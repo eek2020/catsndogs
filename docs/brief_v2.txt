@@ -1,0 +1,332 @@
+WHISPER CRYSTALS
+Project Brief
+For Agent-Driven PRD & TRD Generation
+
+
+Project Name
+Whisper Crystals — A Space Pirates Game
+Version
+0.1 — Initial Brief
+Date
+February 2026
+Classification
+Creative Development — Confidential
+Intended Use
+Agent input to generate full PRD and TRD documentation
+Tech Stack (Phase 1)
+Python / Pygame — 2D side-scrolling prototype
+Tech Stack (Future)
+Evaluate Godot or Unity post-prototype
+
+This document provides all creative, narrative, and technical context an AI agent needs to produce structured Product Requirements Documents (PRDs) and Technical Requirements Documents (TRDs) for the Whisper Crystals game project. Each section includes explicit agent instructions.
+
+1. How to Use This Brief (Agent Guide)
+This brief is structured to give a Claude agent (or equivalent) everything needed to generate professional PRD and TRD documents without further human input. Each section contains:
+	•	Context — the creative and technical background
+	•	Constraints — what is fixed vs open for agent interpretation
+	•	Agent Instructions — explicit directives in highlighted callouts
+
+AGENT INSTRUCTION: Read this entire document before generating any output. Use the Game Bible (Whisper Crystals v0.1) as the canonical creative source. This brief takes precedence for technical and structural decisions.
+
+The agent should produce the following output documents:
+	•	PRD-001: Game Overview & Feature Requirements
+	•	PRD-002: Narrative & Story System Requirements
+	•	PRD-003: Character & Faction System Requirements
+	•	TRD-001: Technical Architecture & Stack
+	•	TRD-002: Game Engine & Prototype Specification
+	•	TRD-003: Data Model & State Management
+2. Project Vision & Goals
+2.1 Vision Statement
+Whisper Crystals is a narrative-driven 2D side-scrolling space pirate game inspired by the Spelljammer D&D setting. The player commands Aristotle, a self-made cat pirate captain who controls the universe's only known source of starship fuel — Whisper Crystals. The game spans a multiverse of colliding factions from fantasy, sci-fi, and myth, all competing for control of this resource.
+AGENT INSTRUCTION: Use this vision statement verbatim as the opening paragraph in PRD-001 Section 1 (Product Overview).
+2.2 Core Goals
+	•	Deliver a playable 2D prototype in Python/Pygame demonstrating core game loop, narrative choice, and faction interaction.
+	•	Establish a codebase architecture that can migrate cleanly to Godot or Unity in a future phase.
+	•	Create a rich, character-driven narrative with meaningful player choices across 4 story arcs.
+	•	Build a commodity economy system around Whisper Crystals that drives all political and conflict mechanics.
+	•	Support future web-based collaboration tooling to allow co-development and shared game state visibility.
+
+AGENT INSTRUCTION: Translate each core goal into a numbered functional requirement with MoSCoW priority in PRD-001. Prototype delivery goals are MUST HAVE. Migration and collaboration tooling are SHOULD HAVE or COULD HAVE.
+2.3 Out of Scope (Phase 1)
+	•	3D graphics or 3D game engine (Phase 2+)
+	•	Multiplayer or online play
+	•	Mobile platform builds
+	•	Full voice acting or orchestral soundtrack
+	•	Unity or Godot migration (evaluation only in Phase 1)
+
+AGENT INSTRUCTION: Include an explicit Out of Scope section in PRD-001 using this list. Mark these as WON'T HAVE in MoSCoW.
+
+3. World & Narrative Context
+3.1 Setting
+A vast multiverse of interconnected realms — fantasy kingdoms, sci-fi civilisations, alien worlds, mythological planes — all linked by interstellar space. Ships travel between realms using Whisper Crystals as fuel. No crystals, no travel. The faction that controls crystals controls the multiverse.
+Each realm produces its own faction type with entirely distinct political systems, combat abilities, and cultural values. These factions do not merely coexist — every single one is actively competing to become the dominant power across all realms. The goal for every faction is conquest and total control of the multiverse. Aristotle sits at the centre of this because whoever controls the crystals controls who can even participate in that race.
+	•	Realm of the Feline Courts — produces Felid Corsairs and Lions. Politics: meritocracy vs noble birthright. Abilities: stealth, speed, cunning diplomacy.
+	•	Realm of the Canine Order — produces Canis League and Wolves. Politics: military hierarchy and pack loyalty. Abilities: organised warfare, siege tactics, superior logistics.
+	•	Fairy Realms — information, illusion, and trade. Politics: fluid mercantile allegiances. Abilities: magical espionage, enchanted goods, intelligence networks.
+	•	Knight Kingdoms — chivalric order and law. Politics: feudal hierarchy imposing universal order. Abilities: heavy armour, disciplined formations, siege engineering.
+	•	Goblin Warrens — scavengers and engineers. Politics: anarchic guild cartels. Abilities: rapid ship modification, black-market crystal trade, sabotage.
+	•	Alien Space Races — advanced deep-space civilisations. Politics: varies wildly by race. Abilities: superior technology, unknown weapons, deeply unpredictable behaviour.
+
+AGENT INSTRUCTION: In PRD-003, create a Faction Unique Abilities requirement. Each faction must have at least 3 distinct mechanical abilities differentiating their ships, crew, and encounter options. These must affect gameplay outcomes, not just aesthetics. In TRD-003, model faction_abilities[] as a typed ability registry per faction entity.
+3.2 The Commodity — Whisper Crystals
+	•	Sole known fuel source for inter-realm space travel (equivalent to dilithium crystals in Star Trek or spice in Dune).
+	•	Exclusively produced and refined by the Felid Corsairs (cat faction), discovered by Aristotle.
+	•	Every faction is dependent on cat supply — this is the central economic and political tension.
+	•	Crystals have a subtle mystical quality: they whisper. The lore behind this is deliberately mysterious.
+
+AGENT INSTRUCTION: In PRD-002, create a Commodity System feature requirement covering: crystal inventory management, supply/demand mechanics, trade negotiation events, and supply route attack/defence scenarios. In TRD-003, model Whisper Crystals as a core game resource with quantity, quality, and location attributes.
+3.3 Story Arcs
+The game is structured across four arcs, each with distinct objectives, encounters, and player choices:
+Arc
+Title
+Theme
+Key Antagonist
+Arc 1
+The Upstart
+Origin — building the empire from nothing
+Dave (introduction)
+Arc 2
+The Squeeze
+Rising pressure — fighting on three fronts
+Dave + Death + Lions
+Arc 3
+The Alliance
+Unlikely partners — multiverse diplomacy
+Death (revelation)
+Arc 4
+The Reckoning
+Final conflict — 3 possible endings
+Dave + Death + Wolves
+
+AGENT INSTRUCTION: In PRD-002, create a Story Progression feature requirement for each arc. Each arc requirement must include: entry conditions, key narrative events (min 2), player decision points (min 1), and exit conditions leading to the next arc. Model arcs as discrete game states in TRD-003.
+
+4. Characters & Factions
+4.1 Core Characters
+Character context for agent: these personalities must permeate all dialogue, behaviour AI, and narrative writing. They are not stat blocks — they are people.
+Character
+Role
+Faction
+Core Driver
+Aristotle
+Protagonist / Player
+Felid Corsairs (Cat)
+Maintain independence and crystal monopoly; survive on all fronts
+Dave
+Primary Antagonist
+Canis League (Dog)
+Break the Whisper Crystal monopoly; achieve energy independence for dogs
+Death
+Secondary Antagonist
+Felid Corsairs (Cat — rival)
+Seize crystal production from Aristotle; internal power grab within cat hierarchy
+
+AGENT INSTRUCTION: In PRD-003, create a Character System requirement for each core character covering: stats/attributes, dialogue system integration, faction relationship tracking, and behavioural AI state machine (for NPCs). In TRD-003, model each character as an entity with faction_id, relationship_scores[], current_arc, and behaviour_state.
+
+Character Personality Notes (for dialogue and AI behaviour)
+	•	Aristotle: Street cat made good. Self-made before the lions even noticed the crystals existed. Thinks he is the smartest creature in any room — and usually is. Still thinks like a scrappy alley cat even while commanding a fleet. Philosophical, cunning, allergic to being told what to do. His philosophy: understand everything, control what you can, survive the rest.
+	•	Dave: The most dangerous kind of antagonist — completely ordinary name, completely extraordinary determination. Methodical, loyal to his faction, utterly relentless. He does not hate Aristotle. He simply needs what Aristotle has and will not stop until he gets it. The banality of Dave is intentional. He is not theatrical. He just wins.
+	•	Death: Old world. Theatrical where Dave is quiet. Possibly connected to the Lion hierarchy, possibly a pure rogue — this ambiguity is intentional and should be preserved until Arc 3 reveals it. Sees Aristotle as an upstart who got lucky with the crystals and intends to correct that. Ancient, patient, and completely certain of their own superiority.
+
+AGENT INSTRUCTION: Use these personality notes to write character behaviour specifications in PRD-003. Each character's AI state machine must reflect their personality — Aristotle's player character context must inform default dialogue tone throughout the game. Death's true allegiance must be implemented as a hidden story flag revealed in Arc 3.
+4.2 Factions
+	•	Felid Corsairs — cats. Fast ships, independent culture, crystal producers. Player's faction. Ideology: freedom through power.
+	•	Canis League — dogs. Hierarchical military structure, heavy ships, crystal-dependent. Ideology: order through loyalty.
+	•	The Lions — noble cat hierarchy. Self-declared noblest beasts of the jungle. Claim Whisper Crystal production by divine birthright. They were rulers before the crystals existed and intend to rule after. Aristotle is an insult to their lineage.
+	•	The Wolves — military elite of the canine world. Self-declared noblest beasts of the forest. The strategic mind behind Canis League military ambition. They do not follow orders — they give them. Ideology: dominance through superior tactics and evolutionary right.
+	•	Fairies — information brokers and magical traders. Know more than they reveal. Will trade with anyone.
+	•	Knights — chivalric orders imposing universal law. See the multiverse conflict as chaos requiring correction.
+	•	Goblins — black-market engineers and scavengers. Will sell modified ship parts, stolen crystals, or sabotage services to the highest bidder.
+	•	Alien Space Races — wildcard factions from deep space with their own agendas and technologies that others do not yet understand.
+
+MIXED-UNIVERSE CREW: A critical world mechanic is that ship crews are NOT faction-pure. Aristotle's crew — and any captain's crew — can contain members drawn from across the multiverse. A cat captain can have goblin engineers, fairy scouts, and a knight navigator aboard the same ship. Crew composition affects ship capabilities, encounter options, and morale dynamics. This is a feature requirement, not a flavour note.
+
+AGENT INSTRUCTION: In PRD-003, create: (1) Faction Relationship System requirement covering reputation scores, diplomatic state, trade permissions, and mission availability with minimum 3 relationship states per faction. (2) Mixed Crew Composition requirement — crew members are individuals drawn from any faction/realm, each with a species type, home faction, skill set, and morale modifier. Crew composition must affect gameplay. Model faction data in TRD-003 as a faction registry with relationship matrix. Model crew members as individual entities with species, faction_origin, skills[], and morale_modifier attributes.
+
+5. Core Game Mechanics
+5.1 Game Loop
+The core loop is: Navigate space → Encounter event (combat / trade / diplomacy) → Make decision → Outcome affects resources, faction relationships, and story state → Progress arc → Repeat.
+AGENT INSTRUCTION: In PRD-001, define this as the Core Game Loop requirement with entry/exit states for each loop phase. In TRD-001, map each phase to a Python module or class. The game loop must be the central orchestrator.
+5.2 Ship System
+	•	Cat ships: Fast, low armour, high manoeuvrability. Asymmetric design.
+	•	Dog ships: Bulkier, more guns, stronger shields. Naval structure.
+	•	Ship stats: Speed, Armour, Firepower, Crystal Capacity, Crew Capacity.
+	•	Ships can be damaged, upgraded, or captured during encounters.
+
+AGENT INSTRUCTION: In PRD-001, create Ship System requirements covering: ship stats, damage model, upgrade paths, and fleet management. In TRD-003, model ships as entities with stat attributes and an equipment/upgrade slot system.
+5.3 Encounter System
+	•	Combat encounters: Side-scrolling space combat. Player fires, dodges, boards enemy ships.
+	•	Trade encounters: Negotiation UI. Offer/counter-offer on crystal supply. Faction relationship affects pricing.
+	•	Diplomatic encounters: Dialogue trees. Choice-driven. Outcomes affect faction standing and story flags.
+	•	Exploration encounters: Discover new realms, hidden crystal deposits, lore artefacts.
+
+AGENT INSTRUCTION: In PRD-001, define four Encounter Type requirements (Combat, Trade, Diplomatic, Exploration), each with input triggers, player interaction model, success/failure outcomes, and effects on game state. In TRD-002, specify the encounter engine as an event-driven system with an encounter_type dispatcher.
+5.4 Narrative Choice System
+	•	Player decisions at key story beats alter faction relationships, resource access, and available arcs.
+	•	Choices are not binary good/evil — they are strategic tradeoffs (short-term vs long-term gain).
+	•	Arc 4 endings (Hold / Share / Destroy) are determined by cumulative choice history, not a single decision.
+
+AGENT INSTRUCTION: In PRD-002, create a Narrative Choice System requirement. Specify: choice presentation (dialogue UI), consequence tracking (flags and scores), and ending calculation logic (weighted choice history). In TRD-003, model choice history as a persistent player_decisions[] array with outcome_weights.
+
+6. Migration Strategy (Non-Negotiable)
+CRITICAL REQUIREMENT: The Phase 1 Python/Pygame prototype MUST be architected for clean migration to a commercial game engine (Godot 4 or Unity) in a later phase. This is not optional. Every technical decision in Phase 1 must be made with migration in mind. Any code that cannot be migrated must be explicitly documented as throwaway.
+6.1 Migration Mandate
+The prototype is a proof of concept and narrative vehicle — not the final product. The architecture must ensure that when the decision is made to migrate to Godot 4 or Unity, the core game logic, data models, story content, and asset pipeline transfer with minimal rework. The engine is replaceable. The game is not.
+AGENT INSTRUCTION: In TRD-001, elevate Migration Readiness to a first-class architectural constraint. Every module specification must include a 'Migration Notes' field stating whether it is: PORTABLE (pure logic, transfers as-is), REWRITE REQUIRED (engine-specific, must be rebuilt), or ABSTRACTED (wrapped behind an interface to isolate engine dependency).
+6.2 Migration-Ready Design Principles
+	•	Engine Abstraction Layer (EAL): All Pygame-specific code (rendering, input, audio, windowing) must sit behind an abstraction interface. Core game logic must never call Pygame directly.
+	•	Data-Driven Content: All story arcs, dialogue trees, encounter tables, faction data, and character stats must be defined in JSON/YAML files — not hardcoded. These files migrate without changes.
+	•	Pure Python Game Logic: The game state machine, combat calculations, economy model, and narrative engine must be written in pure Python with zero engine dependencies. These become the migration payload.
+	•	Asset Independence: All art assets (sprites, backgrounds, UI) must be stored in a structured /assets directory with an asset manifest. The manifest format must be engine-agnostic.
+	•	No Engine-Specific Patterns: Avoid Pygame-specific design patterns (e.g. Sprite groups as primary architecture). Use standard OOP patterns that map cleanly to Godot Nodes or Unity GameObjects.
+
+AGENT INSTRUCTION: In TRD-001 Section 3, expand Architecture Principles to include the Engine Abstraction Layer as a required component. Provide a Python interface definition (abstract base class) for the rendering, input, and audio subsystems that Pygame implements in Phase 1 and Godot/Unity implements in Phase 2.
+6.3 Module Migration Classification
+All Phase 1 modules must be pre-classified by migration complexity:
+Module
+Migration Class
+Notes
+Game State Machine
+PORTABLE
+Pure Python logic. Direct port to GDScript or C#.
+Narrative / Story Engine
+PORTABLE
+JSON-driven. Data files migrate unchanged.
+Economy / Crystal Model
+PORTABLE
+Pure calculation logic. No engine dependency.
+Faction & Character Data
+PORTABLE
+JSON schema. Reusable in any engine.
+Rendering / Display
+REWRITE
+Pygame-specific. Must sit behind EAL interface.
+Input Handling
+REWRITE
+Pygame event system. Wrap behind input abstraction.
+Audio
+REWRITE
+Pygame mixer. Wrap behind audio abstraction.
+Save / Load System
+ABSTRACTED
+JSON in Phase 1. Interface allows swap to engine-native system.
+UI / HUD
+REWRITE
+Pygame surface rendering. Rebuild in engine UI system.
+
+AGENT INSTRUCTION: Reproduce this migration classification table in TRD-001. For every REWRITE module, the TRD must specify the abstract interface it must implement in Phase 1. For every PORTABLE module, confirm the pattern used (dataclass, pure function, state machine) that ensures portability.
+6.4 Migration Trigger Criteria
+Migration from Python/Pygame to a commercial engine will be triggered when one or more of the following conditions are met:
+	•	The prototype successfully demonstrates all four story arcs end-to-end.
+	•	Performance limitations of Pygame prevent delivery of required visual quality or frame rate.
+	•	A collaborator or publisher requires a specific engine as a delivery condition.
+	•	The decision is made to target console or mobile platforms.
+
+AGENT INSTRUCTION: Include these migration triggers in TRD-001 as the Migration Decision Framework. Add a recommendation: evaluate Godot 4 first (open source, Python-adjacent GDScript, lighter overhead) before Unity (stronger commercial ecosystem, heavier tooling).
+
+7. Technical Context & Constraints
+7.1 Phase 1 Tech Stack
+Language
+Python 3.11+
+Game Library
+Pygame (pygame-ce preferred for performance)
+Architecture
+Object-oriented. Single-file prototype evolving to modular package structure.
+Data Persistence
+JSON save files. Local filesystem only in Phase 1.
+Asset Pipeline
+2D sprites. PNG format. Placeholder assets acceptable for prototype.
+Target Platform
+Desktop (Mac M3/M4 primary dev environment). Windows compatibility desired.
+Version Control
+Git. GitHub or equivalent. Feature branch workflow.
+Testing
+Pytest for unit tests on game logic. Manual QA for gameplay.
+
+AGENT INSTRUCTION: Use this table as the foundation for TRD-001 Section 2 (Technology Stack). Add recommended library versions, installation commands, and environment setup steps. Flag any Mac M3/M4 specific considerations for Pygame.
+7.2 Architecture Principles
+	•	Separation of concerns: Game logic, rendering, and data must be cleanly separated from day one.
+	•	Migration-ready: All game logic must be engine-agnostic so it can transfer to Godot/Unity. No Pygame-specific logic embedded in core game systems.
+	•	State machine driven: Game state (menus, navigation, encounter, cutscene, end) managed via explicit state machine, not ad-hoc flags.
+	•	Data-driven content: Story arcs, dialogue, encounter tables loaded from JSON/YAML, not hardcoded.
+
+AGENT INSTRUCTION: In TRD-001, translate each architecture principle into a technical constraint with rationale and implementation guidance. Include a recommended module/package structure diagram (described in text if diagramming is not available).
+7.3 Development Philosophy — Vibe Coding
+This project is built using a rapid prototyping philosophy sometimes called vibe coding: build fast, see results quickly, iterate on what works. This is a personal project and creative endeavour — not an enterprise delivery. The TRDs must reflect this.
+	•	Speed over perfection in Phase 1. Get the game loop running and playable before engineering elegantly.
+	•	Iterative builds: each coding session should produce something runnable. No long dark periods of build-up before a first result.
+	•	Placeholder-first: placeholder sprites, placeholder audio, placeholder UI — get the logic working first, polish later.
+	•	Single developer primary: architecture must be comprehensible to one person. Avoid over-engineering.
+	•	AI-assisted development: code will be generated with Claude assistance. TRD code examples should be prompt-ready — clear, well-commented, easy for an AI to extend.
+
+AGENT INSTRUCTION: In TRD-002, add a Development Approach section reflecting the vibe coding philosophy. Recommend a build sequence that delivers a visible, playable result within the first session (e.g. player ship on screen, moving, firing). Structure the TRD so each feature can be built and tested independently before the next is added. Code examples must be clean, commented, and AI-extension-friendly.
+7.4 Collaboration Application
+A web-based collaboration application is planned to allow a co-creator (friend and creative collaborator) to view and engage with the game's development in real time. This is not a multiplayer game feature — it is a development collaboration tool.
+	•	Use case: Developer builds the game locally. Collaborator accesses a web app to see current game state, story progress, faction data, and character status — without needing to run the game themselves.
+	•	The collaborator contributed significant creative ideas to this project. The app gives them visibility and engagement in the development process.
+	•	Minimum viable collaboration features: view current story arc status, view faction relationship matrix, view character states, view Whisper Crystal economy snapshot.
+	•	Phase 3 stretch: collaborator can submit narrative suggestions or faction event ideas via the web app that feed into the development pipeline.
+
+AGENT INSTRUCTION: In PRD-001, add a Collaboration Web Application requirement (COULD HAVE / Phase 3). Specify: read-only game state dashboard, faction relationship viewer, story arc progress tracker, and crystal economy display. Note this is a companion tool for co-creator engagement, not a player-facing feature. In TRD-001, note that the game state model must expose a clean API or export format that the web app can consume without coupling to the game engine.
+7.5 Future Phase Considerations
+	•	Phase 2: Evaluate Godot 4 as migration target. GDScript or C# binding for core logic.
+	•	Phase 2: Evaluate Unity as alternative. C# port of game logic.
+	•	Phase 3: Web-based collaboration dashboard — shared game state visibility for co-developer and creative collaborator.
+	•	Phase 3: Potential multiplayer hooks — faction vs faction PvP.
+
+AGENT INSTRUCTION: In TRD-001, include a Future Phase Migration section. Identify which Python modules will need engine-specific rewrites vs which are portable. Flag risks and recommended abstraction layers.
+
+8. Agent Deliverable Specification
+The agent receiving this brief must produce six documents. Each document specification is listed below with required sections, content guidance, and format rules.
+PRD-001: Game Overview & Feature Requirements
+	•	Section 1: Product Overview (use vision statement from Section 2.1 verbatim)
+	•	Section 2: Goals & Success Criteria (from Section 2.2, MoSCoW prioritised)
+	•	Section 3: Out of Scope (from Section 2.3)
+	•	Section 4: Core Game Loop Requirements
+	•	Section 5: Ship System Requirements
+	•	Section 6: Encounter System Requirements (all 4 types)
+	•	Section 7: UI/UX Requirements (menus, HUD, dialogue interface)
+	•	Section 8: Save/Load Requirements
+	•	Format: Each requirement as REQ-ID | Description | Priority | Acceptance Criteria
+PRD-002: Narrative & Story System Requirements
+	•	Section 1: Narrative Vision
+	•	Section 2: Story Arc Requirements (one per arc, with entry/exit conditions)
+	•	Section 3: Dialogue System Requirements
+	•	Section 4: Narrative Choice & Consequence Requirements
+	•	Section 5: Whisper Crystal Commodity System Requirements
+	•	Section 6: Ending Requirements (3 endings, trigger conditions)
+	•	Format: Same REQ-ID format. Include story flag names as part of acceptance criteria.
+PRD-003: Character & Faction System Requirements
+	•	Section 1: Character System Requirements (Aristotle, Dave, Death)
+	•	Section 2: NPC Behaviour Requirements
+	•	Section 3: Faction Registry Requirements (all 5+ factions)
+	•	Section 4: Faction Relationship System Requirements
+	•	Section 5: Faction-Specific Ship & Crew Requirements
+	•	Format: Same REQ-ID format. Include data attributes list per entity.
+TRD-001: Technical Architecture & Stack
+	•	Section 1: Executive Summary
+	•	Section 2: Technology Stack (from Section 6.1)
+	•	Section 3: Architecture Principles & Constraints (from Section 6.2)
+	•	Section 4: Module & Package Structure
+	•	Section 5: Data Flow Diagram (described in text)
+	•	Section 6: Future Phase Migration Analysis
+	•	Format: Technical prose with code block examples where appropriate.
+TRD-002: Game Engine & Prototype Specification
+	•	Section 1: Pygame Setup & Environment
+	•	Section 2: Game Loop Implementation Pattern
+	•	Section 3: State Machine Specification
+	•	Section 4: Rendering Pipeline
+	•	Section 5: Encounter Engine Design
+	•	Section 6: Input Handling
+	•	Section 7: Asset Management
+	•	Format: Include pseudocode or Python code snippets for key systems.
+TRD-003: Data Model & State Management
+	•	Section 1: Entity Data Models (Character, Ship, Faction, Encounter, Choice)
+	•	Section 2: Game State Model
+	•	Section 3: Whisper Crystal Resource Model
+	•	Section 4: Save File Schema (JSON)
+	•	Section 5: Story Flag & Choice History Model
+	•	Format: Python dataclass or JSON schema examples for each entity.
+
+AGENT INSTRUCTION: Generate all six documents in sequence. Use consistent requirement ID numbering across PRDs (PRD001-REQ-001, PRD002-REQ-001 etc). Cross-reference between documents where entities appear in both PRD and TRD. Maintain tone: professional technical documentation, no creative embellishment in requirements language.
+
+Whisper Crystals — Project Brief v0.1 | For Agent Use | Creative Development Confidential

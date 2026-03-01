@@ -1,0 +1,115 @@
+{
+    "arcs": [
+        {
+            "arc_id": "arc_1",
+            "title": "The Upstart",
+            "theme": "Origin — building the empire from nothing",
+            "entry_conditions": {},
+            "exit_conditions": {
+                "arc1_crystal_discovered": true,
+                "arc1_dave_met": true,
+                "arc1_death_glimpsed": true
+            },
+            "next_arc_id": "arc_2",
+            "key_events": [
+                "enc_arc1_crystal_discovery",
+                "enc_arc1_dave_trade",
+                "enc_arc1_death_shadow"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc1_stance_choice",
+                    "flag_name": "arc1_stance",
+                    "options": ["aggressive_expansion", "cautious_trade", "isolationist_defence"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_2",
+            "title": "The Squeeze",
+            "theme": "Rising pressure — fighting on three fronts",
+            "entry_conditions": {
+                "arc1_crystal_discovered": true,
+                "arc1_dave_met": true,
+                "arc1_death_glimpsed": true
+            },
+            "exit_conditions": {
+                "arc2_route_resolved": "!null",
+                "arc2_death_betrayal": true,
+                "arc2_lion_response": "!null"
+            },
+            "next_arc_id": "arc_3",
+            "key_events": [
+                "enc_arc2_route_seizure",
+                "enc_arc2_death_betrayal",
+                "enc_arc2_lion_tribute",
+                "enc_arc2_alliance_offer"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc2_priority_choice",
+                    "flag_name": "arc2_priority",
+                    "options": ["external_threat", "internal_threat", "political_threat"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_3",
+            "title": "The Alliance",
+            "theme": "Unlikely partners — multiverse diplomacy",
+            "entry_conditions": {
+                "arc2_route_resolved": "!null",
+                "arc2_death_betrayal": true,
+                "arc2_lion_response": "!null"
+            },
+            "exit_conditions": {
+                "arc3_alien_contact": true,
+                "arc3_dave_parley": true,
+                "arc3_death_allegiance": "!null"
+            },
+            "next_arc_id": "arc_4",
+            "key_events": [
+                "enc_arc3_alien_summit",
+                "enc_arc3_dave_parley",
+                "enc_arc3_death_revelation"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc3_alliance_portfolio",
+                    "flag_name": "arc3_alliances",
+                    "options": ["broad_alliance", "selective_alliance", "independent_path"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_4",
+            "title": "The Reckoning",
+            "theme": "Final conflict — what is Aristotle willing to become?",
+            "entry_conditions": {
+                "arc3_alien_contact": true,
+                "arc3_dave_parley": true,
+                "arc3_death_allegiance": "!null"
+            },
+            "exit_conditions": {},
+            "next_arc_id": null,
+            "key_events": [
+                "enc_arc4_dave_assault",
+                "enc_arc4_death_grab",
+                "enc_arc4_lion_wolf_declaration"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc4_final_choice",
+                    "flag_name": "ending",
+                    "options": ["hold_monopoly", "share_crystals", "destroy_sites"],
+                    "note": "Determined by cumulative outcome_weights, not direct selection"
+                }
+            ]
+        }
+    ],
+    "ending_thresholds": {
+        "ending_a_hold": { "min_weight": 0.5, "max_weight": null },
+        "ending_b_share": { "min_weight": -0.2, "max_weight": 0.5 },
+        "ending_c_destroy": { "min_weight": null, "max_weight": -0.2 }
+    }
+}

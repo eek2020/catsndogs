@@ -1,0 +1,293 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc1_crystal_discovery",
+            "encounter_type": "exploration",
+            "title": "The Forgotten Deposit",
+            "description": "The sensors of your scrappy corsair vessel scream. Deep in a forgotten nebula, Aristotle's whiskers twitch. Before him floats an asteroid crackling with raw, unearthly energy. Whisper Crystals. The stuff of legends. \"Well well,\" he murmurs, \"looks like the alley cat found the cream.\"",
+            "arc_id": "arc_1",
+            "location": "forgotten_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_crystal_discovered": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "investigate_carefully",
+                    "text": "Approach cautiously. Run deep spectrum scans before touching a thing.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle watches the readouts. The crystals resonate at frequencies that could shatter a hull—or power a fleet. \"Knowledge is power,\" he notes, securing a pristine sample.",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": 10, "crystal_quality": 2 },
+                        "story_flags_set": ["arc1_crystal_discovered"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "grab_and_go",
+                    "text": "Overcharge the tractor beams! Load up the hold, questions later.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Sparks fly as raw crystals crash into the cargo bay. Several shatter, but the sheer volume is staggering. \"Messy,\" Aristotle grins, \"but profitable.\"",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": 25, "crystal_quality": 0 },
+                        "story_flags_set": ["arc1_crystal_discovered"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_dave_trade",
+            "encounter_type": "diplomatic",
+            "title": "A Dog at the Door",
+            "description": "A heavy Canis League cruiser drops out of warp, casting a long shadow over your ship. The comms crackle. A rigidly uniformed dog appears on screen. \"I am Commander Dave,\" he says, his voice devoid of theatrics. \"I understand you have found something... volatile. Let us discuss terms.\"",
+            "arc_id": "arc_1",
+            "location": "trade_hub_alpha",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_crystal_discovered": true,
+                "arc1_dave_met": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "share_info",
+                    "text": "\"Name your price, Dave. I'm a businessman, not a martyr.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's ear twitches slightly. \"Pragmatic. I appreciate that.\" Supplies are transferred. Dave logs Aristotle not as a pirate, but as an asset. For now.",
+                        "faction_changes": { "canis_league": 10 },
+                        "resource_changes": { "crystal_inventory": -5, "salvage": 25 },
+                        "story_flags_set": ["arc1_dave_met"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "withhold_info",
+                    "text": "\"My crystals. My terms. Back off, lapdog.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's expression remains completely neutral. \"A predictable response. We will revisit this.\" The comms cut. The Canis League doesn't forget.",
+                        "faction_changes": { "canis_league": -15 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_dave_met"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "negotiate_middle",
+                    "text": "\"I might part with a few fragments. What's it worth to the League?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A tense negotiation follows. Dave pays fairly, but Aristotle knows he's just given a starving dog a taste of meat. The hunt has begun.",
+                        "faction_changes": { "canis_league": 5 },
+                        "resource_changes": { "crystal_inventory": -2, "salvage": 10 },
+                        "story_flags_set": ["arc1_dave_met"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_death_shadow",
+            "encounter_type": "exploration",
+            "title": "Eyes in the Dark",
+            "description": "The proximity alarms whisper instead of blaring. At the very edge of scanner range, a silhouette drifts. It bears Corsair markings, but they are ancient, almost decayed. A transmission slips through—not words, just a low, rumbling purr that vibrates in Aristotle's chest.",
+            "arc_id": "arc_1",
+            "location": "forgotten_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_dave_met": true,
+                "arc1_death_glimpsed": false
+            },
+            "npc_ids": ["death"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "pursue",
+                    "text": "Full power to engines. Flush them out of the shadows.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The ship vanishes like smoke, leaving only a decaying energy signature. Aristotle narrows his eyes. \"Someone thinks they're the ghost of the fleet. We'll see about that.\"",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_death_glimpsed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "ignore",
+                    "text": "Hold position. Don't chase ghosts into an ambush.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle watches the blip fade. \"Let them hide in the dark. I'm building an empire in the light.\" Still, the purr echoes in the silence of the bridge.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_death_glimpsed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_canis_patrol",
+            "encounter_type": "combat",
+            "title": "Canis Interdiction",
+            "description": "A pair of Canis League interceptors bracket your vector. \"Unregistered vessel,\" barks a harsh voice. \"Power down your drives and prepare for cargo inspection. By order of the League.\"",
+            "arc_id": "arc_1",
+            "location": "trade_routes",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_crystal_discovered": true,
+                "arc1_dave_met": true
+            },
+            "npc_ids": [],
+            "priority": 5,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "fight",
+                    "text": "\"The only thing you're inspecting is my exhaust. Fire!\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle laughs as the cannons spin up. \"Let's show these dogs how a cat fights!\"",
+                        "faction_changes": { "canis_league": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "negotiate",
+                    "text": "Bribe the patrol officer with a \"processing fee\".",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The officer takes the crystals and clears your path. Corruption is universal, it seems.",
+                        "faction_changes": { "canis_league": 2 },
+                        "resource_changes": { "crystal_inventory": -3 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_pirate_skirmish",
+            "encounter_type": "combat",
+            "title": "Goblin Scrappers",
+            "description": "Rust-bucket ships burst from a debris field, their comms filled with chaotic, overlapping shrieks. Goblin scavengers! They don't want politics; they want your hull plating and whatever's underneath it.",
+            "arc_id": "arc_1",
+            "location": "asteroid_belt",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_crystal_discovered": true
+            },
+            "npc_ids": [],
+            "priority": 3,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "fight_pirates",
+                    "text": "Swarm tactics won't work on us. Target their engines!",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The goblin ships are fast but brittle. A few precise shots send them tumbling into the void.",
+                        "faction_changes": { "goblins": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "bribe_pirates",
+                    "text": "Eject a cargo pod of scrap metal to distract them.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The goblins immediately abandon their attack vector to fight each other over the scrap. Classic.",
+                        "faction_changes": { "goblins": 5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_stance_choice",
+            "encounter_type": "diplomatic",
+            "title": "The Captain's Doctrine",
+            "description": "Aristotle stands on the bridge, looking at the tactical map. The Canis League is aware of him. Shadows watch from the dark. The crystals thrum in the hold. He is no longer just a pirate; he is a player on the board. The crew awaits his command.",
+            "arc_id": "arc_1",
+            "location": "starting_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_crystal_discovered": true,
+                "arc1_dave_met": true,
+                "arc1_death_glimpsed": true
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "aggressive_expansion",
+                    "text": "\"We take what we want. Arm the fleet. Let the multiverse bleed.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The crew roars in approval. Aristotle's Corsairs will be feared. The age of the scrappy underdog is over.",
+                        "faction_changes": { "canis_league": -10, "lions": -5, "felid_corsairs": 10 },
+                        "resource_changes": { "salvage": 30 },
+                        "story_flags_set": ["arc1_stance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "cautious_trade",
+                    "text": "\"We make ourselves indispensable. Build the market. Control the flow.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle smirks. Wars are expensive; monopolies are profitable. He will weave a web of commerce they cannot escape.",
+                        "faction_changes": { "fairies": 10, "goblins": 10, "canis_league": 5 },
+                        "resource_changes": { "crystal_inventory": 15 },
+                        "story_flags_set": ["arc1_stance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "isolationist_defence",
+                    "text": "\"We fortify our borders. Let them break their teeth on our shields.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A pragmatic approach. The Corsairs will build a fortress around the crystal deposits. Let the dogs bark.",
+                        "faction_changes": { "lions": 5 },
+                        "resource_changes": { "salvage": 50, "crystal_inventory": -10 },
+                        "story_flags_set": ["arc1_stance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        }
+    ]
+}

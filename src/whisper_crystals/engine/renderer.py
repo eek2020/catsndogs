@@ -1,0 +1,122 @@
+"""Pygame renderer — implements RenderInterface with advanced effects."""
+
+import pygame
+
+from whisper_crystals.core.interfaces import RenderInterface
+from whisper_crystals.engine.camera import Camera
+
+
+class PygameRenderer(RenderInterface):
+    """Draws to a Pygame display surface via the Camera viewport."""
+
+    def __init__(self, screen: pygame.Surface, camera: Camera) -> None:
+        self.screen = screen
+        self.camera = camera
+        self._font_cache: dict[tuple[str | None, int], pygame.font.Font] = {}
+        # Cache surfaces for glowing effects to save FPS
+        self._glow_cache: dict[tuple[int, tuple], pygame.Surface] = {}
+
+    def _get_font(self, font_id: str | None, size: int) -> pygame.font.Font:
+        key = (font_id, size)
+        if key not in self._font_cache:
+            self._font_cache[key] = pygame.font.Font(font_id, size)
+        return self._font_cache[key]
+
+    # -- RenderInterface implementation --
+
+    def clear(self) -> None:
+        self.screen.fill((6, 12, 24))  # Deep navy base inspired by splash art
+
+    def draw_sprite(self, sprite_id: str, world_pos: tuple[float, float]) -> None:
+        screen_pos = self.camera.world_to_screen(world_pos)
+        pygame.draw.circle(self.screen, (255, 255, 255), screen_pos, 10)
+
+    def draw_text(
+        self,
+        text: str,
+        pos: tuple[int, int],
+        font_id: str | None = None,
+        color: tuple[int, int, int] = (255, 255, 255),
+        size: int = 24,
+    ) -> None:
+        font = self._get_font(font_id, size)
+
+        # Keep body text crisp; only add a subtle shadow on larger headings.
+        antialias = size >= 16
+        if size >= 26:
+            shadow = font.render(text, antialias, (8, 16, 30))
+            shadow.set_alpha(110)
+            self.screen.blit(shadow, (pos[0] + 1, pos[1] + 1))
+
+        surface = font.render(text, antialias, color)
+        self.screen.blit(surface, pos)
+
+    def draw_rect(
+        self,
+        rect: tuple[int, int, int, int],
+        color: tuple[int, int, int, int] | tuple[int, int, int],
+        width: int = 0,
+    ) -> None:
+        if len(color) == 4 and color[3] < 255:
+            # Alpha rectangle
+            surf = pygame.Surface((rect[2], rect[3]), pygame.SRCALPHA)
+            pygame.draw.rect(surf, color, (0, 0, rect[2], rect[3]), width)
+            self.screen.blit(surf, (rect[0], rect[1]))
+        else:
+            pygame.draw.rect(self.screen, color[:3], pygame.Rect(*rect), width)
+
+    def draw_polygon(
+        self,
+        points: list[tuple[float, float]],
+        color: tuple[int, int, int, int] | tuple[int, int, int],
+        width: int = 0,
+    ) -> None:
+        if len(color) == 4 and color[3] < 255:
+            # Alpha polygon - need a bounding box
+            min_x = min(p[0] for p in points)
+            max_x = max(p[0] for p in points)
+            min_y = min(p[1] for p in points)
+            max_y = max(p[1] for p in points)
+            surf = pygame.Surface((max_x - min_x, max_y - min_y), pygame.SRCALPHA)
+            local_points = [(p[0] - min_x, p[1] - min_y) for p in points]
+            pygame.draw.polygon(surf, color, local_points, width)
+            self.screen.blit(surf, (min_x, min_y))
+        else:
+            pygame.draw.polygon(self.screen, color[:3], points, width)
+
+    def draw_circle(
+        self,
+        center: tuple[int, int],
+        radius: int,
+        color: tuple[int, int, int, int] | tuple[int, int, int],
+        width: int = 0,
+    ) -> None:
+        if len(color) == 4 and color[3] < 255:
+            surf = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+            pygame.draw.circle(surf, color, (radius, radius), radius, width)
+            self.screen.blit(surf, (center[0] - radius, center[1] - radius))
+        else:
+            pygame.draw.circle(self.screen, color[:3], center, radius, width)
+
+    def get_screen_size(self) -> tuple[int, int]:
+        return self.screen.get_size()
+
+    def present(self) -> None:
+        pygame.display.flip()
+
+    # --- Advanced Extensions (Engine Specific for phase 1) ---
+
+    def draw_glow(self, center: tuple[int, int], radius: int, color: tuple[int, int, int]) -> None:
+        """Draws an additive-blended soft glow."""
+        key = (radius, color)
+        if key not in self._glow_cache:
+            surf = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+            for r in range(radius, 0, -2):
+                alpha = int(255 * (1 - (r / radius))**2)
+                pygame.draw.circle(surf, (*color, alpha), (radius, radius), r)
+            self._glow_cache[key] = surf
+            
+        self.screen.blit(self._glow_cache[key], (center[0] - radius, center[1] - radius), special_flags=pygame.BLEND_RGB_ADD)
+
+    def draw_line(self, start: tuple[int, int], end: tuple[int, int], color: tuple[int, int, int], width: int = 1) -> None:
+        pygame.draw.line(self.screen, color, start, end, width)
