@@ -6,6 +6,7 @@ import json
 import os
 from typing import Any
 
+from whisper_crystals.entities.crystal import CrystalDeposit, CrystalMarket, SupplyRoute
 from whisper_crystals.entities.encounter import Encounter
 from whisper_crystals.entities.faction import Faction
 from whisper_crystals.entities.ship import Ship, ShipStats
@@ -78,3 +79,36 @@ class DataLoader:
         """Load ending threshold configuration."""
         data = self._load_json("story/arc_definitions.json")
         return data.get("ending_thresholds", {})
+
+    def load_crystal_deposits(self) -> dict[str, CrystalDeposit]:
+        """Load crystal deposit definitions."""
+        data = self._load_json("economy/economy_data.json")
+        deposits: dict[str, CrystalDeposit] = {}
+        for d in data.get("crystal_deposits", []):
+            deposit = CrystalDeposit.from_dict(d)
+            deposits[deposit.deposit_id] = deposit
+        return deposits
+
+    def load_supply_routes(self) -> dict[str, SupplyRoute]:
+        """Load supply route definitions."""
+        data = self._load_json("economy/economy_data.json")
+        routes: dict[str, SupplyRoute] = {}
+        for r in data.get("supply_routes", []):
+            route = SupplyRoute.from_dict(r)
+            routes[route.route_id] = route
+        return routes
+
+    def load_crystal_market(self) -> CrystalMarket:
+        """Load crystal market configuration."""
+        data = self._load_json("economy/economy_data.json")
+        return CrystalMarket.from_dict(data.get("crystal_market", {}))
+
+    def load_regions(self) -> list[dict]:
+        """Load region definitions."""
+        data = self._load_json("economy/regions.json")
+        return data.get("regions", [])
+
+    def load_points_of_interest(self) -> list[dict]:
+        """Load point-of-interest definitions."""
+        data = self._load_json("economy/regions.json")
+        return data.get("points_of_interest", [])

@@ -1,0 +1,151 @@
+{
+    "crystal_deposits": [
+        {
+            "deposit_id": "feline_courts_primary",
+            "location": "feline_courts",
+            "quantity_remaining": 500,
+            "quality_grade": 3,
+            "extraction_rate": 8,
+            "is_discovered": true,
+            "is_active": true
+        },
+        {
+            "deposit_id": "canine_order_vein",
+            "location": "canine_order",
+            "quantity_remaining": 200,
+            "quality_grade": 2,
+            "extraction_rate": 4,
+            "is_discovered": true,
+            "is_active": false
+        },
+        {
+            "deposit_id": "fairy_realms_hidden",
+            "location": "fairy_realms",
+            "quantity_remaining": 350,
+            "quality_grade": 4,
+            "extraction_rate": 3,
+            "is_discovered": false,
+            "is_active": false
+        },
+        {
+            "deposit_id": "goblin_warrens_scrap",
+            "location": "goblin_warrens",
+            "quantity_remaining": 150,
+            "quality_grade": 1,
+            "extraction_rate": 10,
+            "is_discovered": true,
+            "is_active": true
+        },
+        {
+            "deposit_id": "deep_space_anomaly",
+            "location": "deep_space",
+            "quantity_remaining": 800,
+            "quality_grade": 5,
+            "extraction_rate": 2,
+            "is_discovered": false,
+            "is_active": false
+        },
+        {
+            "deposit_id": "knight_kingdoms_mine",
+            "location": "knight_kingdoms",
+            "quantity_remaining": 300,
+            "quality_grade": 2,
+            "extraction_rate": 6,
+            "is_discovered": true,
+            "is_active": false
+        }
+    ],
+    "supply_routes": [
+        {
+            "route_id": "corsair_to_goblins",
+            "origin": "feline_courts",
+            "destination": "goblin_warrens",
+            "status": "active",
+            "capacity": 15,
+            "risk_level": 2,
+            "faction_threats": ["canis_league"]
+        },
+        {
+            "route_id": "corsair_to_fairies",
+            "origin": "feline_courts",
+            "destination": "fairy_realms",
+            "status": "active",
+            "capacity": 10,
+            "risk_level": 1,
+            "faction_threats": []
+        },
+        {
+            "route_id": "goblins_to_knights",
+            "origin": "goblin_warrens",
+            "destination": "knight_kingdoms",
+            "status": "active",
+            "capacity": 8,
+            "risk_level": 3,
+            "faction_threats": ["wolves"]
+        },
+        {
+            "route_id": "knights_to_canine",
+            "origin": "knight_kingdoms",
+            "destination": "canine_order",
+            "status": "active",
+            "capacity": 12,
+            "risk_level": 2,
+            "faction_threats": ["felid_corsairs"]
+        },
+        {
+            "route_id": "fairy_to_deep_space",
+            "origin": "fairy_realms",
+            "destination": "deep_space",
+            "status": "active",
+            "capacity": 5,
+            "risk_level": 4,
+            "faction_threats": ["aliens"]
+        }
+    ],
+    "crystal_market": {
+        "base_price": 100,
+        "demand_multipliers": {
+            "felid_corsairs": 0.8,
+            "canis_league": 1.5,
+            "lions": 1.3,
+            "wolves": 1.4,
+            "fairies": 1.1,
+            "knights": 1.2,
+            "goblins": 0.9,
+            "aliens": 1.0
+        },
+        "supply_modifier": 1.0
+    },
+    "trade_goods": [
+        {
+            "good_id": "raw_crystals",
+            "name": "Raw Whisper Crystals",
+            "base_value": 100,
+            "weight": 1
+        },
+        {
+            "good_id": "refined_crystals",
+            "name": "Refined Whisper Crystals",
+            "base_value": 250,
+            "weight": 1
+        },
+        {
+            "good_id": "salvage_parts",
+            "name": "Salvage Parts",
+            "base_value": 30,
+            "weight": 2
+        },
+        {
+            "good_id": "fairy_enchantments",
+            "name": "Fairy Enchantments",
+            "base_value": 200,
+            "weight": 1
+        },
+        {
+            "good_id": "goblin_tech",
+            "name": "Goblin Tech Scrap",
+            "base_value": 50,
+            "weight": 3
+        }
+    ]
+}

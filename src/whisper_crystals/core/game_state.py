@@ -10,6 +10,7 @@ from whisper_crystals.entities.character import (
     CharacterStats,
     Species,
 )
+from whisper_crystals.entities.crystal import CrystalDeposit, CrystalMarket, SupplyRoute
 from whisper_crystals.entities.faction import Faction
 from whisper_crystals.entities.ship import Ship, ShipStats
 
@@ -23,6 +24,29 @@ class PlayerDecision:
     timestamp: float
     outcome_weight: float
     consequences_applied: dict = field(default_factory=dict)
+
+    def to_dict(self) -> dict:
+        return {
+            "decision_id": self.decision_id,
+            "encounter_id": self.encounter_id,
+            "choice_id": self.choice_id,
+            "arc_id": self.arc_id,
+            "timestamp": self.timestamp,
+            "outcome_weight": self.outcome_weight,
+            "consequences_applied": self.consequences_applied,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> PlayerDecision:
+        return cls(
+            decision_id=data["decision_id"],
+            encounter_id=data["encounter_id"],
+            choice_id=data["choice_id"],
+            arc_id=data["arc_id"],
+            timestamp=data["timestamp"],
+            outcome_weight=data["outcome_weight"],
+            consequences_applied=data.get("consequences_applied", {}),
+        )
 
 
 @dataclass
@@ -76,10 +100,94 @@ class GameStateData:
     # NPCs
     npc_registry: dict[str, Character] = field(default_factory=dict)
 
+    # Economy
+    crystal_deposits: dict[str, CrystalDeposit] = field(default_factory=dict)
+    supply_routes: dict[str, SupplyRoute] = field(default_factory=dict)
+    crystal_market: CrystalMarket = field(default_factory=CrystalMarket)
+    trade_ledger: list[dict] = field(default_factory=list)
+
     # Story
     story_flags: dict[str, object] = field(default_factory=dict)
     player_decisions: list[PlayerDecision] = field(default_factory=list)
     completed_encounters: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        """Serialise the entire game state to a JSON-compatible dict."""
+        return {
+            "version": self.version,
+            "save_slot": self.save_slot,
+            "playtime_seconds": self.playtime_seconds,
+            "current_arc": self.current_arc,
+            "player_character": self.player_character.to_dict(),
+            "player_ship": self.player_ship.to_dict(),
+            "fleet": [s.to_dict() for s in self.fleet],
+            "current_region": self.current_region,
+            "position_x": self.position_x,
+            "position_y": self.position_y,
+            "crystal_inventory": self.crystal_inventory,
+            "crystal_quality": self.crystal_quality,
+            "salvage": self.salvage,
+            "faction_registry": {
+                fid: f.to_dict() for fid, f in self.faction_registry.items()
+            },
+            "relationship_matrix": self.relationship_matrix,
+            "cascade_rules": self.cascade_rules,
+            "npc_registry": {
+                nid: n.to_dict() for nid, n in self.npc_registry.items()
+            },
+            "crystal_deposits": {
+                did: d.to_dict() for did, d in self.crystal_deposits.items()
+            },
+            "supply_routes": {
+                rid: r.to_dict() for rid, r in self.supply_routes.items()
+            },
+            "crystal_market": self.crystal_market.to_dict(),
+            "trade_ledger": list(self.trade_ledger),
+            "story_flags": self.story_flags,
+            "player_decisions": [d.to_dict() for d in self.player_decisions],
+            "completed_encounters": self.completed_encounters,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> GameStateData:
+        """Restore game state from a JSON-compatible dict."""
+        state = cls(
+            version=data.get("version", "0.1.0"),
+            save_slot=data.get("save_slot", 0),
+            playtime_seconds=data.get("playtime_seconds", 0.0),
+            current_arc=data.get("current_arc", "arc_1"),
+            player_character=Character.from_dict(data["player_character"]),
+            player_ship=Ship.from_dict(data["player_ship"]),
+            fleet=[Ship.from_dict(s) for s in data.get("fleet", [])],
+            current_region=data.get("current_region", "starting_realm"),
+            position_x=data.get("position_x", 0.0),
+            position_y=data.get("position_y", 0.0),
+            crystal_inventory=data.get("crystal_inventory", 0),
+            crystal_quality=data.get("crystal_quality", 1),
+            salvage=data.get("salvage", 0),
+            relationship_matrix=data.get("relationship_matrix", {}),
+            cascade_rules=data.get("cascade_rules", []),
+            crystal_market=CrystalMarket.from_dict(data.get("crystal_market", {})),
+            trade_ledger=data.get("trade_ledger", []),
+            story_flags=data.get("story_flags", {}),
+            player_decisions=[
+                PlayerDecision.from_dict(d) for d in data.get("player_decisions", [])
+            ],
+            completed_encounters=data.get("completed_encounters", []),
+        )
+        # Restore faction registry
+        for fid, fdata in data.get("faction_registry", {}).items():
+            state.faction_registry[fid] = Faction.from_dict(fdata)
+        # Restore NPC registry
+        for nid, ndata in data.get("npc_registry", {}).items():
+            state.npc_registry[nid] = Character.from_dict(ndata)
+        # Restore crystal deposits
+        for did, ddata in data.get("crystal_deposits", {}).items():
+            state.crystal_deposits[did] = CrystalDeposit.from_dict(ddata)
+        # Restore supply routes
+        for rid, rdata in data.get("supply_routes", {}).items():
+            state.supply_routes[rid] = SupplyRoute.from_dict(rdata)
+        return state
 
 
 def create_new_game_state(data_loader) -> GameStateData:
@@ -119,6 +227,11 @@ def create_new_game_state(data_loader) -> GameStateData:
         relationship_with_player=0,
         true_allegiance=None,
     )
+
+    # Load economy data
+    state.crystal_deposits = data_loader.load_crystal_deposits()
+    state.supply_routes = data_loader.load_supply_routes()
+    state.crystal_market = data_loader.load_crystal_market()
 
     # Initialise story flags for Arc 1
     state.story_flags = {

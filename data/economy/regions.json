@@ -1,0 +1,124 @@
+{
+    "regions": [
+        {
+            "region_id": "starting_realm",
+            "name": "The Fringe",
+            "controlling_faction": "felid_corsairs",
+            "danger_level": 1,
+            "is_discovered": true,
+            "is_accessible": true,
+            "connected_regions": ["feline_courts", "goblin_warrens"]
+        },
+        {
+            "region_id": "feline_courts",
+            "name": "The Feline Courts",
+            "controlling_faction": "felid_corsairs",
+            "danger_level": 1,
+            "is_discovered": true,
+            "is_accessible": true,
+            "connected_regions": ["starting_realm", "canine_order", "fairy_realms"]
+        },
+        {
+            "region_id": "canine_order",
+            "name": "The Canine Order",
+            "controlling_faction": "canis_league",
+            "danger_level": 3,
+            "is_discovered": false,
+            "is_accessible": true,
+            "connected_regions": ["feline_courts", "knight_kingdoms"]
+        },
+        {
+            "region_id": "fairy_realms",
+            "name": "Fairy Realms",
+            "controlling_faction": "fairies",
+            "danger_level": 2,
+            "is_discovered": false,
+            "is_accessible": true,
+            "connected_regions": ["feline_courts", "deep_space", "goblin_warrens"]
+        },
+        {
+            "region_id": "goblin_warrens",
+            "name": "Goblin Warrens",
+            "controlling_faction": "goblins",
+            "danger_level": 2,
+            "is_discovered": true,
+            "is_accessible": true,
+            "connected_regions": ["starting_realm", "fairy_realms", "knight_kingdoms"]
+        },
+        {
+            "region_id": "knight_kingdoms",
+            "name": "Knight Kingdoms",
+            "controlling_faction": "knights",
+            "danger_level": 2,
+            "is_discovered": false,
+            "is_accessible": true,
+            "connected_regions": ["canine_order", "goblin_warrens"]
+        },
+        {
+            "region_id": "deep_space",
+            "name": "Deep Space",
+            "controlling_faction": "aliens",
+            "danger_level": 5,
+            "is_discovered": false,
+            "is_accessible": false,
+            "connected_regions": ["fairy_realms"]
+        }
+    ],
+    "points_of_interest": [
+        {
+            "poi_id": "fringe_wreck_01",
+            "region": "starting_realm",
+            "name": "Derelict Freighter",
+            "poi_type": "wreck",
+            "description": "A half-destroyed freighter drifting in the void.",
+            "is_discovered": true,
+            "is_visited": false,
+            "rewards": {"salvage": 50},
+            "risk_level": 1
+        },
+        {
+            "poi_id": "feline_crystal_cave",
+            "region": "feline_courts",
+            "name": "Hidden Crystal Cave",
+            "poi_type": "deposit",
+            "description": "A cave system glittering with raw whisper crystals.",
+            "is_discovered": false,
+            "is_visited": false,
+            "rewards": {"crystals": 25},
+            "risk_level": 2
+        },
+        {
+            "poi_id": "goblin_black_market",
+            "region": "goblin_warrens",
+            "name": "Black Market Hub",
+            "poi_type": "settlement",
+            "description": "A hidden trading post run by goblin merchants.",
+            "is_discovered": true,
+            "is_visited": false,
+            "rewards": {"salvage": 30},
+            "risk_level": 3
+        },
+        {
+            "poi_id": "fairy_anomaly",
+            "region": "fairy_realms",
+            "name": "Enchanted Anomaly",
+            "poi_type": "anomaly",
+            "description": "An anomaly pulsing with fairy magic.",
+            "is_discovered": false,
+            "is_visited": false,
+            "rewards": {"crystals": 15, "salvage": 20},
+            "risk_level": 4
+        },
+        {
+            "poi_id": "deep_space_signal",
+            "region": "deep_space",
+            "name": "Unknown Signal Source",
+            "poi_type": "anomaly",
+            "description": "A powerful signal emanating from an unknown source.",
+            "is_discovered": false,
+            "is_visited": false,
+            "rewards": {"crystals": 50},
+            "risk_level": 5
+        }
+    ]
+}

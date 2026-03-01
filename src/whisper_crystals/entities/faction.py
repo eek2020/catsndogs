@@ -90,7 +90,9 @@ class Faction:
             government=data.get("government", ""),
             realm=data.get("realm", ""),
             ideology=data.get("ideology", ""),
-            reputation_with_player=data.get("starting_reputation", 0),
+            reputation_with_player=data.get(
+                "reputation_with_player", data.get("starting_reputation", 0)
+            ),
             ship_template_id=data.get("ship_template_id", ""),
             conquest_intent=data.get("conquest_intent", 50),
             traits=data.get("traits", []),

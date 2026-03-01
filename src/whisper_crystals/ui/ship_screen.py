@@ -25,7 +25,7 @@ HEALTH_RED = (220, 60, 40)
 class ShipScreenState(GameState):
     """Overlay showing player ship stats, crew, and upgrades (read-only for PoC)."""
 
-    state_type = GameStateType.PAUSE
+    state_type = GameStateType.SHIP_SCREEN
 
     def __init__(self, machine: GameStateMachine, game_state: GameStateData) -> None:
         super().__init__(machine)

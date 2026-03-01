@@ -98,6 +98,32 @@ class PygameRenderer(RenderInterface):
         else:
             pygame.draw.circle(self.screen, color[:3], center, radius, width)
 
+    def draw_image(
+        self,
+        image: object,
+        pos: tuple[int, int],
+        size: tuple[int, int] | None = None,
+        rotation: float | None = None,
+        centered: bool = False,
+    ) -> None:
+        surf = image
+        if size is not None:
+            surf = pygame.transform.smoothscale(surf, (max(1, size[0]), max(1, size[1])))
+        if rotation is not None:
+            surf = pygame.transform.rotozoom(surf, -rotation, 1.0)
+        if centered:
+            rect = surf.get_rect(center=pos)
+            self.screen.blit(surf, rect)
+        else:
+            self.screen.blit(surf, pos)
+
+    def get_image_size(self, image: object) -> tuple[int, int]:
+        return image.get_size()
+
+    def measure_text(self, text: str, size: int = 24) -> tuple[int, int]:
+        font = self._get_font(None, size)
+        return font.size(text)
+
     def get_screen_size(self) -> tuple[int, int]:
         return self.screen.get_size()
 

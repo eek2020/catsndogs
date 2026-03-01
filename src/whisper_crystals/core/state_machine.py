@@ -19,6 +19,9 @@ class GameStateType(Enum):
     CUTSCENE = auto()
     PAUSE = auto()
     END = auto()
+    FACTION_SCREEN = auto()
+    SHIP_SCREEN = auto()
+    SETTINGS = auto()
 
 
 class GameState(ABC):

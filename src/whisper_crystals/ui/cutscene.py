@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import math
 
-import pygame
-
 from whisper_crystals.core.interfaces import Action, RenderInterface
 from whisper_crystals.core.state_machine import GameState, GameStateMachine, GameStateType
 
@@ -30,9 +28,9 @@ class CutsceneState(GameState):
         lines: list[str],
         on_complete: callable,
         subtitle: str = "",
-        title_image: pygame.Surface | None = None,
-        character_image: pygame.Surface | None = None,
-        character_image_left: pygame.Surface | None = None,
+        title_image: object | None = None,
+        character_image: object | None = None,
+        character_image_left: object | None = None,
         show_narrative_text: bool = True,
     ) -> None:
         super().__init__(machine)
@@ -70,11 +68,9 @@ class CutsceneState(GameState):
                 if self._all_done:
                     self._on_complete()
                 elif not self._line_done:
-                    # Skip typewriter for current line
                     self._char_progress = float(len(self._lines[self._current_line]))
                     self._line_done = True
                 else:
-                    # Advance to next line
                     self._current_line += 1
                     self._char_progress = 0.0
                     self._line_done = False
@@ -98,102 +94,109 @@ class CutsceneState(GameState):
     def _render_character_in_banner(
         self,
         renderer: RenderInterface,
-        image: pygame.Surface,
+        image: object,
         banner_h: int,
         sw: int,
         left: bool,
     ) -> None:
         """Render a character portrait into the banner on the left or right side."""
-        if not hasattr(renderer, "screen"):
-            return
-        iw, ih = image.get_size()
+        iw, ih = renderer.get_image_size(image)
         max_h = banner_h - 8
         max_w = int(sw * 0.16)
         scale = min(max_w / iw, max_h / ih)
         char_w = max(1, int(iw * scale))
         char_h = max(1, int(ih * scale))
-        char_surf = pygame.transform.smoothscale(image, (char_w, char_h))
         if left:
-            cx = 16
+            cx = 16 + char_w // 2
         else:
-            cx = sw - char_w - 16
-        cy = (banner_h - char_h) // 2
-        # Subtle glow behind character to blend with banner
-        renderer.draw_glow((cx + char_w // 2, banner_h // 2), char_w // 2 + 20, (18, 10, 38))
-        renderer.screen.blit(char_surf, (cx, cy))
+            cx = sw - char_w // 2 - 16
+        cy = banner_h // 2
+        renderer.draw_glow((cx, cy), char_w // 2 + 20, (18, 10, 38))
+        renderer.draw_image(image, (cx, cy), size=(char_w, char_h), centered=True)
 
     def render(self, renderer: RenderInterface) -> None:
         sw, sh = renderer.get_screen_size()
 
-        # Deep cinematic background with gradient-like overlay
         renderer.draw_rect((0, 0, sw, sh), BG)
+        renderer.draw_glow(
+            (sw // 2, sh // 2), int(400 + 20 * math.sin(self._time * 2)), (16, 48, 78)
+        )
 
-        # Ambient storytelling glow
-        renderer.draw_glow((sw // 2, sh // 2), int(400 + 20 * math.sin(self._time * 2)), (16, 48, 78))
-
-        # Title block
         alpha = int(self._fade_in * 255)
 
-        # Top banner styling
+        # Top banner
         banner_h = 130
         renderer.draw_rect((0, 0, sw, banner_h), (10, 20, 34, 220))
         renderer.draw_line((0, banner_h), (sw, banner_h), BORDER, 2)
 
-        if self._title_image is not None and hasattr(renderer, "screen"):
-            iw, ih = self._title_image.get_size()
-            # Reserve space for characters on either side
+        if self._title_image is not None:
+            iw, ih = renderer.get_image_size(self._title_image)
             char_reserve = int(sw * 0.18) + 24
             max_w = sw - char_reserve * 2
             max_h = banner_h - 8
             scale = min(max_w / iw, max_h / ih)
             title_w = max(1, int(iw * scale))
             title_h = max(1, int(ih * scale))
-            title_surf = pygame.transform.smoothscale(self._title_image, (title_w, title_h))
-            tx = (sw - title_w) // 2
-            ty = (banner_h - title_h) // 2
-            # Glow halo behind logo to blend into banner
             renderer.draw_glow((sw // 2, banner_h // 2), title_w // 2 + 40, (18, 56, 100))
-            renderer.screen.blit(title_surf, (tx, ty))
+            renderer.draw_image(
+                self._title_image,
+                (sw // 2, banner_h // 2),
+                size=(title_w, title_h),
+                centered=True,
+            )
         else:
             tc = (TITLE_COLOR[0], TITLE_COLOR[1], TITLE_COLOR[2], alpha)
-            renderer.draw_text(self._title.upper(), (sw // 2 - len(self._title) * 12, 40), size=42, color=tc)
+            renderer.draw_text(
+                self._title.upper(), (sw // 2 - len(self._title) * 12, 40), size=42, color=tc
+            )
 
         if self._subtitle and self._show_narrative_text:
             sc = (150, 150, 160, alpha)
-            renderer.draw_text(self._subtitle, (sw // 2 - len(self._subtitle) * 5, 95), size=18, color=sc)
+            renderer.draw_text(
+                self._subtitle, (sw // 2 - len(self._subtitle) * 5, 95), size=18, color=sc
+            )
 
-        # Characters — render left before right so right overlaps on narrow windows
+        # Characters
         if self._character_image_left is not None:
-            self._render_character_in_banner(renderer, self._character_image_left, banner_h, sw, left=True)
+            self._render_character_in_banner(
+                renderer, self._character_image_left, banner_h, sw, left=True
+            )
         if self._character_image is not None:
-            self._render_character_in_banner(renderer, self._character_image, banner_h, sw, left=False)
+            self._render_character_in_banner(
+                renderer, self._character_image, banner_h, sw, left=False
+            )
 
         # Narrative text box
         box_x, box_y = 60, banner_h + 40
         box_w = sw - 120
         box_h = sh - banner_h - 120
-        
-        # Stylized text panel
+
         renderer.draw_rect((box_x, box_y, box_w, box_h), (12, 24, 36, 180))
         renderer.draw_rect((box_x, box_y, box_w, box_h), BORDER, width=1)
-        
+
         # Corner accents
         renderer.draw_line((box_x, box_y), (box_x + 30, box_y), HIGHLIGHT, 2)
         renderer.draw_line((box_x, box_y), (box_x, box_y + 30), HIGHLIGHT, 2)
-        renderer.draw_line((box_x + box_w - 30, box_y + box_h), (box_x + box_w, box_y + box_h), HIGHLIGHT, 2)
-        renderer.draw_line((box_x + box_w, box_y + box_h - 30), (box_x + box_w, box_y + box_h), HIGHLIGHT, 2)
+        renderer.draw_line(
+            (box_x + box_w - 30, box_y + box_h), (box_x + box_w, box_y + box_h), HIGHLIGHT, 2
+        )
+        renderer.draw_line(
+            (box_x + box_w, box_y + box_h - 30), (box_x + box_w, box_y + box_h), HIGHLIGHT, 2
+        )
 
-        if not self._show_narrative_text and self._title_image is not None and hasattr(renderer, "screen"):
-            iw, ih = self._title_image.get_size()
+        if not self._show_narrative_text and self._title_image is not None:
+            iw, ih = renderer.get_image_size(self._title_image)
             max_w = int(box_w * 0.82)
             max_h = int(box_h * 0.78)
             scale = min(max_w / iw, max_h / ih)
             img_w = max(1, int(iw * scale))
             img_h = max(1, int(ih * scale))
-            title_surf = pygame.transform.smoothscale(self._title_image, (img_w, img_h))
-            ix = box_x + (box_w - img_w) // 2
-            iy = box_y + (box_h - img_h) // 2
-            renderer.screen.blit(title_surf, (ix, iy))
+            renderer.draw_image(
+                self._title_image,
+                (box_x + box_w // 2, box_y + box_h // 2),
+                size=(img_w, img_h),
+                centered=True,
+            )
             return
 
         # Rendered lines (all previous + current with typewriter)
@@ -203,16 +206,13 @@ class CutsceneState(GameState):
                 text = self._lines[i]
                 color = DIM
             else:
-                text = self._lines[i][:int(self._char_progress)]
+                text = self._lines[i][: int(self._char_progress)]
                 color = TEXT_COLOR
-                
-                # Active line indicator
+
                 renderer.draw_line((box_x + 20, y + 10), (box_x + 20, y + 30), HIGHLIGHT, 3)
-                
-            # Word wrap
+
             self._render_wrapped(renderer, text, box_x + 40, y, box_w - 80, 22, color)
-            
-            # Estimate height for next line block (rough approx based on length and width)
+
             cpl = max(1, (box_w - 80) // (22 * 0.55))
             lines_needed = max(1, len(self._lines[i]) // cpl + 1)
             y += lines_needed * 32 + 20

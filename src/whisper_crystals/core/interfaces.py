@@ -101,6 +101,36 @@ class RenderInterface(ABC):
         pass
 
     @abstractmethod
+    def draw_image(
+        self,
+        image: object,
+        pos: tuple[int, int],
+        size: tuple[int, int] | None = None,
+        rotation: float | None = None,
+        centered: bool = False,
+    ) -> None:
+        """Draw an engine-specific image handle at the given position.
+
+        Args:
+            image: Opaque engine image handle.
+            pos: Screen (x, y) position.
+            size: Optional (w, h) to scale the image.
+            rotation: Optional rotation in degrees.
+            centered: If True, pos is the center; otherwise top-left.
+        """
+        pass
+
+    @abstractmethod
+    def get_image_size(self, image: object) -> tuple[int, int]:
+        """Return (width, height) of an opaque image handle."""
+        pass
+
+    @abstractmethod
+    def measure_text(self, text: str, size: int = 24) -> tuple[int, int]:
+        """Return (width, height) of text rendered at the given size."""
+        pass
+
+    @abstractmethod
     def get_screen_size(self) -> tuple[int, int]:
         pass
 

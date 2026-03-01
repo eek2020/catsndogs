@@ -5,4 +5,4 @@
 
 | Review ID | Task | Reviewer | Date | Status | File |
 | --------- | ---- | -------- | ---- | ------ | ---- |
-| — | No reviews yet | — | — | — | — |
+| REVIEW-001 | Phase 0 Refactor (0.1–0.5) | Opus 4.6 | 2026-03-01 | PASS | [REVIEW-001](REVIEW-001_phase0_refactor.md) |

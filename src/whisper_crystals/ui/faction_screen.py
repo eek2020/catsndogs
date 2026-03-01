@@ -34,7 +34,7 @@ STATE_COLORS = {
 class FactionScreenState(GameState):
     """Overlay screen showing faction standings and details."""
 
-    state_type = GameStateType.PAUSE  # Reuse PAUSE type for overlay
+    state_type = GameStateType.FACTION_SCREEN
 
     def __init__(
         self,
