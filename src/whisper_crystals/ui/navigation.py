@@ -64,13 +64,14 @@ class NavigationState(GameState):
         # Trail particles
         self._trail: list[tuple[float, float, float, float]] = []
 
-        # Encounter check timer
-        self._encounter_timer: float = 0.0
-        self._distance_moved: float = 0.0
+        # Encounter/POI tracking
+        self._check_timer: float = 0.0
+        self.active_pois: list[dict] = []
 
         # Optional sprite ship rendering (loaded lazily via engine)
         self._ship_sprite: object | None = None
         self._ship_sprite_points_up = False
+        self._cutlass_sprite: object | None = None
         self._sprite_loaded = False
 
     def _ensure_sprite_loaded(self) -> None:
@@ -100,7 +101,13 @@ class NavigationState(GameState):
             image = remove_background_by_corners(image)
             self._ship_sprite = image
             self._ship_sprite_points_up = points_up
-            return
+            break
+
+        cutlass_path = project_root / "design" / "ui_ux" / "fight_cutlass.png"
+        if cutlass_path.exists():
+            image = load_image_alpha(str(cutlass_path))
+            if image is not None:
+                self._cutlass_sprite = remove_background_by_corners(image)
 
     def _render_vector_ship(self, renderer: RenderInterface, sx: int, sy: int, a: float) -> None:
         """Fallback ship rendering when sprite art is unavailable."""
@@ -134,8 +141,9 @@ class NavigationState(GameState):
         )
 
     def enter(self) -> None:
-        self._encounter_timer = 0.0
+        self._check_timer = 0.0
         self._trail.clear()
+        self.active_pois.clear()
 
     def exit(self) -> None:
         pass
@@ -174,7 +182,6 @@ class NavigationState(GameState):
         if is_moving:
             self.ship_x += dx * move
             self.ship_y += dy * move
-            self._distance_moved += abs(dx * move) + abs(dy * move)
 
             if random.random() < 0.6:
                 ex = self.ship_x - math.cos(self.ship_angle) * SHIP_SIZE * 0.8
@@ -199,18 +206,68 @@ class NavigationState(GameState):
         self.camera.follow((self.ship_x, self.ship_y), dt, smoothing=8.0)
         self.hud.update(dt)
 
-        self._encounter_timer += dt
-        if self._encounter_timer >= ENCOUNTER_CHECK_INTERVAL and self._distance_moved > 50:
-            self._encounter_timer = 0.0
-            self._distance_moved = 0.0
-            self._check_encounters()
+        self._check_timer += dt
+        if self._check_timer >= ENCOUNTER_CHECK_INTERVAL:
+            self._check_timer = 0.0
+            self._update_pois()
 
-    def _check_encounters(self) -> None:
+        self._check_collisions()
+
+    def _update_pois(self) -> None:
         if not self.encounter_engine or not self.game_state_data:
             return
-        encounter = self.encounter_engine.check_triggers(self.game_state_data)
-        if encounter and self._on_encounter:
-            self._on_encounter(encounter)
+            
+        available = self.encounter_engine.get_available_encounters(self.game_state_data)
+        available_ids = {e.encounter_id for e in available}
+        
+        # Keep only POIs that are still valid (available_ids already filters completed non-repeatable encounters)
+        self.active_pois = [
+            p for p in self.active_pois 
+            if p["encounter"].encounter_id in available_ids 
+        ]
+        
+        active_ids = {p["encounter"].encounter_id for p in self.active_pois}
+        
+        for enc in available:
+            if enc.encounter_id not in active_ids:
+                # Spawn POI ahead or around player
+                angle = random.uniform(0, 2 * math.pi)
+                dist = random.uniform(400, 1000)
+                px = self.ship_x + math.cos(angle) * dist
+                py = self.ship_y + math.sin(angle) * dist
+                
+                color = (255, 200, 100)
+                if enc.encounter_type == "combat":
+                    color = (255, 50, 50)
+                elif enc.encounter_type == "diplomatic":
+                    color = (100, 200, 255)
+                elif enc.encounter_type == "exploration":
+                    color = (100, 255, 150)
+                elif enc.encounter_type == "trade":
+                    color = (100, 255, 100)
+                    
+                self.active_pois.append({
+                    "encounter": enc,
+                    "x": px,
+                    "y": py,
+                    "radius": 40.0,
+                    "color": color
+                })
+
+    def _check_collisions(self) -> None:
+        if not self._on_encounter:
+            return
+        # Copy list to handle removal or state change safely
+        for poi in list(self.active_pois):
+            dx = poi["x"] - self.ship_x
+            dy = poi["y"] - self.ship_y
+            dist = math.sqrt(dx*dx + dy*dy)
+            
+            if dist < poi["radius"] + SHIP_SIZE:
+                # Trigger encounter and remove it from POI maps so it doesn't trigger repeatedly
+                self.active_pois.remove(poi)
+                self._on_encounter(poi["encounter"])
+                break
 
     def _check_arc_exit(self) -> None:
         if not self.narrative or not self.game_state_data:
@@ -220,8 +277,7 @@ class NavigationState(GameState):
                 self._on_arc_complete()
 
     def on_return_from_encounter(self) -> None:
-        self._encounter_timer = 0.0
-        self._distance_moved = 0.0
+        self._check_timer = 0.0
         self._check_arc_exit()
 
     def render(self, renderer: RenderInterface) -> None:
@@ -229,6 +285,56 @@ class NavigationState(GameState):
 
         # Starfield
         self.starfield.draw(renderer, self.camera.x, self.camera.y)
+
+        # Active POIs
+        pulse_time = self.game_state_data.playtime_seconds if self.game_state_data else 0
+        for poi in self.active_pois:
+            px, py = poi["x"], poi["y"]
+            sw, sh = renderer.get_screen_size()
+            
+            # Skip drawing if completely off-screen (approximate culling)
+            dx = px - self.camera.x
+            dy = py - self.camera.y
+            if abs(dx) > sw and abs(dy) > sh:
+                continue
+
+            sx, sy = self.camera.world_to_screen((px, py))
+            r = int(poi["radius"])
+            
+            # Encounter Rendering
+            pulse = 1.0 + 0.2 * math.sin(pulse_time * 3 + px * 0.01)
+            is_combat = poi["encounter"].encounter_type == "combat"
+            
+            if is_combat and getattr(self, "_cutlass_sprite", None) is not None:
+                # Grow and shrink softly (pulsating)
+                cutlass_pulse = 1.0 + 0.15 * math.sin(pulse_time * 4)
+                # Outer glow for the fight
+                renderer.draw_glow((sx, sy), int((r * 1.5) * cutlass_pulse), poi["color"])
+                
+                # Draw scaled cutlass image
+                iw, ih = renderer.get_image_size(self._cutlass_sprite)
+                base_size = r * 2.5
+                max_dim = max(iw, ih)
+                scale = (base_size / max_dim) * cutlass_pulse
+                size = (max(1, int(iw * scale)), max(1, int(ih * scale)))
+                
+                renderer.draw_image(self._cutlass_sprite, (sx, sy), size=size, centered=True)
+            else:
+                # Nebula cloud for Story Arcs / non-combat places
+                if hasattr(renderer, "draw_nebula"):
+                    renderer.draw_nebula((sx, sy), int(r * 1.2), poi["color"], pulse_time + px * 0.001)
+                else:
+                    renderer.draw_glow((sx, sy), int((r * 1.5) * pulse), poi["color"])
+                    core_r = int((r // 2) * (1.0 + 0.1 * math.sin(pulse_time * 5)))
+                    renderer.draw_circle((sx, sy), core_r, poi["color"])
+            
+            # Encounter Category Tag above the node
+            renderer.draw_text(
+                poi["encounter"].title, 
+                (sx - len(poi["encounter"].title) * 4, sy - r - 25), 
+                size=16, 
+                color=(240, 240, 255)
+            )
 
         # Engine trail
         for tx, ty, life, max_life in self._trail:
@@ -282,7 +388,7 @@ class NavigationState(GameState):
             arc_title = ""
             if self.narrative:
                 arc_title = self.narrative.get_arc_title(self.game_state_data.current_arc)
-            self.hud.draw(renderer, self.game_state_data, arc_title)
+            self.hud.draw(renderer, self.game_state_data, arc_title, self.active_pois)
             sw, sh = renderer.get_screen_size()
 
             renderer.draw_rect((sw // 2 - 280, sh - 38, 560, 38), (16, 12, 26, 160))

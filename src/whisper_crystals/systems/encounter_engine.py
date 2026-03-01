@@ -37,6 +37,18 @@ class EncounterEngine:
                 return encounter
         return None
 
+    def get_available_encounters(self, game_state: GameStateData) -> list[Encounter]:
+        """Return all encounters whose conditions are met and which haven't been completed.
+        Sorted by priority descending.
+        """
+        available = []
+        for encounter in sorted(self.encounter_table, key=lambda e: -e.priority):
+            if not encounter.repeatable and encounter.encounter_id in game_state.completed_encounters:
+                continue
+            if self._evaluate_conditions(encounter.trigger_conditions, game_state):
+                available.append(encounter)
+        return available
+
     def _evaluate_conditions(self, conditions: dict, game_state: GameStateData) -> bool:
         """Check if all trigger conditions are satisfied by the current game state."""
         for key, expected in conditions.items():

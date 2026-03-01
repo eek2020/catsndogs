@@ -91,6 +91,17 @@ class RenderInterface(ABC):
         pass
 
     @abstractmethod
+    def draw_nebula(
+        self,
+        center: tuple[int, int],
+        radius: int,
+        color: tuple[int, int, int],
+        timer: float
+    ) -> None:
+        """Draws a soft-edged nebula cloud."""
+        pass
+
+    @abstractmethod
     def draw_line(
         self,
         start: tuple[int, int],

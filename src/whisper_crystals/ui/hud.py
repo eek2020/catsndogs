@@ -26,7 +26,7 @@ class HUD:
         if self._message_timer > 0:
             self._message_timer -= dt
 
-    def draw(self, renderer: RenderInterface, state: GameStateData, arc_title: str) -> None:
+    def draw(self, renderer: RenderInterface, state: GameStateData, arc_title: str, active_pois: list[dict] | None = None) -> None:
         sw, sh = renderer.get_screen_size()
 
         # Top bar styling - beautiful angled high-tech panel
@@ -107,9 +107,9 @@ class HUD:
                 color=(255, 200, 50, alpha),
             )
 
-        self._draw_minimap(renderer, state)
+        self._draw_minimap(renderer, state, active_pois)
 
-    def _draw_minimap(self, renderer: RenderInterface, state: GameStateData) -> None:
+    def _draw_minimap(self, renderer: RenderInterface, state: GameStateData, active_pois: list[dict] | None = None) -> None:
         """Draws a 150x150 minimap in the bottom right corner showing the player."""
         sw, sh = renderer.get_screen_size()
         
@@ -145,6 +145,21 @@ class HUD:
         blip_x = map_x + int(normalized_x * map_size)
         blip_y = map_y + int(normalized_y * map_size)
         
+        # Draw POIs
+        if active_pois:
+            for poi in active_pois:
+                poi_x = max(-world_scale/2, min(world_scale/2, poi["x"]))
+                poi_y = max(-world_scale/2, min(world_scale/2, poi["y"]))
+                
+                poi_nx = (poi_x + world_scale/2) / world_scale
+                poi_ny = (poi_y + world_scale/2) / world_scale
+                
+                poi_map_x = map_x + int(poi_nx * map_size)
+                poi_map_y = map_y + int(poi_ny * map_size)
+                
+                renderer.draw_circle((poi_map_x, poi_map_y), 3, poi["color"])
+        
+        # Player Blip on top
         renderer.draw_circle((blip_x, blip_y), 3, (110, 214, 255))
         renderer.draw_circle((blip_x, blip_y), 6, (110, 214, 255, 100), width=1)
         
