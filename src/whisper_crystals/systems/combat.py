@@ -67,5 +67,5 @@ def calculate_damage(attacker_fp: int, defender_armour: int) -> int:
 
 
 def dodge_chance(defender_speed: int) -> float:
-    """Dodge probability based on speed: speed 10 -> 30%, speed 1 -> 3%."""
-    return min(0.35, defender_speed * 0.03)
+    """Dodge probability based on speed: speed 10 -> 40%, speed 1 -> 4%."""
+    return min(0.45, defender_speed * 0.04)

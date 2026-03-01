@@ -57,8 +57,8 @@ class NavigationState(GameState):
         self.hud = HUD()
 
         # Player ship state
-        self.ship_x: float = 0.0
-        self.ship_y: float = 0.0
+        self.ship_x: float = game_state.position_x if game_state else 0.0
+        self.ship_y: float = game_state.position_y if game_state else 0.0
         self.ship_angle: float = 0.0
 
         # Trail particles

@@ -5,6 +5,7 @@ This module is engine-agnostic: ZERO pygame imports.
 
 from __future__ import annotations
 
+import logging
 from typing import TYPE_CHECKING
 
 from whisper_crystals.core.data_loader import DataLoader
@@ -13,6 +14,11 @@ from whisper_crystals.core.game_state import GameStateData, create_new_game_stat
 from whisper_crystals.core.interfaces import Action
 from whisper_crystals.core.save_manager import SaveManager
 from whisper_crystals.core.state_machine import GameStateMachine
+
+logger = logging.getLogger(__name__)
+
+# We import AudioInterface to keep core engine agnostic, but we inject PygameAudio in __main__
+from whisper_crystals.core.interfaces import AudioInterface
 from whisper_crystals.entities.encounter import Encounter
 from whisper_crystals.systems.combat import CombatShip
 from whisper_crystals.systems.encounter_engine import EncounterEngine
@@ -26,6 +32,7 @@ from whisper_crystals.systems.realm_control import RealmControlSystem
 from whisper_crystals.ui.combat_ui import CombatState
 from whisper_crystals.ui.cutscene import CutsceneState
 from whisper_crystals.ui.dialogue_ui import DialogueState
+from whisper_crystals.ui.ending_screen import EndingState
 from whisper_crystals.ui.faction_screen import FactionScreenState
 from whisper_crystals.ui.menu import MenuState
 from whisper_crystals.ui.navigation import NavigationState
@@ -52,10 +59,12 @@ class GameSession:
         camera: Camera,
         input_handler: InputInterface,
         state_machine: GameStateMachine,
+        audio_subsystem: AudioInterface | None = None,
     ) -> None:
         self.camera = camera
         self.input_handler = input_handler
         self.state_machine = state_machine
+        self.audio = audio_subsystem
         self.event_bus = EventBus()
 
         # Data & systems
@@ -70,6 +79,21 @@ class GameSession:
         self.realm_control = RealmControlSystem(self.event_bus)
         self.save_manager = SaveManager()
         self.settings = load_settings()
+        
+        # Apply initial settings to audio
+        if self.audio:
+            # Assuming settings dict has 'audio_volume' or similar
+            vol = self.settings.get('volume', 1.0) if hasattr(self.settings, 'get') else 1.0
+            self.audio.set_volume(vol)
+            
+            # Setup basic audio events
+            self.event_bus.subscribe("play_sfx", lambda sfx_id, **kw: self.audio.play_sfx(sfx_id))
+            self.event_bus.subscribe("play_music", lambda music_id, **kw: self.audio.play_music(music_id))
+            self.event_bus.subscribe("stop_music", lambda *args, **kw: self.audio.stop_music())
+            self.event_bus.subscribe("arc_advanced", lambda old_arc, new_arc, **kw: self.audio.play_music(new_arc))
+            self.event_bus.subscribe("volume_changed", lambda vol, **kw: self.audio.set_volume(vol))
+
+        self.event_bus.subscribe("game_ending_reached", lambda *args, **kw: self._on_game_ending_reached())
 
         # Runtime state
         self.game_state: GameStateData | None = None
@@ -90,6 +114,7 @@ class GameSession:
             on_new_game=lambda: self.start_new_game(),
             on_load_game=self._open_load_from_menu,
             on_quit=self._quit,
+            event_bus=self.event_bus,
             splash_art=splash_art,
             save_manager=self.save_manager,
         )
@@ -152,6 +177,7 @@ class GameSession:
                 return
 
         self.game_state = create_new_game_state(self.data_loader)
+        logger.info("Starting new game state: %s", self.game_state)
 
         if on_loading_frame:
             if not on_loading_frame("Loading narrative data...", 0.50):
@@ -199,11 +225,13 @@ class GameSession:
 
     def _on_encounter(self, encounter: Encounter) -> None:
         """Push a dialogue state when an encounter fires."""
+        logger.info("Triggered encounter: %s", encounter.encounter_id)
         dialogue = DialogueState(
             machine=self.state_machine,
             encounter=encounter,
             encounter_engine=self.encounter_engine,
             game_state=self.game_state,
+            event_bus=self.event_bus,
             on_complete=self._on_dialogue_complete,
             on_combat=self._on_combat_from_encounter,
         )
@@ -286,6 +314,7 @@ class GameSession:
         old_arc = self.game_state.current_arc
         old_title = self.narrative.get_arc_title(old_arc)
         new_arc = self.narrative.advance_arc(self.game_state)
+        logger.info("Arc completed: %s. Advanced to new arc: %s", old_arc, new_arc)
 
         if new_arc:
             new_title = self.narrative.get_arc_title(new_arc)
@@ -308,6 +337,18 @@ class GameSession:
                 on_complete=on_cutscene_done,
             )
             self.state_machine.push(cutscene)
+
+    def _on_game_ending_reached(self) -> None:
+        """Push ending screen when the narrative concludes."""
+        if not self.game_state:
+            return
+            
+        ending = EndingState(
+            machine=self.state_machine,
+            game_state=self.game_state,
+            on_return_to_menu=self._quit_to_menu,
+        )
+        self.state_machine.switch(ending)
 
     # ------------------------------------------------------------------
     # Screen overlays
@@ -381,6 +422,7 @@ class GameSession:
         settings_state = SettingsScreenState(
             machine=self.state_machine,
             settings=self.settings,
+            event_bus=self.event_bus,
         )
         self.state_machine.push(settings_state)
 

@@ -1,0 +1,204 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc2_route_seized",
+            "encounter_type": "diplomatic",
+            "title": "The Squeeze Begins",
+            "description": "The Canis League has blockaded the Delta-9 crystal route. Rows of League cruisers sit ominously in the void, choking off your primary supply line. Commander Dave's face fills the comms screen. \"Your monopoly ends today, Aristotle. Stand down or be fired upon.\"",
+            "arc_id": "arc_2",
+            "location": "delta_9_route",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_route_resolved": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "negotiate_blockade",
+                    "text": "\"Let's not be hasty, Dave. We can work out a toll agreement.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave accepts a sizable chunk of your inventory as an ongoing 'processing fee'. The route opens, but the Corsairs look weak.",
+                        "faction_changes": { "canis_league": 5, "felid_corsairs": -5 },
+                        "resource_changes": { "crystal_inventory": -30 },
+                        "story_flags_set": ["arc2_route_resolved"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "fight_blockade",
+                    "text": "\"Delta-9 belongs to the Corsairs! All ships, break their line!\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A brutal skirmish ensues. The League cruisers are forced back, but your fleet takes heavy damage. The route is secure, for now.",
+                        "faction_changes": { "canis_league": -15, "felid_corsairs": 10 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": ["arc2_route_resolved"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "reroute_stealth",
+                    "text": "Order the freighters to take the dangerous nebula path. Avoid the blockade entirely.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Several ships are lost to nebula storms, but the majority slip through unseen. Dave is left guarding an empty road.",
+                        "faction_changes": { "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -10, "salvage": -10 },
+                        "story_flags_set": ["arc2_route_resolved"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_death_sabotage",
+            "encounter_type": "event",
+            "title": "Shadows in the Ranks",
+            "description": "An explosion rocks the main refinery ship. Damage reports pour in: it wasn't an external attack. The saboteurs left a calling card—a decaying corsair insignia. Death's faction is moving against you from within.",
+            "arc_id": "arc_2",
+            "location": "refinery_fleet",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_death_betrayal": false
+            },
+            "npc_ids": ["death"],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "purge_ranks",
+                    "text": "Initiate a brutal purge. Anyone with suspected loyalties to Death is thrown out the airlock.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The sabotage stops, but morale plummets. Your crew now fears you as much as they fear Death.",
+                        "faction_changes": { "felid_corsairs": -15 },
+                        "resource_changes": { "crystal_inventory": -15 },
+                        "story_flags_set": ["arc2_death_betrayal"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "investigate_quietly",
+                    "text": "Hire internal spies to find the ringleaders and turn them into double agents.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "It costs a fortune in bribes, but you secure your fleet without a bloodbath. Death's network is crippled.",
+                        "faction_changes": { "felid_corsairs": 5 },
+                        "resource_changes": { "crystal_inventory": -30, "salvage": -20 },
+                        "story_flags_set": ["arc2_death_betrayal"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_lion_tribute",
+            "encounter_type": "diplomatic",
+            "title": "The Royal Demand",
+            "description": "A gilded dreadnought from the Lion Sovereign arrives. An impeccably dressed emissary steps onto your deck. \"Aristotle. The Sovereign recognizes your little venture. To continue operating in Royal space, you will pay a tithe of 50 percent of all crystal yields.\"",
+            "arc_id": "arc_2",
+            "location": "corsair_headquarters",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_death_betrayal": true,
+                "arc2_route_resolved": true,
+                "arc2_lion_response": false
+            },
+            "npc_ids": [],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "pay_tribute",
+                    "text": "\"Fine. But we want Lion protection from the Canis League in return.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The emissary sneers but accepts. You are now a vassal, but your borders are suddenly much safer.",
+                        "faction_changes": { "lions": 15, "canis_league": -10, "felid_corsairs": -10 },
+                        "resource_changes": { "crystal_inventory": -40 },
+                        "story_flags_set": ["arc2_lion_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "refuse_tribute",
+                    "text": "\"Tell your Sovereign we answer to no one. Get off my ship.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The emissary leaves without a word. You've just made a powerful enemy, but your crew cheers your defiance.",
+                        "faction_changes": { "lions": -20, "felid_corsairs": 15 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_lion_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "offer_bribe",
+                    "text": "Take the emissary aside and offer a substantial personal bribe to report the territory as 'barren'.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The emissary's eyes gleam. \"A barren wasteland indeed.\" The Lions will be delayed, buying you precious time.",
+                        "faction_changes": { "lions": 5 },
+                        "resource_changes": { "salvage": -40, "crystal_inventory": -10 },
+                        "story_flags_set": ["arc2_lion_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_fairy_alliance",
+            "encounter_type": "exploration",
+            "title": "A Flickering Proposition",
+            "description": "As the pressure mounts, an anomaly appears on the bridge. A swarm of glowing lights coalesces into a shimmering, shifting figure. The Fairies of the Fae-Wilds. \"The mechanical ones press you hard, little cat,\" they sing. \"We offer sanctuary... for a price in starlight.\"",
+            "arc_id": "arc_2",
+            "location": "deep_space",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_lion_response": true
+            },
+            "npc_ids": [],
+            "priority": 5,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "accept_fairies",
+                    "text": "\"We could use the magic. What's the trade?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "You trade crystals for strange, ethereal cloaking devices. The Canis League's sensors go blind around your ships.",
+                        "faction_changes": { "fairies": 10, "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -15, "salvage": 15 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "reject_fairies",
+                    "text": "\"Keep your space-magic. I trust steel and plasma.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The figure dissolves into glittering dust. \"Steel breaks, little cat. We shall see.\"",
+                        "faction_changes": { "fairies": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        }
+    ]
+}

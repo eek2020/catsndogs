@@ -4,15 +4,18 @@ from __future__ import annotations
 
 import math
 import random
+import logging
 from typing import TYPE_CHECKING
-
 from whisper_crystals.core.interfaces import Action, RenderInterface
+
 from whisper_crystals.core.state_machine import GameState, GameStateMachine, GameStateType
 from whisper_crystals.systems.combat import CombatLog, CombatShip, calculate_damage, dodge_chance
 
 if TYPE_CHECKING:
     from whisper_crystals.core.event_bus import EventBus
     from whisper_crystals.core.game_state import GameStateData
+
+logger = logging.getLogger(__name__)
 
 
 # Colours
@@ -67,6 +70,7 @@ class CombatState(GameState):
         self._projectiles: list[dict] = []
 
     def enter(self) -> None:
+        logger.info("Combat started! %s vs %s", self.player.name, self.enemy.name)
         self._log.add(f"Combat! {self.player.name} vs {self.enemy.name}")
         self._log.add("Choose your action.")
         self._phase = "player_turn"
@@ -95,11 +99,15 @@ class CombatState(GameState):
         """Player fires on enemy."""
         if random.random() < dodge_chance(self.enemy.speed):
             self._log.add(f"{self.enemy.name} dodges!")
+            self.event_bus.publish("play_sfx", "laser_miss")
         else:
             dmg = calculate_damage(self.player.firepower, self.enemy.armour)
             self.enemy.current_hull = max(0, self.enemy.current_hull - dmg)
             self._log.add(f"You deal {dmg} damage to {self.enemy.name}!")
             self._enemy_shake = 0.3
+            self.event_bus.publish("play_sfx", "laser_hit")
+            
+        self.event_bus.publish("play_sfx", "laser_fire")
 
         if self.enemy.current_hull <= 0:
             self._log.add(f"{self.enemy.name} destroyed!")
@@ -113,11 +121,15 @@ class CombatState(GameState):
         """Enemy fires on player."""
         if random.random() < dodge_chance(self.player.speed):
             self._log.add(f"{self.player.name} dodges!")
+            self.event_bus.publish("play_sfx", "laser_miss")
         else:
             dmg = calculate_damage(self.enemy.firepower, self.player.armour)
             self.player.current_hull = max(0, self.player.current_hull - dmg)
             self._log.add(f"{self.enemy.name} deals {dmg} damage!")
             self._player_shake = 0.3
+            self.event_bus.publish("play_sfx", "laser_hit")
+            
+        self.event_bus.publish("play_sfx", "laser_fire")
 
         if self.player.current_hull <= 0:
             self._log.add("Your ship is destroyed!")
@@ -144,12 +156,14 @@ class CombatState(GameState):
     def _finish(self) -> None:
         """Apply combat results to game state and call the appropriate callback."""
         self.game_state.player_ship.current_hull = self.player.current_hull
+        logger.info("Combat finished. Result: %s. Player hull remaining: %d", self._result, self.player.current_hull)
 
         if self._result == "victory":
             crystal_loot = random.randint(3, 10)
             salvage_loot = random.randint(5, 15)
             self.game_state.crystal_inventory += crystal_loot
             self.game_state.salvage += salvage_loot
+            self.event_bus.publish("play_sfx", "victory_fanfare")
             self.event_bus.publish(
                 "combat_victory",
                 enemy_faction=self.enemy.faction_id,
@@ -158,8 +172,10 @@ class CombatState(GameState):
             )
             self._on_victory()
         elif self._result == "defeat":
+            self.event_bus.publish("play_sfx", "explosion_large")
             self._on_defeat()
         elif self._result == "fled":
+            self.event_bus.publish("play_sfx", "engine_boost")
             self._on_flee()
 
     def update(self, dt: float) -> None:

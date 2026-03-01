@@ -1,0 +1,126 @@
+{
+    "dialogue_tree_id": "dave_hub",
+    "character_id": "dave",
+    "nodes": {
+        "root": {
+            "text": "State your business, Corsair. The Canis League's patience is not an infinite resource.",
+            "choices": [
+                {
+                    "text": "I'm looking for a trade agreement.",
+                    "next_node_id": "trade_inquiry",
+                    "conditions": {
+                        "arc1_dave_met": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Your blockade won't stand, Dave.",
+                    "next_node_id": "blockade_threat",
+                    "conditions": {
+                        "arc2_route_resolved": null
+                    },
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Let's parley. One leader to another.",
+                    "next_node_id": "arc3_parley",
+                    "conditions": {
+                        "current_arc": "arc_3",
+                        "arc3_dave_parley": false
+                    },
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": 5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] I have nothing to say to you.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "trade_inquiry": {
+            "text": "The League requires a steady flow of crystals to maintain order. We do not barter; we secure supply lines. What are your terms?",
+            "choices": [
+                {
+                    "text": "Standard market rates. But I guarantee the supply.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "blockade_threat": {
+            "text": "It is not a 'blockade'. It is a perimeter securing essential assets. If you attempt to run it, your ships will be salvaged. This is not personal.",
+            "choices": [
+                {
+                    "text": "We'll see about that.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc3_parley": {
+            "text": "Aristotle. You've survived longer than most forecasted. You hold the commodity, but we hold the fleet. Share the refining process, and we can stop the ancient houses from rolling over both of us.",
+            "choices": [
+                {
+                    "text": "I'll consider it. (Trigger Dave Parley)",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": 15
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_dave_parley"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_conversation": {
+            "text": "[Transmission Terminated]",
+            "choices": []
+        }
+    }
+}

@@ -146,10 +146,12 @@ class TestCombat:
         assert 5 <= avg <= 9  # ~7 with variance
 
     def test_dodge_chance_scaling(self):
+        # 4% per speed, capped at 45%
         assert dodge_chance(0) == 0.0
         assert 0.0 < dodge_chance(5) < 0.35
-        assert dodge_chance(10) == 0.30
-        assert dodge_chance(20) == 0.35  # capped
+        assert dodge_chance(10) == 0.40
+        assert dodge_chance(15) == 0.45
+        assert dodge_chance(20) == 0.45  # capped
 
     def test_combat_ship_from_template(self):
         template = {
@@ -230,3 +232,147 @@ class TestFullArc1Flow:
         # Verify decisions were tracked
         assert len(self.state.player_decisions) == 4
         assert len(self.state.completed_encounters) == 4
+
+
+class TestFullArc2Flow:
+    """Integration test: walk through all Arc 2 encounters programmatically."""
+
+    def setup_method(self):
+        self.loader = DataLoader(data_root=DATA_ROOT)
+        self.bus = EventBus()
+        self.engine = EncounterEngine(self.loader, self.bus)
+        self.narrative = NarrativeSystem(self.loader, self.bus)
+        self.state = create_new_game_state(self.loader)
+        
+        # Fast-forward to Arc 2
+        self.state.story_flags["arc1_crystal_discovered"] = True
+        self.state.story_flags["arc1_dave_met"] = True
+        self.state.story_flags["arc1_death_glimpsed"] = True
+        self.state.story_flags["arc1_stance"] = True
+        self.state.current_arc = "arc_2"
+        
+        self.engine.load_encounters("arc2")
+        self.narrative.load()
+
+    def test_complete_arc2(self):
+        # 1. Route Seized
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc2_route_seized"
+        self.engine.apply_choice_outcome(self.state, enc, 0)
+        assert self.state.story_flags["arc2_route_resolved"] is True
+
+        # 2. Death Sabotage
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc2_death_sabotage"
+        self.engine.apply_choice_outcome(self.state, enc, 1)
+        assert self.state.story_flags["arc2_death_betrayal"] is True
+
+        # 3. Lion Tribute
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc2_lion_tribute"
+        self.engine.apply_choice_outcome(self.state, enc, 1)
+        assert self.state.story_flags["arc2_lion_response"] is True
+
+        # Arc exit conditions should now be met
+        assert self.narrative.check_arc_exit(self.state) is True
+
+        # Advance to Arc 3
+        new_arc = self.narrative.advance_arc(self.state)
+        assert new_arc == "arc_3"
+        assert self.state.current_arc == "arc_3"
+
+
+class TestFullArc3Flow:
+    """Integration test: walk through all Arc 3 encounters programmatically."""
+
+    def setup_method(self):
+        self.loader = DataLoader(data_root=DATA_ROOT)
+        self.bus = EventBus()
+        self.engine = EncounterEngine(self.loader, self.bus)
+        self.narrative = NarrativeSystem(self.loader, self.bus)
+        self.state = create_new_game_state(self.loader)
+        
+        # Fast-forward to Arc 3
+        self.state.story_flags["arc2_route_resolved"] = True
+        self.state.story_flags["arc2_death_betrayal"] = True
+        self.state.story_flags["arc2_lion_response"] = True
+        self.state.current_arc = "arc_3"
+        
+        self.engine.load_encounters("arc3")
+        self.narrative.load()
+
+    def test_complete_arc3(self):
+        # 1. Alien Summit
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc3_alien_summit"
+        self.engine.apply_choice_outcome(self.state, enc, 0)
+        assert self.state.story_flags["arc3_alien_contact"] is True
+
+        # 2. Dave Parley
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc3_dave_parley"
+        self.engine.apply_choice_outcome(self.state, enc, 0)
+        assert self.state.story_flags["arc3_dave_parley"] is True
+
+        # 3. Death Reveal
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc3_death_reveal"
+        self.engine.apply_choice_outcome(self.state, enc, 1)
+        assert self.state.story_flags["arc3_death_allegiance"] is True
+
+        # Arc exit conditions should now be met
+        assert self.narrative.check_arc_exit(self.state) is True
+
+        # Advance to Arc 4
+        new_arc = self.narrative.advance_arc(self.state)
+        assert new_arc == "arc_4"
+        assert self.state.current_arc == "arc_4"
+
+
+class TestFullArc4Flow:
+    """Integration test: walk through all Arc 4 encounters programmatically."""
+
+    def setup_method(self):
+        self.loader = DataLoader(data_root=DATA_ROOT)
+        self.bus = EventBus()
+        self.engine = EncounterEngine(self.loader, self.bus)
+        self.narrative = NarrativeSystem(self.loader, self.bus)
+        self.state = create_new_game_state(self.loader)
+        
+        # Fast-forward to Arc 4
+        self.state.story_flags["arc3_alien_contact"] = True
+        self.state.story_flags["arc3_dave_parley"] = True
+        self.state.story_flags["arc3_death_allegiance"] = True
+        self.state.current_arc = "arc_4"
+        
+        self.engine.load_encounters("arc4")
+        self.narrative.load()
+
+    def test_complete_arc4(self):
+        # 1. Dave Assault
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc4_dave_assault"
+        self.engine.apply_choice_outcome(self.state, enc, 0)
+        assert self.state.story_flags["arc4_dave_assault"] is True
+
+        # 2. Death Bid
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc4_death_bid"
+        self.engine.apply_choice_outcome(self.state, enc, 0)
+        assert self.state.story_flags["arc4_death_bid"] is True
+
+        # 3. Sovereign Intent
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc4_sovereign_intent"
+        self.engine.apply_choice_outcome(self.state, enc, 1)
+        assert self.state.story_flags["arc4_sovereign_intent"] is True
+
+        # 4. Final Choice
+        enc = self.engine.check_triggers(self.state)
+        assert enc.encounter_id == "enc_arc4_final_choice"
+        self.engine.apply_choice_outcome(self.state, enc, 0) # Choose Ending A
+
+        # Validate End State Flags
+        assert self.state.story_flags["game_completed"] is True
+        assert self.state.story_flags["ending_a_hold"] is True
+

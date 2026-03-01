@@ -1,0 +1,272 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc4_dave_assault",
+            "encounter_type": "combat",
+            "title": "Cry Havoc",
+            "description": "It was bound to happen. The Canis League has stopped trying to control you and started trying to erase you. A massive armada jumps into the system, guns already firing. Dave's voice echoes over the open channels: \"The experiment is over, Aristotle. Surrender your ships, or die with them.\"",
+            "arc_id": "arc_4",
+            "location": "crystal_forge_prime",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_dave_assault": false
+            },
+            "npc_ids": [
+                "dave"
+            ],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "full_defense",
+                    "text": "\"Hold the line! No dog sets foot on my production facilities!\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The battle is apocalyptic. Your Corsair fleet holds, but the cost in feline lives and shattered hulls is astronomical.",
+                        "faction_changes": {
+                            "canis_league": -30,
+                            "felid_corsairs": 10
+                        },
+                        "resource_changes": {
+                            "salvage": 100,
+                            "crystal_inventory": -50
+                        },
+                        "story_flags_set": [
+                            "arc4_dave_assault"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.5
+                },
+                {
+                    "choice_id": "tactical_retreat",
+                    "text": "Evacuate the core personnel and scorch the outer facilities to delay them.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "You lose a massive chunk of your infrastructure, but your veteran crews survive to fight another day.",
+                        "faction_changes": {
+                            "canis_league": -15,
+                            "felid_corsairs": -5
+                        },
+                        "resource_changes": {
+                            "crystal_inventory": -80
+                        },
+                        "story_flags_set": [
+                            "arc4_dave_assault"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "crystal_overload",
+                    "text": "Weaponize the raw crystal deposits. Detonate an asteroid in the middle of their fleet.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The explosion tears a hole in reality. A third of the League fleet is annihilated instantly, but the raw energy backlash cripples your own ship.",
+                        "faction_changes": {
+                            "canis_league": -50
+                        },
+                        "resource_changes": {
+                            "salvage": 50,
+                            "crystal_inventory": -100
+                        },
+                        "story_flags_set": [
+                            "arc4_dave_assault"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc4_death_bid",
+            "encounter_type": "event",
+            "title": "The Knife in the Dark",
+            "description": "While you are focused on the League armada, alarms blare from the Vault. Death has bypassed the security grid and is attempting to seize the core crystal reserves. \"You were a useful distraction, Captain,\" Death whispers over the internal comms. \"But the masters require the prize now.\"",
+            "arc_id": "arc_4",
+            "location": "the_vault",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_dave_assault": true,
+                "arc4_death_bid": false
+            },
+            "npc_ids": [
+                "death"
+            ],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "personal_combat",
+                    "text": "Grab your plasma-cutlass. You're going down to the Vault to handle this personally.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A savage duel among the glowing crystals. Aristotle loses an eye, but Death is finally put down for good.",
+                        "faction_changes": {
+                            "felid_corsairs": 20
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc4_death_bid",
+                            "death_defeated"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "vent_atmosphere",
+                    "text": "No heroics. Vent the atmosphere in the Vault into the cold vacuum of space.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Ruthless and effective. Death is blown out into the void, but a massive quantity of refined crystals is lost with them.",
+                        "faction_changes": {
+                            "felid_corsairs": 5
+                        },
+                        "resource_changes": {
+                            "crystal_inventory": -50
+                        },
+                        "story_flags_set": [
+                            "arc4_death_bid",
+                            "death_defeated"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc4_sovereign_intent",
+            "encounter_type": "diplomatic",
+            "title": "The True Masters",
+            "description": "The battlefield goes entirely still. Massive jump-signatures tear open space itself. Depending on who was pulling strings in the shadows, elements of the Lion Sovereignty or the Wolf packs arrive. They aren't here to negotiate. They are here to annex the entire sector.",
+            "arc_id": "arc_4",
+            "location": "sector_zero",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_death_bid": true,
+                "arc4_sovereign_intent": false
+            },
+            "npc_ids": [],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "defy_sovereigns",
+                    "text": "\"This is Corsair space! Send whatever you have left at them!\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "It's a desperate final stand. The ancient factions are incredibly powerful, pushing your fleet to the absolute breaking point.",
+                        "faction_changes": {
+                            "lions": -30,
+                            "wolves": -30,
+                            "felid_corsairs": 15
+                        },
+                        "resource_changes": {
+                            "salvage": 50,
+                            "crystal_inventory": -20
+                        },
+                        "story_flags_set": [
+                            "arc4_sovereign_intent"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "call_in_chits",
+                    "text": "Broadcast an emergency frequency to every minor faction, pirate, and alien you've ever dealt with. Call in the debts.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A ragtag armada of Goblins, Fairies, and unaligned scavengers warps in to flank the Sovereigns. Chaos reigns.",
+                        "faction_changes": {
+                            "goblins": 20,
+                            "fairies": 20,
+                            "lions": -10,
+                            "wolves": -10
+                        },
+                        "resource_changes": {
+                            "salvage": 100
+                        },
+                        "story_flags_set": [
+                            "arc4_sovereign_intent"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc4_final_choice",
+            "encounter_type": "event",
+            "title": "The Whisper's End",
+            "description": "The battle rages outside, a maelstrom of destruction. Aristotle stands alone in the primary control center of the central forge. His paw rests over the master console. He controls the flow of the crystals. He controls the fuel of the multiverse. The decision he makes now will rewrite the stars.",
+            "arc_id": "arc_4",
+            "location": "the_forge",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_sovereign_intent": true,
+                "game_completed": false
+            },
+            "npc_ids": [
+                "aristotle"
+            ],
+            "priority": 1,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "ending_a_hold",
+                    "text": "[Ending A - Hold] Overload the defenses and crush the invaders. The monopoly remains ours.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle unleashes the full, terrifying power of the automated forges. The enemy fleets are annihilated. He sits on a throne of crystals, ruling the stars alone. The age of the Pirate King begins.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "game_completed",
+                            "ending_a_hold"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 1.0
+                },
+                {
+                    "choice_id": "ending_b_share",
+                    "text": "[Ending B - Share] Broadcast the refining schematics on all open channels to every corner of the multiverse.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The data bursts outward at faster-than-light speeds. The monopoly is broken. Without scarcity, the wars stop. Aristotle watches his empire dissolve, smiling. He saved the galaxy by giving it away.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "game_completed",
+                            "ending_b_share"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 1.0
+                },
+                {
+                    "choice_id": "ending_c_destroy",
+                    "text": "[Ending C - Destroy] Initiate the core critical overload. Deny the power to everyone.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle types exactly zero into the containment parameters. A blinding flash consumes the sector. The crystals are gone forever. The galaxy is plunged into a dark age, but it is finally free of the great game.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "game_completed",
+                            "ending_c_destroy"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 1.0
+                }
+            ]
+        }
+    ]
+}

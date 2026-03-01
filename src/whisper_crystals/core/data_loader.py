@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from typing import Any
 
@@ -11,6 +12,7 @@ from whisper_crystals.entities.encounter import Encounter
 from whisper_crystals.entities.faction import Faction
 from whisper_crystals.entities.ship import Ship, ShipStats
 
+logger = logging.getLogger(__name__)
 
 class DataLoader:
     """Loads and caches game data from JSON files in the data/ directory."""
@@ -24,10 +26,17 @@ class DataLoader:
         if relative_path in self._cache:
             return self._cache[relative_path]
         full_path = os.path.join(self.data_root, relative_path)
-        with open(full_path, encoding="utf-8") as f:
-            data = json.load(f)
-        self._cache[relative_path] = data
-        return data
+        try:
+            with open(full_path, encoding="utf-8") as f:
+                data = json.load(f)
+            self._cache[relative_path] = data
+            return data
+        except FileNotFoundError:
+            logger.error("Data file not found: %s", full_path)
+            raise
+        except json.JSONDecodeError as e:
+            logger.error("Failed to parse JSON in %s: %s", full_path, e)
+            raise
 
     def load_factions(self) -> dict[str, Faction]:
         """Load all factions from faction_registry.json."""
@@ -63,7 +72,9 @@ class DataLoader:
 
     def load_encounters(self, arc_id: str) -> list[Encounter]:
         """Load encounter definitions for a given arc."""
-        filename = f"encounters/{arc_id}_encounters.json"
+        # Convert "arc_1" to "arc1" for consistent filenames
+        file_arc_id = arc_id.replace("_", "")
+        filename = f"encounters/{file_arc_id}_encounters.json"
         try:
             data = self._load_json(filename)
         except FileNotFoundError:

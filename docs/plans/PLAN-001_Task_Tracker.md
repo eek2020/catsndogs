@@ -68,11 +68,11 @@
 
 | Status | Task | ID | Model | Depends On | Completed |
 | ------ | ---- | -- | ----- | ---------- | --------- |
-| [ ] | Arc 2 Encounter Data | 3.1 | Sonnet | — | — |
-| [ ] | Arc 3 Encounter Data | 3.2 | Sonnet | — | — |
-| [ ] | Arc 4 Encounter Data | 3.3 | Sonnet | — | — |
-| [ ] | Integration Tests for Arcs 2-4 | 3.4 | Sonnet | 3.1, 3.2, 3.3 | — |
-| [ ] | Dialogue Data Files | 3.5 | Haiku | — | — |
+| [x] | Arc 2 Encounter Data | 3.1 | Sonnet | — | 2026-03-01 |
+| [x] | Arc 3 Encounter Data | 3.2 | Sonnet | — | 2026-03-01 |
+| [x] | Arc 4 Encounter Data | 3.3 | Sonnet | — | 2026-03-01 |
+| [x] | Integration Tests for Arcs 2-4 | 3.4 | Sonnet | 3.1, 3.2, 3.3 | 2026-03-01 |
+| [x] | Dialogue Data Files | 3.5 | Haiku | — | 2026-03-01 |
 
 ---
 
@@ -96,6 +96,6 @@
 | Phase 0 | 5 | 5 | 0 |
 | Phase 1 | 4 | 4 | 0 |
 | Phase 2 | 6 | 6 | 0 |
-| Phase 3 | 5 | 0 | 5 |
+| Phase 3 | 5 | 5 | 0 |
 | Phase 4 | 5 | 0 | 5 |
-| **Total** | **32** | **22** | **10** |
+| **Total** | **32** | **23** | **9** |

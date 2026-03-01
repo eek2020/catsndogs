@@ -12,6 +12,9 @@ from typing import TYPE_CHECKING
 from whisper_crystals.core.interfaces import Action, RenderInterface
 from whisper_crystals.core.state_machine import GameState, GameStateMachine, GameStateType
 
+if TYPE_CHECKING:
+    from whisper_crystals.core.event_bus import EventBus
+
 logger = logging.getLogger(__name__)
 
 # Colours
@@ -75,10 +78,12 @@ class SettingsScreenState(GameState):
         self,
         machine: GameStateMachine,
         settings: dict,
+        event_bus: EventBus | None = None,
         on_back: callable | None = None,
     ) -> None:
         super().__init__(machine)
         self.settings = settings
+        self.event_bus = event_bus
         self._on_back = on_back
 
         self._items = [
@@ -105,8 +110,12 @@ class SettingsScreenState(GameState):
                 return
             if action in (Action.MOVE_UP, Action.MENU_UP):
                 self._selected = (self._selected - 1) % len(self._items)
+                if self.event_bus:
+                    self.event_bus.publish("play_sfx", "menu_tick")
             elif action in (Action.MOVE_DOWN, Action.MENU_DOWN):
                 self._selected = (self._selected + 1) % len(self._items)
+                if self.event_bus:
+                    self.event_bus.publish("play_sfx", "menu_tick")
             elif action in (Action.MOVE_RIGHT, Action.CONFIRM):
                 self._adjust(1)
             elif action == Action.MOVE_LEFT:
@@ -116,11 +125,20 @@ class SettingsScreenState(GameState):
         """Adjust the currently selected setting value."""
         item = self._items[self._selected]
         if item["type"] == "slider":
+            if self.event_bus:
+                self.event_bus.publish("play_sfx", "menu_tick")
             key = item["key"]
             val = self.settings.get(key, 50)
             val = max(0, min(100, val + direction * 5))
             self.settings[key] = val
+            if key == "music_volume" or key == "sfx_volume":
+                # For now just apply single volume from max
+                vol = max(self.settings.get("music_volume", 50), self.settings.get("sfx_volume", 50)) / 100.0
+                if self.event_bus:
+                    self.event_bus.publish("volume_changed", vol)
         elif item["type"] == "enum":
+            if self.event_bus:
+                self.event_bus.publish("play_sfx", "menu_tick")
             key = item["key"]
             values = item["values"]
             current = self.settings.get(key, values[0])

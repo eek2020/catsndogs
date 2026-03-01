@@ -1,0 +1,292 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc3_alien_summit",
+            "encounter_type": "diplomatic",
+            "title": "Strangers from the Void",
+            "description": "Sensors detect a vessel that defies all known physics. It shimmers into existence—a crystalline lattice rather than a hull. The being on screen is a mass of shifting light, speaking directly into Aristotle's mind. \"We observe your struggle with the lower lifeforms. We offer... elevation. At a cost.\"",
+            "arc_id": "arc_3",
+            "location": "anomaly_zone",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_alien_contact": false
+            },
+            "npc_ids": [],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "embrace_aliens",
+                    "text": "\"Whatever gives us the edge. What do you need?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The aliens integrate their tech into your ships. The Corsairs become practically ethereal, but the physical toll on the crew is terrifying.",
+                        "faction_changes": {
+                            "fairies": 5,
+                            "canis_league": -10,
+                            "lions": -10,
+                            "felid_corsairs": 5
+                        },
+                        "resource_changes": {
+                            "salvage": 40,
+                            "crystal_inventory": -30
+                        },
+                        "story_flags_set": [
+                            "arc3_alien_contact"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "reject_aliens",
+                    "text": "\"I don't make deals with things I can't look in the eye. Leave our sector.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The entity pulses a shade of angry crimson and vanishes. The more traditional factions respect your decision to refuse the supernatural.",
+                        "faction_changes": {
+                            "canis_league": 5,
+                            "lions": 5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_alien_contact"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "exploit_aliens",
+                    "text": "Attempt to steal their technology during the parley without making a deal.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "It goes disastrously wrong. The aliens don't use technology; they ARE the technology. Several of your science team are vaporised.",
+                        "faction_changes": {
+                            "felid_corsairs": -15
+                        },
+                        "resource_changes": {
+                            "salvage": -20
+                        },
+                        "story_flags_set": [
+                            "arc3_alien_contact"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_dave_parley",
+            "encounter_type": "diplomatic",
+            "title": "A Quiet Meeting",
+            "description": "Commander Dave sends a secure, unencrypted channel request. Not an ambush. A meeting. Neutral ground, a derelict station on the fringe. You sit across from the old dog. \"The Sovereigns will consume us both, Aristotle,\" he rasps. \"I follow the League to maintain order. You break order for profit. But neither of us wants to be a slave.\"",
+            "arc_id": "arc_3",
+            "location": "derelict_station",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_alien_contact": true,
+                "arc3_dave_parley": false
+            },
+            "npc_ids": [
+                "dave"
+            ],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "dave_alliance",
+                    "text": "\"Then let's stop fighting each other. We pool our intelligence, split the crystals.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave slowly nods. \"A temporary arrangement. Until the real threat is dealt with.\" A bizarre, fragile peace is formed.",
+                        "faction_changes": {
+                            "canis_league": 25,
+                            "lions": -15,
+                            "felid_corsairs": -5
+                        },
+                        "resource_changes": {
+                            "crystal_inventory": -20,
+                            "salvage": 30
+                        },
+                        "story_flags_set": [
+                            "arc3_dave_parley"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "dave_stubborn",
+                    "text": "\"I don't need your help, Dave. I've built an empire. I can defend it.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave sighs, looking tired. \"Pride goeth before destruction, cat. Expect no mercy when the end comes.\"",
+                        "faction_changes": {
+                            "canis_league": -5,
+                            "felid_corsairs": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_dave_parley"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_death_reveal",
+            "encounter_type": "event",
+            "title": "The Master's Voice",
+            "description": "The shadows finally solidify. Death stands on your bridge, having bypassed all security. But he is not here to assassinate you. He bows. \"I have tested your fleet, Captain. You have proven... adequate. My true masters wish to speak with you regarding the final disposition of the crystals.\"",
+            "arc_id": "arc_3",
+            "location": "aristotle_flagship",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_parley": true,
+                "arc3_death_allegiance": false
+            },
+            "npc_ids": [
+                "death"
+            ],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "death_lions",
+                    "text": "\"You work for the Lion Sovereign. I should have known you were a lap cat.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death purrs. \"The Sovereign offers order. The chaotic distribution of crystals must end. We act as their unseen hand.\"",
+                        "faction_changes": {
+                            "lions": 5,
+                            "felid_corsairs": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_death_allegiance",
+                            "death_serves_lions"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "death_wolves",
+                    "text": "\"The Wolves of the Outer Rim. You're an anarchist.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death chuckles, a dry, rattling sound. \"The Sovereigns and the League are stagnant. The fire must be stoked. The crystals are the spark.\"",
+                        "faction_changes": {
+                            "wolves": 15,
+                            "canis_league": -10,
+                            "lions": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_death_allegiance",
+                            "death_serves_wolves"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "death_independent",
+                    "text": "\"You don't work for anyone. You want to control the monopoly yourself.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death's eyes widen slightly. \"You perceive clearly, Captain. Why serve a king when one can be a god?\"",
+                        "faction_changes": {
+                            "wolves": -5,
+                            "lions": -5,
+                            "felid_corsairs": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_death_allegiance",
+                            "death_serves_self"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_faction_offer",
+            "encounter_type": "diplomatic",
+            "title": "A Web of Deals",
+            "description": "With the major players distracted, the smaller factions smell blood in the water. The Goblin scavengers and the isolated Fairy enclaves both offer you exclusive, highly illegal technology—but only if you betray the other to them.",
+            "arc_id": "arc_3",
+            "location": "smugglers_moon",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_death_allegiance": true
+            },
+            "npc_ids": [],
+            "priority": 5,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "ally_goblins",
+                    "text": "Arm the Goblins and give them the coordinates to the Fairy enclaves.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The scavengers swarm the graceful Fairy ships. Brutal, but effective. The scavengers give you advanced scrap-tech weapons.",
+                        "faction_changes": {
+                            "goblins": 15,
+                            "fairies": -25
+                        },
+                        "resource_changes": {
+                            "salvage": 50
+                        },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "ally_fairies",
+                    "text": "Provide the Fairies with crystal overchargers to wipe out the Goblin fleets.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The Fairy ships dance through the scavenger swarms, tearing them apart with pinpoint energy lances. The Fairies grant you powerful defensive shields.",
+                        "faction_changes": {
+                            "fairies": 15,
+                            "goblins": -25
+                        },
+                        "resource_changes": {
+                            "salvage": 10,
+                            "crystal_inventory": -10
+                        },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "play_both",
+                    "text": "Take their money and do neither. Let them kill each other.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Both factions realize they've been played. They break off their war just long enough to put bounties on your head.",
+                        "faction_changes": {
+                            "fairies": -15,
+                            "goblins": -15
+                        },
+                        "resource_changes": {
+                            "crystal_inventory": 40
+                        },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.6
+                }
+            ]
+        }
+    ]
+}

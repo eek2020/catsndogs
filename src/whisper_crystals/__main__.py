@@ -14,6 +14,7 @@ from whisper_crystals.engine.image_utils import load_image, load_image_alpha, re
 from whisper_crystals.engine.input_handler import PygameInputHandler
 from whisper_crystals.engine.renderer import PygameRenderer
 from whisper_crystals.engine.startup import show_loading_frame, show_startup_splash
+from whisper_crystals.engine.audio import PygameAudio
 
 
 def _resolve_project_root() -> str:
@@ -36,7 +37,10 @@ def _load_art(root: str) -> tuple:
     return splash, images["intro_title"], images["aristotle"], images["dave"]
 
 
+from whisper_crystals.core.logger import setup_logging
+
 def main() -> None:
+    setup_logging()
     root = _resolve_project_root()
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -52,12 +56,14 @@ def main() -> None:
     camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
     renderer = PygameRenderer(screen, camera)
     input_handler = PygameInputHandler()
+    audio = PygameAudio(root)
 
     session = GameSession(
         data_root=os.path.join(root, "data"),
         camera=camera,
         input_handler=input_handler,
         state_machine=GameStateMachine(),
+        audio_subsystem=audio,
     )
 
     # Wire loading screen into new-game flow

@@ -48,8 +48,12 @@ class EncounterEngine:
                 if expected == "!null":
                     if actual is None:
                         return False
-                elif actual != expected:
-                    return False
+                else:
+                    # Coerce None to False for boolean expectations
+                    if actual is None and isinstance(expected, bool):
+                        actual = False
+                    if actual != expected:
+                        return False
         return True
 
     def apply_choice_outcome(

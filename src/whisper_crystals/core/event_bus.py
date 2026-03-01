@@ -30,7 +30,7 @@ class EventBus:
                 cb for cb in self._subscribers[event_name] if cb is not callback
             ]
 
-    def publish(self, event_name: str, **kwargs: Any) -> None:
-        """Fire an event, calling all subscribers with the provided kwargs."""
+    def publish(self, event_name: str, *args: Any, **kwargs: Any) -> None:
+        """Fire an event, calling all subscribers with the provided args and kwargs."""
         for callback in self._subscribers.get(event_name, []):
-            callback(**kwargs)
+            callback(*args, **kwargs)

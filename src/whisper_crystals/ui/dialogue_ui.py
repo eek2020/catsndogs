@@ -10,6 +10,7 @@ from whisper_crystals.core.state_machine import GameState, GameStateMachine, Gam
 from whisper_crystals.entities.encounter import Encounter
 
 if TYPE_CHECKING:
+    from whisper_crystals.core.event_bus import EventBus
     from whisper_crystals.core.game_state import GameStateData
     from whisper_crystals.systems.encounter_engine import EncounterEngine
 
@@ -42,6 +43,7 @@ class DialogueState(GameState):
         encounter: Encounter,
         encounter_engine: EncounterEngine,
         game_state: GameStateData,
+        event_bus: EventBus,
         on_complete: callable,
         on_combat: callable | None = None,
     ) -> None:
@@ -49,6 +51,7 @@ class DialogueState(GameState):
         self.encounter = encounter
         self.encounter_engine = encounter_engine
         self.game_state = game_state
+        self.event_bus = event_bus
         self._on_complete = on_complete
         self._on_combat = on_combat
 
@@ -105,17 +108,21 @@ class DialogueState(GameState):
                     continue
 
                 if action in (Action.MOVE_UP, Action.MENU_UP):
+                    self.event_bus.publish("play_sfx", "menu_tick")
                     self._selected = (self._selected - 1) % len(self.encounter.choices)
                 elif action in (Action.MOVE_DOWN, Action.MENU_DOWN):
+                    self.event_bus.publish("play_sfx", "menu_tick")
                     self._selected = (self._selected + 1) % len(self.encounter.choices)
                 elif action == Action.CONFIRM:
                     self._resolve_choice()
             elif self._phase == "outcome":
                 if action == Action.CONFIRM:
+                    self.event_bus.publish("play_sfx", "menu_select")
                     self._on_complete()
 
     def _resolve_choice(self) -> None:
         """Apply the selected choice and transition to outcome or combat."""
+        self.event_bus.publish("play_sfx", "menu_select")
         choice = self.encounter.choices[self._selected]
         is_fight = (
             self.encounter.encounter_type == "combat"

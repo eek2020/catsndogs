@@ -23,6 +23,7 @@ class MenuState(GameState):
         machine: GameStateMachine,
         on_new_game: callable,
         on_quit: callable,
+        event_bus: EventBus | None = None,
         on_load_game: callable | None = None,
         splash_art: object | None = None,
         save_manager: SaveManager | None = None,
@@ -33,6 +34,7 @@ class MenuState(GameState):
         self._on_quit = on_quit
         self._splash_art = splash_art
         self._save_manager = save_manager
+        self.event_bus = event_bus
 
         self._options: list[str] = ["New Game"]
         # Show load slots inline: "Load Slot 1 — Aristotle (Arc 1)"
@@ -74,9 +76,15 @@ class MenuState(GameState):
         for action in actions:
             if action in (Action.MOVE_UP, Action.MENU_UP):
                 self._selected_index = (self._selected_index - 1) % len(self._options)
+                if self.event_bus:
+                    self.event_bus.publish("play_sfx", "menu_tick")
             elif action in (Action.MOVE_DOWN, Action.MENU_DOWN):
                 self._selected_index = (self._selected_index + 1) % len(self._options)
+                if self.event_bus:
+                    self.event_bus.publish("play_sfx", "menu_tick")
             elif action == Action.CONFIRM:
+                if self.event_bus:
+                    self.event_bus.publish("play_sfx", "menu_select")
                 if self._selected_index == 0:
                     self._on_new_game()
                 elif self._selected_index == self._quit_index:

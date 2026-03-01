@@ -1,0 +1,82 @@
+{
+    "dialogue_tree_id": "aristotle_internal",
+    "character_id": "aristotle",
+    "nodes": {
+        "root": {
+            "text": "The hum of the ship engines is the only honest thing left in this galaxy. The crystals whisper in the hold. A monopoly is a heavy crown.",
+            "choices": [
+                {
+                    "text": "Review fleet status.",
+                    "next_node_id": "fleet_status",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Contemplate the crystals.",
+                    "next_node_id": "crystal_thoughts",
+                    "conditions": {
+                        "arc1_crystal_discovered": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Return to helm]",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "fleet_status": {
+            "text": "The corsairs look to me. The hierarchy is maintained through respect, not just fear. But fear helps when dealing with the dogs.",
+            "choices": [
+                {
+                    "text": "Prepare for the next jump.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "crystal_thoughts": {
+            "text": "Funny. A rock that sings, and the whole universe goes crazy for it. I was just the first to listen.",
+            "choices": [
+                {
+                    "text": "And the last to let go.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_conversation": {
+            "text": "Aristotle returns to his command chair.",
+            "choices": []
+        }
+    }
+}

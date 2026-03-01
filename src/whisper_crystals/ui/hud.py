@@ -106,3 +106,46 @@ class HUD:
                 size=28,
                 color=(255, 200, 50, alpha),
             )
+
+        self._draw_minimap(renderer, state)
+
+    def _draw_minimap(self, renderer: RenderInterface, state: GameStateData) -> None:
+        """Draws a 150x150 minimap in the bottom right corner showing the player."""
+        sw, sh = renderer.get_screen_size()
+        
+        map_size = 150
+        map_x = sw - map_size - 20
+        map_y = sh - map_size - 20
+        
+        # Background
+        renderer.draw_rect((map_x, map_y, map_size, map_size), (12, 18, 28, 200))
+        renderer.draw_rect((map_x, map_y, map_size, map_size), (50, 100, 180, 255), width=2)
+        
+        # Grid lines for flavour
+        for i in range(1, 4):
+            renderer.draw_line((map_x + i * (map_size // 4), map_y), 
+                               (map_x + i * (map_size // 4), map_y + map_size), 
+                               (30, 50, 80, 150), 1)
+            renderer.draw_line((map_x, map_y + i * (map_size // 4)), 
+                               (map_x + map_size, map_y + i * (map_size // 4)), 
+                               (30, 50, 80, 150), 1)
+
+        # Player Blip
+        # Assuming world coordinates roughly map linearly for visual purposes
+        # Let's say the minimap covers a 10000x10000 area centered on (0,0)
+        world_scale = 10000.0
+        
+        # Clamp player position for minimap
+        px = max(-world_scale/2, min(world_scale/2, state.position_x))
+        py = max(-world_scale/2, min(world_scale/2, state.position_y))
+        
+        normalized_x = (px + world_scale/2) / world_scale
+        normalized_y = (py + world_scale/2) / world_scale
+        
+        blip_x = map_x + int(normalized_x * map_size)
+        blip_y = map_y + int(normalized_y * map_size)
+        
+        renderer.draw_circle((blip_x, blip_y), 3, (110, 214, 255))
+        renderer.draw_circle((blip_x, blip_y), 6, (110, 214, 255, 100), width=1)
+        
+        renderer.draw_text("SECTOR MAP", (map_x + 5, map_y + 5), size=12, color=(100, 180, 220))
