@@ -73,7 +73,7 @@ class GameSession:
         self.encounter_engine = EncounterEngine(self.data_loader, self.event_bus)
         self.narrative = NarrativeSystem(self.data_loader, self.event_bus)
         self.faction_system = FactionSystem(self.event_bus)
-        self.economy_system = EconomySystem(self.event_bus)
+        self.economy_system = EconomySystem(self.event_bus, data_loader=self.data_loader)
         self.crew_morale = CrewMoraleSystem(self.event_bus)
         self.exploration = ExplorationSystem(self.event_bus)
         self.faction_conquest = FactionConquestAI(self.event_bus)
@@ -468,9 +468,7 @@ class GameSession:
 
     def _quit_to_menu(self) -> None:
         """Pop back to main menu from pause."""
-        # Clear the state stack and push a fresh menu
-        while not self.state_machine.is_empty:
-            self.state_machine.pop()
+        self.state_machine.clear()
         self.game_state = None
         self.nav_state = None
         self.push_menu()

@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Callable
+
+logger = logging.getLogger(__name__)
 
 
 class EventBus:
@@ -33,4 +36,10 @@ class EventBus:
     def publish(self, event_name: str, *args: Any, **kwargs: Any) -> None:
         """Fire an event, calling all subscribers with the provided args and kwargs."""
         for callback in self._subscribers.get(event_name, []):
-            callback(*args, **kwargs)
+            try:
+                callback(*args, **kwargs)
+            except Exception:
+                logger.exception(
+                    "EventBus: subscriber %r failed for event %r",
+                    callback, event_name,
+                )

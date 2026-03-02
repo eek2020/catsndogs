@@ -20,6 +20,20 @@ NEUTRAL_THRESHOLD = 60
 HIGH_THRESHOLD = 80
 
 
+def _morale_label(value: int) -> str:
+    """Return a human-readable status label for a morale value."""
+    if value <= MUTINY_THRESHOLD:
+        return "MUTINY"
+    elif value <= LOW_THRESHOLD:
+        return "DISGRUNTLED"
+    elif value <= NEUTRAL_THRESHOLD:
+        return "STEADY"
+    elif value <= HIGH_THRESHOLD:
+        return "CONTENT"
+    else:
+        return "INSPIRED"
+
+
 class CrewMoraleSystem:
     """Manages crew morale tracking and its gameplay effects."""
 
@@ -41,34 +55,16 @@ class CrewMoraleSystem:
     def get_morale_status(self, game_state: GameStateData) -> str:
         """Return human-readable morale status."""
         avg = self.get_average_morale(game_state)
-        if avg <= MUTINY_THRESHOLD:
-            return "MUTINY"
-        elif avg <= LOW_THRESHOLD:
-            return "DISGRUNTLED"
-        elif avg <= NEUTRAL_THRESHOLD:
-            return "STEADY"
-        elif avg <= HIGH_THRESHOLD:
-            return "CONTENT"
-        else:
-            return "INSPIRED"
+        return _morale_label(avg)
 
     def get_crew_by_morale(
         self, game_state: GameStateData,
     ) -> list[tuple[str, int, str]]:
         """Return crew sorted by morale: (name, morale, status)."""
-        result = []
-        for c in game_state.player_ship.crew:
-            if c.morale <= MUTINY_THRESHOLD:
-                status = "MUTINY"
-            elif c.morale <= LOW_THRESHOLD:
-                status = "DISGRUNTLED"
-            elif c.morale <= NEUTRAL_THRESHOLD:
-                status = "STEADY"
-            elif c.morale <= HIGH_THRESHOLD:
-                status = "CONTENT"
-            else:
-                status = "INSPIRED"
-            result.append((c.name, c.morale, status))
+        result = [
+            (c.name, c.morale, _morale_label(c.morale))
+            for c in game_state.player_ship.crew
+        ]
         result.sort(key=lambda x: x[1])
         return result
 
@@ -96,7 +92,10 @@ class CrewMoraleSystem:
             if crew_id is not None and member.crew_id != crew_id:
                 continue
             old_morale = member.morale
-            member.morale = max(0, min(100, member.morale + delta + member.morale_modifier))
+            # morale_modifier scales the delta (e.g. +2 means +20% effect)
+            # rather than being added unconditionally each call
+            effective_delta = int(delta * (1 + member.morale_modifier / 10))
+            member.morale = max(0, min(100, member.morale + effective_delta))
             affected.append(member)
 
             # Check mutiny threshold crossing

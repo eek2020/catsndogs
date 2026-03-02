@@ -10,9 +10,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from whisper_crystals.entities.crystal import CrystalDeposit, CrystalMarket, SupplyRoute
-from whisper_crystals.entities.ship import Ship
+from whisper_crystals.entities.ship import Ship, ShipStats, ShipUpgrade
+
+# Valid fields for upgrade target_stat validation
+_VALID_UPGRADE_STATS: frozenset[str] = frozenset(ShipStats.__dataclass_fields__)
 
 if TYPE_CHECKING:
+    from whisper_crystals.core.data_loader import DataLoader
     from whisper_crystals.core.event_bus import EventBus
     from whisper_crystals.core.game_state import GameStateData
 
@@ -20,8 +24,9 @@ if TYPE_CHECKING:
 class EconomySystem:
     """Manages crystal extraction, supply routes, market pricing, and trade."""
 
-    def __init__(self, event_bus: EventBus) -> None:
+    def __init__(self, event_bus: EventBus, data_loader: DataLoader | None = None) -> None:
         self.event_bus = event_bus
+        self.data_loader = data_loader
 
     # ------------------------------------------------------------------
     # Crystal extraction
@@ -414,10 +419,9 @@ class EconomySystem:
 
     def purchase_upgrade(self, game_state: GameStateData, upgrade_id: str) -> bool:
         """Purchase and install a ship upgrade."""
-        # Load upgrade templates
-        from whisper_crystals.core.data_loader import DataLoader
-        data_loader = DataLoader()
-        upgrades = data_loader.load_upgrades()
+        if self.data_loader is None:
+            return False
+        upgrades = self.data_loader.load_upgrades()
         
         upgrade_data = None
         for upg in upgrades:
@@ -442,26 +446,29 @@ class EconomySystem:
             return False
         
         # Check stat caps (max 15 for most stats)
-        from whisper_crystals.entities.ship import ShipUpgrade
         upgrade = ShipUpgrade.from_dict(upgrade_data)
+        if upgrade.target_stat not in _VALID_UPGRADE_STATS:
+            return False
         current_stat = getattr(ship.base_stats, upgrade.target_stat, 0)
         if current_stat + upgrade.modifier > 15:
             return False
-        
+
         # Apply upgrade
         game_state.crystal_inventory -= upgrade.cost_crystals
         game_state.salvage -= upgrade.cost_salvage
         ship.upgrades.append(upgrade)
-        
+
         # Apply stat modifier
         setattr(ship.base_stats, upgrade.target_stat, current_stat + upgrade.modifier)
-        
+
         # Apply side effects if any
         if "side_effect" in upgrade_data:
             side_effect = upgrade_data["side_effect"]
+            if side_effect["target_stat"] not in _VALID_UPGRADE_STATS:
+                return True  # Upgrade applied, but skip invalid side effect
             side_stat = getattr(ship.base_stats, side_effect["target_stat"], 0)
-            setattr(ship.base_stats, side_effect["target_stat"], 
-                   side_stat + side_effect["modifier"])
+            setattr(ship.base_stats, side_effect["target_stat"],
+                    side_stat + side_effect["modifier"])
         
         game_state.trade_ledger.append({
             "type": "upgrade",
@@ -492,10 +499,9 @@ class EconomySystem:
 
     def purchase_ship(self, game_state: GameStateData, template_id: str) -> bool:
         """Purchase a new ship, trading in current ship."""
-        # Load ship templates
-        from whisper_crystals.core.data_loader import DataLoader
-        data_loader = DataLoader()
-        ship_templates = data_loader.load_ship_templates()
+        if self.data_loader is None:
+            return False
+        ship_templates = self.data_loader.load_ship_templates()
         
         template_data = ship_templates.get(template_id)
         if not template_data:
@@ -508,7 +514,6 @@ class EconomySystem:
             return False
         
         # Calculate costs
-        from whisper_crystals.entities.ship import Ship
         new_ship = Ship.from_template(template_data, "player_new_ship", template_data["name"])
         trade_in_value = self.calculate_ship_trade_in_value(game_state.player_ship)
         purchase_cost = new_ship.max_hull * 3  # Base cost

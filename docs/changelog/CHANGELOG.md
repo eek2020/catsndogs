@@ -6,6 +6,43 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-02 — Documentation Audit & Restructure
+
+**Task:** Documentation consolidation and master plan creation
+**Scope:** Full /docs reorganisation — no source code changes
+
+### Documentation Structure
+
+- Created `docs/MASTER_PLAN.md` — unified single source of truth for all planning and status
+- Created `docs/architecture/` — moved all TRDs (TRD-001, TRD-002, TRD-003) here from `docs/trd/`
+- Created `docs/architecture/decisions/` — moved ADR_TEMPLATE and ADR-001 here from `docs/decisions/`
+- Created `docs/process/` — moved `CONTRIBUTING.md` here; updated all plan references to `MASTER_PLAN.md`
+- Created `docs/archive/prds/` — archived PRD-001, PRD-002, PRD-003 with completion summaries
+- Created `docs/archive/plans/` — archived PLAN-001 (superseded) and PLAN-002 (absorbed into MASTER_PLAN.md)
+- Created `docs/archive/briefs/` — moved `suggestions.md` here
+
+### Reviews
+
+- Moved `CODE_REVIEW_2026-03-02.md` → `docs/reviews/REVIEW-002_code_review_2026-03-02.md`
+- Moved `IMPLEMENTATION_PLAN_2026-03-02.md` → `docs/reviews/REVIEW-002_remediation_plan_2026-03-02.md`
+- Updated `docs/reviews/REVIEW_LOG.md` with REVIEW-002 entry
+
+### Removed
+
+- `docs/trd/` — empty after TRD migration to `docs/architecture/`
+- `docs/prd/` — empty after PRD archival
+- `docs/decisions/` — empty after ADR migration to `docs/architecture/decisions/`
+- `docs/plans/` — superseded by `docs/MASTER_PLAN.md`
+- `docs/suggestions.md` — moved to `docs/archive/briefs/`
+
+### Updated
+
+- `README.md` — updated project structure, docs links point to new locations, added game status
+- `docs/process/CONTRIBUTING.md` — updated all plan references to `MASTER_PLAN.md` and new path structure
+- `docs/reviews/REVIEW_LOG.md` — added REVIEW-002 entry
+
+---
+
 ## 2026-03-01 — Phase 2: Game Systems
 
 **Tasks:** 2.1, 2.2, 2.3, 2.4, 2.5, 2.6 (PLAN-001)

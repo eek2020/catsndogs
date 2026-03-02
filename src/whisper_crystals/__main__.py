@@ -7,6 +7,7 @@ import os
 import pygame
 
 from whisper_crystals.core.config import FPS, SCREEN_HEIGHT, SCREEN_WIDTH
+from whisper_crystals.core.logger import setup_logging
 from whisper_crystals.core.session import GameSession
 from whisper_crystals.core.state_machine import GameStateMachine
 from whisper_crystals.engine.camera import Camera
@@ -36,8 +37,6 @@ def _load_art(root: str) -> tuple:
         images[key] = remove_near_white_bg(img) if img is not None else None
     return splash, images["intro_title"], images["aristotle"], images["dave"]
 
-
-from whisper_crystals.core.logger import setup_logging
 
 def main() -> None:
     setup_logging()

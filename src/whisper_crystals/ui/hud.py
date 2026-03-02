@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import TYPE_CHECKING
 
 from whisper_crystals.core.interfaces import RenderInterface
@@ -86,7 +87,6 @@ class HUD:
             # Pulse opacity based on time
             alpha = min(255, int(self._message_timer * 400))
             if self._message_timer > 1.0:
-                import math
                 alpha = int(200 + 55 * math.sin(state.playtime_seconds * 10))
                 
             renderer.draw_glow((sw // 2, msg_y + 15), 100, (50, 20, 80))

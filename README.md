@@ -11,17 +11,11 @@ run.bat           # Windows
 python run.py     # Cross-platform Python launcher
 
 # Option 2: Manual setup
-# Create virtual environment
 python3.11 -m venv .venv
 source .venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Run the game
 python -m whisper_crystals
 
-```bash
 # Run tests
 pytest tests/ -v
 ```
@@ -29,34 +23,36 @@ pytest tests/ -v
 ## Project Structure
 
 ```text
-CatsnDogs/
-├── docs/               # PRD and TRD documentation
-│   ├── prd/            # Product Requirements Documents (PRD-001 to PRD-003)
-│   └── trd/            # Technical Requirements Documents (TRD-001 to TRD-003)
-├── story/              # Narrative reference materials
-│   ├── arcs/           # Story arc overviews and beat sheets
-│   ├── characters/     # Character profiles and progression
-│   ├── factions/       # Faction registry and relationship data
-│   └── dialogue/       # Dialogue tree drafts
-├── design/             # Design reference materials
-│   ├── art_direction/  # Visual style guide and colour palettes
-│   ├── ui_ux/          # UI/UX wireframes and specifications
-│   └── ships/          # Ship design specs and stat tables
-├── src/                # Python source code
+whisper_crystals/
+├── docs/                       # Project documentation
+│   ├── MASTER_PLAN.md          # Active plan — start here
+│   ├── architecture/           # TRDs (tech specs) and ADRs
+│   ├── process/                # CONTRIBUTING.md
+│   ├── changelog/              # CHANGELOG.md
+│   ├── reviews/                # Code review records
+│   ├── issues/                 # Issue tracking
+│   └── archive/                # Completed PRDs and superseded plans
+├── story/                      # Narrative reference materials
+│   ├── arcs/                   # Story arc overviews
+│   ├── characters/             # Character profiles
+│   └── factions/               # Faction lore
+├── design/                     # Art direction, UI/UX, ship design specs
+├── src/
 │   └── whisper_crystals/
-│       ├── core/       # Engine-agnostic game logic
-│       ├── entities/   # Data models (Character, Ship, Faction, etc.)
-│       ├── systems/    # Game systems (combat, trade, diplomacy, etc.)
-│       ├── engine/     # Pygame-specific rendering and input
-│       └── ui/         # UI components
-├── data/               # Data-driven content (JSON)
-│   ├── encounters/     # Encounter definitions
-│   ├── dialogue/       # Dialogue trees
-│   ├── factions/       # Faction data and relationship matrix
-│   ├── ships/          # Ship templates
-│   └── story/          # Story arc definitions
-├── assets/             # Game assets (sprites, audio)
-└── tests/              # Pytest test suite
+│       ├── core/               # Engine-agnostic game logic
+│       ├── entities/           # Data models (Character, Ship, Faction, etc.)
+│       ├── systems/            # Game systems (combat, economy, crew, etc.)
+│       ├── engine/             # Pygame-specific rendering and input
+│       └── ui/                 # UI state classes
+├── data/                       # Data-driven content (JSON)
+│   ├── encounters/             # Arc 1–4 encounter definitions
+│   ├── dialogue/               # Dialogue trees
+│   ├── factions/               # Faction registry and relationship matrix
+│   ├── ships/                  # Ship templates per faction
+│   ├── economy/                # Crystal deposits, supply routes, regions
+│   └── story/                  # Arc definitions and story flags
+├── assets/                     # Game assets (sprites, audio)
+└── tests/                      # Pytest test suite (186 tests)
 ```
 
 ## Tech Stack
@@ -64,23 +60,29 @@ CatsnDogs/
 - **Language:** Python 3.11+
 - **Game Library:** pygame-ce 2.4.1+
 - **Testing:** pytest 8.0+
+- **Linting:** ruff 0.2+
 - **Target Platform:** Desktop (Mac M3/M4 primary, Windows compatible)
 
 ## Architecture Principles
 
-- **Separation of concerns** — Game logic, rendering, and data are cleanly separated
+- **Engine Abstraction Layer (EAL)** — `core/`, `systems/`, `entities/` have zero pygame imports; only `engine/` contains pygame
 - **Migration-ready** — All game logic is engine-agnostic for future Godot/Unity port
-- **State machine driven** — Explicit state machine manages all game states
-- **Data-driven content** — Story, dialogue, encounters loaded from JSON at runtime
+- **Stack state machine** — Explicit push/pop/switch state machine manages all game states
+- **Data-driven content** — Story, dialogue, encounters, factions loaded from JSON at runtime
+- **Event bus** — Pub/sub system for decoupled communication between game systems
+
+## Game State
+
+All four story arcs are implemented. The game is fully playable from new game to one of three endings.
+See `docs/MASTER_PLAN.md` for current development status and active work.
 
 ## Documentation
 
-- `docs/prd/PRD-001` — Game Overview & Feature Requirements
-- `docs/prd/PRD-002` — Narrative & Story System Requirements
-- `docs/prd/PRD-003` — Character & Faction System Requirements
-- `docs/trd/TRD-001` — Technical Architecture & Stack
-- `docs/trd/TRD-002` — Game Engine & Prototype Specification
-- `docs/trd/TRD-003` — Data Model & State Management
+- [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md) — Active plan: current state, tasks, roadmap
+- [`docs/architecture/TRD-001`](docs/architecture/TRD-001_Technical_Architecture_Stack.md) — Technical Architecture & Stack
+- [`docs/architecture/TRD-002`](docs/architecture/TRD-002_Game_Engine_Prototype_Specification.md) — Game Engine & Prototype Specification
+- [`docs/architecture/TRD-003`](docs/architecture/TRD-003_Data_Model_State_Management.md) — Data Model & State Management
+- [`docs/process/CONTRIBUTING.md`](docs/process/CONTRIBUTING.md) — Contributor guide
 
 ## License
 

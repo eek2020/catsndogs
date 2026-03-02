@@ -70,6 +70,6 @@ Phase 0 is assigned to Opus 4.6 (tasks 0.1-0.3) because the changes are cross-cu
 ## Follow-Up Actions
 
 - [x] Create project management structure (Step 1)
-- [ ] Execute Phase 0 tasks 0.1 through 0.5
-- [ ] File code review (REVIEW-001) after Phase 0
-- [ ] Run full test suite and manual play-test
+- [x] Execute Phase 0 tasks 0.1 through 0.5
+- [x] File code review (REVIEW-001) after Phase 0
+- [x] Run full test suite and manual play-test

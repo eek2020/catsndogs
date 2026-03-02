@@ -90,3 +90,13 @@ class GameStateMachine:
             self._stack.pop()
         self._stack.append(state)
         state.enter()
+
+    def clear(self) -> None:
+        """Remove all states from the stack.
+
+        Only the top state receives an exit() call; intermediate states
+        are discarded without enter/exit churn.
+        """
+        if self._stack:
+            self._stack[-1].exit()
+            self._stack.clear()

@@ -10,6 +10,7 @@ from whisper_crystals.core.state_machine import GameState, GameStateMachine, Gam
 from whisper_crystals.engine.starfield import Starfield
 
 if TYPE_CHECKING:
+    from whisper_crystals.core.event_bus import EventBus
     from whisper_crystals.core.save_manager import SaveManager
 
 

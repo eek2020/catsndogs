@@ -30,24 +30,24 @@ class EncounterEngine:
         Returns the highest-priority encounter whose conditions are met
         and which hasn't been completed yet (unless repeatable).
         """
-        for encounter in sorted(self.encounter_table, key=lambda e: -e.priority):
-            if not encounter.repeatable and encounter.encounter_id in game_state.completed_encounters:
-                continue
-            if self._evaluate_conditions(encounter.trigger_conditions, game_state):
-                return encounter
-        return None
+        eligible = self._get_eligible_encounters(game_state)
+        return eligible[0] if eligible else None
 
     def get_available_encounters(self, game_state: GameStateData) -> list[Encounter]:
         """Return all encounters whose conditions are met and which haven't been completed.
         Sorted by priority descending.
         """
-        available = []
+        return self._get_eligible_encounters(game_state)
+
+    def _get_eligible_encounters(self, game_state: GameStateData) -> list[Encounter]:
+        """Return encounters whose conditions are met, sorted by priority descending."""
+        result = []
         for encounter in sorted(self.encounter_table, key=lambda e: -e.priority):
             if not encounter.repeatable and encounter.encounter_id in game_state.completed_encounters:
                 continue
             if self._evaluate_conditions(encounter.trigger_conditions, game_state):
-                available.append(encounter)
-        return available
+                result.append(encounter)
+        return result
 
     def _evaluate_conditions(self, conditions: dict, game_state: GameStateData) -> bool:
         """Check if all trigger conditions are satisfied by the current game state."""
@@ -119,8 +119,9 @@ class EncounterEngine:
         )
         game_state.player_decisions.append(decision)
 
-        # Mark encounter as completed
-        game_state.completed_encounters.append(encounter.encounter_id)
+        # Mark encounter as completed (guard against duplicates for repeatable encounters)
+        if encounter.encounter_id not in game_state.completed_encounters:
+            game_state.completed_encounters.append(encounter.encounter_id)
 
         self.event_bus.publish(
             "encounter_completed",

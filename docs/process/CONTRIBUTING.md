@@ -1,20 +1,19 @@
 # Contributing to Whisper Crystals
 
-This guide is for AI agents and developers picking up tasks from the implementation plan.
+This guide is for AI agents and developers picking up tasks.
 
 ## Before You Start
 
 1. Read `CLAUDE.md` in the project root for architecture rules and conventions
-2. Check `docs/plans/PLAN-001_Task_Tracker.md` for available tasks
+2. Check `docs/MASTER_PLAN.md` for active tasks and current priorities
 3. Verify your task's dependencies are marked complete before starting
 4. Read all files listed in your task description before making changes
 
 ## Picking Up a Task
 
-1. Find your task in the task tracker
-2. Confirm all dependencies are complete (status: done)
-3. Mark the task as "in-progress" in the tracker
-4. Note the recommended model tier — tasks are sized for specific capability levels
+1. Find your task in `docs/MASTER_PLAN.md` under "Active Initiatives"
+2. Confirm all dependencies are complete
+3. Note the recommended model tier — tasks are sized for specific capability levels
 
 ## Branch Naming
 
@@ -24,7 +23,7 @@ Examples:
 
 - `task/0.1_extract-game-session`
 - `task/1.1_save-load-manager`
-- `task/3.1_arc2-encounter-data`
+- `task/sm-01_side-mission-system`
 
 ## Implementation Checklist
 
@@ -35,12 +34,12 @@ For every task:
 - [ ] Write or update tests for any new logic
 - [ ] Run `pytest tests/ -v` — all tests must pass
 - [ ] Verify no pygame imports leaked into core/systems/entities
-- [ ] Update the task tracker with completion date
+- [ ] Update `docs/MASTER_PLAN.md` with completion status
 - [ ] Add a changelog entry in `docs/changelog/CHANGELOG.md`
 
 ## Code Review Process
 
-Reviews are required for Phase 0 tasks and any task that modifies core architecture.
+Reviews are required for tasks that modify core architecture or cross-cutting concerns.
 
 ### Filing a Review
 
@@ -70,11 +69,11 @@ When you encounter a bug or problem during implementation:
 
 When a task requires an architectural decision (choosing between approaches, changing patterns):
 
-1. Create: `docs/decisions/ADR-{NNN}_{decision-title}.md`
-2. Use the template from `docs/decisions/ADR_TEMPLATE.md`
-3. Move superseded ADRs to `docs/decisions/archive/`
+1. Create: `docs/architecture/decisions/ADR-{NNN}_{decision-title}.md`
+2. Use the template from `docs/architecture/decisions/ADR_TEMPLATE.md`
+3. Add a SUPERSEDED header to any ADR that is replaced by a new decision
 
-## Content Authoring (Phase 3)
+## Content Authoring
 
 For encounter data, dialogue, and other JSON content:
 
@@ -84,10 +83,19 @@ For encounter data, dialogue, and other JSON content:
 - Validate JSON structure matches existing entity `from_dict()` methods
 - Write integration tests that walk through the arc programmatically
 
-## Archiving Completed Documents
+## Documentation Structure
 
-When all items in a document are complete:
-
-1. Copy the document to the appropriate `archive/` directory
-2. Add a note at the top: `ARCHIVED: {date} — All items complete`
-3. Keep the original in place as reference until the next planning cycle
+```
+docs/
+├── MASTER_PLAN.md          # Single source of truth for planning (read this first)
+├── architecture/           # TRDs and ADRs
+│   ├── TRD-001 to TRD-003  # Technical Reference Documents
+│   └── decisions/          # ADR-001+, ADR_TEMPLATE
+├── process/                # This file and process documentation
+├── changelog/              # CHANGELOG.md
+├── issues/                 # open/, in-progress/, closed/
+├── reviews/                # Code reviews and remediation plans
+└── archive/                # Completed/superseded documents
+    ├── prds/               # Archived PRDs with completion summaries
+    └── plans/              # Archived PLAN-001, PLAN-002
+```
