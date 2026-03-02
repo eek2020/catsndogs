@@ -22,6 +22,7 @@ class GameStateType(Enum):
     FACTION_SCREEN = auto()
     SHIP_SCREEN = auto()
     SETTINGS = auto()
+    PURCHASE = auto()
 
 
 class GameState(ABC):

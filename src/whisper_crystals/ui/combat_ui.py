@@ -295,6 +295,24 @@ class CombatState(GameState):
                 color=(*DIM[:2], alpha),
             )
 
+            # Show repair prompt if player has hull damage
+            if self.player.current_hull < self.player.max_hull:
+                damage_percent = 1.0 - (self.player.current_hull / self.player.max_hull)
+                if damage_percent > 0.1:  # Only show if more than 10% damage
+                    repair_y = sh - 140
+                    renderer.draw_text(
+                        "⚠ HULL DAMAGE DETECTED",
+                        (sw // 2 - 100, repair_y),
+                        size=14,
+                        color=HEALTH_RED,
+                    )
+                    renderer.draw_text(
+                        "Press R to open repair dock",
+                        (sw // 2 - 120, repair_y + 20),
+                        size=12,
+                        color=DIM,
+                    )
+
     def _draw_ship(
         self,
         renderer: RenderInterface,

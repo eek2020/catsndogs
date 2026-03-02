@@ -37,6 +37,7 @@ from whisper_crystals.ui.faction_screen import FactionScreenState
 from whisper_crystals.ui.menu import MenuState
 from whisper_crystals.ui.navigation import NavigationState
 from whisper_crystals.ui.pause_menu import PauseMenuState
+from whisper_crystals.ui.purchase_screen import PurchaseScreenState
 from whisper_crystals.ui.settings_screen import SettingsScreenState, load_settings
 from whisper_crystals.ui.ship_screen import ShipScreenState
 from whisper_crystals.ui.trade_screen import TradeScreenState
@@ -141,6 +142,9 @@ class GameSession:
                 return True
             if Action.FIRE in actions:
                 self._open_ship_screen()
+                return True
+            if Action.MENU_SELECT in actions:
+                self.nav_state._open_purchase_screen()
                 return True
 
         state.handle_input(actions)
@@ -380,6 +384,18 @@ class GameSession:
             )
             self.state_machine.push(trade)
 
+    def open_purchase_screen(self, location: str) -> None:
+        """Push purchase screen overlay for ship repairs, upgrades, and new ships."""
+        if self.game_state:
+            purchase = PurchaseScreenState(
+                machine=self.state_machine,
+                game_state=self.game_state,
+                economy=self.economy_system,
+                location=location,
+                on_close=lambda: self.state_machine.pop(),
+            )
+            self.state_machine.push(purchase)
+
     # ------------------------------------------------------------------
     # Navigation
     # ------------------------------------------------------------------
@@ -395,6 +411,7 @@ class GameSession:
             narrative=self.narrative,
             on_encounter=self._on_encounter,
             on_arc_complete=self._on_arc_complete,
+            session=self,
         )
         self.state_machine.switch(self.nav_state)
 

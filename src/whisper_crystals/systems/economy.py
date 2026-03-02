@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from whisper_crystals.entities.crystal import CrystalDeposit, CrystalMarket, SupplyRoute
+from whisper_crystals.entities.ship import Ship
 
 if TYPE_CHECKING:
     from whisper_crystals.core.event_bus import EventBus
@@ -363,3 +364,204 @@ class EconomySystem:
             "net_profit": total_earned - total_spent,
             "trade_count": len(game_state.trade_ledger),
         }
+
+    # ------------------------------------------------------------------
+    # Ship repair and upgrade system
+    # ------------------------------------------------------------------
+
+    def calculate_repair_cost(self, ship: Ship, repair_amount: int) -> int:
+        """Calculate salvage cost to repair hull damage."""
+        if repair_amount <= 0 or ship.current_hull >= ship.max_hull:
+            return 0
+        
+        # Base cost per hull point varies by ship class
+        base_cost_per_hull = ship.max_hull * 0.5  # 50% of max hull as base
+        return int(base_cost_per_hull * (repair_amount / ship.max_hull))
+
+    def repair_ship(self, game_state: GameStateData, repair_amount: int) -> bool:
+        """Repair ship hull using salvage as currency."""
+        ship = game_state.player_ship
+        if repair_amount <= 0:
+            return False
+        
+        # Can't repair beyond max hull
+        actual_repair = min(repair_amount, ship.max_hull - ship.current_hull)
+        if actual_repair <= 0:
+            return False
+        
+        cost = self.calculate_repair_cost(ship, actual_repair)
+        if game_state.salvage < cost:
+            return False
+        
+        # Apply repair and cost
+        game_state.salvage -= cost
+        ship.current_hull += actual_repair
+        
+        game_state.trade_ledger.append({
+            "type": "repair",
+            "repair_amount": actual_repair,
+            "cost": cost,
+        })
+        
+        self.event_bus.publish(
+            "ship_repaired",
+            repair_amount=actual_repair,
+            cost=cost,
+            current_hull=ship.current_hull,
+            max_hull=ship.max_hull,
+        )
+        return True
+
+    def purchase_upgrade(self, game_state: GameStateData, upgrade_id: str) -> bool:
+        """Purchase and install a ship upgrade."""
+        # Load upgrade templates
+        from whisper_crystals.core.data_loader import DataLoader
+        data_loader = DataLoader()
+        upgrades = data_loader.load_upgrades()
+        
+        upgrade_data = None
+        for upg in upgrades:
+            if upg["upgrade_id"] == upgrade_id:
+                upgrade_data = upg
+                break
+        
+        if not upgrade_data:
+            return False
+        
+        ship = game_state.player_ship
+        
+        # Check if upgrade already installed
+        for existing in ship.upgrades:
+            if existing.upgrade_id == upgrade_id:
+                return False
+        
+        # Check resources
+        if game_state.crystal_inventory < upgrade_data.get("cost_crystals", 0):
+            return False
+        if game_state.salvage < upgrade_data.get("cost_salvage", 0):
+            return False
+        
+        # Check stat caps (max 15 for most stats)
+        from whisper_crystals.entities.ship import ShipUpgrade
+        upgrade = ShipUpgrade.from_dict(upgrade_data)
+        current_stat = getattr(ship.base_stats, upgrade.target_stat, 0)
+        if current_stat + upgrade.modifier > 15:
+            return False
+        
+        # Apply upgrade
+        game_state.crystal_inventory -= upgrade.cost_crystals
+        game_state.salvage -= upgrade.cost_salvage
+        ship.upgrades.append(upgrade)
+        
+        # Apply stat modifier
+        setattr(ship.base_stats, upgrade.target_stat, current_stat + upgrade.modifier)
+        
+        # Apply side effects if any
+        if "side_effect" in upgrade_data:
+            side_effect = upgrade_data["side_effect"]
+            side_stat = getattr(ship.base_stats, side_effect["target_stat"], 0)
+            setattr(ship.base_stats, side_effect["target_stat"], 
+                   side_stat + side_effect["modifier"])
+        
+        game_state.trade_ledger.append({
+            "type": "upgrade",
+            "upgrade_id": upgrade_id,
+            "cost_crystals": upgrade.cost_crystals,
+            "cost_salvage": upgrade.cost_salvage,
+        })
+        
+        self.event_bus.publish(
+            "upgrade_purchased",
+            upgrade_id=upgrade_id,
+            target_stat=upgrade.target_stat,
+            modifier=upgrade.modifier,
+        )
+        return True
+
+    def calculate_ship_trade_in_value(self, ship: Ship) -> int:
+        """Calculate trade-in value for current ship."""
+        base_value = ship.max_hull * 2  # Base value from hull
+        
+        # Add value from upgrades
+        upgrade_value = sum(upg.cost_salvage * 0.5 for upg in ship.upgrades)
+        
+        # Condition bonus/penalty
+        condition_factor = ship.current_hull / ship.max_hull
+        
+        return int((base_value + upgrade_value) * condition_factor)
+
+    def purchase_ship(self, game_state: GameStateData, template_id: str) -> bool:
+        """Purchase a new ship, trading in current ship."""
+        # Load ship templates
+        from whisper_crystals.core.data_loader import DataLoader
+        data_loader = DataLoader()
+        ship_templates = data_loader.load_ship_templates()
+        
+        template_data = ship_templates.get(template_id)
+        if not template_data:
+            return False
+        
+        # Check faction reputation
+        faction_id = template_data["faction_id"]
+        faction = game_state.faction_registry.get(faction_id)
+        if not faction or faction.reputation_with_player < 0:
+            return False
+        
+        # Calculate costs
+        from whisper_crystals.entities.ship import Ship
+        new_ship = Ship.from_template(template_data, "player_new_ship", template_data["name"])
+        trade_in_value = self.calculate_ship_trade_in_value(game_state.player_ship)
+        purchase_cost = new_ship.max_hull * 3  # Base cost
+        net_cost = max(0, purchase_cost - trade_in_value)
+        
+        # Check resources
+        if game_state.salvage < net_cost:
+            return False
+        
+        # Handle cargo transfer
+        old_capacity = game_state.player_ship.base_stats.crystal_capacity * 10
+        new_capacity = new_ship.base_stats.crystal_capacity * 10
+        
+        if game_state.crystal_inventory > new_capacity:
+            # Can't transfer all cargo, abort
+            return False
+        
+        # Handle crew transfer
+        if len(game_state.player_ship.crew) > new_ship.base_stats.crew_capacity:
+            # Can't transfer all crew, abort
+            return False
+        
+        # Execute purchase
+        game_state.salvage -= net_cost
+        
+        # Transfer cargo and crew
+        new_ship.crystal_cargo = game_state.player_ship.crystal_cargo
+        new_ship.crew = game_state.player_ship.crew.copy()
+        
+        # Transfer compatible upgrades
+        for upgrade in game_state.player_ship.upgrades:
+            # Simple compatibility check - same target stat
+            if hasattr(new_ship.base_stats, upgrade.target_stat):
+                new_ship.upgrades.append(upgrade)
+                # Apply upgrade stats to new ship
+                current_stat = getattr(new_ship.base_stats, upgrade.target_stat, 0)
+                setattr(new_ship.base_stats, upgrade.target_stat, current_stat + upgrade.modifier)
+        
+        # Replace player ship
+        game_state.player_ship = new_ship
+        
+        game_state.trade_ledger.append({
+            "type": "ship_purchase",
+            "template_id": template_id,
+            "trade_in_value": trade_in_value,
+            "purchase_cost": purchase_cost,
+            "net_cost": net_cost,
+        })
+        
+        self.event_bus.publish(
+            "ship_purchased",
+            template_id=template_id,
+            ship_name=new_ship.name,
+            net_cost=net_cost,
+        )
+        return True

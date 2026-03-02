@@ -444,3 +444,86 @@ class TestSerialization:
         assert restored.base_price == market.base_price
         assert restored.demand_multipliers == market.demand_multipliers
         assert restored.supply_modifier == market.supply_modifier
+
+
+# ---- Ship Repair Tests ----
+
+class TestShipRepair:
+    def test_calculate_repair_cost(
+        self, economy: EconomySystem, game_state: GameStateData,
+    ) -> None:
+        ship = game_state.player_ship
+        ship.current_hull = 50
+        ship.max_hull = 100
+        cost = economy.calculate_repair_cost(ship, 20)
+        # base_cost_per_hull = 100 * 0.5 = 50; cost = int(50 * (20/100)) = 10
+        assert cost == 10
+
+    def test_calculate_repair_cost_no_damage(
+        self, economy: EconomySystem, game_state: GameStateData,
+    ) -> None:
+        ship = game_state.player_ship
+        ship.current_hull = 100
+        ship.max_hull = 100
+        assert economy.calculate_repair_cost(ship, 10) == 0
+
+    def test_repair_ship_success(
+        self, economy: EconomySystem, game_state: GameStateData, event_bus: EventBus,
+    ) -> None:
+        game_state.player_ship.current_hull = 60
+        game_state.player_ship.max_hull = 100
+        game_state.salvage = 100
+        events: list[dict] = []
+        event_bus.subscribe("ship_repaired", lambda **kw: events.append(kw))
+
+        assert economy.repair_ship(game_state, 20)
+        assert game_state.player_ship.current_hull == 80
+        assert game_state.salvage < 100
+        assert len(game_state.trade_ledger) == 1
+        assert game_state.trade_ledger[-1]["type"] == "repair"
+        assert len(events) == 1
+
+    def test_repair_ship_insufficient_salvage(
+        self, economy: EconomySystem, game_state: GameStateData,
+    ) -> None:
+        game_state.player_ship.current_hull = 10
+        game_state.player_ship.max_hull = 100
+        game_state.salvage = 0
+        assert not economy.repair_ship(game_state, 50)
+        assert game_state.player_ship.current_hull == 10
+
+    def test_repair_ship_caps_at_max_hull(
+        self, economy: EconomySystem, game_state: GameStateData,
+    ) -> None:
+        game_state.player_ship.current_hull = 90
+        game_state.player_ship.max_hull = 100
+        game_state.salvage = 500
+        assert economy.repair_ship(game_state, 50)  # Request 50 but only 10 needed
+        assert game_state.player_ship.current_hull == 100
+
+    def test_repair_ship_already_full(
+        self, economy: EconomySystem, game_state: GameStateData,
+    ) -> None:
+        game_state.player_ship.current_hull = 100
+        game_state.player_ship.max_hull = 100
+        assert not economy.repair_ship(game_state, 10)
+
+
+# ---- Starting State Tests ----
+
+class TestStartingState:
+    def test_starting_salvage(self) -> None:
+        from unittest.mock import MagicMock
+        from whisper_crystals.core.game_state import create_new_game_state
+
+        loader = MagicMock()
+        loader.load_factions.return_value = {}
+        loader.load_relationship_matrix.return_value = {}
+        loader.load_cascade_rules.return_value = []
+        loader.load_ship_templates.return_value = {}
+        loader.load_crystal_deposits.return_value = {}
+        loader.load_supply_routes.return_value = {}
+        loader.load_crystal_market.return_value = CrystalMarket()
+
+        state = create_new_game_state(loader)
+        assert state.salvage == 50

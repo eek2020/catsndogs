@@ -119,6 +119,10 @@ class DataLoader:
         data = self._load_json("economy/regions.json")
         return data.get("regions", [])
 
+    def load_regions_full(self) -> dict:
+        """Load full regions data including repair locations and ship dealers."""
+        return self._load_json("economy/regions.json")
+
     def load_points_of_interest(self) -> list[dict]:
         """Load point-of-interest definitions."""
         data = self._load_json("economy/regions.json")

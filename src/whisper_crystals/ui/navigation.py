@@ -43,6 +43,7 @@ class NavigationState(GameState):
         narrative: NarrativeSystem | None = None,
         on_encounter: callable | None = None,
         on_arc_complete: callable | None = None,
+        session: object | None = None,
     ) -> None:
         super().__init__(machine)
         self.camera = camera
@@ -52,6 +53,7 @@ class NavigationState(GameState):
         self.narrative = narrative
         self._on_encounter = on_encounter
         self._on_arc_complete = on_arc_complete
+        self.session = session
 
         self.starfield = Starfield(num_stars=300, seed=42)
         self.hud = HUD()
@@ -152,6 +154,41 @@ class NavigationState(GameState):
         for action in actions:
             if action == Action.PAUSE:
                 pass  # Handled by GameSession.tick() before reaching here
+
+    def _open_ship_screen(self) -> None:
+        """Open ship management screen."""
+        if self.session:
+            # This would need to be implemented in session
+            pass
+
+    def _open_purchase_screen(self) -> None:
+        """Open purchase screen if at a location with shipyard."""
+        if self.session and self.game_state_data:
+            # Check if current region has shipyard/repair facilities
+            current_region = self.game_state_data.current_region
+            regions_data = self.session.data_loader.load_regions_full()
+            
+            # Find region data
+            region_info = None
+            for region in regions_data.get("regions", []):
+                if region["region_id"] == current_region:
+                    region_info = region
+                    break
+            
+            # Also check if region is in repair_locations or ship_dealers
+            repair_locations = regions_data.get("repair_locations", [])
+            ship_dealers = regions_data.get("ship_dealers", {})
+            
+            has_facilities = (
+                (region_info and (region_info.get("has_shipyard", False) or region_info.get("repair_facilities", False))) or
+                (current_region in repair_locations) or
+                (current_region in ship_dealers)
+            )
+            
+            if has_facilities:
+                self.session.open_purchase_screen(current_region)
+            else:
+                self.hud.flash("No shipyard facilities at this location.", 2.0)
 
     def update(self, dt: float) -> None:
         dx, dy = 0.0, 0.0
@@ -397,8 +434,8 @@ class NavigationState(GameState):
             )
 
             renderer.draw_text(
-                "WASD: MOVE   |   E: FACTIONS   |   SPACE: SHIP   |   ESC: PAUSE",
-                (sw // 2 - 245, sh - 28),
+                "WASD: MOVE   |   E: FACTIONS   |   SPACE: SHIP   |   R: SHIPYARD   |   ESC: PAUSE",
+                (sw // 2 - 265, sh - 28),
                 size=16,
                 color=(160, 160, 170),
             )

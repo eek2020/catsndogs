@@ -193,6 +193,7 @@ class GameStateData:
 def create_new_game_state(data_loader) -> GameStateData:
     """Initialise a fresh game state from JSON data files."""
     state = GameStateData()
+    state.salvage = 50
 
     # Load factions
     state.faction_registry = data_loader.load_factions()

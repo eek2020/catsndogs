@@ -24,6 +24,7 @@ class Action(Enum):
     CANCEL = auto()
     MENU_UP = auto()
     MENU_DOWN = auto()
+    MENU_SELECT = auto()
 
 
 # ---------------------------------------------------------------------------
