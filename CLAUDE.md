@@ -78,7 +78,7 @@ story/            # Narrative reference (arcs, characters, factions)
 
 ## Task Workflow
 
-1. Check `docs/plans/PLAN-001_Task_Tracker.md` for your assigned task
+1. Check `docs/archive/plans/PLAN-001_Task_Tracker.md` for your assigned task
 2. Read the task description, dependencies, and acceptance criteria
 3. Read all files you will modify before making changes
 4. Implement the changes

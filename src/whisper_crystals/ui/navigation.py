@@ -23,6 +23,7 @@ SHIP_SPEED = 300.0
 SHIP_COLOR = (180, 50, 220)  # Felid Corsair purple
 SHIP_SIZE = 18
 SHIP_SPRITE_MAX_EDGE = 140
+POI_SHIP_SIZE = (48, 48)  # Size to render faction ship sprites at POIs
 
 # How often (in seconds) we check for encounter triggers
 ENCOUNTER_CHECK_INTERVAL = 1.5
@@ -37,6 +38,40 @@ ENCOUNTER_TYPE_COLORS: dict[str, tuple[int, int, int]] = {
     "distress_signal": (255, 160, 50),  # orange
 }
 ENCOUNTER_COLOR_DEFAULT = (255, 200, 100)  # gold fallback
+
+# Map encounter locations to the faction most associated with that realm
+LOCATION_FACTION: dict[str, str] = {
+    "canine_order": "canis_league",
+    "trade_hub_alpha": "canis_league",
+    "league_border": "canis_league",
+    "league_space": "canis_league",
+    "feline_courts": "felid_corsairs",
+    "corsair_space": "felid_corsairs",
+    "lion_territory": "lions",
+    "lion_space": "lions",
+    "wolf_territory": "wolves",
+    "wolf_space": "wolves",
+    "fairy_realm": "fairy_court",
+    "fairy_space": "fairy_court",
+    "goblin_territory": "goblin_syndicate",
+    "goblin_space": "goblin_syndicate",
+    "knight_realm": "knight_order",
+    "knight_space": "knight_order",
+    "ancient_ruins": "ancient_ones",
+    "void_space": "ancient_ones",
+}
+
+# Faction ID to ship_template_id mapping (mirrors faction_registry.json)
+FACTION_SHIP_TEMPLATE: dict[str, str] = {
+    "felid_corsairs": "corsair_raider",
+    "canis_league": "league_cruiser",
+    "lions": "royal_galleon",
+    "wolves": "wolf_strike_craft",
+    "fairy_court": "fairy_vessel",
+    "knight_order": "knight_warship",
+    "goblin_syndicate": "goblin_scrapship",
+    "ancient_ones": "alien_craft",
+}
 
 
 class NavigationState(GameState):
@@ -81,46 +116,79 @@ class NavigationState(GameState):
         self._check_timer: float = 0.0
         self.active_pois: list[dict] = []
 
-        # Optional sprite ship rendering (loaded lazily via engine)
+        # Sprite rendering (loaded lazily via SpriteManager or engine fallback)
         self._ship_sprite: object | None = None
         self._ship_sprite_points_up = False
         self._cutlass_sprite: object | None = None
         self._sprite_loaded = False
 
+    @staticmethod
+    def _infer_faction(encounter: object) -> str:
+        """Infer the primary faction associated with an encounter.
+
+        Checks faction_changes in choice outcomes first, then falls back
+        to location-based mapping.
+        """
+        # Check faction_changes in choice outcomes for the primary faction
+        for choice in getattr(encounter, "choices", []):
+            outcome = getattr(choice, "outcome", None)
+            if outcome:
+                fc = getattr(outcome, "faction_changes", {})
+                if fc:
+                    return next(iter(fc))
+
+        # Fall back to location mapping
+        location = getattr(encounter, "location", "")
+        return LOCATION_FACTION.get(location, "")
+
+    def _get_sprite_manager(self) -> object | None:
+        """Return the SpriteManager from the session, if available."""
+        if self.session:
+            return getattr(self.session, "sprite_manager", None)
+        return None
+
     def _ensure_sprite_loaded(self) -> None:
-        """Lazily load ship artwork using engine image utilities."""
+        """Lazily load ship artwork using SpriteManager or engine fallback."""
         if self._sprite_loaded:
             return
         self._sprite_loaded = True
 
-        from whisper_crystals.engine.image_utils import (
-            load_image_alpha,
-            remove_background_by_corners,
-        )
+        sm = self._get_sprite_manager()
+        if sm is not None:
+            # Use SpriteManager for player ship and cutlass
+            self._ship_sprite = sm.get_ship("corsair_raider")
+            self._ship_sprite_points_up = False
+            self._cutlass_sprite = sm.get_ui("fight_cutlass", remove_bg=True)
+        else:
+            # Fallback: load directly from engine utilities
+            from whisper_crystals.engine.image_utils import (
+                load_image_alpha,
+                remove_background_by_corners,
+            )
 
-        project_root = Path(__file__).resolve().parents[3]
-        ships_dir = project_root / "design" / "ships"
-        candidates = [
-            (ships_dir / "ship_r_side.png", False),
-            (ships_dir / "ship_up_side.png", True),
-        ]
+            project_root = Path(__file__).resolve().parents[3]
+            ships_dir = project_root / "design" / "ships"
+            candidates = [
+                (ships_dir / "ship_r_side.png", False),
+                (ships_dir / "ship_up_side.png", True),
+            ]
 
-        for image_path, points_up in candidates:
-            if not image_path.exists():
-                continue
-            image = load_image_alpha(str(image_path))
-            if image is None:
-                continue
-            image = remove_background_by_corners(image)
-            self._ship_sprite = image
-            self._ship_sprite_points_up = points_up
-            break
+            for image_path, points_up in candidates:
+                if not image_path.exists():
+                    continue
+                image = load_image_alpha(str(image_path))
+                if image is None:
+                    continue
+                image = remove_background_by_corners(image)
+                self._ship_sprite = image
+                self._ship_sprite_points_up = points_up
+                break
 
-        cutlass_path = project_root / "design" / "ui_ux" / "fight_cutlass.png"
-        if cutlass_path.exists():
-            image = load_image_alpha(str(cutlass_path))
-            if image is not None:
-                self._cutlass_sprite = remove_background_by_corners(image)
+            cutlass_path = project_root / "design" / "ui_ux" / "fight_cutlass.png"
+            if cutlass_path.exists():
+                image = load_image_alpha(str(cutlass_path))
+                if image is not None:
+                    self._cutlass_sprite = remove_background_by_corners(image)
 
     def _render_vector_ship(self, renderer: RenderInterface, sx: int, sy: int, a: float) -> None:
         """Fallback ship rendering when sprite art is unavailable."""
@@ -281,6 +349,7 @@ class NavigationState(GameState):
         
         active_ids = {p["encounter"].encounter_id for p in self.active_pois}
         
+        sm = self._get_sprite_manager()
         for enc in available:
             if enc.encounter_id not in active_ids:
                 # Spawn POI ahead or around player
@@ -288,17 +357,26 @@ class NavigationState(GameState):
                 dist = random.uniform(400, 1000)
                 px = self.ship_x + math.cos(angle) * dist
                 py = self.ship_y + math.sin(angle) * dist
-                
+
                 color = ENCOUNTER_TYPE_COLORS.get(
                     enc.encounter_type, ENCOUNTER_COLOR_DEFAULT
                 )
-                    
+
+                # Resolve faction ship sprite for combat POIs
+                faction_id = self._infer_faction(enc)
+                ship_template = FACTION_SHIP_TEMPLATE.get(faction_id, "")
+                poi_sprite = None
+                if sm and ship_template:
+                    poi_sprite = sm.get_ship(ship_template, size=POI_SHIP_SIZE)
+
                 self.active_pois.append({
                     "encounter": enc,
                     "x": px,
                     "y": py,
                     "radius": 40.0,
-                    "color": color
+                    "color": color,
+                    "faction_id": faction_id,
+                    "ship_sprite": poi_sprite,
                 })
 
     def _update_distress(self, dt: float) -> None:
@@ -322,6 +400,8 @@ class NavigationState(GameState):
                 "color": ENCOUNTER_TYPE_COLORS.get(
                     encounter.encounter_type, ENCOUNTER_COLOR_DEFAULT
                 ),
+                "faction_id": "",
+                "ship_sprite": None,
             })
             self.hud.flash(f"DISTRESS SIGNAL: {encounter.title}", 3.0)
 
@@ -388,25 +468,40 @@ class NavigationState(GameState):
             # Encounter Rendering
             pulse = 1.0 + 0.2 * math.sin(pulse_time * 3 + px * 0.01)
             is_combat = poi["encounter"].encounter_type == "combat"
-            
-            if is_combat and getattr(self, "_cutlass_sprite", None) is not None:
-                # Grow and shrink softly (pulsating)
+            poi_ship = poi.get("ship_sprite")
+
+            if is_combat and poi_ship is not None:
+                # Faction ship sprite for combat POIs — pulsing glow behind
+                ship_pulse = 1.0 + 0.15 * math.sin(pulse_time * 4)
+                renderer.draw_glow((sx, sy), int((r * 1.5) * ship_pulse), poi["color"])
+                # Draw faction ship sprite (slightly bobbing)
+                bob_y = int(3 * math.sin(pulse_time * 2 + px * 0.01))
+                renderer.draw_image(
+                    poi_ship, (sx, sy + bob_y), size=POI_SHIP_SIZE, centered=True,
+                )
+                # Small cutlass icon below to indicate combat
+                if self._cutlass_sprite is not None:
+                    renderer.draw_image(
+                        self._cutlass_sprite, (sx, sy + r + 10),
+                        size=(20, 20), centered=True,
+                    )
+            elif is_combat and self._cutlass_sprite is not None:
+                # Fallback: cutlass icon when no faction ship sprite available
                 cutlass_pulse = 1.0 + 0.15 * math.sin(pulse_time * 4)
-                # Outer glow for the fight
                 renderer.draw_glow((sx, sy), int((r * 1.5) * cutlass_pulse), poi["color"])
-                
-                # Draw scaled cutlass image
                 iw, ih = renderer.get_image_size(self._cutlass_sprite)
                 base_size = r * 2.5
                 max_dim = max(iw, ih)
                 scale = (base_size / max_dim) * cutlass_pulse
                 size = (max(1, int(iw * scale)), max(1, int(ih * scale)))
-                
                 renderer.draw_image(self._cutlass_sprite, (sx, sy), size=size, centered=True)
             else:
                 # Nebula cloud for Story Arcs / non-combat places
                 if hasattr(renderer, "draw_nebula"):
-                    renderer.draw_nebula((sx, sy), int(r * 1.2), poi["color"], pulse_time + px * 0.001)
+                    renderer.draw_nebula(
+                        (sx, sy), int(r * 1.2), poi["color"],
+                        pulse_time + px * 0.001,
+                    )
                 else:
                     renderer.draw_glow((sx, sy), int((r * 1.5) * pulse), poi["color"])
                     core_r = int((r // 2) * (1.0 + 0.1 * math.sin(pulse_time * 5)))

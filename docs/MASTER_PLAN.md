@@ -34,16 +34,16 @@ Three endings are reachable based on cumulative choice history. The core loop is
 | Save / Load | ✅ Complete | SaveManager with 3 slots, atomic writes, settings persistence |
 | All UI States | ✅ Complete | Menu, Navigation, Combat, Trade, Dialogue, Cutscene, Ship Screen, Faction Screen, Pause, Settings, Ending, Mission Log |
 | Side Missions | ✅ Complete | SideMissionSystem, distress signals, mission log UI, 4 arc-1 missions, 5 distress encounters |
-| Test Coverage | ✅ Complete | 210 tests, 100% pass rate, all headless (no display context needed) |
+| Test Coverage | ✅ Complete | 280 tests, 100% pass rate, all headless (no display context needed) |
 | Code Quality | ✅ Complete | Code review done 2026-03-02; 11 critical/medium issues resolved |
 
 ### Codebase Metrics
 
 | Metric | Count |
 |--------|-------|
-| Python modules | 44 |
-| Test files | 13 |
-| Total tests | 210 |
+| Python modules | 46 |
+| Test files | 16 |
+| Total tests | 280 |
 | Test pass rate | 100% |
 | Dataclass entities | 13 |
 | Game systems | 10 |
@@ -150,9 +150,9 @@ These tasks complete the original PLAN-001 scope. All depend on Phases 0–3 bei
 
 | Status | Task | ID | Notes |
 |--------|------|----|-------|
-| ⬜ Todo | Music System (BGM playback, track transitions, per-state themes) | 4.1 | Modify `engine/audio.py`; create `assets/audio/music/` |
-| ⬜ Todo | Sound Effects System (SFX triggers via event bus, volume control) | 4.1b | Depends on 4.1 |
-| ⬜ Todo | Ending Summary Screen | 4.3 | Full decision summary display in `ui/ending_screen.py` |
+| ✅ Done | Music System (BGM playback, track transitions, per-state themes) | 4.1 | `core/music_manager.py` + `assets/audio/music/` + session wiring |
+| ✅ Done | Sound Effects System (SFX triggers via event bus, volume control) | 4.1b | SFX event registry in `core/music_manager.py`, wired via event bus |
+| ✅ Done | Ending Summary Screen | 4.3 | Full decision summary in `ui/ending_screen.py` (scrollable) |
 | ⬜ Todo | Difficulty Balance Pass | 4.4 | Tune `systems/combat.py`, encounter data, ship templates |
 
 ### 6.2 Entertainment Enhancements — Side Missions + Distress Signals (COMPLETE)
@@ -190,10 +190,10 @@ infrastructure to make adding new sprites trivial.
 
 | Status | Task | ID | Scope |
 |--------|------|----|-------|
-| ⬜ Todo | Sprite asset manager | 3.1 | Create `engine/sprite_manager.py` — centralised sprite loading, caching, and scaling. Faction-keyed sprite registry. Lazy-load with fallback to vector shapes. |
-| ⬜ Todo | Faction ship sprites in navigation | 3.2 | Render enemy/NPC ship sprites in POIs using faction-appropriate art (league_cruiser.png, royal_galleon.jpg, etc.). Player ship already uses ship_r_side.png. |
+| ✅ Done | Sprite asset manager | 3.1 | `engine/sprite_manager.py` — centralised sprite loading, caching, scaling, faction-keyed registry. Lazy-load with vector fallback. |
+| ✅ Done | Faction ship sprites in navigation | 3.2 | POIs show faction ship sprites for combat encounters. SpriteManager wired into session + navigation. Faction inferred from encounter data. |
 | ⬜ Todo | Character portraits in all dialogues | 3.3 | Ensure all dialogue encounters render NPC portraits from `design/charcters/`. Add faction-coloured portrait frames. Handle missing portraits with silhouette fallback. |
-| ⬜ Todo | Combat scene ship sprites | 3.4 | Replace vector combat ships in `ui/combat_ui.py` with sprite rendering. Player ship left, enemy ship right. Damage effects (tinting, shake). |
+| ✅ Done | Combat scene ship sprites | 3.4 | Ship sprites replace vector shapes in `ui/combat_ui.py`. Player ship left, enemy right (flipped). Vector fallback preserved. `CombatShip.ship_template_id` added. |
 | ⬜ Todo | Faction-themed UI panels | 3.5 | Apply faction colour palettes (from art direction guide) to UI panel borders, glow effects, and text colours when viewing faction-specific content. Extract colours to `ui/theme.py`. |
 | ⬜ Todo | Region-specific space backgrounds | 3.6 | Colour-temperature tinting per region (amber for starting realm, blue for Canis territory, gold for Lion territory). Modify starfield palette based on `current_region`. |
 | ⬜ Todo | Crystal visual effects | 3.7 | Whisper crystal glow in HUD (pulsing blue-white), crystal deposit POI effects, ship engine crystal chamber glow during thrust. |
@@ -218,15 +218,16 @@ infrastructure to make adding new sprites trivial.
 | League Cruiser | `design/ships/league_cruiser.png` | Not used — ready for 3.2 |
 | League Destroyer | `design/ships/league_destroyer.jpg` | Not used — ready for 3.2 |
 | Royal Galleon | `design/ships/royal_galleon.jpg` | Not used — ready for 3.2 |
+| Wolf Strike Craft | `design/ships/wolf_ship.png` | Used in navigation + combat (3.2, 3.4) |
+| Fairy Vessel | `design/ships/fairy_ship.png` | Used in navigation + combat (3.2, 3.4) |
+| Knight Warship | `design/ships/knight_ship.png` | Used in navigation + combat (3.2, 3.4) |
+| Goblin Scrapship | `design/ships/goblin_scrapper.png` | Used in navigation + combat (3.2, 3.4) |
 | Combat cutlass icon | `design/ui_ux/fight_cutlass.png` | Used for combat POIs |
 | Splash screen | `design/artwork/wc_splash_screen.png` | Used on startup |
 | Title graphic | `design/artwork/whisper_crystals_title.png` | Used on menu |
 
 **Missing art to commission/generate:**
-- Wolf ship sprite (charcoal/dark green tactical profile)
-- Fairy ship/vessel sprite (iridescent, organic)
-- Goblin scrapper sprite (rust/junk aesthetic)
-- Knight ship sprite (silver/heraldic)
+
 - Alien vessel sprite (neon cyan/bioluminescent)
 - Faction-specific UI frame textures (optional, can use colour tinting)
 - Crystal deposit sprite/animation

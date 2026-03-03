@@ -6,6 +6,88 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-03 — PLAN-003 (3.2, 3.4) Ship Sprite Integration
+
+**Tasks:** Register new ship art, faction ship sprites in navigation, combat ship sprites
+**Model:** Opus 4.6
+
+### New Art Assets
+
+- `design/ships/wolf_ship.png` — Wolf Clans strike craft
+- `design/ships/fairy_ship.png` — Fairy Court vessel
+- `design/ships/knight_ship.png` — Knight Order warship
+- `design/ships/goblin_scrapper.png` — Goblin Syndicate scrapship
+
+### Modified Files
+
+- `engine/sprite_manager.py` — Registered 4 new ship sprites (wolf, fairy, knight, goblin) in
+  SHIP_SPRITES registry. Only `alien_craft` remains as a placeholder.
+- `__main__.py` — Creates SpriteManager and passes to GameSession.
+- `core/session.py` — Accepts `sprite_manager` parameter, stores it, passes to CombatState.
+- `ui/navigation.py` — Faction ship sprites rendered at combat POIs (with bobbing animation and
+  cutlass sub-icon). Faction inferred from encounter data via `_infer_faction()`. Player ship
+  loading refactored to use SpriteManager. Location-to-faction and faction-to-template mappings.
+- `ui/combat_ui.py` — Ship sprites replace vector shapes when available. Player sprite (facing
+  right) and enemy sprite (flipped left). Vector fallback preserved. Lazy-loaded via
+  `_ensure_sprites_loaded()`.
+- `systems/combat.py` — Added `ship_template_id` field to `CombatShip` dataclass. Populated
+  in both `from_game_ship()` and `from_template()` factory methods.
+- `tests/test_sprite_manager.py` — Updated tests: new assets have paths, only `alien_craft`
+  is empty. Test count: 26.
+
+### Test Results
+
+- 281 tests, 100% pass rate
+- EAL compliance verified (zero pygame imports in core/systems/entities)
+
+---
+
+## 2026-03-03 — Phase 4 (4.1, 4.1b, 4.3) + PLAN-003 (3.1)
+
+**Tasks:** Music System, SFX System, Ending Summary Screen, Sprite Asset Manager
+**Model:** Opus 4.6
+
+### New Files
+
+- `core/music_manager.py` — MusicManager with per-state theme mapping, arc-specific navigation
+  themes, SFX event registry, enable/disable controls. Engine-agnostic (uses AudioInterface ABC).
+- `engine/sprite_manager.py` — SpriteManager with centralised sprite loading, caching, scaling,
+  faction-keyed ship/portrait/character registries, faction colour palettes. Lazy-load with
+  graceful fallback to None (callers use vector shapes).
+- `tests/test_music_manager.py` — 18 tests covering theme registry, state transitions, arc themes,
+  overlay behaviour, SFX triggers, enable/disable, no-audio fallback.
+- `tests/test_sprite_manager.py` — 25 tests covering registry completeness, lookup/caching,
+  flip/scale, faction colour lookup, preload, cache clearing.
+- `tests/test_ending_screen.py` — 18 tests covering ending calculation, summary builder
+  (stats, factions, decisions, missions), input handling (scroll, confirm), text wrapping.
+- `assets/audio/music/.gitkeep` — Directory for BGM track files
+- `assets/audio/sfx/.gitkeep` — Directory for SFX files
+
+### Modified Files
+
+- `core/session.py` — Replaced raw audio event subscriptions with MusicManager. Added
+  `music.on_state_change()` at all key transitions (menu, cutscene, navigation, dialogue,
+  combat, trade, ending). Wired SFX events through music manager. Arc advancement updates
+  navigation theme via `music.on_arc_change()`.
+- `ui/ending_screen.py` — Full rewrite: scrollable decision summary with voyage statistics
+  (duration, crystals, salvage, encounters, decisions, ship status), faction standings with
+  reputation tags (Allied/Friendly/Neutral/Hostile/At War), side mission summary, decision
+  history grouped by arc with positive/negative indicators. Arrow key scrolling. Fixed
+  `.reputation` → `.reputation_with_player` bug.
+
+### Bug Fixes
+
+- Fixed `EndingState._calculate_ending()` using non-existent `.reputation` attribute on
+  Faction entities (should be `.reputation_with_player`). Same fix in `_build_summary()`.
+
+### Test Results
+
+- All 280 tests pass (210 previous + 70 new)
+- All tests run headless without pygame display context
+- EAL verification: zero pygame imports in `core/`, `systems/`, `entities/`
+
+---
+
 ## 2026-03-02 — PLAN-002: Side Missions & Distress Signals
 
 **Task:** Entertainment Enhancements — Side Missions + Distress Signals (13 tasks)

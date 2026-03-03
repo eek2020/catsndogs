@@ -52,6 +52,7 @@ class RenderInterface(ABC):
         font_id: str | None = None,
         color: tuple[int, int, int] = (255, 255, 255),
         size: int = 24,
+        shadow: bool = True,
     ) -> None:
         pass
 

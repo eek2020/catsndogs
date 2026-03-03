@@ -21,6 +21,7 @@ class CombatShip:
     current_hull: int
     max_hull: int
     is_player: bool = False
+    ship_template_id: str = ""
 
     @classmethod
     def from_game_ship(cls, ship, is_player: bool = False) -> CombatShip:
@@ -33,6 +34,7 @@ class CombatShip:
             current_hull=ship.current_hull,
             max_hull=ship.max_hull,
             is_player=is_player,
+            ship_template_id=getattr(ship, "ship_class", ""),
         )
 
     @classmethod
@@ -46,6 +48,7 @@ class CombatShip:
             firepower=stats.get("firepower", 5),
             current_hull=template.get("max_hull", 100),
             max_hull=template.get("max_hull", 100),
+            ship_template_id=template.get("template_id", ""),
         )
 
 

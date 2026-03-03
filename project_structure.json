@@ -1,0 +1,1618 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-03-03T22:59:59.845026+00:00",
+  "project_root": "/Users/erichook-marshall/Downloads/git/catsndogs",
+  "notes": {
+    "machine_readable": true,
+    "excluded_directories": [
+      ".git",
+      ".pytest_cache",
+      "__pycache__"
+    ],
+    "excluded_files": [
+      ".DS_Store"
+    ],
+    "exclusion_reason": "Avoids VCS/cache noise; focuses on actionable project structure."
+  },
+  "structure": {
+    "path": ".",
+    "type": "directory",
+    "size_bytes": null,
+    "children": [
+      {
+        "path": ".claude",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": ".claude/settings.local.json",
+            "type": "file",
+            "size_bytes": 2702,
+            "purpose": "JSON data file",
+            "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+          }
+        ],
+        "purpose": "AI assistant configuration",
+        "unique_characteristics": "Contains local assistant settings used by Claude tooling."
+      },
+      {
+        "path": "assets",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "assets/audio",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "assets/audio/music",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "assets/audio/music/.gitkeep",
+                    "type": "file",
+                    "size_bytes": 0,
+                    "purpose": "Placeholder file",
+                    "unique_characteristics": "Keeps otherwise-empty directory tracked in git."
+                  }
+                ],
+                "purpose": "Music tracks",
+                "unique_characteristics": "Uses .gitkeep; currently prepared as a placeholder for future BGM assets."
+              },
+              {
+                "path": "assets/audio/sfx",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "assets/audio/sfx/.gitkeep",
+                    "type": "file",
+                    "size_bytes": 0,
+                    "purpose": "Placeholder file",
+                    "unique_characteristics": "Keeps otherwise-empty directory tracked in git."
+                  },
+                  {
+                    "path": "assets/audio/sfx/laser_fire.mp3",
+                    "type": "file",
+                    "size_bytes": 17181,
+                    "purpose": "Audio asset",
+                    "unique_characteristics": "Sound/music media file used by the audio subsystem."
+                  },
+                  {
+                    "path": "assets/audio/sfx/laser_hit.mp3",
+                    "type": "file",
+                    "size_bytes": 48946,
+                    "purpose": "Audio asset",
+                    "unique_characteristics": "Sound/music media file used by the audio subsystem."
+                  },
+                  {
+                    "path": "assets/audio/sfx/menu_tick.mp3",
+                    "type": "file",
+                    "size_bytes": 33481,
+                    "purpose": "Audio asset",
+                    "unique_characteristics": "Sound/music media file used by the audio subsystem."
+                  }
+                ],
+                "purpose": "Sound effects",
+                "unique_characteristics": "Contains gameplay and UI effects (laser/menu feedback sounds)."
+              }
+            ],
+            "purpose": "Audio assets",
+            "unique_characteristics": "Organized into music and sfx for runtime playback."
+          }
+        ],
+        "purpose": "Game assets",
+        "unique_characteristics": "Holds binary media assets used by the game (audio, images)."
+      },
+      {
+        "path": "data",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "data/dialogue",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/dialogue/aristotle_internal.json",
+                "type": "file",
+                "size_bytes": 3120,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/dialogue/dave_hub.json",
+                "type": "file",
+                "size_bytes": 4948,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/dialogue/death_hub.json",
+                "type": "file",
+                "size_bytes": 4860,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Dialogue data",
+            "unique_characteristics": "Conversation hubs and internal monologues for narrative scenes."
+          },
+          {
+            "path": "data/economy",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/economy/economy_data.json",
+                "type": "file",
+                "size_bytes": 4350,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/economy/regions.json",
+                "type": "file",
+                "size_bytes": 5103,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Economy simulation data",
+            "unique_characteristics": "Defines regions and economic balancing constants."
+          },
+          {
+            "path": "data/encounters",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/encounters/arc1_encounters.json",
+                "type": "file",
+                "size_bytes": 15091,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/encounters/arc2_encounters.json",
+                "type": "file",
+                "size_bytes": 10674,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/encounters/arc3_encounters.json",
+                "type": "file",
+                "size_bytes": 13742,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/encounters/arc4_encounters.json",
+                "type": "file",
+                "size_bytes": 13031,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Encounter definitions",
+            "unique_characteristics": "Arc-based encounter packs consumed by encounter systems."
+          },
+          {
+            "path": "data/factions",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/factions/faction_registry.json",
+                "type": "file",
+                "size_bytes": 14457,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Faction registry data",
+            "unique_characteristics": "Source of faction identities/relationships for diplomacy and conquest."
+          },
+          {
+            "path": "data/ships",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/ships/ship_templates.json",
+                "type": "file",
+                "size_bytes": 5575,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Ship template data",
+            "unique_characteristics": "Template definitions for ship stats and classes."
+          },
+          {
+            "path": "data/side_missions",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/side_missions/arc1_side_missions.json",
+                "type": "file",
+                "size_bytes": 3505,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              },
+              {
+                "path": "data/side_missions/distress_signals.json",
+                "type": "file",
+                "size_bytes": 10804,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Side mission data",
+            "unique_characteristics": "Optional mission packs and distress-signal scenarios."
+          },
+          {
+            "path": "data/story",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "data/story/arc_definitions.json",
+                "type": "file",
+                "size_bytes": 4154,
+                "purpose": "JSON data file",
+                "unique_characteristics": "Data-driven configuration/content consumed by runtime loaders."
+              }
+            ],
+            "purpose": "Story progression data",
+            "unique_characteristics": "Arc definition metadata and progression controls."
+          }
+        ],
+        "purpose": "Data-driven gameplay content",
+        "unique_characteristics": "JSON registries powering story, economy, encounters, and world state."
+      },
+      {
+        "path": "design",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "design/archive",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [],
+            "purpose": "Directory",
+            "unique_characteristics": "Project folder used for organization."
+          },
+          {
+            "path": "design/art_direction",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "design/art_direction/art_direction_guide.md",
+                "type": "file",
+                "size_bytes": 4172,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Art direction docs",
+            "unique_characteristics": "Visual style rules and tone references."
+          },
+          {
+            "path": "design/artwork",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "design/artwork/wc_splash_screen.png",
+                "type": "file",
+                "size_bytes": 9837996,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/artwork/whisper_crystals_title.png",
+                "type": "file",
+                "size_bytes": 7243215,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              }
+            ],
+            "purpose": "Brand/splash artwork",
+            "unique_characteristics": "High-resolution title and splash assets for presentation."
+          },
+          {
+            "path": "design/charcters",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "design/charcters/aristotle.png",
+                "type": "file",
+                "size_bytes": 3770565,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/aristotle_head.png",
+                "type": "file",
+                "size_bytes": 5958055,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/dave.png",
+                "type": "file",
+                "size_bytes": 1683657,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/dave_head.png",
+                "type": "file",
+                "size_bytes": 1846318,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/death.jpg",
+                "type": "file",
+                "size_bytes": 100284,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/death_head.png",
+                "type": "file",
+                "size_bytes": 1059057,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/death_head_front.jpg",
+                "type": "file",
+                "size_bytes": 170042,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/charcters/death_v2.jpg",
+                "type": "file",
+                "size_bytes": 192472,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              }
+            ],
+            "purpose": "Character concept art",
+            "unique_characteristics": "Character art source files (folder name intentionally misspelled in repo)."
+          },
+          {
+            "path": "design/ships",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "design/ships/alien_vessel.png",
+                "type": "file",
+                "size_bytes": 8875177,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/fairy_ship.png",
+                "type": "file",
+                "size_bytes": 8152870,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/goblin_scrapper.png",
+                "type": "file",
+                "size_bytes": 8696034,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/knight_ship.png",
+                "type": "file",
+                "size_bytes": 9047787,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/league_cruiser.png",
+                "type": "file",
+                "size_bytes": 5822951,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/league_destroyer.jpg",
+                "type": "file",
+                "size_bytes": 248152,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/royal_galleon.jpg",
+                "type": "file",
+                "size_bytes": 211310,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/ship_design_specs.md",
+                "type": "file",
+                "size_bytes": 4605,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "design/ships/ship_r_side.png",
+                "type": "file",
+                "size_bytes": 8637708,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/ship_up_side.png",
+                "type": "file",
+                "size_bytes": 6460291,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ships/wolf_ship.png",
+                "type": "file",
+                "size_bytes": 8057345,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              }
+            ],
+            "purpose": "Ship concept art + specs",
+            "unique_characteristics": "Ship visual concepts and design specification markdown."
+          },
+          {
+            "path": "design/ui_ux",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "design/ui_ux/combat_background.png",
+                "type": "file",
+                "size_bytes": 8929874,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ui_ux/combat_bg_annotated.png",
+                "type": "file",
+                "size_bytes": 1081230,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ui_ux/combat_bg_calibration.png",
+                "type": "file",
+                "size_bytes": 1633906,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ui_ux/fight_cutlass.png",
+                "type": "file",
+                "size_bytes": 5862999,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ui_ux/ui_ux_specification.md",
+                "type": "file",
+                "size_bytes": 11422,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "design/ui_ux/zoom_left_porthole.png",
+                "type": "file",
+                "size_bytes": 944659,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              },
+              {
+                "path": "design/ui_ux/zoom_right_porthole.png",
+                "type": "file",
+                "size_bytes": 952108,
+                "purpose": "Image asset",
+                "unique_characteristics": "Art/reference visual used for design or runtime visuals."
+              }
+            ],
+            "purpose": "UI/UX references",
+            "unique_characteristics": "Combat background, UI calibrations, and UX specification assets."
+          }
+        ],
+        "purpose": "Design documentation and art references",
+        "unique_characteristics": "Houses visual direction docs and source concept art."
+      },
+      {
+        "path": "docs",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "docs/architecture",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "docs/architecture/decisions",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "docs/architecture/decisions/ADR-001_Project_Structure_Refactor.md",
+                    "type": "file",
+                    "size_bytes": 3904,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  },
+                  {
+                    "path": "docs/architecture/decisions/ADR_TEMPLATE.md",
+                    "type": "file",
+                    "size_bytes": 685,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  }
+                ],
+                "purpose": "Architecture Decision Records",
+                "unique_characteristics": "Formal ADR templates and accepted decisions."
+              },
+              {
+                "path": "docs/architecture/TRD-001_Technical_Architecture_Stack.md",
+                "type": "file",
+                "size_bytes": 19122,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/architecture/TRD-002_Game_Engine_Prototype_Specification.md",
+                "type": "file",
+                "size_bytes": 16560,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/architecture/TRD-003_Data_Model_State_Management.md",
+                "type": "file",
+                "size_bytes": 23035,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Technical architecture docs",
+            "unique_characteristics": "TRDs and ADRs defining core engineering direction."
+          },
+          {
+            "path": "docs/archive",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "docs/archive/briefs",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "docs/archive/briefs/suggestions.md",
+                    "type": "file",
+                    "size_bytes": 9690,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  }
+                ],
+                "purpose": "Directory",
+                "unique_characteristics": "Project folder used for organization."
+              },
+              {
+                "path": "docs/archive/plans",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "docs/archive/plans/PLAN-001_Implementation_Master_Plan.md",
+                    "type": "file",
+                    "size_bytes": 12766,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  },
+                  {
+                    "path": "docs/archive/plans/PLAN-001_Task_Tracker.md",
+                    "type": "file",
+                    "size_bytes": 4283,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  },
+                  {
+                    "path": "docs/archive/plans/PLAN-002_Entertainment_Enhancements.md",
+                    "type": "file",
+                    "size_bytes": 9137,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  }
+                ],
+                "purpose": "Directory",
+                "unique_characteristics": "Project folder used for organization."
+              },
+              {
+                "path": "docs/archive/prds",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "docs/archive/prds/PRD-001_Game_Overview_Feature_Requirements.md",
+                    "type": "file",
+                    "size_bytes": 16782,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  },
+                  {
+                    "path": "docs/archive/prds/PRD-002_Narrative_Story_System_Requirements.md",
+                    "type": "file",
+                    "size_bytes": 15940,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  },
+                  {
+                    "path": "docs/archive/prds/PRD-003_Character_Faction_System_Requirements.md",
+                    "type": "file",
+                    "size_bytes": 20898,
+                    "purpose": "Markdown documentation",
+                    "unique_characteristics": "Human-readable project documentation/specification."
+                  }
+                ],
+                "purpose": "Directory",
+                "unique_characteristics": "Project folder used for organization."
+              },
+              {
+                "path": "docs/archive/brief_v2.txt",
+                "type": "file",
+                "size_bytes": 26922,
+                "purpose": "File",
+                "unique_characteristics": "Project file."
+              },
+              {
+                "path": "docs/archive/Whisper_Crystals_Project_Brief v2.docx",
+                "type": "file",
+                "size_bytes": 22175,
+                "purpose": "Word document",
+                "unique_characteristics": "Long-form design/planning document in Office format."
+              },
+              {
+                "path": "docs/archive/Whisper_Crystals_Project_Brief.docx",
+                "type": "file",
+                "size_bytes": 16312,
+                "purpose": "Word document",
+                "unique_characteristics": "Long-form design/planning document in Office format."
+              }
+            ],
+            "purpose": "Archived documentation",
+            "unique_characteristics": "Legacy briefs/plans/PRDs retained for historical context."
+          },
+          {
+            "path": "docs/changelog",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "docs/changelog/CHANGELOG.md",
+                "type": "file",
+                "size_bytes": 17593,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Change history",
+            "unique_characteristics": "Version-by-version historical change log."
+          },
+          {
+            "path": "docs/issues",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "docs/issues/closed",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [],
+                "purpose": "Issue status bucket",
+                "unique_characteristics": "Folder reserved for markdown issue records grouped by lifecycle state."
+              },
+              {
+                "path": "docs/issues/in-progress",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [],
+                "purpose": "Issue status bucket",
+                "unique_characteristics": "Folder reserved for markdown issue records grouped by lifecycle state."
+              },
+              {
+                "path": "docs/issues/open",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [],
+                "purpose": "Issue status bucket",
+                "unique_characteristics": "Folder reserved for markdown issue records grouped by lifecycle state."
+              },
+              {
+                "path": "docs/issues/ISSUE_LOG.md",
+                "type": "file",
+                "size_bytes": 619,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/issues/ISSUE_TEMPLATE.md",
+                "type": "file",
+                "size_bytes": 657,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Issue tracking docs",
+            "unique_characteristics": "Templates and issue index with open/in-progress/closed folders."
+          },
+          {
+            "path": "docs/process",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "docs/process/CONTRIBUTING.md",
+                "type": "file",
+                "size_bytes": 3695,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Process docs",
+            "unique_characteristics": "Contribution workflow and standards."
+          },
+          {
+            "path": "docs/reviews",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "docs/reviews/archive",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [],
+                "purpose": "Directory",
+                "unique_characteristics": "Project folder used for organization."
+              },
+              {
+                "path": "docs/reviews/REVIEW-001_phase0_refactor.md",
+                "type": "file",
+                "size_bytes": 3292,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/reviews/REVIEW-002_code_review_2026-03-02.md",
+                "type": "file",
+                "size_bytes": 20262,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/reviews/REVIEW-002_remediation_plan_2026-03-02.md",
+                "type": "file",
+                "size_bytes": 8801,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/reviews/REVIEW_LOG.md",
+                "type": "file",
+                "size_bytes": 543,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              },
+              {
+                "path": "docs/reviews/REVIEW_TEMPLATE.md",
+                "type": "file",
+                "size_bytes": 1287,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Code review records",
+            "unique_characteristics": "Review logs, remediation plans, and archived review docs."
+          },
+          {
+            "path": "docs/MASTER_PLAN.md",
+            "type": "file",
+            "size_bytes": 18286,
+            "purpose": "Markdown documentation",
+            "unique_characteristics": "Human-readable project documentation/specification."
+          },
+          {
+            "path": "docs/Whisper_Crystals_Game_Bible.docx",
+            "type": "file",
+            "size_bytes": 13081,
+            "purpose": "Word document",
+            "unique_characteristics": "Long-form design/planning document in Office format."
+          }
+        ],
+        "purpose": "Project documentation",
+        "unique_characteristics": "Architecture, planning, process docs, issue tracking, and reviews."
+      },
+      {
+        "path": "logs",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "logs/whisper_crystals.log",
+            "type": "file",
+            "size_bytes": 686417,
+            "purpose": "File",
+            "unique_characteristics": "Project file."
+          }
+        ],
+        "purpose": "Runtime logs",
+        "unique_characteristics": "Log output folder for debugging and diagnostics."
+      },
+      {
+        "path": "src",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "src/whisper_crystals",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "src/whisper_crystals/core",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "src/whisper_crystals/core/__init__.py",
+                    "type": "file",
+                    "size_bytes": 43,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/config.py",
+                    "type": "file",
+                    "size_bytes": 145,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/data_loader.py",
+                    "type": "file",
+                    "size_bytes": 6031,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/event_bus.py",
+                    "type": "file",
+                    "size_bytes": 1614,
+                    "purpose": "Event bus",
+                    "unique_characteristics": "Pub/sub messaging between decoupled subsystems."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/game_state.py",
+                    "type": "file",
+                    "size_bytes": 9797,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/interfaces.py",
+                    "type": "file",
+                    "size_bytes": 5113,
+                    "purpose": "Protocol/interfaces definitions",
+                    "unique_characteristics": "Contracts that decouple systems and improve testability."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/logger.py",
+                    "type": "file",
+                    "size_bytes": 2263,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/music_manager.py",
+                    "type": "file",
+                    "size_bytes": 6039,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/save_manager.py",
+                    "type": "file",
+                    "size_bytes": 4873,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/session.py",
+                    "type": "file",
+                    "size_bytes": 21708,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/core/state_machine.py",
+                    "type": "file",
+                    "size_bytes": 2748,
+                    "purpose": "State machine implementation",
+                    "unique_characteristics": "Stack-style game state transitions (push/pop/switch)."
+                  }
+                ],
+                "purpose": "Engine-agnostic core",
+                "unique_characteristics": "Core domain logic, state, interfaces, saves, and eventing."
+              },
+              {
+                "path": "src/whisper_crystals/engine",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "src/whisper_crystals/engine/__init__.py",
+                    "type": "file",
+                    "size_bytes": 62,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/audio.py",
+                    "type": "file",
+                    "size_bytes": 3039,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/camera.py",
+                    "type": "file",
+                    "size_bytes": 872,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/image_utils.py",
+                    "type": "file",
+                    "size_bytes": 2655,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/input_handler.py",
+                    "type": "file",
+                    "size_bytes": 2182,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/renderer.py",
+                    "type": "file",
+                    "size_bytes": 7664,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/sprite_manager.py",
+                    "type": "file",
+                    "size_bytes": 9237,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/starfield.py",
+                    "type": "file",
+                    "size_bytes": 1944,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/engine/startup.py",
+                    "type": "file",
+                    "size_bytes": 2117,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  }
+                ],
+                "purpose": "Pygame engine adapters",
+                "unique_characteristics": "Rendering/input/audio integrations specific to pygame-ce."
+              },
+              {
+                "path": "src/whisper_crystals/entities",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "src/whisper_crystals/entities/__init__.py",
+                    "type": "file",
+                    "size_bytes": 75,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/entities/character.py",
+                    "type": "file",
+                    "size_bytes": 3332,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/entities/crystal.py",
+                    "type": "file",
+                    "size_bytes": 3462,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/entities/encounter.py",
+                    "type": "file",
+                    "size_bytes": 2786,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/entities/faction.py",
+                    "type": "file",
+                    "size_bytes": 4798,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/entities/ship.py",
+                    "type": "file",
+                    "size_bytes": 5243,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/entities/side_mission.py",
+                    "type": "file",
+                    "size_bytes": 3414,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  }
+                ],
+                "purpose": "Domain entities",
+                "unique_characteristics": "Data models for characters, factions, ships, encounters, etc."
+              },
+              {
+                "path": "src/whisper_crystals/systems",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "src/whisper_crystals/systems/__init__.py",
+                    "type": "file",
+                    "size_bytes": 92,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/combat.py",
+                    "type": "file",
+                    "size_bytes": 2226,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/crew_morale.py",
+                    "type": "file",
+                    "size_bytes": 7403,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/economy.py",
+                    "type": "file",
+                    "size_bytes": 21338,
+                    "purpose": "Economy mechanics",
+                    "unique_characteristics": "Largest gameplay system module with trading/economic rules."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/encounter_engine.py",
+                    "type": "file",
+                    "size_bytes": 5573,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/exploration.py",
+                    "type": "file",
+                    "size_bytes": 11535,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/faction_conquest.py",
+                    "type": "file",
+                    "size_bytes": 11931,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/faction_system.py",
+                    "type": "file",
+                    "size_bytes": 3379,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/narrative.py",
+                    "type": "file",
+                    "size_bytes": 3588,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/realm_control.py",
+                    "type": "file",
+                    "size_bytes": 9291,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/systems/side_mission.py",
+                    "type": "file",
+                    "size_bytes": 11269,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  }
+                ],
+                "purpose": "Gameplay systems",
+                "unique_characteristics": "Mechanics modules for economy, combat, exploration, and narrative."
+              },
+              {
+                "path": "src/whisper_crystals/ui",
+                "type": "directory",
+                "size_bytes": null,
+                "children": [
+                  {
+                    "path": "src/whisper_crystals/ui/__init__.py",
+                    "type": "file",
+                    "size_bytes": 69,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/combat_ui.py",
+                    "type": "file",
+                    "size_bytes": 37317,
+                    "purpose": "Combat interface",
+                    "unique_characteristics": "Large UI module driving tactical combat presentation/controls."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/cutscene.py",
+                    "type": "file",
+                    "size_bytes": 10413,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/dialogue_ui.py",
+                    "type": "file",
+                    "size_bytes": 14399,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/ending_screen.py",
+                    "type": "file",
+                    "size_bytes": 12738,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/faction_screen.py",
+                    "type": "file",
+                    "size_bytes": 7402,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/hud.py",
+                    "type": "file",
+                    "size_bytes": 7166,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/menu.py",
+                    "type": "file",
+                    "size_bytes": 6299,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/mission_log.py",
+                    "type": "file",
+                    "size_bytes": 9625,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/navigation.py",
+                    "type": "file",
+                    "size_bytes": 23461,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/pause_menu.py",
+                    "type": "file",
+                    "size_bytes": 5482,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/purchase_screen.py",
+                    "type": "file",
+                    "size_bytes": 19774,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/settings_screen.py",
+                    "type": "file",
+                    "size_bytes": 8088,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/ship_screen.py",
+                    "type": "file",
+                    "size_bytes": 8942,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  },
+                  {
+                    "path": "src/whisper_crystals/ui/trade_screen.py",
+                    "type": "file",
+                    "size_bytes": 10550,
+                    "purpose": "Python source file",
+                    "unique_characteristics": "Runtime implementation module."
+                  }
+                ],
+                "purpose": "UI screens and flows",
+                "unique_characteristics": "Concrete screen/state implementations for in-game interfaces."
+              },
+              {
+                "path": "src/whisper_crystals/__init__.py",
+                "type": "file",
+                "size_bytes": 72,
+                "purpose": "Python source file",
+                "unique_characteristics": "Runtime implementation module."
+              },
+              {
+                "path": "src/whisper_crystals/__main__.py",
+                "type": "file",
+                "size_bytes": 3525,
+                "purpose": "Module entrypoint",
+                "unique_characteristics": "Allows `python -m whisper_crystals` execution."
+              }
+            ],
+            "purpose": "Main game package",
+            "unique_characteristics": "Top-level package implementing game runtime and modules."
+          }
+        ],
+        "purpose": "Application source tree",
+        "unique_characteristics": "Python package source for runtime game systems."
+      },
+      {
+        "path": "story",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "story/archive",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [],
+            "purpose": "Directory",
+            "unique_characteristics": "Project folder used for organization."
+          },
+          {
+            "path": "story/arcs",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "story/arcs/arc_overview.md",
+                "type": "file",
+                "size_bytes": 3133,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Arc narrative guides",
+            "unique_characteristics": "High-level structure and sequencing notes for story arcs."
+          },
+          {
+            "path": "story/characters",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "story/characters/character_profiles.md",
+                "type": "file",
+                "size_bytes": 5888,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Character narrative profiles",
+            "unique_characteristics": "Backstories, roles, and characterization details."
+          },
+          {
+            "path": "story/factions",
+            "type": "directory",
+            "size_bytes": null,
+            "children": [
+              {
+                "path": "story/factions/faction_registry.md",
+                "type": "file",
+                "size_bytes": 7596,
+                "purpose": "Markdown documentation",
+                "unique_characteristics": "Human-readable project documentation/specification."
+              }
+            ],
+            "purpose": "Faction lore docs",
+            "unique_characteristics": "Narrative framing and ideological/factional background."
+          }
+        ],
+        "purpose": "Narrative reference content",
+        "unique_characteristics": "Story guides, character profiles, and faction lore docs."
+      },
+      {
+        "path": "support",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "support/analyze_combat_bg.py",
+            "type": "file",
+            "size_bytes": 12459,
+            "purpose": "Utility script",
+            "unique_characteristics": "Developer support script for analysis/calibration tasks."
+          },
+          {
+            "path": "support/annotate_at_game_res.py",
+            "type": "file",
+            "size_bytes": 4308,
+            "purpose": "Utility script",
+            "unique_characteristics": "Developer support script for analysis/calibration tasks."
+          },
+          {
+            "path": "support/calibrate_combat_ui.py",
+            "type": "file",
+            "size_bytes": 8544,
+            "purpose": "Utility script",
+            "unique_characteristics": "Developer support script for analysis/calibration tasks."
+          },
+          {
+            "path": "support/radial_scan.py",
+            "type": "file",
+            "size_bytes": 10893,
+            "purpose": "Utility script",
+            "unique_characteristics": "Developer support script for analysis/calibration tasks."
+          }
+        ],
+        "purpose": "Development support scripts",
+        "unique_characteristics": "One-off calibration/analysis tools used during development."
+      },
+      {
+        "path": "tests",
+        "type": "directory",
+        "size_bytes": null,
+        "children": [
+          {
+            "path": "tests/test_code_review_fixes.py",
+            "type": "file",
+            "size_bytes": 15151,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_crew_morale.py",
+            "type": "file",
+            "size_bytes": 6943,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_data_loader.py",
+            "type": "file",
+            "size_bytes": 3591,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_dialogue_format.py",
+            "type": "file",
+            "size_bytes": 2304,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_economy.py",
+            "type": "file",
+            "size_bytes": 19326,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_ending_screen.py",
+            "type": "file",
+            "size_bytes": 8286,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_entities.py",
+            "type": "file",
+            "size_bytes": 5780,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_exploration.py",
+            "type": "file",
+            "size_bytes": 9038,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_faction_conquest.py",
+            "type": "file",
+            "size_bytes": 10629,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_game_state_serialization.py",
+            "type": "file",
+            "size_bytes": 4468,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_music_manager.py",
+            "type": "file",
+            "size_bytes": 5516,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_save_manager.py",
+            "type": "file",
+            "size_bytes": 4809,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_settings.py",
+            "type": "file",
+            "size_bytes": 1958,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_side_missions.py",
+            "type": "file",
+            "size_bytes": 11940,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_skip.py",
+            "type": "file",
+            "size_bytes": 6417,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_sprite_manager.py",
+            "type": "file",
+            "size_bytes": 9710,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          },
+          {
+            "path": "tests/test_systems.py",
+            "type": "file",
+            "size_bytes": 15676,
+            "purpose": "Pytest module",
+            "unique_characteristics": "Automated test coverage for a game subsystem or behavior."
+          }
+        ],
+        "purpose": "Automated test suite",
+        "unique_characteristics": "Pytest coverage for systems, UI behavior, data integrity, and regressions."
+      },
+      {
+        "path": ".gitignore",
+        "type": "file",
+        "size_bytes": 257,
+        "purpose": "File",
+        "unique_characteristics": "Project file."
+      },
+      {
+        "path": "CLAUDE.md",
+        "type": "file",
+        "size_bytes": 4614,
+        "purpose": "Assistant guidance",
+        "unique_characteristics": "Repository-specific AI assistant context/instructions."
+      },
+      {
+        "path": "pyproject.toml",
+        "type": "file",
+        "size_bytes": 624,
+        "purpose": "Python project metadata",
+        "unique_characteristics": "Defines package metadata, dependencies, pytest, and ruff settings."
+      },
+      {
+        "path": "README.md",
+        "type": "file",
+        "size_bytes": 4143,
+        "purpose": "Project overview and quick start",
+        "unique_characteristics": "Primary onboarding doc with setup, architecture, and usage."
+      },
+      {
+        "path": "requirements.txt",
+        "type": "file",
+        "size_bytes": 57,
+        "purpose": "Pip dependency pin list",
+        "unique_characteristics": "Lightweight dependency install path for non-packaging workflows."
+      },
+      {
+        "path": "run.bat",
+        "type": "file",
+        "size_bytes": 748,
+        "purpose": "Windows launcher script",
+        "unique_characteristics": "Batch wrapper for Windows startup flow."
+      },
+      {
+        "path": "run.py",
+        "type": "file",
+        "size_bytes": 1126,
+        "purpose": "Cross-platform launcher",
+        "unique_characteristics": "Python entry script to start game without shell-specific scripts."
+      },
+      {
+        "path": "run.sh",
+        "type": "file",
+        "size_bytes": 656,
+        "purpose": "Unix launcher script",
+        "unique_characteristics": "Shell wrapper for Mac/Linux startup flow."
+      },
+      {
+        "path": "test_nebula.py",
+        "type": "file",
+        "size_bytes": 69,
+        "purpose": "Minimal smoke test",
+        "unique_characteristics": "Small test utility script at repository root."
+      }
+    ],
+    "purpose": "Directory",
+    "unique_characteristics": "Project folder used for organization."
+  }
+}

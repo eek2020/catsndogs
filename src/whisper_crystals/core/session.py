@@ -12,6 +12,7 @@ from whisper_crystals.core.data_loader import DataLoader
 from whisper_crystals.core.event_bus import EventBus
 from whisper_crystals.core.game_state import GameStateData, create_new_game_state
 from whisper_crystals.core.interfaces import Action
+from whisper_crystals.core.music_manager import MusicManager
 from whisper_crystals.core.save_manager import SaveManager
 from whisper_crystals.core.state_machine import GameStateMachine
 
@@ -63,11 +64,15 @@ class GameSession:
         input_handler: InputInterface,
         state_machine: GameStateMachine,
         audio_subsystem: AudioInterface | None = None,
+        sprite_manager: object | None = None,
+        combat_bg: object | None = None,
     ) -> None:
         self.camera = camera
         self.input_handler = input_handler
         self.state_machine = state_machine
         self.audio = audio_subsystem
+        self.sprite_manager = sprite_manager
+        self.combat_bg = combat_bg
         self.event_bus = EventBus()
 
         # Data & systems
@@ -84,20 +89,42 @@ class GameSession:
         self.save_manager = SaveManager()
         self.settings = load_settings()
         
+        # Music & SFX manager
+        self.music = MusicManager(self.audio)
+
         # Apply initial settings to audio
         if self.audio:
-            # Assuming settings dict has 'audio_volume' or similar
             vol = self.settings.get('volume', 1.0) if hasattr(self.settings, 'get') else 1.0
             self.audio.set_volume(vol)
-            
-            # Setup basic audio events
-            self.event_bus.subscribe("play_sfx", lambda sfx_id, **kw: self.audio.play_sfx(sfx_id))
-            self.event_bus.subscribe("play_music", lambda music_id, **kw: self.audio.play_music(music_id))
-            self.event_bus.subscribe("stop_music", lambda *args, **kw: self.audio.stop_music())
-            self.event_bus.subscribe("arc_advanced", lambda old_arc, new_arc, **kw: self.audio.play_music(new_arc))
-            self.event_bus.subscribe("volume_changed", lambda vol, **kw: self.audio.set_volume(vol))
 
-        self.event_bus.subscribe("game_ending_reached", lambda *args, **kw: self._on_game_ending_reached())
+            # Volume change events
+            self.event_bus.subscribe(
+                "volume_changed", lambda vol, **kw: self.audio.set_volume(vol)
+            )
+
+        # Wire SFX events through the music manager
+        for event_name in (
+            "combat_hit", "combat_miss", "combat_victory", "combat_defeat",
+            "combat_flee", "crystal_pickup", "salvage_pickup",
+            "encounter_triggered", "trade_buy", "trade_sell",
+            "mission_accepted", "mission_completed", "mission_failed",
+            "save_game", "load_game",
+        ):
+            self.event_bus.subscribe(
+                event_name,
+                lambda *a, _evt=event_name, **kw: self.music.play_sfx_for_event(_evt),
+            )
+
+        # Arc advancement updates the music theme
+        self.event_bus.subscribe(
+            "arc_advanced",
+            lambda old_arc, new_arc, **kw: self.music.on_arc_change(new_arc),
+        )
+
+        self.event_bus.subscribe(
+            "game_ending_reached",
+            lambda *args, **kw: self._on_game_ending_reached(),
+        )
 
         # Runtime state
         self.game_state: GameStateData | None = None
@@ -123,6 +150,7 @@ class GameSession:
             save_manager=self.save_manager,
         )
         self.state_machine.push(menu)
+        self.music.on_state_change("menu")
 
     def tick(self, dt: float) -> bool:
         """Run one frame of game logic. Returns False when the game should exit."""
@@ -230,6 +258,7 @@ class GameSession:
             character_image_left=dave_art,
         )
         self.state_machine.switch(intro)
+        self.music.on_state_change("cutscene")
 
     # ------------------------------------------------------------------
     # Callbacks (encounter, dialogue, combat, arc transitions)
@@ -248,10 +277,12 @@ class GameSession:
             on_combat=self._on_combat_from_encounter,
         )
         self.state_machine.push(dialogue)
+        self.music.on_state_change("dialogue")
 
     def _on_dialogue_complete(self) -> None:
         """Pop dialogue and return to navigation."""
         self.state_machine.pop()
+        self.music.on_state_change("navigation")
         if self.nav_state:
             self.nav_state.on_return_from_encounter()
 
@@ -315,8 +346,11 @@ class GameSession:
             on_victory=on_victory,
             on_defeat=on_defeat,
             on_flee=on_flee,
+            sprite_manager=self.sprite_manager,
+            background=self.combat_bg,
         )
         self.state_machine.push(combat)
+        self.music.on_state_change("combat")
 
     def _on_arc_complete(self) -> None:
         """Handle arc transition with cutscene."""
@@ -362,6 +396,7 @@ class GameSession:
             on_return_to_menu=self._quit_to_menu,
         )
         self.state_machine.switch(ending)
+        self.music.on_state_change("ending")
 
     # ------------------------------------------------------------------
     # Screen overlays
@@ -389,9 +424,13 @@ class GameSession:
                 game_state=self.game_state,
                 economy=self.economy_system,
                 faction_id=faction_id,
-                on_close=lambda: self.state_machine.pop(),
+                on_close=lambda: (
+                    self.state_machine.pop(),
+                    self.music.on_state_change("navigation"),
+                ),
             )
             self.state_machine.push(trade)
+            self.music.on_state_change("trade")
 
     def open_purchase_screen(self, location: str) -> None:
         """Push purchase screen overlay for ship repairs, upgrades, and new ships."""
@@ -434,6 +473,9 @@ class GameSession:
             session=self,
         )
         self.state_machine.switch(self.nav_state)
+        if self.game_state:
+            self.music.on_arc_change(self.game_state.current_arc)
+        self.music.on_state_change("navigation")
 
     # ------------------------------------------------------------------
     # Pause menu and settings

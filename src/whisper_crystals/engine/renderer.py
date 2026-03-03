@@ -41,15 +41,16 @@ class PygameRenderer(RenderInterface):
         font_id: str | None = None,
         color: tuple[int, int, int] = (255, 255, 255),
         size: int = 24,
+        shadow: bool = True,
     ) -> None:
         font = self._get_font(font_id, size)
 
         # Keep body text crisp; only add a subtle shadow on larger headings.
         antialias = size >= 16
-        if size >= 26:
-            shadow = font.render(text, antialias, (8, 16, 30))
-            shadow.set_alpha(110)
-            self.screen.blit(shadow, (pos[0] + 1, pos[1] + 1))
+        if shadow and size >= 26:
+            shadow_surf = font.render(text, antialias, (8, 16, 30))
+            shadow_surf.set_alpha(110)
+            self.screen.blit(shadow_surf, (pos[0] + 1, pos[1] + 1))
 
         surface = font.render(text, antialias, color)
         self.screen.blit(surface, pos)

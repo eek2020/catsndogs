@@ -16,6 +16,7 @@ from whisper_crystals.engine.input_handler import PygameInputHandler
 from whisper_crystals.engine.renderer import PygameRenderer
 from whisper_crystals.engine.startup import show_loading_frame, show_startup_splash
 from whisper_crystals.engine.audio import PygameAudio
+from whisper_crystals.engine.sprite_manager import SpriteManager
 
 
 def _resolve_project_root() -> str:
@@ -24,8 +25,9 @@ def _resolve_project_root() -> str:
 
 
 def _load_art(root: str) -> tuple:
-    """Load all artwork assets. Returns (splash, intro_title, aristotle, dave)."""
+    """Load all artwork assets. Returns (splash, intro_title, aristotle, dave, combat_bg)."""
     splash = load_image(os.path.join(root, "design", "artwork", "wc_splash_screen.png"))
+    combat_bg = load_image(os.path.join(root, "design", "ui_ux", "combat_background.png"))
     paths = {
         "intro_title": os.path.join(root, "design", "artwork", "whisper_crystals_title.png"),
         "aristotle": os.path.join(root, "design", "charcters", "aristotle.png"),
@@ -35,7 +37,7 @@ def _load_art(root: str) -> tuple:
     for key, path in paths.items():
         img = load_image_alpha(path)
         images[key] = remove_near_white_bg(img) if img is not None else None
-    return splash, images["intro_title"], images["aristotle"], images["dave"]
+    return splash, images["intro_title"], images["aristotle"], images["dave"], combat_bg
 
 
 def main() -> None:
@@ -46,7 +48,7 @@ def main() -> None:
     pygame.display.set_caption("Whisper Crystals")
     clock = pygame.time.Clock()
 
-    splash_art, intro_title, aristotle, dave = _load_art(root)
+    splash_art, intro_title, aristotle, dave, combat_bg = _load_art(root)
 
     if not show_startup_splash(screen, splash_art):
         pygame.quit()
@@ -56,6 +58,8 @@ def main() -> None:
     renderer = PygameRenderer(screen, camera)
     input_handler = PygameInputHandler()
     audio = PygameAudio(root)
+    sprites = SpriteManager(root)
+    sprites.preload_all()
 
     session = GameSession(
         data_root=os.path.join(root, "data"),
@@ -63,6 +67,8 @@ def main() -> None:
         input_handler=input_handler,
         state_machine=GameStateMachine(),
         audio_subsystem=audio,
+        sprite_manager=sprites,
+        combat_bg=combat_bg,
     )
 
     # Wire loading screen into new-game flow
@@ -76,7 +82,7 @@ def main() -> None:
     session.push_menu(splash_art=splash_art)
 
     while session.running:
-        dt = clock.tick(FPS) / 1000.0
+        dt = min(clock.tick(FPS) / 1000.0, 0.1)  # Cap dt to prevent jumps after hitches
         events = pygame.event.get()
         input_handler.process_events(events)
         if input_handler.should_quit():
