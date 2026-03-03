@@ -102,7 +102,9 @@ class DialogueState(GameState):
         for action in actions:
             if self._phase == "choosing":
                 if not self._description_done:
-                    if action in (Action.CONFIRM, Action.INTERACT, Action.FIRE):
+                    if action in (
+                        Action.CONFIRM, Action.INTERACT, Action.FIRE, Action.SKIP,
+                    ):
                         self._description_done = True
                         self._description_chars = float(len(self.encounter.description))
                     continue
@@ -116,7 +118,7 @@ class DialogueState(GameState):
                 elif action == Action.CONFIRM:
                     self._resolve_choice()
             elif self._phase == "outcome":
-                if action == Action.CONFIRM:
+                if action in (Action.CONFIRM, Action.SKIP):
                     self.event_bus.publish("play_sfx", "menu_select")
                     self._on_complete()
 
@@ -276,8 +278,8 @@ class DialogueState(GameState):
             renderer.draw_rect((40, footer_y, sw - 80, footer_h), (10, 28, 42, 210))
             renderer.draw_line((40, footer_y), (sw - 40, footer_y), BORDER_COLOR, 1)
             renderer.draw_text(
-                "\u2191/\u2193 SELECT   |   ENTER CONFIRM",
-                (sw // 2 - 170, footer_y + 6),
+                "\u2191/\u2193 SELECT   |   ENTER CONFIRM   |   TAB SKIP",
+                (sw // 2 - 240, footer_y + 6),
                 size=20,
                 color=HIGHLIGHT_COLOR,
             )

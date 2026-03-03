@@ -64,7 +64,11 @@ class CutsceneState(GameState):
 
     def handle_input(self, actions: list[Action]) -> None:
         for action in actions:
-            if action == Action.CONFIRM:
+            if action == Action.SKIP and not self._all_done:
+                self._current_line = len(self._lines)
+                self._line_done = True
+                self._all_done = True
+            elif action == Action.CONFIRM:
                 if self._all_done:
                     self._on_complete()
                 elif not self._line_done:
@@ -216,6 +220,12 @@ class CutsceneState(GameState):
             cpl = max(1, (box_w - 80) // (22 * 0.55))
             lines_needed = max(1, len(self._lines[i]) // cpl + 1)
             y += lines_needed * 32 + 20
+
+        # Skip hint
+        if not self._all_done:
+            renderer.draw_text(
+                "TAB  SKIP", (sw - 160, sh - 36), size=16, color=DIM
+            )
 
         # Prompt
         if self._all_done:

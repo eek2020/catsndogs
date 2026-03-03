@@ -1,0 +1,96 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc1_bounty_goblin_raiders",
+      "mission_type": "bounty",
+      "title": "Clean Up Aisle Seven",
+      "description": "Goblin Scrapper raiders have been ambushing merchant convoys near the Asteroid Belt. The Felid Corsairs want them dealt with — permanently.",
+      "region": "asteroid_belt",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_crystal_discovered": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_bounty_offer_goblins",
+      "objectives": [
+        {
+          "objective_id": "defeat_goblins",
+          "description": "Defeat the Goblin Scrapper patrol",
+          "encounter_id": "enc_arc1_pirate_skirmish"
+        }
+      ],
+      "rewards": {"salvage": 40, "crystals": 5},
+      "faction_rewards": {"felid_corsairs": 8, "goblins": -5},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc1_retrieve_stolen_cargo",
+      "mission_type": "retrieval",
+      "title": "Lost in Transit",
+      "description": "A shipment of rare alloys vanished between realms. The Canis League suspects pirates, but the cargo manifest tells a different story. Track it down before anyone else does.",
+      "region": "forgotten_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_cargo_rumour",
+      "objectives": [
+        {
+          "objective_id": "find_cargo",
+          "description": "Locate the missing cargo shipment",
+          "encounter_id": "enc_arc1_cargo_search"
+        },
+        {
+          "objective_id": "return_cargo",
+          "description": "Return the cargo to the contact",
+          "encounter_id": "enc_arc1_cargo_return"
+        }
+      ],
+      "rewards": {"salvage": 60, "crystals": 8},
+      "faction_rewards": {"canis_league": 5},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc1_escort_fairy_envoy",
+      "mission_type": "escort",
+      "title": "Wings of Diplomacy",
+      "description": "A Fairy Collective envoy needs safe passage through contested space. The pay is good, but crossing the Lions' patrol routes could be costly.",
+      "region": "starting_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_crystal_discovered": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_fairy_plea",
+      "objectives": [
+        {
+          "objective_id": "escort_envoy",
+          "description": "Escort the Fairy envoy through Lion territory",
+          "encounter_id": "enc_arc1_fairy_escort"
+        }
+      ],
+      "rewards": {"salvage": 30, "crystals": 12},
+      "faction_rewards": {"fairies": 10, "lions": -3},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc1_salvage_derelict",
+      "mission_type": "retrieval",
+      "title": "Ghost Ship",
+      "description": "Sensors picked up a derelict drifting in the outer reaches. No life signs. No distress beacon. Just a hull full of salvage — and probably a reason nobody claimed it yet.",
+      "region": "forgotten_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_1"
+      },
+      "discovery_encounter_id": null,
+      "objectives": [
+        {
+          "objective_id": "board_derelict",
+          "description": "Board and search the derelict vessel",
+          "encounter_id": "enc_arc1_derelict_board"
+        }
+      ],
+      "rewards": {"salvage": 80},
+      "faction_rewards": {},
+      "priority": 1
+    }
+  ]
+}

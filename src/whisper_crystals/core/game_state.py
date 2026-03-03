@@ -13,6 +13,7 @@ from whisper_crystals.entities.character import (
 from whisper_crystals.entities.crystal import CrystalDeposit, CrystalMarket, SupplyRoute
 from whisper_crystals.entities.faction import Faction
 from whisper_crystals.entities.ship import Ship, ShipStats
+from whisper_crystals.entities.side_mission import SideMission
 
 
 @dataclass
@@ -111,6 +112,9 @@ class GameStateData:
     player_decisions: list[PlayerDecision] = field(default_factory=list)
     completed_encounters: list[str] = field(default_factory=list)
 
+    # Side missions
+    side_missions: dict[str, SideMission] = field(default_factory=dict)
+
     def to_dict(self) -> dict:
         """Serialise the entire game state to a JSON-compatible dict."""
         return {
@@ -146,6 +150,9 @@ class GameStateData:
             "story_flags": self.story_flags,
             "player_decisions": [d.to_dict() for d in self.player_decisions],
             "completed_encounters": self.completed_encounters,
+            "side_missions": {
+                mid: m.to_dict() for mid, m in self.side_missions.items()
+            },
         }
 
     @classmethod
@@ -187,6 +194,9 @@ class GameStateData:
         # Restore supply routes
         for rid, rdata in data.get("supply_routes", {}).items():
             state.supply_routes[rid] = SupplyRoute.from_dict(rdata)
+        # Restore side missions
+        for mid, mdata in data.get("side_missions", {}).items():
+            state.side_missions[mid] = SideMission.from_dict(mdata)
         return state
 
 

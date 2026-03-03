@@ -27,6 +27,17 @@ SHIP_SPRITE_MAX_EDGE = 140
 # How often (in seconds) we check for encounter triggers
 ENCOUNTER_CHECK_INTERVAL = 1.5
 
+# Distinct color per encounter type so players can identify POIs at a glance
+ENCOUNTER_TYPE_COLORS: dict[str, tuple[int, int, int]] = {
+    "combat": (255, 50, 50),          # red
+    "diplomatic": (100, 200, 255),    # sky blue
+    "exploration": (100, 255, 150),   # green
+    "trade": (100, 255, 100),         # lime
+    "event": (200, 130, 255),         # purple
+    "distress_signal": (255, 160, 50),  # orange
+}
+ENCOUNTER_COLOR_DEFAULT = (255, 200, 100)  # gold fallback
+
 
 class NavigationState(GameState):
     """Core gameplay state: flying the ship through space."""
@@ -248,6 +259,8 @@ class NavigationState(GameState):
             self._check_timer = 0.0
             self._update_pois()
 
+        self._update_distress(dt)
+        self._check_mission_objectives()
         self._check_collisions()
 
     def _update_pois(self) -> None:
@@ -257,10 +270,13 @@ class NavigationState(GameState):
         available = self.encounter_engine.get_available_encounters(self.game_state_data)
         available_ids = {e.encounter_id for e in available}
         
-        # Keep only POIs that are still valid (available_ids already filters completed non-repeatable encounters)
+        # Keep only POIs that are still valid (available_ids already filters completed
+        # non-repeatable encounters). Distress signal POIs are managed by _update_distress,
+        # not the encounter engine, so preserve them here.
         self.active_pois = [
-            p for p in self.active_pois 
-            if p["encounter"].encounter_id in available_ids 
+            p for p in self.active_pois
+            if p["encounter"].encounter_id in available_ids
+            or p["encounter"].encounter_type == "distress_signal"
         ]
         
         active_ids = {p["encounter"].encounter_id for p in self.active_pois}
@@ -273,15 +289,9 @@ class NavigationState(GameState):
                 px = self.ship_x + math.cos(angle) * dist
                 py = self.ship_y + math.sin(angle) * dist
                 
-                color = (255, 200, 100)
-                if enc.encounter_type == "combat":
-                    color = (255, 50, 50)
-                elif enc.encounter_type == "diplomatic":
-                    color = (100, 200, 255)
-                elif enc.encounter_type == "exploration":
-                    color = (100, 255, 150)
-                elif enc.encounter_type == "trade":
-                    color = (100, 255, 100)
+                color = ENCOUNTER_TYPE_COLORS.get(
+                    enc.encounter_type, ENCOUNTER_COLOR_DEFAULT
+                )
                     
                 self.active_pois.append({
                     "encounter": enc,
@@ -290,6 +300,43 @@ class NavigationState(GameState):
                     "radius": 40.0,
                     "color": color
                 })
+
+    def _update_distress(self, dt: float) -> None:
+        """Tick the distress signal system and spawn POIs for new distress encounters."""
+        if not self.session or not self.game_state_data:
+            return
+        sms = getattr(self.session, "side_mission_system", None)
+        if sms is None:
+            return
+        encounter = sms.update_distress(dt, self.game_state_data)
+        if encounter is not None:
+            angle = random.uniform(0, 2 * math.pi)
+            dist = random.uniform(500, 900)
+            px = self.ship_x + math.cos(angle) * dist
+            py = self.ship_y + math.sin(angle) * dist
+            self.active_pois.append({
+                "encounter": encounter,
+                "x": px,
+                "y": py,
+                "radius": 40.0,
+                "color": ENCOUNTER_TYPE_COLORS.get(
+                    encounter.encounter_type, ENCOUNTER_COLOR_DEFAULT
+                ),
+            })
+            self.hud.flash(f"DISTRESS SIGNAL: {encounter.title}", 3.0)
+
+    def _check_mission_objectives(self) -> None:
+        """Check if any active mission objectives were completed."""
+        if not self.session or not self.game_state_data:
+            return
+        sms = getattr(self.session, "side_mission_system", None)
+        if sms is None:
+            return
+        completed = sms.check_objectives(self.game_state_data)
+        for mission_id in completed:
+            mission = self.game_state_data.side_missions.get(mission_id)
+            if mission:
+                self.hud.flash(f"MISSION COMPLETE: {mission.title}", 4.0)
 
     def _check_collisions(self) -> None:
         if not self._on_encounter:
@@ -434,8 +481,8 @@ class NavigationState(GameState):
             )
 
             renderer.draw_text(
-                "WASD: MOVE   |   E: FACTIONS   |   SPACE: SHIP   |   R: SHIPYARD   |   ESC: PAUSE",
-                (sw // 2 - 265, sh - 28),
+                "WASD: MOVE  |  E: FACTIONS  |  SPACE: SHIP  |  R: SHIPYARD  |  M: MISSIONS  |  ESC: PAUSE",
+                (sw // 2 - 300, sh - 28),
                 size=16,
                 color=(160, 160, 170),
             )

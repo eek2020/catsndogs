@@ -25,6 +25,8 @@ class Action(Enum):
     MENU_UP = auto()
     MENU_DOWN = auto()
     MENU_SELECT = auto()
+    MISSION_LOG = auto()
+    SKIP = auto()
 
 
 # ---------------------------------------------------------------------------

@@ -23,6 +23,7 @@ class GameStateType(Enum):
     SHIP_SCREEN = auto()
     SETTINGS = auto()
     PURCHASE = auto()
+    MISSION_LOG = auto()
 
 
 class GameState(ABC):

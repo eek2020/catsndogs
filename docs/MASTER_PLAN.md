@@ -1,6 +1,6 @@
 # Whisper Crystals — Master Plan
 
-**Date:** 2026-03-02
+**Date:** 2026-03-02 (last updated 2026-03-02)
 **Status:** Authoritative — supersedes PLAN-001 and PLAN-002
 **Review source:** See `docs/reviews/REVIEW-002_code_review_2026-03-02.md`
 
@@ -32,22 +32,23 @@ Three endings are reachable based on cumulative choice history. The core loop is
 | Faction System | ✅ Complete | 6+2 factions, relationship matrix, diplomatic states, cascade rules |
 | Faction Conquest AI | ✅ Complete | Background faction warfare, realm control, power rankings |
 | Save / Load | ✅ Complete | SaveManager with 3 slots, atomic writes, settings persistence |
-| All UI States | ✅ Complete | Menu, Navigation, Combat, Trade, Dialogue, Cutscene, Ship Screen, Faction Screen, Pause, Settings, Ending |
-| Test Coverage | ✅ Complete | 186 tests, 100% pass rate, all headless (no display context needed) |
+| All UI States | ✅ Complete | Menu, Navigation, Combat, Trade, Dialogue, Cutscene, Ship Screen, Faction Screen, Pause, Settings, Ending, Mission Log |
+| Side Missions | ✅ Complete | SideMissionSystem, distress signals, mission log UI, 4 arc-1 missions, 5 distress encounters |
+| Test Coverage | ✅ Complete | 210 tests, 100% pass rate, all headless (no display context needed) |
 | Code Quality | ✅ Complete | Code review done 2026-03-02; 11 critical/medium issues resolved |
 
 ### Codebase Metrics
 
 | Metric | Count |
 |--------|-------|
-| Python modules | 41 |
-| Test files | 12 |
-| Total tests | 186 |
+| Python modules | 44 |
+| Test files | 13 |
+| Total tests | 210 |
 | Test pass rate | 100% |
-| Dataclass entities | 12 |
-| Game systems | 9 |
-| UI states | 13 |
-| JSON data files | 18 |
+| Dataclass entities | 13 |
+| Game systems | 10 |
+| UI states | 14 |
+| JSON data files | 20 |
 
 ---
 
@@ -96,14 +97,14 @@ src/whisper_crystals/
                   #   state_machine, data_loader, save_manager, logger
   entities/       # Dataclasses: Character, Ship, Faction, Encounter, Crystal, SideMission
   systems/        # Logic: combat, economy, exploration, crew_morale, encounter_engine,
-                  #   faction_system, faction_conquest, realm_control, narrative
+                  #   faction_system, faction_conquest, realm_control, narrative, side_mission
   engine/         # Pygame: renderer, input_handler, audio, camera, starfield, image_utils, startup
   ui/             # States: menu, navigation, combat_ui, dialogue_ui, cutscene, hud,
                   #   pause_menu, settings_screen, ship_screen, trade_screen,
-                  #   faction_screen, purchase_screen, ending_screen
+                  #   faction_screen, purchase_screen, ending_screen, mission_log
 
-data/             # JSON: encounters/, dialogue/, factions/, ships/, economy/, story/
-tests/            # 12 test files, 186 tests
+data/             # JSON: encounters/, dialogue/, factions/, ships/, economy/, story/, side_missions/
+tests/            # 13 test files, 210 tests
 ```
 
 Migration classification: `core/`, `entities/`, `systems/` are PORTABLE (pure Python, transfer to Godot/Unity as-is).
@@ -145,45 +146,90 @@ Migration classification: `core/`, `entities/`, `systems/` are PORTABLE (pure Py
 
 ### 6.1 Phase 4 — Polish and Integration
 
-These 5 tasks complete the original PLAN-001 scope. All depend on Phases 0–3 being done.
+These tasks complete the original PLAN-001 scope. All depend on Phases 0–3 being done.
 
 | Status | Task | ID | Notes |
 |--------|------|----|-------|
 | ⬜ Todo | Music System (BGM playback, track transitions, per-state themes) | 4.1 | Modify `engine/audio.py`; create `assets/audio/music/` |
 | ⬜ Todo | Sound Effects System (SFX triggers via event bus, volume control) | 4.1b | Depends on 4.1 |
-| ⬜ Todo | Minimap in HUD | 4.2 | Add 150×150 minimap to `ui/hud.py` bottom-right |
 | ⬜ Todo | Ending Summary Screen | 4.3 | Full decision summary display in `ui/ending_screen.py` |
 | ⬜ Todo | Difficulty Balance Pass | 4.4 | Tune `systems/combat.py`, encounter data, ship templates |
 
-### 6.2 Entertainment Enhancements — Side Missions + Distress Signals
+### 6.2 Entertainment Enhancements — Side Missions + Distress Signals (COMPLETE)
 
-This is the active feature work. The SideMission entity is done; all other tasks are pending.
+✅ **All 13 tasks completed 2026-03-02.**
 
-**Goal:** Give the player agency between arc story beats (side missions) and moral surprise moments
-during travel (distress signals), without touching the core narrative structure.
+Adds optional side missions and distress signal encounters for gameplay texture between arc beats.
 
-| Status | Task | File(s) |
-|--------|------|---------|
-| ✅ Done | SideMission + MissionObjective entities | `entities/side_mission.py` |
-| ⬜ Todo | SideMissionSystem | `systems/side_mission.py` |
-| ⬜ Todo | Arc 1 side mission data (3–4 missions) | `data/side_missions/arc1_side_missions.json` |
-| ⬜ Todo | Distress signal encounter pool (4–5 repeatable) | `data/side_missions/distress_signals.json` |
-| ⬜ Todo | DataLoader additions | `core/data_loader.py` — add `load_side_missions()`, `load_distress_signals()` |
-| ⬜ Todo | GameStateData additions | `core/game_state.py` — add `side_missions: dict[str, SideMission]` |
-| ⬜ Todo | MISSION_LOG state type | `core/state_machine.py` — add to `GameStateType` enum |
-| ⬜ Todo | Wire SideMissionSystem | `core/session.py` — instantiate system, add `_open_mission_log()` |
-| ⬜ Todo | Navigation integration | `ui/navigation.py` — distress POI spawning, M key hotkey |
-| ⬜ Todo | HUD active mission indicator | `ui/hud.py` — amber "[M: N MISSIONS]" in top bar |
-| ⬜ Todo | MissionLogState UI | `ui/mission_log.py` — overlay with active/completed mission list |
-| ⬜ Todo | Full test suite | `tests/test_side_missions.py` |
-| ⬜ Todo | Run tests + EAL verification | `pytest tests/ -v` + grep check |
+**Files created:**
+- `systems/side_mission.py` — SideMissionSystem (lifecycle, objectives, rewards, distress spawning)
+- `data/side_missions/arc1_side_missions.json` — 4 arc 1 missions (bounty, retrieval, escort, salvage)
+- `data/side_missions/distress_signals.json` — 5 distress signal encounters (3 choices each)
+- `ui/mission_log.py` — MissionLogState overlay (two-panel: list + detail with objectives/rewards)
+- `tests/test_side_missions.py` — 24 tests
 
-**Implementation notes:**
-- `SideMissionSystem` pattern mirrors `ExplorationSystem`
-- Distress signals use `arc_id: "any"`, `repeatable: true`, `spawn_weight` field
-- Navigation spawns distress signals probabilistically (timer 30–90s), not condition-based
-- MissionLogState uses amber/gold theme; pushed as overlay like ShipScreenState
-- See `docs/archive/plans/PLAN-002_Entertainment_Enhancements.md` for full JSON schemas and code snippets
+**Files modified:**
+- `core/interfaces.py` — MISSION_LOG action
+- `core/state_machine.py` — MISSION_LOG state type
+- `core/data_loader.py` — `load_side_missions()`, `load_distress_signals()`
+- `core/game_state.py` — `side_missions` field + serialization
+- `core/session.py` — SideMissionSystem wired, M key hotkey, `_open_mission_log()`
+- `entities/encounter.py` — `spawn_weight` field
+- `engine/input_handler.py` — M key → MISSION_LOG
+- `ui/navigation.py` — distress POI spawning, mission objective checking, distress_signal color
+- `ui/hud.py` — active mission count indicator
+
+### 6.3 PLAN-003 — Sprite Character & Visual Identity
+
+**Goal:** Give the game visual personality. Replace geometric placeholders with sprite-based
+rendering for ships, characters, and faction-specific visual treatments. Leverage existing
+art assets (8 character portraits, 5 ship sprites, splash art, cutlass icon) and build the
+infrastructure to make adding new sprites trivial.
+
+**Priority order:**
+
+| Status | Task | ID | Scope |
+|--------|------|----|-------|
+| ⬜ Todo | Sprite asset manager | 3.1 | Create `engine/sprite_manager.py` — centralised sprite loading, caching, and scaling. Faction-keyed sprite registry. Lazy-load with fallback to vector shapes. |
+| ⬜ Todo | Faction ship sprites in navigation | 3.2 | Render enemy/NPC ship sprites in POIs using faction-appropriate art (league_cruiser.png, royal_galleon.jpg, etc.). Player ship already uses ship_r_side.png. |
+| ⬜ Todo | Character portraits in all dialogues | 3.3 | Ensure all dialogue encounters render NPC portraits from `design/charcters/`. Add faction-coloured portrait frames. Handle missing portraits with silhouette fallback. |
+| ⬜ Todo | Combat scene ship sprites | 3.4 | Replace vector combat ships in `ui/combat_ui.py` with sprite rendering. Player ship left, enemy ship right. Damage effects (tinting, shake). |
+| ⬜ Todo | Faction-themed UI panels | 3.5 | Apply faction colour palettes (from art direction guide) to UI panel borders, glow effects, and text colours when viewing faction-specific content. Extract colours to `ui/theme.py`. |
+| ⬜ Todo | Region-specific space backgrounds | 3.6 | Colour-temperature tinting per region (amber for starting realm, blue for Canis territory, gold for Lion territory). Modify starfield palette based on `current_region`. |
+| ⬜ Todo | Crystal visual effects | 3.7 | Whisper crystal glow in HUD (pulsing blue-white), crystal deposit POI effects, ship engine crystal chamber glow during thrust. |
+| ⬜ Todo | Character sprite sheets (future) | 3.8 | Placeholder task for animated character sprites if/when needed. Not required for prototype. |
+
+**Key principles:**
+- All sprite loading goes through `engine/` (EAL compliance)
+- UI states reference sprites via abstract IDs, not file paths
+- Graceful fallback: if a sprite is missing, fall back to existing vector shapes
+- No breaking changes to game logic — sprites are purely visual layer
+- Leverage existing `engine/image_utils.py` infrastructure (load_image_alpha, remove_background_by_corners)
+
+**Existing art assets ready for integration:**
+
+| Asset | Location | Current Status |
+|-------|----------|----------------|
+| Aristotle portrait (head) | `design/charcters/aristotle_head.png` | Used in dialogue |
+| Dave portrait (head) | `design/charcters/dave_head.png` | Used in dialogue |
+| Death portrait (head) | `design/charcters/death_head.png` | Used in dialogue |
+| Player ship (right profile) | `design/ships/ship_r_side.png` | Used in navigation |
+| Player ship (top-down) | `design/ships/ship_up_side.png` | Alternative, loaded |
+| League Cruiser | `design/ships/league_cruiser.png` | Not used — ready for 3.2 |
+| League Destroyer | `design/ships/league_destroyer.jpg` | Not used — ready for 3.2 |
+| Royal Galleon | `design/ships/royal_galleon.jpg` | Not used — ready for 3.2 |
+| Combat cutlass icon | `design/ui_ux/fight_cutlass.png` | Used for combat POIs |
+| Splash screen | `design/artwork/wc_splash_screen.png` | Used on startup |
+| Title graphic | `design/artwork/whisper_crystals_title.png` | Used on menu |
+
+**Missing art to commission/generate:**
+- Wolf ship sprite (charcoal/dark green tactical profile)
+- Fairy ship/vessel sprite (iridescent, organic)
+- Goblin scrapper sprite (rust/junk aesthetic)
+- Knight ship sprite (silver/heraldic)
+- Alien vessel sprite (neon cyan/bioluminescent)
+- Faction-specific UI frame textures (optional, can use colour tinting)
+- Crystal deposit sprite/animation
 
 ---
 
@@ -211,33 +257,44 @@ Deferred items from code review. None are blockers. Prioritize when addressing P
 
 ## 8. Future Roadmap
 
-### Post-Side Missions (PLAN-002 Tier 1 Remainder)
+### Next up: PLAN-003 — Sprite Character & Visual Identity (see § 6.3)
 
-1. **Live World News** — Subscribe to existing `FactionConquestSystem` events; queue "subspace radio intercepts" to HUD.
-   Low effort, high entertainment value. No new data files needed.
+Give the game visual personality with sprite-based rendering. 8 tasks covering sprite manager,
+faction ship sprites, character portraits, combat sprites, themed UI, region backgrounds, and
+crystal effects. All existing art assets are ready for integration.
 
-### PLAN-002 Tier 2
+### Post-PLAN-003 Enhancements
 
-2. **Wanted / Notoriety System** — Add `notoriety: dict[str, int]` to `GameStateData`. New `WantedSystem` injects
-   patrol encounters into encounter pool. HUD shows star indicator. Pairs well with distress signal exploit mechanic.
+**Tier 1 (Low effort, high impact):**
 
-3. **Named Crew with Mini-Storylines** — Add `name`, `backstory`, `loyalty_to_faction`, `special_ability`, `arc_flags`
-   to `CrewMember`. New `crew_dialogue.json` files. Morale system already exists; adds the emotional hook.
+1. **Live World News** — Subscribe to existing `FactionConquestSystem` events; queue "subspace
+   radio intercepts" to HUD. No new data files needed.
 
-### PLAN-002 Tier 3
+**Tier 2 (Medium effort, high impact):**
 
-4. **Tavern / Station Hub with Rumors** — Information economy. New `RumorSystem` + `rumor_registry.json`.
-   Purchased rumors set story flags unlocking encounters or POI markers.
+2. **Wanted / Notoriety System** — Add `notoriety: dict[str, int]` to `GameStateData`. New
+   `WantedSystem` injects patrol encounters into encounter pool. HUD shows star indicator.
+   Pairs well with distress signal exploit mechanic.
 
-5. **Black Market / Smuggling** — Hidden trade nodes with contraband. `WantedSystem` checks cargo on patrol.
-   Pairs with Wanted system (#2).
+3. **Named Crew with Mini-Storylines** — Add `name`, `backstory`, `loyalty_to_faction`,
+   `special_ability`, `arc_flags` to `CrewMember`. New `crew_dialogue.json` files. Morale
+   system already exists; adds the emotional hook.
 
-6. **Astral Dice (Gambling Mini-Game)** — New `MiniGameState` pushed onto stack. Self-contained dice math.
-   "Death plays dice" encounter is the flagship use case.
+**Tier 3 (Medium effort, medium impact):**
+
+4. **Tavern / Station Hub with Rumors** — Information economy. New `RumorSystem` +
+   `rumor_registry.json`. Purchased rumors set story flags unlocking encounters or POI markers.
+
+5. **Black Market / Smuggling** — Hidden trade nodes with contraband. `WantedSystem` checks
+   cargo on patrol. Pairs with Wanted system (#2).
+
+6. **Astral Dice (Gambling Mini-Game)** — New `MiniGameState` pushed onto stack. Self-contained
+   dice math. "Death plays dice" encounter is the flagship use case.
 
 ### Engine Migration
 
 Migration from Python/Pygame to Godot 4 or Unity when any of these conditions are met:
+
 - All four story arcs are fully playable end-to-end
 - Pygame performance limits prevent required visual quality or frame rate
 - Platform expansion (console, mobile) is targeted

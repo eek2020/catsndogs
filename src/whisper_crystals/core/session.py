@@ -29,12 +29,14 @@ from whisper_crystals.systems.faction_conquest import FactionConquestAI
 from whisper_crystals.systems.faction_system import FactionSystem
 from whisper_crystals.systems.narrative import NarrativeSystem
 from whisper_crystals.systems.realm_control import RealmControlSystem
+from whisper_crystals.systems.side_mission import SideMissionSystem
 from whisper_crystals.ui.combat_ui import CombatState
 from whisper_crystals.ui.cutscene import CutsceneState
 from whisper_crystals.ui.dialogue_ui import DialogueState
 from whisper_crystals.ui.ending_screen import EndingState
 from whisper_crystals.ui.faction_screen import FactionScreenState
 from whisper_crystals.ui.menu import MenuState
+from whisper_crystals.ui.mission_log import MissionLogState
 from whisper_crystals.ui.navigation import NavigationState
 from whisper_crystals.ui.pause_menu import PauseMenuState
 from whisper_crystals.ui.purchase_screen import PurchaseScreenState
@@ -78,6 +80,7 @@ class GameSession:
         self.exploration = ExplorationSystem(self.event_bus)
         self.faction_conquest = FactionConquestAI(self.event_bus)
         self.realm_control = RealmControlSystem(self.event_bus)
+        self.side_mission_system = SideMissionSystem(self.data_loader, self.event_bus)
         self.save_manager = SaveManager()
         self.settings = load_settings()
         
@@ -146,6 +149,9 @@ class GameSession:
             if Action.MENU_SELECT in actions:
                 self.nav_state._open_purchase_screen()
                 return True
+            if Action.MISSION_LOG in actions:
+                self._open_mission_log()
+                return True
 
         state.handle_input(actions)
         state.update(dt)
@@ -196,6 +202,8 @@ class GameSession:
                 return
 
         self.encounter_engine.load_encounters("arc1")
+        self.side_mission_system.load_missions("arc1")
+        self.side_mission_system.load_distress_signals()
 
         if on_loading_frame:
             if not on_loading_frame("Ready for launch", 1.0):
@@ -323,6 +331,7 @@ class GameSession:
         if new_arc:
             new_title = self.narrative.get_arc_title(new_arc)
             self.encounter_engine.load_encounters(new_arc)
+            self.side_mission_system.load_missions(new_arc)
 
             def on_cutscene_done() -> None:
                 self.state_machine.pop()
@@ -396,6 +405,17 @@ class GameSession:
             )
             self.state_machine.push(purchase)
 
+    def _open_mission_log(self) -> None:
+        """Push mission log overlay."""
+        if self.game_state:
+            mission_log = MissionLogState(
+                machine=self.state_machine,
+                game_state=self.game_state,
+                side_mission_system=self.side_mission_system,
+                on_close=lambda: self.state_machine.pop(),
+            )
+            self.state_machine.push(mission_log)
+
     # ------------------------------------------------------------------
     # Navigation
     # ------------------------------------------------------------------
@@ -450,6 +470,8 @@ class GameSession:
             self.game_state = loaded
             self.narrative.load()
             self.encounter_engine.load_encounters(loaded.current_arc)
+            self.side_mission_system.load_missions(loaded.current_arc)
+            self.side_mission_system.load_distress_signals()
             self._launch_navigation()
 
     def _open_load_from_pause(self) -> None:
@@ -462,6 +484,8 @@ class GameSession:
             self.game_state = loaded
             self.narrative.load()
             self.encounter_engine.load_encounters(loaded.current_arc)
+            self.side_mission_system.load_missions(loaded.current_arc)
+            self.side_mission_system.load_distress_signals()
             # Pop pause menu, then switch to new navigation
             self.state_machine.pop()
             self._launch_navigation()

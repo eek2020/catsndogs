@@ -63,6 +63,7 @@ class CombatState(GameState):
         self._result = ""  # "victory", "defeat", "fled"
         self._log = CombatLog()
         self._anim_timer = 0.0
+        self._flee_attempts = 0
 
         # Visual animation state
         self._player_shake = 0.0
@@ -140,10 +141,10 @@ class CombatState(GameState):
             self._log.add("Your turn. Choose an action.")
 
     def _attempt_flee(self) -> None:
-        """Try to flee — success based on relative speed."""
-        flee_chance = min(
-            0.8, self.player.speed / max(1, self.player.speed + self.enemy.speed)
-        )
+        """Try to flee — success based on relative speed, improving with each attempt."""
+        base_chance = self.player.speed / max(1, self.player.speed + self.enemy.speed)
+        flee_chance = min(0.95, base_chance + self._flee_attempts * 0.15)
+        self._flee_attempts += 1
         if random.random() < flee_chance:
             self._log.add("You escaped!")
             self._phase = "result"

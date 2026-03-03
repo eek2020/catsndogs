@@ -59,6 +59,7 @@ class Encounter:
     choices: list[EncounterChoice] = field(default_factory=list)
     priority: int = 0
     repeatable: bool = False
+    spawn_weight: float = 1.0
 
     @classmethod
     def from_dict(cls, data: dict) -> Encounter:
@@ -75,4 +76,5 @@ class Encounter:
             choices=choices,
             priority=data.get("priority", 0),
             repeatable=data.get("repeatable", False),
+            spawn_weight=data.get("spawn_weight", 1.0),
         )

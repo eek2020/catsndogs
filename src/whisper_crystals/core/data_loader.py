@@ -11,6 +11,7 @@ from whisper_crystals.entities.crystal import CrystalDeposit, CrystalMarket, Sup
 from whisper_crystals.entities.encounter import Encounter
 from whisper_crystals.entities.faction import Faction
 from whisper_crystals.entities.ship import Ship, ShipStats
+from whisper_crystals.entities.side_mission import SideMission
 
 logger = logging.getLogger(__name__)
 
@@ -127,3 +128,21 @@ class DataLoader:
         """Load point-of-interest definitions."""
         data = self._load_json("economy/regions.json")
         return data.get("points_of_interest", [])
+
+    def load_side_missions(self, arc_id: str) -> list[SideMission]:
+        """Load side mission definitions for a given arc."""
+        file_arc_id = arc_id.replace("_", "")
+        filename = f"side_missions/{file_arc_id}_side_missions.json"
+        try:
+            data = self._load_json(filename)
+        except FileNotFoundError:
+            return []
+        return [SideMission.from_dict(m) for m in data.get("side_missions", [])]
+
+    def load_distress_signals(self) -> list[Encounter]:
+        """Load the distress signal encounter pool."""
+        try:
+            data = self._load_json("side_missions/distress_signals.json")
+        except FileNotFoundError:
+            return []
+        return [Encounter.from_dict(e) for e in data.get("distress_signals", [])]

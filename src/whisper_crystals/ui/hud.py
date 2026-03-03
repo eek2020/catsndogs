@@ -60,6 +60,15 @@ class HUD:
             arc_text = f"ARC {state.current_arc.split('_')[1]}: {arc_title.upper()}"
             renderer.draw_text(arc_text, (sw // 2 - len(arc_text) * 5, y+1), size=20, color=(180, 50, 220))
 
+        # Missions indicator (between arc title and hull)
+        mission_count = sum(
+            1 for m in state.side_missions.values() if m.status == "active"
+        )
+        if mission_count > 0:
+            mission_text = f"M: {mission_count} MISSION{'S' if mission_count != 1 else ''}"
+            mx = sw // 2 + 140
+            renderer.draw_text(mission_text, (mx, y + 1), size=18, color=(220, 180, 50))
+
         # Right side: Ship Hull
         hull_pct = state.player_ship.current_hull / max(1, state.player_ship.max_hull)
         hcolor = (60, 200, 80) if hull_pct > 0.5 else (220, 60, 40)

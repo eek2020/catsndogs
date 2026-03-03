@@ -20,6 +20,8 @@ DEFAULT_KEY_MAP: dict[int, Action] = {
     pygame.K_RETURN: Action.CONFIRM,
     pygame.K_BACKSPACE: Action.CANCEL,
     pygame.K_r: Action.MENU_SELECT,
+    pygame.K_m: Action.MISSION_LOG,
+    pygame.K_TAB: Action.SKIP,
 }
 
 

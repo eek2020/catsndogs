@@ -6,6 +6,48 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-02 — PLAN-002: Side Missions & Distress Signals
+
+**Task:** Entertainment Enhancements — Side Missions + Distress Signals (13 tasks)
+**Model:** Opus 4.6
+
+### New Files
+
+- `systems/side_mission.py` — SideMissionSystem with mission lifecycle, objective tracking, reward
+  application, and distress signal spawning (timer-based, weighted random)
+- `data/side_missions/arc1_side_missions.json` — 4 side missions for Arc 1 (bounty, retrieval, escort, salvage)
+- `data/side_missions/distress_signals.json` — 5 distress signal encounters with 3 choices each
+  (help/exploit/ignore), repeatable, weighted spawn
+- `ui/mission_log.py` — MissionLogState overlay (two-panel: mission list + detail with objectives/rewards)
+- `tests/test_side_missions.py` — 24 tests covering entity serialization, data loading, system lifecycle,
+  rewards, events, and GameStateData round-trip
+
+### Modified Files
+
+- `core/interfaces.py` — Added `MISSION_LOG` to `Action` enum
+- `core/state_machine.py` — Added `MISSION_LOG` to `GameStateType` enum
+- `core/data_loader.py` — Added `load_side_missions(arc_id)`, `load_distress_signals()`
+- `core/game_state.py` — Added `side_missions: dict[str, SideMission]` field + to_dict/from_dict
+- `core/session.py` — Wired SideMissionSystem, M key hotkey, `_open_mission_log()`,
+  load on new game/load/arc transition
+- `entities/encounter.py` — Added `spawn_weight: float` field
+- `engine/input_handler.py` — Mapped `pygame.K_m` to `Action.MISSION_LOG`
+- `ui/navigation.py` — Distress POI spawning, mission objective checking, distress_signal colour
+- `ui/hud.py` — Active mission count indicator (amber text in top bar)
+
+### Updated Documentation
+
+- `docs/MASTER_PLAN.md` — Marked PLAN-002 complete, added PLAN-003 (Sprite Character & Visual Identity),
+  updated metrics (210 tests, 10 systems, 14 UI states, 20 data files)
+
+### Test Results
+
+- All 210 tests pass (186 previous + 24 new)
+- All tests run headless without pygame display context
+- EAL verification: zero pygame imports in `core/`, `systems/`, `entities/`
+
+---
+
 ## 2026-03-02 — Documentation Audit & Restructure
 
 **Task:** Documentation consolidation and master plan creation
