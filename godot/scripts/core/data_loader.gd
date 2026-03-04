@@ -35,7 +35,7 @@ func _load_json(relative_path: String) -> Variant:
 
 
 func load_factions() -> Dictionary:
-	var data := _load_json("factions/faction_registry.json")
+	var data: Variant = _load_json("factions/faction_registry.json")
 	if data == null:
 		return {}
 	var factions: Dictionary = {}
@@ -46,21 +46,21 @@ func load_factions() -> Dictionary:
 
 
 func load_relationship_matrix() -> Dictionary:
-	var data := _load_json("factions/faction_registry.json")
+	var data: Variant = _load_json("factions/faction_registry.json")
 	if data == null:
 		return {}
 	return data.get("relationship_matrix", {})
 
 
 func load_cascade_rules() -> Array:
-	var data := _load_json("factions/faction_registry.json")
+	var data: Variant = _load_json("factions/faction_registry.json")
 	if data == null:
 		return []
 	return data.get("cascade_rules", [])
 
 
 func load_ship_templates() -> Dictionary:
-	var data := _load_json("ships/ship_templates.json")
+	var data: Variant = _load_json("ships/ship_templates.json")
 	if data == null:
 		return {}
 	var templates: Dictionary = {}
@@ -70,7 +70,7 @@ func load_ship_templates() -> Dictionary:
 
 
 func load_upgrades() -> Array:
-	var data := _load_json("ships/ship_templates.json")
+	var data: Variant = _load_json("ships/ship_templates.json")
 	if data == null:
 		return []
 	return data.get("upgrades", [])
@@ -79,7 +79,7 @@ func load_upgrades() -> Array:
 func load_encounters(arc_id: String) -> Array:
 	var file_arc_id := arc_id.replace("_", "")
 	var filename := "encounters/%s_encounters.json" % file_arc_id
-	var data := _load_json(filename)
+	var data: Variant = _load_json(filename)
 	if data == null:
 		return []
 	var encounters: Array = []
@@ -89,21 +89,21 @@ func load_encounters(arc_id: String) -> Array:
 
 
 func load_arc_definitions() -> Array:
-	var data := _load_json("story/arc_definitions.json")
+	var data: Variant = _load_json("story/arc_definitions.json")
 	if data == null:
 		return []
 	return data.get("arcs", [])
 
 
 func load_ending_thresholds() -> Dictionary:
-	var data := _load_json("story/arc_definitions.json")
+	var data: Variant = _load_json("story/arc_definitions.json")
 	if data == null:
 		return {}
 	return data.get("ending_thresholds", {})
 
 
 func load_crystal_deposits() -> Dictionary:
-	var data := _load_json("economy/economy_data.json")
+	var data: Variant = _load_json("economy/economy_data.json")
 	if data == null:
 		return {}
 	var deposits: Dictionary = {}
@@ -114,7 +114,7 @@ func load_crystal_deposits() -> Dictionary:
 
 
 func load_supply_routes() -> Dictionary:
-	var data := _load_json("economy/economy_data.json")
+	var data: Variant = _load_json("economy/economy_data.json")
 	if data == null:
 		return {}
 	var routes: Dictionary = {}
@@ -125,28 +125,28 @@ func load_supply_routes() -> Dictionary:
 
 
 func load_crystal_market() -> CrystalDeposit.CrystalMarket:
-	var data := _load_json("economy/economy_data.json")
+	var data: Variant = _load_json("economy/economy_data.json")
 	if data == null:
 		return CrystalDeposit.CrystalMarket.new()
 	return CrystalDeposit.CrystalMarket.from_dict(data.get("crystal_market", {}))
 
 
 func load_regions() -> Array:
-	var data := _load_json("economy/regions.json")
+	var data: Variant = _load_json("economy/regions.json")
 	if data == null:
 		return []
 	return data.get("regions", [])
 
 
 func load_regions_full() -> Dictionary:
-	var data := _load_json("economy/regions.json")
+	var data: Variant = _load_json("economy/regions.json")
 	if data == null:
 		return {}
 	return data
 
 
 func load_points_of_interest() -> Array:
-	var data := _load_json("economy/regions.json")
+	var data: Variant = _load_json("economy/regions.json")
 	if data == null:
 		return []
 	return data.get("points_of_interest", [])
@@ -155,7 +155,7 @@ func load_points_of_interest() -> Array:
 func load_side_missions(arc_id: String) -> Array:
 	var file_arc_id := arc_id.replace("_", "")
 	var filename := "side_missions/%s_side_missions.json" % file_arc_id
-	var data := _load_json(filename)
+	var data: Variant = _load_json(filename)
 	if data == null:
 		return []
 	var missions: Array = []
@@ -165,7 +165,7 @@ func load_side_missions(arc_id: String) -> Array:
 
 
 func load_distress_signals() -> Array:
-	var data := _load_json("side_missions/distress_signals.json")
+	var data: Variant = _load_json("side_missions/distress_signals.json")
 	if data == null:
 		return []
 	var signals_arr: Array = []

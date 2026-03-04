@@ -36,7 +36,7 @@ func check_arc_exit(game_state: GameStateData) -> bool:
 	for flag_name in exit_conditions:
 		var expected = exit_conditions[flag_name]
 		var actual = game_state.story_flags.get(flag_name)
-		if expected == "!null":
+		if expected is String and expected == "!null":
 			if actual == null:
 				return false
 		elif actual != expected:
@@ -76,7 +76,7 @@ func get_arc_progress(game_state: GameStateData) -> Dictionary:
 	for flag_name in exit_conditions:
 		var expected = exit_conditions[flag_name]
 		var actual = game_state.story_flags.get(flag_name)
-		if expected == "!null":
+		if expected is String and expected == "!null":
 			progress[flag_name] = actual != null
 		else:
 			progress[flag_name] = actual == expected

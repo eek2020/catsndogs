@@ -60,7 +60,11 @@ static func from_dict(data: Dictionary) -> SideMission:
 	m.rewards = data.get("rewards", {})
 	m.faction_rewards = data.get("faction_rewards", {})
 	m.trigger_conditions = data.get("trigger_conditions", {})
-	m.discovery_encounter_id = data.get("discovery_encounter_id", "")
+	var discovery_id: Variant = data.get("discovery_encounter_id", "")
+	if discovery_id == null:
+		m.discovery_encounter_id = ""
+	else:
+		m.discovery_encounter_id = str(discovery_id)
 	m.priority = data.get("priority", 0)
 	return m
 

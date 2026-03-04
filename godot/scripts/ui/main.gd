@@ -72,10 +72,32 @@ func push_overlay(scene_key: String) -> Control:
 	return overlay
 
 
+func replace_overlay(current_overlay: Control, scene_key: String) -> Control:
+	var path: String = SCENES.get(scene_key, "")
+	if path.is_empty():
+		push_error("Unknown overlay key: %s" % scene_key)
+		return null
+	var existing_idx := _overlay_stack.find(current_overlay)
+	if existing_idx >= 0:
+		_overlay_stack.remove_at(existing_idx)
+	if is_instance_valid(current_overlay):
+		current_overlay.queue_free()
+	var scene: PackedScene = load(path)
+	var overlay: Control = scene.instantiate()
+	overlay.modulate.a = 0.0
+	scene_container.add_child(overlay)
+	_overlay_stack.append(overlay)
+	var tween := create_tween()
+	tween.tween_property(overlay, "modulate:a", 1.0, 0.15)
+	return overlay
+
+
 func pop_overlay() -> void:
+	while not _overlay_stack.is_empty() and not is_instance_valid(_overlay_stack[-1]):
+		_overlay_stack.pop_back()
 	if _overlay_stack.is_empty():
 		return
-	var overlay := _overlay_stack.pop_back()
+	var overlay: Control = _overlay_stack.pop_back()
 	var tween := create_tween()
 	tween.tween_property(overlay, "modulate:a", 0.0, 0.15)
 	tween.tween_callback(overlay.queue_free)

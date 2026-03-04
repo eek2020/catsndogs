@@ -24,6 +24,7 @@ SHIP_COLOR = (180, 50, 220)  # Felid Corsair purple
 SHIP_SIZE = 18
 SHIP_SPRITE_MAX_EDGE = 140
 POI_SHIP_SIZE = (48, 48)  # Size to render faction ship sprites at POIs
+CAMERA_DEADZONE = 120.0  # Pixels ship can drift from screen center before camera pans
 
 # How often (in seconds) we check for encounter triggers
 ENCOUNTER_CHECK_INTERVAL = 1.5
@@ -319,7 +320,20 @@ class NavigationState(GameState):
             self.game_state_data.position_y = self.ship_y
             self.game_state_data.playtime_seconds += dt
 
-        self.camera.follow((self.ship_x, self.ship_y), dt, smoothing=8.0)
+        # Keep the ship moving visibly on screen: only pan camera after exiting a deadzone.
+        center_x = self.camera.x + self.camera.width / 2
+        center_y = self.camera.y + self.camera.height / 2
+        target_x = center_x
+        target_y = center_y
+        if self.ship_x < center_x - CAMERA_DEADZONE:
+            target_x = self.ship_x + CAMERA_DEADZONE
+        elif self.ship_x > center_x + CAMERA_DEADZONE:
+            target_x = self.ship_x - CAMERA_DEADZONE
+        if self.ship_y < center_y - CAMERA_DEADZONE:
+            target_y = self.ship_y + CAMERA_DEADZONE
+        elif self.ship_y > center_y + CAMERA_DEADZONE:
+            target_y = self.ship_y - CAMERA_DEADZONE
+        self.camera.follow((target_x, target_y), dt, smoothing=8.0)
         self.hud.update(dt)
 
         self._check_timer += dt

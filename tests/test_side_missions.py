@@ -106,6 +106,19 @@ class TestSideMissionSerialization:
         )
         assert mission.is_complete is False
 
+    def test_from_dict_allows_null_discovery_encounter_id(self):
+        mission = SideMission.from_dict(
+            {
+                "mission_id": "sm_null_discovery",
+                "mission_type": "retrieval",
+                "title": "Ghost Ping",
+                "description": "Recovered from partial telemetry.",
+                "discovery_encounter_id": None,
+                "objectives": [],
+            }
+        )
+        assert mission.discovery_encounter_id is None
+
 
 # ------------------------------------------------------------------
 # Data loading

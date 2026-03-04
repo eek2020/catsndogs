@@ -188,7 +188,7 @@ static func _evaluate_conditions(conditions: Dictionary, game_state: GameStateDa
 				return false
 		else:
 			var actual = game_state.story_flags.get(key)
-			if expected == "!null":
+			if expected is String and expected == "!null":
 				if actual == null:
 					return false
 			else:
