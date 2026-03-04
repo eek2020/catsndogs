@@ -1,0 +1,274 @@
+{
+  "distress_signals": [
+    {
+      "encounter_id": "distress_stranded_merchant",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Stranded Merchant",
+      "description": "A civilian freighter broadcasts on all emergency bands. Their crystal drive is dead and life support is failing. You could help, ignore them, or... take what they have.",
+      "arc_id": "any",
+      "location": "any",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 1.0,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Respond to the distress call and share spare crystals",
+          "conditions": {},
+          "outcome": {
+            "description": "You dock with the freighter and patch their crystal drive. The captain is grateful — word of your kindness will spread through merchant channels.",
+            "faction_changes": {"felid_corsairs": 3},
+            "resource_changes": {"salvage": 15, "crystal_inventory": -2},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.33
+        },
+        {
+          "choice_id": "ignore",
+          "text": "Plot a new course. Not your problem.",
+          "conditions": {},
+          "outcome": {
+            "description": "You bank hard and leave the freighter behind. The distress signal fades into static. The multiverse is cruel — you're just not making it crueller.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.33
+        },
+        {
+          "choice_id": "exploit",
+          "text": "Disable their shields and take the cargo",
+          "conditions": {},
+          "outcome": {
+            "description": "You override their failing systems and strip the cargo hold clean. The crew watches helplessly as you fly away with everything they had.",
+            "faction_changes": {"felid_corsairs": -5, "goblins": 3},
+            "resource_changes": {"salvage": 50, "crystal_inventory": 5},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.34
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_damaged_warship",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Crippled Warship",
+      "description": "A Canis League patrol vessel limps through the void, trailing debris. Their weapons are offline but their pride isn't. They're requesting assistance — from a cat pirate.",
+      "arc_id": "any",
+      "location": "any",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 0.8,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Offer repairs and medical supplies",
+          "conditions": {},
+          "outcome": {
+            "description": "The League captain swallows his pride and accepts. As your crew patches their hull, you share a tense but civil drink on the bridge. Perhaps cats and dogs can coexist.",
+            "faction_changes": {"canis_league": 8},
+            "resource_changes": {"salvage": -10},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Help them — for a price",
+          "conditions": {},
+          "outcome": {
+            "description": "Business is business. The League captain agrees to your terms through gritted teeth. You leave richer, and they leave alive. Everyone wins — technically.",
+            "faction_changes": {"canis_league": 2},
+            "resource_changes": {"salvage": 25, "crystal_inventory": 3},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        },
+        {
+          "choice_id": "ignore",
+          "text": "Leave them to their fate",
+          "conditions": {},
+          "outcome": {
+            "description": "You fly past without a word. The League vessel grows smaller in your viewport until it's just another speck in the void.",
+            "faction_changes": {"canis_league": -3},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_escape_pod",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Escape Pod",
+      "description": "A lone escape pod tumbles through space, its beacon barely flickering. The occupant could be anyone — a refugee, a spy, or something worse.",
+      "arc_id": "any",
+      "location": "any",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 1,
+      "repeatable": true,
+      "spawn_weight": 1.0,
+      "choices": [
+        {
+          "choice_id": "rescue",
+          "text": "Bring the pod aboard",
+          "conditions": {},
+          "outcome": {
+            "description": "The survivor turns out to be a fairy cartographer with star charts of uncharted crystal deposits. She offers to share the data in gratitude.",
+            "faction_changes": {"fairies": 4},
+            "resource_changes": {"crystal_inventory": 6},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "scan_first",
+          "text": "Run a deep scan before approaching",
+          "conditions": {},
+          "outcome": {
+            "description": "Your scans reveal the pod is rigged with a proximity mine — a goblin trap. You detonate it safely from a distance and salvage the debris.",
+            "faction_changes": {"goblins": -2},
+            "resource_changes": {"salvage": 20},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        },
+        {
+          "choice_id": "ignore",
+          "text": "Keep flying",
+          "conditions": {},
+          "outcome": {
+            "description": "The pod drifts away. You'll never know what was inside. Some mysteries are better left unsolved.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_pirate_ambush",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Faint Signal",
+      "description": "A weak, garbled transmission repeats on loop: coordinates, a plea for help, and then silence. It could be genuine — or it could be bait.",
+      "arc_id": "any",
+      "location": "any",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 3,
+      "repeatable": true,
+      "spawn_weight": 0.7,
+      "choices": [
+        {
+          "choice_id": "investigate",
+          "text": "Follow the coordinates cautiously",
+          "conditions": {},
+          "outcome": {
+            "description": "It was an ambush — but you were ready. Goblin scrappers decloak around you, but your prepped weapons send them scattering. They drop some loot in their retreat.",
+            "faction_changes": {"goblins": -4},
+            "resource_changes": {"salvage": 35},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "rush_in",
+          "text": "Full speed to the rescue!",
+          "conditions": {},
+          "outcome": {
+            "description": "You fly straight into a goblin trap. They strip your shields before you can react, but you fight free — battered but alive, and a little wiser.",
+            "faction_changes": {"goblins": -2},
+            "resource_changes": {"salvage": -15},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        },
+        {
+          "choice_id": "ignore",
+          "text": "Smells like a trap. Move on.",
+          "conditions": {},
+          "outcome": {
+            "description": "You trust your instincts and chart a wide course around the signal. Smart captains live longer.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_lion_transport",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Lion Tribute Ship",
+      "description": "A Lion Dominion transport has suffered a crystal drive failure. They're carrying tribute crystals and won't beg for help — but they're drifting toward an asteroid field.",
+      "arc_id": "any",
+      "location": "any",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 0.6,
+      "choices": [
+        {
+          "choice_id": "help_freely",
+          "text": "Tow them to safety — no strings attached",
+          "conditions": {},
+          "outcome": {
+            "description": "The Lion captain is stunned by your generosity. A cat pirate with honour? He offers a formal commendation to the Dominion council.",
+            "faction_changes": {"lions": 10},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "demand_payment",
+          "text": "Offer a tow — for half their tribute",
+          "conditions": {},
+          "outcome": {
+            "description": "The Lion captain's mane bristles, but he agrees. Half their tribute fills your hold nicely, and they live to pay taxes another day.",
+            "faction_changes": {"lions": -2},
+            "resource_changes": {"crystal_inventory": 8},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ignore",
+          "text": "The Lions can sort themselves out",
+          "conditions": {},
+          "outcome": {
+            "description": "You watch the transport drift toward the asteroid field. Not your circus, not your... lions.",
+            "faction_changes": {"lions": -4},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    }
+  ]
+}

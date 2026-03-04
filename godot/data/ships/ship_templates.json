@@ -1,0 +1,175 @@
+{
+    "ship_templates": [
+        {
+            "template_id": "corsair_raider",
+            "name": "Corsair Raider",
+            "faction_id": "felid_corsairs",
+            "base_stats": {
+                "speed": 8,
+                "armour": 3,
+                "firepower": 5,
+                "crystal_capacity": 6,
+                "crew_capacity": 4
+            },
+            "max_hull": 100,
+            "sprite_id": "ships/corsair_raider.png",
+            "description": "Standard Felid Corsair vessel. Fast, agile, and deadly."
+        },
+        {
+            "template_id": "corsair_smuggler",
+            "name": "Corsair Smuggler",
+            "faction_id": "felid_corsairs",
+            "base_stats": {
+                "speed": 7,
+                "armour": 3,
+                "firepower": 4,
+                "crystal_capacity": 9,
+                "crew_capacity": 3
+            },
+            "max_hull": 90,
+            "sprite_id": "ships/corsair_smuggler.png",
+            "description": "Trade-optimised corsair with expanded cargo bays."
+        },
+        {
+            "template_id": "corsair_interceptor",
+            "name": "Corsair Interceptor",
+            "faction_id": "felid_corsairs",
+            "base_stats": {
+                "speed": 9,
+                "armour": 1,
+                "firepower": 8,
+                "crystal_capacity": 4,
+                "crew_capacity": 3
+            },
+            "max_hull": 80,
+            "sprite_id": "ships/corsair_interceptor.png",
+            "description": "Glass cannon. Fastest and hardest-hitting corsair, but fragile."
+        },
+        {
+            "template_id": "league_cruiser",
+            "name": "League Cruiser",
+            "faction_id": "canis_league",
+            "base_stats": {
+                "speed": 4,
+                "armour": 8,
+                "firepower": 6,
+                "crystal_capacity": 5,
+                "crew_capacity": 8
+            },
+            "max_hull": 120,
+            "sprite_id": "ships/league_cruiser.png",
+            "description": "Standard Canis League vessel. Heavy, armed, and crewed."
+        },
+        {
+            "template_id": "league_destroyer",
+            "name": "League Destroyer",
+            "faction_id": "canis_league",
+            "base_stats": {
+                "speed": 3,
+                "armour": 9,
+                "firepower": 9,
+                "crystal_capacity": 4,
+                "crew_capacity": 10
+            },
+            "max_hull": 180,
+            "sprite_id": "ships/league_destroyer.png",
+            "description": "Elite Canis warship. A boss-level threat."
+        },
+        {
+            "template_id": "royal_galleon",
+            "name": "Royal Galleon",
+            "faction_id": "lions",
+            "base_stats": {
+                "speed": 5,
+                "armour": 6,
+                "firepower": 5,
+                "crystal_capacity": 7,
+                "crew_capacity": 6
+            },
+            "max_hull": 120,
+            "sprite_id": "ships/royal_galleon.png",
+            "description": "Ornate Lion vessel. Balanced stats, political prestige."
+        },
+        {
+            "template_id": "wolf_strike_craft",
+            "name": "Wolf Strike Craft",
+            "faction_id": "wolves",
+            "base_stats": {
+                "speed": 6,
+                "armour": 7,
+                "firepower": 8,
+                "crystal_capacity": 4,
+                "crew_capacity": 7
+            },
+            "max_hull": 140,
+            "sprite_id": "ships/wolf_strike_craft.png",
+            "description": "Tactical Wolf warship. Optimised for combat superiority."
+        }
+    ],
+    "upgrades": [
+        {
+            "upgrade_id": "reinforced_hull",
+            "name": "Reinforced Hull",
+            "target_stat": "armour",
+            "modifier": 1,
+            "cost_crystals": 20,
+            "cost_salvage": 10
+        },
+        {
+            "upgrade_id": "turbocharger",
+            "name": "Turbocharger",
+            "target_stat": "speed",
+            "modifier": 1,
+            "cost_crystals": 25,
+            "cost_salvage": 15
+        },
+        {
+            "upgrade_id": "heavy_guns",
+            "name": "Heavy Guns",
+            "target_stat": "firepower",
+            "modifier": 1,
+            "cost_crystals": 30,
+            "cost_salvage": 20
+        },
+        {
+            "upgrade_id": "crystal_compressor",
+            "name": "Crystal Compressor",
+            "target_stat": "crystal_capacity",
+            "modifier": 1,
+            "cost_crystals": 15,
+            "cost_salvage": 5
+        },
+        {
+            "upgrade_id": "expanded_quarters",
+            "name": "Expanded Quarters",
+            "target_stat": "crew_capacity",
+            "modifier": 1,
+            "cost_crystals": 10,
+            "cost_salvage": 15
+        },
+        {
+            "upgrade_id": "stealth_plating",
+            "name": "Stealth Plating",
+            "target_stat": "speed",
+            "modifier": 1,
+            "cost_crystals": 35,
+            "cost_salvage": 25,
+            "side_effect": {
+                "target_stat": "armour",
+                "modifier": -1
+            }
+        },
+        {
+            "upgrade_id": "siege_cannons",
+            "name": "Siege Cannons",
+            "target_stat": "firepower",
+            "modifier": 2,
+            "cost_crystals": 40,
+            "cost_salvage": 30,
+            "side_effect": {
+                "target_stat": "speed",
+                "modifier": -1
+            }
+        }
+    ]
+}

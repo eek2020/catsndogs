@@ -1,0 +1,125 @@
+{
+    "dialogue_tree_id": "death_hub",
+    "character_id": "death",
+    "nodes": {
+        "root": {
+            "text": "Captain. You look terribly tired holding onto so much power. Care to pass the burden?",
+            "choices": [
+                {
+                    "text": "Watch your tone, or I'll airlock you.",
+                    "next_node_id": "airlock_threat",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "felid_corsairs": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "What do the Lions want now?",
+                    "next_node_id": "lion_inquiry",
+                    "conditions": {
+                        "arc2_death_betrayal": true,
+                        "arc3_death_allegiance": null
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Are you working for the Wolves?",
+                    "next_node_id": "wolf_inquiry",
+                    "conditions": {
+                        "arc2_death_betrayal": true,
+                        "arc3_death_allegiance": null
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Get off my bridge.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "airlock_threat": {
+            "text": "My, my. Touchy. The streets are still in you, Aristotle. It makes you predictable.",
+            "choices": [
+                {
+                    "text": "[Leave]",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "lion_inquiry": {
+            "text": "The Lions? They think the stars belong to them by birthright. I merely help them believe it... while it's profitable.",
+            "choices": [
+                {
+                    "text": "I knew it. You're a puppet for the nobility. (Trigger Allegiance Reveal)",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "lions": 5,
+                            "felid_corsairs": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_death_allegiance"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "wolf_inquiry": {
+            "text": "The Wolves appreciate strategy. They don't care about birthright, only results. We have... overlapping strategic aims.",
+            "choices": [
+                {
+                    "text": "You sold us out to the military. (Trigger Allegiance Reveal)",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "wolves": 5,
+                            "felid_corsairs": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_death_allegiance"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_conversation": {
+            "text": "Death slips back into the shadows. The chill lingers.",
+            "choices": []
+        }
+    }
+}

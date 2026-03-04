@@ -26,3 +26,7 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Godot engine
+.godot/
+export_presets.cfg
