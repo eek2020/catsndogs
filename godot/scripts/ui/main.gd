@@ -12,6 +12,7 @@ const TRANSITION_DURATION := 0.3
 
 # Scene paths
 const SCENES := {
+	"splash": "res://scenes/ui/splash.tscn",
 	"menu": "res://scenes/ui/menu.tscn",
 	"navigation": "res://scenes/ui/navigation.tscn",
 	"combat": "res://scenes/ui/combat_ui.tscn",
@@ -33,7 +34,7 @@ var _overlay_stack: Array[Control] = []
 func _ready() -> void:
 	theme = ThemeBuilder.build()
 	transition_overlay.color = Color(0, 0, 0, 1)
-	switch_scene("menu")
+	switch_scene("splash")
 
 
 func switch_scene(scene_key: String) -> void:

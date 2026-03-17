@@ -15,23 +15,44 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -250.0
+offset_top = -280.0
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="HBox" type="HBoxContainer" parent="Panel"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="PortraitContainer" type="VBoxContainer" parent="Panel/HBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 0)
+alignment = 1
+
+[node name="PortraitRect" type="TextureRect" parent="Panel/HBox/PortraitContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 100)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Panel/HBox/PortraitContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.3, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="VBox" type="VBoxContainer" parent="Panel/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Panel/HBox/VBox"]
 layout_mode = 2
 text = "Encounter"
 horizontal_alignment = 1
 theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
 theme_override_font_sizes/font_size = 24
 
-[node name="Description" type="RichTextLabel" parent="Panel/VBox"]
+[node name="Description" type="RichTextLabel" parent="Panel/HBox/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 80)
 fit_content = true
 text = ""
 
-[node name="ChoicesContainer" type="VBoxContainer" parent="Panel/VBox"]
+[node name="ChoicesContainer" type="VBoxContainer" parent="Panel/HBox/VBox"]
 layout_mode = 2

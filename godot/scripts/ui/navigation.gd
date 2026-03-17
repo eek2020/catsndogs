@@ -11,14 +11,20 @@ extends Control
 
 var _flash_timer: float = 0.0
 var _poi_refresh_timer: float = 0.0
+var _elapsed: float = 0.0
 
 const POI_REFRESH_INTERVAL: float = 1.5
-const SHIP_SPEED: float = 200.0
+const SHIP_SPEED: float = 300.0
 const SHIP_DRAW_SIZE := Vector2(72.0, 72.0)
 const SHIP_COLLISION_RADIUS: float = 24.0
 const POI_RADIUS: float = 38.0
 const STAR_COUNT: int = 180
 const STARFIELD_AREA: float = 4200.0
+
+# Minimap
+const MINIMAP_SIZE: int = 150
+const MINIMAP_MARGIN: int = 16
+const MINIMAP_WORLD_RANGE: float = 2400.0  # World units visible in minimap
 
 const ENCOUNTER_TYPE_COLORS := {
 	"combat": Color(1.0, 0.2, 0.2),
@@ -33,10 +39,22 @@ var _ship_texture: Texture2D = preload("res://assets/ships/ship_r_side.png")
 var _active_pois: Array = []
 var _stars: Array = []
 
+# Ship rotation & movement feel
+var _ship_angle: float = 0.0  # Radians, 0 = facing right
+var _is_moving: bool = false
+
+# Engine trail particles: Array of {x, y, life, max_life}
+var _trail: Array = []
+
+# Distress signals handled by SideMissionSystem.update_distress()
+
+# First-run welcome
+var _showed_welcome: bool = false
+
 
 func _ready() -> void:
 	randomize()
-	_prepare_ship_texture_alpha()
+	_ship_texture = _remove_background_by_corners(_ship_texture)
 	_build_starfield()
 	flash_label.text = ""
 	_poi_refresh_timer = 0.0
@@ -44,21 +62,48 @@ func _ready() -> void:
 	_update_hud()
 
 
-func _prepare_ship_texture_alpha() -> void:
-	if _ship_texture == null:
-		return
-	var image: Image = _ship_texture.get_image()
+static func _remove_background_by_corners(tex: Texture2D, tolerance: float = 0.13, feather: float = 0.05) -> Texture2D:
+	"""Remove solid background colour detected from corner pixels."""
+	if tex == null:
+		return tex
+	var image: Image = tex.get_image()
 	if image == null:
-		return
+		return tex
 	image.convert(Image.FORMAT_RGBA8)
 	var w: int = image.get_width()
 	var h: int = image.get_height()
+	if w == 0 or h == 0:
+		return tex
+	var corners: Array[Color] = [
+		image.get_pixel(0, 0),
+		image.get_pixel(w - 1, 0),
+		image.get_pixel(0, h - 1),
+		image.get_pixel(w - 1, h - 1),
+	]
+	for c in corners:
+		if c.a < 0.95:
+			return tex
+	var best_idx: int = 0
+	var best_score: float = INF
+	for i in 4:
+		var score: float = 0.0
+		for j in 4:
+			if i != j:
+				score += absf(corners[i].r - corners[j].r) + absf(corners[i].g - corners[j].g) + absf(corners[i].b - corners[j].b)
+		if score < best_score:
+			best_score = score
+			best_idx = i
+	var bg: Color = corners[best_idx]
 	for y in h:
 		for x in w:
-			var c: Color = image.get_pixel(x, y)
-			if c.a > 0.9 and c.r <= 0.08 and c.g <= 0.08 and c.b <= 0.08:
-				image.set_pixel(x, y, Color(c.r, c.g, c.b, 0.0))
-	_ship_texture = ImageTexture.create_from_image(image)
+			var px: Color = image.get_pixel(x, y)
+			var delta: float = maxf(absf(px.r - bg.r), maxf(absf(px.g - bg.g), absf(px.b - bg.b)))
+			if delta <= tolerance:
+				image.set_pixel(x, y, Color(px.r, px.g, px.b, 0.0))
+			elif delta <= tolerance + feather:
+				var alpha_scale: float = (delta - tolerance) / feather
+				image.set_pixel(x, y, Color(px.r, px.g, px.b, px.a * alpha_scale))
+	return ImageTexture.create_from_image(image)
 
 
 func _build_starfield() -> void:
@@ -71,14 +116,32 @@ func _build_starfield() -> void:
 		})
 
 
+func _has_overlay() -> bool:
+	var main: Control = get_tree().current_scene
+	if main and "_overlay_stack" in main:
+		var stack: Array = main._overlay_stack
+		for overlay in stack:
+			if is_instance_valid(overlay):
+				return true
+	return false
+
+
 func _process(dt: float) -> void:
 	if GameSession.game_state == null:
 		return
-	_handle_movement(dt)
-	_update_poi_timer(dt)
-	_check_poi_collisions()
+	_elapsed += dt
+	# Pause gameplay when overlays (dialogue, combat, etc.) are open
+	if not _has_overlay():
+		_handle_movement(dt)
+		_update_trail(dt)
+		_update_poi_timer(dt)
+		_update_distress(dt)
+		_check_poi_collisions()
+	else:
+		_update_trail(dt)  # Let trail fade while paused
 	_update_flash(dt)
 	_update_hud()
+	_show_welcome()
 	queue_redraw()
 
 
@@ -92,10 +155,39 @@ func _handle_movement(dt: float) -> void:
 		direction.x -= 1
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
-	if direction != Vector2.ZERO:
+
+	_is_moving = direction != Vector2.ZERO
+	if _is_moving:
 		direction = direction.normalized()
 		GameSession.game_state.position_x += direction.x * SHIP_SPEED * dt
 		GameSession.game_state.position_y += direction.y * SHIP_SPEED * dt
+
+		# Smooth rotation toward movement direction
+		var target_angle: float = atan2(direction.y, direction.x)
+		var diff: float = fposmod(target_angle - _ship_angle + PI, TAU) - PI
+		_ship_angle += diff * minf(1.0, dt * 10.0)
+
+		# Spawn engine trail particles
+		if randf() < 0.6:
+			var gs: GameStateData = GameSession.game_state
+			var ex: float = gs.position_x - cos(_ship_angle) * 18.0
+			var ey: float = gs.position_y - sin(_ship_angle) * 18.0
+			var life: float = randf_range(0.5, 1.2)
+			_trail.append({
+				"x": ex + randf_range(-3.0, 3.0),
+				"y": ey + randf_range(-3.0, 3.0),
+				"life": life,
+				"max_life": life,
+			})
+
+
+func _update_trail(dt: float) -> void:
+	var new_trail: Array = []
+	for p in _trail:
+		p["life"] -= dt
+		if p["life"] > 0:
+			new_trail.append(p)
+	_trail = new_trail
 
 
 func _update_poi_timer(dt: float) -> void:
@@ -103,6 +195,26 @@ func _update_poi_timer(dt: float) -> void:
 	if _poi_refresh_timer >= POI_REFRESH_INTERVAL:
 		_poi_refresh_timer = 0.0
 		_refresh_pois()
+
+
+func _update_distress(dt: float) -> void:
+	if GameSession.game_state == null:
+		return
+	var encounter: Encounter = GameSession.side_mission_system.update_distress(dt, GameSession.game_state)
+	if encounter == null:
+		return
+	var gs: GameStateData = GameSession.game_state
+	var angle := randf() * TAU
+	var distance := randf_range(500.0, 900.0)
+	var color: Color = ENCOUNTER_TYPE_COLORS.get("distress_signal", Color(1.0, 0.62, 0.35))
+	_active_pois.append({
+		"encounter": encounter,
+		"x": gs.position_x + cos(angle) * distance,
+		"y": gs.position_y + sin(angle) * distance,
+		"radius": POI_RADIUS,
+		"color": color,
+	})
+	flash("DISTRESS SIGNAL: %s" % encounter.title, 3.0)
 
 
 func _refresh_pois() -> void:
@@ -116,7 +228,7 @@ func _refresh_pois() -> void:
 	var retained: Array = []
 	for poi in _active_pois:
 		var enc = poi.get("encounter")
-		if enc != null and available_ids.has(enc.encounter_id):
+		if enc != null and (available_ids.has(enc.encounter_id) or enc.encounter_type == "distress_signal"):
 			retained.append(poi)
 	_active_pois = retained
 
@@ -203,6 +315,13 @@ func _update_hud() -> void:
 		hull_label.text = "Hull: %d/%d" % [gs.player_ship.current_hull, gs.player_ship.max_hull]
 
 
+func _show_welcome() -> void:
+	if _showed_welcome:
+		return
+	_showed_welcome = true
+	flash("Fly toward the markers to begin encounters", 5.0)
+
+
 func flash(message: String, duration: float = 3.0) -> void:
 	flash_label.text = message
 	_flash_timer = duration
@@ -221,6 +340,10 @@ func on_return_from_encounter() -> void:
 	_update_hud()
 
 
+# ---------------------------------------------------------------------------
+# Drawing
+# ---------------------------------------------------------------------------
+
 func _draw() -> void:
 	var gs: GameStateData = GameSession.game_state
 	if gs == null:
@@ -228,39 +351,11 @@ func _draw() -> void:
 
 	var center := size * 0.5
 	_draw_starfield(center, gs)
-
-	if _ship_texture != null:
-		draw_texture_rect(
-			_ship_texture,
-			Rect2(center - (SHIP_DRAW_SIZE * 0.5), SHIP_DRAW_SIZE),
-			false,
-			Color(1, 1, 1, 0.95)
-		)
-	else:
-		draw_circle(center, SHIP_COLLISION_RADIUS, Color(0.72, 0.34, 0.9))
-
-	var default_font: Font = ThemeDB.fallback_font
-	for poi in _active_pois:
-		var sx: float = center.x + (poi["x"] - gs.position_x)
-		var sy: float = center.y + (poi["y"] - gs.position_y)
-		var screen_pos := Vector2(sx, sy)
-		var poi_color: Color = poi.get("color", Color(1.0, 0.82, 0.45))
-
-		draw_circle(screen_pos, poi["radius"], poi_color * Color(1, 1, 1, 0.18))
-		draw_arc(screen_pos, poi["radius"], 0.0, TAU, 48, poi_color, 2.0)
-		draw_circle(screen_pos, 7.0, poi_color)
-
-		if default_font != null:
-			var encounter: Encounter = poi["encounter"]
-			draw_string(
-				default_font,
-				screen_pos + Vector2(16, -10),
-				encounter.title,
-				HORIZONTAL_ALIGNMENT_LEFT,
-				260,
-				14,
-				Color(0.92, 0.95, 1.0)
-			)
+	_draw_trail(center, gs)
+	_draw_pois(center, gs)
+	_draw_ship(center)
+	_draw_minimap(gs)
+	_draw_controls_bar()
 
 
 func _draw_starfield(center: Vector2, gs: GameStateData) -> void:
@@ -274,3 +369,158 @@ func _draw_starfield(center: Vector2, gs: GameStateData) -> void:
 		var brightness := 0.62 + (depth * 0.33)
 		var color := Color(brightness, brightness, brightness + 0.05, 0.9)
 		draw_circle(screen_pos, maxf(1.0, depth * 2.2), color)
+
+
+func _draw_trail(center: Vector2, gs: GameStateData) -> void:
+	for p in _trail:
+		var sx: float = center.x + (p["x"] - gs.position_x)
+		var sy: float = center.y + (p["y"] - gs.position_y)
+		var frac: float = p["life"] / p["max_life"]
+		var alpha: float = frac * 0.78
+		var radius: float = 2.0 + frac * 4.0
+		draw_circle(Vector2(sx, sy), radius, Color(0.4, 0.7, 1.0, alpha))
+
+
+func _draw_pois(center: Vector2, gs: GameStateData) -> void:
+	var default_font: Font = ThemeDB.fallback_font
+	for poi in _active_pois:
+		var sx: float = center.x + (poi["x"] - gs.position_x)
+		var sy: float = center.y + (poi["y"] - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		var poi_color: Color = poi.get("color", Color(1.0, 0.82, 0.45))
+
+		# Pulsing glow effect
+		var pulse: float = 1.0 + 0.2 * sin(_elapsed * 3.0 + poi["x"] * 0.01)
+		var outer_r: float = poi["radius"] * 1.5 * pulse
+
+		# Outer glow (translucent)
+		draw_circle(screen_pos, outer_r, poi_color * Color(1, 1, 1, 0.1))
+		# Ring
+		draw_arc(screen_pos, poi["radius"] * pulse, 0.0, TAU, 48, poi_color, 2.0)
+		# Inner core (pulsing)
+		var core_r: float = 7.0 * (1.0 + 0.15 * sin(_elapsed * 5.0))
+		draw_circle(screen_pos, core_r, poi_color)
+
+		# Encounter type indicator for combat
+		if poi["encounter"].encounter_type == "combat":
+			# Draw crossed swords indicator
+			var cx: float = sx
+			var cy: float = sy
+			draw_line(Vector2(cx - 8, cy - 8), Vector2(cx + 8, cy + 8), Color(1.0, 0.3, 0.3), 2.0)
+			draw_line(Vector2(cx + 8, cy - 8), Vector2(cx - 8, cy + 8), Color(1.0, 0.3, 0.3), 2.0)
+
+		# Title label
+		if default_font != null:
+			var encounter: Encounter = poi["encounter"]
+			var type_tag: String = encounter.encounter_type.to_upper()
+			# Type tag above
+			draw_string(
+				default_font,
+				screen_pos + Vector2(-20, -poi["radius"] - 22),
+				type_tag,
+				HORIZONTAL_ALIGNMENT_LEFT,
+				200,
+				12,
+				poi_color * Color(1, 1, 1, 0.7)
+			)
+			# Title below type
+			draw_string(
+				default_font,
+				screen_pos + Vector2(-20, -poi["radius"] - 8),
+				encounter.title,
+				HORIZONTAL_ALIGNMENT_LEFT,
+				260,
+				14,
+				Color(0.92, 0.95, 1.0)
+			)
+
+
+func _draw_ship(center: Vector2) -> void:
+	if _ship_texture != null:
+		# Rotate ship sprite based on movement direction
+		var angle_deg: float = rad_to_deg(_ship_angle)
+		draw_set_transform(center, _ship_angle, Vector2.ONE)
+		draw_texture_rect(
+			_ship_texture,
+			Rect2(-(SHIP_DRAW_SIZE * 0.5), SHIP_DRAW_SIZE),
+			false,
+			Color(1, 1, 1, 0.95)
+		)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+		# Engine glow when moving
+		if _is_moving:
+			var glow_pulse: float = 1.0 + 0.5 * sin(_elapsed * 20.0)
+			var engine_offset := Vector2(-SHIP_DRAW_SIZE.x * 0.45, 0.0).rotated(_ship_angle)
+			var engine_pos := center + engine_offset
+			draw_circle(engine_pos, 6.0 * glow_pulse, Color(0.4, 0.8, 1.0, 0.5))
+			draw_circle(engine_pos, 3.0 * glow_pulse, Color(0.8, 0.95, 1.0, 0.8))
+	else:
+		draw_circle(center, SHIP_COLLISION_RADIUS, Color(0.72, 0.34, 0.9))
+
+
+func _draw_minimap(gs: GameStateData) -> void:
+	var map_x: float = size.x - MINIMAP_SIZE - MINIMAP_MARGIN
+	var map_y: float = size.y - MINIMAP_SIZE - MINIMAP_MARGIN - 30  # Above controls bar
+	var map_rect := Rect2(map_x, map_y, MINIMAP_SIZE, MINIMAP_SIZE)
+
+	# Background
+	draw_rect(map_rect, Color(0.05, 0.07, 0.11, 0.8))
+	# Border
+	draw_rect(map_rect, Color(0.2, 0.4, 0.7, 0.8), false, 2.0)
+
+	# Grid lines
+	for i in range(1, 4):
+		var gx: float = map_x + i * (MINIMAP_SIZE / 4.0)
+		var gy: float = map_y + i * (MINIMAP_SIZE / 4.0)
+		draw_line(Vector2(gx, map_y), Vector2(gx, map_y + MINIMAP_SIZE), Color(0.12, 0.2, 0.3, 0.6), 1.0)
+		draw_line(Vector2(map_x, gy), Vector2(map_x + MINIMAP_SIZE, gy), Color(0.12, 0.2, 0.3, 0.6), 1.0)
+
+	# POI blips (relative to player position)
+	var half_range: float = MINIMAP_WORLD_RANGE * 0.5
+	for poi in _active_pois:
+		var rel_x: float = poi["x"] - gs.position_x
+		var rel_y: float = poi["y"] - gs.position_y
+		# Skip if outside minimap range
+		if absf(rel_x) > half_range or absf(rel_y) > half_range:
+			continue
+		var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
+		var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
+		var bx: float = map_x + nx * MINIMAP_SIZE
+		var by: float = map_y + ny * MINIMAP_SIZE
+		var poi_color: Color = poi.get("color", Color(1.0, 0.82, 0.45))
+		draw_circle(Vector2(bx, by), 3.0, poi_color)
+
+	# Player blip (center)
+	var player_pos := Vector2(map_x + MINIMAP_SIZE * 0.5, map_y + MINIMAP_SIZE * 0.5)
+	draw_circle(player_pos, 3.0, Color(0.43, 0.84, 1.0))
+	draw_arc(player_pos, 6.0, 0.0, TAU, 24, Color(0.43, 0.84, 1.0, 0.4), 1.0)
+
+	# Direction indicator (small line showing heading)
+	var dir_end := player_pos + Vector2(cos(_ship_angle), sin(_ship_angle)) * 10.0
+	draw_line(player_pos, dir_end, Color(0.43, 0.84, 1.0, 0.7), 1.5)
+
+	# Label
+	var default_font: Font = ThemeDB.fallback_font
+	if default_font:
+		draw_string(default_font, Vector2(map_x + 4, map_y + 14), "SECTOR MAP", HORIZONTAL_ALIGNMENT_LEFT, 200, 12, Color(0.4, 0.7, 0.86))
+
+
+func _draw_controls_bar() -> void:
+	var bar_h: float = 28.0
+	var bar_y: float = size.y - bar_h
+	draw_rect(Rect2(0, bar_y, size.x, bar_h), Color(0.06, 0.05, 0.1, 0.65))
+	draw_line(Vector2(0, bar_y), Vector2(size.x, bar_y), Color(0.27, 0.17, 0.43), 1.0)
+
+	var default_font: Font = ThemeDB.fallback_font
+	if default_font:
+		var hint_text := "WASD: MOVE  |  E: FACTIONS  |  SPACE: SHIP  |  M: MISSIONS  |  ESC: PAUSE"
+		draw_string(
+			default_font,
+			Vector2(size.x * 0.5 - 280, bar_y + 18),
+			hint_text,
+			HORIZONTAL_ALIGNMENT_CENTER,
+			600,
+			14,
+			Color(0.63, 0.63, 0.67)
+		)

@@ -1,13 +1,8 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
 # OS generated files
 .DS_Store
 .DS_Store?
 ._*
-Thumbe.db
+Thumbs.db
 ehthumbs.db
 Desktop.ini
 
@@ -23,9 +18,6 @@ Desktop.ini
 # Project specific
 logs/
 *.log
-.pytest_cache/
-.coverage
-htmlcov/
 
 # Godot engine
 .godot/

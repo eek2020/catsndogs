@@ -23,6 +23,8 @@ offset_bottom = 250.0
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Title" type="Label" parent="Panel/VBox"]
 layout_mode = 2
@@ -33,7 +35,11 @@ theme_override_font_sizes/font_size = 28
 
 [node name="MissionList" type="VBoxContainer" parent="Panel/VBox"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
 
 [node name="CloseBtn" type="Button" parent="Panel/VBox"]
 layout_mode = 2
 text = "Close"
+size_flags_horizontal = 1

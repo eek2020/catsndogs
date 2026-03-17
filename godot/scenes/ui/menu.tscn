@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/artwork/whisper_crystals_title.png" id="2"]
 
 [node name="MenuScreen" type="Control"]
 layout_mode = 3
@@ -18,19 +19,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -160.0
-offset_right = 180.0
-offset_bottom = 160.0
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="VBox"]
+[node name="TitleArt" type="TextureRect" parent="VBox"]
 layout_mode = 2
-text = "WHISPER CRYSTALS"
-horizontal_alignment = 1
-theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
-theme_override_font_sizes/font_size = 36
+custom_minimum_size = Vector2(400, 120)
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Subtitle" type="Label" parent="VBox"]
 layout_mode = 2
