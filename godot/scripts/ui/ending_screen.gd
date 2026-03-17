@@ -61,6 +61,8 @@ func _build_summary() -> void:
 	lines.append("Missions Completed: %d" % completed_missions)
 	lines.append("Missions Failed: %d" % failed_missions)
 	lines.append("")
+	if gs.protagonist_id == "dave":
+		lines.append("[color=#96c8ff]Commander Dave's campaign has concluded.[/color]")
 	lines.append("[color=#f0d47a]Thank you for playing Whisper Crystals.[/color]")
 	summary_label.text = "\n".join(lines)
 	summary_label.visible_characters = 0

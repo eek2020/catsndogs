@@ -10,6 +10,7 @@ extends Resource
 
 # Arc progression
 @export var current_arc: String = "arc_1"
+@export var protagonist_id: String = "aristotle"
 
 # Player
 @export var player_character: Character = null
@@ -73,6 +74,7 @@ func to_dict() -> Dictionary:
 		"save_slot": save_slot,
 		"playtime_seconds": playtime_seconds,
 		"current_arc": current_arc,
+		"protagonist_id": protagonist_id,
 		"player_character": player_character.to_dict() if player_character else {},
 		"player_ship": player_ship.to_dict() if player_ship else {},
 		"fleet": fleet.map(func(s): return s.to_dict()),
@@ -103,6 +105,7 @@ static func from_dict(data: Dictionary) -> GameStateData:
 	state.save_slot = data.get("save_slot", 0)
 	state.playtime_seconds = data.get("playtime_seconds", 0.0)
 	state.current_arc = data.get("current_arc", "arc_1")
+	state.protagonist_id = data.get("protagonist_id", "aristotle")
 	if data.has("player_character"):
 		state.player_character = Character.from_dict(data["player_character"])
 	if data.has("player_ship"):

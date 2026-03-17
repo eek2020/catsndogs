@@ -17,10 +17,9 @@ func _ready() -> void:
 
 
 func _on_new_game() -> void:
-	GameSession.start_new_game()
 	var main: Control = get_tree().current_scene
 	if main.has_method("switch_scene"):
-		main.switch_scene("cutscene")
+		main.switch_scene("character_select")
 
 
 func _on_load_game() -> void:

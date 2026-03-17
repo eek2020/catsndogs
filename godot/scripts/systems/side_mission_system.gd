@@ -17,8 +17,8 @@ func _init(p_data_loader: DataLoader) -> void:
 	data_loader = p_data_loader
 
 
-func load_missions(arc_id: String) -> void:
-	_mission_templates = data_loader.load_side_missions(arc_id)
+func load_missions(arc_id: String, suffix: String = "") -> void:
+	_mission_templates = data_loader.load_side_missions(arc_id, suffix)
 
 
 func load_distress_signals() -> void:

@@ -1,0 +1,97 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc1_dave_patrol_duty",
+      "mission_type": "escort",
+      "title": "Patrol Duty",
+      "description": "The Canis League is running a supply convoy through contested space near the Canine Order border. Dave's been tapped to ride shotgun — bandits have been picking off stragglers, and the convoy captain won't launch without an escort.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_dave_convoy_request",
+      "objectives": [
+        {
+          "objective_id": "escort_convoy",
+          "description": "Escort the League supply convoy through contested space",
+          "encounter_id": "enc_dave_escort_complete"
+        }
+      ],
+      "rewards": {"salvage": 35, "crystals": 5},
+      "faction_rewards": {"canis_league": 8},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc1_dave_intelligence_sweep",
+      "mission_type": "retrieval",
+      "title": "Intelligence Sweep",
+      "description": "A League scout ship was destroyed in the outer sectors and its encrypted data drives are floating in the wreckage. Command wants them recovered before anyone else gets curious. Dave knows the flight path — time to retrace it.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_dave_intel_briefing",
+      "objectives": [
+        {
+          "objective_id": "find_wreckage",
+          "description": "Locate the destroyed League scout ship",
+          "encounter_id": "enc_dave_find_wreck"
+        },
+        {
+          "objective_id": "retrieve_data",
+          "description": "Retrieve the encrypted data drives from the wreckage",
+          "encounter_id": "enc_dave_retrieve_data"
+        }
+      ],
+      "rewards": {"salvage": 50},
+      "faction_rewards": {"canis_league": 5, "wolves": 3},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc1_dave_border_enforcement",
+      "mission_type": "bounty",
+      "title": "Border Enforcement",
+      "description": "A Corsair raider has been hitting League trade lanes with impunity, vanishing before patrols arrive. Dave's got a lead on the raider's next ambush point. Time to turn the tables.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_dave_bounty_posting",
+      "objectives": [
+        {
+          "objective_id": "defeat_raider",
+          "description": "Neutralise the Corsair raider harassing League trade lanes",
+          "encounter_id": "enc_dave_defeat_raider"
+        }
+      ],
+      "rewards": {"salvage": 45, "crystals": 8},
+      "faction_rewards": {"canis_league": 5, "felid_corsairs": -5},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc1_dave_diplomatic_courier",
+      "mission_type": "escort",
+      "title": "Diplomatic Courier",
+      "description": "Sealed orders from League High Command need to reach a Knight garrison on the frontier. The contents are classified, the route is dangerous, and Dave trusts exactly one crew to get them there in one piece.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc1_dave_courier_mission",
+      "objectives": [
+        {
+          "objective_id": "deliver_orders",
+          "description": "Deliver the sealed orders to the Knight garrison",
+          "encounter_id": "enc_dave_deliver_orders"
+        }
+      ],
+      "rewards": {"salvage": 30, "crystals": 10},
+      "faction_rewards": {"knights": 10},
+      "priority": 3
+    }
+  ]
+}

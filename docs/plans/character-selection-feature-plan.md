@@ -1,15 +1,19 @@
 # ISSUE-001: Character Selection Feature — Implementation Plan
 
+> **Status: REWORKED FOR GODOT**
+> This plan was originally written for the Python/Pygame codebase. It has been reworked and implemented using Godot 4.6 / GDScript native patterns (scene-based UI, autoload singletons, data-driven JSON).
+> See the implementation plan at `.claude/plans/crispy-orbiting-naur.md` for the Godot-specific approach.
+
 Add dual-protagonist support (Aristotle or Dave) with fully separate narrative paths, new encounter data, character selection UI, and Dave-specific endings.
 
 ---
 
-## Impact Summary
+## Impact Summary (Godot)
 
 Based on full codebase review, the following areas are affected:
 
 | Area | Scope | Key Files |
-|------|-------|-----------|
+| ------ | ------- | ----------- |
 | Core systems | Protagonist tracking, session init, save/load | `game_state.py`, `session.py` |
 | Entry point | Art loading, new-game wiring | `__main__.py` |
 | New UI state | Character selection screen | New: `ui/character_selection.py` |
@@ -142,6 +146,7 @@ Based on full codebase review, the following areas are affected:
 **New file:** `data/encounters/arc1_encounters_dave.json`
 
 Dave's Arc 1 — "The New Command": Dave takes command of a League cruiser squadron and discovers intelligence about a cat pirate who has found an energy source. Key beats:
+
 - **Discovery**: League intelligence reports a new crystal energy source in Corsair territory
 - **First contact with Aristotle**: Tense diplomatic encounter from Dave's side — sizing up the pirate
 - **First glimpse of Death**: Intercepted comms suggest internal Corsair instability Dave can exploit
@@ -154,6 +159,7 @@ Story flags: `arc1_intel_received`, `arc1_aristotle_met`, `arc1_corsair_instabil
 **New file:** `data/encounters/arc2_encounters_dave.json`
 
 Dave's Arc 2 — "The Campaign": Dave escalates his campaign to secure crystal access. Key beats:
+
 - **Blockade operation**: Dave positions his fleet to choke Corsair supply lines
 - **Internal League politics**: Wolf faction pressures Dave for faster results
 - **Lion interference**: Lions demand the League stand down from "their" territory
@@ -166,6 +172,7 @@ Story flags: `arc2_blockade_status`, `arc2_wolf_pressure`, `arc2_lion_demand`, `
 **New file:** `data/encounters/arc3_encounters_dave.json`
 
 Dave's Arc 3 — "The Reckoning": Alliances shift, Dave must choose who to trust. Key beats:
+
 - **Alien contact**: The aliens approach Dave separately with a different offer
 - **Aristotle parley**: The same parley scene, from Dave's perspective
 - **Death approaches Dave**: Death offers to betray Aristotle in exchange for protection
@@ -178,6 +185,7 @@ Story flags: `arc3_alien_contact`, `arc3_aristotle_parley`, `arc3_death_offer`, 
 **New file:** `data/encounters/arc4_encounters_dave.json`
 
 Dave's Arc 4 — "The Siege": The final push for crystal control. Key beats:
+
 - **Full assault on Corsair forge**: Dave launches his armada
 - **Death's betrayal**: Death turns on everyone (or on Dave specifically)
 - **Sovereign intervention**: Lions/Wolves arrive with their own agenda
@@ -227,6 +235,7 @@ Story flags: `arc4_assault_result`, `arc4_death_betrayal`, `arc4_sovereign_respo
 **File:** `src/whisper_crystals/core/game_state.py` (in `create_new_game_state`)
 
 Dave's starting reputations (inverted from Aristotle's perspective):
+
 - Canis League: **+60** (home faction, was -20 for Aristotle)
 - Felid Corsairs: **-20** (enemy, was +60 for Aristotle)
 - Wolves: **+30** (allied canines, was -30 for Aristotle)
@@ -264,7 +273,7 @@ Dave's starting reputations (inverted from Aristotle's perspective):
 ### 4.1 — Test Suite
 
 | Test File | Scope |
-|-----------|-------|
+| ----------- | ------- |
 | `tests/test_character_selection.py` (new) | CharacterSelectionState UI, protagonist_id routing |
 | `tests/test_game_state.py` (update) | Protagonist tracking, Dave init, serialization |
 | `tests/test_session.py` (update) | Character-aware new game, encounter loading |
@@ -290,7 +299,7 @@ Dave's starting reputations (inverted from Aristotle's perspective):
 ## New Files Summary
 
 | File | Type |
-|------|------|
+| ------ | ------ |
 | `src/whisper_crystals/ui/character_selection.py` | Python — UI state |
 | `data/characters/dave_protagonist.json` | JSON — Dave's playable config |
 | `data/encounters/arc1_encounters_dave.json` | JSON — Dave Arc 1 |
@@ -307,7 +316,7 @@ Dave's starting reputations (inverted from Aristotle's perspective):
 ## Modified Files Summary
 
 | File | Changes |
-|------|---------|
+| ------ | --------- |
 | `src/whisper_crystals/core/game_state.py` | `protagonist_id` field, Dave init in `create_new_game_state()` |
 | `src/whisper_crystals/core/session.py` | Character selection flow, character-aware cutscenes/loading |
 | `src/whisper_crystals/core/state_machine.py` | `CHARACTER_SELECT` state type |

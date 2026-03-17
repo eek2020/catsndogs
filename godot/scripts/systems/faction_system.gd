@@ -58,10 +58,13 @@ func get_all_standings(game_state: GameStateData) -> Array:
 			"ideology": faction.ideology,
 			"species": faction.species,
 		})
+	var player_faction: String = GameSession.game_state.player_character.faction_id \
+		if GameSession.game_state and GameSession.game_state.player_character \
+		else "felid_corsairs"
 	standings.sort_custom(func(a, b):
-		if a["faction_id"] == "felid_corsairs":
+		if a["faction_id"] == player_faction:
 			return true
-		if b["faction_id"] == "felid_corsairs":
+		if b["faction_id"] == player_faction:
 			return false
 		return a["reputation"] > b["reputation"]
 	)

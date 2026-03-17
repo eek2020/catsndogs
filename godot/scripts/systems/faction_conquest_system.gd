@@ -47,8 +47,10 @@ class ConquestAction extends Resource:
 func plan_faction_actions(game_state: GameStateData) -> Array:
 	_turn_counter += 1
 	var new_actions: Array = []
+	var player_faction: String = game_state.player_character.faction_id \
+		if game_state.player_character else "felid_corsairs"
 	for fid in game_state.faction_registry:
-		if fid == "felid_corsairs":
+		if fid == player_faction:
 			continue
 		var faction: Faction = game_state.faction_registry[fid]
 		if randi_range(0, 100) > faction.conquest_intent:

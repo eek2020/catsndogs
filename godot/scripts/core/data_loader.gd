@@ -34,6 +34,13 @@ func _load_json(relative_path: String) -> Variant:
 	return json.data
 
 
+func load_protagonists() -> Dictionary:
+	var data: Variant = _load_json("characters/protagonists.json")
+	if data == null:
+		return {}
+	return data.get("protagonists", {})
+
+
 func load_factions() -> Dictionary:
 	var data: Variant = _load_json("factions/faction_registry.json")
 	if data == null:
@@ -76,10 +83,12 @@ func load_upgrades() -> Array:
 	return data.get("upgrades", [])
 
 
-func load_encounters(arc_id: String) -> Array:
+func load_encounters(arc_id: String, suffix: String = "") -> Array:
 	var file_arc_id := arc_id.replace("_", "")
-	var filename := "encounters/%s_encounters.json" % file_arc_id
+	var filename := "encounters/%s_encounters%s.json" % [file_arc_id, suffix]
 	var data: Variant = _load_json(filename)
+	if data == null and not suffix.is_empty():
+		data = _load_json("encounters/%s_encounters.json" % file_arc_id)
 	if data == null:
 		return []
 	var encounters: Array = []
@@ -152,10 +161,12 @@ func load_points_of_interest() -> Array:
 	return data.get("points_of_interest", [])
 
 
-func load_side_missions(arc_id: String) -> Array:
+func load_side_missions(arc_id: String, suffix: String = "") -> Array:
 	var file_arc_id := arc_id.replace("_", "")
-	var filename := "side_missions/%s_side_missions.json" % file_arc_id
+	var filename := "side_missions/%s_side_missions%s.json" % [file_arc_id, suffix]
 	var data: Variant = _load_json(filename)
+	if data == null and not suffix.is_empty():
+		data = _load_json("side_missions/%s_side_missions.json" % file_arc_id)
 	if data == null:
 		return []
 	var missions: Array = []

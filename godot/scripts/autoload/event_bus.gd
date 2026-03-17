@@ -34,6 +34,7 @@ signal save_game
 signal load_game
 
 # --- Narrative events ---
+signal protagonist_selected(protagonist_id: String)
 signal arc_advanced(old_arc: String, new_arc: String)
 signal game_ending_reached
 

@@ -14,6 +14,7 @@ const TRANSITION_DURATION := 0.3
 const SCENES := {
 	"splash": "res://scenes/ui/splash.tscn",
 	"menu": "res://scenes/ui/menu.tscn",
+	"character_select": "res://scenes/ui/character_select.tscn",
 	"navigation": "res://scenes/ui/navigation.tscn",
 	"combat": "res://scenes/ui/combat_ui.tscn",
 	"dialogue": "res://scenes/ui/dialogue_ui.tscn",

@@ -1,0 +1,100 @@
+{
+    "protagonists": {
+        "aristotle": {
+            "character_id": "aristotle",
+            "name": "Aristotle",
+            "species": "CAT",
+            "faction_id": "felid_corsairs",
+            "title": "Captain",
+            "stats": {
+                "cunning": 8,
+                "leadership": 6,
+                "negotiation": 4,
+                "combat_skill": 5,
+                "intimidation": 6,
+                "stealth": 7
+            },
+            "portrait": "res://assets/characters/aristotle_head.png",
+            "ship_template_id": "corsair_raider",
+            "ship_id": "aristotle_flagship",
+            "ship_name": "The Whisper",
+            "starting_region": "starting_realm",
+            "starting_salvage": 50,
+            "encounter_suffix": "",
+            "side_mission_suffix": "",
+            "rival_id": "dave",
+            "rival": {
+                "character_id": "dave",
+                "name": "Dave",
+                "species": "DOG",
+                "faction_id": "canis_league",
+                "title": "Commander",
+                "behaviour_state": "OBSERVING"
+            },
+            "intro_title": "WHISPER CRYSTALS",
+            "intro_subtitle": "",
+            "intro_lines": [
+                "In a multiverse where cats, dogs, fairies, and goblins sail between realms...",
+                "Captain Aristotle \u2014 a street cat turned Corsair \u2014 discovers a crystal that hums with unearthly power.",
+                "Whisper Crystals. Fuel for ships, currency for empires, and now... his burden.",
+                "The Canis League wants them. The Lions demand tribute. Something ancient watches from the shadows.",
+                "And so the journey begins."
+            ],
+            "description": "A street cat turned Corsair captain. Cunning, fast, and fiercely independent. Controls the multiverse's only supply of Whisper Crystals.",
+            "story_flags": {
+                "arc1_crystal_discovered": false,
+                "arc1_dave_met": false,
+                "arc1_death_glimpsed": false,
+                "arc1_stance": null
+            }
+        },
+        "dave": {
+            "character_id": "dave",
+            "name": "Dave",
+            "species": "DOG",
+            "faction_id": "canis_league",
+            "title": "Commander",
+            "stats": {
+                "cunning": 4,
+                "leadership": 8,
+                "negotiation": 6,
+                "combat_skill": 7,
+                "intimidation": 5,
+                "stealth": 3
+            },
+            "portrait": "res://assets/characters/dave_head.png",
+            "ship_template_id": "league_cruiser",
+            "ship_id": "dave_flagship",
+            "ship_name": "The Iron Paw",
+            "starting_region": "starting_realm",
+            "starting_salvage": 30,
+            "encounter_suffix": "_dave",
+            "side_mission_suffix": "_dave",
+            "rival_id": "aristotle",
+            "rival": {
+                "character_id": "aristotle",
+                "name": "Aristotle",
+                "species": "CAT",
+                "faction_id": "felid_corsairs",
+                "title": "Captain",
+                "behaviour_state": "OBSERVING"
+            },
+            "intro_title": "WHISPER CRYSTALS",
+            "intro_subtitle": "The Other Side",
+            "intro_lines": [
+                "In a multiverse torn by faction wars, one resource fuels every fleet: Whisper Crystals.",
+                "Commander Dave \u2014 loyal officer of the Canis League \u2014 receives orders that will change everything.",
+                "A cat corsair has seized the only known crystal source. The League's ships will starve without fuel.",
+                "Duty demands action. But the deeper Dave digs, the more he questions who the real enemy is.",
+                "And so the hunt begins."
+            ],
+            "description": "A disciplined Canis League Commander. Loyal, tactical, and burdened by duty. Sent to secure the crystals by any means necessary.",
+            "story_flags": {
+                "arc1_intel_received": false,
+                "arc1_aristotle_met": false,
+                "arc1_death_glimpsed": false,
+                "arc1_dave_stance": null
+            }
+        }
+    }
+}

@@ -6,6 +6,83 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-17 — Character Selection Feature (ISSUE-001)
+
+**Task:** Add dual-protagonist support — choose Aristotle or Dave at game start
+**Model:** Opus 4.6
+
+### Changes
+
+- **GameStateData:** Added `protagonist_id` field with backward-compatible save/load
+- **DataLoader:** Added `load_protagonists()`, suffix parameter on `load_encounters()` and `load_side_missions()` with fallback to shared files
+- **GameSession:** Refactored `start_new_game(protagonist_id)` and `create_new_game_state()` to be data-driven from `protagonists.json` config
+- **Character Select UI:** New scene (`character_select.tscn`) and controller (`character_select.gd`) with two-panel layout, portraits, stats, and select buttons
+- **Menu:** "New Game" now routes to character selection screen
+- **Cutscene:** Intro text loaded from protagonist config instead of hardcoded Aristotle lines
+- **Faction systems:** Replaced hardcoded `"felid_corsairs"` references with dynamic `player_character.faction_id` in `faction_system.gd` and `faction_conquest_system.gd`
+- **EventBus:** Added `protagonist_selected` signal
+- **Ending screen:** Added protagonist-specific flavor text for Dave
+- **Data files:** Created `protagonists.json`, Dave arc 1-4 encounters, Dave dialogue files, Dave side missions
+
+---
+
+## 2026-03-17 — Godogen Asset & Workflow Integration
+
+**Task:** Integrate godogen Godot 4 development resources into Whisper Crystals
+**Model:** Opus 4.6
+
+### Phase 1: Documentation Structure
+
+- Created `docs/godot-reference/` with 7 core reference documents:
+  - `gdscript-reference.md` — Complete GDScript syntax, types, operators, patterns
+  - `quirks-and-gotchas.md` — 18 known engine issues and runtime pitfalls
+  - `best-practices.md` — Coding standards for Godot development
+  - `scene-generation-patterns.md` — Scene builder patterns and ownership chains
+  - `script-generation-patterns.md` — Runtime script templates
+  - `scene-script-coordination.md` — Rules for scene/script interaction
+  - `test-harness-patterns.md` — Testing approaches for Godot scenes
+  - `screenshot-capture.md` — Screenshot and video capture workflow
+- Copied 862 Godot API reference files to `docs/godot-reference/api/`
+- Created workflow templates: `PLAN.md`, `ASSETS.md`, `MEMORY.md` at project root
+
+### Phase 2: Local Tools
+
+- Set up `tools/godot-dev/` with 4 tool categories:
+  - `sprites/` — spritesheet_template.py, spritesheet_slice.py
+  - `assets/` — rembg_matting.py (background removal with alpha matting)
+  - `docs/` — godot_api_converter.py, class_list.py, ensure_doc_api.sh
+  - `capture/` — gpu_detect.sh, screenshot.sh (with macOS support)
+
+### Phase 3: Development Methodology
+
+- Created `docs/development-methodology/` with 3 guides:
+  - `task-decomposition.md` — Feature classification and task planning
+  - `architecture-planning.md` — Scene hierarchy and script design
+  - `iteration-strategy.md` — Progress-based stopping criteria
+- Created `docs/qa/visual-qa-checklist.md` — Manual QA checklists from VQA prompts
+
+### Phase 4: Testing Infrastructure
+
+- Created `examples/godot-patterns/test-harness-example/` with working test template
+
+### Phase 5: Project-Specific Adaptations
+
+- Created `docs/GODOT_DEV_GUIDE.md` — Central reference linking all godogen assets
+- Created quick reference cards in `docs/godot-reference/quick-refs/`:
+  - `gdscript-cheat-sheet.md` — Type inference rules, common patterns
+  - `common-nodes.md` — Node types by category with use cases
+- Created working examples in `examples/godot-patterns/`:
+  - `scene-builder-example/` — 2D scene builder with ownership chain
+  - `runtime-script-example/` — Player controller with proper type annotations
+  - `test-harness-example/` — Test with simulated input and assertions
+
+### Excluded (API-Dependent)
+
+- asset_gen.py (Gemini API), tripo3d.py (Tripo3D API), visual_qa.py (Gemini Vision)
+- All SKILL.md files (Claude Code skill invocation system)
+
+---
+
 ## 2026-03-03 — PLAN-003 (3.2, 3.4) Ship Sprite Integration
 
 **Tasks:** Register new ship art, faction ship sprites in navigation, combat ship sprites

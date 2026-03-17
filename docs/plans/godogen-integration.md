@@ -1,12 +1,13 @@
-# Godogen Asset Integration for Whisper Crystals
+# Godogen Asset & Workflow Integration for Whisper Crystals
 
-Integrate valuable Godot 4 development resources from the godogen folder into the Whisper Crystals project, excluding all API-dependent components (Gemini, Tripo3D, Claude Code integrations).
+Integrate valuable Godot 4 development resources from the godogen folder into the Whisper Crystals project, excluding all API-dependent components (Gemini, Tripo3D, Claude Code skill invocations). This plan covers both concrete assets (docs, tools) and reworkable workflow patterns from the godogen skills orchestration system.
 
 ## Analysis Summary
 
-The godogen folder contains a comprehensive Godot 4 game development pipeline with extensive documentation, tools, and best practices. After excluding API-dependent components, the following high-value assets remain:
+The godogen folder contains a comprehensive Godot 4 game development pipeline with extensive documentation, tools, and best practices. After excluding API-dependent components, approximately 70% of its methodology and assets remain usable.
 
-**Documentation Assets (API-free)**
+### Documentation Assets (API-Free)
+
 - Complete GDScript language reference with type inference rules and common pitfalls
 - 850+ Godot class API documentation in Markdown format
 - Engine quirks and gotchas documentation
@@ -15,59 +16,99 @@ The godogen folder contains a comprehensive Godot 4 game development pipeline wi
 - Test harness patterns
 - Project scaffolding guidelines
 
-**Local Tools (No API dependencies)**
+### Local Tools (No API Dependencies)
+
 - Sprite sheet template generator (Python)
 - Sprite sheet slicer (Python)
 - Background removal with alpha matting (rembg + pymatting)
 - Godot API documentation converter
 - Class list utilities
 
-**Methodologies**
-- Game decomposition strategies (task planning)
-- Architecture design patterns
-- Visual QA frameworks (prompts only, no API execution)
+### Reworkable Workflow Patterns
+
+The godogen skills system uses a two-skill orchestration model (orchestrator + executor) with document-based state. While the skill invocation mechanism is Claude Code-specific, the underlying patterns are highly valuable:
+
+| Pattern | Value | Description |
+| --------- | ------- | ------------- |
+| **Orchestration workflow** | High | Sequential pipeline with resume capability via PLAN.md, STRUCTURE.md, MEMORY.md, ASSETS.md as shared state documents |
+| **Task decomposition** | High | "Minimize task count, bundle routine work, isolate algorithmic risks." Most features are routine — only isolate genuinely hard problems (procedural gen, custom physics, complex shaders). Each task boundary = integration risk |
+| **Progressive doc loading** | High | Index files (`_common.md`, `_other.md`) with one-line descriptions; full class docs loaded on-demand; phase-specific guides loaded when needed |
+| **Scene/script coordination** | High | Generate scenes first, name nodes predictably, attach scripts in scene builder, connect signals in scripts (not scenes), match `extends` to node type |
+| **Test harness** | High | `extends SceneTree` for headless execution, `_initialize()` setup, console assertions, simulated input via Timers, camera positioning for verification |
+| **Visual QA framework** | Medium | Structured checklists for evaluating screenshots — grid placement, scale, composition, z-fighting, clipping, placeholder remnants. Usable as manual QA checklists without the Gemini API |
+| **Project memory (MEMORY.md)** | High | Read before starting work, write back discoveries after completing tasks. Preserves institutional knowledge across sessions |
+| **Asset sizing discipline** | Medium | Every asset in ASSETS.md includes intended in-game size (sprite sheets: per-frame display size, backgrounds: pixel dimensions) to prevent scaling bugs |
+| **Iteration philosophy** | Medium | Judge when to stop based on progress signals, not arbitrary counts. Keep going if there's progress; stop early if fundamental limitation recognized; red flag: "making same fix repeatedly without convergence" |
+| **Capture workflow** | Low | GPU detection via glxinfo, hardware Vulkan when available, xvfb + lavapipe fallback, timeout safety nets |
+
+## Excluded Components (API-Dependent)
+
+The following will **NOT** be integrated as they require external API services:
+
+- `asset_gen.py` — Requires Google Gemini API
+- `tripo3d.py` — Requires Tripo3D API
+- `visual_qa.py` — Requires Google Gemini API for vision analysis
+- `visual-target.md` — References Gemini image generation
+- `asset-gen.md` — Gemini/Tripo3D integration guide
+- `asset-planner.md` — Budget-aware asset generation (API-based)
+- Any SKILL.md files referencing Claude Code skill invocation system
+
+**Alternative approaches:**
+
+- Visual targets: Create reference images manually or use existing concept art
+- Assets: Use traditional art pipeline, asset stores, or local generation tools
+- Visual QA: Use VQA prompts as manual review checklists
 
 ## Integration Plan
 
-### Phase 1: Documentation Structure Setup
+### Phase 1: Documentation Structure + Core Workflow Documents
 
 **Create documentation hierarchy in `/docs/godot-reference/`**
 
 1. **Core Language Reference**
-   - `gdscript-reference.md` - Complete GDScript syntax, types, operators, patterns
-   - `quirks-and-gotchas.md` - Known engine issues, type inference errors, runtime pitfalls
-   - `best-practices.md` - Coding standards and patterns specific to Godot
+   - `gdscript-reference.md` — Complete GDScript syntax, types, operators, patterns
+   - `quirks-and-gotchas.md` — Known engine issues, type inference errors, runtime pitfalls
+   - `best-practices.md` — Coding standards and patterns specific to Godot
 
 2. **Development Patterns**
-   - `scene-generation-patterns.md` - Scene builder patterns, ownership chains, node compositions
-   - `script-generation-patterns.md` - Runtime script templates, lifecycle methods, common patterns
-   - `test-harness-patterns.md` - Testing approaches for Godot scenes
+   - `scene-generation-patterns.md` — Scene builder patterns, ownership chains, node compositions
+   - `script-generation-patterns.md` — Runtime script templates, lifecycle methods, common patterns
+   - `scene-script-coordination.md` — Rules for coordinating scene builders and runtime scripts (from `coordination.md`)
+   - `test-harness-patterns.md` — Testing approaches for Godot scenes
 
 3. **Godot API Reference**
    - `api/` directory with 850+ class documentation files
-   - `api/_common.md` - Index of ~128 most common classes
-   - `api/_other.md` - Index of remaining ~730 classes
-   - Individual class files (AABB.md, Node.md, CharacterBody3D.md, etc.)
+   - `api/_common.md` — Index of ~128 most common classes
+   - `api/_other.md` — Index of remaining ~730 classes
+
+4. **Core Workflow Documents**
+   - `PLAN.md` template — Task DAG format with status tracking
+   - `ASSETS.md` template — Asset manifest with sizing column
+   - Initialize `MEMORY.md` with known Godot quirks from godogen
 
 ### Phase 2: Local Tools Integration
 
 **Create `/tools/godot-dev/` directory for development utilities**
 
-1. **Sprite Tools** (No API dependencies)
-   - `spritesheet_template.py` - Generate numbered grid templates for sprite sheets
-   - `spritesheet_slice.py` - Slice sprite sheets into individual frames
-   - `requirements.txt` - Python dependencies (PIL/Pillow)
+1. **Sprite Tools**
+   - `spritesheet_template.py` — Generate numbered grid templates for sprite sheets
+   - `spritesheet_slice.py` — Slice sprite sheets into individual frames
+   - `requirements.txt` — Python dependencies (PIL/Pillow)
 
-2. **Asset Processing** (No API dependencies)
-   - `rembg_matting.py` - Advanced background removal with alpha matting
-   - `requirements-assets.txt` - Dependencies (rembg, pymatting, numpy, scipy, PIL)
+2. **Asset Processing**
+   - `rembg_matting.py` — Advanced background removal with alpha matting
+   - `requirements-assets.txt` — Dependencies (rembg, pymatting, numpy, scipy, PIL)
 
 3. **Documentation Tools**
-   - `godot_api_converter.py` - Convert Godot XML docs to Markdown
-   - `class_list.py` - Godot class categorization utilities
-   - `ensure_doc_api.sh` - Script to fetch latest Godot API docs
+   - `godot_api_converter.py` — Convert Godot XML docs to Markdown
+   - `class_list.py` — Godot class categorization utilities
+   - `ensure_doc_api.sh` — Script to fetch latest Godot API docs
 
-### Phase 3: Methodology Integration
+4. **Capture Tools**
+   - `gpu_detect.sh` — GPU detection via glxinfo
+   - `screenshot.sh` — Capture wrapper with xvfb fallback
+
+### Phase 3: Development Methodology + Workflow Guides
 
 **Create `/docs/development-methodology/` for planning frameworks**
 
@@ -76,6 +117,7 @@ The godogen folder contains a comprehensive Godot 4 game development pipeline wi
    - Adapt "hard vs routine" feature classification
    - Document minimal task decomposition philosophy
    - Include examples relevant to RPG/narrative games
+   - Classify Whisper Crystals features: "hard" (dialogue tree engine, economy simulation) vs "routine" (UI, basic movement)
 
 2. **Architecture Planning Guide**
    - Extract scaffolding patterns from `scaffold.md`
@@ -83,75 +125,62 @@ The godogen folder contains a comprehensive Godot 4 game development pipeline wi
    - Script responsibility patterns
    - Signal flow design
 
-3. **Quality Assurance Framework**
-   - Visual QA prompt templates (static and dynamic)
-   - Verification criteria patterns
-   - Test coverage guidelines
+3. **Iteration Strategy Guide**
+   - Progress-based stopping criteria
+   - Escalation criteria for architectural issues
+   - When to pivot vs persist
 
-### Phase 4: Project-Specific Adaptations
+4. **Quality Assurance Framework**
+   - Visual QA checklists adapted from VQA prompts (static and dynamic)
+   - Implementation quality checks (grid placement, scale, composition)
+   - Visual bug detection (z-fighting, clipping, floating objects, placeholder remnants)
+   - Screenshot review workflow
 
-**Customize for Whisper Crystals needs**
+### Phase 4: Testing Infrastructure
 
-1. **Create Whisper Crystals Development Guide**
-   - `/docs/GODOT_DEV_GUIDE.md` - Central reference linking to all godogen assets
+1. **Test Harness Templates** — `extends SceneTree` examples for headless verification
+2. **Screenshot Capture Workflow** — Document capture commands for different scene types
+3. **GPU Setup Guide** — Document setup for CI/CD environments
+
+### Phase 5: Project-Specific Adaptations + Documentation
+
+1. **Whisper Crystals Development Guide**
+   - `/docs/GODOT_DEV_GUIDE.md` — Central reference linking to all godogen assets
    - Project-specific patterns (dialogue systems, crew management, economy)
    - Integration with existing architecture (TRD documents)
 
-2. **Tool Configuration**
-   - Set up Python virtual environment for tools
-   - Create wrapper scripts for common operations
-   - Document tool usage in project README
-
-3. **Workflow Integration**
-   - Create `.windsurf/workflows/` entries for common tasks
-   - Scene generation workflow
-   - Asset processing workflow
-   - Testing workflow
-
-### Phase 5: Documentation and Training
-
-**Make resources discoverable and usable**
-
-1. **Quick Reference Cards**
-   - `/docs/godot-reference/quick-refs/` directory
-   - GDScript cheat sheet (1-2 pages)
+2. **Quick Reference Cards** (`/docs/godot-reference/quick-refs/`)
+   - GDScript cheat sheet
    - Common node types and use cases
    - Debugging checklist
 
-2. **Integration Documentation**
-   - Update main project README with godogen asset references
-   - Create TOOLS.md documenting available utilities
-   - Link from existing architecture docs (TRDs)
+3. **Tool Configuration**
+   - Set up Python virtual environment for tools
+   - Create wrapper scripts for common operations
+   - Document tool usage
 
-3. **Example Implementations**
-   - Create `/examples/godot-patterns/` directory
-   - Small example scenes demonstrating patterns
-   - Annotated with references to documentation
-
-## Excluded Components (API-Dependent)
-
-The following will **NOT** be integrated as they require external API services:
-
-- `asset_gen.py` - Requires Google Gemini API
-- `tripo3d.py` - Requires Tripo3D API
-- `visual_qa.py` - Requires Google Gemini API for vision analysis
-- `visual-target.md` - References Gemini image generation
-- `asset-gen.md` - Gemini/Tripo3D integration guide
-- `asset-planner.md` - Budget-aware asset generation (API-based)
-- Any SKILL.md files referencing Claude Code skill system
+4. **Example Implementations** (`/examples/godot-patterns/`)
+   - Scene builder example
+   - Runtime script example
+   - Test harness example
 
 ## File Structure After Integration
 
-```
+```text
 whisper_crystals/
+├── PLAN.md                              # Task DAG (adapted from godogen)
+├── ASSETS.md                            # Asset manifest with sizing
 ├── docs/
+│   ├── GODOT_DEV_GUIDE.md              # Central reference
 │   ├── godot-reference/
 │   │   ├── gdscript-reference.md
 │   │   ├── quirks-and-gotchas.md
 │   │   ├── best-practices.md
 │   │   ├── scene-generation-patterns.md
 │   │   ├── script-generation-patterns.md
+│   │   ├── scene-script-coordination.md
 │   │   ├── test-harness-patterns.md
+│   │   ├── screenshot-capture.md
 │   │   ├── quick-refs/
 │   │   │   ├── gdscript-cheat-sheet.md
 │   │   │   └── common-nodes.md
@@ -162,8 +191,10 @@ whisper_crystals/
 │   ├── development-methodology/
 │   │   ├── task-decomposition.md
 │   │   ├── architecture-planning.md
-│   │   └── quality-assurance.md
-│   └── GODOT_DEV_GUIDE.md
+│   │   ├── iteration-strategy.md
+│   │   └── workflow-pipeline.md
+│   └── qa/
+│       └── visual-qa-checklist.md
 ├── tools/
 │   └── godot-dev/
 │       ├── sprites/
@@ -173,47 +204,35 @@ whisper_crystals/
 │       ├── assets/
 │       │   ├── rembg_matting.py
 │       │   └── requirements.txt
-│       └── docs/
-│           ├── godot_api_converter.py
-│           ├── class_list.py
-│           └── ensure_doc_api.sh
-├── examples/
-│   └── godot-patterns/
-│       ├── scene-builder-example/
-│       ├── runtime-script-example/
-│       └── test-harness-example/
-└── .windsurf/
-    └── workflows/
-        ├── godot-scene-generation.md
-        ├── godot-asset-processing.md
-        └── godot-testing.md
+│       ├── docs/
+│       │   ├── godot_api_converter.py
+│       │   ├── class_list.py
+│       │   └── ensure_doc_api.sh
+│       └── capture/
+│           ├── gpu_detect.sh
+│           └── screenshot.sh
+└── examples/
+    └── godot-patterns/
+        ├── scene-builder-example/
+        ├── runtime-script-example/
+        └── test-harness-example/
 ```
-
-## Benefits
-
-1. **Comprehensive GDScript Knowledge Base** - Deep reference material compensating for LLM's limited GDScript training data
-2. **Proven Patterns** - Battle-tested approaches for scene generation, script organization, and testing
-3. **Local Asset Tools** - No API costs for sprite sheet generation and background removal
-4. **Godot API On-Demand** - Complete class documentation for all 850+ engine classes
-5. **Development Methodology** - Structured approach to task decomposition and architecture design
-6. **Quality Framework** - Visual QA patterns adaptable to manual testing
-7. **Zero External Dependencies** - All integrated assets work offline without API keys
-
-## Implementation Notes
-
-- All Python tools will require virtual environment setup
-- Godot API docs can be regenerated for newer Godot versions using provided scripts
-- Documentation should be referenced in existing TRD documents
-- Consider creating Windsurf workflows for common tool operations
-- Tools are language-agnostic (Python) and can be used alongside existing Python codebase
 
 ## Success Criteria
 
 - [ ] All documentation accessible in `/docs/godot-reference/`
 - [ ] Tools functional with documented setup instructions
 - [ ] Quick reference materials created for common tasks
-- [ ] Integration documented in main project README
+- [ ] PLAN.md format adopted for task tracking
+- [ ] MEMORY.md initialized with godogen quirks and in active use
+- [ ] ASSETS.md template created with sizing column
+- [ ] Task decomposition guide created for Whisper Crystals features
+- [ ] Scene/script coordination patterns documented
+- [ ] Test harness templates created
+- [ ] Screenshot capture workflow established
+- [ ] Manual QA checklist created from VQA prompts
+- [ ] Iteration strategy documented
 - [ ] Example implementations provided for key patterns
-- [ ] Workflows created for common development tasks
-- [ ] No API-dependent components included
+- [ ] Integration documented in GODOT_DEV_GUIDE.md
 - [ ] All tools tested and working in project environment
+- [ ] No API-dependent components included

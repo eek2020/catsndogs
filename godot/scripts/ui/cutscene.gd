@@ -28,16 +28,16 @@ func setup(p_title: String, p_subtitle: String, p_lines: Array[String]) -> void:
 
 
 func _ready() -> void:
-	# Default intro cutscene if no setup call
+	# Load intro from protagonist config if no setup call provided lines
 	if lines.is_empty():
-		title_label.text = "WHISPER CRYSTALS"
-		lines = [
-			"In a multiverse where cats, dogs, fairies, and goblins sail between realms...",
-			"Captain Aristotle — a street cat turned Corsair — discovers a crystal that hums with unearthly power.",
-			"Whisper Crystals. Fuel for ships, currency for empires, and now... his burden.",
-			"The Canis League wants them. The Lions demand tribute. Something ancient watches from the shadows.",
+		var config: Dictionary = GameSession.get_protagonist_config()
+		title_label.text = config.get("intro_title", "WHISPER CRYSTALS")
+		subtitle_label.text = config.get("intro_subtitle", "")
+		var raw_lines: Array = config.get("intro_lines", [
 			"And so the journey begins.",
-		]
+		])
+		for line in raw_lines:
+			lines.append(str(line))
 	_current_line = 0
 	continue_label.text = "SPACE: reveal text"
 	_show_next_line()

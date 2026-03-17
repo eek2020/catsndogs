@@ -11,8 +11,8 @@ func _init(p_data_loader: DataLoader) -> void:
 	data_loader = p_data_loader
 
 
-func load_encounters(arc_id: String) -> void:
-	encounter_table = data_loader.load_encounters(arc_id)
+func load_encounters(arc_id: String, suffix: String = "") -> void:
+	encounter_table = data_loader.load_encounters(arc_id, suffix)
 
 
 func check_triggers(game_state: GameStateData) -> Encounter:

@@ -1,0 +1,293 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc1_dave_intel_briefing",
+            "encounter_type": "exploration",
+            "title": "The Intelligence Report",
+            "description": "The briefing room aboard The Iron Paw is cold steel and discipline. An intelligence officer slides a holographic dossier across the table. 'Commander Dave, sir. We've intercepted Corsair chatter. A cat pirate has found something — an energy source in the fringe nebulae. Whisper Crystals. If the reports are accurate, this changes everything.'",
+            "arc_id": "arc_1",
+            "location": "canine_order",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_intel_received": false
+            },
+            "npc_ids": [],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "full_analysis",
+                    "text": "Order a full intelligence analysis before acting. Know the enemy.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave studies every data point. The crystals resonate at frequencies that could revolutionise propulsion — or be weaponised. 'Preparation wins wars,' he tells his staff, filing the report under top priority.",
+                        "faction_changes": {},
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": ["arc1_intel_received"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "scramble_fleet",
+                    "text": "Scramble a patrol squadron immediately. Secure the region before the Corsairs dig in.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave barks orders and the hangar erupts with activity. Three cruisers launch within the hour. 'If we wait, we lose,' Dave thinks. The League's engines roar toward the fringe.",
+                        "faction_changes": {},
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc1_intel_received"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_dave_meets_aristotle",
+            "encounter_type": "diplomatic",
+            "title": "The Corsair Captain",
+            "description": "A ragged Corsair vessel drops out of warp — nimble, scarred, practically held together by audacity. The comms channel opens and a smirking cat in a battered captain's coat appears on screen. 'Commander Dave, I presume? Word travels fast in the multiverse. I'm Aristotle. You're in my neighbourhood.'",
+            "arc_id": "arc_1",
+            "location": "trade_hub_alpha",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_intel_received": true,
+                "arc1_aristotle_met": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "demand_surrender",
+                    "text": "'You are in possession of strategic resources. Surrender them to the League. This is not a negotiation.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle's ears flatten, then he laughs. 'A dog who barks orders at a cat. How original.' The channel cuts. Dave stares at the blank screen. This pirate will not bend easily.",
+                        "faction_changes": { "felid_corsairs": -15 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_aristotle_met"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "propose_trade",
+                    "text": "'The League can offer protection, supplies, and legitimacy. What do you want for the crystals?'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle tilts his head. 'A dog with manners. Interesting.' A small shipment of crystals arrives, along with an itemised invoice that borders on robbery. But contact is established.",
+                        "faction_changes": { "felid_corsairs": 10 },
+                        "resource_changes": { "crystal_inventory": 5, "salvage": -20 },
+                        "story_flags_set": ["arc1_aristotle_met"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "observe_silently",
+                    "text": "'I'm here to observe. The League keeps its options open.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle narrows his eyes. 'A dog who watches before he bites. Noted.' The channel closes. Dave has shown nothing — and learned everything about the pirate's bravado.",
+                        "faction_changes": { "felid_corsairs": 0 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_aristotle_met"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_dave_death_signal",
+            "encounter_type": "exploration",
+            "title": "Ghost Frequency",
+            "description": "The Iron Paw's comms officer frowns at her console. 'Commander, we're picking up a signal on a dead frequency — one the Corsairs haven't used in decades. It's... a purr, sir. A low-frequency resonance. And it's coming from inside Corsair space.' Dave leans forward. Something is very wrong within the Felid ranks.",
+            "arc_id": "arc_1",
+            "location": "forgotten_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_aristotle_met": true,
+                "arc1_death_glimpsed": false
+            },
+            "npc_ids": ["death"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "investigate_signal",
+                    "text": "Dispatch a stealth probe to track the signal source. Intelligence is everything.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The probe returns fragmented data — a ship with ancient Corsair markings, moving like a phantom. Someone inside the Corsair faction is operating off-book. Dave files the data. 'If there's a fracture in their ranks, we can exploit it.'",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_death_glimpsed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "dismiss_signal",
+                    "text": "Log it and move on. We have bigger concerns than Corsair internal politics.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave waves it off, but the comms officer logs the frequency anyway. Hours later, another pulse arrives — closer this time. Whatever it is, it knows Dave is watching.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc1_death_glimpsed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_dave_corsair_raid",
+            "encounter_type": "combat",
+            "title": "Corsair Ambush",
+            "description": "Alarms blare across the bridge. Three Corsair raiders drop out of warp on an intercept course, their weapons already hot. 'League vessel, you're trespassing in free space!' spits a voice. 'Dump your cargo and maybe we'll let you limp home.'",
+            "arc_id": "arc_1",
+            "location": "trade_routes",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_intel_received": true,
+                "arc1_aristotle_met": true
+            },
+            "npc_ids": [],
+            "priority": 5,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "engage_raiders",
+                    "text": "'All hands to battle stations. Show these pirates what League discipline looks like.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The Iron Paw's guns thunder. League training versus Corsair cunning. The raiders scatter under coordinated fire — one limps away trailing smoke.",
+                        "faction_changes": { "felid_corsairs": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "broadcast_authority",
+                    "text": "Open a League authority channel. 'This vessel is under Canis League protection. Stand down or be reported.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The raiders hesitate — League retaliation is systematic and thorough. They break off, cursing on open channels. Dave exhales. Not every fight needs to be fought.",
+                        "faction_changes": { "felid_corsairs": 2 },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_dave_goblin_scrappers",
+            "encounter_type": "combat",
+            "title": "Scrap Wolves",
+            "description": "A swarm of cobbled-together goblin ships erupts from a debris field, their comms a cacophony of shrieks and laughter. They don't care about politics — they want metal, fuel, and anything not bolted down.",
+            "arc_id": "arc_1",
+            "location": "asteroid_belt",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_intel_received": true
+            },
+            "npc_ids": [],
+            "priority": 3,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "fire_volley",
+                    "text": "Form firing line. One concentrated volley should scatter them.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Disciplined League gunnery tears through the ramshackle fleet. The survivors flee, leaving a trail of sparking debris.",
+                        "faction_changes": { "goblins": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "eject_scrap",
+                    "text": "Jettison our scrap reserves as a decoy. Let them fight over it.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The goblins immediately abandon their attack run, squabbling over the jettisoned scrap. Predictable creatures. Dave notes the tactic for future reference.",
+                        "faction_changes": { "goblins": 5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc1_dave_stance_choice",
+            "encounter_type": "diplomatic",
+            "title": "The Commander's Orders",
+            "description": "Dave stands before the tactical holo-map in the war room. The crystal situation is clear: a pirate controls the fuel supply, shadows move in Corsair space, and the League High Command is demanding results. His officers wait for orders. Every path from here reshapes the campaign.",
+            "arc_id": "arc_1",
+            "location": "canine_order",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "arc1_intel_received": true,
+                "arc1_aristotle_met": true,
+                "arc1_death_glimpsed": true
+            },
+            "npc_ids": [],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "military_blockade",
+                    "text": "'We blockade the crystal regions. Starve them out. The League controls the lanes.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's officers salute and deploy. A ring of League cruisers forms around the fringe nebulae. No crystal moves without League approval. It's clean, efficient, and utterly uncompromising.",
+                        "faction_changes": { "felid_corsairs": -10, "canis_league": 10, "lions": -5 },
+                        "resource_changes": { "salvage": 30 },
+                        "story_flags_set": ["arc1_dave_stance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "trade_negotiation",
+                    "text": "'We negotiate access. Crystals flow through League markets. Everyone profits — under our terms.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave sends trade envoys instead of warships. It's slower, less dramatic, but sustainable. The League will become the crystal market — and markets are harder to attack than fleets.",
+                        "faction_changes": { "felid_corsairs": 5, "fairies": 10, "goblins": 5 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc1_dave_stance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "espionage_infiltration",
+                    "text": "'We plant operatives inside the Corsair network. Know their moves before they make them.'",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's intelligence officers move like shadows into Corsair ports. The information flows slowly at first, then in a torrent. Dave knows more about Aristotle's operation than Aristotle does.",
+                        "faction_changes": { "lions": 5, "fairies": 5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc1_dave_stance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        }
+    ]
+}

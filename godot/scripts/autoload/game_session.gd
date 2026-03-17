@@ -42,14 +42,14 @@ func _ready() -> void:
 # New game flow
 # ------------------------------------------------------------------
 
-func start_new_game() -> void:
-	game_state = create_new_game_state()
+func start_new_game(protagonist_id: String = "aristotle") -> void:
+	game_state = create_new_game_state(protagonist_id)
+	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
 	narrative.load_arcs()
-	encounter_engine.load_encounters("arc1")
-	side_mission_system.load_missions("arc1")
+	encounter_engine.load_encounters("arc1", suffix)
+	side_mission_system.load_missions("arc1", suffix)
 	side_mission_system.load_distress_signals()
 	realm_control.initialize_realms(game_state)
-	# Load region data for exploration
 	var region_data: Array = data_loader.load_regions()
 	exploration.load_regions(region_data)
 	if game_state:
@@ -57,43 +57,42 @@ func start_new_game() -> void:
 		MusicManager.on_state_change("navigation")
 
 
-func create_new_game_state() -> GameStateData:
+func create_new_game_state(protagonist_id: String = "aristotle") -> GameStateData:
 	var state := GameStateData.new()
-	state.salvage = 50
+	state.protagonist_id = protagonist_id
+	var protagonists: Dictionary = data_loader.load_protagonists()
+	var config: Dictionary = protagonists.get(protagonist_id, protagonists.get("aristotle", {}))
+	state.salvage = config.get("starting_salvage", 50)
+	state.current_region = config.get("starting_region", "starting_realm")
 	# Load factions
 	state.faction_registry = data_loader.load_factions()
 	state.relationship_matrix = data_loader.load_relationship_matrix()
 	state.cascade_rules = data_loader.load_cascade_rules()
 	# Load player ship from template
 	var templates: Dictionary = data_loader.load_ship_templates()
-	var corsair_tmpl: Dictionary = templates.get("corsair_raider", {})
-	if not corsair_tmpl.is_empty():
-		state.player_ship = Ship.from_template(corsair_tmpl, "aristotle_flagship", "The Whisper")
+	var tmpl_id: String = config.get("ship_template_id", "corsair_raider")
+	var tmpl: Dictionary = templates.get(tmpl_id, {})
+	if not tmpl.is_empty():
+		state.player_ship = Ship.from_template(
+			tmpl, config.get("ship_id", "flagship"), config.get("ship_name", "Ship")
+		)
 	else:
 		state.player_ship = Ship.new()
-		state.player_ship.ship_id = "aristotle_flagship"
-		state.player_ship.ship_name = "The Whisper"
-		state.player_ship.faction_id = "felid_corsairs"
-		state.player_ship.ship_class = "corsair_raider"
+		state.player_ship.ship_id = config.get("ship_id", "flagship")
+		state.player_ship.ship_name = config.get("ship_name", "Ship")
+		state.player_ship.faction_id = config.get("faction_id", "felid_corsairs")
+		state.player_ship.ship_class = tmpl_id
 		state.player_ship.current_hull = 100
 		state.player_ship.max_hull = 100
-	# Player character defaults
-	state.player_character = Character.new()
-	state.player_character.character_id = "aristotle"
-	state.player_character.character_name = "Aristotle"
-	state.player_character.species = Character.Species.CAT
-	state.player_character.faction_id = "felid_corsairs"
-	state.player_character.title = "Captain"
+	# Player character from config
+	state.player_character = Character.from_dict(config)
 	state.player_character.is_player = true
-	# Core NPCs
-	var dave := Character.new()
-	dave.character_id = "dave"
-	dave.character_name = "Dave"
-	dave.species = Character.Species.DOG
-	dave.faction_id = "canis_league"
-	dave.title = "Commander"
-	dave.behaviour_state = Character.BehaviourState.OBSERVING
-	state.npc_registry["dave"] = dave
+	# Rival NPC
+	var rival_data: Dictionary = config.get("rival", {})
+	if not rival_data.is_empty():
+		var rival := Character.from_dict(rival_data)
+		state.npc_registry[rival.character_id] = rival
+	# Death is always an NPC
 	var death := Character.new()
 	death.character_id = "death"
 	death.character_name = "Death"
@@ -106,14 +105,16 @@ func create_new_game_state() -> GameStateData:
 	state.crystal_deposits = data_loader.load_crystal_deposits()
 	state.supply_routes = data_loader.load_supply_routes()
 	state.crystal_market = data_loader.load_crystal_market()
-	# Story flags for Arc 1
-	state.story_flags = {
-		"arc1_crystal_discovered": false,
-		"arc1_dave_met": false,
-		"arc1_death_glimpsed": false,
-		"arc1_stance": null,
-	}
+	# Story flags from protagonist config
+	var flags: Dictionary = config.get("story_flags", {})
+	state.story_flags = flags.duplicate()
 	return state
+
+
+func get_protagonist_config() -> Dictionary:
+	var pid: String = game_state.protagonist_id if game_state else "aristotle"
+	var protagonists: Dictionary = data_loader.load_protagonists()
+	return protagonists.get(pid, {})
 
 
 # ------------------------------------------------------------------
@@ -131,9 +132,10 @@ func load_game(slot: int = 0) -> bool:
 	if loaded == null:
 		return false
 	game_state = loaded
+	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
 	narrative.load_arcs()
-	encounter_engine.load_encounters(game_state.current_arc)
-	side_mission_system.load_missions(game_state.current_arc)
+	encounter_engine.load_encounters(game_state.current_arc, suffix)
+	side_mission_system.load_missions(game_state.current_arc, suffix)
 	side_mission_system.load_distress_signals()
 	realm_control.initialize_realms(game_state)
 	MusicManager.on_arc_change(game_state.current_arc)
@@ -146,8 +148,9 @@ func load_game(slot: int = 0) -> bool:
 # ------------------------------------------------------------------
 
 func _on_arc_advanced(old_arc: String, new_arc: String) -> void:
-	encounter_engine.load_encounters(new_arc)
-	side_mission_system.load_missions(new_arc)
+	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
+	encounter_engine.load_encounters(new_arc, suffix)
+	side_mission_system.load_missions(new_arc, suffix)
 	MusicManager.on_arc_change(new_arc)
 
 
