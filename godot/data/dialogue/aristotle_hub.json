@@ -1,0 +1,502 @@
+{
+    "dialogue_tree_id": "aristotle_hub",
+    "character_id": "aristotle",
+    "nodes": {
+        "root": {
+            "text": "Well, well. Commander Dave, in the fur. Come to sniff around my cargo hold, or is this a social call? Either way, you're paying docking fees.",
+            "choices": [
+                {
+                    "text": "We need to discuss crystal supply.",
+                    "next_node_id": "trade_talk",
+                    "conditions": {
+                        "arc1_dave_met": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "I'm here to assess the threat you pose.",
+                    "next_node_id": "threat_assessment",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The situation has changed. (Arc 1)",
+                    "next_node_id": "arc_1_branch",
+                    "conditions": {
+                        "current_arc": "arc_1"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Your routes are being cut off. (Arc 2)",
+                    "next_node_id": "arc_2_branch",
+                    "conditions": {
+                        "current_arc": "arc_2"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The old houses are circling. (Arc 3)",
+                    "next_node_id": "arc_3_branch",
+                    "conditions": {
+                        "current_arc": "arc_3"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "This ends now, Aristotle. (Arc 4)",
+                    "next_node_id": "arc_4_branch",
+                    "conditions": {
+                        "current_arc": "arc_4"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] This was a waste of time.",
+                    "next_node_id": "end_conversation_dismissive",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "trade_talk": {
+            "text": "Crystals, crystals, crystals. Everyone wants to 'discuss' them. Nobody wants to pay what they're worth. Here's the deal, Commander — I set the price because I'm the only one who knows which rocks sing and which ones just sit there looking pretty. Supply and demand. Emphasis on the 'I supply' part.",
+            "choices": [
+                {
+                    "text": "Name your terms.",
+                    "next_node_id": "trade_terms",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The League will find its own supply.",
+                    "next_node_id": "trade_bluff",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "trade_terms": {
+            "text": "Now you're speaking my language. Standard rate, plus a 'don't shoot my ships' surcharge. Oh, and your patrols stay out of Sector 7. A cat needs room to breathe.",
+            "choices": [
+                {
+                    "text": "Agreed. For now.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10
+                        },
+                        "resource_changes": {
+                            "crystals": 20
+                        },
+                        "story_flags_set": [
+                            "dave_accepted_aristotle_terms"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Sector 7 is non-negotiable.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_rejected_aristotle_terms"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "trade_bluff": {
+            "text": "Ha! Good luck with that. Your engineers have been poking at crystal shards for months. You know what they've found? Expensive paperweights. The refining process isn't in the rock, Commander. It's in the ear. And mine are better than yours.",
+            "choices": [
+                {
+                    "text": "We'll see.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "threat_assessment": {
+            "text": "A threat? Me? I'm a humble merchant with a fast ship and a flexible moral compass. The real threats are the ones you can't see coming. Like whoever's been raiding your supply convoys in the Drift. That wasn't me, by the way. I'd have left a calling card.",
+            "choices": [
+                {
+                    "text": "If not you, then who?",
+                    "next_node_id": "unknown_threat",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_asked_about_raids"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "I don't believe you.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "unknown_threat": {
+            "text": "If I knew, I'd charge you for the intel. But here's a freebie — whatever hit your convoy left resonance burns. That's not pirate weaponry. That's old tech. Very old. The kind that was supposed to be extinct. You're welcome.",
+            "choices": [
+                {
+                    "text": "This changes things.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_learned_resonance_burns"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_1_branch": {
+            "text": "Changed how? The galaxy's the same mess it was yesterday. Factions squabbling, dogs chasing cats, cats stealing everything that isn't nailed down. I just happen to be very good at the stealing part. What's your angle, Commander?",
+            "choices": [
+                {
+                    "text": "The League wants stable trade, not conflict.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc1_dave_offered_peace"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "My angle is putting you in a cell.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -15
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc1_dave_threatened_aristotle"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_2_branch": {
+            "text": "Cut off? Please. I've been smuggling cargo through blockades since before you had your first command. But I'll admit, things are... tighter than usual. Someone's feeding your fleet my route charts. I don't suppose you know anything about that?",
+            "choices": [
+                {
+                    "text": "League intelligence is thorough.",
+                    "next_node_id": "arc_2_intel",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "It wasn't us. You have a mole.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc2_dave_warned_aristotle"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_2_intel": {
+            "text": "Thorough. Right. You know what else is thorough? A cornered cat. Push me too hard, Commander, and I stop being the charming rogue you tolerate and start being the problem you can't solve. Your call.",
+            "choices": [
+                {
+                    "text": "Noted.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc2_aristotle_warned_dave"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_3_branch": {
+            "text": "The ancient houses. Yeah. I've noticed. Old money, old ships, old grudges. They think the crystals belong to them by birthright. Funny thing about birthrights — they don't stop a broadside. You and I might need to have a different kind of conversation, Commander.",
+            "choices": [
+                {
+                    "text": "A temporary truce against a common enemy?",
+                    "next_node_id": "arc_3_truce",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 15
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The League will handle the houses. Stay out of it.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_3_truce": {
+            "text": "Truce. Such an ugly word. Let's call it... a mutual investment in not being dead. I keep the crystals flowing, you keep the old guard off my tail. And when this is over, we go back to our regularly scheduled rivalry. Deal?",
+            "choices": [
+                {
+                    "text": "Deal. But I'll be watching you.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10,
+                            "canis_league": -5
+                        },
+                        "resource_changes": {
+                            "crystals": 15
+                        },
+                        "story_flags_set": [
+                            "arc3_dave_aristotle_truce"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "No deal. I don't trust pirates.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -15
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc3_dave_rejected_truce"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_4_branch": {
+            "text": "Ends? Commander, nothing ends. It just changes shape. You've chased me across four sectors, through a civil war, past things that should have killed us both. And here we are. Two old enemies with more in common than either of us wants to admit. So. How does this go?",
+            "choices": [
+                {
+                    "text": "Surrender the crystal monopoly. Peacefully.",
+                    "next_node_id": "arc_4_surrender",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Together. Against what's coming.",
+                    "next_node_id": "arc_4_alliance",
+                    "conditions": {
+                        "arc3_dave_aristotle_truce": true
+                    },
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 20
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "It goes badly. For you.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -20
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc4_dave_hostile_final"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_4_surrender": {
+            "text": "Peacefully. You know, for a military dog, you've got a funny sense of humor. The crystals aren't mine to surrender. They're... alive, Commander. They chose me. And lately, they've been whispering about something bigger than both of us. Something that makes our little feud look like kittens batting at yarn.",
+            "choices": [
+                {
+                    "text": "What are they saying?",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "arc4_dave_heard_crystal_warning"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Superstition won't save you.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "arc_4_alliance": {
+            "text": "Together. Ha. Three arcs ago I'd have laughed you out of the airlock. But you kept your word during the truce. That means something, even to a pirate. Alright, Commander. Cats and dogs, side by side. The universe won't know what hit it.",
+            "choices": [
+                {
+                    "text": "Then we have an accord.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 25,
+                            "canis_league": 10
+                        },
+                        "resource_changes": {
+                            "crystals": 30
+                        },
+                        "story_flags_set": [
+                            "arc4_dave_aristotle_alliance"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_conversation_dismissive": {
+            "text": "Leaving so soon? Don't forget to tip the docking clamps on your way out. And Commander? Next time, bring snacks. These meetings are always so dreary.",
+            "choices": []
+        },
+        "end_conversation": {
+            "text": "Aristotle leans back in his chair, tail flicking, eyes sharp. The conversation is over, but the calculation never stops.",
+            "choices": []
+        }
+    }
+}

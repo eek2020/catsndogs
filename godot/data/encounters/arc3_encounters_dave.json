@@ -1,0 +1,332 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc3_dave_alien_contact",
+            "encounter_type": "exploration",
+            "title": "Alien Contact",
+            "description": "The signal arrives on no known frequency. Dave's communications officer frowns at the display. \"Sir, this... isn't from any registered faction.\" Dave leans forward. The message resolves into a visual: vast, luminous beings drifting in the void between stars. Their voice arrives not through speakers but through the hull itself, a vibration felt in the bones. \"Commander Dave of the Canis League. We have observed your campaign with interest. We offer an alternative to your current... trajectory.\"",
+            "arc_id": "arc_3",
+            "location": "deep_void",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_alien_contact": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "listen_carefully",
+                    "text": "\"Speak plainly. What do you want?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The aliens describe a crystal resonance technology that could amplify or neutralize whisper crystal deposits at will. In League hands, it would end the resource war overnight. Dave listens without expression. Power of this magnitude always comes with strings attached.",
+                        "faction_changes": { "aliens": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_alien_contact"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "demand_proof",
+                    "text": "\"The League deals in evidence, not promises. Prove your capability.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A nearby asteroid flickers, then erupts with crystal growth in seconds. Dave watches a dead rock become a fortune. His jaw tightens. This is real. This changes everything. \"Noted,\" he says, because that is all he trusts himself to say.",
+                        "faction_changes": { "aliens": 5 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc3_dave_alien_contact"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "refuse_contact",
+                    "text": "\"Unknown entities offering power. That is the oldest trap in the book. Terminate the signal.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The aliens withdraw without protest. Dave stares at the empty void where they hovered. His instincts say he just refused the most dangerous gift in the multiverse. His duty says he was right to.",
+                        "faction_changes": { "aliens": -10, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_alien_contact"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_dave_aristotle_parley",
+            "encounter_type": "diplomatic",
+            "title": "Aristotle Parley",
+            "description": "Aristotle's ship appears at the edge of scanner range, broadcasting a parley flag. Dave studies the display. The cat is alone. No fleet. No ambush formation. Either this is the bravest move Aristotle has ever made, or the most desperate. Dave adjusts his uniform collar and opens the channel. \"Captain Aristotle. You have five minutes.\"",
+            "arc_id": "arc_3",
+            "location": "neutral_zone",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_alien_contact": true,
+                "arc3_dave_aristotle_parley": false
+            },
+            "npc_ids": ["dave", "aristotle"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "hear_him_out",
+                    "text": "\"Speak your piece, cat. I am listening.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle grins on screen. \"Dave, old boy, we have both been played. The aliens, the factions, this whole crystal circus. Someone is pulling strings.\" Dave does not respond immediately. He catalogues every word, every micro-expression. The cat is scared. That is new. That is useful. \"Continue,\" Dave says.",
+                        "faction_changes": { "felid_corsairs": 10, "canis_league": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_aristotle_parley"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "set_terms",
+                    "text": "\"If you want to talk, surrender your crystal reserves first. Then we negotiate.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle's grin freezes. \"Still a dog on a leash, I see.\" The channel holds for a tense moment. Then Aristotle transmits a partial manifest. Not surrender. A gesture. Dave files it and says nothing. Gestures can be built upon.",
+                        "faction_changes": { "felid_corsairs": 5, "canis_league": 5 },
+                        "resource_changes": { "crystal_inventory": 5 },
+                        "story_flags_set": ["arc3_dave_aristotle_parley"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "reject_parley",
+                    "text": "\"Your five minutes are up. The next time we meet, it will be in combat.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave closes the channel. Aristotle's ship hangs in the void for a long moment, then turns and burns hard for Corsair space. Dave watches it go. He has made his choice. Duty does not negotiate with pirates.",
+                        "faction_changes": { "felid_corsairs": -15, "canis_league": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_aristotle_parley"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_dave_death_offer",
+            "encounter_type": "exploration",
+            "title": "Death's Offer",
+            "description": "The ghost ship appears without warning. No warp signature, no sensor trace. One moment the void is empty; the next, Death's vessel fills the viewport like a splinter of absolute darkness. The comms activate on their own. A low, rumbling purr fills the bridge. \"Commander Dave. I have watched you hunt my kin with admirable patience.\" Death's eyes glow in the shadows. \"I can deliver Aristotle to you. Bound. Broken. All I require is... a favour.\"",
+            "arc_id": "arc_3",
+            "location": "forgotten_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_aristotle_parley": true,
+                "arc3_dave_death_offer": false
+            },
+            "npc_ids": ["dave", "death"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "accept_offer",
+                    "text": "\"State your terms. If they serve the League's interests, we have an arrangement.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death's purr deepens. \"When the dust settles, I want the Forgotten Realm. All of it. No League patrols. No jurisdiction. A kingdom of shadows.\" Dave considers. A lawless zone in exchange for ending the Corsair threat. The math is ugly, but it works. \"Provisionally accepted,\" he says.",
+                        "faction_changes": { "felid_corsairs": -10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_death_offer"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "refuse_offer",
+                    "text": "\"The League does not make deals with shadows. Leave my bridge.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death's eyes dim. \"Pity. You are more principled than I expected. That will make this harder for everyone.\" The ghost ship fades like a bad dream. Dave's officers release held breath. He does not. Principle means fighting alone.",
+                        "faction_changes": { "canis_league": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_death_offer"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "counter_offer",
+                    "text": "\"I do not need you to deliver Aristotle. But I could use intelligence on his defences.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A pause. Then a low chuckle like gravel sliding. \"Shrewd. You want the fruit without the poison.\" Death transmits a data packet: Corsair fleet positions, crystal cache coordinates, Aristotle's personal contingency plans. \"Consider this a... free sample,\" Death whispers, and vanishes.",
+                        "faction_changes": { "felid_corsairs": -5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc3_dave_death_offer"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_dave_knight_emissary",
+            "encounter_type": "diplomatic",
+            "title": "Knight Emissary",
+            "description": "A Knight Order vessel arrives under diplomatic colours, its hull emblazoned with the crossed-swords sigil. The emissary is calm, measured, every word chosen with care. \"Commander Dave. The Order has observed the escalating conflict with growing concern. We propose a formal alliance. The Knights will lend their fleet and their legitimacy to the League's campaign. In exchange, we require a seat at the table when the crystal governance is decided.\"",
+            "arc_id": "arc_3",
+            "location": "neutral_zone",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_death_offer": true,
+                "arc3_dave_knight_alliance": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "accept_alliance",
+                    "text": "\"The League welcomes the Order's partnership. Your terms are fair.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave shakes the emissary's hand. It is a firm grip, military to military. The Knights bring honour and heavy cruisers. Dave brings strategy and crystal intelligence. Together, they represent a force that even Aristotle cannot ignore.",
+                        "faction_changes": { "knights": 15, "canis_league": 5 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": ["arc3_dave_knight_alliance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "conditional_alliance",
+                    "text": "\"Operational support, yes. Political power-sharing is premature.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The emissary's expression cools but does not close. \"A limited engagement, then. We will revisit the political question when the dust settles.\" Dave nods. He has gained ships without surrendering authority. The Knights will remember this caution.",
+                        "faction_changes": { "knights": 5, "canis_league": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_knight_alliance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "decline_alliance",
+                    "text": "\"The League fights its own wars. We do not need keepers.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The emissary rises stiffly. \"Pride before pragmatism, Commander. A curious choice for a dog of war.\" The Knight vessel departs. Dave watches it go. He has kept the League's independence. Whether that independence will survive the coming storm is another question.",
+                        "faction_changes": { "knights": -15, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_knight_alliance"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_dave_coalition_building",
+            "encounter_type": "diplomatic",
+            "title": "Coalition Building",
+            "description": "Dave spreads the alliance map across his desk. Alien technology. Aristotle's intentions. Death's treachery. Knight honour. Wolf hunger. Lion pride. Every faction a variable in an equation with no clean solution. He pours another glass of water. Drinks it. Sets the glass down with precision. Then he begins to draw lines between the factions. Some will be bridges. Others will be barriers. This is the architecture of the endgame.",
+            "arc_id": "arc_3",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_alien_contact": true,
+                "arc3_dave_aristotle_parley": true,
+                "arc3_dave_death_offer": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "military_coalition",
+                    "text": "\"Wolves. Knights. Heavy fleet. We end this with overwhelming force.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave drafts the coalition charter in military language: chain of command, rules of engagement, victory conditions. The wolves grin. The knights salute. It is a war machine, precise and lethal. Dave does not smile. Machines do not smile. They execute.",
+                        "faction_changes": { "wolves": 10, "knights": 10, "canis_league": 10, "felid_corsairs": -15 },
+                        "resource_changes": { "salvage": 30 },
+                        "story_flags_set": ["arc3_dave_coalition"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "diplomatic_council",
+                    "text": "\"A council of all factions. Even the Corsairs. Legitimacy through inclusion.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave sends invitations to every faction, including a carefully worded one to Aristotle. The responses trickle in. Some hostile, some cautious, all engaged. Dave has traded military advantage for political ground. It is a gamble. He does not gamble. But this is not gambling. This is diplomacy.",
+                        "faction_changes": { "felid_corsairs": 10, "fairies": 10, "knights": 5, "lions": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc3_dave_coalition"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "independent_command",
+                    "text": "\"No coalition. The League stands alone. We answer to no one.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave burns the alliance map. The League will fight with its own fleet, its own resources, its own doctrine. No wolf demands. No lion egos. No fairy tricks. No knight conditions. Just the mission. Dave sits alone in the war room and plans the final campaign. Alone is familiar. Alone is clean.",
+                        "faction_changes": { "canis_league": 15, "wolves": -10, "knights": -10, "lions": -5 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc3_dave_coalition"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc3_dave_pirate_harassment",
+            "encounter_type": "combat",
+            "title": "Pirate Harassment",
+            "description": "Corsair raiders hit a League supply convoy on the outer rim. Fast ships, hit-and-run tactics. The signature style of Aristotle's fleet: arrogant, precise, and infuriating. By the time Dave's reinforcements arrive, the raiders are gone and three supply ships are venting atmosphere.",
+            "arc_id": "arc_3",
+            "location": "trade_routes",
+            "trigger_conditions": {
+                "current_arc": "arc_3",
+                "arc3_dave_alien_contact": true
+            },
+            "npc_ids": [],
+            "priority": 3,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "reinforce_convoys",
+                    "text": "\"Double the escorts. Assign interceptor wings to every convoy.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave reallocates fleet resources. It stretches the blockade thin but protects the supply lines. A defensive choice. Dave does not prefer defence, but he refuses to lose ships to a cat's ego.",
+                        "faction_changes": { "felid_corsairs": -5 },
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "set_trap",
+                    "text": "\"Bait convoy. Skeleton crew, heavy escort hiding in the debris field.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The trap is set with clinical precision. When the Corsair raiders descend on the bait, League warships emerge from the asteroid field like steel jaws closing. The raiders scatter, leaving wreckage and salvage. Dave watches the combat replay once. Then deletes it. The result is what matters.",
+                        "faction_changes": { "felid_corsairs": -10, "canis_league": 5 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        }
+    ]
+}

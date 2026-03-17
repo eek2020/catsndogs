@@ -1,0 +1,330 @@
+{
+    "dialogue_tree_id": "dave_internal",
+    "character_id": "dave",
+    "nodes": {
+        "root": {
+            "text": "The bridge is quiet. Status boards glow green across every station. Order. Discipline. The Canis League was built on these things. And yet, the galaxy refuses to cooperate.",
+            "choices": [
+                {
+                    "text": "Review mission orders.",
+                    "next_node_id": "review_orders",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Assess the crystal situation.",
+                    "next_node_id": "crystal_situation",
+                    "conditions": {
+                        "arc1_crystal_discovered": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Think about loyalty.",
+                    "next_node_id": "loyalty_reflection",
+                    "conditions": {
+                        "current_arc": "arc_2"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Check on the crew.",
+                    "next_node_id": "crew_morale",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Return to command]",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "review_orders": {
+            "text": "Secure the supply lanes. Neutralize pirate interference. Protect League interests. The directives are clear. Execution is where it gets complicated.",
+            "choices": [
+                {
+                    "text": "The Corsair problem is escalating.",
+                    "next_node_id": "corsair_assessment",
+                    "conditions": {
+                        "arc1_dave_met": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_reviewed_orders"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The ancient houses are moving.",
+                    "next_node_id": "ancient_houses_concern",
+                    "conditions": {
+                        "current_arc": "arc_3"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Orders received. Proceeding.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "corsair_assessment": {
+            "text": "Aristotle is no common smuggler. He found the crystals first, and that head start has kept him alive. But monopolies built on luck do not last. The League's resources will outlast his cunning. Eventually.",
+            "choices": [
+                {
+                    "text": "Diplomacy might be faster than force.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_considers_diplomacy"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The blockade will break him.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_chose_force"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "ancient_houses_concern": {
+            "text": "The old families have been quiet too long. They controlled the shipping lanes before the crystals changed everything. Now they want that power back. The League and the Corsairs may have more in common than either side admits.",
+            "choices": [
+                {
+                    "text": "A temporary alliance might be necessary.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": 10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_open_to_alliance"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The League handles its own threats.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "crystal_situation": {
+            "text": "One source. One supplier. One point of failure for every fleet in the galaxy. The crystals are not just fuel — they are leverage. Whoever controls the refining process controls the balance of power. Right now, that is a cat with a pirate flag.",
+            "choices": [
+                {
+                    "text": "We need our own refining capability.",
+                    "next_node_id": "refining_plan",
+                    "conditions": {
+                        "current_arc": "arc_2"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Securing supply is the priority.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_assessed_crystals"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "refining_plan": {
+            "text": "League engineers have studied the crystal fragments. The resonance pattern is unlike anything natural. If we can reverse-engineer the refining process, the Corsairs lose their only advantage. But that takes time we may not have.",
+            "choices": [
+                {
+                    "text": "Allocate more resources to research.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {
+                            "crystals": -10
+                        },
+                        "story_flags_set": [
+                            "dave_funded_research"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Seizing existing supply is faster.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "corsair_clans": -10
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_chose_seizure"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "loyalty_reflection": {
+            "text": "The League demands obedience. The crew gives loyalty. These are not the same thing. Some of these soldiers followed me before they followed the flag. If High Command's orders cross a line, which allegiance holds?",
+            "choices": [
+                {
+                    "text": "Duty comes first. Always.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": 5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_loyal_to_league"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "The crew trusts me to make the right call.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {
+                            "canis_league": -5
+                        },
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_independent_streak"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "crew_morale": {
+            "text": "Morale reports are within acceptable parameters. But numbers do not capture the murmurs in the mess hall. Long deployments. Short rations. The crew knows we are stretched thin.",
+            "choices": [
+                {
+                    "text": "Address the crew directly.",
+                    "next_node_id": "address_crew",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "They'll hold. They always do.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "address_crew": {
+            "text": "A commander who speaks to his crew is a commander who keeps them. The words do not need to be grand. Just honest. 'We hold the line because no one else will.' That is enough. It has to be.",
+            "choices": [
+                {
+                    "text": "Dismissed.",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "dave_addressed_crew"
+                        ],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_conversation": {
+            "text": "Dave straightens his uniform and returns to the command console.",
+            "choices": []
+        }
+    }
+}

@@ -1,0 +1,332 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc2_dave_blockade",
+            "encounter_type": "diplomatic",
+            "title": "Blockade Operation",
+            "description": "Dave stands at the tactical display aboard the League dreadnought Ironbound. Crystal supply routes glow red across the star map. He traces them with one claw, methodical, unhurried. \"Every route. Every junction. We close them all.\" His officers exchange glances. This is not a raid. This is a siege.",
+            "arc_id": "arc_2",
+            "location": "trade_routes",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_blockade_status": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "full_blockade",
+                    "text": "\"Total interdiction. Nothing moves without League authorization.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave signs the order without hesitation. Within hours, League cruisers fan out across every known trade lane. The crystal supply chain goes dark. Somewhere, Aristotle will feel the noose tighten.",
+                        "faction_changes": { "canis_league": 10, "felid_corsairs": -15, "fairies": -10 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": ["arc2_blockade_status"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "selective_blockade",
+                    "text": "\"Targeted interdiction. Hit their main arteries, leave minor routes open for intelligence.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave nods to his signals officer. \"Let them think they have options. Every minor route we leave open is a funnel we control.\" The blockade deploys with surgical precision. The cat will run, and Dave will watch where he runs to.",
+                        "faction_changes": { "canis_league": 5, "felid_corsairs": -5, "fairies": -5 },
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": ["arc2_blockade_status"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "diplomatic_blockade",
+                    "text": "\"Establish a quarantine zone. Frame it as a safety measure, not aggression.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "\"The crystals are volatile. Unregulated transport endangers civilian populations.\" Dave dictates the press release himself. It is technically true. The blockade materializes behind a veil of bureaucratic concern.",
+                        "faction_changes": { "canis_league": 5, "felid_corsairs": -5, "knights": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_blockade_status"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_dave_wolf_pressure",
+            "encounter_type": "diplomatic",
+            "title": "Wolf Pressure",
+            "description": "A Wolf Dominion admiral materializes on the secure channel, teeth bared in what might be a smile or a threat. \"Commander Dave. Our packs grow restless. The blockade was supposed to deliver results. Our fleets require crystal fuel. Yesterday.\" Dave's expression does not change. He has learned to let wolves snarl.",
+            "arc_id": "arc_2",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_blockade_status": true,
+                "arc2_wolf_pressure": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "appease_wolves",
+                    "text": "\"The Dominion will have its allocation. I am adjusting the timetable now.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave diverts a portion of seized crystal reserves to the wolves. It buys time. Time he cannot afford, but the alternative is a war on two fronts. \"Patience is a resource,\" he tells himself. He is running low.",
+                        "faction_changes": { "wolves": 10, "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -10 },
+                        "story_flags_set": ["arc2_wolf_pressure"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "stand_firm",
+                    "text": "\"The campaign proceeds on my schedule. Not yours. Not anyone's.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The Wolf admiral's eyes narrow. The channel cuts. Dave sits in silence for a long moment. He has made an enemy of convenience. But the League answers to duty, not to hunger.",
+                        "faction_changes": { "wolves": -15, "canis_league": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_wolf_pressure"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "redirect_wolves",
+                    "text": "\"The Corsairs are the obstacle. Help me remove them, and the crystals flow freely.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave lays out the tactical data. The wolves lean forward, predatory interest replacing impatience. A joint operation. Dave will use their teeth while keeping his own paws clean.",
+                        "faction_changes": { "wolves": 5, "felid_corsairs": -10 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc2_wolf_pressure"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_dave_lion_interference",
+            "encounter_type": "diplomatic",
+            "title": "Lion Interference",
+            "description": "The Lion Sovereignty's ambassador arrives without invitation, flanked by honour guards in gilded armour. \"Commander Dave.\" The lion's voice drips with aristocratic disdain. \"Your blockade extends into sovereign territory. The Pride does not recognize Canis jurisdiction over the Amber Corridor. Withdraw, or we shall withdraw you.\"",
+            "arc_id": "arc_2",
+            "location": "amber_corridor",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_wolf_pressure": true,
+                "arc2_lion_demand": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "concede_territory",
+                    "text": "\"The League recognizes the Sovereignty's claim. We will adjust our perimeter.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders the blockade line redrawn. The lions strut away satisfied. A gap in the net, but Dave marks it on his private chart. Gaps can be useful. They show you where the prey will run.",
+                        "faction_changes": { "lions": 10, "canis_league": -5, "felid_corsairs": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_lion_demand"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "hold_ground",
+                    "text": "\"Crystal security is a multiverse concern. The League holds its position.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The ambassador's mane bristles. \"You will regret this, dog.\" Dave watches him leave. He does not flinch. He has drawn a line in the void, and the League will hold it.",
+                        "faction_changes": { "lions": -15, "canis_league": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_lion_demand"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "propose_joint_patrol",
+                    "text": "\"A joint patrol. Lion and League ships, shared jurisdiction. Equal authority.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The ambassador pauses, considering. Pride wars with pragmatism. \"We will... discuss this with the Pride Council.\" Dave nods. He has turned a demand into a negotiation. That is enough.",
+                        "faction_changes": { "lions": 5, "canis_league": 5 },
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc2_lion_demand"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_dave_fairy_intel",
+            "encounter_type": "trade",
+            "title": "Fairy Intelligence",
+            "description": "A Fairy Consortium broker appears on a private frequency, wings shimmering with holographic encryption patterns. \"Commander Dave. Charmed, truly. Word on the ether is you're hunting a certain ginger tom. We happen to know things about his Corsair friends. Weaknesses. Blind spots. Supply caches.\" She tilts her head. \"Everything has a price, of course.\"",
+            "arc_id": "arc_2",
+            "location": "trade_hub_alpha",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_lion_demand": true,
+                "arc2_fairy_intel": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "buy_full_intel",
+                    "text": "\"Name your price. The League pays for results.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave authorizes the transfer without haggling. The fairy's data packet is dense: patrol schedules, hull weaknesses, crystal cache locations, crew manifests. Dave reads every line. \"Thorough,\" he murmurs. The Corsairs just became transparent.",
+                        "faction_changes": { "fairies": 15, "felid_corsairs": -5 },
+                        "resource_changes": { "crystal_inventory": -15, "salvage": -20 },
+                        "story_flags_set": ["arc2_fairy_intel"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "negotiate_price",
+                    "text": "\"The Consortium's information is only as good as its verification. Half now. Half on confirmation.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The fairy pouts but agrees. The data is partial but actionable. Dave cross-references it with League intelligence. Where the two overlap, he finds truth. Where they diverge, he finds something more valuable: the shape of fairy deception.",
+                        "faction_changes": { "fairies": 5 },
+                        "resource_changes": { "crystal_inventory": -8 },
+                        "story_flags_set": ["arc2_fairy_intel"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "reject_intel",
+                    "text": "\"The League does not buy intelligence from mercenary sources. We gather our own.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The fairy broker blinks, then shrugs. \"Your loss, Commander. The cat won't wait for you to catch up.\" The channel closes. Dave stares at the dark screen. Principle has a cost. He pays it without complaint.",
+                        "faction_changes": { "fairies": -10, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_fairy_intel"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_dave_corsair_counterattack",
+            "encounter_type": "combat",
+            "title": "Corsair Counterattack",
+            "description": "Alarms shatter the bridge silence. Felid Corsair raiders pour from a nebula, engines burning hot, weapons charged. They hit the blockade line hard and fast, Aristotle's signature tactics: overwhelming aggression from an unexpected vector. Dave straightens in his command chair. \"Battlestations. Hold the line.\"",
+            "arc_id": "arc_2",
+            "location": "blockade_perimeter",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_blockade_status": true
+            },
+            "npc_ids": [],
+            "priority": 4,
+            "repeatable": true,
+            "choices": [
+                {
+                    "choice_id": "defensive_formation",
+                    "text": "\"Maintain formation. Let them break against our hull.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The League ships absorb the assault like a wall of iron. Corsair ships shatter against coordinated fire. Dave watches the tactical display with cold satisfaction. Discipline defeats chaos. Every time.",
+                        "faction_changes": { "felid_corsairs": -5 },
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "counterattack",
+                    "text": "\"Break formation. Pursue and destroy. No survivors, no reports.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's ships surge forward. The Corsair raiders scatter, but League interceptors run them down one by one. It is efficient. It is brutal. Dave files his report with exact casualty figures and no adjectives.",
+                        "faction_changes": { "felid_corsairs": -10, "canis_league": 5 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc2_dave_campaign_doctrine",
+            "encounter_type": "diplomatic",
+            "title": "Campaign Doctrine",
+            "description": "Dave stands alone in the war room. The tactical map glows with data: wolf demands, lion borders, fairy intelligence, corsair movements. Every faction pulling in a different direction. Every alliance conditional. He pours a glass of water and drinks it slowly. Then he sits down and begins to write the next phase of the campaign. There is always a next phase.",
+            "arc_id": "arc_2",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_2",
+                "arc2_wolf_pressure": true,
+                "arc2_lion_demand": true,
+                "arc2_fairy_intel": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "escalate_pressure",
+                    "text": "\"Increase the blockade. Double patrols. Starve them out.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave signs the escalation orders. More ships. Tighter corridors. The crystal economy contracts like a fist. Somewhere, Aristotle's crew will feel the hunger. Dave does not enjoy this. He simply does what must be done.",
+                        "faction_changes": { "canis_league": 10, "felid_corsairs": -15, "fairies": -10, "goblins": -5 },
+                        "resource_changes": { "salvage": 30 },
+                        "story_flags_set": ["arc2_dave_priority"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "seek_diplomacy",
+                    "text": "\"Open a channel to the Corsairs. Offer terms. Real terms.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave composes the message himself. No threats. No posturing. A clear offer: regulated crystal distribution, Corsair participation, mutual security. Whether the cat accepts is another matter. But the offer will be on the record.",
+                        "faction_changes": { "felid_corsairs": 10, "canis_league": -5, "knights": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc2_dave_priority"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "covert_operations",
+                    "text": "\"Send operatives behind their lines. Sabotage. Infiltration. Quietly.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave briefs a handpicked team. No uniforms. No records. They will ghost through Corsair territory, planting seeds of doubt and disruption. Dave dislikes this work. But the mission demands what it demands.",
+                        "faction_changes": { "felid_corsairs": -10, "fairies": 5 },
+                        "resource_changes": { "crystal_inventory": -5, "salvage": 15 },
+                        "story_flags_set": ["arc2_dave_priority"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        }
+    ]
+}

@@ -4,72 +4,60 @@ A narrative-driven 2D side-scrolling space pirate game inspired by the Spelljamm
 
 ## Quick Start
 
-```bash
-# Option 1: Use the launcher (recommended)
-./run.sh          # Mac/Linux
-run.bat           # Windows
-python run.py     # Cross-platform Python launcher
-
-# Option 2: Manual setup
-python3.11 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python -m whisper_crystals
-
-# Run tests
-pytest tests/ -v
-```
+1. Install [Godot 4.6](https://godotengine.org/download/) (GL Compatibility renderer)
+2. Open the project: **Project → Import → select `godot/project.godot`**
+3. Press **F5** (or ▶) to run the game
 
 ## Project Structure
 
 ```text
 whisper_crystals/
-├── docs/                       # Project documentation
-│   ├── MASTER_PLAN.md          # Active plan — start here
-│   ├── architecture/           # TRDs (tech specs) and ADRs
-│   ├── process/                # CONTRIBUTING.md
-│   ├── changelog/              # CHANGELOG.md
-│   ├── reviews/                # Code review records
-│   ├── issues/                 # Issue tracking
-│   └── archive/                # Completed PRDs and superseded plans
-├── story/                      # Narrative reference materials
-│   ├── arcs/                   # Story arc overviews
-│   ├── characters/             # Character profiles
-│   └── factions/               # Faction lore
-├── design/                     # Art direction, UI/UX, ship design specs
-├── src/
-│   └── whisper_crystals/
-│       ├── core/               # Engine-agnostic game logic
-│       ├── entities/           # Data models (Character, Ship, Faction, etc.)
-│       ├── systems/            # Game systems (combat, economy, crew, etc.)
-│       ├── engine/             # Pygame-specific rendering and input
-│       └── ui/                 # UI state classes
-├── data/                       # Data-driven content (JSON)
-│   ├── encounters/             # Arc 1–4 encounter definitions
-│   ├── dialogue/               # Dialogue trees
-│   ├── factions/               # Faction registry and relationship matrix
-│   ├── ships/                  # Ship templates per faction
-│   ├── economy/                # Crystal deposits, supply routes, regions
-│   └── story/                  # Arc definitions and story flags
-├── assets/                     # Game assets (sprites, audio)
-└── tests/                      # Pytest test suite (186 tests)
+├── godot/                        # Godot 4.6 project root
+│   ├── project.godot             # Godot project config
+│   ├── scenes/                   # Scene tree (.tscn files)
+│   │   ├── main.tscn             # Main scene (entry point)
+│   │   └── ui/                   # UI scenes
+│   ├── scripts/                  # GDScript source
+│   │   ├── autoload/             # Singletons (EventBus, GameSession, MusicManager)
+│   │   ├── core/                 # Core game logic
+│   │   ├── entities/             # Data models
+│   │   ├── systems/              # Game systems (combat, economy, crew, etc.)
+│   │   └── ui/                   # UI controllers
+│   ├── data/                     # Data-driven content (JSON)
+│   │   ├── encounters/           # Arc 1–4 encounter definitions
+│   │   ├── dialogue/             # Dialogue trees
+│   │   ├── factions/             # Faction registry
+│   │   ├── ships/                # Ship templates
+│   │   ├── economy/              # Crystal deposits, supply routes, regions
+│   │   ├── story/                # Arc definitions and story flags
+│   │   └── side_missions/        # Side mission data
+│   ├── assets/                   # Game assets (sprites, audio)
+│   └── shaders/                  # Custom shaders
+├── docs/                         # Project documentation
+│   ├── MASTER_PLAN.md            # Active plan — start here
+│   ├── architecture/             # TRDs (tech specs) and ADRs
+│   ├── changelog/                # CHANGELOG.md
+│   └── issues/                   # Issue tracking
+├── story/                        # Narrative reference materials
+│   ├── arcs/                     # Story arc overviews
+│   ├── characters/               # Character profiles
+│   └── factions/                 # Faction lore
+└── design/                       # Art direction, characters, artwork
 ```
 
 ## Tech Stack
 
-- **Language:** Python 3.11+
-- **Game Library:** pygame-ce 2.4.1+
-- **Testing:** pytest 8.0+
-- **Linting:** ruff 0.2+
+- **Engine:** Godot 4.6 (GL Compatibility renderer)
+- **Language:** GDScript
+- **Resolution:** 1280×720, canvas_items stretch mode
 - **Target Platform:** Desktop (Mac M3/M4 primary, Windows compatible)
 
 ## Architecture Principles
 
-- **Engine Abstraction Layer (EAL)** — `core/`, `systems/`, `entities/` have zero pygame imports; only `engine/` contains pygame
-- **Migration-ready** — All game logic is engine-agnostic for future Godot/Unity port
-- **Stack state machine** — Explicit push/pop/switch state machine manages all game states
+- **Autoload singletons** — `EventBus`, `GameSession`, and `MusicManager` provide global services
 - **Data-driven content** — Story, dialogue, encounters, factions loaded from JSON at runtime
 - **Event bus** — Pub/sub system for decoupled communication between game systems
+- **Scene-based UI** — UI screens are individual scenes managed via the scene tree
 
 ## Game State
 
@@ -82,7 +70,6 @@ See `docs/MASTER_PLAN.md` for current development status and active work.
 - [`docs/architecture/TRD-001`](docs/architecture/TRD-001_Technical_Architecture_Stack.md) — Technical Architecture & Stack
 - [`docs/architecture/TRD-002`](docs/architecture/TRD-002_Game_Engine_Prototype_Specification.md) — Game Engine & Prototype Specification
 - [`docs/architecture/TRD-003`](docs/architecture/TRD-003_Data_Model_State_Management.md) — Data Model & State Management
-- [`docs/process/CONTRIBUTING.md`](docs/process/CONTRIBUTING.md) — Contributor guide
 
 ## License
 

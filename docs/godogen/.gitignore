@@ -1,0 +1,6 @@
+.claude/
+**/__pycache__
+
+# Generated reference docs (recreated by ensure_doc_api.sh)
+skills/gdscript-doc/doc_source/
+skills/gdscript-doc/doc_api/
