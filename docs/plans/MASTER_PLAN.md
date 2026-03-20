@@ -1,6 +1,6 @@
 # Whisper Crystals — Master Plan
 
-**Date:** 2026-03-02 (last updated 2026-03-02)
+**Date:** 2026-03-02 (last updated 2026-03-18)
 **Status:** Authoritative — supersedes PLAN-001 and PLAN-002
 **Review source:** See `docs/reviews/REVIEW-002_code_review_2026-03-02.md`
 
@@ -140,6 +140,38 @@ Migration classification: `core/`, `entities/`, `systems/` are PORTABLE (pure Py
 | BUG-4: _quit_to_menu enter/exit churn | Low | Fixed by R-3 (clear() method) |
 | R-13: Stray imports | Low | Imports moved to file top |
 
+### Character Selection Feature (ISSUE-001) — COMPLETE (2026-03-18)
+
+Dual-protagonist support (Aristotle or Dave) with fully separate narrative paths, new encounter data, character selection UI, and Dave-specific endings. Implemented in Godot 4.6 / GDScript.
+
+**Summary of completed work:**
+- Character selection screen (`scripts/ui/character_select.gd` + `scenes/ui/character_select.tscn`)
+- Protagonist data file (`data/characters/protagonists.json`) with Aristotle and Dave configs
+- Dave encounter data for all 4 arcs (`data/encounters/arc*_encounters_dave.json`)
+- Dave dialogue files (`data/dialogue/dave_internal.json`, `data/dialogue/aristotle_hub.json`)
+- Dave side missions (`data/side_missions/arc1_side_missions_dave.json`)
+- Dave arc definitions and endings in `data/story/arc_definitions.json`
+- Character-aware cutscene, intro, and ending flows
+- League Cruiser wired as Dave's player ship
+- Protagonist-aware encounter loading
+
+**Previous plan:** `docs/plans/character-selection-feature-plan.md` — archived.
+
+### Bug Fixes (2026-03-18)
+
+| ID | Issue | Root Cause | Fix |
+|----|-------|------------|-----|
+| BUG-5 | Space bar opens ship stats modal; pressing again stacks another modal making it harder to close. Same behaviour on E, M, ESC keys. | `navigation.gd _unhandled_input` had no overlay guard — every keypress pushed a new overlay. `main.gd push_overlay` had no duplicate-type prevention. | Added `_has_overlay()` guard in `navigation.gd _unhandled_input`. Added duplicate-overlay-key check in `main.gd push_overlay` (belt-and-suspenders fix for all callers). |
+| BUG-6 | Aristotle's head shows white background on character select screen. | Asset `aristotle_head.png` has RGBA mode but all alpha=255 (no actual transparency). Character select loaded raw without background removal. Dialogue UI already had `_remove_near_white_bg` but character select did not. | Added `_remove_near_white_bg` to `character_select.gd` (runtime fix). **Art asset needs re-export with proper transparency** — see § 6.3 missing art notes. |
+| BUG-7 | Outcome text in dialogue (e.g. rescue a ship) gets cut off before finishing printing. | `dialogue_ui.gd _on_choice_selected` started a fixed timer in parallel with typewriter reveal. Long text would still be revealing when timer expired and frame closed. | Changed to `await` the typewriter reveal completion first, then start a 2-second read timer. Text always fully visible before close. |
+| BUG-8 | Ship screen crashes with "Invalid access to property or key 'theme_override_colors' on Label". Same bug in mission log. | `theme_override_colors` is not a directly accessible dictionary property in Godot 4. Code used `label.theme_override_colors.font_color = Color(...)` instead of the correct method API. | Replaced all occurrences with `label.add_theme_color_override("font_color", Color(...))` — 5 in `ship_screen.gd`, 3 in `mission_log.gd`. ISSUE-002. |
+| BUG-9 | Mission log input actions `"menu_up"` / `"menu_down"` don't exist in InputMap — errors every keypress. | Non-existent action names used in `mission_log.gd _unhandled_input`. | Replaced with `"ui_up"` / `"ui_down"` (Godot built-in actions). `move_up`/`move_down` in the `or` clause already worked. |
+| BUG-10 | `combat_overlay` variable declared twice in `dialogue_ui.gd` — "declared below in parent block" warning. | Variable declared in both `if` branch (line 225) and fallback path (line 235) in same function scope. | Renamed second declaration to `combat_screen`. |
+| BUG-11 | Unused parameter warnings in `game_session.gd`: `old_arc`, `faction_id`, `protagonist_id`. | Parameters received from signals/callers but not used in function bodies. | Prefixed with underscore: `_old_arc`, `_faction_id`, `_protagonist_id`. |
+| BUG-12 | Local variable `is_contested` shadows method `is_contested()` in `realm_control_system.gd`. | Local bool at line 64 has same name as class method at line 133. | Renamed local to `region_contested`. |
+| BUG-13 | Variable `sign` shadows built-in `sign()` function in `mission_log.gd`. | Local string variable named `sign` used for "+"/"-" prefix. | Renamed to `sign_prefix`. |
+| BUG-14 | Local variable `angle_deg` declared but never used in `navigation.gd _draw_ship`. | `rad_to_deg()` result stored but never referenced. | Prefixed with underscore: `_angle_deg`. |
+
 ---
 
 ## 6. Active Initiatives
@@ -231,6 +263,8 @@ infrastructure to make adding new sprites trivial.
 - Alien vessel sprite (neon cyan/bioluminescent)
 - Faction-specific UI frame textures (optional, can use colour tinting)
 - Crystal deposit sprite/animation
+- **`aristotle_head.png` needs re-export with proper transparency** — current asset is RGBA but all alpha=255 (solid white background). Runtime `_remove_near_white_bg` handles it but a proper transparent PNG is preferred.
+- 8 crew member portraits (placeholder silhouettes used until art is ready)
 
 ---
 
@@ -264,7 +298,49 @@ Give the game visual personality with sprite-based rendering. 8 tasks covering s
 faction ship sprites, character portraits, combat sprites, themed UI, region backgrounds, and
 crystal effects. All existing art assets are ready for integration.
 
-### Post-PLAN-003 Enhancements
+### 6.5 Crew Missions Feature — COMPLETE (2026-03-18)
+
+**Goal:** Each protagonist recruits a crew of 4 named characters through story-driven missions.
+Each crew member fills a ship role and brings unique trait bonuses that enhance gameplay.
+
+**Full plan:** `docs/plans/crew-missions-feature-plan.md`
+
+**Aristotle's Crew:**
+
+| Role | Name | Join Type | Key Trait |
+|------|------|-----------|-----------|
+| First Mate | Nine Lives | Willing (old friends) | Survivability — hull repair, crew casualty reduction |
+| Gunner | No Tail | Persuade (respects strength) | Firepower — damage bonus, critical hits |
+| Navigator | Silky | Willing (great friends) | Pathfinding — hidden routes, discovery rate |
+| Surgeon | Blood Paw | Rescue required | Healing — morale recovery, repair costs |
+
+**Dave's Crew:**
+
+| Role | Name | Join Type | Key Trait |
+|------|------|-----------|-----------|
+| First Mate | Charlie | Willing (childhood friend) | Loyalty — morale boost, desertion reduction |
+| Gunner | Bombardier | Persuade (prove yourself) | Explosives — firepower, area damage |
+| Navigator | Luna | Willing (fascinated by mission) | Star Reading — hidden routes, ambush detection |
+| Surgeon | Thistle | Persuade (distrust military) | Field Medicine — morale recovery, survival |
+
+**Summary of completed work:**
+
+- **Data files created:** `crew_members.json` (8 crew definitions), `crew_missions_aristotle.json` (4 missions), `crew_missions_dave.json` (4 missions), 8 crew encounter files (2-3 encounters each with story-driven dialogue)
+- **New system:** `CrewTraitSystem` (`scripts/systems/crew_trait_system.gd`) — loads crew definitions, calculates active trait bonuses per ship
+- **Entity extensions:** `CrewMember` extended with `trait_id`, `portrait`, `backstory`, `recruitment_status`; `SideMission` extended with `crew_member_id`; `Encounter` extended with `mission_type`, `crew_member_id`
+- **System integrations:** `CombatSystem` applies firepower/critical hit bonuses; `CrewMoraleSystem` applies morale recovery bonuses; `EconomySystem` applies hull repair cost reduction; `EncounterEngine` applies exploration discovery rate and ambush detection bonuses
+- **Recruitment flow:** `DialogueUI` detects crew recruitment encounters and triggers `recruit_crew_member()` via `GameSession`; `EventBus.crew_member_recruited` signal wired to `GameSession._on_crew_member_recruited()`
+- **DataLoader methods:** `load_crew_members()`, `load_crew_missions()`, `load_crew_encounters()`
+- **SideMissionSystem:** `load_crew_missions()` appends crew missions to mission templates
+- **UI enhancements:** Ship screen shows detailed crew roster with roles, traits, morale, and empty role slots; Mission log groups crew missions under "CREW MISSIONS" header; Navigation HUD shows crew count indicator
+- **Placeholder art:** `assets/characters/crew/` directory created for portraits
+
+**Art status:** All crew portraits are placeholders — artwork in development.
+**Story status:** Recruitment narratives are placeholder — story refinement ongoing.
+
+---
+
+### Post-Current Enhancements
 
 **Tier 1 (Low effort, high impact):**
 
@@ -277,31 +353,16 @@ crystal effects. All existing art assets are ready for integration.
    `WantedSystem` injects patrol encounters into encounter pool. HUD shows star indicator.
    Pairs well with distress signal exploit mechanic.
 
-3. **Named Crew with Mini-Storylines** — Add `name`, `backstory`, `loyalty_to_faction`,
-   `special_ability`, `arc_flags` to `CrewMember`. New `crew_dialogue.json` files. Morale
-   system already exists; adds the emotional hook.
-
 **Tier 3 (Medium effort, medium impact):**
 
-4. **Tavern / Station Hub with Rumors** — Information economy. New `RumorSystem` +
+3. **Tavern / Station Hub with Rumors** — Information economy. New `RumorSystem` +
    `rumor_registry.json`. Purchased rumors set story flags unlocking encounters or POI markers.
 
-5. **Black Market / Smuggling** — Hidden trade nodes with contraband. `WantedSystem` checks
+4. **Black Market / Smuggling** — Hidden trade nodes with contraband. `WantedSystem` checks
    cargo on patrol. Pairs with Wanted system (#2).
 
-6. **Astral Dice (Gambling Mini-Game)** — New `MiniGameState` pushed onto stack. Self-contained
+5. **Astral Dice (Gambling Mini-Game)** — New `MiniGameState` pushed onto stack. Self-contained
    dice math. "Death plays dice" encounter is the flagship use case.
-
-### Engine Migration
-
-Migration from Python/Pygame to Godot 4 or Unity when any of these conditions are met:
-
-- All four story arcs are fully playable end-to-end
-- Pygame performance limits prevent required visual quality or frame rate
-- Platform expansion (console, mobile) is targeted
-- A collaborator or publisher requires a specific engine
-
-Recommendation: Evaluate Godot 4 first (open source, Python-adjacent GDScript, lighter overhead).
 
 ---
 
@@ -318,4 +379,6 @@ Recommendation: Evaluate Godot 4 first (open source, Python-adjacent GDScript, l
 | Issues | `docs/issues/` | open/, in-progress/, closed/ |
 | Archived PRDs | `docs/archive/prds/` | PRD-001, PRD-002, PRD-003 with completion summaries |
 | Archived plans | `docs/archive/plans/` | PLAN-001, PLAN-002 superseded by this document |
+| Character selection plan | `docs/archive/plans/character-selection-feature-plan.md` | ISSUE-001 — completed, archived |
+| Crew missions plan | `docs/plans/crew-missions-feature-plan.md` | Active — crew recruitment feature |
 | Game design brief | `docs/archive/briefs/suggestions.md` | Original enhancement analysis |

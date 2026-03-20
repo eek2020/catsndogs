@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cipsygsgigtuy"
-path="res://.godot/imported/royal_galleon.jpg-6d12067d2cf7fc8a728c00064535e6e2.ctex"
+uid="uid://knmy5itdrkyn"
+path="res://.godot/imported/death_head_front.png-647889414b923ef502307f52df4cbc29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ships/royal_galleon.jpg"
-dest_files=["res://.godot/imported/royal_galleon.jpg-6d12067d2cf7fc8a728c00064535e6e2.ctex"]
+source_file="res://assets/characters/death_head_front.png"
+dest_files=["res://.godot/imported/death_head_front.png-647889414b923ef502307f52df4cbc29.ctex"]
 
 [params]
 

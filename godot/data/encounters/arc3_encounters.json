@@ -81,7 +81,7 @@
             "encounter_id": "enc_arc3_dave_parley",
             "encounter_type": "diplomatic",
             "title": "A Quiet Meeting",
-            "description": "Commander Dave sends a secure, unencrypted channel request. Not an ambush. A meeting. Neutral ground, a derelict station on the fringe. You sit across from the old dog. \"The Sovereigns will consume us both, Aristotle,\" he rasps. \"I follow the League to maintain order. You break order for profit. But neither of us wants to be a slave.\"",
+            "description": "Commander Dave sends a secure, unencrypted channel request. Not an ambush. A meeting. Neutral ground, a derelict station on the fringe.",
             "arc_id": "arc_3",
             "location": "derelict_station",
             "trigger_conditions": {
@@ -94,46 +94,111 @@
             ],
             "priority": 9,
             "repeatable": false,
-            "choices": [
+            "choices": [],
+            "dialogue_steps": [
                 {
-                    "choice_id": "dave_alliance",
-                    "text": "\"Then let's stop fighting each other. We pool our intelligence, split the crystals.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave slowly nods. \"A temporary arrangement. Until the real threat is dealt with.\" A bizarre, fragile peace is formed.",
-                        "faction_changes": {
-                            "canis_league": 25,
-                            "lions": -15,
-                            "felid_corsairs": -5
-                        },
-                        "resource_changes": {
-                            "crystal_inventory": -20,
-                            "salvage": 30
-                        },
-                        "story_flags_set": [
-                            "arc3_dave_parley"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": -0.2
+                    "speaker": "dave",
+                    "text": "Dave is already seated when you arrive, paws folded on the rusted table. No guards. No weapons visible. He looks older than you remember."
                 },
                 {
-                    "choice_id": "dave_stubborn",
-                    "text": "\"I don't need your help, Dave. I've built an empire. I can defend it.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave sighs, looking tired. \"Pride goeth before destruction, cat. Expect no mercy when the end comes.\"",
-                        "faction_changes": {
-                            "canis_league": -5,
-                            "felid_corsairs": 10
+                    "speaker": "dave",
+                    "text": "\"Sit down, Aristotle. I didn't drag us both to this heap of scrap for posturing.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Lovely place you've picked. Very romantic. Is that rust or blood on the walls?\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"Both, probably. Listen to me carefully. The Sovereigns are moving. Lions from the core, Wolves from the rim. They don't care about our little war. They want the crystals, and they will grind us both to dust to get them.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Us both? That's generous. Last I checked, you were the one blockading my trade routes.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"And last I checked, you were the one selling fuel to anyone with coin, including factions that would burn the League to cinders.\" Dave's jaw tightens. \"But that's yesterday's argument. The Sovereigns are tomorrow's problem. And tomorrow is coming fast.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"So what are you proposing, Commander? That we hold paws and sing together?\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"I'm proposing that we stop being useful idiots. Every time we fight each other, the Sovereigns get stronger. They're playing us, Aristotle. Both of us.\" He leans forward. \"I need to know if there's anything behind that grin of yours besides ego.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle's grin flickers. For a fraction of a second, something real shows through. Then the mask is back.",
+                    "choices": [
+                        {
+                            "choice_id": "dave_alliance",
+                            "text": "\"Then let's stop fighting each other. We pool our intelligence, split the crystals. Temporary ceasefire, mutual benefit.\"",
+                            "next_step": "alliance_branch",
+                            "outcome": {
+                                "description": "Dave slowly nods. \"A temporary arrangement. Until the real threat is dealt with.\" A bizarre, fragile peace is formed.",
+                                "faction_changes": {
+                                    "canis_league": 25,
+                                    "lions": -15,
+                                    "felid_corsairs": -5
+                                },
+                                "resource_changes": {
+                                    "crystal_inventory": -20,
+                                    "salvage": 30
+                                },
+                                "story_flags_set": [
+                                    "arc3_dave_parley"
+                                ],
+                                "story_flags_cleared": []
+                            }
                         },
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "arc3_dave_parley"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.3
+                        {
+                            "choice_id": "dave_stubborn",
+                            "text": "\"I don't need your help, Dave. I've built an empire from nothing. I can defend it from everything.\"",
+                            "next_step": "stubborn_branch",
+                            "outcome": {
+                                "description": "Dave sighs, looking tired. \"Pride goeth before destruction, cat. Expect no mercy when the end comes.\"",
+                                "faction_changes": {
+                                    "canis_league": -5,
+                                    "felid_corsairs": 10
+                                },
+                                "resource_changes": {},
+                                "story_flags_set": [
+                                    "arc3_dave_parley"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "alliance_branch",
+                    "speaker": "dave",
+                    "text": "Dave extends a paw across the table. It is not a friendly gesture. It is a contract. \"Temporary. Until the Sovereigns are dealt with. Then we renegotiate.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Temporary. Obviously.\" Aristotle takes the paw. The grip is firm on both sides. Neither trusts the other. Both need each other. It's the ugliest alliance in the multiverse."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"I'll transmit League intelligence on Sovereign fleet movements. You share your crystal cache locations. Non-negotiable.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "stubborn_branch",
+                    "speaker": "dave",
+                    "text": "Dave stands slowly. He buttons his coat with mechanical precision. \"I came here because I thought you might surprise me. You didn't.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Don't let the airlock hit you on the way out, Commander.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"When the Sovereigns come for you—and they will—remember this moment. Remember I offered you a hand and you slapped it away.\" He turns and walks out without looking back.",
+                    "end": true
                 }
             ]
         },
@@ -141,7 +206,7 @@
             "encounter_id": "enc_arc3_death_reveal",
             "encounter_type": "event",
             "title": "The Master's Voice",
-            "description": "The shadows finally solidify. Death stands on your bridge, having bypassed all security. But he is not here to assassinate you. He bows. \"I have tested your fleet, Captain. You have proven... adequate. My true masters wish to speak with you regarding the final disposition of the crystals.\"",
+            "description": "The shadows on the bridge solidify. Death stands before you, having bypassed every lock, every guard, every alarm. He is not here to kill. He bows.",
             "arc_id": "arc_3",
             "location": "aristotle_flagship",
             "trigger_conditions": {
@@ -154,65 +219,135 @@
             ],
             "priority": 8,
             "repeatable": false,
-            "choices": [
+            "choices": [],
+            "dialogue_steps": [
                 {
-                    "choice_id": "death_lions",
-                    "text": "\"You work for the Lion Sovereign. I should have known you were a lap cat.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Death purrs. \"The Sovereign offers order. The chaotic distribution of crystals must end. We act as their unseen hand.\"",
-                        "faction_changes": {
-                            "lions": 5,
-                            "felid_corsairs": -5
-                        },
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "arc3_death_allegiance",
-                            "death_serves_lions"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.0
+                    "speaker": "death",
+                    "text": "The temperature on the bridge drops ten degrees. Crew freeze at their stations. Death materializes from nothing, shadows pooling at his feet like spilled ink."
                 },
                 {
-                    "choice_id": "death_wolves",
-                    "text": "\"The Wolves of the Outer Rim. You're an anarchist.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Death chuckles, a dry, rattling sound. \"The Sovereigns and the League are stagnant. The fire must be stoked. The crystals are the spark.\"",
-                        "faction_changes": {
-                            "wolves": 15,
-                            "canis_league": -10,
-                            "lions": -10
-                        },
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "arc3_death_allegiance",
-                            "death_serves_wolves"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.0
+                    "speaker": "death",
+                    "text": "\"Captain Aristotle. I have tested your fleet. Your resolve. Your... resourcefulness.\" The purr is low, vibrating through the deck plates. \"You have proven adequate.\""
                 },
                 {
-                    "choice_id": "death_independent",
-                    "text": "\"You don't work for anyone. You want to control the monopoly yourself.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Death's eyes widen slightly. \"You perceive clearly, Captain. Why serve a king when one can be a god?\"",
-                        "faction_changes": {
-                            "wolves": -5,
-                            "lions": -5,
-                            "felid_corsairs": -10
+                    "speaker": "aristotle",
+                    "text": "\"Adequate? I've been losing sleep over you for two arcs and I get 'adequate'? I'm insulted.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Insult is a luxury of the living, Captain. I deal in truths. And here is one: I did not come to you on my own initiative. I was sent.\" Death's eyes glow like dying embers. \"My true masters wish to discuss the final disposition of the crystals.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Masters. The great and terrible Death has masters. Now that IS interesting.\" Aristotle circles him slowly. \"So who holds your leash, shadow?\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Perceptive creatures guess. Fools demand answers. Which are you, Captain?\" Death's form flickers, shadows dancing. \"Tell me who you think I serve. I will confirm or deny nothing. But your guess will... shape what follows.\"",
+                    "choices": [
+                        {
+                            "choice_id": "death_lions",
+                            "text": "\"You work for the Lion Sovereign. I should have known. You're a lap cat after all.\"",
+                            "next_step": "lions_branch",
+                            "outcome": {
+                                "description": "Death purrs. \"The Sovereign offers order. The chaotic distribution of crystals must end. We act as their unseen hand.\"",
+                                "faction_changes": {
+                                    "lions": 5,
+                                    "felid_corsairs": -5
+                                },
+                                "resource_changes": {},
+                                "story_flags_set": [
+                                    "arc3_death_allegiance",
+                                    "death_serves_lions"
+                                ],
+                                "story_flags_cleared": []
+                            }
                         },
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "arc3_death_allegiance",
-                            "death_serves_self"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.0
+                        {
+                            "choice_id": "death_wolves",
+                            "text": "\"The Wolves of the Outer Rim. You're an anarchist wrapped in shadows.\"",
+                            "next_step": "wolves_branch",
+                            "outcome": {
+                                "description": "Death chuckles, a dry, rattling sound. \"The Sovereigns and the League are stagnant. The fire must be stoked. The crystals are the spark.\"",
+                                "faction_changes": {
+                                    "wolves": 15,
+                                    "canis_league": -10,
+                                    "lions": -10
+                                },
+                                "resource_changes": {},
+                                "story_flags_set": [
+                                    "arc3_death_allegiance",
+                                    "death_serves_wolves"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "death_independent",
+                            "text": "\"You don't work for anyone. You want the monopoly for yourself, you greedy ghost.\"",
+                            "next_step": "self_branch",
+                            "outcome": {
+                                "description": "Death's eyes widen slightly. \"You perceive clearly, Captain. Why serve a king when one can be a god?\"",
+                                "faction_changes": {
+                                    "wolves": -5,
+                                    "lions": -5,
+                                    "felid_corsairs": -10
+                                },
+                                "resource_changes": {},
+                                "story_flags_set": [
+                                    "arc3_death_allegiance",
+                                    "death_serves_self"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "lions_branch",
+                    "speaker": "death",
+                    "text": "Death's purr deepens. \"The Sovereign understands what you do not. Order is not the enemy of freedom. It is its foundation. The crystals must flow through proper channels.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Proper channels. You mean golden paws. Lion paws.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Better a crown than a pirate's noose, Captain. Consider whose hand you would rather feed from.\" The shadows begin to recede. \"We will speak again. When the time comes... choose wisely.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "wolves_branch",
+                    "speaker": "death",
+                    "text": "A rattling chuckle fills the bridge. \"The wolves understand hunger. The old orders are calcified. Brittle. The multiverse needs fire, not more rules.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Fire has a habit of burning the one who lights it, Death.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Only if you stand too close. I never stand too close to anything, Captain. It is the secret to longevity.\" He dissolves into the darkness between the consoles. \"The wolves send their regards. And their teeth.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "self_branch",
+                    "speaker": "death",
+                    "text": "Death goes very still. The shadows around him freeze. Then his eyes widen, and for the first time, something like genuine emotion crosses that spectral face."
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"You perceive clearly, Captain. Dangerously clearly.\" The purr drops to a whisper. \"Why serve a king when one can be a god? The crystals are not fuel. They are power. And power belongs to those bold enough to seize it.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Takes one to know one, I suppose. We're not so different, you and I.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"No, Captain. We are nothing alike. You hoard for profit. I hunger for something far older.\" The shadows swallow him whole. Only the echo of his purr remains, vibrating in the walls.",
+                    "end": true
                 }
             ]
         },

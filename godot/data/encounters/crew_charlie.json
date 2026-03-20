@@ -1,0 +1,181 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_charlie_discovery",
+      "encounter_type": "exploration",
+      "title": "Convoy Under Siege",
+      "description": "A League supply convoy burns in the void ahead. Raiders circle like vultures. Through the smoke, a single cruiser holds formation, shields flickering. The comms crackle with a familiar voice: 'This is Commander Charlie of the LSS Stalwart. Any friendly vessels — we are taking heavy fire.'",
+      "arc_id": "arc_1",
+      "location": "contested_border",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_crystal_discovered": true
+      },
+      "npc_ids": ["dave", "charlie"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "charlie",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "charlie",
+          "text": "This is Commander Charlie of the LSS Stalwart! Shields at twelve percent — any friendly vessel, we are taking heavy fire!"
+        },
+        {
+          "speaker": "dave",
+          "text": "Charlie? Charlie! It's Dave. Hold your position — we're coming in."
+        },
+        {
+          "speaker": "charlie",
+          "text": "Dave?! You magnificent mutt! I haven't heard that voice since graduation night. You still owe me for the mess hall incident, by the way."
+        },
+        {
+          "speaker": "dave",
+          "text": "We can settle debts later. Right now you've got six raiders on your tail and a convoy to save. What's the play?"
+        },
+        {
+          "speaker": "charlie",
+          "text": "I've been holding formation for twenty minutes with duct tape and stubbornness. These raiders hit hard but they're disorganised. If you can break their line, I can cover the transports."
+        },
+        {
+          "speaker": "dave",
+          "text": "I see two options. We go in loud and scatter them head-on, or I loop around and we catch them in a pincer.",
+          "choices": [
+            {
+              "choice_id": "break_ambush",
+              "text": "Full speed — break the ambush and protect the convoy.",
+              "next_step": "break_ambush_result",
+              "outcome": {
+                "description": "You dive into the fray. Together, your ship and Charlie's cruiser scatter the raiders. When the smoke clears, Charlie's battered face appears on screen, grinning ear to ear.",
+                "faction_changes": {"canis_league": 5},
+                "resource_changes": {"salvage": 10},
+                "story_flags_set": ["crew_charlie_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "flank_raiders",
+              "text": "Circle around — hit the raiders from behind while Charlie holds the line.",
+              "next_step": "flank_result",
+              "outcome": {
+                "description": "The flanking manoeuvre is textbook. Caught between two fires, the raiders break and scatter.",
+                "faction_changes": {"canis_league": 5},
+                "resource_changes": {"salvage": 15},
+                "story_flags_set": ["crew_charlie_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "break_ambush_result",
+          "speaker": "charlie",
+          "text": "Ha HA! Just like the academy drills! You always did love the direct approach, Dave."
+        },
+        {
+          "speaker": "dave",
+          "text": "And you always did love complaining about it while it worked."
+        },
+        {
+          "speaker": "charlie",
+          "text": "Fair point. Convoy's safe, raiders are running, and I owe you a drink. Actually, I owe you several. Get over here so I can shake your paw, Captain.",
+          "end": true
+        },
+        {
+          "step_id": "flank_result",
+          "speaker": "charlie",
+          "text": "Classic pincer — straight out of Commander Hawke's playbook! I always said you paid more attention in tactics class than you let on."
+        },
+        {
+          "speaker": "dave",
+          "text": "I just let you believe you were the smart one. Kept you motivated."
+        },
+        {
+          "speaker": "charlie",
+          "text": "Unbelievable. Five years and you're still winding me up. Get over here, Dave — I want to see the ship that just saved my tail.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_charlie_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Charlie Joins the Crew",
+      "description": "Charlie surveys the damage to his cruiser and shakes his head. 'The Stalwart's done. Reactor's cracked.' He turns to Dave, suddenly serious. 'My convoy crew is safe — I've radioed for League pickup. But I'm not waiting around for a desk assignment.'",
+      "arc_id": "arc_1",
+      "location": "contested_border",
+      "trigger_conditions": {
+        "crew_charlie_found": true
+      },
+      "npc_ids": ["dave", "charlie"],
+      "priority": 7,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "charlie",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "charlie",
+          "text": "She's done, Dave. Reactor's cracked clean through. The Stalwart held together long enough to save the convoy, and that's all I can ask."
+        },
+        {
+          "speaker": "dave",
+          "text": "I'm sorry, Charlie. I know what that ship meant to you."
+        },
+        {
+          "speaker": "charlie",
+          "text": "Ships can be replaced. People can't. My convoy crew is safe — League pickup is en route."
+        },
+        {
+          "speaker": "charlie",
+          "text": "But I'll be honest with you, Dave. Command is going to ground me. Stick me behind a desk reviewing supply manifests. I'd rather eat my own tail."
+        },
+        {
+          "speaker": "dave",
+          "text": "You know what I'm doing out here isn't exactly sanctioned."
+        },
+        {
+          "speaker": "charlie",
+          "text": "I know. The crystal mission. The whole fleet's been whispering about it."
+        },
+        {
+          "speaker": "charlie",
+          "text": "You need someone who knows League formations inside-out, who can hold a line when things go sideways, and who won't flinch when the orders stop making sense. That's me, Dave. It's always been me."
+        },
+        {
+          "speaker": "charlie",
+          "text": "Permission to come aboard, Captain?",
+          "choices": [
+            {
+              "choice_id": "welcome_aboard",
+              "text": "Permission granted. Welcome aboard, First Mate.",
+              "next_step": "welcome_result",
+              "outcome": {
+                "description": "Charlie snaps a salute — then breaks into a grin and pulls Dave into a rough hug. He takes the First Mate's station like he was born to it.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_charlie_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "welcome_result",
+          "speaker": "charlie",
+          "text": "First Mate Charlie, reporting for duty!"
+        },
+        {
+          "speaker": "dave",
+          "text": "Try not to break this ship too."
+        },
+        {
+          "speaker": "charlie",
+          "text": "No promises. But I'll keep her flying, Dave. You point us at trouble, and I'll make sure we come out the other side. Just like the academy — except this time, the stakes are real.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_silky_discovery",
+      "encounter_type": "exploration",
+      "title": "The Shifting Labyrinth",
+      "description": "The fairy-realm labyrinth twists impossibly around your ship. Corridors of light bend and fold. Deep within, your sensors detect a life sign — calm, steady, as if whoever is in there isn't lost at all. Star charts are etched into the walls in an elegant paw.",
+      "arc_id": "arc_2",
+      "location": "fairy_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "npc_ids": ["aristotle", "silky"],
+      "priority": 5,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "silky",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "aristotle",
+          "text": "The labyrinth is shifting again. Corridors are folding in on themselves — our navigation systems can't keep up."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "But there's a life sign at the centre. Steady heartbeat, no distress. Whoever's in there is... comfortable.",
+          "choices": [
+            {
+              "choice_id": "follow_charts",
+              "text": "Follow the star charts etched on the walls deeper into the labyrinth.",
+              "next_step": "follow_charts_path",
+              "outcome": {
+                "description": "The charts lead you through corridors that shouldn't exist. At the centre, a graceful cat sits cross-legged, sketching a new constellation.",
+                "faction_changes": {"fairies": 3},
+                "resource_changes": {},
+                "story_flags_set": ["crew_silky_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "broadcast_signal",
+              "text": "Broadcast a rescue signal into the labyrinth.",
+              "next_step": "broadcast_path",
+              "outcome": {
+                "description": "Your signal echoes and warps through the impossible corridors. Then a reply — not distressed, but amused.",
+                "faction_changes": {"fairies": 3},
+                "resource_changes": {},
+                "story_flags_set": ["crew_silky_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "follow_charts_path",
+          "speaker": "aristotle",
+          "text": "These charts on the walls... they're not just decorative. They're directions. Each one leads deeper."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "The style is beautiful. Whoever drew these understands the labyrinth on a level I've never seen."
+        },
+        {
+          "speaker": "silky",
+          "text": "That's because most people try to solve the labyrinth. I simply asked it where it wanted to go."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Who — where did you come from? I didn't see you approach."
+        },
+        {
+          "speaker": "silky",
+          "text": "I've been here the whole time, Aristotle. I drew those charts for you. You followed them beautifully, by the way."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "You know my name?"
+        },
+        {
+          "speaker": "silky",
+          "text": "I know a great many things. Your name. Your heading. The exact number of whisper crystals in your hold. The labyrinth speaks to those who listen."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "That's... either impressive or deeply unsettling."
+        },
+        {
+          "speaker": "silky",
+          "text": "Why not both? My name is Silky. And you're right on schedule.",
+          "end": true
+        },
+        {
+          "step_id": "broadcast_path",
+          "speaker": "silky",
+          "text": "No need to shout, Captain. I'm right here."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I — what? Where did you come from? We were broadcasting a rescue signal."
+        },
+        {
+          "speaker": "silky",
+          "text": "Yes, I heard. Very loud. The labyrinth heard it too — it found the whole thing rather amusing."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "The labyrinth found it amusing. Right. And you are?"
+        },
+        {
+          "speaker": "silky",
+          "text": "My name is Silky. And I wasn't in need of rescue, Aristotle. I was waiting for you."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "You know my name. How long have you been in here?"
+        },
+        {
+          "speaker": "silky",
+          "text": "Long enough to chart every route in and out. Long enough to learn the labyrinth's moods. Long enough to know that your ship would pass through this sector on the seventeenth day of the new cycle."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I didn't even know I'd be here until yesterday."
+        },
+        {
+          "speaker": "silky",
+          "text": "And yet here you are. I was beginning to think you'd never arrive.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_silky_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Silky Joins the Crew",
+      "description": "Silky sits in the ship's observation lounge, surrounded by rolled star charts. She watches the labyrinth recede through the viewport with an expression that might be fondness.",
+      "arc_id": "arc_2",
+      "location": "fairy_realm",
+      "trigger_conditions": {
+        "crew_silky_found": true
+      },
+      "npc_ids": ["aristotle", "silky"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "silky",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "aristotle",
+          "text": "You said you were waiting for me. I'd like an explanation for that, if you don't mind."
+        },
+        {
+          "speaker": "silky",
+          "text": "The stars tell stories, Aristotle. Most people see dots of light. I see routes, currents, the way the universe breathes."
+        },
+        {
+          "speaker": "silky",
+          "text": "Your story has been written in the star charts for months. A cat captain, carrying whisper crystals, threading the needle between factions that want to control the only fuel in the multiverse."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "And you decided to wait in a labyrinth for me to show up? That's a lot of faith in star charts."
+        },
+        {
+          "speaker": "silky",
+          "text": "Faith has nothing to do with it. Mathematics. Pattern recognition. And a good sense of timing."
+        },
+        {
+          "speaker": "silky",
+          "text": "I've mapped routes that no one else knows. Paths between realms. Shortcuts through nebulae. Ways to slip past any blockade the League or the Lions could build."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "That kind of knowledge is dangerous to carry alone."
+        },
+        {
+          "speaker": "silky",
+          "text": "Precisely why I've been waiting for the right ship. One with a captain who navigates by instinct rather than greed. Yours will do nicely."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "That almost sounded like a compliment buried under three layers of mysticism.",
+          "choices": [
+            {
+              "choice_id": "welcome_navigator",
+              "text": "The navigation console is yours. Show us the hidden routes.",
+              "next_step": "accepted",
+              "outcome": {
+                "description": "Silky's eyes sparkle as she takes her place at the navigator's station. Within minutes, the ship's charts bloom with routes no one has ever seen.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_silky_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "accepted",
+          "speaker": "silky",
+          "text": "Navigator Silky, at your service. Though I should warn you — I don't navigate so much as... converse with the space between stars."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "As long as we end up where we need to be, you can converse with whatever you like."
+        },
+        {
+          "speaker": "silky",
+          "text": "Oh, we'll end up where we need to be. Whether that's where you think you want to go is another matter entirely."
+        },
+        {
+          "speaker": "silky",
+          "text": "Now then. Let me show you how the universe really looks."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Why do I get the feeling my life just got significantly more complicated?"
+        },
+        {
+          "speaker": "silky",
+          "text": "Because it did. But in the most interesting way possible.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

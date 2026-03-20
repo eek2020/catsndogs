@@ -4,7 +4,7 @@
             "encounter_id": "enc_arc2_route_seized",
             "encounter_type": "diplomatic",
             "title": "The Squeeze Begins",
-            "description": "The Canis League has blockaded the Delta-9 crystal route. Rows of League cruisers sit ominously in the void, choking off your primary supply line. Commander Dave's face fills the comms screen. \"Your monopoly ends today, Aristotle. Stand down or be fired upon.\"",
+            "description": "The Canis League has blockaded the Delta-9 crystal route. Rows of League cruisers sit ominously in the void, choking off your primary supply line. Commander Dave's face fills the comms screen.",
             "arc_id": "arc_2",
             "location": "delta_9_route",
             "trigger_conditions": {
@@ -14,45 +14,135 @@
             "npc_ids": ["dave"],
             "priority": 10,
             "repeatable": false,
-            "choices": [
+            "choices": [],
+            "dialogue_steps": [
                 {
-                    "choice_id": "negotiate_blockade",
-                    "text": "\"Let's not be hasty, Dave. We can work out a toll agreement.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave accepts a sizable chunk of your inventory as an ongoing 'processing fee'. The route opens, but the Corsairs look weak.",
-                        "faction_changes": { "canis_league": 5, "felid_corsairs": -5 },
-                        "resource_changes": { "crystal_inventory": -30 },
-                        "story_flags_set": ["arc2_route_resolved"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.1
+                    "speaker": "dave",
+                    "text": "Your monopoly ends today, Aristotle. Stand down or be fired upon."
                 },
                 {
-                    "choice_id": "fight_blockade",
-                    "text": "\"Delta-9 belongs to the Corsairs! All ships, break their line!\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "A brutal skirmish ensues. The League cruisers are forced back, but your fleet takes heavy damage. The route is secure, for now.",
-                        "faction_changes": { "canis_league": -15, "felid_corsairs": 10 },
-                        "resource_changes": { "salvage": 20 },
-                        "story_flags_set": ["arc2_route_resolved"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.3
+                    "speaker": "aristotle",
+                    "text": "Dave! What a pleasant surprise. Love what you've done with the place. Very intimidating. Very... compensatory."
                 },
                 {
-                    "choice_id": "reroute_stealth",
-                    "text": "Order the freighters to take the dangerous nebula path. Avoid the blockade entirely.",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Several ships are lost to nebula storms, but the majority slip through unseen. Dave is left guarding an empty road.",
-                        "faction_changes": { "canis_league": -5 },
-                        "resource_changes": { "crystal_inventory": -10, "salvage": -10 },
-                        "story_flags_set": ["arc2_route_resolved"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": -0.1
+                    "speaker": "dave",
+                    "text": "Deflect all you want. My cruisers have every route locked. Nothing moves without League authorisation. Not a single crystal."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "You went to all this trouble just for little old me? I'm touched. Really. My tail is literally tingling."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "This isn't a social call. The crystal supply chain is now a League security concern. You have three options: cooperate, resist, or disappear. I recommend the first.",
+                    "choices": [
+                        {
+                            "choice_id": "negotiate_blockade",
+                            "text": "Let's not be hasty, Dave. Surely two reasonable captains can work out a toll arrangement.",
+                            "next_step": "branch_negotiate",
+                            "outcome": {
+                                "description": "Dave accepts a sizable chunk of your inventory as an ongoing 'processing fee'. The route opens, but the Corsairs look weak.",
+                                "faction_changes": { "canis_league": 5, "felid_corsairs": -5 },
+                                "resource_changes": { "crystal_inventory": -30 },
+                                "story_flags_set": ["arc2_route_resolved"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "fight_blockade",
+                            "text": "Delta-9 belongs to the Corsairs! All ships, break their line!",
+                            "next_step": "branch_fight",
+                            "outcome": {
+                                "description": "A brutal skirmish ensues. The League cruisers are forced back, but your fleet takes heavy damage. The route is secure, for now.",
+                                "faction_changes": { "canis_league": -15, "felid_corsairs": 10 },
+                                "resource_changes": { "salvage": 20 },
+                                "story_flags_set": ["arc2_route_resolved"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "reroute_stealth",
+                            "text": "You know what, Dave? You can have this road. I know a shortcut.",
+                            "next_step": "branch_reroute",
+                            "outcome": {
+                                "description": "Several ships are lost to nebula storms, but the majority slip through unseen. Dave is left guarding an empty road.",
+                                "faction_changes": { "canis_league": -5 },
+                                "resource_changes": { "crystal_inventory": -10, "salvage": -10 },
+                                "story_flags_set": ["arc2_route_resolved"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "branch_negotiate",
+                    "speaker": "dave",
+                    "text": "A toll. You want to charge the League a toll for using routes you don't own."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Not a toll. A processing fee. Very different. Much more legitimate. I'll even give you a receipt."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "I'll take thirty percent of your crystal throughput. Non-negotiable. In return, the route stays open and my guns stay cold."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Thirty percent! That's highway robbery, Dave. And I should know — I'm a pirate."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Take the deal or take a broadside. Your choice."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Fine. Fine! But I'm keeping the receipt joke. That one's mine.",
+                    "end": true
+                },
+                {
+                    "step_id": "branch_fight",
+                    "speaker": "aristotle",
+                    "text": "All Corsair vessels — attack pattern Claw! Tear them apart!"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Foolish. All batteries, fire at will. Maintain formation."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Your formation is cute, Dave. Real textbook. But textbooks don't account for cats."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Your fleet is taking damage. This is pointless bravado.",
+                    "start_combat": true
+                },
+                {
+                    "step_id": "branch_reroute",
+                    "speaker": "dave",
+                    "text": "There is no shortcut. The nebula route will tear your freighters apart."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Maybe. Maybe not. But you know what won't tear them apart? Your blockade. Because we won't be anywhere near it."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "You're gambling your entire fleet on a nebula run. That's not strategy. That's desperation."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Desperation, inspiration — same thing with better lighting. Enjoy guarding an empty road, Commander."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "You'll lose ships."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Probably. But the ones that make it through will be carrying crystals. And you'll be sitting here with nothing but a blockade and a bad mood. Ta-ta, Dave.",
+                    "end": true
                 }
             ]
         },

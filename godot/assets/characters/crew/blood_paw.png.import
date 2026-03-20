@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj1rl7jm6otk4"
-path="res://.godot/imported/death_head_front.jpg-77041121c768f9910634c12c1914efa6.ctex"
+uid="uid://c04725ql8ihpq"
+path="res://.godot/imported/blood_paw.png-5e86f06cfbcd168c393b36bb28401c20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/death_head_front.jpg"
-dest_files=["res://.godot/imported/death_head_front.jpg-77041121c768f9910634c12c1914efa6.ctex"]
+source_file="res://assets/characters/crew/blood_paw.png"
+dest_files=["res://.godot/imported/blood_paw.png-5e86f06cfbcd168c393b36bb28401c20.ctex"]
 
 [params]
 

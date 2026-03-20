@@ -60,7 +60,7 @@
             "encounter_id": "enc_arc3_dave_aristotle_parley",
             "encounter_type": "diplomatic",
             "title": "Aristotle Parley",
-            "description": "Aristotle's ship appears at the edge of scanner range, broadcasting a parley flag. Dave studies the display. The cat is alone. No fleet. No ambush formation. Either this is the bravest move Aristotle has ever made, or the most desperate. Dave adjusts his uniform collar and opens the channel. \"Captain Aristotle. You have five minutes.\"",
+            "description": "Aristotle's ship appears at the edge of scanner range, broadcasting a parley flag. Dave studies the display. The cat is alone. No fleet. No ambush formation.",
             "arc_id": "arc_3",
             "location": "neutral_zone",
             "trigger_conditions": {
@@ -71,45 +71,127 @@
             "npc_ids": ["dave", "aristotle"],
             "priority": 8,
             "repeatable": false,
-            "choices": [
+            "choices": [],
+            "dialogue_steps": [
                 {
-                    "choice_id": "hear_him_out",
-                    "text": "\"Speak your piece, cat. I am listening.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Aristotle grins on screen. \"Dave, old boy, we have both been played. The aliens, the factions, this whole crystal circus. Someone is pulling strings.\" Dave does not respond immediately. He catalogues every word, every micro-expression. The cat is scared. That is new. That is useful. \"Continue,\" Dave says.",
-                        "faction_changes": { "felid_corsairs": 10, "canis_league": -5 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc3_dave_aristotle_parley"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": -0.1
+                    "speaker": "dave",
+                    "text": "Dave watches the lone Corsair vessel drift closer on the tactical display. His first officer shifts uncomfortably. \"It could be a trap, sir.\" Dave says nothing. He already knows it isn't."
                 },
                 {
-                    "choice_id": "set_terms",
-                    "text": "\"If you want to talk, surrender your crystal reserves first. Then we negotiate.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Aristotle's grin freezes. \"Still a dog on a leash, I see.\" The channel holds for a tense moment. Then Aristotle transmits a partial manifest. Not surrender. A gesture. Dave files it and says nothing. Gestures can be built upon.",
-                        "faction_changes": { "felid_corsairs": 5, "canis_league": 5 },
-                        "resource_changes": { "crystal_inventory": 5 },
-                        "story_flags_set": ["arc3_dave_aristotle_parley"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.1
+                    "speaker": "dave",
+                    "text": "\"Open the channel.\" Dave straightens his collar. \"Captain Aristotle. You have five minutes.\""
                 },
                 {
-                    "choice_id": "reject_parley",
-                    "text": "\"Your five minutes are up. The next time we meet, it will be in combat.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave closes the channel. Aristotle's ship hangs in the void for a long moment, then turns and burns hard for Corsair space. Dave watches it go. He has made his choice. Duty does not negotiate with pirates.",
-                        "faction_changes": { "felid_corsairs": -15, "canis_league": 10 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc3_dave_aristotle_parley"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.3
+                    "speaker": "aristotle",
+                    "text": "Aristotle appears on screen. The grin is there, of course. It is always there. But something is different. The eyes don't match the mouth. \"Dave, old boy. Miss me?\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"You came alone. No escort. No fleet hiding in the debris field.\" Dave's eyes narrow. \"Either this is the bravest move you have ever made, or the most desperate.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Can't it be both?\" The grin wavers. Aristotle shifts in his captain's chair. \"Look, Dave. I'm not here to trade insults. Something is coming. Something bigger than our little spat over fuel rights.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave catalogues every micro-expression. The twitch of Aristotle's whiskers. The way his claws grip the armrest. The cat is scared. That is new. That is very useful information. \"Continue.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"The Sovereigns. Lions and Wolves both. They've been playing us against each other, Dave. While we've been bashing heads, they've been positioning fleets. I've seen the deployments. It's not posturing. It's an invasion corridor.\"",
+                    "choices": [
+                        {
+                            "choice_id": "hear_him_out",
+                            "text": "\"Show me the intelligence. If your data is solid, we can talk.\"",
+                            "next_step": "hear_branch",
+                            "outcome": {
+                                "description": "Aristotle transmits Corsair surveillance data. Dave's analysts confirm the Sovereign fleet movements. The cat is telling the truth. Dave does not respond immediately. He files the information and says, \"Continue.\"",
+                                "faction_changes": { "felid_corsairs": 10, "canis_league": -5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc3_dave_aristotle_parley"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "set_terms",
+                            "text": "\"If you want to talk, surrender your crystal reserves first. Then we negotiate.\"",
+                            "next_step": "terms_branch",
+                            "outcome": {
+                                "description": "Aristotle's grin freezes. He transmits a partial crystal manifest. Not surrender. A gesture. Dave files it and says nothing. Gestures can be built upon.",
+                                "faction_changes": { "felid_corsairs": 5, "canis_league": 5 },
+                                "resource_changes": { "crystal_inventory": 5 },
+                                "story_flags_set": ["arc3_dave_aristotle_parley"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "reject_parley",
+                            "text": "\"Your five minutes are up. The next time we meet, it will be in combat.\"",
+                            "next_step": "reject_branch",
+                            "outcome": {
+                                "description": "Dave closes the channel. Aristotle's ship hangs in the void, then burns hard for Corsair space. Dave watches it go. Duty does not negotiate with pirates.",
+                                "faction_changes": { "felid_corsairs": -15, "canis_league": 10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc3_dave_aristotle_parley"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "hear_branch",
+                    "speaker": "aristotle",
+                    "text": "Aristotle transmits the files. Star charts. Fleet dispositions. Intercepted communications. It is comprehensive. It is also an enormous risk—this data reveals Corsair intelligence capabilities."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave reviews the data in silence. His analysts confirm: the Sovereign movements are real. The invasion corridor is real. The timeline is weeks, not months."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"Your intelligence is solid.\" A pause. \"You are also terrified. I have never seen that on you before, Aristotle.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Yeah, well. Enjoy it while it lasts.\" The grin flickers back, but it's thin. \"So. Do we keep killing each other for the Sovereigns' entertainment, or do we do something stupid and unprecedented?\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"I will take this under advisement.\" Dave's expression betrays nothing. But he does not close the channel. That is, for Dave, practically an embrace.",
+                    "end": true
+                },
+                {
+                    "step_id": "terms_branch",
+                    "speaker": "aristotle",
+                    "text": "The grin freezes. \"Surrender? That's your opening move? You really are a dog.\" But Aristotle doesn't cut the channel. After a long moment, he transmits a partial manifest. Twelve crystal caches. A fraction of his reserves."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave reviews the manifest. It is a gesture, not a surrender. But it is a gesture that costs Aristotle real resources. That means something."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"Received.\" Dave files the data without comment. \"You may continue your briefing, Captain.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Such warmth. Such hospitality.\" But the cat's shoulders relax a fraction. He has bought time. Dave has gained leverage. Both of them know it. Neither says it.",
+                    "end": true
+                },
+                {
+                    "step_id": "reject_branch",
+                    "speaker": "aristotle",
+                    "text": "The grin dies. For one unguarded moment, Aristotle looks exactly like what he is: a cat who has gambled everything and lost."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Still a dog on a leash, I see. When the Sovereigns eat you alive, remember I tried.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave closes the channel. He watches Aristotle's ship hang in the void for a long moment, then burn hard for Corsair space. His first officer asks, \"Orders, sir?\" Dave says, \"Resume patrol.\" Duty does not negotiate with pirates. Even frightened ones.",
+                    "end": true
                 }
             ]
         },
@@ -117,7 +199,7 @@
             "encounter_id": "enc_arc3_dave_death_offer",
             "encounter_type": "exploration",
             "title": "Death's Offer",
-            "description": "The ghost ship appears without warning. No warp signature, no sensor trace. One moment the void is empty; the next, Death's vessel fills the viewport like a splinter of absolute darkness. The comms activate on their own. A low, rumbling purr fills the bridge. \"Commander Dave. I have watched you hunt my kin with admirable patience.\" Death's eyes glow in the shadows. \"I can deliver Aristotle to you. Bound. Broken. All I require is... a favour.\"",
+            "description": "The ghost ship appears without warning. No warp signature, no sensor trace. Death's vessel fills the viewport like a splinter of absolute darkness.",
             "arc_id": "arc_3",
             "location": "forgotten_realm",
             "trigger_conditions": {
@@ -128,45 +210,115 @@
             "npc_ids": ["dave", "death"],
             "priority": 7,
             "repeatable": false,
-            "choices": [
+            "choices": [],
+            "dialogue_steps": [
                 {
-                    "choice_id": "accept_offer",
-                    "text": "\"State your terms. If they serve the League's interests, we have an arrangement.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Death's purr deepens. \"When the dust settles, I want the Forgotten Realm. All of it. No League patrols. No jurisdiction. A kingdom of shadows.\" Dave considers. A lawless zone in exchange for ending the Corsair threat. The math is ugly, but it works. \"Provisionally accepted,\" he says.",
-                        "faction_changes": { "felid_corsairs": -10 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc3_dave_death_offer"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.3
+                    "speaker": "death",
+                    "text": "The comms activate on their own. Every screen on the bridge flickers to static, then resolves into shadow. Two burning eyes appear in the darkness. A purr rolls across the bridge like distant thunder."
                 },
                 {
-                    "choice_id": "refuse_offer",
-                    "text": "\"The League does not make deals with shadows. Leave my bridge.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Death's eyes dim. \"Pity. You are more principled than I expected. That will make this harder for everyone.\" The ghost ship fades like a bad dream. Dave's officers release held breath. He does not. Principle means fighting alone.",
-                        "faction_changes": { "canis_league": 10 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc3_dave_death_offer"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.0
+                    "speaker": "death",
+                    "text": "\"Commander Dave. I have watched you hunt my kin with admirable patience. Such... discipline. Such restraint.\" The purr deepens. \"It must be exhausting, being so controlled all the time.\""
                 },
                 {
-                    "choice_id": "counter_offer",
-                    "text": "\"I do not need you to deliver Aristotle. But I could use intelligence on his defences.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "A pause. Then a low chuckle like gravel sliding. \"Shrewd. You want the fruit without the poison.\" Death transmits a data packet: Corsair fleet positions, crystal cache coordinates, Aristotle's personal contingency plans. \"Consider this a... free sample,\" Death whispers, and vanishes.",
-                        "faction_changes": { "felid_corsairs": -5 },
-                        "resource_changes": { "salvage": 15 },
-                        "story_flags_set": ["arc3_dave_death_offer"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.1
+                    "speaker": "dave",
+                    "text": "\"Identify yourself. You are broadcasting on a League military frequency.\" Dave's voice is level. His hand rests near the alarm console. His crew does not move."
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"You know who I am, Commander. Every shadow your patrols have chased. Every ship that vanished without a trace. I am the question mark in your reports.\" A pause. \"I can deliver Aristotle to you. Bound. Broken. All I require is... a favour.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave's expression does not change. But his crew notices his jaw tighten, the way it does before a difficult decision. \"I am listening. But I will not commit to terms proposed by a ghost.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"When the dust settles, I want the Forgotten Realm. All of it. No League patrols. No jurisdiction. A kingdom of shadows where I answer to no one.\" The eyes flare brighter. \"A small price for the pirate king's head, wouldn't you say?\"",
+                    "choices": [
+                        {
+                            "choice_id": "accept_offer",
+                            "text": "\"State the operational details. If they serve the League's interests, we have a provisional arrangement.\"",
+                            "next_step": "accept_branch",
+                            "outcome": {
+                                "description": "Death's purr deepens. A lawless zone in exchange for ending the Corsair threat. The math is ugly, but it works. \"Provisionally accepted,\" Dave says.",
+                                "faction_changes": { "felid_corsairs": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc3_dave_death_offer"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "refuse_offer",
+                            "text": "\"The League does not make deals with shadows. Leave my bridge.\"",
+                            "next_step": "refuse_branch",
+                            "outcome": {
+                                "description": "Death's eyes dim. \"Pity. You are more principled than I expected. That will make this harder for everyone.\" The ghost ship fades. Principle means fighting alone.",
+                                "faction_changes": { "canis_league": 10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc3_dave_death_offer"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "counter_offer",
+                            "text": "\"I do not need you to deliver Aristotle. But I could use intelligence on his defences.\"",
+                            "next_step": "counter_branch",
+                            "outcome": {
+                                "description": "A low chuckle. \"Shrewd. You want the fruit without the poison.\" Death transmits Corsair fleet positions, crystal caches, Aristotle's contingency plans. \"Consider this a free sample.\"",
+                                "faction_changes": { "felid_corsairs": -5 },
+                                "resource_changes": { "salvage": 15 },
+                                "story_flags_set": ["arc3_dave_death_offer"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "accept_branch",
+                    "speaker": "dave",
+                    "text": "\"Provisionally accepted. The Forgotten Realm becomes a demilitarized zone under your... administration. In exchange, I expect Aristotle's fleet neutralized within thirty standard days.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Thirty days.\" The purr becomes a rattling laugh. \"You negotiated a deadline with Death. I admire the audacity, Commander.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"Audacity has nothing to do with it. I operate on schedules.\" Dave's crew exchange uneasy glances. Their commander just made a deal with the void. Dave does not notice their discomfort. Or if he does, he files it under acceptable costs."
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Schedules. How very... canine.\" The shadow recedes. The bridge lights flicker back to full. Death's vessel vanishes as silently as it appeared. Dave stares at the empty void for exactly three seconds. Then turns to his officers. \"Resume course.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "refuse_branch",
+                    "speaker": "death",
+                    "text": "The eyes dim to sullen embers. \"Pity. You are more principled than I expected, Commander. That will make this harder. For everyone.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"I have been making things hard for everyone my entire career. Leave.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"As you wish.\" The shadows bleed away like smoke in a breeze. The bridge lights stabilize. Dave's officers release held breath. Dave does not. He will not exhale until the sensor sweep confirms the ghost ship is truly gone. Principle is expensive. He can afford it.",
+                    "end": true
+                },
+                {
+                    "step_id": "counter_branch",
+                    "speaker": "death",
+                    "text": "A pause. Then a chuckle like gravel sliding down a grave. \"Shrewd, Commander. You want the fruit without the poison. Very well.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"Intelligence only. No operational involvement. The League takes Aristotle on its own terms.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "A data packet appears on the tactical console. Corsair fleet positions. Crystal cache coordinates. Aristotle's personal contingency plans. \"Consider this a free sample,\" Death whispers. \"The next delivery will cost you.\" The shadow vanishes. Dave stares at the data. It is worth more than a fleet. That is precisely what concerns him.",
+                    "end": true
                 }
             ]
         },

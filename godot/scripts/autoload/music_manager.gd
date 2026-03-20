@@ -53,6 +53,12 @@ var _current_theme: String = ""
 var _current_arc: String = ""
 var _music_enabled: bool = true
 var _sfx_enabled: bool = true
+var _music_volume_db: float = -20.0  # Default volume (dB)
+var _sfx_volume_db: float = 0.0
+
+# Saved playback positions so music can resume where it left off
+var _saved_positions: Dictionary = {}  # theme_id -> playback_position_sec
+var _saved_streams: Dictionary = {}    # theme_id -> AudioStream resource
 
 @onready var _music_player: AudioStreamPlayer = AudioStreamPlayer.new()
 @onready var _sfx_player: AudioStreamPlayer = AudioStreamPlayer.new()
@@ -60,9 +66,12 @@ var _sfx_enabled: bool = true
 
 func _ready() -> void:
 	_music_player.bus = "Master"
+	_music_player.volume_db = _music_volume_db
 	_sfx_player.bus = "Master"
+	_sfx_player.volume_db = _sfx_volume_db
 	add_child(_music_player)
 	add_child(_sfx_player)
+	EventBus.volume_changed.connect(_on_volume_changed)
 	# Connect to EventBus signals for auto-SFX
 	EventBus.combat_hit.connect(func(): play_sfx_for_event("combat_hit"))
 	EventBus.combat_miss.connect(func(): play_sfx_for_event("combat_miss"))
@@ -90,7 +99,9 @@ func on_state_change(state_key: String) -> void:
 	if theme.is_empty():
 		return
 	if state_key == "navigation" and ARC_THEMES.has(_current_arc):
-		theme = ARC_THEMES[_current_arc]
+		var arc_theme: String = ARC_THEMES[_current_arc]
+		if _theme_file_exists(arc_theme):
+			theme = arc_theme
 	_play_theme(theme)
 
 
@@ -98,12 +109,67 @@ func on_arc_change(arc_id: String) -> void:
 	_current_arc = arc_id
 	if _current_theme in ARC_THEMES.values() or _current_theme == "theme_navigation":
 		var arc_theme: String = ARC_THEMES.get(arc_id, "theme_navigation")
+		if not _theme_file_exists(arc_theme):
+			arc_theme = "theme_navigation"
 		_play_theme(arc_theme)
 
 
 func stop() -> void:
+	_saved_positions.clear()
+	_saved_streams.clear()
 	_music_player.stop()
 	_current_theme = ""
+	_paused = false
+
+
+var _paused: bool = false
+var _paused_position: float = 0.0
+var _paused_stream: AudioStream = null
+var _paused_theme: String = ""
+
+
+func pause_music() -> void:
+	if _paused or not _music_player.playing:
+		return
+	_paused_position = _music_player.get_playback_position()
+	_paused_stream = _music_player.stream
+	_paused_theme = _current_theme
+	# Fade out quickly
+	var tw := create_tween()
+	tw.tween_property(_music_player, "volume_db", -80.0, 0.5)
+	await tw.finished
+	_music_player.stop()
+	_paused = true
+
+
+func resume_music() -> void:
+	if not _paused or _paused_stream == null:
+		_paused = false
+		return
+	_music_player.stream = _paused_stream
+	_music_player.volume_db = -80.0
+	_music_player.play(_paused_position)
+	_current_theme = _paused_theme
+	var tw := create_tween()
+	tw.tween_property(_music_player, "volume_db", _music_volume_db, 0.8)
+	_paused = false
+	_paused_stream = null
+	_paused_theme = ""
+
+
+func play_one_shot_theme(theme_id: String) -> void:
+	var path := "res://assets/audio/music/%s.ogg" % theme_id
+	if not ResourceLoader.exists(path):
+		path = "res://assets/audio/music/%s.mp3" % theme_id
+	if not ResourceLoader.exists(path):
+		return
+	var stream: AudioStream = load(path)
+	if stream == null:
+		return
+	_music_player.stop()
+	_music_player.stream = stream
+	_music_player.volume_db = _music_volume_db
+	_music_player.play()
 
 
 func set_music_enabled(enabled: bool) -> void:
@@ -114,6 +180,23 @@ func set_music_enabled(enabled: bool) -> void:
 
 func set_sfx_enabled(enabled: bool) -> void:
 	_sfx_enabled = enabled
+
+
+func set_music_volume(volume_linear: float) -> void:
+	## Set music volume from a 0.0–1.0 linear scale.
+	_music_volume_db = linear_to_db(clampf(volume_linear, 0.0, 1.0))
+	_music_player.volume_db = _music_volume_db
+
+
+func set_sfx_volume(volume_linear: float) -> void:
+	## Set SFX volume from a 0.0–1.0 linear scale.
+	_sfx_volume_db = linear_to_db(clampf(volume_linear, 0.0, 1.0))
+	_sfx_player.volume_db = _sfx_volume_db
+
+
+func _on_volume_changed(volume: float) -> void:
+	## Handle the EventBus volume_changed signal (controls music volume).
+	set_music_volume(volume)
 
 
 var current_theme: String:
@@ -151,17 +234,40 @@ func play_sfx(sfx_id: String) -> void:
 # Internal
 # ------------------------------------------------------------------
 
+func _theme_file_exists(theme_id: String) -> bool:
+	var path := "res://assets/audio/music/%s.ogg" % theme_id
+	if ResourceLoader.exists(path):
+		return true
+	path = "res://assets/audio/music/%s.mp3" % theme_id
+	return ResourceLoader.exists(path)
+
+
 func _play_theme(theme_id: String) -> void:
 	if theme_id == _current_theme:
 		return
 	if not _music_enabled:
 		_current_theme = theme_id
 		return
+	# Resolve the stream to play before stopping anything
+	var resume_pos: float = _saved_positions.get(theme_id, 0.0)
+	var cached_stream: AudioStream = _saved_streams.get(theme_id, null)
+	var new_stream: AudioStream = null
+	if cached_stream:
+		new_stream = cached_stream
+	else:
+		var path := "res://assets/audio/music/%s.ogg" % theme_id
+		if not ResourceLoader.exists(path):
+			path = "res://assets/audio/music/%s.mp3" % theme_id
+		if ResourceLoader.exists(path):
+			new_stream = load(path)
+	if new_stream == null:
+		# No file found — keep current music playing, don't update state.
+		return
+	# We have something to play — now save outgoing position and switch
+	if not _current_theme.is_empty() and _music_player.playing:
+		_saved_positions[_current_theme] = _music_player.get_playback_position()
+		_saved_streams[_current_theme] = _music_player.stream
 	_music_player.stop()
-	var path := "res://assets/audio/music/%s.ogg" % theme_id
-	if not ResourceLoader.exists(path):
-		path = "res://assets/audio/music/%s.mp3" % theme_id
-	if ResourceLoader.exists(path):
-		_music_player.stream = load(path)
-		_music_player.play()
+	_music_player.stream = new_stream
+	_music_player.play(resume_pos)
 	_current_theme = theme_id

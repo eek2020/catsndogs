@@ -1,0 +1,276 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_no_tail_discovery",
+      "encounter_type": "exploration",
+      "title": "The Besieged Outpost",
+      "description": "Smoke rises from a crumbling outpost on the edge of contested space. Sensors show League wreckage scattered around the perimeter — and a single heat signature inside. One cat, holding the line alone against impossible odds.",
+      "arc_id": "arc_1",
+      "location": "contested_border",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "npc_ids": ["aristotle", "no_tail"],
+      "priority": 5,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "no_tail",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "aristotle",
+          "text": "Sensors are picking up League wreckage scattered around that outpost. Somebody put up one hell of a fight down there."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Single heat signature inside. Still alive. Still armed, from the look of the energy readings.",
+          "choices": [
+            {
+              "choice_id": "approach_outpost",
+              "text": "Land and approach the outpost on foot.",
+              "next_step": "approach_on_foot",
+              "outcome": {
+                "description": "The outpost walls are scorched black. Inside, a scarred cat with no tail crouches behind a barricade, weapon trained on you.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_no_tail_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "hail_from_ship",
+              "text": "Hail the outpost from your ship — identify yourself as Corsair.",
+              "next_step": "hail_radio",
+              "outcome": {
+                "description": "Static. Then a rough voice answers the hail.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_no_tail_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "approach_on_foot",
+          "speaker": "no_tail",
+          "text": "Stop right there. Hands where I can see them, or the next thing you see is the inside of a body bag."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Easy. I'm not League. Felid Corsair — Captain Aristotle. We picked up the fighting on sensors."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Corsair. Great. Last Corsair who came through here promised reinforcements. That was three weeks ago. I'm still waiting."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Looks like you managed on your own. That's a lot of League wreckage for one cat."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Twelve scouts. Two gunships. They thought one outpost with one defender wasn't worth a proper assault force. They were wrong."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I can see that. You're No Tail, aren't you? I've heard stories."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Stories don't hold positions. Ammunition does. Speaking of which — mine's getting low. So either say something useful or move along.",
+          "end": true
+        },
+        {
+          "step_id": "hail_radio",
+          "speaker": "no_tail",
+          "text": "Corsair, huh? Lot of Corsairs ran when the League showed up. You here to fight or to talk?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Depends on what needs fighting. I'm Captain Aristotle. We saw the wreckage on approach — impressive work."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Don't flatter me. Flattery is what people do when they want something. What do you want?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Honestly? I saw one heat signature holding off what looked like a League squadron's worth of debris. I wanted to see who was still standing."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Well, now you've seen. I'm No Tail. This is my outpost. Or what's left of it."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "You want to keep talking, come down here and talk face to face. I don't trust anyone I can't see.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_no_tail_challenge",
+      "encounter_type": "combat",
+      "title": "Proving Ground",
+      "description": "No Tail crosses her arms. League scouts are regrouping at the edge of the outpost. This is a test — not just of skill, but of whether Aristotle will stand and fight.",
+      "arc_id": "arc_1",
+      "location": "contested_border",
+      "trigger_conditions": {
+        "crew_no_tail_found": true
+      },
+      "npc_ids": ["aristotle", "no_tail"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "no_tail",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "no_tail",
+          "text": "Sensors are lighting up. More League scouts, coming in from the dust belt. They're regrouping for another push."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "How many?"
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Enough. Words are cheap, Captain. I've watched a hundred talkers run at the first sign of League cruisers."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "So here's the deal. Help me finish this. Fight beside me, right here, right now. Then we'll talk."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "And if I say I'd rather handle this from the ship?",
+          "choices": [
+            {
+              "choice_id": "fight_league_scouts",
+              "text": "Fight alongside No Tail against the League scouts.",
+              "next_step": "accept_fight",
+              "outcome": {
+                "description": "The battle is short and brutal. No Tail fights like a cornered animal — all fury and precision.",
+                "faction_changes": {"canis_league": -3},
+                "resource_changes": {"salvage": 15},
+                "story_flags_set": ["crew_no_tail_impressed"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "accept_fight",
+          "speaker": "no_tail",
+          "text": "Good answer. Take the left flank. Don't get in my line of fire. And Captain?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Yeah?"
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Try to keep up.",
+          "start_combat": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_no_tail_recruit",
+      "encounter_type": "diplomatic",
+      "title": "No Tail Joins the Crew",
+      "description": "The League wreckage smoulders around the outpost. No Tail sits on the wall, cleaning her weapon with practised hands. For the first time, her expression isn't hostile — just tired.",
+      "arc_id": "arc_1",
+      "location": "contested_border",
+      "trigger_conditions": {
+        "crew_no_tail_impressed": true
+      },
+      "npc_ids": ["aristotle", "no_tail"],
+      "priority": 7,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "no_tail",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "no_tail",
+          "text": "You didn't run."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Was that a compliment?"
+        },
+        {
+          "speaker": "no_tail",
+          "text": "It's an observation. Most Corsairs I've met talk big and fly fast in the wrong direction. You stayed."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "You needed a hand. It wasn't complicated."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "No. It wasn't. That's what I liked about it."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "My outpost is gone. My crew — what was left of them — evacuated weeks ago. I stayed because someone had to hold the line. But the line's moved now."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "What will you do?"
+        },
+        {
+          "speaker": "no_tail",
+          "text": "My guns still work. My aim hasn't slipped. And I've got nowhere else to be."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "So. Need a gunner, Captain?",
+          "choices": [
+            {
+              "choice_id": "hire_gunner",
+              "text": "The guns are yours. Welcome aboard, No Tail.",
+              "next_step": "accepted",
+              "outcome": {
+                "description": "No Tail's scarred face cracks into something that might be a smile. She slings her weapon over her shoulder and follows you to the ship without looking back.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_no_tail_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "accepted",
+          "speaker": "no_tail",
+          "text": "Right then. Show me the weapons systems."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Deck two, forward battery. Four pulse cannons, two torpedo tubes. They could use someone who knows how to—"
+        },
+        {
+          "speaker": "no_tail",
+          "text": "I'll figure it out. I always do."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "One rule, Captain. When I say 'fire,' you don't second-guess me. In combat, hesitation kills."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Fair enough. One rule from me — we don't shoot first unless we have to."
+        },
+        {
+          "speaker": "no_tail",
+          "text": "Fine. But when we do shoot, we shoot to end it. Point me at the enemy. I'll handle the rest.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

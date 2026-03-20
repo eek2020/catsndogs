@@ -47,7 +47,7 @@
             "encounter_id": "enc_arc1_dave_trade",
             "encounter_type": "diplomatic",
             "title": "A Dog at the Door",
-            "description": "A heavy Canis League cruiser drops out of warp, casting a long shadow over your ship. The comms crackle. A rigidly uniformed dog appears on screen. \"I am Commander Dave,\" he says, his voice devoid of theatrics. \"I understand you have found something... volatile. Let us discuss terms.\"",
+            "description": "A heavy Canis League cruiser drops out of warp, casting a long shadow over your ship.",
             "arc_id": "arc_1",
             "location": "trade_hub_alpha",
             "trigger_conditions": {
@@ -58,47 +58,203 @@
             "npc_ids": ["dave"],
             "priority": 8,
             "repeatable": false,
-            "choices": [
+            "dialogue_steps": [
                 {
-                    "choice_id": "share_info",
-                    "text": "\"Name your price, Dave. I'm a businessman, not a martyr.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave's ear twitches slightly. \"Pragmatic. I appreciate that.\" Supplies are transferred. Dave logs Aristotle not as a pirate, but as an asset. For now.",
-                        "faction_changes": { "canis_league": 10 },
-                        "resource_changes": { "crystal_inventory": -5, "salvage": 25 },
-                        "story_flags_set": ["arc1_dave_met"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.1
+                    "speaker": "dave",
+                    "text": "I am Commander Dave of the Canis League. I understand you have found something... volatile."
                 },
                 {
-                    "choice_id": "withhold_info",
-                    "text": "\"My crystals. My terms. Back off, lapdog.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave's expression remains completely neutral. \"A predictable response. We will revisit this.\" The comms cut. The Canis League doesn't forget.",
-                        "faction_changes": { "canis_league": -15 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc1_dave_met"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.4
+                    "speaker": "aristotle",
+                    "text": "Word travels fast. You've come a long way for a chat, Commander."
                 },
                 {
-                    "choice_id": "negotiate_middle",
-                    "text": "\"I might part with a few fragments. What's it worth to the League?\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "A tense negotiation follows. Dave pays fairly, but Aristotle knows he's just given a starving dog a taste of meat. The hunt has begun.",
-                        "faction_changes": { "canis_league": 5 },
-                        "resource_changes": { "crystal_inventory": -2, "salvage": 10 },
-                        "story_flags_set": ["arc1_dave_met"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": -0.1
+                    "speaker": "dave",
+                    "text": "This is not a social call. The League requires stability. Unregulated crystal deposits threaten that stability. Let us discuss terms.",
+                    "choices": [
+                        {
+                            "choice_id": "share_info",
+                            "text": "\"Name your price, Dave. I'm a businessman, not a martyr.\"",
+                            "next_step": "trade_friendly",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": [],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "withhold_info",
+                            "text": "\"My crystals. My terms. Back off, lapdog.\"",
+                            "next_step": "trade_hostile",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": [],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "negotiate_middle",
+                            "text": "\"I might part with a few fragments. What's it worth to the League?\"",
+                            "next_step": "trade_negotiate",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": [],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "trade_friendly",
+                    "speaker": "dave",
+                    "text": "Pragmatic. I appreciate that. The League can offer salvage, protection, and a formal supply contract."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Protection from whom, exactly? Your own patrols?"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "From everyone who will come for those crystals. And they will come. You need allies, Aristotle. We both know it.",
+                    "choices": [
+                        {
+                            "choice_id": "accept_deal",
+                            "text": "\"Fine. Standard rates. But I choose my buyers.\"",
+                            "next_step": "deal_done",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 5 },
+                                "resource_changes": { "crystal_inventory": -5, "salvage": 25 },
+                                "story_flags_set": ["arc1_dave_met"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "push_back_friendly",
+                            "text": "\"Allies don't show up with warships. Try again without the cruiser.\"",
+                            "next_step": "deal_tense",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -2 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc1_dave_met"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "deal_done",
+                    "speaker": "dave",
+                    "text": "Acceptable. Supplies are being transferred. I am logging you as a League asset. Do not make me regret this.",
+                    "end": true
+                },
+                {
+                    "step_id": "deal_tense",
+                    "speaker": "dave",
+                    "text": "The cruiser is non-negotiable. But I take your point. We will be in touch, Captain.",
+                    "end": true
+                },
+                {
+                    "step_id": "trade_hostile",
+                    "speaker": "dave",
+                    "text": "A predictable response. The League does not beg. We secure."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Is that a threat, Commander?"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "It is a statement of fact. You have two options: cooperate, or be classified as a threat to League stability.",
+                    "choices": [
+                        {
+                            "choice_id": "back_down",
+                            "text": "\"...Fine. Let's talk. But on my terms.\"",
+                            "next_step": "hostile_deescalate",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 5 },
+                                "resource_changes": { "crystal_inventory": -2, "salvage": 10 },
+                                "story_flags_set": ["arc1_dave_met"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "escalate_fight",
+                            "text": "\"Then classify me. I dare you.\"",
+                            "next_step": "hostile_combat",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc1_dave_met", "arc1_dave_hostile"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "hostile_deescalate",
+                    "speaker": "dave",
+                    "text": "A wise reconsideration. The League remembers those who choose cooperation — eventually.",
+                    "end": true
+                },
+                {
+                    "step_id": "hostile_combat",
+                    "speaker": "dave",
+                    "text": "So be it. All units — weapons free. Disable that vessel.",
+                    "start_combat": true
+                },
+                {
+                    "step_id": "trade_negotiate",
+                    "speaker": "dave",
+                    "text": "The League pays market rate. No more, no less. But we guarantee exclusivity in this sector."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Exclusivity? That's a fancy word for monopoly, Dave."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Call it what you wish. A small shipment now builds trust for larger contracts later.",
+                    "choices": [
+                        {
+                            "choice_id": "accept_negotiate",
+                            "text": "\"A trial run. Small shipment, fair price. We'll see how the League treats its partners.\"",
+                            "next_step": "negotiate_accept",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 5 },
+                                "resource_changes": { "crystal_inventory": -2, "salvage": 10 },
+                                "story_flags_set": ["arc1_dave_met"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "reject_negotiate",
+                            "text": "\"I don't do exclusivity. Find another supplier.\"",
+                            "next_step": "negotiate_reject",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc1_dave_met"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "negotiate_accept",
+                    "speaker": "dave",
+                    "text": "A tense negotiation follows. Dave pays fairly. Aristotle watches the cruiser pull away, knowing he has just given a starving dog a taste of meat.",
+                    "end": true
+                },
+                {
+                    "step_id": "negotiate_reject",
+                    "speaker": "dave",
+                    "text": "Then we have nothing further to discuss. But the League has a long memory, Captain. We will revisit this.",
+                    "end": true
                 }
-            ]
+            ],
+            "choices": []
         },
         {
             "encounter_id": "enc_arc1_death_shadow",

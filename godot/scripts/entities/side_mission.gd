@@ -14,6 +14,7 @@ extends Resource
 @export var faction_rewards: Dictionary = {}
 @export var trigger_conditions: Dictionary = {}
 @export var discovery_encounter_id: String = ""
+@export var crew_member_id: String = ""
 @export var priority: int = 0
 
 
@@ -43,6 +44,7 @@ func to_dict() -> Dictionary:
 		"faction_rewards": faction_rewards,
 		"trigger_conditions": trigger_conditions,
 		"discovery_encounter_id": discovery_encounter_id,
+		"crew_member_id": crew_member_id,
 		"priority": priority,
 	}
 
@@ -65,6 +67,8 @@ static func from_dict(data: Dictionary) -> SideMission:
 		m.discovery_encounter_id = ""
 	else:
 		m.discovery_encounter_id = str(discovery_id)
+	var cm_id: Variant = data.get("crew_member_id", "")
+	m.crew_member_id = str(cm_id) if cm_id != null else ""
 	m.priority = data.get("priority", 0)
 	return m
 

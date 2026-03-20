@@ -1,0 +1,279 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_thistle_discovery",
+      "encounter_type": "exploration",
+      "title": "Between the Lines",
+      "description": "The battlefield is fresh — wreckage from both Knight and Corsair ships still glows hot. Between the lines, a field tent stands neutral ground. Inside, a dog in medic's garb treats a wounded Knight with one paw and a Corsair pirate with the other. Thistle. She doesn't look up.",
+      "arc_id": "arc_2",
+      "location": "knight_territory",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "npc_ids": ["dave", "thistle"],
+      "priority": 5,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "thistle",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "dave",
+          "text": "There's a field tent set up between the wreckage. Someone's treating wounded from both sides."
+        },
+        {
+          "speaker": "thistle",
+          "text": "If you're going to stand there, make yourself useful or make yourself scarce. I've got a Knight with a collapsed lung and a Corsair with shrapnel in places shrapnel shouldn't be."
+        },
+        {
+          "speaker": "dave",
+          "text": "I'm Commander Dave. I—"
+        },
+        {
+          "speaker": "thistle",
+          "text": "I know who you are. Your reputation precedes you. So does your ship's engine noise — you might want to get that looked at. Now, are you here to help or to recruit?",
+          "choices": [
+            {
+              "choice_id": "approach_tent",
+              "text": "Approach the field tent with hands visible.",
+              "next_step": "approach_result",
+              "outcome": {
+                "description": "Thistle doesn't look up as you enter. She finishes a suture with surgical precision before acknowledging you.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_thistle_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "send_supplies",
+              "text": "Send medical supplies from your ship before approaching.",
+              "next_step": "supplies_result",
+              "outcome": {
+                "description": "Thistle pauses when the supply crates arrive. She checks each one methodically, then looks toward your ship with a flicker of respect.",
+                "faction_changes": {},
+                "resource_changes": {"salvage": -5},
+                "story_flags_set": ["crew_thistle_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "approach_result",
+          "speaker": "thistle",
+          "text": "Hands visible. Good. The last officer who walked in here had his sidearm drawn. I told him to holster it or I'd use it as a tongue depressor."
+        },
+        {
+          "speaker": "dave",
+          "text": "I'm not here to cause trouble. I saw the tent and wanted to know who sets up a neutral medical station in a war zone."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Someone who's tired of watching people die for political nonsense. Knights and Corsairs kill each other, and for what? Territory lines on a map that'll be redrawn next year."
+        },
+        {
+          "speaker": "thistle",
+          "text": "I don't care about your rank, your faction, or your mission, Commander. I care about the person bleeding on my table. Full stop."
+        },
+        {
+          "speaker": "dave",
+          "text": "That's a rare thing out here."
+        },
+        {
+          "speaker": "thistle",
+          "text": "It shouldn't be. That's the whole problem.",
+          "end": true
+        },
+        {
+          "step_id": "supplies_result",
+          "speaker": "thistle",
+          "text": "Medical-grade supplies. Actual antiseptic, not the military surplus alcohol they label as antiseptic. Synthetic sutures, plasma coagulant... You sent real equipment."
+        },
+        {
+          "speaker": "dave",
+          "text": "I figured a medic working a battlefield tent might need more than well-wishes."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Most commanders would have flown past without a second glance. The ones who stop usually want something. What do you want, Commander?"
+        },
+        {
+          "speaker": "dave",
+          "text": "Honestly? I saw someone doing the right thing in the middle of a war zone and wanted to understand why."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Because someone has to. And because the people who should be doing it are too busy giving orders that create more wounded. You have my attention for sixty seconds, Commander. Talk.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_thistle_challenge",
+      "encounter_type": "event",
+      "title": "The Medic's Test",
+      "description": "Thistle fixes you with a hard stare. 'Every military type says they're different. Then they order strikes on civilian stations and call it collateral.' She points to three wounded from different factions. 'Treat them. All of them. No questions about allegiance. Show me what you are.'",
+      "arc_id": "arc_2",
+      "location": "knight_territory",
+      "trigger_conditions": {
+        "crew_thistle_found": true
+      },
+      "npc_ids": ["dave", "thistle"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "thistle",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "thistle",
+          "text": "You came back. Most don't. Either you're genuinely decent or you're very committed to the act."
+        },
+        {
+          "speaker": "dave",
+          "text": "I came back because I think you're right — about the war, about the politics, about all of it."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Words. Every military type says they're different. Then they order strikes on civilian stations and call it 'collateral damage' and sleep just fine."
+        },
+        {
+          "speaker": "dave",
+          "text": "I don't sleep fine. That's why I'm out here instead of behind a desk."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Guilt is a start. But it's not enough. You want to prove something to me? Good. I've got three wounded — a Knight, a Corsair, and a Goblin trader who was just in the wrong place. Different factions, different allegiances, same red blood."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Treat them. All of them. No questions about who they fight for. No triaging by uniform. You treat the most critical first, regardless of the flag they fly. Show me what you are, Commander.",
+          "choices": [
+            {
+              "choice_id": "treat_all",
+              "text": "Treat every wounded person, regardless of faction.",
+              "next_step": "treat_result",
+              "outcome": {
+                "description": "You work alongside Thistle for hours. She watches your every move — how you treat the Corsair with the same care as the Knight, how you don't flinch at Goblin blood.",
+                "faction_changes": {"knights": 3},
+                "resource_changes": {},
+                "story_flags_set": ["crew_thistle_impressed"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "treat_result",
+          "speaker": "thistle",
+          "text": "You treated the Goblin first. He was most critical."
+        },
+        {
+          "speaker": "dave",
+          "text": "He was bleeding out. The others could wait."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Most officers treat their own faction first. Politics before medicine. You didn't hesitate. You didn't even ask which side they were on."
+        },
+        {
+          "speaker": "dave",
+          "text": "You told me not to."
+        },
+        {
+          "speaker": "thistle",
+          "text": "I told you not to. But you wouldn't have asked anyway. I watched your eyes — you were reading vital signs, not uniforms. That's not something you can fake."
+        },
+        {
+          "speaker": "thistle",
+          "text": "You're not just a uniform, Commander. I see that now. Took me a while, but I see it.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_thistle_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Thistle Joins the Crew",
+      "description": "Thistle packs her medical kit with practised efficiency. 'I left the Knights because chivalry became a word they used to justify cruelty.' She slings the kit over her shoulder. 'You showed me something different today. Your crew is going into danger — they'll need a surgeon who fights for life, not politics.'",
+      "arc_id": "arc_2",
+      "location": "knight_territory",
+      "trigger_conditions": {
+        "crew_thistle_impressed": true
+      },
+      "npc_ids": ["dave", "thistle"],
+      "priority": 7,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "thistle",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "thistle",
+          "text": "I've been thinking, Commander. About what comes next. I've been out here patching up the fallout of other people's wars for two years. It's not enough."
+        },
+        {
+          "speaker": "dave",
+          "text": "What do you mean?"
+        },
+        {
+          "speaker": "thistle",
+          "text": "I mean I'm treating symptoms, not the disease. I stitch up a Knight, he goes back to fighting. I save a Corsair, she raids another convoy next week. The cycle doesn't break from a field tent."
+        },
+        {
+          "speaker": "dave",
+          "text": "And you think my ship is different?"
+        },
+        {
+          "speaker": "thistle",
+          "text": "I think your crew is heading into places where a surgeon who knows battlefield medicine will be the difference between coming home and not. And I think you're trying to break the cycle, not just survive it."
+        },
+        {
+          "speaker": "thistle",
+          "text": "I left the Knights because 'chivalry' became a word they used to justify cruelty. Noble cause, ugly methods. I won't make that mistake again. So I need to ask you directly, Commander — will you let me run the medbay my way? No faction protocols. No triaging by rank. I treat the most critical first, always."
+        },
+        {
+          "speaker": "dave",
+          "text": "I wouldn't have it any other way.",
+          "choices": [
+            {
+              "choice_id": "welcome_surgeon",
+              "text": "Welcome aboard, Thistle. The medbay is yours.",
+              "next_step": "welcome_result",
+              "outcome": {
+                "description": "Thistle nods — just once, but it carries the weight of real trust. She sets up the medbay her way: no faction symbols, no military protocol.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_thistle_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "welcome_result",
+          "speaker": "thistle",
+          "text": "First things first — that sign goes up."
+        },
+        {
+          "speaker": "dave",
+          "text": "What sign?"
+        },
+        {
+          "speaker": "thistle",
+          "text": "'All Welcome.' Two words. Non-negotiable. Anyone who walks through my medbay door gets treated, no matter who they are or what flag they fly."
+        },
+        {
+          "speaker": "dave",
+          "text": "Done."
+        },
+        {
+          "speaker": "thistle",
+          "text": "Good. Now send your crew in for physicals. I want baseline vitals on everyone by end of day. And tell whoever's been self-medicating with engine coolant for headaches that I will find out and I will not be gentle about it.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

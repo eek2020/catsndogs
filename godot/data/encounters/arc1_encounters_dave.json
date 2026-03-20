@@ -47,7 +47,7 @@
             "encounter_id": "enc_arc1_dave_meets_aristotle",
             "encounter_type": "diplomatic",
             "title": "The Corsair Captain",
-            "description": "A ragged Corsair vessel drops out of warp — nimble, scarred, practically held together by audacity. The comms channel opens and a smirking cat in a battered captain's coat appears on screen. 'Commander Dave, I presume? Word travels fast in the multiverse. I'm Aristotle. You're in my neighbourhood.'",
+            "description": "A ragged Corsair vessel drops out of warp — nimble, scarred, practically held together by audacity. The comms channel opens and a smirking cat in a battered captain's coat appears on screen.",
             "arc_id": "arc_1",
             "location": "trade_hub_alpha",
             "trigger_conditions": {
@@ -58,45 +58,123 @@
             "npc_ids": ["aristotle"],
             "priority": 8,
             "repeatable": false,
-            "choices": [
+            "choices": [],
+            "dialogue_steps": [
                 {
-                    "choice_id": "demand_surrender",
-                    "text": "'You are in possession of strategic resources. Surrender them to the League. This is not a negotiation.'",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Aristotle's ears flatten, then he laughs. 'A dog who barks orders at a cat. How original.' The channel cuts. Dave stares at the blank screen. This pirate will not bend easily.",
-                        "faction_changes": { "felid_corsairs": -15 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc1_aristotle_met"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.4
+                    "speaker": "aristotle",
+                    "text": "Commander Dave, I presume? Word travels fast in the multiverse. I'm Aristotle. You're in my neighbourhood."
                 },
                 {
-                    "choice_id": "propose_trade",
-                    "text": "'The League can offer protection, supplies, and legitimacy. What do you want for the crystals?'",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Aristotle tilts his head. 'A dog with manners. Interesting.' A small shipment of crystals arrives, along with an itemised invoice that borders on robbery. But contact is established.",
-                        "faction_changes": { "felid_corsairs": 10 },
-                        "resource_changes": { "crystal_inventory": 5, "salvage": -20 },
-                        "story_flags_set": ["arc1_aristotle_met"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": -0.1
+                    "speaker": "dave",
+                    "text": "I know who you are. A smuggler playing at captain. The League has a file on you thicker than your hull plating."
                 },
                 {
-                    "choice_id": "observe_silently",
-                    "text": "'I'm here to observe. The League keeps its options open.'",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Aristotle narrows his eyes. 'A dog who watches before he bites. Noted.' The channel closes. Dave has shown nothing — and learned everything about the pirate's bravado.",
-                        "faction_changes": { "felid_corsairs": 0 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc1_aristotle_met"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.0
+                    "speaker": "aristotle",
+                    "text": "A file! I'm flattered. I hope they got my good side. So, Commander — what brings the League's finest all the way out to my little corner of nothing?"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Whisper Crystals. You have them. The League needs them. That's all that matters.",
+                    "choices": [
+                        {
+                            "choice_id": "demand_surrender",
+                            "text": "You are in possession of strategic resources. Surrender them to the League. This is not a negotiation.",
+                            "next_step": "branch_demand",
+                            "outcome": {
+                                "description": "Aristotle's ears flatten, then he laughs. 'A dog who barks orders at a cat. How original.' The channel cuts. Dave stares at the blank screen. This pirate will not bend easily.",
+                                "faction_changes": { "felid_corsairs": -15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc1_aristotle_met"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "propose_trade",
+                            "text": "The League can offer protection, supplies, and legitimacy. What do you want for the crystals?",
+                            "next_step": "branch_trade",
+                            "outcome": {
+                                "description": "Aristotle tilts his head. 'A dog with manners. Interesting.' A small shipment of crystals arrives, along with an itemised invoice that borders on robbery. But contact is established.",
+                                "faction_changes": { "felid_corsairs": 10 },
+                                "resource_changes": { "crystal_inventory": 5, "salvage": -20 },
+                                "story_flags_set": ["arc1_aristotle_met"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "observe_silently",
+                            "text": "I'm here to observe. The League keeps its options open.",
+                            "next_step": "branch_observe",
+                            "outcome": {
+                                "description": "Aristotle narrows his eyes. 'A dog who watches before he bites. Noted.' The channel closes. Dave has shown nothing — and learned everything about the pirate's bravado.",
+                                "faction_changes": { "felid_corsairs": 0 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc1_aristotle_met"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "branch_demand",
+                    "speaker": "aristotle",
+                    "text": "Ha! 'Not a negotiation,' he says. You dogs really are all bark, aren't you? Tell you what, Commander — come take them. I dare you."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "You think this is a game. It isn't. The League doesn't make threats. It makes promises."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Promises, threats — same coin, different side. You want my crystals? Get in line. Every faction in the multiverse wants a piece. At least the others brought gifts."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Remember this conversation, pirate. When the League blockade closes around your little empire, you'll wish you'd listened.",
+                    "end": true
+                },
+                {
+                    "step_id": "branch_trade",
+                    "speaker": "aristotle",
+                    "text": "Now we're talking! A dog with manners. I didn't think they made those anymore. Protection, you say? Supplies? Legitimacy?"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Tell you what — I'll send a small shipment. Consider it a... free sample. The invoice will follow. You won't like the invoice."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "I don't need to like it. I need the crystals. Send your terms. The League will review them."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Review away, Commander. But don't take too long. My dance card fills up fast, and there are plenty of factions who'd love to be my new best friend."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "We'll be in touch. Dave out.",
+                    "end": true
+                },
+                {
+                    "step_id": "branch_observe",
+                    "speaker": "aristotle",
+                    "text": "Observe? That's it? You flew all this way, brought your big shiny warship into my space, and you just want to... watch?"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Information is the most valuable resource in any campaign. You of all people should understand that."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "A dog who watches before he bites. Noted. Well, enjoy the view, Commander. It's quite something out here in the fringe."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Just remember — I'll be watching you right back. And cats have much better eyes in the dark."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "I'm counting on it.",
+                    "end": true
                 }
             ]
         },

@@ -1,0 +1,280 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_bombardier_discovery",
+      "encounter_type": "exploration",
+      "title": "The League Brig",
+      "description": "The League outpost is in chaos — a prison break is underway. Amid the alarms and running guards, you find Cell Block 7. Inside the last cell, a stocky dog sits calmly amid scorch marks, tossing a bolt between his paws. 'Bombardier,' reads the plate. 'Sentenced: Excessive Enthusiasm.'",
+      "arc_id": "arc_1",
+      "location": "canis_territory",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "npc_ids": ["dave", "bombardier"],
+      "priority": 5,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "bombardier",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "dave",
+          "text": "Cell Block 7. 'Bombardier — Sentenced: Excessive Enthusiasm.' That's... a new one."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Oh good, a visitor. Let me guess — officer, judging by the posture. Here to gawk at the dangerous criminal?"
+        },
+        {
+          "speaker": "dave",
+          "text": "The outpost is in the middle of a prison break and you're just sitting there tossing a bolt around."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Yep. See, the amateurs are running for the exits. Guards will catch them in the hangar. Me? I'm waiting for someone interesting to walk by. And here you are."
+        },
+        {
+          "speaker": "dave",
+          "text": "I'm Commander Dave. I've heard rumours about an explosives expert the League locked up for—"
+        },
+        {
+          "speaker": "bombardier",
+          "text": "For doing the right thing? Yeah, that's me. Blew up a weapons cache the brass was selling to pirates under the table. 'Unauthorised demolition of League property,' they called it. I call it Tuesday.",
+          "choices": [
+            {
+              "choice_id": "open_cell",
+              "text": "Override the cell lock and introduce yourself properly.",
+              "next_step": "open_cell_result",
+              "outcome": {
+                "description": "The lock clicks. Bombardier studies your face with sudden interest.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_bombardier_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "talk_through_bars",
+              "text": "Talk through the bars first — find out more.",
+              "next_step": "talk_bars_result",
+              "outcome": {
+                "description": "Bombardier leans forward, sizing you up through the bars.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_bombardier_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "open_cell_result",
+          "speaker": "bombardier",
+          "text": "Well well. You just opened a cell in a League brig without authorisation. That's either very brave or very stupid."
+        },
+        {
+          "speaker": "dave",
+          "text": "I've been told it's usually both."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Wait. You're THAT Dave. The one who went rogue with the crystal shipment. The whole brig's been buzzing about it. So you're not by-the-book after all."
+        },
+        {
+          "speaker": "dave",
+          "text": "The book wasn't working. I'm writing a new one."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Cute. But I've heard that speech before from every officer who thinks they're special. Talk is cheap, Commander. Explosions, though — explosions are honest.",
+          "end": true
+        },
+        {
+          "step_id": "talk_bars_result",
+          "speaker": "bombardier",
+          "text": "Smart. Don't trust the prisoner. I respect that. Most officers who come down here either want something or want to feel good about themselves."
+        },
+        {
+          "speaker": "dave",
+          "text": "Maybe I want both. The League is selling weapons to pirates?"
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Was. I blew up the evidence. Which is apparently worse than the crime itself, according to military justice. Funny how that works."
+        },
+        {
+          "speaker": "dave",
+          "text": "I know how that feels. I've seen the corruption firsthand."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Sure you have. But seeing it and doing something about it are two very different things. You came down here for a reason, Commander. Spit it out or move along.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_bombardier_challenge",
+      "encounter_type": "event",
+      "title": "Prove Yourself",
+      "description": "Bombardier folds his arms. 'Every officer who's come through here promised things would be different. Then they filed reports and followed orders.' He jerks his chin toward a nearby armoury. 'There's a weapons cache the League's been selling under the table. Corrupt officers skimming profits. Destroy it, and I'll believe you're different.'",
+      "arc_id": "arc_1",
+      "location": "canis_territory",
+      "trigger_conditions": {
+        "crew_bombardier_found": true
+      },
+      "npc_ids": ["dave", "bombardier"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "bombardier",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "bombardier",
+          "text": "So you came back. Either you're persistent or you're bored. Both are dangerous in my experience."
+        },
+        {
+          "speaker": "dave",
+          "text": "I came back because you were right. About the corruption. I want to do something about it."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Oh, wonderful. Another hero. You know what happened to the last officer who said that to me? Filed a report. A REPORT. Against an arms trafficking ring. Know what the brass did?"
+        },
+        {
+          "speaker": "dave",
+          "text": "Let me guess — they filed the report somewhere dark and promoted the traffickers."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Give the dog a biscuit. So I stopped filing reports and started filing detonation charges. Much more effective."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "You want to prove you're different? There's another cache. Armoury B-7, east wing. The same corrupt officers rebuilt their supply line while I've been rotting in here. Weapons marked for disposal, actually headed for Corsair raiders."
+        },
+        {
+          "speaker": "dave",
+          "text": "You want me to destroy League property."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "I want you to destroy STOLEN property being sold to people who murder convoy crews. There's a difference. The question is whether you can see it.",
+          "choices": [
+            {
+              "choice_id": "destroy_cache",
+              "text": "Plant charges on the corrupt weapons cache.",
+              "next_step": "destroy_result",
+              "outcome": {
+                "description": "The explosion rattles the outpost. Bombardier watches the fireball with a slow grin spreading across his face.",
+                "faction_changes": {"canis_league": -3},
+                "resource_changes": {},
+                "story_flags_set": ["crew_bombardier_impressed"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "destroy_result",
+          "speaker": "bombardier",
+          "text": "Now THAT is what I'm talking about! Listen to that secondary detonation — the thermal charges caught. Beautiful. Absolutely beautiful."
+        },
+        {
+          "speaker": "dave",
+          "text": "You're enjoying this way too much."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "There is no such thing as 'too much' when it comes to blowing up corruption, Commander. That's my professional opinion."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Alright. You didn't file a report. You didn't ask permission. You just did the right thing and let the fire sort it out. I can work with that.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_bombardier_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Bombardier Joins the Crew",
+      "description": "Bombardier stretches in the corridor, cracking his knuckles. 'Been in that cell six months. My demolitions kit is still in evidence locker 4B.' He raises an eyebrow. 'I'm guessing you could use someone who knows their way around a detonator. Interested?'",
+      "arc_id": "arc_1",
+      "location": "canis_territory",
+      "trigger_conditions": {
+        "crew_bombardier_impressed": true
+      },
+      "npc_ids": ["dave", "bombardier"],
+      "priority": 7,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "bombardier",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "bombardier",
+          "text": "Six months in that cell and my joints sound like a bag of gravel. But my hands? Steady as ever. Some things you don't lose."
+        },
+        {
+          "speaker": "dave",
+          "text": "I noticed your demolitions kit is listed in evidence locker 4B."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "You looked that up? I'm touched. Really. That kit has seventeen custom charges, three shaped detonators, and a plasma cutter I named Veronica. She's very temperamental."
+        },
+        {
+          "speaker": "dave",
+          "text": "You named your plasma cutter."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "You name your ship. I name things that can level a building. We all have hobbies."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Look, Commander. You need a gunner. Someone who can crack armour, breach bulkheads, and improvise when the fancy equipment breaks. That's me. And I need a captain who won't court martial me for doing what needs doing.",
+          "choices": [
+            {
+              "choice_id": "hire_gunner",
+              "text": "Grab your kit. You're my new Gunner.",
+              "next_step": "hire_result",
+              "outcome": {
+                "description": "Bombardier's eyes light up like a fuse. He retrieves his demolitions kit with almost tender care, checking each charge and detonator.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_bombardier_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "hire_result",
+          "speaker": "bombardier",
+          "text": "Veronica! Did you miss me? Of course you did."
+        },
+        {
+          "speaker": "dave",
+          "text": "Please tell me you're talking to the plasma cutter and not an actual person in the evidence locker."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "Gunner Bombardier, ready and EXTREMELY enthusiastic. Fair warning, Commander — I'm loud, I'm opinionated, and things around me tend to catch fire. But never the things you want to keep."
+        },
+        {
+          "speaker": "dave",
+          "text": "That's... reassuring."
+        },
+        {
+          "speaker": "bombardier",
+          "text": "It should be. I'm very precise about what I explode. Everything else is just collateral enthusiasm.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

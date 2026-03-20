@@ -1,0 +1,331 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_blood_paw_discovery",
+      "encounter_type": "exploration",
+      "title": "The Field Hospital",
+      "description": "The war zone is a graveyard of ships. Amid the wreckage, a single station pulses with light — a makeshift hospital. Inside, a cat in a bloodstained apron works tirelessly, treating the wounded regardless of faction markings.",
+      "arc_id": "arc_2",
+      "location": "lion_territory",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "npc_ids": ["aristotle", "blood_paw"],
+      "priority": 5,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "blood_paw",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "aristotle",
+          "text": "Sensors show a makeshift hospital station in the middle of this wreckage. Someone's running a field surgery in an active war zone."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I'm reading multiple wounded — Lions, Corsairs, even Fairy folk. Whoever's in charge is treating everyone.",
+          "choices": [
+            {
+              "choice_id": "offer_help",
+              "text": "Dock and offer your crew's help with the wounded.",
+              "next_step": "offer_help_path",
+              "outcome": {
+                "description": "Blood Paw barely looks up when you arrive. The wounded come first. Always.",
+                "faction_changes": {"lions": 2},
+                "resource_changes": {},
+                "story_flags_set": ["crew_blood_paw_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "observe_first",
+              "text": "Watch from a distance before approaching.",
+              "next_step": "observe_path",
+              "outcome": {
+                "description": "You watch Blood Paw move between patients — treating them all the same, regardless of faction.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_blood_paw_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "offer_help_path",
+          "speaker": "aristotle",
+          "text": "We're docking now. My crew can help with the wounded — we have medical supplies aboard."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Supplies in the back. Sterile bandages, second shelf. Start with the critical cases — there's a Corsair with shrapnel in her lung and a Lion soldier who's lost too much blood."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "You're not going to ask who we are?"
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "I don't care who you are. I care whether you can follow instructions and keep your hands clean. Can you do that?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Yes, ma'am."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Good. And it's Doctor, not ma'am. Blood Paw. Former chief physician of the Lion court. Now — stop talking and start helping."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Former Lion court physician? What happened?"
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "The court decided that healing should be political. I disagreed. Loudly. Now I treat everyone, and the court can sort out its own wounded."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Less talking. That Corsair's lung won't fix itself.",
+          "end": true
+        },
+        {
+          "step_id": "observe_path",
+          "speaker": "aristotle",
+          "text": "Let's hold position and watch. I want to understand what's happening in there before we commit."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "She's treating a Lion soldier. Now a Corsair pirate. A Fairy merchant. She doesn't even check their markings."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "You've been sitting out there for twelve minutes. I noticed you on sensors eight minutes ago."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I — apologies. I was observing."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Observing. While people bleed. Fascinating approach."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "That's fair. I'm Captain Aristotle, Felid Corsair. We have medical supplies aboard."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Then stop observing and start unloading them. I'm Blood Paw. Former Lion court physician. Are you here to help, or to recruit? Because right now, I need the former."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Right now, we're here to help."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Then dock at airlock three. Wash your hands. And move quickly — I have patients who can't afford your caution.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_blood_paw_challenge",
+      "encounter_type": "event",
+      "title": "Evacuation",
+      "description": "Sensors flash: an incoming bombardment. The hospital station's shields won't hold. Every patient aboard will die unless someone acts now.",
+      "arc_id": "arc_2",
+      "location": "lion_territory",
+      "trigger_conditions": {
+        "crew_blood_paw_found": true
+      },
+      "npc_ids": ["aristotle", "blood_paw"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "blood_paw",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "aristotle",
+          "text": "Sensors just lit up. Incoming bombardment — multiple warheads, ninety seconds out. The station's shields won't hold."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "How many can your ship carry?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "If we clear the cargo bay... maybe all of them. It'll be tight."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Then clear the cargo bay. I'm not leaving a single patient behind. Not one.",
+          "choices": [
+            {
+              "choice_id": "evacuate_all",
+              "text": "Open the cargo bay — we'll take everyone. Every last one.",
+              "next_step": "evacuation_begins",
+              "outcome": {
+                "description": "It's a desperate rush. Your crew works alongside Blood Paw, carrying stretchers through buckling corridors.",
+                "faction_changes": {"lions": 3},
+                "resource_changes": {"salvage": -10},
+                "story_flags_set": ["crew_blood_paw_impressed"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "evacuation_begins",
+          "speaker": "blood_paw",
+          "text": "Critical patients first. The Lion soldier on the spine board — careful with his neck. The Corsair with the chest drain goes next."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Sixty seconds. My crew is moving as fast as they can."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Faster. The ambulatory patients can walk — get them moving. You, with the Fairy merchant — support her left side, she has broken ribs."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Thirty seconds. The station's outer hull is buckling. Blood Paw, we need to go now."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "One more. There's a Goblin child in the back ward. I am not leaving without him."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I'll get the child. You get to the ship."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Don't tell me where to go on my own station, Captain. I know these corridors. Move."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "The station is breaking apart — sealing the airlock now. Everyone's aboard. Everyone."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Count them. I need an exact count."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Thirty-seven patients. All accounted for."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Thirty-seven. Good. Now get us clear of the blast radius, and find me somewhere clean to set up triage. We're not out of the woods yet.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_blood_paw_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Blood Paw Joins the Crew",
+      "description": "The evacuees are safe at a neutral station. Blood Paw finds you on the bridge, wiping her paws clean. The exhaustion in her eyes can't hide the steel underneath.",
+      "arc_id": "arc_2",
+      "location": "lion_territory",
+      "trigger_conditions": {
+        "crew_blood_paw_impressed": true
+      },
+      "npc_ids": ["aristotle", "blood_paw"],
+      "priority": 7,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "blood_paw",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "blood_paw",
+          "text": "All thirty-seven patients are stable. The neutral station has accepted them for ongoing care. My work here is done."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "You lost your hospital."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "I lost a building. The patients survived. That's the only metric that matters."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "What will you do now? Set up another field hospital?"
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "I've been thinking about that. I left the Lion court because they forgot what healing means. They wanted me to prioritise — treat officers first, leave enemy wounded to die."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "And you couldn't do that."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "A wound doesn't care about politics. A broken bone doesn't check faction markings. I swore an oath to heal, and I meant it."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Yesterday, you opened your cargo bay for thirty-seven strangers. You didn't ask what faction they belonged to. You didn't calculate the cost."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "It was the right thing to do."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Yes. It was. And that's rare enough to be worth something."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Your crew will get hurt out there, Captain. Space combat, boarding actions, crystal mining accidents. You need a surgeon who won't let them die.",
+          "choices": [
+            {
+              "choice_id": "welcome_surgeon",
+              "text": "The medbay is yours, Blood Paw. Keep my crew alive.",
+              "next_step": "accepted",
+              "outcome": {
+                "description": "Blood Paw sets up the medbay with military precision — supplies sorted, instruments sterilised, emergency protocols posted.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_blood_paw_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "accepted",
+          "speaker": "blood_paw",
+          "text": "Ship's Surgeon Blood Paw, reporting. First order of business — I need a full medical inventory and health assessments for every crew member. No exceptions."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Every crew member? Even the captain?"
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Especially the captain. I've seen the way you eat. Cafeteria rations and engine-room coffee are not a nutritional strategy."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I was hoping the ship's surgeon would be less... direct."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "Then you hired the wrong surgeon. I don't sugarcoat diagnoses, and I don't tolerate crew members who skip their checkups."
+        },
+        {
+          "speaker": "blood_paw",
+          "text": "No one dies on my ship, Captain. That's not a promise — it's a policy.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

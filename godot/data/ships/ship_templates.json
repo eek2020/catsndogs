@@ -104,6 +104,24 @@
             "max_hull": 140,
             "sprite_id": "ships/wolf_strike_craft.png",
             "description": "Tactical Wolf warship. Optimised for combat superiority."
+        },
+        {
+            "template_id": "pirate_destroyer",
+            "name": "Pirate Destroyer",
+            "faction_id": "felid_corsairs",
+            "base_stats": {
+                "speed": 4,
+                "armour": 8,
+                "firepower": 9,
+                "crystal_capacity": 5,
+                "crew_capacity": 8
+            },
+            "max_hull": 160,
+            "sprite_id": "ships/ship_destroyer_r_side.png",
+            "description": "A fearsome corsair warship bristling with cannons and skull banners. Slow but devastating.",
+            "purchasable": true,
+            "cost_crystals": 80,
+            "cost_salvage": 60
         }
     ],
     "upgrades": [

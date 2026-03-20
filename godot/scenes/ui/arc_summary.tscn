@@ -1,0 +1,97 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/arc_summary.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/hyperspace_jump.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="hyperspace_mat"]
+shader = ExtResource("2")
+shader_parameter/progress = 0.0
+shader_parameter/bg_color = Color(0.02, 0.03, 0.06, 1)
+shader_parameter/streak_color = Color(0.45, 0.72, 1, 1)
+shader_parameter/flash_color = Color(0.85, 0.92, 1, 1)
+shader_parameter/streak_count = 80.0
+
+[node name="ArcSummary" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.02, 0.03, 0.06, 0.92)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.08
+anchor_right = 0.85
+anchor_bottom = 0.92
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = null
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Spacer1" type="Control" parent="Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 20)
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "ARC COMPLETE"
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.9, 0.82, 0.45, 1)
+
+[node name="SubtitleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Now entering..."
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.65, 0.75, 0.88, 1)
+
+[node name="Separator" type="HSeparator" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0.25, 0.35, 0.5, 0.6)
+
+[node name="StatsContainer" type="VBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Separator2" type="HSeparator" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0.25, 0.35, 0.5, 0.6)
+
+[node name="ContinueButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(220, 48)
+text = "JUMP TO NEXT SECTOR"
+theme_override_font_sizes/font_size = 18
+
+[node name="Spacer2" type="Control" parent="Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 10)
+
+[node name="HyperspaceRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+material = SubResource("hyperspace_mat")
+color = Color(1, 1, 1, 1)

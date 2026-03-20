@@ -1,0 +1,124 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "crew_dave_charlie",
+      "mission_type": "crew_recruitment",
+      "title": "Convoy Under Fire",
+      "description": "A League supply convoy is under attack near the contested border. The commander — Charlie, Dave's childhood friend from the academy — is holding the line, but reinforcements aren't coming.",
+      "region": "contested_border",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_crystal_discovered": true
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "charlie",
+      "objectives": [
+        {
+          "objective_id": "find_convoy",
+          "description": "Locate Charlie's besieged convoy",
+          "encounter_id": "enc_crew_charlie_discovery"
+        },
+        {
+          "objective_id": "recruit_charlie",
+          "description": "Welcome Charlie aboard",
+          "encounter_id": "enc_crew_charlie_recruit"
+        }
+      ],
+      "rewards": {"salvage": 25},
+      "faction_rewards": {"canis_league": 5},
+      "priority": 5
+    },
+    {
+      "mission_id": "crew_dave_bombardier",
+      "mission_type": "crew_recruitment",
+      "title": "Excessive Enthusiasm",
+      "description": "During a prison break encounter at a League outpost, you discover Bombardier — a demolitions expert court-martialled for blowing up the wrong building (or the right one, depending on who you ask).",
+      "region": "canis_territory",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "bombardier",
+      "objectives": [
+        {
+          "objective_id": "find_bombardier",
+          "description": "Find Bombardier in the League brig",
+          "encounter_id": "enc_crew_bombardier_discovery"
+        },
+        {
+          "objective_id": "convince_bombardier",
+          "description": "Prove you're not another by-the-book officer",
+          "encounter_id": "enc_crew_bombardier_challenge"
+        },
+        {
+          "objective_id": "recruit_bombardier",
+          "description": "Recruit Bombardier to your crew",
+          "encounter_id": "enc_crew_bombardier_recruit"
+        }
+      ],
+      "rewards": {"salvage": 35},
+      "faction_rewards": {"canis_league": -2},
+      "priority": 4
+    },
+    {
+      "mission_id": "crew_dave_luna",
+      "mission_type": "crew_recruitment",
+      "title": "Star Charts and Silence",
+      "description": "A derelict research station has been broadcasting a faint, repeating signal for weeks. Inside, Luna — a wolf-dog navigator of extraordinary talent — waits patiently among her star charts for someone worth guiding.",
+      "region": "forgotten_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "luna",
+      "objectives": [
+        {
+          "objective_id": "find_station",
+          "description": "Board the derelict research station",
+          "encounter_id": "enc_crew_luna_discovery"
+        },
+        {
+          "objective_id": "recruit_luna",
+          "description": "Convince Luna to join your crew",
+          "encounter_id": "enc_crew_luna_recruit"
+        }
+      ],
+      "rewards": {"crystals": 8},
+      "faction_rewards": {"wolves": 6},
+      "priority": 4
+    },
+    {
+      "mission_id": "crew_dave_thistle",
+      "mission_type": "crew_recruitment",
+      "title": "No Sides, Only Wounded",
+      "description": "On a battlefield between Knights and Corsairs, a lone medic treats wounded from both factions. Thistle doesn't pick sides — she picks up the pieces. Earning her trust requires proving you're more than just another uniform.",
+      "region": "knight_territory",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "thistle",
+      "objectives": [
+        {
+          "objective_id": "find_thistle",
+          "description": "Locate Thistle on the battlefield",
+          "encounter_id": "enc_crew_thistle_discovery"
+        },
+        {
+          "objective_id": "prove_intent",
+          "description": "Prove your intentions are honourable",
+          "encounter_id": "enc_crew_thistle_challenge"
+        },
+        {
+          "objective_id": "recruit_thistle",
+          "description": "Recruit Thistle to your crew",
+          "encounter_id": "enc_crew_thistle_recruit"
+        }
+      ],
+      "rewards": {"salvage": 20},
+      "faction_rewards": {"knights": 5},
+      "priority": 3
+    }
+  ]
+}

@@ -83,6 +83,18 @@ func load_upgrades() -> Array:
 	return data.get("upgrades", [])
 
 
+func load_purchasable_ships() -> Array:
+	"""Return ship templates that have purchasable == true."""
+	var data: Variant = _load_json("ships/ship_templates.json")
+	if data == null:
+		return []
+	var result: Array = []
+	for tmpl in data.get("ship_templates", []):
+		if tmpl.get("purchasable", false):
+			result.append(tmpl)
+	return result
+
+
 func load_encounters(arc_id: String, suffix: String = "") -> Array:
 	var file_arc_id := arc_id.replace("_", "")
 	var filename := "encounters/%s_encounters%s.json" % [file_arc_id, suffix]
@@ -183,3 +195,32 @@ func load_distress_signals() -> Array:
 	for e in data.get("distress_signals", []):
 		signals_arr.append(Encounter.from_dict(e))
 	return signals_arr
+
+
+func load_crew_members() -> Array:
+	var data: Variant = _load_json("characters/crew_members.json")
+	if data == null:
+		return []
+	return data.get("crew_members", [])
+
+
+func load_crew_missions(protagonist_id: String) -> Array:
+	var filename := "side_missions/crew_missions_%s.json" % protagonist_id
+	var data: Variant = _load_json(filename)
+	if data == null:
+		return []
+	var missions: Array = []
+	for m in data.get("side_missions", []):
+		missions.append(SideMission.from_dict(m))
+	return missions
+
+
+func load_crew_encounters(crew_id: String) -> Array:
+	var filename := "encounters/crew_%s.json" % crew_id
+	var data: Variant = _load_json(filename)
+	if data == null:
+		return []
+	var encounters: Array = []
+	for e in data.get("encounters", []):
+		encounters.append(Encounter.from_dict(e))
+	return encounters

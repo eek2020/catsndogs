@@ -1,6 +1,47 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/purchase_screen.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/ship_upgrade_background.png" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inner"]
+bg_color = Color(0.06, 0.04, 0.02, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.42, 0.2, 0.6)
+corner_radius_left_top = 4
+corner_radius_right_top = 4
+corner_radius_left_bottom = 4
+corner_radius_right_bottom = 4
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inner2"]
+bg_color = Color(0.06, 0.04, 0.02, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.42, 0.2, 0.6)
+corner_radius_left_top = 4
+corner_radius_right_top = 4
+corner_radius_left_bottom = 4
+corner_radius_right_bottom = 4
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sep"]
+bg_color = Color(0.55, 0.42, 0.2, 0.4)
+content_margin_top = 1.0
+content_margin_bottom = 1.0
 
 [node name="PurchaseScreen" type="Control"]
 layout_mode = 3
@@ -9,37 +50,126 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
+
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -200.0
-offset_right = 300.0
-offset_bottom = 200.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 180
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="HBox" type="HBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="LeftPanel" type="PanelContainer" parent="Panel/MarginContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_inner")
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer/HBox/LeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
 layout_mode = 2
 text = "SHIPYARD"
 horizontal_alignment = 1
 theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 
-[node name="InfoLabel" type="Label" parent="Panel/VBox"]
+[node name="Separator1" type="HSeparator" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
 layout_mode = 2
-text = "Salvage: 0"
-theme_override_colors/font_color = Color(0.3, 0.8, 0.9, 1)
+theme_override_styles/separator = SubResource("StyleBoxFlat_sep")
 
-[node name="RepairBtn" type="Button" parent="Panel/VBox"]
+[node name="ShipPreview" type="TextureRect" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 120)
+expand_mode = 3
+stretch_mode = 5
+
+[node name="ShipNameLabel" type="Label" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
+layout_mode = 2
+text = "Your Ship"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
+theme_override_font_sizes/font_size = 16
+
+[node name="InfoLabel" type="Label" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
+layout_mode = 2
+text = "Crystals: 0  |  Salvage: 0  |  Hull: 0/0"
+theme_override_colors/font_color = Color(0.3, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="ShipStatsLabel" type="Label" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
+layout_mode = 2
+text = "Speed: 0  |  Armour: 0  |  Firepower: 0  |  Cargo: 0  |  Crew: 0"
+theme_override_colors/font_color = Color(0.7, 0.84, 1.0, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="Separator2" type="HSeparator" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_sep")
+
+[node name="RepairBtn" type="Button" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
 layout_mode = 2
 text = "Repair Hull (25 HP)"
 
-[node name="CloseBtn" type="Button" parent="Panel/VBox"]
+[node name="CloseBtn" type="Button" parent="Panel/MarginContainer/HBox/LeftPanel/VBox"]
 layout_mode = 2
-text = "Close"
+text = "Close [R]"
+
+[node name="RightPanel" type="PanelContainer" parent="Panel/MarginContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_inner2")
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer/HBox/RightPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ShipsHeader" type="Label" parent="Panel/MarginContainer/HBox/RightPanel/VBox"]
+layout_mode = 2
+text = "— Ships For Sale —"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="ShipList" type="VBoxContainer" parent="Panel/MarginContainer/HBox/RightPanel/VBox"]
+layout_mode = 2
+
+[node name="SepShipUpgrade" type="HSeparator" parent="Panel/MarginContainer/HBox/RightPanel/VBox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_sep")
+
+[node name="UpgradesHeader" type="Label" parent="Panel/MarginContainer/HBox/RightPanel/VBox"]
+layout_mode = 2
+text = "— Ship Upgrades —"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/HBox/RightPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="UpgradeList" type="VBoxContainer" parent="Panel/MarginContainer/HBox/RightPanel/VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

@@ -50,11 +50,16 @@ func change_crew_morale(
 	crew_id: String = "",
 ) -> void:
 	var crew: Array = game_state.player_ship.crew
+	var morale_bonus: float = 0.0
+	if GameSession.crew_trait_system != null:
+		morale_bonus = GameSession.crew_trait_system.get_bonus(game_state.player_ship, "morale_recovery")
 	for member in crew:
 		if crew_id != "" and member.crew_id != crew_id:
 			continue
 		var old_morale: int = member.morale
 		var effective_delta := int(delta * (1.0 + member.morale_modifier / 10.0))
+		if delta > 0 and morale_bonus > 0.0:
+			effective_delta = int(effective_delta * (1.0 + morale_bonus))
 		member.morale = clampi(member.morale + effective_delta, 0, 100)
 		if old_morale > MUTINY_THRESHOLD and member.morale <= MUTINY_THRESHOLD:
 			print("Crew mutiny risk: %s (morale %d)" % [member.crew_name, member.morale])

@@ -6,6 +6,254 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-19 — Arc Transition: Stats Summary + Hyperspace Jump
+
+**Feature:** When a story arc completes, a full-screen stats summary and hyperspace jump animation play before entering the next sector.
+
+1. **Arc Summary Screen** — Overlay showing completed arc title, next arc title + theme teaser, and 8 animated count-up stats: encounters completed, combat victories, crew recruited, missions completed, crystals, salvage, hull status, and playtime.
+
+2. **Hyperspace Jump Shader** — Custom canvas_item shader with radial star streaks, blue-white tunnel intensification, flash-to-white, and fade-to-black. Driven by a single `progress` uniform (0→1) over ~2.5 seconds.
+
+3. **Combat Victory Counter** — Added `combat_victories` field to `GameStateData` with full save/load persistence, incremented on each `combat_victory` signal.
+
+4. **Flow:** Arc exit conditions met → `arc_advanced` signal → navigation pushes `arc_summary` overlay → player reads stats → presses "JUMP TO NEXT SECTOR" → stats fade out → hyperspace shader plays → `arc_transition_complete` signal → POIs refresh for new arc.
+
+### New Files
+
+- `scripts/ui/arc_summary.gd` — Stats screen + hyperspace jump controller
+- `scenes/ui/arc_summary.tscn` — Scene layout with panel, stats container, continue button, hyperspace ColorRect
+- `shaders/hyperspace_jump.gdshader` — Radial streak warp shader with 3-phase animation
+
+### Modified Files
+
+- `scripts/core/game_state_data.gd` — Added `combat_victories` field + persistence in `to_dict()`/`from_dict()`
+- `scripts/autoload/game_session.gd` — Connected `combat_victory` signal, added `_on_combat_victory()` handler
+- `scripts/autoload/event_bus.gd` — Added `arc_transition_complete(new_arc)` signal
+- `scripts/ui/main.gd` — Registered `arc_summary` in SCENES dictionary
+- `scripts/ui/navigation.gd` — Replaced flash message with `push_overlay("arc_summary")`, added `_on_arc_transition_complete()` to refresh POIs after jump
+
+---
+
+## 2026-03-19 — Crew recruitment encounters converted to dialogue_steps
+
+**Feature:** All 8 crew member recruitment encounters now use two-sided branching dialogue.
+
+1. **Cat crew encounters** - Nine Lives, No Tail, Silky, and Blood Paw recruitment conversations converted to dialogue_steps with Aristotle. Each crew member has distinct personality: Nine Lives (cocky), No Tail (gruff), Silky (enigmatic), Blood Paw (dedicated healer).
+
+2. **Dog crew encounters** - Charlie, Bombardier, Luna, and Thistle recruitment conversations converted to dialogue_steps with Dave. Each crew member has distinct personality: Charlie (enthusiastic), Bombardier (sarcastic), Luna (calculating), Thistle (principled).
+
+3. **Arc 1-2 story encounters** — Key Dave/Aristotle confrontations converted: arc1 face-to-face meeting and arc2 route seizure standoff.
+
+4. **Arc 3 story encounters** — Dave/Aristotle parley (both perspectives), Death reveal on Aristotle's bridge, Death's offer to Dave in the Forgotten Realm.
+
+5. **Arc 4 story encounters** — Dave's assault on crystal fields (Dave/Aristotle comms exchange before combat), Death's Vault bid (Aristotle/Death confrontation), Death's mid-battle betrayal (Dave/Death), and the climactic Dave/Aristotle showdown with three branching endings (surrender terms, shared governance, destruction).
+
+6. **Portrait support** — Added 8 crew member portraits to CHARACTER_PORTRAITS registry including Nine Lives portrait.
+
+### Changes
+
+- `scripts/ui/dialogue_ui.gd` — Added crew member portrait paths
+- `data/encounters/crew_nine_lives.json` — Converted to dialogue_steps
+- `data/encounters/crew_no_tail.json` — Converted to dialogue_steps
+- `data/encounters/crew_silky.json` — Converted to dialogue_steps
+- `data/encounters/crew_blood_paw.json` — Converted to dialogue_steps
+- `data/encounters/crew_charlie.json` — Converted to dialogue_steps
+- `data/encounters/crew_bombardier.json` — Converted to dialogue_steps
+- `data/encounters/crew_luna.json` — Converted to dialogue_steps
+- `data/encounters/crew_thistle.json` — Converted to dialogue_steps
+- `data/encounters/arc1_encounters_dave.json` — Dave/Aristotle meeting converted
+- `data/encounters/arc2_encounters.json` — Route seizure confrontation converted
+- `data/encounters/arc3_encounters.json` — Dave parley + Death reveal converted
+- `data/encounters/arc3_encounters_dave.json` — Aristotle parley + Death offer converted
+- `data/encounters/arc4_encounters.json` — Dave assault + Death bid converted
+- `data/encounters/arc4_encounters_dave.json` — Death betrayal + Aristotle showdown converted
+
+---
+
+## 2026-03-19 — Two-sided branching dialogue system
+
+**Feature:** Encounters can now have multi-step, two-sided conversations with branching outcomes.
+
+1. **Dialogue steps format** — Encounters support an optional `dialogue_steps` array in JSON. Each step has a `speaker`, `text`, and optional `choices` with `next_step` branching. Steps can end peacefully (`"end": true`) or escalate to combat (`"start_combat": true`).
+
+2. **Two-portrait UI** — Dialogue screen now shows Aristotle on the left and the NPC on the right. The active speaker's portrait is highlighted at full opacity while the other dims to 0.4 alpha.
+
+3. **Step state machine** — The dialogue UI walks through steps sequentially, pausing for player choices and auto-advancing non-choice lines. Choices apply mid-dialogue outcomes (flags, resources, factions) and jump to branch targets via `step_id`.
+
+4. **Backwards compatible** — Encounters without `dialogue_steps` use the original single-step flow unchanged.
+
+5. **Proof-of-concept** — `enc_arc1_dave_trade` converted to a branching two-sided conversation with three paths: friendly trade, negotiation, and hostile escalation to combat.
+
+### Changes
+
+- `scripts/entities/encounter.gd` — added `DialogueStep`, `DialogueStepChoice` inner classes, `dialogue_steps` field
+- `scripts/systems/encounter_engine.gd` — added `apply_dialogue_step_outcome()`, `complete_encounter()`
+- `scripts/autoload/event_bus.gd` — added `dialogue_step_advanced` signal
+- `scenes/ui/dialogue_ui.tscn` — restructured to left/right portrait layout
+- `scripts/ui/dialogue_ui.gd` — added step state machine, two-portrait handling, speaker highlighting, branching flow
+- `data/encounters/arc1_encounters.json` — converted Dave trade encounter to branching dialogue
+
+---
+
+## 2026-03-19 — Add ship purchasing and Pirate Destroyer to shipyard
+
+**Feature:** Players can now buy new ships in the shipyard alongside repairs and upgrades.
+
+1. **Pirate Destroyer template** — Added to `ship_templates.json` with `purchasable: true`, costing 80 crystals + 60 salvage. Stats: Spd 4, Arm 8, Fp 9, Hull 160, Cargo 5, Crew 8. Uses `ship_destroyer_r_side.png` sprite.
+
+2. **Ship purchase logic** — Added `purchase_ship()` to `economy_system.gd`. Validates affordability, prevents re-buying current ship class, transfers crew and cargo to the new vessel, emits `EventBus.ship_purchased`.
+
+3. **Data loader** — Added `load_purchasable_ships()` to `data_loader.gd` filtering templates with `purchasable == true`.
+
+4. **Shipyard UI** — Left panel now shows current ship sprite preview and ship name/class. Right panel split into "Ships For Sale" (with thumbnails, stat summary, cost, buy button) and "Ship Upgrades". Buying a ship swaps your vessel and refreshes the entire UI.
+
+### Changes
+
+- `data/ships/ship_templates.json` — added Pirate Destroyer template with purchase cost fields
+- `scripts/core/data_loader.gd` — added `load_purchasable_ships()`
+- `scripts/systems/economy_system.gd` — added `purchase_ship()`
+- `scripts/ui/purchase_screen.gd` — added ship preview, ship purchasing UI, ship list builder
+- `scenes/ui/purchase_screen.tscn` — added ShipPreview, ShipNameLabel, ShipList nodes; restructured right panel
+
+---
+
+## 2026-03-19 — Implement ship upgrade shop in the shipyard screen
+
+**Problem:** The shipyard (R key) only offered hull repair. Ship upgrades were fully defined in data (7 upgrades in `ship_templates.json`) and the `Ship.ShipUpgrade` entity class existed, but there was no way to browse, buy, or apply upgrades during gameplay. This made combat increasingly unwinnable as enemies scaled up.
+
+**Solution:** Built the full upgrade purchase pipeline:
+
+1. **Economy logic** — Added `purchase_upgrade()` and `_apply_stat_modifier()` to `economy_system.gd`. Handles cost deduction (crystals + salvage), stat application (including side effects like Siege Cannons: +2 firepower / -1 speed), duplicate prevention, and emits `EventBus.upgrade_purchased`.
+
+2. **Shipyard UI overhaul** — Rebuilt `purchase_screen.gd` to show current ship stats, repair with dynamic cost display, and a scrollable list of all 7 upgrades. Each row shows the upgrade name, stat effect, cost (crystals + salvage), affordability colour coding, and a Buy button. Installed upgrades show as green "INSTALLED" labels.
+
+3. **Scene layout** — Expanded `purchase_screen.tscn` panel to fit ship stats line, repair button, upgrades header, scrollable upgrade list, and close button.
+
+### Changes
+
+- `scripts/systems/economy_system.gd` — added `purchase_upgrade()` and `_apply_stat_modifier()` functions
+- `scripts/ui/purchase_screen.gd` — full rewrite with upgrade list UI, dynamic repair cost, ship stats display
+- `scenes/ui/purchase_screen.tscn` — expanded layout with `ShipStatsLabel`, `ScrollContainer`/`UpgradeList`, `UpgradesHeader`
+
+---
+
+## 2026-03-19 — Fix story arc progression, add repair access and arc progress HUD
+
+**Problem:** Story arcs never advanced because `NarrativeSystem.check_arc_exit()` and `advance_arc()` were defined but never called after encounters. This meant the game stayed stuck in Arc 1 forever, making battles increasingly pointless. Additionally, the repair/purchase screen existed but had no keybind to access it, so players couldn't repair their ship during gameplay.
+
+**Solution:** Three changes to make gameplay progression work:
+
+1. **Wired arc progression** — After each encounter outcome is applied in `encounter_engine.gd`, the game now checks if the current arc's exit conditions are satisfied and automatically advances to the next arc. This loads new encounters, side missions, and updates music.
+
+2. **Added repair screen access (R key)** — Added a `repair` input action bound to R and wired it in `navigation.gd` so players can open the purchase/repair screen at any time. Updated the controls bar hint text.
+
+3. **Added arc progress feedback** — The HUD arc label now shows progress as "ARC TITLE (2/3)" indicating how many exit conditions have been met. When an arc advances, a 6-second flash notification announces the new arc.
+
+### Changes
+
+- `scripts/systems/encounter_engine.gd` — added `check_arc_exit()` + `advance_arc()` call after `apply_choice_outcome()`
+- `scripts/ui/navigation.gd` — connected `arc_advanced` signal, added `_on_arc_advanced()` flash + POI refresh, added R key handler for purchase overlay, updated HUD to show arc progress count, updated controls bar hint
+- `project.godot` — added `repair` input action mapped to R key
+
+---
+
+## 2026-03-19 — Improved ship orientation during navigation
+
+**Problem:** The player ship used a single side-view sprite rotated 360 degrees, which looked unnatural at vertical angles.
+
+**Solution:** Replaced free rotation with a banking + smooth flip + directional sprite blending system:
+- 3-sprite flip transition: cross-fades through a 3/4 angle turning sprite (`ship_rotate.png`) during horizontal direction changes, blending from rotate sprite to side sprite with overlapping alpha curves
+- Ease-out-quad curve on flip progress so the rotate midpoint transitions quickly
+- Slight banking tilt (up to ~17 degrees) when moving vertically for momentum feel
+- Cross-fades between side-view sprite (`ship_r_side.png`) and top-down sprite (`ship_up_side.png`) based on vertical movement dominance
+- Engine glow and trail particles adapt to the new orientation system
+
+### Changes
+- `scripts/ui/navigation.gd` — replaced `_ship_angle` rotation system with `_facing_right` flip, `_bank_angle` tilt, `_vertical_blend` dual-sprite blending, and `_heading_angle` for trail/minimap; added `_draw_ship_perspective()` helper that renders the ship as a UV-mapped trapezoid for pseudo-3D turning; loaded and processed `ship_up_side.png` as second directional sprite; updated engine glow to blend between side-rear and heading-based offsets
+
+---
+
+## 2026-03-19 — Fix ESC-to-skip cutscene, navigation & combat music
+
+**Bug 1:** ESC key did not skip the intro cutscene. The `skip` input action was mapped to keycode `4194306` (Tab) instead of `4194305` (Escape).
+
+**Bug 2:** Navigation music never played. `on_state_change("navigation")` always resolved to the arc-specific theme (`"theme_arc1"`) which doesn't exist, instead of falling back to `"theme_navigation"`. Additionally, `_play_theme()` set `_current_theme` even when no file was found, poisoning subsequent calls.
+
+**Bug 3:** Combat music never played. Combat starts via `replace_overlay()` which was missing the `MusicManager.on_state_change()` call that `push_overlay()` and `switch_scene()` both have.
+
+### Changes
+- `project.godot` — fixed `skip` input action keycode from `4194306` (Tab) to `4194305` (Escape)
+- `scripts/autoload/music_manager.gd` — added `_theme_file_exists()` helper; `on_state_change()` and `on_arc_change()` now fall back to default themes when arc-specific files don't exist; `_play_theme()` now resolves the new stream before stopping the current track — if no file exists, current music keeps playing instead of going silent; lowered default music volume from -10 dB to -20 dB
+- `scripts/ui/main.gd` — `replace_overlay()` now calls `MusicManager.on_state_change(scene_key)` and sets overlay meta key
+
+---
+
+## 2026-03-19 — Music volume control & playback continuity
+
+**Features:**
+- Volume control: settings slider now controls music volume (0–100% linear scale, mapped to dB)
+- Music continuity: when switching themes (e.g., navigation → combat → navigation), tracks resume where they left off instead of restarting from the beginning
+- Navigation music support: place `theme_navigation.ogg/.mp3` in `assets/audio/music/` and it plays during flight
+
+### Changes
+- `scripts/autoload/music_manager.gd` — added `set_music_volume()`, `set_sfx_volume()`, playback position save/restore in `_play_theme()`, default volume at -10 dB, wired `EventBus.volume_changed`
+- `scripts/ui/settings_screen.gd` — slider initializes from current volume, toggles reflect current state, calls `MusicManager.set_music_volume()` directly
+
+---
+
+## 2026-03-19 — Fix overlay music (combat, trade, etc.)
+
+**Bug:** `push_overlay()` in `main.gd` did not call `MusicManager.on_state_change()`, so combat music (and any other overlay-based screen music) never played.
+
+### Changes
+- `scripts/ui/main.gd` — `push_overlay()` now triggers `MusicManager.on_state_change(scene_key)` and saves the prior scene key; `pop_overlay()` restores the previous music when all overlays are cleared.
+
+---
+
+## 2026-03-18 — Crew Missions Feature
+
+**Task:** Add crew recruitment missions — 4 named crew members per protagonist with story-driven recruitment and trait bonuses
+
+### New Files
+
+- `data/characters/crew_members.json` — 8 crew member definitions (4 per protagonist) with roles, traits, backstories
+- `data/side_missions/crew_missions_aristotle.json` — 4 crew recruitment missions for Aristotle
+- `data/side_missions/crew_missions_dave.json` — 4 crew recruitment missions for Dave
+- `data/encounters/crew_nine_lives.json` — Nine Lives recruitment encounters (2 encounters)
+- `data/encounters/crew_no_tail.json` — No Tail recruitment encounters (3 encounters)
+- `data/encounters/crew_silky.json` — Silky recruitment encounters (2 encounters)
+- `data/encounters/crew_blood_paw.json` — Blood Paw recruitment encounters (3 encounters)
+- `data/encounters/crew_charlie.json` — Charlie recruitment encounters (2 encounters)
+- `data/encounters/crew_bombardier.json` — Bombardier recruitment encounters (3 encounters)
+- `data/encounters/crew_luna.json` — Luna recruitment encounters (2 encounters)
+- `data/encounters/crew_thistle.json` — Thistle recruitment encounters (3 encounters)
+- `scripts/systems/crew_trait_system.gd` — CrewTraitSystem: loads crew definitions, calculates active trait bonuses per ship
+- `assets/characters/crew/.gdkeep` — Placeholder directory for crew portrait art
+
+### Modified Files
+
+- `scripts/entities/ship.gd` — Extended `CrewMember` with `trait_id`, `portrait`, `backstory`, `recruitment_status` fields + serialization
+- `scripts/entities/side_mission.gd` — Added `crew_member_id` field + serialization
+- `scripts/entities/encounter.gd` — Added `mission_type`, `crew_member_id` fields + deserialization
+- `scripts/core/data_loader.gd` — Added `load_crew_members()`, `load_crew_missions()`, `load_crew_encounters()`
+- `scripts/systems/side_mission_system.gd` — Added `load_crew_missions()` to append crew missions to templates
+- `scripts/systems/combat_system.gd` — Applied `firepower_bonus` and `critical_hit_chance` crew trait bonuses to damage calculation
+- `scripts/systems/crew_morale_system.gd` — Applied `morale_recovery` crew trait bonus to positive morale changes
+- `scripts/systems/economy_system.gd` — Applied `hull_repair_rate` crew trait bonus to reduce repair costs
+- `scripts/systems/encounter_engine.gd` — Applied `exploration_discovery_rate` and `ambush_detection` bonuses to encounter priority sorting
+- `scripts/autoload/event_bus.gd` — Added `crew_member_recruited(crew_id, protagonist_id)` signal
+- `scripts/autoload/game_session.gd` — Added `CrewTraitSystem` initialization, crew mission/encounter loading, recruitment listener, `recruit_crew_member()` helper
+- `scripts/ui/dialogue_ui.gd` — Added crew recruitment detection (`_check_crew_recruitment`) and confirmation display (`_show_crew_recruitment_confirmation`)
+- `scripts/ui/ship_screen.gd` — Enhanced crew roster with role labels, trait descriptions, morale colours, and empty role slots
+- `scripts/ui/mission_log.gd` — Added "CREW MISSIONS" group header with crew/main/side sorting
+- `scripts/ui/navigation.gd` — Added crew count indicator to HUD (`Crew: X/Y`)
+
+### Updated Documentation
+
+- `docs/plans/MASTER_PLAN.md` — Marked Crew Missions Feature as COMPLETE (2026-03-18) with full implementation summary
+
+---
+
 ## 2026-03-17 — Character Selection Feature (ISSUE-001)
 
 **Task:** Add dual-protagonist support — choose Aristotle or Dave at game start

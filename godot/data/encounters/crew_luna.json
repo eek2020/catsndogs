@@ -1,0 +1,200 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_luna_discovery",
+      "encounter_type": "exploration",
+      "title": "The Silent Station",
+      "description": "A derelict research station drifts in the forgotten reaches, broadcasting a faint repeating signal. Inside, every wall is covered with star charts — hand-drawn, meticulous, beautiful. At the centre, a quiet wolf-dog hybrid sits cross-legged, studying a constellation map by candlelight.",
+      "arc_id": "arc_2",
+      "location": "forgotten_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "npc_ids": ["dave", "luna"],
+      "priority": 5,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "luna",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "dave",
+          "text": "This is Commander Dave, hailing the research station. We picked up your signal. Is anyone aboard?"
+        },
+        {
+          "speaker": "luna",
+          "text": "Your ship's drive signature — Canis League, modified. Hull resonance suggests recent combat repairs. You've been busy, Commander."
+        },
+        {
+          "speaker": "dave",
+          "text": "You can tell all that from a drive signature?"
+        },
+        {
+          "speaker": "luna",
+          "text": "I can tell considerably more than that. But the rest would be rude to say aloud until we've been properly introduced. I'm Luna.",
+          "choices": [
+            {
+              "choice_id": "board_station",
+              "text": "Board the station carefully and approach.",
+              "next_step": "board_result",
+              "outcome": {
+                "description": "Luna doesn't look up immediately as you enter. Her eyes are sharp, calculating, and deeply curious when she finally raises them.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_luna_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "hail_station",
+              "text": "Hail the station from your ship.",
+              "next_step": "hail_result",
+              "outcome": {
+                "description": "A long pause, then Luna's calm, measured voice responds over comms.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_luna_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "board_result",
+          "speaker": "luna",
+          "text": "These star charts on the walls — I've been mapping gravity currents between realms. Most navigators use the standard routes. Standard routes are slow, predictable, and boring."
+        },
+        {
+          "speaker": "dave",
+          "text": "You've been out here alone doing all this? How long?"
+        },
+        {
+          "speaker": "luna",
+          "text": "Three weeks. My ship's drive failed. But stranded is a matter of perspective. I prefer 'stationary with purpose.'"
+        },
+        {
+          "speaker": "dave",
+          "text": "That's an optimistic way to describe being stuck."
+        },
+        {
+          "speaker": "luna",
+          "text": "Optimism has nothing to do with it. I simply used the time productively. Though I admit the candlelight is more for atmosphere than necessity. The station's power cells work fine."
+        },
+        {
+          "speaker": "luna",
+          "text": "Your mission goes beyond what the League sanctioned, doesn't it, Commander? The whisper crystals, the unsanctioned course corrections, the combat engagements outside your patrol zone. I've been listening to comm traffic for weeks. You're not following orders anymore.",
+          "end": true
+        },
+        {
+          "step_id": "hail_result",
+          "speaker": "luna",
+          "text": "I've been expecting company, though not specifically you. Your trajectory matched three of my predicted intercept paths. The probability was 0.73 that someone would investigate my signal within the week."
+        },
+        {
+          "speaker": "dave",
+          "text": "You predicted someone would come?"
+        },
+        {
+          "speaker": "luna",
+          "text": "I predicted several scenarios. A salvage crew was most likely. A League patrol, second. A rogue commander chasing whisper crystals across the forgotten reaches — that was my preferred outcome, admittedly."
+        },
+        {
+          "speaker": "dave",
+          "text": "How do you know about the crystals?"
+        },
+        {
+          "speaker": "luna",
+          "text": "I listen. I calculate. I draw conclusions. Your comm traffic is not as encrypted as you believe, Commander. Come aboard. I have something to show you — and you have questions that need better answers than the League has given you.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_luna_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Luna Joins the Crew",
+      "description": "Luna unfurls a massive star chart across the table. 'I've been stranded here for weeks, but I haven't been idle.' The chart shows routes you've never seen — paths through nebulae, gravity slingshots, shortcuts between realms. 'My ship's drive is dead. But my mind works perfectly. I'll navigate — if the journey is worth charting.'",
+      "arc_id": "arc_2",
+      "location": "forgotten_realm",
+      "trigger_conditions": {
+        "crew_luna_found": true
+      },
+      "npc_ids": ["dave", "luna"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "luna",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "luna",
+          "text": "Before you ask — yes, I want off this station. But I'm not interested in being rescued. Rescue implies helplessness. I'm proposing a trade."
+        },
+        {
+          "speaker": "dave",
+          "text": "A trade?"
+        },
+        {
+          "speaker": "luna",
+          "text": "You need a navigator. Your current route planning is — and I say this with respect — inefficient. You've been burning thirty percent more fuel than necessary since the Argos Nebula."
+        },
+        {
+          "speaker": "dave",
+          "text": "You've been tracking my fuel consumption?"
+        },
+        {
+          "speaker": "luna",
+          "text": "I've been tracking everything. It passes the time."
+        },
+        {
+          "speaker": "luna",
+          "text": "Look at this chart. These are routes no one else has mapped. Gravity corridors between realms, nebula shortcuts, slingshot paths around dead stars. Three weeks of work. It would take the League cartography division six months to produce this — and they'd still miss the elegant parts."
+        },
+        {
+          "speaker": "dave",
+          "text": "You're not modest."
+        },
+        {
+          "speaker": "luna",
+          "text": "Modesty is for people who aren't sure of their abilities. I'm very sure of mine. The question is whether your mission is worth applying them to."
+        },
+        {
+          "speaker": "dave",
+          "text": "We're chasing something bigger than the League admits. The crystals, the factions, the power struggle — it all connects. I need someone who can see the patterns I'm missing."
+        },
+        {
+          "speaker": "luna",
+          "text": "Patterns are what I do, Commander. I'll navigate your ship — if the journey goes somewhere worth charting. Not for the League. Not for politics. For the truth of it.",
+          "choices": [
+            {
+              "choice_id": "welcome_navigator",
+              "text": "Every journey needs a navigator. Welcome aboard, Luna.",
+              "next_step": "welcome_result",
+              "outcome": {
+                "description": "Luna carefully rolls her charts and follows you to the ship. At the navigation console, she pauses, running her fingers over the controls.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_luna_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "welcome_result",
+          "speaker": "luna",
+          "text": "Adequate hardware. The calibration is off by point-four degrees, but I can correct that. Give me an hour."
+        },
+        {
+          "speaker": "dave",
+          "text": "Make yourself at home."
+        },
+        {
+          "speaker": "luna",
+          "text": "Home is wherever the calculations are interesting, Commander. And I suspect yours are about to become very interesting indeed.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

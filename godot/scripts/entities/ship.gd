@@ -104,6 +104,10 @@ class CrewMember extends Resource:
 	@export var morale: int = 100
 	@export var morale_modifier: int = 0
 	@export var faction_trait_bonus: String = ""
+	@export var trait_id: String = ""
+	@export var portrait: String = ""
+	@export var backstory: String = ""
+	@export var recruitment_status: String = "unknown"  # "unknown", "discovered", "recruited"
 
 	static func from_dict(data: Dictionary) -> CrewMember:
 		var cm := CrewMember.new()
@@ -117,6 +121,10 @@ class CrewMember extends Resource:
 		cm.morale = data.get("morale", 100)
 		cm.morale_modifier = data.get("morale_modifier", 0)
 		cm.faction_trait_bonus = data.get("faction_trait_bonus", "")
+		cm.trait_id = data.get("trait_id", "")
+		cm.portrait = data.get("portrait", "")
+		cm.backstory = data.get("backstory", data.get("description", ""))
+		cm.recruitment_status = data.get("recruitment_status", "unknown")
 		return cm
 
 	func to_dict() -> Dictionary:
@@ -131,6 +139,10 @@ class CrewMember extends Resource:
 			"morale": morale,
 			"morale_modifier": morale_modifier,
 			"faction_trait_bonus": faction_trait_bonus,
+			"trait_id": trait_id,
+			"portrait": portrait,
+			"backstory": backstory,
+			"recruitment_status": recruitment_status,
 		}
 
 

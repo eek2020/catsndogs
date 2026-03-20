@@ -1,7 +1,7 @@
 # Issue: ISSUE-001 — Character Selection Feature
 
 **Severity:** High
-**Status:** Open
+**Status:** Closed
 **Reported:** 2026-03-16
 **Linked Task:** N/A
 **Assigned To:** N/A
@@ -150,6 +150,6 @@ Currently, the game is hardcoded to start with Aristotle as the player character
 
 ## Resolution
 
-**Resolved:** {YYYY-MM-DD}
-**Fix:** {Brief description of what was done}
-**Verified:** {How it was tested}
+**Resolved:** 2026-03-18
+**Fix:** Dual-protagonist support fully implemented in Godot 4.6 / GDScript. Character selection screen, Dave encounter data for all 4 arcs, Dave dialogue/side missions/endings, protagonist-aware loading. See MASTER_PLAN § 5 "Character Selection Feature" for full summary.
+**Verified:** Manual playthroughs of both Aristotle and Dave paths through all 4 arcs.

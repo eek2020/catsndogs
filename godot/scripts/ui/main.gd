@@ -27,9 +27,12 @@ const SCENES := {
 	"pause": "res://scenes/ui/pause_menu.tscn",
 	"settings": "res://scenes/ui/settings_screen.tscn",
 	"ending": "res://scenes/ui/ending_screen.tscn",
+	"arc_summary": "res://scenes/ui/arc_summary.tscn",
 }
 
 var _overlay_stack: Array[Control] = []
+var _scene_key_before_overlay: String = ""
+var _current_scene_key: String = ""
 
 
 func _ready() -> void:
@@ -54,21 +57,30 @@ func switch_scene(scene_key: String) -> void:
 	var scene: PackedScene = load(path)
 	_current_scene = scene.instantiate()
 	scene_container.add_child(_current_scene)
+	_current_scene_key = scene_key
 	MusicManager.on_state_change(scene_key)
 	await _fade_in()
 	_transitioning = false
 
 
 func push_overlay(scene_key: String) -> Control:
+	# Prevent stacking duplicate overlays of the same type
+	for existing in _overlay_stack:
+		if is_instance_valid(existing) and existing.has_meta("_overlay_key") and existing.get_meta("_overlay_key") == scene_key:
+			return null
 	var path: String = SCENES.get(scene_key, "")
 	if path.is_empty():
 		push_error("Unknown overlay key: %s" % scene_key)
 		return null
 	var scene: PackedScene = load(path)
 	var overlay: Control = scene.instantiate()
+	overlay.set_meta("_overlay_key", scene_key)
 	overlay.modulate.a = 0.0
 	scene_container.add_child(overlay)
 	_overlay_stack.append(overlay)
+	if _overlay_stack.size() == 1:
+		_scene_key_before_overlay = _current_scene_key
+	MusicManager.on_state_change(scene_key)
 	var tween := create_tween()
 	tween.tween_property(overlay, "modulate:a", 1.0, 0.15)
 	return overlay
@@ -86,9 +98,11 @@ func replace_overlay(current_overlay: Control, scene_key: String) -> Control:
 		current_overlay.queue_free()
 	var scene: PackedScene = load(path)
 	var overlay: Control = scene.instantiate()
+	overlay.set_meta("_overlay_key", scene_key)
 	overlay.modulate.a = 0.0
 	scene_container.add_child(overlay)
 	_overlay_stack.append(overlay)
+	MusicManager.on_state_change(scene_key)
 	var tween := create_tween()
 	tween.tween_property(overlay, "modulate:a", 1.0, 0.15)
 	return overlay
@@ -103,6 +117,10 @@ func pop_overlay() -> void:
 	var tween := create_tween()
 	tween.tween_property(overlay, "modulate:a", 0.0, 0.15)
 	tween.tween_callback(overlay.queue_free)
+	# Restore previous music when all overlays are cleared
+	if _overlay_stack.is_empty() and not _scene_key_before_overlay.is_empty():
+		MusicManager.on_state_change(_scene_key_before_overlay)
+		_scene_key_before_overlay = ""
 
 
 func _clear_overlays() -> void:

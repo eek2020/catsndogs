@@ -48,8 +48,13 @@ func _build_list() -> void:
 	_all_missions.sort_custom(func(a: SideMission, b: SideMission) -> bool:
 		var a_is_main: bool = a.mission_type.to_lower() == "main" or a.mission_id.to_lower().begins_with("main_")
 		var b_is_main: bool = b.mission_type.to_lower() == "main" or b.mission_id.to_lower().begins_with("main_")
-		if a_is_main != b_is_main:
-			return a_is_main
+		var a_is_crew: bool = a.mission_type == "crew_recruitment"
+		var b_is_crew: bool = b.mission_type == "crew_recruitment"
+		# Sort order: main > crew > side
+		var a_group: int = 0 if a_is_main else (1 if a_is_crew else 2)
+		var b_group: int = 0 if b_is_main else (1 if b_is_crew else 2)
+		if a_group != b_group:
+			return a_group < b_group
 		var sa: int = status_order.get(a.status, 9)
 		var sb: int = status_order.get(b.status, 9)
 		if sa != sb:
@@ -95,14 +100,19 @@ func _build_list() -> void:
 	right_panel.add_child(_detail_label)
 
 	var has_main_header := false
+	var has_crew_header := false
 	var has_side_header := false
 	for i in range(_all_missions.size()):
 		var mission := _all_missions[i]
 		var is_main: bool = mission.mission_type.to_lower() == "main" or mission.mission_id.to_lower().begins_with("main_")
+		var is_crew: bool = mission.mission_type == "crew_recruitment"
 		if is_main and not has_main_header:
 			left_box.add_child(_build_group_header("MAIN MISSIONS"))
 			has_main_header = true
-		elif not is_main and not has_side_header:
+		elif is_crew and not has_crew_header:
+			left_box.add_child(_build_group_header("CREW MISSIONS"))
+			has_crew_header = true
+		elif not is_main and not is_crew and not has_side_header:
 			left_box.add_child(_build_group_header("SIDE MISSIONS"))
 			has_side_header = true
 
@@ -121,7 +131,7 @@ func _build_group_header(text: String) -> Label:
 	var header := Label.new()
 	header.text = text
 	header.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	header.theme_override_colors.font_color = Color(0.7, 0.84, 1.0)
+	header.add_theme_color_override("font_color", Color(0.7, 0.84, 1.0))
 	return header
 
 
@@ -137,12 +147,12 @@ func _select_mission(index: int) -> void:
 		var btn := _entry_buttons[i]
 		btn.modulate = Color(1, 1, 1, 1)
 		if i == _selected_idx:
-			btn.theme_override_colors.font_color = Color(1.0, 0.93, 0.62)
+			btn.add_theme_color_override("font_color", Color(1.0, 0.93, 0.62))
 			var tween := create_tween()
 			tween.tween_property(btn, "modulate", Color(1.0, 1.0, 1.0, 0.86), 0.09)
 			tween.tween_property(btn, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.09)
 		else:
-			btn.theme_override_colors.font_color = Color(0.86, 0.89, 0.95)
+			btn.add_theme_color_override("font_color", Color(0.86, 0.89, 0.95))
 
 	_render_selected_details()
 
@@ -176,18 +186,18 @@ func _render_selected_details() -> void:
 			lines.append("[color=#f2d27a]%s: +%s[/color]" % [str(resource).capitalize(), str(mission.rewards[resource])])
 		for faction_id in mission.faction_rewards.keys():
 			var delta: int = int(mission.faction_rewards[faction_id])
-			var sign := "+" if delta >= 0 else ""
+			var sign_prefix := "+" if delta >= 0 else ""
 			var rep_color := "#76da83" if delta >= 0 else "#e27f7f"
-			lines.append("[color=%s]%s: %s%d rep[/color]" % [rep_color, str(faction_id), sign, delta])
+			lines.append("[color=%s]%s: %s%d rep[/color]" % [rep_color, str(faction_id), sign_prefix, delta])
 
 	_detail_label.text = "\n".join(lines)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("menu_up") or event.is_action_pressed("move_up"):
+	if event.is_action_pressed("ui_up") or event.is_action_pressed("move_up"):
 		if _selected_idx > 0:
 			_select_mission(_selected_idx - 1)
-	elif event.is_action_pressed("menu_down") or event.is_action_pressed("move_down"):
+	elif event.is_action_pressed("ui_down") or event.is_action_pressed("move_down"):
 		if _selected_idx < _all_missions.size() - 1:
 			_select_mission(_selected_idx + 1)
 	elif event.is_action_pressed("cancel") or event.is_action_pressed("pause") or event.is_action_pressed("mission_log"):

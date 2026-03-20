@@ -36,12 +36,23 @@ const ENCOUNTER_TYPE_COLORS := {
 }
 
 var _ship_texture: Texture2D = preload("res://assets/ships/ship_r_side.png")
+var _ship_up_texture: Texture2D = preload("res://assets/ships/ship_up_side.png")
+var _ship_rotate_texture: Texture2D = preload("res://assets/ships/ship_rotate.png")
 var _active_pois: Array = []
 var _stars: Array = []
 
-# Ship rotation & movement feel
-var _ship_angle: float = 0.0  # Radians, 0 = facing right
+# Ship orientation state
+var _facing_right: bool = true
+var _flip_progress: float = 1.0   # 0 = mid-flip (edge-on), 1 = fully facing
+var _bank_angle: float = 0.0      # Current banking tilt in radians
+var _vertical_blend: float = 0.0  # 0 = side sprite, 1 = top-down sprite
+var _heading_angle: float = 0.0   # Smoothed heading for trail/minimap
 var _is_moving: bool = false
+
+const FLIP_SPEED: float = 6.0
+const BANK_MAX_ANGLE: float = 0.30       # ~17 degrees max banking tilt
+const BANK_SPEED: float = 8.0
+const VERTICAL_BLEND_SPEED: float = 5.0
 
 # Engine trail particles: Array of {x, y, life, max_life}
 var _trail: Array = []
@@ -55,11 +66,14 @@ var _showed_welcome: bool = false
 func _ready() -> void:
 	randomize()
 	_ship_texture = _remove_background_by_corners(_ship_texture)
+	_ship_up_texture = _remove_background_by_corners(_ship_up_texture)
+	_ship_rotate_texture = _remove_background_by_corners(_ship_rotate_texture)
 	_build_starfield()
 	flash_label.text = ""
 	_poi_refresh_timer = 0.0
 	_refresh_pois()
 	_update_hud()
+	EventBus.arc_advanced.connect(_on_arc_advanced)
 
 
 static func _remove_background_by_corners(tex: Texture2D, tolerance: float = 0.13, feather: float = 0.05) -> Texture2D:
@@ -162,16 +176,39 @@ func _handle_movement(dt: float) -> void:
 		GameSession.game_state.position_x += direction.x * SHIP_SPEED * dt
 		GameSession.game_state.position_y += direction.y * SHIP_SPEED * dt
 
-		# Smooth rotation toward movement direction
+		# --- Horizontal flip detection ---
+		if direction.x > 0.01 and not _facing_right:
+			_facing_right = true
+			_flip_progress = 0.0
+		elif direction.x < -0.01 and _facing_right:
+			_facing_right = false
+			_flip_progress = 0.0
+
+		# --- Banking tilt based on vertical movement ---
+		var bank_target: float = direction.y * BANK_MAX_ANGLE
+		# Invert bank when facing left so tilt feels natural
+		if not _facing_right:
+			bank_target = -bank_target
+		_bank_angle += (bank_target - _bank_angle) * minf(1.0, dt * BANK_SPEED)
+
+		# --- Vertical blend (side sprite <-> top-down sprite) ---
+		var abs_x: float = absf(direction.x)
+		var abs_y: float = absf(direction.y)
+		var vert_dominance: float = abs_y / maxf(abs_x + abs_y, 0.001)
+		# Only blend toward top-down when movement is mostly vertical
+		var blend_target: float = clampf((vert_dominance - 0.55) / 0.35, 0.0, 1.0)
+		_vertical_blend += (blend_target - _vertical_blend) * minf(1.0, dt * VERTICAL_BLEND_SPEED)
+
+		# --- Smoothed heading angle (for trail + minimap) ---
 		var target_angle: float = atan2(direction.y, direction.x)
-		var diff: float = fposmod(target_angle - _ship_angle + PI, TAU) - PI
-		_ship_angle += diff * minf(1.0, dt * 10.0)
+		var diff: float = fposmod(target_angle - _heading_angle + PI, TAU) - PI
+		_heading_angle += diff * minf(1.0, dt * 10.0)
 
 		# Spawn engine trail particles
 		if randf() < 0.6:
 			var gs: GameStateData = GameSession.game_state
-			var ex: float = gs.position_x - cos(_ship_angle) * 18.0
-			var ey: float = gs.position_y - sin(_ship_angle) * 18.0
+			var ex: float = gs.position_x - cos(_heading_angle) * 18.0
+			var ey: float = gs.position_y - sin(_heading_angle) * 18.0
 			var life: float = randf_range(0.5, 1.2)
 			_trail.append({
 				"x": ex + randf_range(-3.0, 3.0),
@@ -179,6 +216,13 @@ func _handle_movement(dt: float) -> void:
 				"life": life,
 				"max_life": life,
 			})
+	else:
+		# Idle: decay bank angle, let flip finish
+		_bank_angle += (0.0 - _bank_angle) * minf(1.0, dt * BANK_SPEED)
+
+	# Always animate flip progress toward 1.0 (even when idle)
+	if _flip_progress < 1.0:
+		_flip_progress = minf(_flip_progress + dt * FLIP_SPEED, 1.0)
 
 
 func _update_trail(dt: float) -> void:
@@ -285,6 +329,8 @@ func _on_encounter(encounter) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _has_overlay():
+		return
 	if event.is_action_pressed("pause"):
 		var main: Control = get_tree().current_scene
 		if main.has_method("push_overlay"):
@@ -301,18 +347,35 @@ func _unhandled_input(event: InputEvent) -> void:
 		var main: Control = get_tree().current_scene
 		if main.has_method("push_overlay"):
 			main.push_overlay("mission_log")
+	elif event.is_action_pressed("repair"):
+		var main: Control = get_tree().current_scene
+		if main.has_method("push_overlay"):
+			main.push_overlay("purchase")
 
 
 func _update_hud() -> void:
 	var gs: GameStateData = GameSession.game_state
 	if gs == null:
 		return
-	arc_label.text = gs.current_arc.to_upper()
+	var arc_title: String = GameSession.narrative.get_arc_title(gs.current_arc)
+	var progress: Dictionary = GameSession.narrative.get_arc_progress(gs)
+	var done_count: int = 0
+	var total_count: int = progress.size()
+	for flag_name in progress:
+		if progress[flag_name]:
+			done_count += 1
+	if total_count > 0:
+		arc_label.text = "%s (%d/%d)" % [arc_title.to_upper(), done_count, total_count]
+	else:
+		arc_label.text = arc_title.to_upper()
 	region_label.text = gs.current_region.replace("_", " ").capitalize()
 	crystals_label.text = "Crystals: %d" % gs.crystal_inventory
 	salvage_label.text = "Salvage: %d" % gs.salvage
 	if gs.player_ship:
-		hull_label.text = "Hull: %d/%d" % [gs.player_ship.current_hull, gs.player_ship.max_hull]
+		hull_label.text = "Hull: %d/%d  Crew: %d/%d" % [
+			gs.player_ship.current_hull, gs.player_ship.max_hull,
+			gs.player_ship.crew.size(), gs.player_ship.crew_capacity,
+		]
 
 
 func _show_welcome() -> void:
@@ -338,6 +401,26 @@ func on_return_from_encounter() -> void:
 	_poi_refresh_timer = 0.0
 	_refresh_pois()
 	_update_hud()
+
+
+func _on_arc_advanced(old_arc: String, new_arc: String) -> void:
+	# Push the arc summary overlay (stats + hyperspace jump)
+	var main: Control = get_tree().current_scene
+	if main.has_method("push_overlay"):
+		var overlay = main.push_overlay("arc_summary")
+		if overlay and overlay.has_method("setup"):
+			overlay.setup(old_arc, new_arc)
+	# Refresh POIs when transition completes
+	if not EventBus.arc_transition_complete.is_connected(_on_arc_transition_complete):
+		EventBus.arc_transition_complete.connect(_on_arc_transition_complete)
+
+
+func _on_arc_transition_complete(_new_arc: String) -> void:
+	_poi_refresh_timer = 0.0
+	_refresh_pois()
+	_update_hud()
+	if EventBus.arc_transition_complete.is_connected(_on_arc_transition_complete):
+		EventBus.arc_transition_complete.disconnect(_on_arc_transition_complete)
 
 
 # ---------------------------------------------------------------------------
@@ -436,27 +519,58 @@ func _draw_pois(center: Vector2, gs: GameStateData) -> void:
 
 
 func _draw_ship(center: Vector2) -> void:
-	if _ship_texture != null:
-		# Rotate ship sprite based on movement direction
-		var angle_deg: float = rad_to_deg(_ship_angle)
-		draw_set_transform(center, _ship_angle, Vector2.ONE)
-		draw_texture_rect(
-			_ship_texture,
-			Rect2(-(SHIP_DRAW_SIZE * 0.5), SHIP_DRAW_SIZE),
-			false,
-			Color(1, 1, 1, 0.95)
-		)
+	if _ship_texture == null and _ship_up_texture == null:
+		draw_circle(center, SHIP_COLLISION_RADIUS, Color(0.72, 0.34, 0.9))
+		return
+
+	# Ease-out-quad: jumps away from the rotate midpoint quickly, settles slowly
+	var eased_flip: float = 1.0 - (1.0 - _flip_progress) * (1.0 - _flip_progress)
+	var draw_rect_area := Rect2(-(SHIP_DRAW_SIZE * 0.5), SHIP_DRAW_SIZE)
+
+	# --- Side-view layer (blends with rotate sprite during flip) ---
+	if _vertical_blend < 0.99:
+		var base_alpha: float = (1.0 - _vertical_blend) * 0.95
+
+		# Blend: rotate sprite (eased_flip=0) → side sprite (eased_flip=1)
+		# Rotate sprite is fully visible below 0.4, fades out by 0.8
+		var rotate_weight: float = clampf(1.0 - (eased_flip - 0.4) / 0.4, 0.0, 1.0)
+		# Side sprite fades in from 0.3 to 0.7
+		var side_weight: float = clampf((eased_flip - 0.3) / 0.4, 0.0, 1.0)
+
+		# Draw rotate sprite (3/4 angle turning frame)
+		if rotate_weight > 0.01 and _ship_rotate_texture != null:
+			var rotate_alpha: float = base_alpha * rotate_weight
+			# Mirror the rotate sprite based on facing direction
+			var rot_scale_x: float = -1.0 if _facing_right else 1.0
+			draw_set_transform(center, _bank_angle, Vector2(rot_scale_x, 1.0))
+			draw_texture_rect(_ship_rotate_texture, draw_rect_area, false, Color(1, 1, 1, rotate_alpha))
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+		# Draw side sprite (full profile)
+		if side_weight > 0.01 and _ship_texture != null:
+			var side_alpha: float = base_alpha * side_weight
+			var side_scale_x: float = 1.0 if _facing_right else -1.0
+			draw_set_transform(center, _bank_angle, Vector2(side_scale_x, 1.0))
+			draw_texture_rect(_ship_texture, draw_rect_area, false, Color(1, 1, 1, side_alpha))
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+	# --- Top-down layer (for vertical movement) ---
+	if _vertical_blend > 0.01 and _ship_up_texture != null:
+		var top_alpha: float = _vertical_blend * 0.95
+		var top_rotation: float = _heading_angle + PI * 0.5
+		draw_set_transform(center, top_rotation, Vector2.ONE)
+		draw_texture_rect(_ship_up_texture, draw_rect_area, false, Color(1, 1, 1, top_alpha))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
-		# Engine glow when moving
-		if _is_moving:
-			var glow_pulse: float = 1.0 + 0.5 * sin(_elapsed * 20.0)
-			var engine_offset := Vector2(-SHIP_DRAW_SIZE.x * 0.45, 0.0).rotated(_ship_angle)
-			var engine_pos := center + engine_offset
-			draw_circle(engine_pos, 6.0 * glow_pulse, Color(0.4, 0.8, 1.0, 0.5))
-			draw_circle(engine_pos, 3.0 * glow_pulse, Color(0.8, 0.95, 1.0, 0.8))
-	else:
-		draw_circle(center, SHIP_COLLISION_RADIUS, Color(0.72, 0.34, 0.9))
+	# --- Engine glow when moving ---
+	if _is_moving:
+		var glow_pulse: float = 1.0 + 0.5 * sin(_elapsed * 20.0)
+		var side_offset := Vector2(-SHIP_DRAW_SIZE.x * 0.45 * (1.0 if _facing_right else -1.0), 0.0).rotated(_bank_angle)
+		var heading_offset := Vector2(-cos(_heading_angle), -sin(_heading_angle)) * SHIP_DRAW_SIZE.x * 0.45
+		var engine_offset: Vector2 = side_offset.lerp(heading_offset, _vertical_blend)
+		var engine_pos := center + engine_offset
+		draw_circle(engine_pos, 6.0 * glow_pulse, Color(0.4, 0.8, 1.0, 0.5))
+		draw_circle(engine_pos, 3.0 * glow_pulse, Color(0.8, 0.95, 1.0, 0.8))
 
 
 func _draw_minimap(gs: GameStateData) -> void:
@@ -497,7 +611,7 @@ func _draw_minimap(gs: GameStateData) -> void:
 	draw_arc(player_pos, 6.0, 0.0, TAU, 24, Color(0.43, 0.84, 1.0, 0.4), 1.0)
 
 	# Direction indicator (small line showing heading)
-	var dir_end := player_pos + Vector2(cos(_ship_angle), sin(_ship_angle)) * 10.0
+	var dir_end := player_pos + Vector2(cos(_heading_angle), sin(_heading_angle)) * 10.0
 	draw_line(player_pos, dir_end, Color(0.43, 0.84, 1.0, 0.7), 1.5)
 
 	# Label
@@ -514,7 +628,7 @@ func _draw_controls_bar() -> void:
 
 	var default_font: Font = ThemeDB.fallback_font
 	if default_font:
-		var hint_text := "WASD: MOVE  |  E: FACTIONS  |  SPACE: SHIP  |  M: MISSIONS  |  ESC: PAUSE"
+		var hint_text := "WASD: MOVE  |  E: FACTIONS  |  SPACE: SHIP  |  R: REPAIR  |  M: MISSIONS  |  ESC: PAUSE"
 		draw_string(
 			default_font,
 			Vector2(size.x * 0.5 - 280, bar_y + 18),

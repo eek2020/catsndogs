@@ -20,18 +20,18 @@ offset_top = -280.0
 [node name="HBox" type="HBoxContainer" parent="Panel"]
 layout_mode = 2
 
-[node name="PortraitContainer" type="VBoxContainer" parent="Panel/HBox"]
+[node name="LeftPortraitContainer" type="VBoxContainer" parent="Panel/HBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 0)
 alignment = 1
 
-[node name="PortraitRect" type="TextureRect" parent="Panel/HBox/PortraitContainer"]
+[node name="PortraitRect" type="TextureRect" parent="Panel/HBox/LeftPortraitContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(100, 100)
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameLabel" type="Label" parent="Panel/HBox/PortraitContainer"]
+[node name="NameLabel" type="Label" parent="Panel/HBox/LeftPortraitContainer"]
 layout_mode = 2
 horizontal_alignment = 1
 theme_override_colors/font_color = Color(0.3, 0.8, 0.9, 1)
@@ -56,3 +56,20 @@ text = ""
 
 [node name="ChoicesContainer" type="VBoxContainer" parent="Panel/HBox/VBox"]
 layout_mode = 2
+
+[node name="RightPortraitContainer" type="VBoxContainer" parent="Panel/HBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 0)
+alignment = 1
+
+[node name="PortraitRect" type="TextureRect" parent="Panel/HBox/RightPortraitContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 100)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Panel/HBox/RightPortraitContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.3, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 14

@@ -19,6 +19,7 @@ signal salvage_pickup
 
 # --- Encounter events ---
 signal encounter_triggered
+signal dialogue_step_advanced(encounter_id: String, step_index: int)
 
 # --- Trade events ---
 signal trade_buy
@@ -36,6 +37,7 @@ signal load_game
 # --- Narrative events ---
 signal protagonist_selected(protagonist_id: String)
 signal arc_advanced(old_arc: String, new_arc: String)
+signal arc_transition_complete(new_arc: String)
 signal game_ending_reached
 
 # --- Audio events ---
@@ -67,6 +69,7 @@ signal faction_diplomacy(aggressor_id: String, target_id: String, outcome: Strin
 # --- Crew events ---
 signal crew_morale_changed(average_morale: int)
 signal crew_mutiny_risk(crew_id: String)
+signal crew_member_recruited(crew_id: String, protagonist_id: String)
 
 # --- UI navigation ---
 signal ui_select

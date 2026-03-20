@@ -25,6 +25,12 @@ func load_distress_signals() -> void:
 	_distress_pool = data_loader.load_distress_signals()
 
 
+func load_crew_missions(protagonist_id: String, p_data_loader: DataLoader) -> void:
+	var crew_missions: Array = p_data_loader.load_crew_missions(protagonist_id)
+	for mission in crew_missions:
+		_mission_templates.append(mission)
+
+
 # ------------------------------------------------------------------
 # Mission discovery & activation
 # ------------------------------------------------------------------

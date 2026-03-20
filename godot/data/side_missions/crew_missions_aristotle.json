@@ -1,0 +1,124 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "crew_aristotle_nine_lives",
+      "mission_type": "crew_recruitment",
+      "title": "Old Friends, New Stars",
+      "description": "Sensors have picked up a damaged escape pod drifting near the Asteroid Belt. The transponder code is old — very old. It belongs to Nine Lives, a legendary survivor and one of Aristotle's oldest friends from the streets.",
+      "region": "asteroid_belt",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_crystal_discovered": true
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "nine_lives",
+      "objectives": [
+        {
+          "objective_id": "find_nine_lives",
+          "description": "Locate the damaged escape pod in the Asteroid Belt",
+          "encounter_id": "enc_crew_nine_lives_discovery"
+        },
+        {
+          "objective_id": "recruit_nine_lives",
+          "description": "Welcome Nine Lives aboard",
+          "encounter_id": "enc_crew_nine_lives_recruit"
+        }
+      ],
+      "rewards": {"salvage": 20},
+      "faction_rewards": {"felid_corsairs": 5},
+      "priority": 5
+    },
+    {
+      "mission_id": "crew_aristotle_no_tail",
+      "mission_type": "crew_recruitment",
+      "title": "Last Cat Standing",
+      "description": "Reports of a lone cat holding a besieged outpost against League forces have reached your ears. No Tail — scarred, tail-less, and furious — won't join just anyone. She respects only strength.",
+      "region": "contested_border",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "no_tail",
+      "objectives": [
+        {
+          "objective_id": "find_no_tail",
+          "description": "Locate the besieged outpost",
+          "encounter_id": "enc_crew_no_tail_discovery"
+        },
+        {
+          "objective_id": "prove_strength",
+          "description": "Prove your strength to No Tail",
+          "encounter_id": "enc_crew_no_tail_challenge"
+        },
+        {
+          "objective_id": "recruit_no_tail",
+          "description": "Convince No Tail to join your crew",
+          "encounter_id": "enc_crew_no_tail_recruit"
+        }
+      ],
+      "rewards": {"salvage": 30},
+      "faction_rewards": {"felid_corsairs": 3, "canis_league": -3},
+      "priority": 4
+    },
+    {
+      "mission_id": "crew_aristotle_silky",
+      "mission_type": "crew_recruitment",
+      "title": "The Labyrinth Navigator",
+      "description": "Strange signals emanate from deep within a fairy-realm labyrinth. Someone is trapped inside — someone who already knows you're coming. Silky, the enigmatic cartographer, has been waiting.",
+      "region": "fairy_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "silky",
+      "objectives": [
+        {
+          "objective_id": "enter_labyrinth",
+          "description": "Navigate the fairy-realm labyrinth",
+          "encounter_id": "enc_crew_silky_discovery"
+        },
+        {
+          "objective_id": "recruit_silky",
+          "description": "Meet Silky and welcome her aboard",
+          "encounter_id": "enc_crew_silky_recruit"
+        }
+      ],
+      "rewards": {"crystals": 10},
+      "faction_rewards": {"fairies": 8},
+      "priority": 4
+    },
+    {
+      "mission_id": "crew_aristotle_blood_paw",
+      "mission_type": "crew_recruitment",
+      "title": "The Surgeon's Price",
+      "description": "A war zone field hospital is about to be overrun. Blood Paw, a former Lion court physician who defected, is the only thing keeping dozens of wounded alive. She won't leave until everyone is safe.",
+      "region": "lion_territory",
+      "trigger_conditions": {
+        "current_arc": "arc_2"
+      },
+      "discovery_encounter_id": null,
+      "crew_member_id": "blood_paw",
+      "objectives": [
+        {
+          "objective_id": "find_field_hospital",
+          "description": "Locate the field hospital in the war zone",
+          "encounter_id": "enc_crew_blood_paw_discovery"
+        },
+        {
+          "objective_id": "evacuate_wounded",
+          "description": "Help evacuate the wounded",
+          "encounter_id": "enc_crew_blood_paw_challenge"
+        },
+        {
+          "objective_id": "recruit_blood_paw",
+          "description": "Convince Blood Paw to join your crew",
+          "encounter_id": "enc_crew_blood_paw_recruit"
+        }
+      ],
+      "rewards": {"salvage": 25},
+      "faction_rewards": {"lions": 5},
+      "priority": 3
+    }
+  ]
+}

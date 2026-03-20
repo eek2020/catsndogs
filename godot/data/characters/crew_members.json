@@ -1,0 +1,168 @@
+{
+  "crew_members": [
+    {
+      "crew_id": "nine_lives",
+      "name": "Nine Lives",
+      "species": "cat",
+      "role": "first_mate",
+      "faction_origin": "felid_corsairs",
+      "protagonist_id": "aristotle",
+      "portrait": "res://assets/characters/crew/nine_lives.png",
+      "description": "A legendary cat survivor found drifting in a damaged escape pod. Has cheated death so many times the crew thinks she's immortal.",
+      "recruitment_story": "Nine Lives and Aristotle are old friends from the streets. When you find her drifting in a damaged escape pod near the Asteroid Belt, she grins through the static and says she's been waiting for a ride. She joins without hesitation — old debts and older loyalties.",
+      "skills": ["navigation", "evasion", "repair"],
+      "skill_level": 7,
+      "trait_id": "survivability",
+      "trait_description": "Reduces crew casualty chance and boosts hull repair rate.",
+      "trait_bonuses": {
+        "crew_casualty_reduction": 0.15,
+        "hull_repair_rate": 0.10,
+        "post_combat_recovery": 0.05
+      },
+      "join_type": "willing"
+    },
+    {
+      "crew_id": "no_tail",
+      "name": "No Tail",
+      "species": "cat",
+      "role": "gunner",
+      "faction_origin": "felid_corsairs",
+      "protagonist_id": "aristotle",
+      "portrait": "res://assets/characters/crew/no_tail.png",
+      "description": "A scarred, battle-hardened cat with a missing tail and a grudge against the Canis League. Found defending a besieged outpost alone.",
+      "recruitment_story": "No Tail stands alone on the walls of a crumbling outpost, surrounded by League wreckage. She doesn't flinch when you approach — just sizes you up. 'Prove you're not soft,' she growls. Only strength earns her respect.",
+      "skills": ["gunnery", "intimidation", "combat"],
+      "skill_level": 8,
+      "trait_id": "firepower",
+      "trait_description": "Increases weapon damage and grants bonus chance for critical hits.",
+      "trait_bonuses": {
+        "firepower_bonus": 0.10,
+        "critical_hit_chance": 0.05
+      },
+      "join_type": "persuade"
+    },
+    {
+      "crew_id": "silky",
+      "name": "Silky",
+      "species": "cat",
+      "role": "navigator",
+      "faction_origin": "fairies",
+      "protagonist_id": "aristotle",
+      "portrait": "res://assets/characters/crew/silky.png",
+      "description": "A graceful, enigmatic cat who knows hidden routes between realms. Found trapped in a fairy-realm labyrinth.",
+      "recruitment_story": "You find Silky in the shifting corridors of a fairy labyrinth, calmly sketching star charts on the walls. She already knows your name. 'I was wondering when you'd arrive,' she says, tucking the charts under one arm. She joins without being asked.",
+      "skills": ["navigation", "cartography", "perception"],
+      "skill_level": 7,
+      "trait_id": "pathfinding",
+      "trait_description": "Unlocks hidden routes, reduces travel time, and increases exploration discovery rate.",
+      "trait_bonuses": {
+        "exploration_discovery_rate": 0.12,
+        "fuel_efficiency": 0.08
+      },
+      "join_type": "willing"
+    },
+    {
+      "crew_id": "blood_paw",
+      "name": "Blood Paw",
+      "species": "cat",
+      "role": "surgeon",
+      "faction_origin": "lions",
+      "protagonist_id": "aristotle",
+      "portrait": "res://assets/characters/crew/blood_paw.png",
+      "description": "A former Lion court physician who defected after witnessing corruption. Found running a field hospital in a war zone.",
+      "recruitment_story": "Blood Paw is elbow-deep in triage when you find her, stitching together wounded from three different factions. She barely looks up. 'If you want my help, help me first. Get these people out.' Only after the evacuation does she agree to join your crew.",
+      "skills": ["medicine", "chemistry", "diplomacy"],
+      "skill_level": 8,
+      "trait_id": "healing",
+      "trait_description": "Increases crew morale recovery, reduces hull repair costs, and boosts post-combat recovery.",
+      "trait_bonuses": {
+        "morale_recovery": 0.10,
+        "hull_repair_rate": 0.08,
+        "post_combat_recovery": 0.10
+      },
+      "join_type": "persuade"
+    },
+    {
+      "crew_id": "charlie",
+      "name": "Charlie",
+      "species": "dog",
+      "role": "first_mate",
+      "faction_origin": "canis_league",
+      "protagonist_id": "dave",
+      "portrait": "res://assets/characters/crew/charlie.png",
+      "description": "Dave's childhood friend from the Canis League academy. Found commanding a supply convoy under ambush.",
+      "recruitment_story": "Charlie's convoy is pinned down when you arrive — League supplies burning, raiders circling. You break the ambush together, just like the academy drills. He grabs your arm afterwards, grinning. 'Just like old times. Where we headed next, Captain?'",
+      "skills": ["leadership", "logistics", "tactics"],
+      "skill_level": 7,
+      "trait_id": "loyalty",
+      "trait_description": "Boosts crew morale, reduces desertion chance, and grants bonus to leadership checks.",
+      "trait_bonuses": {
+        "morale_recovery": 0.12,
+        "crew_casualty_reduction": 0.08
+      },
+      "join_type": "willing"
+    },
+    {
+      "crew_id": "bombardier",
+      "name": "Bombardier",
+      "species": "dog",
+      "role": "gunner",
+      "faction_origin": "canis_league",
+      "protagonist_id": "dave",
+      "portrait": "res://assets/characters/crew/bombardier.png",
+      "description": "A demolitions expert court-martialled for 'excessive enthusiasm.' Found in a League brig during a prison break encounter.",
+      "recruitment_story": "Bombardier is laughing when you find him in the brig — the wall behind him has scorch marks from a failed escape attempt. 'You another by-the-book officer?' he asks, squinting. Convince him you're different, and his eyes light up. 'Now we're talking.'",
+      "skills": ["demolitions", "gunnery", "engineering"],
+      "skill_level": 8,
+      "trait_id": "explosives",
+      "trait_description": "Increases firepower, area damage bonus, and chance to disable enemy systems.",
+      "trait_bonuses": {
+        "firepower_bonus": 0.12,
+        "critical_hit_chance": 0.06
+      },
+      "join_type": "persuade"
+    },
+    {
+      "crew_id": "luna",
+      "name": "Luna",
+      "species": "wolf_dog",
+      "role": "navigator",
+      "faction_origin": "wolves",
+      "protagonist_id": "dave",
+      "portrait": "res://assets/characters/crew/luna.png",
+      "description": "A quiet, calculating wolf-dog hybrid who reads star charts like poetry. Found stranded on a derelict research station.",
+      "recruitment_story": "Luna is alone on a dead research station, surrounded by star charts pinned to every surface. Her own ship's drive failed weeks ago. She studies you with calm, intelligent eyes. 'Your mission — it goes beyond the League, doesn't it? Interesting. I'll navigate.'",
+      "skills": ["navigation", "astronomy", "analysis"],
+      "skill_level": 7,
+      "trait_id": "star_reading",
+      "trait_description": "Unlocks hidden routes, improves ambush detection, and reduces fuel consumption.",
+      "trait_bonuses": {
+        "exploration_discovery_rate": 0.10,
+        "ambush_detection": 0.10,
+        "fuel_efficiency": 0.10
+      },
+      "join_type": "willing"
+    },
+    {
+      "crew_id": "thistle",
+      "name": "Thistle",
+      "species": "dog",
+      "role": "surgeon",
+      "faction_origin": "knights",
+      "protagonist_id": "dave",
+      "portrait": "res://assets/characters/crew/thistle.png",
+      "description": "A field medic from the Knights faction, disillusioned with chivalric politics. Found treating wounded from both sides of a battle.",
+      "recruitment_story": "Thistle is bandaging a Knight and a Corsair side by side when you find her. She fixes you with a hard stare. 'I don't patch people up so they can go kill each other again. If you're different, prove it.' Only honest conviction sways her.",
+      "skills": ["medicine", "field_surgery", "herbalism"],
+      "skill_level": 8,
+      "trait_id": "field_medicine",
+      "trait_description": "Increases crew morale recovery, reduces hull repair costs, and boosts post-combat survival.",
+      "trait_bonuses": {
+        "morale_recovery": 0.10,
+        "hull_repair_rate": 0.06,
+        "post_combat_recovery": 0.12
+      },
+      "join_type": "persuade"
+    }
+  ]
+}

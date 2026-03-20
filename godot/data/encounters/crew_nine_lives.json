@@ -1,0 +1,221 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_crew_nine_lives_discovery",
+      "encounter_type": "exploration",
+      "title": "A Familiar Signal",
+      "description": "Your sensors pick up a faint distress beacon — old frequency, old encryption. Felid Corsair codes from years ago. As the escape pod materialises on screen, battered and scorched, Aristotle's ears perk up. 'I know that transponder,' he whispers. 'That's Nine Lives.'",
+      "arc_id": "arc_1",
+      "location": "asteroid_belt",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "arc1_crystal_discovered": true
+      },
+      "npc_ids": ["aristotle", "nine_lives"],
+      "priority": 6,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "nine_lives",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "aristotle",
+          "text": "That transponder frequency... Felid Corsair encryption, pre-war codes. Only a handful of us ever used that channel."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "It's Nine Lives. I'd stake the ship on it. She's the only one reckless enough to still broadcast on that frequency."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "The pod looks like it's been through hell. Scorch marks, hull breaches patched with emergency sealant...",
+          "choices": [
+            {
+              "choice_id": "rescue_pod",
+              "text": "Bring the escape pod into the cargo bay immediately.",
+              "next_step": "rescue_immediate",
+              "outcome": {
+                "description": "The airlock hisses open and a battered cat stumbles out, grinning through cracked whiskers.",
+                "faction_changes": {"felid_corsairs": 3},
+                "resource_changes": {},
+                "story_flags_set": ["crew_nine_lives_found"],
+                "story_flags_cleared": []
+              }
+            },
+            {
+              "choice_id": "scan_first",
+              "text": "Run a full scan — could be a trap.",
+              "next_step": "scan_cautious",
+              "outcome": {
+                "description": "Scans confirm a single life sign — feline, vital signs stable but weakened. No booby traps.",
+                "faction_changes": {"felid_corsairs": 3},
+                "resource_changes": {},
+                "story_flags_set": ["crew_nine_lives_found"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "rescue_immediate",
+          "speaker": "nine_lives",
+          "text": "Took you long enough, Ari. I was starting to think I'd have to rescue myself. Again."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Nine Lives. You look like you've been dragged through an asteroid field backwards."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Forwards, actually. Twice. League ambush near the Veil. Took out my ship, but you know me — hard to kill."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Nice ship, by the way. Bit clean for a pirate vessel, but we can fix that."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "You haven't changed a bit. Still grinning after a near-death experience."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Near-death is my resting state, Captain. Speaking of which — got anything to eat? Escape pod rations taste like engine grease.",
+          "end": true
+        },
+        {
+          "step_id": "scan_cautious",
+          "speaker": "aristotle",
+          "text": "One life sign, feline. Vitals weakened but stable. No explosives, no secondary signals. It's clean."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Alright. Bring her in."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "You scanned me? You actually scanned me before opening the door?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Standard procedure. The League has been using lure traps with captured transponders."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Standard procedure. Listen to you. The Aristotle I remember once jumped into a nebula because he thought he saw something shiny."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "That was a whisper crystal deposit, and it paid for our first refit."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Good thing you're the careful one. I've used up at least seven of my lives getting here. Maybe eight. I lost count somewhere around the second explosion."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Get some rest. We'll talk once you've eaten something that isn't emergency paste."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Already feeling at home, Captain.",
+          "end": true
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_crew_nine_lives_recruit",
+      "encounter_type": "diplomatic",
+      "title": "Nine Lives Joins the Crew",
+      "description": "Nine Lives leans against the bridge railing, watching the stars. She's cleaned up, but the scars from her ordeal are still fresh. There's something in her eyes — not just gratitude, but purpose.",
+      "arc_id": "arc_1",
+      "location": "asteroid_belt",
+      "trigger_conditions": {
+        "crew_nine_lives_found": true
+      },
+      "npc_ids": ["aristotle", "nine_lives"],
+      "priority": 7,
+      "repeatable": false,
+      "mission_type": "crew_recruitment",
+      "crew_member_id": "nine_lives",
+      "choices": [],
+      "dialogue_steps": [
+        {
+          "speaker": "nine_lives",
+          "text": "You know, I've been drifting for weeks. Lost my ship, lost my crew. League ambush near the Serpent Nebula."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "I heard rumours. The League has been hitting Corsair patrols hard since the crystal deposits were found."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "It's worse than rumours, Ari. They're not just raiding — they're systematically hunting us. Every old route, every safe harbour. Someone's been feeding them information."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "All the more reason to watch each other's backs."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Funny you should say that. I've been thinking."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "I still know every smuggling route from here to the Outer Veil. I know which station masters can be bribed and which ones will shoot on sight. I know how League patrol ships think, because I've been outrunning them for fifteen years."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "That sounds suspiciously like a job application."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Call it what you like. What I'm saying is — you need a First Mate who refuses to die. And I need a ship with a captain who won't leave people floating in escape pods."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "So what do you say, Captain? Want to cause some trouble together? Like the old days, but with better equipment.",
+          "choices": [
+            {
+              "choice_id": "welcome_aboard",
+              "text": "Welcome aboard, old friend. The ship needs someone who knows these routes.",
+              "next_step": "accepted",
+              "outcome": {
+                "description": "Nine Lives grins — the same fearless grin from the old days. She takes her station with the ease of someone who's always belonged there.",
+                "faction_changes": {},
+                "resource_changes": {},
+                "story_flags_set": ["crew_nine_lives_recruited"],
+                "story_flags_cleared": []
+              }
+            }
+          ]
+        },
+        {
+          "step_id": "accepted",
+          "speaker": "nine_lives",
+          "text": "First Mate Nine Lives, reporting for duty. Try not to get all sentimental on me."
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Wouldn't dream of it. Your station is the second console, port side. Navigation and tactical."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Port side. My favourite. Better view of whatever's about to shoot at us."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "Oh, and Ari? One thing. When I say 'hard to starboard' — you turn hard to starboard. No questions. Deal?"
+        },
+        {
+          "speaker": "aristotle",
+          "text": "Deal. Just don't spend your first shift rearranging my bridge."
+        },
+        {
+          "speaker": "nine_lives",
+          "text": "No promises, Captain. No promises at all.",
+          "end": true
+        }
+      ]
+    }
+  ]
+}

@@ -29,7 +29,27 @@ func get_available_encounters(game_state: GameStateData) -> Array:
 func _get_eligible_encounters(game_state: GameStateData) -> Array:
 	var result: Array = []
 	var sorted_table := encounter_table.duplicate()
-	sorted_table.sort_custom(func(a, b): return a.priority > b.priority)
+	# Apply crew trait discovery/detection bonuses to effective priority
+	var discovery_bonus: float = 0.0
+	var ambush_bonus: float = 0.0
+	if GameSession.crew_trait_system != null and game_state.player_ship != null:
+		discovery_bonus = GameSession.crew_trait_system.get_bonus(game_state.player_ship, "exploration_discovery_rate")
+		ambush_bonus = GameSession.crew_trait_system.get_bonus(game_state.player_ship, "ambush_detection")
+	sorted_table.sort_custom(func(a, b):
+		var a_pri: float = a.priority
+		var b_pri: float = b.priority
+		if discovery_bonus > 0.0:
+			if a.encounter_type == "exploration":
+				a_pri *= (1.0 + discovery_bonus)
+			if b.encounter_type == "exploration":
+				b_pri *= (1.0 + discovery_bonus)
+		if ambush_bonus > 0.0:
+			if a.encounter_type == "combat":
+				a_pri *= (1.0 + ambush_bonus)
+			if b.encounter_type == "combat":
+				b_pri *= (1.0 + ambush_bonus)
+		return a_pri > b_pri
+	)
 	for encounter in sorted_table:
 		if not encounter.repeatable and encounter.encounter_id in game_state.completed_encounters:
 			continue
@@ -107,4 +127,71 @@ func apply_choice_outcome(
 		game_state.completed_encounters.append(encounter.encounter_id)
 
 	EventBus.encounter_triggered.emit()
+
+	# Defer arc-exit check so the dialogue overlay can pop itself first.
+	# Without this, advance_arc pushes arc_summary on top of the dialogue
+	# and pop_overlay pops the wrong overlay, leaving the dialogue stuck.
+	GameSession.call_deferred("_deferred_arc_check")
+
 	return outcome.description
+
+
+## Apply a mid-dialogue choice outcome without completing the encounter.
+## Used during multi-step dialogue when a choice is made but the conversation continues.
+func apply_dialogue_step_outcome(
+	game_state: GameStateData,
+	encounter: Encounter,
+	choice: Encounter.DialogueStepChoice,
+) -> void:
+	var outcome: Encounter.EncounterOutcome = choice.outcome
+	if outcome == null:
+		return
+
+	# Set story flags
+	for flag in outcome.story_flags_set:
+		game_state.story_flags[flag] = true
+
+	# Clear story flags
+	for flag in outcome.story_flags_cleared:
+		game_state.story_flags.erase(flag)
+
+	# Apply resource changes
+	for resource_key in outcome.resource_changes:
+		var delta: int = outcome.resource_changes[resource_key]
+		if resource_key == "crystal_inventory":
+			game_state.crystal_inventory = maxi(0, game_state.crystal_inventory + delta)
+		elif resource_key == "crystal_quality":
+			game_state.crystal_quality = clampi(game_state.crystal_quality + delta, 1, 5)
+		elif resource_key == "salvage":
+			game_state.salvage = maxi(0, game_state.salvage + delta)
+
+	# Apply faction reputation changes
+	for faction_id in outcome.faction_changes:
+		var delta: int = outcome.faction_changes[faction_id]
+		if game_state.faction_registry.has(faction_id):
+			var faction: Faction = game_state.faction_registry[faction_id]
+			faction.reputation_with_player = clampi(faction.reputation_with_player + delta, -100, 100)
+			faction.update_diplomatic_state()
+			EventBus.faction_score_changed.emit(faction_id, delta)
+
+	# Record decision
+	var pd := GameStateData.PlayerDecision.new()
+	pd.decision_id = "%s_%s" % [encounter.encounter_id, choice.choice_id]
+	pd.encounter_id = encounter.encounter_id
+	pd.choice_id = choice.choice_id
+	pd.arc_id = encounter.arc_id
+	pd.timestamp = game_state.playtime_seconds
+	pd.outcome_weight = 0.0
+	game_state.player_decisions.append(pd)
+
+
+## Mark an encounter as completed and check arc progression.
+## Called once at the end of a multi-step dialogue conversation.
+func complete_encounter(game_state: GameStateData, encounter: Encounter) -> void:
+	if encounter.encounter_id not in game_state.completed_encounters:
+		game_state.completed_encounters.append(encounter.encounter_id)
+
+	EventBus.encounter_triggered.emit()
+
+	# Defer arc-exit check so the dialogue overlay can pop itself first.
+	GameSession.call_deferred("_deferred_arc_check")

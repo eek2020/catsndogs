@@ -13,6 +13,7 @@ var exploration: ExplorationSystem
 var faction_conquest: FactionConquestAI
 var realm_control: RealmControlSystem
 var side_mission_system: SideMissionSystem
+var crew_trait_system: CrewTraitSystem
 var save_manager: SaveManager
 
 # Runtime state
@@ -31,11 +32,14 @@ func _ready() -> void:
 	faction_conquest = FactionConquestAI.new()
 	realm_control = RealmControlSystem.new()
 	side_mission_system = SideMissionSystem.new(data_loader)
+	crew_trait_system = CrewTraitSystem.new(data_loader)
 	save_manager = SaveManager.new()
 
 	# Wire EventBus signals
 	EventBus.arc_advanced.connect(_on_arc_advanced)
 	EventBus.game_ending_reached.connect(_on_game_ending_reached)
+	EventBus.crew_member_recruited.connect(_on_crew_member_recruited)
+	EventBus.combat_victory.connect(_on_combat_victory)
 
 
 # ------------------------------------------------------------------
@@ -49,6 +53,8 @@ func start_new_game(protagonist_id: String = "aristotle") -> void:
 	encounter_engine.load_encounters("arc1", suffix)
 	side_mission_system.load_missions("arc1", suffix)
 	side_mission_system.load_distress_signals()
+	side_mission_system.load_crew_missions(protagonist_id, data_loader)
+	_load_crew_encounters(protagonist_id)
 	realm_control.initialize_realms(game_state)
 	var region_data: Array = data_loader.load_regions()
 	exploration.load_regions(region_data)
@@ -137,6 +143,8 @@ func load_game(slot: int = 0) -> bool:
 	encounter_engine.load_encounters(game_state.current_arc, suffix)
 	side_mission_system.load_missions(game_state.current_arc, suffix)
 	side_mission_system.load_distress_signals()
+	side_mission_system.load_crew_missions(game_state.protagonist_id, data_loader)
+	_load_crew_encounters(game_state.protagonist_id)
 	realm_control.initialize_realms(game_state)
 	MusicManager.on_arc_change(game_state.current_arc)
 	MusicManager.on_state_change("navigation")
@@ -147,11 +155,21 @@ func load_game(slot: int = 0) -> bool:
 # Arc / ending callbacks
 # ------------------------------------------------------------------
 
-func _on_arc_advanced(old_arc: String, new_arc: String) -> void:
+func _deferred_arc_check() -> void:
+	if game_state != null and narrative.check_arc_exit(game_state):
+		narrative.advance_arc(game_state)
+
+
+func _on_arc_advanced(_old_arc: String, new_arc: String) -> void:
 	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
 	encounter_engine.load_encounters(new_arc, suffix)
 	side_mission_system.load_missions(new_arc, suffix)
 	MusicManager.on_arc_change(new_arc)
+
+
+func _on_combat_victory() -> void:
+	if game_state != null:
+		game_state.combat_victories += 1
 
 
 func _on_game_ending_reached() -> void:
@@ -162,7 +180,7 @@ func _on_game_ending_reached() -> void:
 # Screen helpers (called by UI scenes)
 # ------------------------------------------------------------------
 
-func open_trade_screen(faction_id: String) -> void:
+func open_trade_screen(_faction_id: String) -> void:
 	MusicManager.on_state_change("trade")
 
 
@@ -174,3 +192,38 @@ func quit_to_menu() -> void:
 func quit_game() -> void:
 	running = false
 	get_tree().quit()
+
+
+# ------------------------------------------------------------------
+# Crew recruitment
+# ------------------------------------------------------------------
+
+func _load_crew_encounters(protagonist_id: String) -> void:
+	var crew_members: Array = data_loader.load_crew_members()
+	for member in crew_members:
+		if member.get("protagonist_id", "") != protagonist_id:
+			continue
+		var crew_id: String = member.get("crew_id", "")
+		var encounters: Array = data_loader.load_crew_encounters(crew_id)
+		for enc in encounters:
+			encounter_engine.encounter_table.append(enc)
+
+
+func _on_crew_member_recruited(crew_id: String, _protagonist_id: String) -> void:
+	if game_state == null:
+		return
+	var crew_members: Array = data_loader.load_crew_members()
+	for member_data in crew_members:
+		if member_data.get("crew_id", "") == crew_id:
+			var cm := Ship.CrewMember.from_dict(member_data)
+			cm.recruitment_status = "recruited"
+			cm.morale = 100
+			game_state.player_ship.crew.append(cm)
+			break
+
+
+func recruit_crew_member(crew_id: String) -> void:
+	if game_state == null:
+		return
+	var protagonist_id: String = game_state.protagonist_id
+	EventBus.crew_member_recruited.emit(crew_id, protagonist_id)

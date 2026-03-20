@@ -51,7 +51,9 @@ func _populate_panel(
 	# Portrait
 	var portrait_path: String = config.get("portrait", "")
 	if not portrait_path.is_empty() and ResourceLoader.exists(portrait_path):
-		portrait.texture = load(portrait_path)
+		var tex: Texture2D = load(portrait_path)
+		tex = _remove_near_white_bg(tex)
+		portrait.texture = tex
 	# Name and faction
 	name_label.text = "%s — %s" % [config.get("name", ""), config.get("title", "")]
 	# Description
@@ -82,3 +84,27 @@ func _on_back() -> void:
 	var main: Control = get_tree().current_scene
 	if main.has_method("switch_scene"):
 		main.switch_scene("menu")
+
+
+static func _remove_near_white_bg(
+	tex: Texture2D, hard_threshold: float = 0.91, soft_threshold: float = 0.77
+) -> Texture2D:
+	if tex == null:
+		return tex
+	var image: Image = tex.get_image()
+	if image == null:
+		return tex
+	image.convert(Image.FORMAT_RGBA8)
+	var w: int = image.get_width()
+	var h: int = image.get_height()
+	for y in h:
+		for x in w:
+			var c: Color = image.get_pixel(x, y)
+			var whiteness: float = minf(c.r, minf(c.g, c.b))
+			if whiteness >= hard_threshold:
+				image.set_pixel(x, y, Color(c.r, c.g, c.b, 0.0))
+			elif whiteness >= soft_threshold:
+				var span: float = maxf(0.001, hard_threshold - soft_threshold)
+				var alpha_scale: float = (hard_threshold - whiteness) / span
+				image.set_pixel(x, y, Color(c.r, c.g, c.b, c.a * alpha_scale))
+	return ImageTexture.create_from_image(image)

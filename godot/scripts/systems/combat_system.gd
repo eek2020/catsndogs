@@ -54,10 +54,19 @@ class CombatLog extends RefCounted:
 
 
 ## Damage = attacker_firepower - defender_armour, min 1, with +/-20% variance.
-static func calculate_damage(attacker_fp: int, defender_armour: int) -> int:
-	var base := maxi(1, attacker_fp - defender_armour)
+## If the attacker is the player, crew trait bonuses are applied.
+static func calculate_damage(attacker_fp: int, defender_armour: int, is_player: bool = false) -> int:
+	var effective_fp: float = float(attacker_fp)
+	if is_player and GameSession.game_state != null:
+		effective_fp *= (1.0 + GameSession.crew_trait_system.get_bonus(GameSession.game_state.player_ship, "firepower_bonus"))
+	var base := maxi(1, int(effective_fp) - defender_armour)
 	var variance := randf_range(0.8, 1.2)
-	return maxi(1, int(base * variance))
+	var damage := maxi(1, int(base * variance))
+	if is_player and GameSession.game_state != null:
+		var crit_bonus: float = GameSession.crew_trait_system.get_bonus(GameSession.game_state.player_ship, "critical_hit_chance")
+		if crit_bonus > 0.0 and randf() < crit_bonus:
+			damage = int(damage * 1.5)
+	return damage
 
 
 ## Dodge probability based on speed: speed 10 -> 40%, speed 1 -> 4%.

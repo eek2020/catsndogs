@@ -13,8 +13,10 @@ var _revealing: bool = false
 var _reveal_accumulator: float = 0.0
 var _reveal_start_chars: int = 0
 var _reveal_target_chars: int = 0
+var _pause_timer: float = 0.0
 
 const TEXT_REVEAL_CPS: float = 62.0
+const LINE_PAUSE_SECONDS: float = 0.5
 
 
 func setup(p_title: String, p_subtitle: String, p_lines: Array[String]) -> void:
@@ -39,11 +41,20 @@ func _ready() -> void:
 		for line in raw_lines:
 			lines.append(str(line))
 	_current_line = 0
-	continue_label.text = "SPACE: reveal text"
+	continue_label.text = "ESC: skip"
 	_show_next_line()
 
 
 func _process(dt: float) -> void:
+	# Handle pause between lines — auto-advance after timer expires
+	if _pause_timer > 0.0:
+		_pause_timer -= dt
+		if _pause_timer <= 0.0:
+			if _current_line < lines.size():
+				_show_next_line()
+			else:
+				_finish()
+		return
 	if not _revealing:
 		return
 	_reveal_accumulator += dt * TEXT_REVEAL_CPS
@@ -53,10 +64,8 @@ func _process(dt: float) -> void:
 	)
 	if text_body.visible_characters >= _reveal_target_chars:
 		_revealing = false
-		if _current_line < lines.size():
-			continue_label.text = "SPACE: next line"
-		else:
-			continue_label.text = "Press SPACE to begin..."
+		# Start pause timer before auto-advancing to next line
+		_pause_timer = LINE_PAUSE_SECONDS
 
 
 func _show_next_line() -> void:
@@ -71,7 +80,7 @@ func _show_next_line() -> void:
 		_reveal_target_chars = text_body.get_total_character_count()
 		text_body.visible_characters = _reveal_start_chars
 		_revealing = true
-		continue_label.text = "SPACE: reveal text"
+		_pause_timer = 0.0
 		text_body.modulate.a = 0.72
 		var tween := create_tween()
 		tween.tween_property(text_body, "modulate:a", 1.0, 0.22)
@@ -82,21 +91,11 @@ func _show_next_line() -> void:
 func _reveal_to_end() -> void:
 	text_body.visible_characters = _reveal_target_chars
 	_revealing = false
-	if _current_line < lines.size():
-		continue_label.text = "SPACE: next line"
-	else:
-		continue_label.text = "Press SPACE to begin..."
+	_pause_timer = LINE_PAUSE_SECONDS
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("fire") or event.is_action_pressed("confirm"):
-		if _revealing:
-			_reveal_to_end()
-		elif _current_line < lines.size():
-			_show_next_line()
-		else:
-			_finish()
-	elif event.is_action_pressed("skip"):
+	if event.is_action_pressed("skip"):
 		_finish()
 
 

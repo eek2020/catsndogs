@@ -186,7 +186,12 @@ func calculate_repair_cost(ship: Ship, repair_amount: int) -> int:
 	if repair_amount <= 0 or ship.current_hull >= ship.max_hull:
 		return 0
 	var base_cost_per_hull: float = ship.max_hull * 0.5
-	return int(base_cost_per_hull * (float(repair_amount) / ship.max_hull))
+	var cost := int(base_cost_per_hull * (float(repair_amount) / ship.max_hull))
+	if GameSession.crew_trait_system != null:
+		var repair_bonus: float = GameSession.crew_trait_system.get_bonus(ship, "hull_repair_rate")
+		if repair_bonus > 0.0:
+			cost = maxi(1, int(cost * (1.0 - repair_bonus)))
+	return cost
 
 
 func repair_ship(game_state: GameStateData, repair_amount: int) -> bool:
@@ -205,6 +210,85 @@ func repair_ship(game_state: GameStateData, repair_amount: int) -> bool:
 		"type": "repair", "repair_amount": actual_repair, "cost": cost,
 	})
 	return true
+
+
+func purchase_ship(game_state: GameStateData, template: Dictionary) -> bool:
+	"""Buy a new ship, replacing the player's current vessel. Crew transfers over."""
+	var ship := game_state.player_ship
+	if ship == null:
+		return false
+	var cost_crystals: int = template.get("cost_crystals", 0)
+	var cost_salvage: int = template.get("cost_salvage", 0)
+	if game_state.crystal_inventory < cost_crystals or game_state.salvage < cost_salvage:
+		return false
+	# Already flying this class?
+	if ship.ship_class == template.get("template_id", ""):
+		return false
+	# Deduct costs
+	game_state.crystal_inventory -= cost_crystals
+	game_state.salvage -= cost_salvage
+	# Create new ship from template, preserving crew and cargo
+	var old_crew: Array = ship.crew.duplicate()
+	var old_cargo: int = ship.crystal_cargo
+	var new_ship := Ship.from_template(template, ship.ship_id, ship.ship_name)
+	new_ship.crew = old_crew
+	new_ship.crystal_cargo = old_cargo
+	game_state.player_ship = new_ship
+	game_state.trade_ledger.append({
+		"type": "ship_purchase",
+		"template_id": template.get("template_id", ""),
+		"cost_crystals": cost_crystals,
+		"cost_salvage": cost_salvage,
+	})
+	EventBus.ship_purchased.emit(template.get("template_id", ""))
+	return true
+
+
+func purchase_upgrade(game_state: GameStateData, upgrade_data: Dictionary) -> bool:
+	"""Buy and apply an upgrade to the player's ship."""
+	var ship := game_state.player_ship
+	if ship == null:
+		return false
+	var cost_crystals: int = upgrade_data.get("cost_crystals", 0)
+	var cost_salvage: int = upgrade_data.get("cost_salvage", 0)
+	if game_state.crystal_inventory < cost_crystals or game_state.salvage < cost_salvage:
+		return false
+	# Check for duplicate upgrade
+	var uid: String = upgrade_data.get("upgrade_id", "")
+	for existing in ship.upgrades:
+		if existing.upgrade_id == uid:
+			return false
+	# Deduct costs
+	game_state.crystal_inventory -= cost_crystals
+	game_state.salvage -= cost_salvage
+	# Apply stat modifier
+	var target_stat: String = upgrade_data.get("target_stat", "")
+	var modifier: int = upgrade_data.get("modifier", 0)
+	_apply_stat_modifier(ship, target_stat, modifier)
+	# Apply side effect if present
+	var side_effect: Dictionary = upgrade_data.get("side_effect", {})
+	if not side_effect.is_empty():
+		_apply_stat_modifier(ship, side_effect.get("target_stat", ""), side_effect.get("modifier", 0))
+	# Record the upgrade
+	var su := Ship.ShipUpgrade.from_dict(upgrade_data)
+	ship.upgrades.append(su)
+	EventBus.upgrade_purchased.emit(uid)
+	return true
+
+
+func _apply_stat_modifier(ship: Ship, stat: String, modifier: int) -> void:
+	"""Apply a numeric modifier to a ship stat."""
+	match stat:
+		"speed":
+			ship.speed = maxi(1, ship.speed + modifier)
+		"armour":
+			ship.armour = maxi(1, ship.armour + modifier)
+		"firepower":
+			ship.firepower = maxi(1, ship.firepower + modifier)
+		"crystal_capacity":
+			ship.crystal_capacity = maxi(1, ship.crystal_capacity + modifier)
+		"crew_capacity":
+			ship.crew_capacity = maxi(1, ship.crew_capacity + modifier)
 
 
 func get_discovered_deposits(game_state: GameStateData) -> Array:

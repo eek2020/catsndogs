@@ -61,12 +61,12 @@ func initialize_realms(game_state: GameStateData) -> void:
 		var sorted_inf: Array = influence.values().duplicate()
 		sorted_inf.sort()
 		sorted_inf.reverse()
-		var is_contested: bool = sorted_inf.size() > 1 and sorted_inf[1] > sorted_inf[0] * 0.7
+		var region_contested: bool = sorted_inf.size() > 1 and sorted_inf[1] > sorted_inf[0] * 0.7
 		var rs := RealmState.new()
 		rs.region_id = region_id
 		rs.controlling_faction = controller
 		rs.faction_influence = influence
-		rs.contested = is_contested
+		rs.contested = region_contested
 		realm_states[region_id] = rs
 
 

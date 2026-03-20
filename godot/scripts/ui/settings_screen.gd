@@ -9,6 +9,13 @@ extends Control
 
 
 func _ready() -> void:
+	# Initialize slider range (0.0 to 1.0 linear volume)
+	volume_slider.min_value = 0.0
+	volume_slider.max_value = 1.0
+	volume_slider.step = 0.05
+	volume_slider.value = db_to_linear(MusicManager._music_volume_db)
+	music_toggle.button_pressed = MusicManager._music_enabled
+	sfx_toggle.button_pressed = MusicManager._sfx_enabled
 	music_toggle.toggled.connect(_on_music_toggled)
 	sfx_toggle.toggled.connect(_on_sfx_toggled)
 	volume_slider.value_changed.connect(_on_volume_changed)
@@ -25,7 +32,7 @@ func _on_sfx_toggled(pressed: bool) -> void:
 
 
 func _on_volume_changed(value: float) -> void:
-	EventBus.volume_changed.emit(value)
+	MusicManager.set_music_volume(value)
 
 
 func _on_close() -> void:
