@@ -224,3 +224,59 @@ func load_crew_encounters(crew_id: String) -> Array:
 	for e in data.get("encounters", []):
 		encounters.append(Encounter.from_dict(e))
 	return encounters
+
+
+func load_region_maps() -> Dictionary:
+	var data: Variant = _load_json("maps/region_maps.json")
+	if data == null:
+		return {}
+	return data
+
+
+func load_galaxy_layout() -> Dictionary:
+	var data: Variant = _load_json("maps/galaxy_layout.json")
+	if data == null:
+		return {}
+	return data
+
+
+func load_purchasable_maps() -> Array:
+	var data: Variant = _load_json("maps/purchasable_maps.json")
+	if data == null:
+		return []
+	return data.get("maps", [])
+
+
+func load_cartographer_encounters() -> Array:
+	var data: Variant = _load_json("encounters/fairy_cartographer.json")
+	if data == null:
+		return []
+	var encounters: Array = []
+	for e in data.get("encounters", []):
+		encounters.append(Encounter.from_dict(e))
+	return encounters
+
+
+func load_cradle_encounters(suffix: String = "") -> Array:
+	"""Load Arc 9 (Cradle of Whispers) encounters — hidden optional arc."""
+	var filename := "encounters/arc9_encounters%s.json" % suffix
+	var data: Variant = _load_json(filename)
+	if data == null and not suffix.is_empty():
+		data = _load_json("encounters/arc9_encounters.json")
+	if data == null:
+		return []
+	var encounters: Array = []
+	for e in data.get("encounters", []):
+		encounters.append(Encounter.from_dict(e))
+	return encounters
+
+
+func load_special_character_encounters() -> Array:
+	"""Load encounters for special characters across all arcs."""
+	var data: Variant = _load_json("encounters/special_characters.json")
+	if data == null:
+		return []
+	var encounters: Array = []
+	for e in data.get("encounters", []):
+		encounters.append(Encounter.from_dict(e))
+	return encounters

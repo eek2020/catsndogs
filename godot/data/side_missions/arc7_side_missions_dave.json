@@ -1,0 +1,126 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc7_dave_warp_navigation",
+      "mission_type": "retrieval",
+      "title": "Operation Compass Point",
+      "description": "The Warp Marches are destabilizing, and League supply lines through the region are compromised. Dave is ordered to establish a secure corridor through the shifting lanes — failure means League forces are cut off from critical crystal reserves.",
+      "region": "warp_marches",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "playing_as_dave": true,
+        "arc7_warp_marches_unlocked": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_dave_warp_briefing",
+      "objectives": [
+        {
+          "objective_id": "map_anomalies",
+          "description": "Map all spatial anomalies in the target corridor",
+          "encounter_id": "enc_sm_arc7_dave_warp_map"
+        },
+        {
+          "objective_id": "establish_corridor",
+          "description": "Establish a stable navigation corridor",
+          "encounter_id": "enc_sm_arc7_dave_warp_corridor"
+        },
+        {
+          "objective_id": "deploy_infrastructure",
+          "description": "Deploy League navigation infrastructure",
+          "encounter_id": "enc_sm_arc7_dave_warp_deploy"
+        }
+      ],
+      "rewards": {"salvage": 85, "crystals": 18},
+      "faction_rewards": {"canis_league": 12},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc7_dave_alien_artifact",
+      "mission_type": "retrieval",
+      "title": "Unidentified Strategic Asset",
+      "description": "League deep-space sensors have detected an object of unknown origin beyond the Warp Marches. Preliminary analysis suggests pre-civilisation technology. Dave's orders: recover the asset for League research. Flux offered coordinates — for a price.",
+      "region": "deep_space",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "playing_as_dave": true,
+        "special_char_flux_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_dave_artifact_orders",
+      "objectives": [
+        {
+          "objective_id": "verify_coordinates",
+          "description": "Verify Flux's coordinates and assess the approach",
+          "encounter_id": "enc_sm_arc7_dave_artifact_verify"
+        },
+        {
+          "objective_id": "secure_artifact",
+          "description": "Secure the artifact for League custody",
+          "encounter_id": "enc_sm_arc7_dave_artifact_secure"
+        }
+      ],
+      "rewards": {"salvage": 55, "crystals": 38},
+      "faction_rewards": {"canis_league": 10},
+      "priority": 1
+    },
+    {
+      "mission_id": "sm_arc7_dave_crystal_experiments",
+      "mission_type": "investigation",
+      "title": "Crystal Research Initiative",
+      "description": "League scientists have been monitoring the Fairy Collective's crystal resonance research with growing alarm. Dave is sent to either participate as a League observer or shut the experiments down — depending on what he finds.",
+      "region": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "playing_as_dave": true,
+        "sm_arc4_dave_crystal_resonance_complete": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_dave_crystal_briefing",
+      "objectives": [
+        {
+          "objective_id": "assess_research",
+          "description": "Assess the Fairy research program's safety protocols",
+          "encounter_id": "enc_sm_arc7_dave_crystal_assess"
+        },
+        {
+          "objective_id": "participate_or_shut_down",
+          "description": "Decide to participate in or terminate the experiments",
+          "encounter_id": "enc_sm_arc7_dave_crystal_decide"
+        },
+        {
+          "objective_id": "manage_consequences",
+          "description": "Manage the consequences of the experiment's outcome",
+          "encounter_id": "enc_sm_arc7_dave_crystal_manage"
+        }
+      ],
+      "rewards": {"salvage": 65, "crystals": 45},
+      "faction_rewards": {"canis_league": 8, "fairies": 5},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc7_dave_diplomatic_intelligence",
+      "mission_type": "investigation",
+      "title": "Strategic Assessment Alpha",
+      "description": "With the endgame approaching, League High Command needs a comprehensive assessment of every faction's military capability, alliance status, and crystal reserves. Dave has the contacts. Time to use them.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "playing_as_dave": true,
+        "arc7_diplomacy_active": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_dave_assessment_orders",
+      "objectives": [
+        {
+          "objective_id": "compile_dossiers",
+          "description": "Compile intelligence dossiers on all major factions",
+          "encounter_id": "enc_sm_arc7_dave_dossiers"
+        },
+        {
+          "objective_id": "identify_threats",
+          "description": "Identify the primary threats to League interests",
+          "encounter_id": "enc_sm_arc7_dave_threats"
+        }
+      ],
+      "rewards": {"salvage": 45, "crystals": 14},
+      "faction_rewards": {"canis_league": 15},
+      "priority": 4
+    }
+  ]
+}

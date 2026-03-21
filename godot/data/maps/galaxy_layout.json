@@ -1,0 +1,84 @@
+{
+    "galaxy_name": "The Celestial Codex",
+    "nodes": {
+        "starting_realm": {
+            "gx": 0.22,
+            "gy": 0.50,
+            "color": "#FFD644",
+            "label_offset_y": -1
+        },
+        "feline_courts": {
+            "gx": 0.38,
+            "gy": 0.28,
+            "color": "#FF9E40",
+            "label_offset_y": -1
+        },
+        "canine_order": {
+            "gx": 0.62,
+            "gy": 0.18,
+            "color": "#4488FF",
+            "label_offset_y": -1
+        },
+        "fairy_realms": {
+            "gx": 0.55,
+            "gy": 0.55,
+            "color": "#AA66FF",
+            "label_offset_y": 1
+        },
+        "goblin_warrens": {
+            "gx": 0.28,
+            "gy": 0.75,
+            "color": "#66DD44",
+            "label_offset_y": 1
+        },
+        "knight_kingdoms": {
+            "gx": 0.75,
+            "gy": 0.55,
+            "color": "#FF6666",
+            "label_offset_y": -1
+        },
+        "deep_space": {
+            "gx": 0.82,
+            "gy": 0.82,
+            "color": "#AAEEFF",
+            "label_offset_y": 1
+        },
+        "shattered_prides": {
+            "gx": 0.30,
+            "gy": 0.12,
+            "color": "#FFCC00",
+            "label_offset_y": -1
+        },
+        "iron_expanse": {
+            "gx": 0.78,
+            "gy": 0.30,
+            "color": "#888899",
+            "label_offset_y": -1
+        },
+        "twilight_bazaar": {
+            "gx": 0.48,
+            "gy": 0.42,
+            "color": "#FFAA88",
+            "label_offset_y": -1
+        },
+        "warp_marches": {
+            "gx": 0.90,
+            "gy": 0.60,
+            "color": "#FF44FF",
+            "label_offset_y": 1
+        },
+        "bone_yard": {
+            "gx": 0.15,
+            "gy": 0.85,
+            "color": "#997755",
+            "label_offset_y": 1
+        },
+        "cradle_of_whispers": {
+            "gx": 0.50,
+            "gy": 0.50,
+            "color": "#FFFFFF",
+            "label_offset_y": 0,
+            "hidden": true
+        }
+    }
+}

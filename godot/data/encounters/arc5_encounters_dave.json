@@ -1,0 +1,290 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc5_dave_wolf_offensive",
+            "encounter_type": "combat",
+            "title": "The Wolf Offensive",
+            "description": "The Wolf Dominion strikes without warning. A hundred grey warships pour through the Amber Corridor, hitting League outposts in a coordinated blitz that Dave recognises immediately as professional-grade military planning. This is not a wolf raid. This is a wolf invasion. Dave watches the tactical display as red markers bloom across League territory like wounds. 'They have been planning this for months,' he says quietly. His first officer asks, 'Orders, sir?' Dave does not answer immediately. He is counting ships. Counting routes. Counting the lives that each response will cost.",
+            "arc_id": "arc_5",
+            "location": "amber_corridor",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_wolf_offensive": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "meet_head_on",
+                    "text": "\"Full fleet engagement. We meet them at the Amber Corridor chokepoint. No retreat.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The League fleet forms a wall of steel across the Corridor. Wolf ships crash against it in wave after wave. The fighting is savage, personal, ship-to-ship in the tightest quarters of the multiverse. Dave stands on a bridge that shakes with every impact and gives orders in the same tone he uses to request tea. The wolves break on the third wave. They fall back snarling. Dave counts the dead. Forty-seven League ships. He writes every name in his personal log that night.",
+                        "faction_changes": { "wolves": -15, "canis_league": 10 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": ["arc5_wolf_offensive"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "fighting_retreat",
+                    "text": "\"Controlled withdrawal. Cede the outer positions. Draw them into our kill zones.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders a tactical retreat that the wolves mistake for fear. They pursue, howling, into a sector Dave has spent three arcs mining with sensor buoys and automated gun platforms. The kill zone activates. Wolf ships die in clusters. The pursuit becomes a rout. Dave watches the wolves scatter and feels nothing. Not satisfaction. Not relief. Nothing. This is the job.",
+                        "faction_changes": { "wolves": -10, "canis_league": 5 },
+                        "resource_changes": { "salvage": 15, "crystal_inventory": -10 },
+                        "story_flags_set": ["arc5_wolf_offensive"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "diplomatic_channel",
+                    "text": "\"Open an encrypted channel to the Dominion alpha. Offer them what they actually want: crystal access.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave broadcasts on the Dominion's private frequency. The wolf alpha answers with teeth bared. Dave speaks numbers: crystal tonnage, delivery schedules, exclusive trade corridors. The alpha's snarl softens to calculation. Within hours, the offensive stalls. The wolves do not retreat — they reposition to 'monitoring distance.' Dave has bought time with promises. Promises he may or may not keep.",
+                        "faction_changes": { "wolves": 10, "canis_league": -10, "felid_corsairs": -5 },
+                        "resource_changes": { "crystal_inventory": -15 },
+                        "story_flags_set": ["arc5_wolf_offensive"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc5_dave_loyalty_crisis",
+            "encounter_type": "diplomatic",
+            "title": "The Loyalty Crisis",
+            "description": "Dave sits in his quarters aboard the Iron Paw. The door is locked. The lights are dim. On his desk are two documents: League High Command's latest orders — 'Maintain defensive posture. Do not escalate.' — and the wolf alpha's counter-proposal — 'Join us. The League's discipline combined with Dominion strength would be unstoppable. You would command the combined fleet.' Dave reads both. Again. And again. For the first time in his career, duty and conscience point in different directions. The League wants restraint. Every instinct Dave possesses screams that restraint will get them killed.",
+            "arc_id": "arc_5",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_wolf_offensive": true,
+                "arc5_dave_crisis": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "obey_command",
+                    "text": "\"I took an oath. The League's orders stand. Defensive posture. No escalation.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave burns the wolf proposal. He files High Command's orders in his operational ledger. His hand is steady. His mind is not. The defensive posture leaves three border sectors exposed. Dave knows they will fall. High Command does not. Or perhaps they do, and consider them acceptable losses. Dave does not consider any loss acceptable. But he obeys. That is what dogs do.",
+                        "faction_changes": { "canis_league": 10, "wolves": -10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc5_dave_crisis"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "exceed_orders",
+                    "text": "\"High Command does not have the tactical picture. I will defend the border sectors regardless of orders.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave deploys reinforcements to the exposed sectors without authorisation. It is insubordination. It may end his career. The border holds. When High Command demands an explanation, Dave transmits a single document: the casualty projections for the sectors he was ordered to abandon. The reprimand is quietly shelved. Dave files the incident under 'necessary.' His conscience is clear. His record is not.",
+                        "faction_changes": { "canis_league": -5, "wolves": -5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc5_dave_crisis"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "consider_wolf_offer",
+                    "text": "\"The Dominion's proposal has tactical merit. Open a back channel. Explore terms.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave contacts the wolf alpha through intermediaries. The terms are intoxicating: supreme command, combined fleets, crystal access for both factions. For three hours, Dave allows himself to imagine it. Then he looks at the League emblem on his desk. He does not accept. He does not refuse. He leaves the channel open. A bridge between duty and heresy. He has never walked so dangerous a line.",
+                        "faction_changes": { "wolves": 10, "canis_league": -10 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc5_dave_crisis"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc5_dave_knight_declaration",
+            "encounter_type": "diplomatic",
+            "title": "The Knight Declaration",
+            "description": "The Knight Order broadcasts on every open channel simultaneously. The message is brief, formal, and devastating: 'The Knight Order declares the Whisper Crystal network a protected heritage of the multiverse. Any faction that seeks to monopolise, weaponise, or destroy the crystal deposits will be treated as an enemy of civilisation. This declaration is retroactive and non-negotiable.' Dave listens to the broadcast three times. The Knights have just rewritten the rules of the entire conflict. Every faction's claims are now contested. Every military position is now potentially illegal. Dave allows himself a grim smile. The Knights have made enemies of everyone. That takes a particular kind of courage.",
+            "arc_id": "arc_5",
+            "location": "neutral_zone",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_dave_crisis": true,
+                "arc5_knight_declaration": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "support_declaration",
+                    "text": "\"The League endorses the Knight Declaration. Crystal heritage protection aligns with our security mandate.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave transmits formal League endorsement. It costs him wolf allies and lion patience, but it grants the League something more valuable: legitimacy. The Knights nod. The multiverse notices. For the first time, the League is seen not as a conqueror but as a guardian. Dave does not care about perception. He cares that the declaration gives him legal authority to blockade anyone who threatens the crystal network. Including Aristotle.",
+                        "faction_changes": { "knights": 15, "canis_league": 5, "wolves": -10, "lions": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc5_knight_declaration"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "pragmatic_neutrality",
+                    "text": "\"The League acknowledges the declaration without endorsement. We will evaluate it operationally.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave issues a carefully worded non-statement that commits the League to nothing. The Knights frown. The wolves shrug. The lions nod with grudging respect. Dave has preserved every option while closing none. It is the most Dave response imaginable. His staff officer mutters, 'Sir, what does that actually mean?' Dave replies, 'It means we will do what we were always going to do. But now we have a framework to cite when we do it.'",
+                        "faction_changes": { "knights": 0, "canis_league": 5 },
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": ["arc5_knight_declaration"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "reject_declaration",
+                    "text": "\"The Knight Order does not dictate League policy. Their declaration has no legal standing in League territory.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's rejection is immediate and public. The Knights' emissary stiffens. 'You will regret this, Commander.' Dave does not flinch. 'The League regrets nothing. We execute policy.' It is a hard line that isolates the League from the Knights' growing coalition. But Dave answers to the League. Not to crusaders.",
+                        "faction_changes": { "knights": -15, "canis_league": 10, "wolves": 5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc5_knight_declaration"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc5_dave_fairy_deep_secret",
+            "encounter_type": "exploration",
+            "title": "The Deep Secret",
+            "description": "The same fairy analyst who warned Dave about crystal instability reappears on a frequency so encrypted that Dave's codebreakers need four hours to verify the channel. She looks haggard, her wings dim. 'Commander. The Consortium has buried this. My superiors will have me killed for transmitting it. The crystals are not geological formations. They are biological. They are alive. And they have been alive for longer than any civilisation in the multiverse. The instability is not decay — it is a heartbeat. The crystals are waking up.'",
+            "arc_id": "arc_5",
+            "location": "deep_void",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_knight_declaration": true,
+                "arc5_fairy_deep_secret": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "protect_analyst",
+                    "text": "\"Transmit your location. The League will extract you and secure your research.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave dispatches a covert extraction team. The fairy analyst arrives aboard the Iron Paw twelve hours later, carrying data cores that rewrite everything the League knows about crystal science. Living crystals. Sentient geology. A sleeping intelligence beneath the fuel that powers the multiverse. Dave reads the research in silence. His coffee goes cold. He does not notice. For the first time in his career, the mission is not to fight or to control. The mission is to understand.",
+                        "faction_changes": { "fairies": -5, "canis_league": 5 },
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc5_fairy_deep_secret"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "demand_proof",
+                    "text": "\"Extraordinary claims require extraordinary evidence. Send your raw data. All of it.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The data arrives in a torrent. Dave's science officers work through the night. By dawn, they are pale and quiet. The data is genuine. The crystals contain molecular structures that are unmistakably organic — DNA analogues woven into crystal lattice at a scale that defies known physics. Dave reviews the summary. 'Alive,' he says to the empty war room. The word sits heavy in the silence.",
+                        "faction_changes": { "fairies": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc5_fairy_deep_secret"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "classify_and_suppress",
+                    "text": "\"This intelligence is classified at the highest level. No one outside this room hears a word. Understood?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave locks the data behind League military encryption. His officers are sworn to silence. The fairy analyst is given asylum but confined to quarters. Dave sits alone with the truth: the multiverse has been burning a living thing for fuel. Every ship that flies, every crystal that powers a weapon — all of it sustained by something that can feel. Dave closes the file. He does not close his eyes. A commander does not have the luxury of horror.",
+                        "faction_changes": { "canis_league": 10, "fairies": -10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc5_fairy_deep_secret"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc5_dave_war_response",
+            "encounter_type": "diplomatic",
+            "title": "The Iron Tide Decision",
+            "description": "The multiverse is at war. Wolves attack from the north. Lions posture from the south. Knights declare from the centre. And beneath it all, the crystals pulse with a heartbeat that only Dave and a handful of others know about. Dave stands at the war room table. Every display shows conflict. Every channel carries demands. His officers wait for the order that will define the next phase of the campaign. Dave picks up a glass of water. Drinks it. Sets it down. 'Gentlemen,' he says. 'This is what we are going to do.'",
+            "arc_id": "arc_5",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_wolf_offensive": true,
+                "arc5_dave_crisis": true,
+                "arc5_knight_declaration": true,
+                "arc5_fairy_deep_secret": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "meet_force_with_force",
+                    "text": "\"Total mobilisation. Every ship, every gun. We crush the wolf offensive and establish League supremacy.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave signs the total mobilisation order. The League war machine engages fully for the first time. It is magnificent and terrible. Wolf fleets are driven back. Lion border probes are repulsed. The League flag flies over contested sectors for the first time. But Dave knows what his officers do not: they are fighting over the skin of something alive. Victory tastes like dust.",
+                        "faction_changes": { "canis_league": 15, "wolves": -15, "lions": -10 },
+                        "resource_changes": { "salvage": 30, "crystal_inventory": -15 },
+                        "story_flags_set": ["arc5_war_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "divide_and_conquer",
+                    "text": "\"Turn the factions against each other. Feed the wolves lion intelligence. Feed the lions wolf plans.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave authorises the most ambitious intelligence operation in League history. Fabricated data, leaked communications, carefully timed provocations. Within weeks, wolves and lions are fighting each other instead of the League. Dave watches the chaos he has orchestrated with the dispassion of a surgeon. It is ugly work. But it keeps League ships intact and League soldiers alive. That is the calculus. That is always the calculus.",
+                        "faction_changes": { "wolves": -5, "lions": -5, "canis_league": 5, "fairies": -5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc5_war_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "seek_the_source",
+                    "text": "\"The war is a symptom. The crystals are the cause. Redirect resources to deep crystal research.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave makes the hardest decision of his career: he pulls ships from the front lines and sends them into the deep crystal fields with science teams instead of marines. High Command is apoplectic. The border sectors bleed. But Dave has read the fairy data and he knows: the war they are fighting is meaningless if the crystals wake up. Understanding the enemy beneath the ground matters more than the enemies at the gate. It is a gamble. Dave does not gamble. But this is not gambling. This is triage.",
+                        "faction_changes": { "canis_league": -10, "fairies": 10, "aliens": 10, "knights": 5 },
+                        "resource_changes": { "salvage": -25, "crystal_inventory": 15 },
+                        "story_flags_set": ["arc5_war_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,1227 @@
+{
+    "starting_realm": {
+        "region_id": "starting_realm",
+        "name": "The Fringe",
+        "bounds": { "width": 6000, "height": 6000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "fringe_story_crystal",
+                "encounter_id": "enc_arc1_crystal_discovery",
+                "arc_id": "arc_1",
+                "x": 1200,
+                "y": 800,
+                "label": "Crystal Discovery Site",
+                "icon": "story"
+            },
+            {
+                "poi_id": "fringe_story_death_shadow",
+                "encounter_id": "enc_arc1_death_shadow",
+                "arc_id": "arc_1",
+                "x": 4800,
+                "y": 4200,
+                "label": "Shadow Signal",
+                "icon": "story"
+            },
+            {
+                "poi_id": "fringe_story_stance",
+                "encounter_id": "enc_arc1_stance_choice",
+                "arc_id": "arc_1",
+                "x": 3000,
+                "y": 3000,
+                "label": "Captain's Bridge",
+                "icon": "story"
+            },
+            {
+                "poi_id": "fringe_story_cartographer",
+                "encounter_id": "enc_fairy_cartographer_rescue",
+                "arc_id": "arc_1",
+                "x": 5400,
+                "y": 5600,
+                "label": "Faint Distress Signal",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "fringe_combat_zone_1",
+                "x": 1800,
+                "y": 4200,
+                "radius": 600,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 30,
+                "respawn_max": 90
+            },
+            {
+                "zone_id": "fringe_rescue_zone_1",
+                "x": 4500,
+                "y": 1200,
+                "radius": 500,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 45,
+                "respawn_max": 120
+            },
+            {
+                "zone_id": "fringe_mixed_zone_1",
+                "x": 3200,
+                "y": 5200,
+                "radius": 700,
+                "types": ["combat", "rescue", "trade"],
+                "max_active": 2,
+                "respawn_min": 40,
+                "respawn_max": 100
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "fringe_hidden_freighter",
+                "x": 5200,
+                "y": 800,
+                "type": "abandoned_ship",
+                "label": "Derelict Corsair Frigate",
+                "description": "An abandoned corsair vessel, its cargo holds still sealed.",
+                "rewards": { "salvage": 120 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "fringe_hidden_crystal_cache",
+                "x": 600,
+                "y": 5400,
+                "type": "crystal_hoard",
+                "label": "Buried Crystal Cache",
+                "description": "A cache of whisper crystals hidden beneath asteroid rubble.",
+                "rewards": { "crystals": 25 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "feline_courts": {
+        "region_id": "feline_courts",
+        "name": "The Feline Courts",
+        "bounds": { "width": 6000, "height": 6000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "courts_story_dave_trade",
+                "encounter_id": "enc_arc1_dave_trade",
+                "arc_id": "arc_1",
+                "x": 3000,
+                "y": 1500,
+                "label": "Trade Hub Alpha",
+                "icon": "story"
+            },
+            {
+                "poi_id": "courts_story_fairy_alliance",
+                "encounter_id": "enc_arc2_fairy_alliance",
+                "arc_id": "arc_2",
+                "x": 5000,
+                "y": 4000,
+                "label": "Fae Crossing Point",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "courts_combat_zone_1",
+                "x": 1500,
+                "y": 3500,
+                "radius": 500,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 35,
+                "respawn_max": 85
+            },
+            {
+                "zone_id": "courts_trade_zone_1",
+                "x": 4200,
+                "y": 1800,
+                "radius": 400,
+                "types": ["trade"],
+                "max_active": 1,
+                "respawn_min": 60,
+                "respawn_max": 150
+            },
+            {
+                "zone_id": "courts_rescue_zone_1",
+                "x": 2800,
+                "y": 5000,
+                "radius": 550,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 50,
+                "respawn_max": 120
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "courts_hidden_treasure",
+                "x": 800,
+                "y": 5500,
+                "type": "treasure",
+                "label": "Royal Corsair Vault",
+                "description": "A sealed vault from the old Corsair dynasty, filled with plunder.",
+                "rewards": { "salvage": 80, "crystals": 20 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "courts_hidden_ship",
+                "x": 5600,
+                "y": 600,
+                "type": "abandoned_ship",
+                "label": "Phantom Clipper",
+                "description": "A derelict clipper wedged in a crystal formation, cargo intact.",
+                "rewards": { "salvage": 150 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "canine_order": {
+        "region_id": "canine_order",
+        "name": "The Canine Order",
+        "bounds": { "width": 7000, "height": 7000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "canine_story_route_seized",
+                "encounter_id": "enc_arc2_route_seized",
+                "arc_id": "arc_2",
+                "x": 3500,
+                "y": 2000,
+                "label": "Delta-9 Blockade",
+                "icon": "story"
+            },
+            {
+                "poi_id": "canine_story_dave_assault",
+                "encounter_id": "enc_arc10_dave_assault",
+                "arc_id": "arc_10",
+                "x": 5500,
+                "y": 5500,
+                "label": "League Armada Staging",
+                "icon": "story"
+            },
+            {
+                "poi_id": "canine_story_dave_parley",
+                "encounter_id": "enc_arc3_dave_parley",
+                "arc_id": "arc_3",
+                "x": 1500,
+                "y": 4500,
+                "label": "Neutral Station",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "canine_combat_zone_1",
+                "x": 2500,
+                "y": 5000,
+                "radius": 700,
+                "types": ["combat"],
+                "max_active": 3,
+                "respawn_min": 25,
+                "respawn_max": 70
+            },
+            {
+                "zone_id": "canine_combat_zone_2",
+                "x": 5000,
+                "y": 2000,
+                "radius": 500,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 30,
+                "respawn_max": 80
+            },
+            {
+                "zone_id": "canine_rescue_zone_1",
+                "x": 6000,
+                "y": 3500,
+                "radius": 450,
+                "types": ["rescue"],
+                "max_active": 1,
+                "respawn_min": 50,
+                "respawn_max": 130
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "canine_hidden_arms_cache",
+                "x": 6500,
+                "y": 600,
+                "type": "treasure",
+                "label": "Confiscated Arms Depot",
+                "description": "A League confiscation depot, abandoned after a territorial retreat.",
+                "rewards": { "salvage": 200 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "canine_hidden_crystal_mine",
+                "x": 400,
+                "y": 6200,
+                "type": "crystal_hoard",
+                "label": "Sealed Crystal Mine",
+                "description": "A crystal vein the League tried to keep secret.",
+                "rewards": { "crystals": 40 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "fairy_realms": {
+        "region_id": "fairy_realms",
+        "name": "Fairy Realms",
+        "bounds": { "width": 5500, "height": 5500 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "fairy_story_alien_summit",
+                "encounter_id": "enc_arc3_alien_summit",
+                "arc_id": "arc_3",
+                "x": 2750,
+                "y": 1200,
+                "label": "Crystalline Gateway",
+                "icon": "story"
+            },
+            {
+                "poi_id": "fairy_story_death_reveal",
+                "encounter_id": "enc_arc3_death_reveal",
+                "arc_id": "arc_3",
+                "x": 4800,
+                "y": 4800,
+                "label": "Shadow Nexus",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "fairy_mixed_zone_1",
+                "x": 1200,
+                "y": 3800,
+                "radius": 600,
+                "types": ["combat", "rescue", "exploration"],
+                "max_active": 2,
+                "respawn_min": 40,
+                "respawn_max": 100
+            },
+            {
+                "zone_id": "fairy_rescue_zone_1",
+                "x": 4200,
+                "y": 2200,
+                "radius": 500,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 45,
+                "respawn_max": 110
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "fairy_hidden_enchanted_trove",
+                "x": 500,
+                "y": 500,
+                "type": "treasure",
+                "label": "Enchanted Trove",
+                "description": "A fairy treasure cache hidden in a pocket dimension.",
+                "rewards": { "crystals": 30, "salvage": 60 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "fairy_hidden_lost_vessel",
+                "x": 5000,
+                "y": 1000,
+                "type": "abandoned_ship",
+                "label": "Lost Explorer Vessel",
+                "description": "A research ship swallowed by a fairy labyrinth, crew long gone.",
+                "rewards": { "salvage": 180 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "fairy_hidden_crystal_garden",
+                "x": 2200,
+                "y": 5200,
+                "type": "crystal_hoard",
+                "label": "Crystal Garden",
+                "description": "Whisper crystals grown in fairy soil, perfectly formed.",
+                "rewards": { "crystals": 50 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "goblin_warrens": {
+        "region_id": "goblin_warrens",
+        "name": "Goblin Warrens",
+        "bounds": { "width": 5500, "height": 5500 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "goblin_story_death_sabotage",
+                "encounter_id": "enc_arc2_death_sabotage",
+                "arc_id": "arc_2",
+                "x": 2800,
+                "y": 2800,
+                "label": "Refinery Station",
+                "icon": "story"
+            },
+            {
+                "poi_id": "goblin_story_faction_offer",
+                "encounter_id": "enc_arc3_faction_offer",
+                "arc_id": "arc_3",
+                "x": 4500,
+                "y": 1200,
+                "label": "Black Market Summit",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "goblin_combat_zone_1",
+                "x": 1000,
+                "y": 4000,
+                "radius": 700,
+                "types": ["combat"],
+                "max_active": 3,
+                "respawn_min": 20,
+                "respawn_max": 60
+            },
+            {
+                "zone_id": "goblin_trade_zone_1",
+                "x": 4800,
+                "y": 4800,
+                "radius": 400,
+                "types": ["trade"],
+                "max_active": 1,
+                "respawn_min": 55,
+                "respawn_max": 140
+            },
+            {
+                "zone_id": "goblin_rescue_zone_1",
+                "x": 3500,
+                "y": 800,
+                "radius": 500,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 40,
+                "respawn_max": 100
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "goblin_hidden_scrap_hoard",
+                "x": 200,
+                "y": 200,
+                "type": "treasure",
+                "label": "Goblin Scrap Hoard",
+                "description": "A massive pile of salvage guarded by deactivated traps.",
+                "rewards": { "salvage": 250 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "goblin_hidden_crystal_stash",
+                "x": 5200,
+                "y": 3000,
+                "type": "crystal_hoard",
+                "label": "Smuggler's Crystal Stash",
+                "description": "Crystals hidden by a now-deceased smuggler in a hollowed asteroid.",
+                "rewards": { "crystals": 35 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "knight_kingdoms": {
+        "region_id": "knight_kingdoms",
+        "name": "Knight Kingdoms",
+        "bounds": { "width": 6500, "height": 6500 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "knight_story_lion_tribute",
+                "encounter_id": "enc_arc2_lion_tribute",
+                "arc_id": "arc_2",
+                "x": 3250,
+                "y": 1800,
+                "label": "Royal Court",
+                "icon": "story"
+            },
+            {
+                "poi_id": "knight_story_sovereign",
+                "encounter_id": "enc_arc10_sovereign_intent",
+                "arc_id": "arc_10",
+                "x": 5500,
+                "y": 5500,
+                "label": "Sovereign Staging Ground",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "knight_combat_zone_1",
+                "x": 2000,
+                "y": 4500,
+                "radius": 600,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 30,
+                "respawn_max": 80
+            },
+            {
+                "zone_id": "knight_rescue_zone_1",
+                "x": 5000,
+                "y": 2000,
+                "radius": 500,
+                "types": ["rescue"],
+                "max_active": 1,
+                "respawn_min": 50,
+                "respawn_max": 120
+            },
+            {
+                "zone_id": "knight_trade_zone_1",
+                "x": 1000,
+                "y": 1500,
+                "radius": 450,
+                "types": ["trade"],
+                "max_active": 1,
+                "respawn_min": 60,
+                "respawn_max": 150
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "knight_hidden_royal_treasury",
+                "x": 6200,
+                "y": 400,
+                "type": "treasure",
+                "label": "Abandoned Royal Treasury",
+                "description": "A treasury from a fallen knight house, vaults still sealed.",
+                "rewards": { "salvage": 100, "crystals": 30 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "knight_hidden_warship",
+                "x": 300,
+                "y": 6000,
+                "type": "abandoned_ship",
+                "label": "Wrecked Royal Galleon",
+                "description": "A once-proud galleon, its weapons and armour still intact.",
+                "rewards": { "salvage": 220 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "deep_space": {
+        "region_id": "deep_space",
+        "name": "Deep Space",
+        "bounds": { "width": 8000, "height": 8000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "deep_story_death_bid",
+                "encounter_id": "enc_arc10_death_bid",
+                "arc_id": "arc_10",
+                "x": 4000,
+                "y": 4000,
+                "label": "The Vault",
+                "icon": "story"
+            },
+            {
+                "poi_id": "deep_story_final_choice",
+                "encounter_id": "enc_arc10_final_choice",
+                "arc_id": "arc_10",
+                "x": 4000,
+                "y": 1500,
+                "label": "Central Forge",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "deep_combat_zone_1",
+                "x": 2000,
+                "y": 6000,
+                "radius": 800,
+                "types": ["combat"],
+                "max_active": 3,
+                "respawn_min": 20,
+                "respawn_max": 60
+            },
+            {
+                "zone_id": "deep_combat_zone_2",
+                "x": 6000,
+                "y": 2000,
+                "radius": 700,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 25,
+                "respawn_max": 70
+            },
+            {
+                "zone_id": "deep_rescue_zone_1",
+                "x": 7000,
+                "y": 7000,
+                "radius": 600,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 60,
+                "respawn_max": 150
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "deep_hidden_alien_cache",
+                "x": 7500,
+                "y": 500,
+                "type": "treasure",
+                "label": "Alien Artifact Cache",
+                "description": "Alien technology and crystal composites of unknown origin.",
+                "rewards": { "crystals": 75, "salvage": 100 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "deep_hidden_crystal_nexus",
+                "x": 500,
+                "y": 7500,
+                "type": "crystal_hoard",
+                "label": "Primordial Crystal Nexus",
+                "description": "The largest natural whisper crystal formation ever recorded.",
+                "rewards": { "crystals": 100 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "deep_hidden_ghost_fleet",
+                "x": 6500,
+                "y": 5500,
+                "type": "abandoned_ship",
+                "label": "Ghost Fleet Graveyard",
+                "description": "Dozens of derelict ships from a forgotten war, salvage everywhere.",
+                "rewards": { "salvage": 300 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "shattered_prides": {
+        "region_id": "shattered_prides",
+        "name": "The Shattered Prides",
+        "bounds": { "width": 6000, "height": 6000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "prides_story_lion_fracture",
+                "encounter_id": "enc_arc4_lion_fracture",
+                "arc_id": "arc_4",
+                "x": 3000,
+                "y": 1500,
+                "label": "The Reformist Court",
+                "icon": "story"
+            },
+            {
+                "poi_id": "prides_story_civil_war",
+                "encounter_id": "enc_arc6_lion_civil_war",
+                "arc_id": "arc_6",
+                "x": 4800,
+                "y": 4200,
+                "label": "Lion War Council",
+                "icon": "story"
+            },
+            {
+                "poi_id": "prides_story_lord_mane",
+                "encounter_id": "enc_special_lord_mane",
+                "arc_id": "arc_4",
+                "x": 1500,
+                "y": 3500,
+                "label": "Lord Mane's Refuge",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "prides_combat_zone_1",
+                "x": 2000,
+                "y": 5000,
+                "radius": 600,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 35,
+                "respawn_max": 90
+            },
+            {
+                "zone_id": "prides_trade_zone_1",
+                "x": 4500,
+                "y": 1000,
+                "radius": 450,
+                "types": ["trade"],
+                "max_active": 1,
+                "respawn_min": 55,
+                "respawn_max": 130
+            },
+            {
+                "zone_id": "prides_rescue_zone_1",
+                "x": 800,
+                "y": 4500,
+                "radius": 500,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 45,
+                "respawn_max": 110
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "prides_hidden_royal_vault",
+                "x": 5500,
+                "y": 500,
+                "type": "treasure",
+                "label": "Ancient Lion Royal Vault",
+                "description": "A sealed vault from the first Lion dynasty, riches of a dead empire.",
+                "rewards": { "salvage": 150, "crystals": 40 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "prides_hidden_cradle_clue",
+                "x": 300,
+                "y": 5800,
+                "type": "lore",
+                "label": "Crumbling Star Temple",
+                "description": "An ancient temple with carvings depicting crystal mountains and a singing light.",
+                "rewards": { "crystals": 20 },
+                "requires_cartographer": true,
+                "story_flags_set": ["cradle_clue_shattered_prides"]
+            },
+            {
+                "poi_id": "prides_hidden_penumbra_cache",
+                "x": 5800,
+                "y": 3500,
+                "type": "treasure",
+                "label": "Lady Penumbra's Dead Drop",
+                "description": "A concealed intelligence cache used by the Lion spymaster.",
+                "rewards": { "salvage": 80 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "iron_expanse": {
+        "region_id": "iron_expanse",
+        "name": "The Iron Expanse",
+        "bounds": { "width": 7000, "height": 7000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "iron_story_wolf_hunt",
+                "encounter_id": "enc_arc5_wolf_hunt",
+                "arc_id": "arc_5",
+                "x": 3500,
+                "y": 2000,
+                "label": "Wolf Staging Ground",
+                "icon": "story"
+            },
+            {
+                "poi_id": "iron_story_iron_fang",
+                "encounter_id": "enc_special_iron_fang",
+                "arc_id": "arc_5",
+                "x": 5500,
+                "y": 5000,
+                "label": "Iron Fang's Fortress",
+                "icon": "story"
+            },
+            {
+                "poi_id": "iron_story_snarl",
+                "encounter_id": "enc_special_snarl",
+                "arc_id": "arc_5",
+                "x": 1500,
+                "y": 5500,
+                "label": "Deserter's Hideout",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "iron_combat_zone_1",
+                "x": 2500,
+                "y": 4500,
+                "radius": 800,
+                "types": ["combat"],
+                "max_active": 3,
+                "respawn_min": 20,
+                "respawn_max": 60
+            },
+            {
+                "zone_id": "iron_combat_zone_2",
+                "x": 5500,
+                "y": 1500,
+                "radius": 600,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 25,
+                "respawn_max": 70
+            },
+            {
+                "zone_id": "iron_rescue_zone_1",
+                "x": 6000,
+                "y": 6000,
+                "radius": 500,
+                "types": ["rescue"],
+                "max_active": 1,
+                "respawn_min": 50,
+                "respawn_max": 130
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "iron_hidden_weapons_lab",
+                "x": 6500,
+                "y": 400,
+                "type": "treasure",
+                "label": "Abandoned Wolf Weapons Lab",
+                "description": "A prototype weapons facility the Wolves abandoned when the project failed.",
+                "rewards": { "salvage": 250 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "iron_hidden_crystal_forge",
+                "x": 400,
+                "y": 6500,
+                "type": "crystal_hoard",
+                "label": "Secret Crystal Forge",
+                "description": "A hidden Wolf attempt at crystal refinement. Crude but functional.",
+                "rewards": { "crystals": 45 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "twilight_bazaar": {
+        "region_id": "twilight_bazaar",
+        "name": "The Twilight Bazaar",
+        "bounds": { "width": 4500, "height": 4500 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "bazaar_story_merchant",
+                "encounter_id": "enc_arc4_bazaar_merchant",
+                "arc_id": "arc_4",
+                "x": 2250,
+                "y": 1200,
+                "label": "The Mysterious Merchant",
+                "icon": "story"
+            },
+            {
+                "poi_id": "bazaar_story_alliance_summit",
+                "encounter_id": "enc_arc8_alliance_summit",
+                "arc_id": "arc_8",
+                "x": 2250,
+                "y": 3500,
+                "label": "The Grand Summit Hall",
+                "icon": "story"
+            },
+            {
+                "poi_id": "bazaar_story_jinx",
+                "encounter_id": "enc_special_jinx",
+                "arc_id": "arc_1",
+                "x": 800,
+                "y": 2200,
+                "label": "Cargo Bay Delta",
+                "icon": "story"
+            },
+            {
+                "poi_id": "bazaar_story_debt_collector",
+                "encounter_id": "enc_special_debt_collector",
+                "arc_id": "arc_3",
+                "x": 3800,
+                "y": 800,
+                "label": "Shadow Alley",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "bazaar_trade_zone_1",
+                "x": 1500,
+                "y": 3000,
+                "radius": 500,
+                "types": ["trade"],
+                "max_active": 2,
+                "respawn_min": 30,
+                "respawn_max": 80
+            },
+            {
+                "zone_id": "bazaar_mixed_zone_1",
+                "x": 3500,
+                "y": 2500,
+                "radius": 600,
+                "types": ["combat", "trade", "rescue"],
+                "max_active": 2,
+                "respawn_min": 35,
+                "respawn_max": 90
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "bazaar_hidden_smuggler_vault",
+                "x": 4200,
+                "y": 4200,
+                "type": "treasure",
+                "label": "Smuggler's Hidden Vault",
+                "description": "A vault beneath the Bazaar, accessible only through a false wall.",
+                "rewards": { "salvage": 100, "crystals": 25 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "warp_marches": {
+        "region_id": "warp_marches",
+        "name": "The Warp Marches",
+        "bounds": { "width": 8000, "height": 8000 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "warp_story_entry",
+                "encounter_id": "enc_arc7_warp_entry",
+                "arc_id": "arc_7",
+                "x": 1500,
+                "y": 1500,
+                "label": "Reality Threshold",
+                "icon": "story"
+            },
+            {
+                "poi_id": "warp_story_communion",
+                "encounter_id": "enc_arc7_crystal_communion",
+                "arc_id": "arc_7",
+                "x": 4000,
+                "y": 4000,
+                "label": "The Resonance Point",
+                "icon": "story"
+            },
+            {
+                "poi_id": "warp_story_void_singer",
+                "encounter_id": "enc_special_void_singer",
+                "arc_id": "arc_7",
+                "x": 6500,
+                "y": 6500,
+                "label": "Void Singer's Domain",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "warp_combat_zone_1",
+                "x": 3000,
+                "y": 6500,
+                "radius": 900,
+                "types": ["combat"],
+                "max_active": 3,
+                "respawn_min": 15,
+                "respawn_max": 50
+            },
+            {
+                "zone_id": "warp_anomaly_zone_1",
+                "x": 6000,
+                "y": 2000,
+                "radius": 800,
+                "types": ["combat", "exploration"],
+                "max_active": 2,
+                "respawn_min": 20,
+                "respawn_max": 60
+            },
+            {
+                "zone_id": "warp_rescue_zone_1",
+                "x": 7000,
+                "y": 4500,
+                "radius": 600,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 55,
+                "respawn_max": 140
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "warp_hidden_cradle_clue",
+                "x": 7500,
+                "y": 7500,
+                "type": "lore",
+                "label": "Temporal Echo Chamber",
+                "description": "A pocket of frozen time containing a vision of the Cradle's location.",
+                "rewards": { "crystals": 35 },
+                "requires_cartographer": true,
+                "story_flags_set": ["cradle_clue_warp_marches"]
+            },
+            {
+                "poi_id": "warp_hidden_alien_archive",
+                "x": 500,
+                "y": 7000,
+                "type": "treasure",
+                "label": "Alien Data Archive",
+                "description": "An alien repository containing technology schematics and crystal research.",
+                "rewards": { "salvage": 200, "crystals": 60 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "warp_hidden_reality_tear",
+                "x": 4500,
+                "y": 500,
+                "type": "crystal_hoard",
+                "label": "Reality Tear Crystal Formation",
+                "description": "Whisper crystals growing wild in a tear between dimensions. Enormous and unstable.",
+                "rewards": { "crystals": 80 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "bone_yard": {
+        "region_id": "bone_yard",
+        "name": "The Bone Yard",
+        "bounds": { "width": 7500, "height": 7500 },
+        "fog_grid_size": 64,
+        "story_locations": [
+            {
+                "poi_id": "bone_story_discovery",
+                "encounter_id": "enc_arc6_bone_yard_discovery",
+                "arc_id": "arc_6",
+                "x": 2000,
+                "y": 2000,
+                "label": "Ancient Flagship Wreck",
+                "icon": "story"
+            },
+            {
+                "poi_id": "bone_story_signal",
+                "encounter_id": "enc_arc6_ancient_signal",
+                "arc_id": "arc_6",
+                "x": 5500,
+                "y": 3500,
+                "label": "Signal Source",
+                "icon": "story"
+            },
+            {
+                "poi_id": "bone_story_echo",
+                "encounter_id": "enc_special_echo",
+                "arc_id": "arc_6",
+                "x": 3750,
+                "y": 5500,
+                "label": "The Dormant Mainframe",
+                "icon": "story"
+            },
+            {
+                "poi_id": "bone_story_keeper",
+                "encounter_id": "enc_special_keeper",
+                "arc_id": "arc_6",
+                "x": 6500,
+                "y": 6500,
+                "label": "The Guardian's Watch",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "bone_combat_zone_1",
+                "x": 1500,
+                "y": 5500,
+                "radius": 800,
+                "types": ["combat"],
+                "max_active": 3,
+                "respawn_min": 20,
+                "respawn_max": 60
+            },
+            {
+                "zone_id": "bone_salvage_zone_1",
+                "x": 5000,
+                "y": 1000,
+                "radius": 700,
+                "types": ["rescue", "trade"],
+                "max_active": 2,
+                "respawn_min": 30,
+                "respawn_max": 80
+            },
+            {
+                "zone_id": "bone_rescue_zone_1",
+                "x": 6500,
+                "y": 4000,
+                "radius": 500,
+                "types": ["rescue", "distress_signal"],
+                "max_active": 1,
+                "respawn_min": 45,
+                "respawn_max": 110
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "bone_hidden_cradle_clue",
+                "x": 7000,
+                "y": 7000,
+                "type": "lore",
+                "label": "Ancient Navigation Core",
+                "description": "A still-functional navigation computer containing coordinates encoded in crystal harmonics.",
+                "rewards": { "crystals": 30 },
+                "requires_cartographer": true,
+                "story_flags_set": ["cradle_clue_bone_yard"]
+            },
+            {
+                "poi_id": "bone_hidden_mega_salvage",
+                "x": 200,
+                "y": 200,
+                "type": "treasure",
+                "label": "Dreadnought Wreck",
+                "description": "The largest derelict in the Bone Yard. Its cargo holds alone could fund a war.",
+                "rewards": { "salvage": 400 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "bone_hidden_crystal_reactor",
+                "x": 3800,
+                "y": 200,
+                "type": "crystal_hoard",
+                "label": "Ancient Crystal Reactor",
+                "description": "A reactor that once powered an entire civilisation. Still contains refined crystals.",
+                "rewards": { "crystals": 65 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "bone_hidden_ancient_weapons",
+                "x": 7200,
+                "y": 1500,
+                "type": "treasure",
+                "label": "Weapons Battery Alpha",
+                "description": "Intact weapon systems from the ancient war. Worth a fortune to the right buyer.",
+                "rewards": { "salvage": 300 },
+                "requires_cartographer": true
+            }
+        ]
+    },
+    "cradle_of_whispers": {
+        "region_id": "cradle_of_whispers",
+        "name": "The Cradle of Whispers",
+        "bounds": { "width": 10000, "height": 10000 },
+        "fog_grid_size": 64,
+        "is_hidden": true,
+        "unlock_conditions": {
+            "current_arc": "arc_8",
+            "arc3_alien_contact": true,
+            "arc5_fairy_deep_secret": true,
+            "arc6_ancient_signal_decoded": true,
+            "arc7_crystal_communion": true,
+            "fairy_cartographer_rescued": true,
+            "cradle_clue_bone_yard": true,
+            "cradle_clue_warp_marches": true,
+            "cradle_clue_shattered_prides": true,
+            "special_char_oracle_met": true,
+            "special_char_keeper_met": true
+        },
+        "story_locations": [
+            {
+                "poi_id": "cradle_story_singing_core",
+                "encounter_id": "enc_arc9_singing_core",
+                "arc_id": "arc_9",
+                "x": 5000,
+                "y": 5000,
+                "label": "The Singing Core",
+                "icon": "story"
+            },
+            {
+                "poi_id": "cradle_story_consciousness",
+                "encounter_id": "enc_arc9_crystal_consciousness",
+                "arc_id": "arc_9",
+                "x": 5000,
+                "y": 3000,
+                "label": "The Crystal Mind",
+                "icon": "story"
+            },
+            {
+                "poi_id": "cradle_story_guardians",
+                "encounter_id": "enc_arc9_ancient_guardians",
+                "arc_id": "arc_9",
+                "x": 2500,
+                "y": 7500,
+                "label": "Guardian Sanctum",
+                "icon": "story"
+            },
+            {
+                "poi_id": "cradle_story_choice",
+                "encounter_id": "enc_arc9_cradle_choice",
+                "arc_id": "arc_9",
+                "x": 5000,
+                "y": 7000,
+                "label": "The Heart of All Crystals",
+                "icon": "story"
+            }
+        ],
+        "spawn_zones": [
+            {
+                "zone_id": "cradle_guardian_zone_1",
+                "x": 3000,
+                "y": 3000,
+                "radius": 1000,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 30,
+                "respawn_max": 80
+            },
+            {
+                "zone_id": "cradle_guardian_zone_2",
+                "x": 7000,
+                "y": 7000,
+                "radius": 800,
+                "types": ["combat"],
+                "max_active": 2,
+                "respawn_min": 25,
+                "respawn_max": 70
+            }
+        ],
+        "hidden_locations": [
+            {
+                "poi_id": "cradle_hidden_crystal_mountain_1",
+                "x": 1000,
+                "y": 1000,
+                "type": "crystal_hoard",
+                "label": "Crystal Mountain — North Peak",
+                "description": "A mountain of pure whisper crystal. The light it emits sings.",
+                "rewards": { "crystals": 100 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "cradle_hidden_crystal_mountain_2",
+                "x": 9000,
+                "y": 1000,
+                "type": "crystal_hoard",
+                "label": "Crystal Mountain — East Peak",
+                "description": "Another crystal mountain. The harmonics here are slightly different, sadder.",
+                "rewards": { "crystals": 100 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "cradle_hidden_crystal_mountain_3",
+                "x": 1000,
+                "y": 9000,
+                "type": "crystal_hoard",
+                "label": "Crystal Mountain — West Peak",
+                "description": "A crystal formation that pulses in rhythm, like a heartbeat.",
+                "rewards": { "crystals": 100 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "cradle_hidden_crystal_mountain_4",
+                "x": 9000,
+                "y": 9000,
+                "type": "crystal_hoard",
+                "label": "Crystal Mountain — South Peak",
+                "description": "The largest formation. When you approach, you hear whispers in languages that don't exist yet.",
+                "rewards": { "crystals": 150 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "cradle_hidden_ancient_wreck",
+                "x": 5000,
+                "y": 1500,
+                "type": "treasure",
+                "label": "First Civilisation Ship",
+                "description": "The ship that brought the first beings to the Cradle. Its technology is beyond anything in the multiverse.",
+                "rewards": { "salvage": 500 },
+                "requires_cartographer": true
+            },
+            {
+                "poi_id": "cradle_hidden_memory_pool",
+                "x": 8000,
+                "y": 5000,
+                "type": "treasure",
+                "label": "Memory Pool",
+                "description": "A pool of liquid crystal that shows visions of every decision you've made throughout the game.",
+                "rewards": { "salvage": 200, "crystals": 50 },
+                "requires_cartographer": true
+            }
+        ]
+    }
+}

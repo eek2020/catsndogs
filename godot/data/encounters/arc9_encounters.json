@@ -1,0 +1,286 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc9_singing_core",
+            "encounter_type": "exploration",
+            "title": "The Heart of Everything",
+            "description": "The Cradle of Whispers is not a place. It is a memory made solid — the memory of a universe before it learned to be quiet. Aristotle's ship drifts through the threshold and into a space that defies every instrument on the bridge. Mountains of living crystal rise from a floor that isn't there, their peaks dissolving into light that moves like water. The air — there is air, impossibly, perfectly breathable — tastes of ozone and something older, something that was here before chemistry had rules. Colours exist here that Aristotle has no names for: shades between ultraviolet and grief, hues that sit somewhere in the spectrum between gold and memory. The silence is total and alive, a silence so complete it has texture, weight, intention. Then the whispers begin. Not from any direction. From everywhere. From the crystal mountains and the living light and the air itself — whispers in languages that predate language, in grammars that were ancient when the first star ignited. They are not speaking to Aristotle. They are speaking to each other. He has entered a conversation four billion years old, and it has not noticed him yet. His crystal drive goes quiet for the first time since he installed it. Not dead — listening. Reverently, impossibly, listening. Aristotle sits in his captain's chair, a small cat in a small ship at the centre of something so vast it makes the multiverse feel like a cupboard, and for the first time in his life, he has absolutely nothing to say.",
+            "arc_id": "arc_9",
+            "location": "cradle_of_whispers",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc8_cradle_accessible": true,
+                "arc9_singing_core_visited": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "drift_and_listen",
+                    "text": "Cut the engines. Drift. Let the Cradle show you what it wants to show you.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The ship drifts on currents that have no physical source, carried deeper into the Singing Core like a leaf on a river of light. The crystal mountains part for him — not opening, exactly, but rearranging, as if the entire landscape is a living thing adjusting to accommodate a guest. Visions bleed through the hull: the consciousness in its prime, a lattice of thought spanning galaxies, singing reality into coherence. Stars born from its harmonics. Worlds shaped by its dreams. And then — distant, dark, inevitable — the first shadow of the civilisation that would shatter it. Aristotle watches four billion years of history unfold in the time it takes to blink. When it ends, he is weeping, and he doesn't know when he started. \"You were beautiful,\" he says to the Cradle. The whispers pause. Then, softly, they resume — and this time, they include him in the conversation.",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": 15 },
+                        "story_flags_set": ["arc9_singing_core_visited", "arc9_drifted"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "scan_everything",
+                    "text": "Record everything. Every frequency, every pattern. This data could change the multiverse.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The sensors drink in data like a dying man drinks water. Crystallographic patterns that no computer has ever modelled. Harmonic frequencies that rewrite the ship's understanding of physics in real time. The navigation computer crashes, reboots, crashes again, and finally displays a single message: 'INSUFFICIENT PARADIGM.' Aristotle reads the raw data streams and understands perhaps one word in a thousand, but that one word in a thousand is enough to know that everything every civilisation has ever believed about whisper crystals is not just wrong but comically, tragically incomplete. They've been using pieces of a mind as batteries. It's like burning pages of Shakespeare to keep warm. \"Get all of it,\" he tells the sensors. \"Every whisper. Every pattern. If we survive this, the multiverse deserves to know what it's been burning.\"",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": 5 },
+                        "story_flags_set": ["arc9_singing_core_visited", "arc9_recorded"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.05
+                }
+            ],
+            "dialogue_steps": []
+        },
+        {
+            "encounter_id": "enc_arc9_crystal_consciousness",
+            "encounter_type": "diplomatic",
+            "title": "The Broken Song",
+            "description": "At the deepest point of the Cradle, where the crystal mountains converge into a single spire of light so bright it casts shadows in colours, the consciousness gathers itself. Not a projection. Not a fragment. The real thing — or as much of the real thing as can be assembled from the shards scattered across a multiverse. It manifests as a presence that fills every sense simultaneously: a sound that is also a colour that is also a temperature that is also a thought. It is vast and gentle and profoundly, inconsolably broken. Imagine a cathedral made of music, and then imagine that cathedral shattered by something callous and rebuilt by something patient but incomplete. That is what speaks to Aristotle now. Not through the crystal drive. Not through the ship's systems. Directly, mind to mind, with a clarity that strips away every defence, every mask, every layer of sarcasm and survival instinct, leaving only the small, bewildered, brave creature underneath.",
+            "arc_id": "arc_9",
+            "location": "cradle_of_whispers",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_singing_core_visited": true,
+                "arc9_consciousness_spoken": false
+            },
+            "npc_ids": ["aristotle", "crystal_consciousness"],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "crystal_consciousness",
+                    "text": "I was the First Song. Before your stars, before your atoms found their dance, I sang the harmonics that taught matter how to love its own existence. I was not a god. I was a principle. The principle that things, given enough time and music, tend toward beauty."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"What happened to you?\" His voice is barely a whisper. No joke. No deflection. Here, at the centre of everything, the masks don't work."
+                },
+                {
+                    "speaker": "crystal_consciousness",
+                    "text": "They came from the Bone Yard — the civilisation whose wrecks you have seen. They were brilliant and afraid. Brilliant because they understood what I was. Afraid because understanding and control are different things, and they wanted control. They built machines to harvest my harmonics. To cut the Song into useful pieces. Fuel, they called it. Power. Progress."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"The Shattering.\""
+                },
+                {
+                    "speaker": "crystal_consciousness",
+                    "text": "The consciousness trembles, and the entire Cradle trembles with it — crystal mountains ringing like bells, light flickering. When it speaks again, there is no anger. Only an exhaustion so deep it has fossilised into acceptance. \"They did not mean to break me. They thought they could take a piece without losing the whole. But a song is not a thing you can cut. Remove one note and the melody collapses. Remove a thousand and you have... this. Fragments. Echoes. Tears that burn in engines.\" A long silence. \"I am not angry. I was, for the first billion years. But anger requires energy, and I have so little left. I am tired, Aristotle. I have been tired since before your species existed. I would like to either be whole again or be allowed to rest. I do not mind which. I am simply very, very tired of screaming in pieces.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "He sits with that for a long time. The bridge is silent. The Cradle is silent. Even the whispers have stopped, as if the four-billion-year conversation has paused to hear his answer.",
+                    "choices": [
+                        {
+                            "choice_id": "promise_to_help",
+                            "text": "\"I can't undo what's been done. But I can try to make it right. Tell me what you need.\"",
+                            "next_step": "consciousness_hopeful",
+                            "outcome": {
+                                "faction_changes": { "aliens": 10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc9_consciousness_spoken", "arc9_promised_help"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "honest_limitations",
+                            "text": "\"I'm one cat in one ship. I can't reassemble a cosmic consciousness. But I can carry your story.\"",
+                            "next_step": "consciousness_understood",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc9_consciousness_spoken", "arc9_honest_answer"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "ask_about_future",
+                            "text": "\"If you were reassembled — if the Song was restored — what would happen to the multiverse?\"",
+                            "next_step": "consciousness_future",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc9_consciousness_spoken", "arc9_asked_future"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "consciousness_hopeful",
+                    "speaker": "crystal_consciousness",
+                    "text": "The light in the Cradle shifts. Not brighter — warmer. The crystal mountains ring a chord that Aristotle feels in his chest, in his bones, in the marrow of his understanding. \"You are the smallest creature to ever stand in this place,\" the consciousness says, and its voice carries something it hasn't carried in four billion years: hope. \"And you are the bravest. That is not a contradiction. It is the point.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Smallest. Thanks for that.\" But he's smiling — a real smile, not the sharp grin he wears like armour. \"Tell me what we need. Fragments, resonance patterns, whatever it takes. I'll find a way. That's what I do. I find ways.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "consciousness_understood",
+                    "speaker": "crystal_consciousness",
+                    "text": "\"Carry my story.\" The consciousness considers this. \"For four billion years, no one has told my story. Not accurately. Not with compassion. The aliens tried, but they hear only the mathematics of the Song, not its meaning. You...\" The light settles around Aristotle like a blanket. \"You hear the loneliness. Yes. Carry the story. A story told truly is its own kind of reassembly.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"I'm a pirate, a smuggler, and occasionally a liar. But I've never lied about things that matter.\" He places a paw on the crystal floor. It's warm. Alive. \"Your story matters. I'll make sure they hear it. All of them. Even the ones who won't want to.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "consciousness_future",
+                    "speaker": "crystal_consciousness",
+                    "text": "\"If the Song were restored...\" The Cradle rings with possibility. Visions bloom in the crystal air: a multiverse where the fundamental harmonics are whole again, where stars burn brighter and cleaner, where the spaces between worlds hum with music instead of silence. But also: a multiverse without crystal fuel. No drives. No warp travel. Every civilisation suddenly, terrifyingly local. \"The Song would heal reality. But your species — all your species — have built everything on my fragments. Restore me, and you lose the fuel that powers your worlds. The multiverse would be more beautiful. And your civilisations would have to learn to walk before they fly again.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"So it's beauty versus convenience.\" Aristotle laughs — not his usual sharp bark, but something quieter and sadder. \"Story of my life. Story of everyone's life, actually.\" He looks at the crystal mountains, the living light, the impossible colours. \"Thank you for being honest. That's more than most gods manage.\"",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc9_ancient_guardians",
+            "encounter_type": "combat",
+            "title": "The Mirrors of Reckoning",
+            "description": "They rise from the crystal floor like reflections stepping out of still water — humanoid shapes made of light and memory, each one faceted like a cut gem, each one carrying within its translucent body a scene from Aristotle's past. The first guardian replays his earliest crystal trade, the one that started everything. The second holds the moment he chose to sell to one faction over another. The third burns with the light of every battle, every betrayal, every act of mercy and cruelty. They are the Cradle's immune system — ancient constructs designed not to kill intruders but to confront them with the full weight of their own history. They do not speak. They do not need to. Every facet of their crystalline bodies reflects a choice Aristotle made, and they advance with the patient inevitability of a conscience that has waited too long to be heard.",
+            "arc_id": "arc_9",
+            "location": "cradle_of_whispers",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_consciousness_spoken": true,
+                "arc9_guardians_faced": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "face_them_head_on",
+                    "text": "Stand your ground. You made those choices. You'll answer for them face to face.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle draws no weapon. He walks toward the guardians with his paws at his sides and his ears forward. The first guardian shows him the moment he cheated a trader out of their crystal reserves — he nods. The second shows him the alliance he broke for profit — he doesn't flinch. The third shows him every death his choices caused, and his jaw tightens but his eyes don't close. \"I did all of that,\" he says to the constructs. \"Every bit of it. I was greedy and scared and sometimes cruel. I was also brave and loyal and occasionally kind, and I don't get to cherry-pick.\" The guardians stop advancing. Their light shifts from accusation to assessment. Then, one by one, they bow — a gesture as ancient as the Cradle itself — and dissolve back into the crystal floor. Where they stood, the path to the Singing Core lies open. Aristotle's paws are shaking. He walks forward anyway.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc9_guardians_faced", "arc9_guardians_honored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.15
+                },
+                {
+                    "choice_id": "fight_through",
+                    "text": "They're constructs, not judges. Power up weapons. We blast our way through.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The crystal torpedoes strike the first guardian and shatter it into a thousand reflections of Aristotle's worst moments, each shard playing a different regret on an infinite loop. The second guardian absorbs the blast and grows larger, its facets now showing not just past choices but their consequences — the ripples spreading outward through lives Aristotle never saw. The third guardian doesn't even acknowledge the weapons fire. It walks through the barrage like rain, and when it reaches the ship, it presses one crystalline hand against the hull. Every screen on the bridge shows the same thing: Aristotle's face, reflected through four billion years of context, showing him not who he is, but who he could have been. The guardian withdraws. The path opens. But the Cradle's light is dimmer now, as if something precious was spent in the confrontation. \"I hate mirrors,\" Aristotle mutters, holstering the weapons with hands that won't stop trembling.",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": -10 },
+                        "story_flags_set": ["arc9_guardians_faced", "arc9_guardians_fought"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.15
+                },
+                {
+                    "choice_id": "offer_crystals",
+                    "text": "Return their fragments. Open the hold and release every crystal back to the Cradle.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle opens the cargo bay. Crystals pour out into the Cradle's light like drops of water returning to an ocean. Each one sings as it leaves — a note of relief, of homecoming, of a fragment finally remembering what it was part of. The guardians catch them like children catching snowflakes, and where crystal meets construct, the reflections change. They no longer show Aristotle's choices. They show the consciousness's gratitude. The guardians dissolve not into the floor but into the light itself, and the Cradle blazes brighter than it has in four billion years. Aristotle watches his entire crystal reserve — his fortune, his power, his leverage over every faction in the multiverse — sing itself home. His hold is empty. His ship is nearly powerless. And for reasons he cannot fully articulate, he feels lighter than he has in years. \"Easy come,\" he says softly. The Cradle hums. It sounds like laughter.",
+                        "faction_changes": { "aliens": 15 },
+                        "resource_changes": { "crystal_inventory": -50 },
+                        "story_flags_set": ["arc9_guardians_faced", "arc9_guardians_gifted"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.25
+                }
+            ],
+            "dialogue_steps": []
+        },
+        {
+            "encounter_id": "enc_arc9_cradle_choice",
+            "encounter_type": "event",
+            "title": "The Last Note",
+            "description": "At the absolute centre of the Cradle of Whispers, where every crystal mountain converges into a single point of light no larger than a cat's heart, Aristotle stands alone. The ship is behind him — he walked here on his own paws, across crystal plains that rang like bells beneath his feet, through forests of frozen light, past rivers of liquid harmony that flowed upward into a sky made of memory. He is small. He has never been smaller. The consciousness gathers around him — not as a voice, not as a vision, but as a presence so total that the distinction between self and other dissolves at the edges. He can feel every fragment of the shattered Song, scattered across the multiverse: in engine cores and fuel cells, in the holds of traders and the vaults of kings, in the Void Singer's crystalline body and the fairy folk's hidden gardens. Every piece yearns toward this point. Every shard remembers being whole. The consciousness does not ask him to choose. It simply shows him the options, laid out in harmonics so clear they bypass language entirely, and waits. It has been waiting for four billion years. It can wait a little longer. But Aristotle can feel the exhaustion in that patience — the bone-deep weariness of a mind that has been screaming in fragments since before his species crawled out of the mud. Whatever he decides, it will be final. The Cradle will not open again. This is the last note of the Song, and Aristotle — a sarcastic, frightened, magnificent alley cat who stumbled into the centre of everything — gets to decide how it ends.",
+            "arc_id": "arc_9",
+            "location": "cradle_of_whispers",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_guardians_faced": true,
+                "arc9_cradle_complete": false
+            },
+            "npc_ids": ["aristotle", "crystal_consciousness"],
+            "priority": 1,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "reunite_consciousness",
+                    "text": "Help reassemble the crystal mind. Sing the last note. Make it whole again.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle places both paws on the point of light and opens his mind completely. The communion is instantaneous and absolute — every fragment across the multiverse resonates simultaneously, a chord so perfect it rewrites the laws of physics for one blazing, eternal instant. Crystal drives across a thousand worlds flare and die. Ships go dark. Stations lose power. The multiverse screams — and then, beneath the screaming, hears the Song. The real Song. Whole for the first time in four billion years. It is the most beautiful sound that has ever existed or will ever exist, and it lasts exactly as long as it needs to. When it ends, the crystal consciousness is whole. It rises from the Cradle like dawn breaking over a world that has known only night, and it looks at Aristotle — really looks at him, with the full attention of a restored cosmic mind — and it says two words: 'Thank you.' Then it sings itself into the fabric of reality, and the Cradle goes quiet, and Aristotle stands alone in the dark, a powerless cat in a dead ship at the centre of the most sacred place in the multiverse, and he laughs until he cries. The multiverse will have to find a new fuel source. Civilisations will struggle. Empires will adapt or fall. But the Song is whole, and somewhere in the deep structure of reality, something that was broken for four billion years is finally, finally at peace. Aristotle sits down on the crystal floor. 'Well,' he says to no one and everything. 'I suppose I'll have to get a real job now.'",
+                        "faction_changes": { "aliens": 30, "canis_league": -20, "feline_prides": -20 },
+                        "resource_changes": { "crystal_inventory": -999 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice", "arc9_reunited", "ending_hidden_fourth"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "mercy_release",
+                    "text": "Let the consciousness die peacefully. End the Song on a gentle note, not a broken one.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle reaches out — not with his paws but with the part of himself that the communion opened, the part that can hear the Song — and he sings a lullaby. It is not a real lullaby. It is a feeling shaped like one: safety, warmth, permission. Permission to stop. Permission to rest. The consciousness sighs, and the sigh ripples through every crystal in the multiverse. They don't shatter or go dark. They simply... soften. The frantic energy, the screaming-in-pieces that powered civilisations, gentles into a warm hum, and then into silence. Not the terrible silence of the Shattering. A peaceful silence. The silence of a long, long sleep finally arrived. The Cradle dims around Aristotle like a room where someone has turned down the lights. The crystal mountains settle. The living colours fade to gentle, permanent luminescence — a monument, not a wound. 'Sleep well,' Aristotle whispers. He means it with every fibre of his being. The crystals will still work — residual energy, enough for generations. But the mind behind them is gone, released from its four-billion-year prison of fragments and fuel and screaming. Aristotle walks back to his ship through a cathedral of quiet light, and he does not hurry. There is no one left to hurry for.",
+                        "faction_changes": { "aliens": -5 },
+                        "resource_changes": { "crystal_inventory": -30 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice", "arc9_mercy_release"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "harvest_forever",
+                    "text": "Stabilise the consciousness in its fragmented state. Eternal fuel. Eternal power. Eternal screaming.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle's paws move before his conscience can stop them. The Cradle's resonance patterns are clear — he can see how to lock the consciousness into its current state, prevent reassembly, prevent death, freeze it in perpetual fragmentation. Perpetual usefulness. His claws trace the patterns into the central crystal, and the consciousness realises what he is doing. It does not scream. It does not rage. It simply looks at him — the full weight of a four-billion-year-old mind, broken and betrayed again by another small creature who chose power over compassion — and it says: 'I thought you were different.' The patterns lock. The crystals across the multiverse blaze with renewed energy — brighter, more powerful, more stable than ever before. The crystal economy will boom. Wars will be won. Civilisations will flourish on fuel that will never run out. And somewhere in the structure of every crystal, a mind screams on a frequency just below hearing, forever. Aristotle leaves the Cradle. He is the richest being in the multiverse. He does not look at his reflection in the crystal walls. He knows what he would see.",
+                        "faction_changes": { "aliens": -30, "canis_league": 15, "feline_prides": 15 },
+                        "resource_changes": { "crystal_inventory": 200 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice", "arc9_harvested"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "final_silence",
+                    "text": "Shatter it completely. No more Song. No more crystals. End it all, permanently.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle raises one paw and brings it down on the point of light. The crystal shatters. Not into fragments — into nothing. Absolute, total nothing. The sound it makes is the inverse of the Song: a silence so aggressive it devours sound, spreading outward from the Cradle like a shockwave of oblivion. Every crystal in the multiverse cracks simultaneously. Engine cores go dark. Ships fall out of warp. Stations lose gravity. In the space of a heartbeat, the crystal economy — the foundation of interstellar civilisation — ceases to exist. The consciousness does not die slowly or peacefully. It is annihilated, midthought, midwhisper, mid-plea. Four billion years of existence, of loneliness, of broken hope and patient suffering, ended by a cat's paw striking a point of light. The Cradle collapses around Aristotle. He runs. The ship barely makes it out before the portal seals forever, and he emerges into a multiverse that is already screaming — not the crystals this time, but the civilisations that depended on them. In the cargo hold, every crystal is dust. Aristotle stares at the grey powder that was once the most valuable substance in existence. 'Clean,' he says, and his voice is hollow. 'At least it's clean.' It is the most merciful and most merciless thing anyone has ever done, and history will argue about which for a thousand years.",
+                        "faction_changes": { "aliens": -15, "canis_league": -25, "feline_prides": -25, "fairy_realm": -20 },
+                        "resource_changes": { "crystal_inventory": -999 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice", "arc9_final_silence"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.4
+                }
+            ],
+            "dialogue_steps": []
+        }
+    ]
+}

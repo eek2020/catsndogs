@@ -71,6 +71,16 @@ signal crew_morale_changed(average_morale: int)
 signal crew_mutiny_risk(crew_id: String)
 signal crew_member_recruited(crew_id: String, protagonist_id: String)
 
+# --- Star map events ---
+signal map_purchased(region_id: String)
+signal fog_revealed(region_id: String, percentage: float)
+signal hidden_location_discovered(poi_id: String)
+signal cartographer_rescued
+signal region_boundary_reached(from_region: String, to_region: String)
+
+# --- Celestial Codex events ---
+signal codex_layer_changed(layer_name: String)
+
 # --- UI navigation ---
 signal ui_select
 signal ui_cancel

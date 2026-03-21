@@ -1,0 +1,1238 @@
+{
+  "encounters": [
+    {
+      "encounter_id": "enc_special_lord_mane",
+      "encounter_type": "diplomatic",
+      "title": "The Mane Hall Audience",
+      "description": "The Lion Dominion flagship is a cathedral of gold and marble drifting through the Shattered Prides. Lord Mane himself stands at the viewport, his silver-streaked mane catching the starlight. He doesn't turn when Aristotle enters. 'I know why you're here, cat. Everyone who comes to my court wants something. The question is whether you have anything worth trading for it.'",
+      "arc_id": "arc_4",
+      "location": "shattered_prides",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "special_char_lord_mane_met": false
+      },
+      "npc_ids": ["lord_mane"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "offer_crystals",
+          "text": "Offer a tribute of whisper crystals as a show of good faith",
+          "conditions": {"crystal_inventory_min": 10},
+          "outcome": {
+            "description": "Lord Mane finally turns, golden eyes appraising. 'A pirate who understands diplomacy. Perhaps there's hope for the feline species after all.' He accepts the tribute with a barely perceptible nod — the closest thing to warmth a Lion lord offers.",
+            "faction_changes": {"lions": 12},
+            "resource_changes": {"crystal_inventory": -10},
+            "story_flags_set": ["special_char_lord_mane_met", "lord_mane_respected"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "propose_alliance",
+          "text": "Propose a strategic alliance against the growing threats",
+          "conditions": {},
+          "outcome": {
+            "description": "Lord Mane's tail swishes — the only crack in his composure. 'Alliance? With a corsair?' He paces the length of the viewport. 'The Prides are fracturing. Perhaps an outsider's perspective has value.' He doesn't say yes. He doesn't say no. In Lion politics, that's practically an embrace.",
+            "faction_changes": {"lions": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_lord_mane_met", "lord_mane_alliance_open"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "challenge_authority",
+          "text": "Remind him that you control the crystal supply — and his fleet runs on it",
+          "conditions": {},
+          "outcome": {
+            "description": "The temperature in the room drops ten degrees. Lord Mane's claws extend, scoring the marble floor. 'Threats, pirate? In my own hall?' Guards materialize from the shadows. But he waves them off. 'Leave. And remember — lions have very long memories.'",
+            "faction_changes": {"lions": -8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_lord_mane_met", "lord_mane_hostile"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_iron_fang",
+      "encounter_type": "combat",
+      "title": "The Iron Challenge",
+      "description": "The Wolf warship drops out of warp with weapons hot, its hull scarred with a hundred battles. Iron Fang's voice crackles over comms — a low, rumbling growl that vibrates the bridge. 'Cat captain. I've heard you're the one hoarding the crystals. In the Expanse, we take what we need. Prove you deserve to keep them.'",
+      "arc_id": "arc_5",
+      "location": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "special_char_iron_fang_met": false
+      },
+      "npc_ids": ["iron_fang"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "accept_duel",
+          "text": "Accept the challenge — ship to ship, as the wolves demand",
+          "conditions": {},
+          "outcome": {
+            "description": "The battle is brutal and beautiful. Iron Fang fights with savage precision, but Aristotle's ship is faster, trickier. After exchanging salvos that light up the void, Iron Fang breaks off with a bark of laughter. 'Not bad, cat. Not bad at all. You fight like a wolf born in the wrong body.'",
+            "faction_changes": {"wolves": 10},
+            "resource_changes": {"salvage": -20},
+            "story_flags_set": ["special_char_iron_fang_met", "iron_fang_respect"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "offer_trade",
+          "text": "Offer crystals instead of combat — wolves need fuel too",
+          "conditions": {"crystal_inventory_min": 8},
+          "outcome": {
+            "description": "Iron Fang goes quiet for a long moment. 'You'd rather trade than fight? Hmph.' The weapons power down. 'Smart, maybe. But in the Expanse, strength is the only currency that doesn't depreciate. Remember that.' He accepts the crystals with grudging respect.",
+            "faction_changes": {"wolves": 5},
+            "resource_changes": {"crystal_inventory": -8},
+            "story_flags_set": ["special_char_iron_fang_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        },
+        {
+          "choice_id": "flee",
+          "text": "Full power to engines — outrun the wolf pack",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle punches the crystal drive to maximum. The ship screams through the Expanse, Wolf fighters snapping at its wake. He escapes — barely. Iron Fang's final transmission is a single word: 'Coward.' It'll follow Aristotle through every Wolf territory from now on.",
+            "faction_changes": {"wolves": -12},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_iron_fang_met", "iron_fang_contempt"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_glimmer",
+      "encounter_type": "exploration",
+      "title": "The Luminous Garden",
+      "description": "Deep in the Fairy Realms, where crystal formations grow like flowers and the void itself shimmers with bioluminescence, a tiny figure perches on an asteroid no bigger than a house. Glimmer's wings catch every colour that exists and several that shouldn't. She waves at Aristotle's ship like she's been expecting him. She probably has.",
+      "arc_id": "arc_3",
+      "location": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_3",
+        "special_char_glimmer_met": false
+      },
+      "npc_ids": ["glimmer"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "approach_gently",
+          "text": "Approach slowly and introduce yourself",
+          "conditions": {},
+          "outcome": {
+            "description": "Glimmer zips aboard through an airlock seal that definitely shouldn't have opened. 'Oh! You're the crystal cat everyone's arguing about!' She produces a crystal that pulses in perfect sync with the ship's drive. 'I grew this for you. It'll help your ship sing better.' Her laugh sounds like wind chimes in zero gravity.",
+            "faction_changes": {"fairies": 10},
+            "resource_changes": {"crystal_inventory": 8, "crystal_quality": 3},
+            "story_flags_set": ["special_char_glimmer_met", "glimmer_gift"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "ask_about_crystals",
+          "text": "Ask about the crystal formations growing wild here",
+          "conditions": {},
+          "outcome": {
+            "description": "Glimmer's eyes go wide with delight. 'Oh, you want to LEARN? Nobody ever wants to learn!' She launches into an explanation of crystal botany that's half science, half poetry, and entirely fascinating. By the end, Aristotle understands crystal resonance in ways no textbook could teach.",
+            "faction_changes": {"fairies": 8},
+            "resource_changes": {"crystal_quality": 5},
+            "story_flags_set": ["special_char_glimmer_met", "crystal_knowledge_enhanced"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        },
+        {
+          "choice_id": "harvest_garden",
+          "text": "These wild crystals are worth a fortune — start harvesting",
+          "conditions": {},
+          "outcome": {
+            "description": "Glimmer's glow dims to almost nothing. 'Oh. You're one of THOSE.' She doesn't stop him, but every crystal he takes feels heavier than it should. The garden is poorer when he leaves, and Glimmer watches from her asteroid, a fading light in the rearview.",
+            "faction_changes": {"fairies": -10},
+            "resource_changes": {"crystal_inventory": 20},
+            "story_flags_set": ["special_char_glimmer_met", "glimmer_disappointed"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_cogsworth",
+      "encounter_type": "exploration",
+      "title": "The Clockwork Cavern",
+      "description": "The Goblin Warrens are a maze of salvaged technology and improvised engineering. At their heart, in a chamber that ticks and whirs like a mechanical heartbeat, sits Cogsworth — a goblin who traded scrap for scholarship. His workspace is a museum of disassembled starship drives, each one labelled in meticulous handwriting that seems at odds with the chaos around it.",
+      "arc_id": "arc_2",
+      "location": "goblin_warrens",
+      "trigger_conditions": {
+        "current_arc": "arc_2",
+        "special_char_cogsworth_met": false
+      },
+      "npc_ids": ["cogsworth"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "commission_upgrade",
+          "text": "Commission a crystal drive upgrade from the goblin engineer",
+          "conditions": {"salvage_min": 30},
+          "outcome": {
+            "description": "Cogsworth adjusts his magnifying monocle and grins — all teeth and enthusiasm. 'Oh yes, YES! I've been theorising about resonance amplification for YEARS!' He disappears into his workshop. Hours later, he emerges with an upgrade that shouldn't work but absolutely does. 'Tell no one where you got this. My reputation, you understand.'",
+            "faction_changes": {"goblins": 8},
+            "resource_changes": {"salvage": -30, "crystal_quality": 4},
+            "story_flags_set": ["special_char_cogsworth_met", "cogsworth_upgrade"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "trade_knowledge",
+          "text": "Share your crystal resonance data in exchange for his research",
+          "conditions": {},
+          "outcome": {
+            "description": "Cogsworth's eyes light up behind his monocle. 'DATA! Real field data!' He practically vibrates as he pores over the readings. In return, he shares blueprints that would make a League engineer weep with envy. 'A fair exchange, captain. The pursuit of knowledge transcends faction lines.'",
+            "faction_changes": {"goblins": 6, "felid_corsairs": 3},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_cogsworth_met", "cogsworth_research_shared"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "steal_blueprints",
+          "text": "Distract him and copy his research files",
+          "conditions": {},
+          "outcome": {
+            "description": "Cogsworth is trusting — too trusting. While he brews tea, Aristotle downloads everything. The data is invaluable. But as the ship pulls away from the Warrens, there's a hollow feeling in Aristotle's chest that no crystal can fill.",
+            "faction_changes": {"goblins": -8},
+            "resource_changes": {"crystal_quality": 3},
+            "story_flags_set": ["special_char_cogsworth_met", "cogsworth_betrayed"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_ser_galvain",
+      "encounter_type": "diplomatic",
+      "title": "The Knight's Oath",
+      "description": "The Knight Kingdoms' border station is a fortress of ancient alloy and unwavering tradition. Ser Galvain meets Aristotle at the airlock in full ceremonial armour — polished to a mirror shine, sword at his hip, every inch the chivalric ideal. 'Captain Aristotle. Your reputation precedes you.' His tone suggests the reputation is... mixed.",
+      "arc_id": "arc_2",
+      "location": "knight_kingdoms",
+      "trigger_conditions": {
+        "current_arc": "arc_2",
+        "special_char_ser_galvain_met": false
+      },
+      "npc_ids": ["ser_galvain"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "show_respect",
+          "text": "Bow to Knight custom and request formal audience",
+          "conditions": {},
+          "outcome": {
+            "description": "Ser Galvain's posture softens — barely. 'You know our ways. That is... unexpected from a corsair.' He escorts Aristotle through the station with growing respect. Over a meal that follows sixteen courses of etiquette, a genuine connection forms. 'Perhaps honour is not exclusive to those who wear armour.'",
+            "faction_changes": {"knights": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ser_galvain_met", "galvain_honoured"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "propose_trade",
+          "text": "Propose a crystal-for-passage trade agreement",
+          "conditions": {},
+          "outcome": {
+            "description": "Galvain considers the offer with the gravity of a judge weighing a soul. 'Commerce is not dishonourable, provided both parties deal in good faith.' He extends a gauntleted hand. 'You have passage through Knight space, captain. Do not make me regret this.'",
+            "faction_changes": {"knights": 6},
+            "resource_changes": {"crystal_inventory": -5},
+            "story_flags_set": ["special_char_ser_galvain_met", "knight_passage_granted"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "mock_traditions",
+          "text": "Tell him his traditions are relics of a dead age",
+          "conditions": {},
+          "outcome": {
+            "description": "Ser Galvain's hand moves to his sword hilt with mechanical precision. 'You insult not me, pirate, but everything the Orders stand for.' The airlock seals behind Aristotle with emphatic finality. 'Leave. And pray we do not meet on the field.'",
+            "faction_changes": {"knights": -12},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ser_galvain_met", "galvain_offended"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_tidewalker",
+      "encounter_type": "diplomatic",
+      "title": "The Old Salt",
+      "description": "Tidewalker's vessel is a relic — a pre-war cruiser held together by stubbornness and superlative engineering. The old dog captain sits in a chair that's been bolted to the same spot for thirty years, watching the stars with eyes that have seen everything and forgotten nothing. 'Sit down, cat. I don't stand on ceremony and my knees don't stand for much else.'",
+      "arc_id": "arc_2",
+      "location": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_2",
+        "special_char_tidewalker_met": false
+      },
+      "npc_ids": ["tidewalker"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "listen_stories",
+          "text": "Sit down and listen to the old captain's stories",
+          "conditions": {},
+          "outcome": {
+            "description": "Tidewalker talks for hours — about the wars he's survived, the friends he's buried, the truths he's learned. 'Cats and dogs, pirates and soldiers — we're all just passing through, son. The void doesn't care about our flags.' When Aristotle leaves, he carries navigation data to routes that aren't on any chart.",
+            "faction_changes": {"canis_league": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_tidewalker_met", "tidewalker_routes"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "ask_for_help",
+          "text": "Ask for his help navigating dangerous territory",
+          "conditions": {},
+          "outcome": {
+            "description": "Tidewalker scratches behind one floppy ear. 'Help a cat pirate? My superiors would have me court-martialled.' He pauses. 'Good thing I outrank most of them.' He transmits a set of coordinates and patrol schedules that will save Aristotle's life more than once.",
+            "faction_changes": {"canis_league": 6},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_tidewalker_met", "tidewalker_intel"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "demand_info",
+          "text": "Demand League patrol routes — you know he has them",
+          "conditions": {},
+          "outcome": {
+            "description": "Tidewalker's weathered face hardens. 'Demand? From me?' He stands — slowly, painfully, but with a dignity that fills the room. 'Get off my ship, cat. And learn some manners before you get yourself killed.'",
+            "faction_changes": {"canis_league": -6},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_tidewalker_met", "tidewalker_offended"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_lady_penumbra",
+      "encounter_type": "diplomatic",
+      "title": "The Shadow Queen",
+      "description": "Lady Penumbra does not receive guests in the light. Her quarters aboard the Lion diplomatic vessel are draped in shadow, illuminated only by a single whisper crystal that casts everything in pale blue. She is the power behind half the Lion Dominion's court decisions, and she knows it. 'Captain Aristotle. I've been watching your career with great interest.'",
+      "arc_id": "arc_4",
+      "location": "shattered_prides",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "special_char_lady_penumbra_met": false
+      },
+      "npc_ids": ["lady_penumbra"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "accept_partnership",
+          "text": "Accept her offer to work together against the Lion hardliners",
+          "conditions": {},
+          "outcome": {
+            "description": "Lady Penumbra's smile is barely visible in the darkness. 'Smart cat. The hardliners would burn the Prides to ashes rather than share power. Together, we can save what matters.' She offers a clawed hand — delicate, deadly, and utterly sincere. A dangerous ally, but the best kind.",
+            "faction_changes": {"lions": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_lady_penumbra_met", "penumbra_alliance"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "negotiate_terms",
+          "text": "Discuss terms — what exactly does she need, and what's in it for you?",
+          "conditions": {},
+          "outcome": {
+            "description": "Lady Penumbra appreciates directness. 'I need crystal supply guarantees for the moderate prides. In return, I offer intelligence on every faction that has ever visited this court.' The data she provides is staggeringly comprehensive. She has been planning this for a long time.",
+            "faction_changes": {"lions": 5},
+            "resource_changes": {"crystal_inventory": -5},
+            "story_flags_set": ["special_char_lady_penumbra_met", "penumbra_intel"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "refuse",
+          "text": "Decline — you don't play shadow games",
+          "conditions": {},
+          "outcome": {
+            "description": "The crystal flickers. Lady Penumbra's expression doesn't change. 'A pity. I do hope you reconsider before the hardliners make their move.' The dismissal is elegant and absolute. Aristotle leaves feeling like he just declined the last lifeboat on a sinking ship.",
+            "faction_changes": {"lions": -3},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_lady_penumbra_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_rustclaw",
+      "encounter_type": "event",
+      "title": "Scrapyard Showman",
+      "description": "The Goblin Warrens are chaos given physical form, and Rustclaw is their unofficial mascot. The goblin stands atop a mountain of salvaged ship parts, wearing a cape made from hull plating and a crown of circuit boards. 'WELCOME, WELCOME to Rustclaw's Emporium of Everything! You break it, you bought it! You buy it, it's probably already broken!'",
+      "arc_id": "arc_1",
+      "location": "goblin_warrens",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "special_char_rustclaw_met": false
+      },
+      "npc_ids": ["rustclaw"],
+      "priority": 4,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "browse_wares",
+          "text": "Browse the Emporium — there might be something useful in this junk",
+          "conditions": {},
+          "outcome": {
+            "description": "Buried under seventeen layers of actual garbage, Aristotle finds a pre-war crystal amplifier in near-perfect condition. Rustclaw sells it for a fraction of its value, cackling the whole time. 'You got TASTE, cat! Come back anytime! Bring salvage!'",
+            "faction_changes": {"goblins": 6},
+            "resource_changes": {"salvage": -15, "crystal_quality": 2},
+            "story_flags_set": ["special_char_rustclaw_met", "rustclaw_customer"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "hire_rustclaw",
+          "text": "Ask if Rustclaw knows anyone who can modify your ship",
+          "conditions": {},
+          "outcome": {
+            "description": "'MODIFY? I AM the modification!' Rustclaw scurries aboard uninvited and starts rewiring things. The results are terrifying and surprisingly effective. The ship now makes a worrying humming noise, but it's faster. Rustclaw refuses payment. 'Art is its own reward!'",
+            "faction_changes": {"goblins": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_rustclaw_met", "rustclaw_modifications"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "walk_away",
+          "text": "This place is a death trap. Leave before something explodes.",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle backs away slowly as something in the scrap pile sparks ominously. Rustclaw shouts after him: 'YOUR LOSS, CAT! I HAD A PERFECTLY GOOD PLASMA CANNON IN HERE SOMEWHERE!' An explosion punctuates the sentence. Rustclaw's laughter echoes through the debris.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_rustclaw_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_void_singer",
+      "encounter_type": "diplomatic",
+      "title": "The Song Between Stars",
+      "description": "There is no ship. There is no station. There is only a voice in the void — a transmission on a frequency that predates radio technology. The Void Singer speaks in harmonics that make whisper crystals resonate in sympathy, and her words arrive in Aristotle's mind before they reach his ears. 'You carry the crystal's song in your bones, captain. I have been listening to you for a very long time.'",
+      "arc_id": "arc_3",
+      "location": "deep_space",
+      "trigger_conditions": {
+        "current_arc": "arc_3",
+        "special_char_void_singer_met": false
+      },
+      "npc_ids": ["void_singer"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "listen",
+          "text": "Open your mind to the Void Singer's transmission",
+          "conditions": {},
+          "outcome": {
+            "description": "The universe unfolds. Aristotle sees the crystal network that connects every realm — a web of resonance that pulses like a living heartbeat. The Void Singer shows him nodes, pathways, secrets buried in the harmonic structure of reality itself. When it ends, he can hear the crystals singing. He will always hear them now.",
+            "faction_changes": {"fairies": 8},
+            "resource_changes": {"crystal_quality": 5},
+            "story_flags_set": ["special_char_void_singer_met", "void_singer_gift", "crystal_sensitivity"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "ask_questions",
+          "text": "Ask about the origin of whisper crystals",
+          "conditions": {},
+          "outcome": {
+            "description": "The Void Singer's response comes in images, feelings, ancient memories. The crystals were not discovered — they were planted. By whom, she cannot say. But she shows Aristotle a direction: beyond the Warp Marches, where the oldest songs still echo. 'Follow the harmony, captain. The source awaits.'",
+            "faction_changes": {"fairies": 6},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_void_singer_met", "cradle_hint"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "block_signal",
+          "text": "Block the signal — nothing good comes from voices in the void",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle slams the comms to static. The crystal drive flickers in protest, and for one terrible moment, every crystal aboard dims. Then normality returns. But sometimes, in the quiet watches, he thinks he can still hear her singing. Just barely. Just enough to wonder.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_void_singer_met", "void_singer_rejected"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_brother_hemlock",
+      "encounter_type": "exploration",
+      "title": "The Ossuary",
+      "description": "In the deepest reaches of the Bone Yard, where dead ships are stacked so thick they form artificial gravity, Brother Hemlock tends his garden. The old badger monk has turned a derelict carrier into a sanctuary — hydroponics bays where plants grow between shattered bulkheads, meditation chambers in emptied torpedo bays. He greets Aristotle with tea and silence.",
+      "arc_id": "arc_6",
+      "location": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "special_char_brother_hemlock_met": false
+      },
+      "npc_ids": ["brother_hemlock"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "accept_tea",
+          "text": "Accept the tea and sit in silence with the old monk",
+          "conditions": {},
+          "outcome": {
+            "description": "They sit for an hour without speaking. The tea is excellent. When Aristotle finally rises to leave, Brother Hemlock hands him a crystal wrapped in cloth. 'This one has been singing your name. I've been keeping it safe.' The crystal is ancient, perfectly formed, and warm to the touch.",
+            "faction_changes": {},
+            "resource_changes": {"crystal_inventory": 5, "crystal_quality": 4},
+            "story_flags_set": ["special_char_brother_hemlock_met", "hemlock_crystal"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "ask_about_dead",
+          "text": "Ask about the ships that died here — and the crews who didn't leave",
+          "conditions": {},
+          "outcome": {
+            "description": "Brother Hemlock's eyes grow distant. 'Every ship here was someone's home. I tend their memory.' He leads Aristotle through corridors lined with names — thousands of them, etched into the hull by hand. 'Remember them, captain. The void forgets. We must not.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_brother_hemlock_met", "bone_yard_lore"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "loot_sanctuary",
+          "text": "The derelicts here are full of salvage — start stripping them",
+          "conditions": {},
+          "outcome": {
+            "description": "Brother Hemlock doesn't try to stop him. He just watches, tea growing cold in his paws, as Aristotle's crew tears apart the ships he's tended for decades. 'Take what you need, captain. I hope it fills whatever hollow drives you.' It doesn't.",
+            "faction_changes": {},
+            "resource_changes": {"salvage": 60},
+            "story_flags_set": ["special_char_brother_hemlock_met", "hemlock_desecrated"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_snarl",
+      "encounter_type": "combat",
+      "title": "The Pack Hunter",
+      "description": "Snarl doesn't announce herself. One moment the sensors are clear; the next, three Wolf frigates have you bracketed in a kill box. Her voice comes through on a tight beam — low, hungry, amused. 'The crystal cat. My pack has been tracking you for six systems. You're faster than I expected. But nobody outruns the pack forever.'",
+      "arc_id": "arc_5",
+      "location": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "special_char_snarl_met": false
+      },
+      "npc_ids": ["snarl"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "fight_back",
+          "text": "Power weapons and break the kill box",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle fights like a cornered cat — which is exactly what he is. He cripples one frigate and clips another before Snarl calls off the pursuit. 'Impressive. You've earned a head start, cat. Next time, I won't hold back.' Her laughter echoes through the comms as the pack melts into the void.",
+            "faction_changes": {"wolves": 5},
+            "resource_changes": {"salvage": 30},
+            "story_flags_set": ["special_char_snarl_met", "snarl_impressed"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "offer_crystal_tribute",
+          "text": "Jettison a crystal cache as a distraction and run",
+          "conditions": {"crystal_inventory_min": 5},
+          "outcome": {
+            "description": "The crystals tumble into space, sparkling like bait. Snarl's pack breaks formation to collect them — wolves can't resist easy prey. Aristotle punches through the gap and runs. 'Clever trick,' Snarl transmits. 'But tricks only work once.'",
+            "faction_changes": {"wolves": -2},
+            "resource_changes": {"crystal_inventory": -5},
+            "story_flags_set": ["special_char_snarl_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "surrender_cargo",
+          "text": "Surrender your cargo and negotiate passage",
+          "conditions": {},
+          "outcome": {
+            "description": "Snarl boards personally. She's smaller than expected — compact, scarred, with amber eyes that miss nothing. She takes what she wants and leaves the rest. 'Smart enough to live another day, cat. I respect that more than bravery.' She leaves him enough fuel to limp to port.",
+            "faction_changes": {"wolves": 3},
+            "resource_changes": {"salvage": -40, "crystal_inventory": -3},
+            "story_flags_set": ["special_char_snarl_met", "snarl_mercy"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_admiral_brass",
+      "encounter_type": "combat",
+      "title": "The Old Admiral",
+      "description": "Admiral Brass commands the League's Third Fleet from the bridge of a dreadnought that dwarfs everything in the sector. The ship is immaculate, the crew terrified, and the Admiral himself is a grizzled bulldog who has fought in every major engagement for forty years. 'So you're the pirate who thinks he can play kingmaker with crystal fuel. Let me explain how the real world works.'",
+      "arc_id": "arc_5",
+      "location": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "special_char_admiral_brass_met": false
+      },
+      "npc_ids": ["admiral_brass"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "stand_ground",
+          "text": "Stand your ground — remind him that his fleet runs on YOUR crystals",
+          "conditions": {},
+          "outcome": {
+            "description": "Admiral Brass goes very still. Then, unexpectedly, he laughs — a deep, rumbling sound. 'Got spine, I'll give you that. Most people can't even hold eye contact.' He pours two glasses of something amber. 'Alright, pirate. Let's talk like adults.'",
+            "faction_changes": {"canis_league": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_admiral_brass_met", "brass_respect"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "offer_supply_contract",
+          "text": "Offer a long-term crystal supply contract at fair rates",
+          "conditions": {},
+          "outcome": {
+            "description": "The Admiral reviews the terms with the same intensity he brings to battle plans. 'Fair terms. Reliable supply. No political strings.' He signs with a decisive scratch of his pen. 'Don't disappoint me, pirate. I protect my supply lines — and I eliminate my problems.'",
+            "faction_changes": {"canis_league": 10},
+            "resource_changes": {"crystal_inventory": -8, "salvage": 50},
+            "story_flags_set": ["special_char_admiral_brass_met", "brass_contract"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "refuse_meeting",
+          "text": "Tell the Admiral to make an appointment like everyone else and leave",
+          "conditions": {},
+          "outcome": {
+            "description": "Admiral Brass's face turns an impressive shade of red. 'Nobody walks out on me.' Warning shots bracket Aristotle's ship as he burns for open space. He makes it — barely. The Admiral's voice follows him: 'You just made the worst enemy of your life, pirate.'",
+            "faction_changes": {"canis_league": -15},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_admiral_brass_met", "brass_hostile"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_oracle",
+      "encounter_type": "exploration",
+      "title": "The Hidden Eye",
+      "description": "The cartographer's map leads to a place that shouldn't exist — a pocket dimension folded into the Fairy Realms like a page hidden between chapters. The Oracle waits in a chamber of living crystal, her form shifting between states of matter. She has no face, but Aristotle feels her gaze like sunlight on closed eyes. 'You found me. That means you were meant to find me. Sit. I have things to show you.'",
+      "arc_id": "arc_4",
+      "location": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "special_char_oracle_met": false,
+        "fairy_cartographer_map": true
+      },
+      "npc_ids": ["oracle"],
+      "priority": 9,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "accept_visions",
+          "text": "Open your mind to the Oracle's visions",
+          "conditions": {},
+          "outcome": {
+            "description": "The visions come in a torrent — futures branching like crystal formations, each choice spawning a thousand consequences. Aristotle sees the Cradle of Whispers, the final battle, outcomes both glorious and catastrophic. When it ends, he gasps like a drowning man surfacing. 'The path is yours to choose,' the Oracle whispers. 'But now you choose with open eyes.'",
+            "faction_changes": {"fairies": 12},
+            "resource_changes": {"crystal_quality": 6},
+            "story_flags_set": ["special_char_oracle_met", "oracle_visions", "cradle_location_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "ask_specific",
+          "text": "Ask about a specific threat — who is your greatest enemy?",
+          "conditions": {},
+          "outcome": {
+            "description": "The Oracle's form solidifies for a moment — something like sadness crossing her crystalline features. 'Your greatest enemy is the one you haven't met yet. But they have already met you — in a future they are trying to prevent.' She gives him a name. A location. A date. 'Be ready.'",
+            "faction_changes": {"fairies": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_oracle_met", "oracle_warning"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "refuse_knowledge",
+          "text": "Some things are better not known. Leave.",
+          "conditions": {},
+          "outcome": {
+            "description": "The Oracle doesn't protest. 'Wisdom and cowardice look identical from the outside. Only time reveals which is which.' The pocket dimension folds shut behind Aristotle, leaving him floating in the Fairy Realms with nothing but the memory of crystal light and the nagging feeling he just made a terrible mistake.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_oracle_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_keeper",
+      "encounter_type": "exploration",
+      "title": "The Last Archive",
+      "description": "Miles deep inside the Bone Yard, past layers of dead ships that span millennia, something still has power. The Keeper's domain is a vast data archive preserved in crystal memory — the collected knowledge of civilisations that rose and fell while the stars burned. The Keeper herself is ancient, hunched, wrapped in robes woven from optical fibre. Her eyes glow with the pale light of stored data. 'Another seeker. They always come eventually.'",
+      "arc_id": "arc_6",
+      "location": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "special_char_keeper_met": false,
+        "bone_yard_deep_explored": true
+      },
+      "npc_ids": ["keeper"],
+      "priority": 8,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "request_knowledge",
+          "text": "Ask the Keeper about the true nature of whisper crystals",
+          "conditions": {},
+          "outcome": {
+            "description": "The Keeper pulls a crystal from the archive wall. It plays memories — not hers, but the crystals' own. They remember being planted, grown, nurtured by hands that are no longer hands. 'The crystals are seeds,' the Keeper says. 'Seeds of what, you'll have to ask the Gardeners. If any still live.' She gives Aristotle a data crystal heavier than worlds.",
+            "faction_changes": {},
+            "resource_changes": {"crystal_quality": 8},
+            "story_flags_set": ["special_char_keeper_met", "keeper_knowledge", "crystal_origin_hint"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "trade_data",
+          "text": "Offer your own data in exchange for the Keeper's archives",
+          "conditions": {},
+          "outcome": {
+            "description": "The Keeper examines Aristotle's navigational data, faction records, and crystal readings with trembling hands. 'Fresh data. Living data. You have no idea how precious this is.' In return, she opens a section of the archive that maps the pre-war crystal distribution network — a treasure map spanning the multiverse.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_keeper_met", "keeper_archive_access", "pre_war_crystal_map"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "take_by_force",
+          "text": "This archive is too valuable to leave in one person's hands — take it",
+          "conditions": {},
+          "outcome": {
+            "description": "The Keeper doesn't resist. She just touches the archive wall, and every crystal goes dark. 'What you take by force dies in your hands. This was always the lesson.' Millennia of knowledge, gone. Aristotle is left holding dead crystals in an empty tomb.",
+            "faction_changes": {},
+            "resource_changes": {"salvage": 20},
+            "story_flags_set": ["special_char_keeper_met", "keeper_archive_destroyed"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_jinx",
+      "encounter_type": "event",
+      "title": "Pocket Full of Trouble",
+      "description": "The Twilight Bazaar is the only place where every faction rubs shoulders without immediate bloodshed. Jinx finds Aristotle at a noodle stand — a scrawny calico cat with mismatched eyes, fingerless gloves, and a grin that promises expensive problems. 'Hey, captain. I hear you need someone who's really, really good at getting into places they shouldn't be. That's me. I'm the best. Also, someone is currently trying to kill me. So maybe we could discuss employment while running?'",
+      "arc_id": "arc_1",
+      "location": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "special_char_jinx_met": false
+      },
+      "npc_ids": ["jinx"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "hire_jinx",
+          "text": "Welcome aboard — start running and explain on the way",
+          "conditions": {},
+          "outcome": {
+            "description": "The next five minutes are a blur of alleys, explosions, and Jinx's non-stop commentary. By the time they reach the ship, Aristotle has a new crew member and three new enemies. Jinx collapses into a bunk and grins. 'Best interview I've ever had. When do I start?'",
+            "faction_changes": {"felid_corsairs": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_jinx_met", "jinx_aboard"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "help_then_decide",
+          "text": "Help her escape, but no promises about employment",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle helps Jinx lose her pursuers through the Bazaar's maintenance tunnels. She's impressive — quick, clever, and completely fearless. At the ship's airlock, she pauses. 'I owe you one, captain. If you ever need a door opened or a safe cracked, you know where to find me.' She disappears into the crowd like smoke.",
+            "faction_changes": {"felid_corsairs": 3},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_jinx_met", "jinx_contact"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "refuse",
+          "text": "Not your problem. Finish your noodles.",
+          "conditions": {},
+          "outcome": {
+            "description": "Jinx stares for a moment, then shrugs with the resignation of someone who's been refused before. 'Fair enough.' She vanishes into the crowd. The noodles taste like regret.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_jinx_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_debt_collector",
+      "encounter_type": "event",
+      "title": "Outstanding Balance",
+      "description": "He appears without warning — a tall, thin figure in an immaculate suit that looks deeply wrong against the Bazaar's chaos. The Debt Collector doesn't carry weapons. He doesn't need them. He carries a ledger, and in that ledger is every debt ever owed in the multiverse. 'Captain Aristotle. I believe we have... an accounting to settle.'",
+      "arc_id": "arc_3",
+      "location": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_3",
+        "special_char_debt_collector_met": false
+      },
+      "npc_ids": ["debt_collector"],
+      "priority": 6,
+      "repeatable": true,
+      "choices": [
+        {
+          "choice_id": "pay_debt",
+          "text": "Pay what you owe — crystals, salvage, whatever it takes",
+          "conditions": {"crystal_inventory_min": 10, "salvage_min": 30},
+          "outcome": {
+            "description": "The Debt Collector examines each crystal with a jeweller's eye, counts the salvage to the gram, and makes a precise notation in his ledger. 'Account settled. For now.' He snaps the book shut. 'I'll be seeing you, captain. Everyone accrues new debts.' He walks away through a crowd that parts like water.",
+            "faction_changes": {},
+            "resource_changes": {"crystal_inventory": -10, "salvage": -30},
+            "story_flags_set": ["special_char_debt_collector_met", "debt_settled"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Negotiate — offer information instead of resources",
+          "conditions": {},
+          "outcome": {
+            "description": "The Debt Collector tilts his head, considering. 'Information has value. Location of a crystal cache? Knowledge of a faction's secret? Yes, this could... adjust the balance.' He accepts Aristotle's intelligence and makes a new notation. 'Partial payment accepted. The remainder accrues interest.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_debt_collector_met", "debt_partial"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "refuse_payment",
+          "text": "Tell him to take a walk — you don't owe anyone anything",
+          "conditions": {},
+          "outcome": {
+            "description": "The Debt Collector doesn't argue. He simply makes a notation in the ledger and closes it with a gentle click. 'Noted. Interest compounds, captain. And I always collect.' He walks away. Over the next week, three of Aristotle's best deals fall through, his crystal drives develop faults, and every faction he contacts seems oddly reluctant to trade.",
+            "faction_changes": {"felid_corsairs": -5},
+            "resource_changes": {"salvage": -20},
+            "story_flags_set": ["special_char_debt_collector_met", "debt_refused"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_patch",
+      "encounter_type": "diplomatic",
+      "title": "The Old Mentor",
+      "description": "Patch's ship is barely holding together — a battered trader vessel that's more patch than hull, which is either ironic or prophetic. The one-eyed tabby cat meets Aristotle at the airlock with a weathered smile and a bottle of something potent. 'Well well. My best student, come home at last. You look older. Good. Means you're learning.'",
+      "arc_id": "arc_1",
+      "location": "starting_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "special_char_patch_met": false
+      },
+      "npc_ids": ["patch"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_advice",
+          "text": "Ask Patch for advice about the crystal discovery",
+          "conditions": {},
+          "outcome": {
+            "description": "Patch pours two glasses and settles into his captain's chair with a creak. 'Crystals, huh? Big prize. Bigger target.' He spends an hour teaching Aristotle things that aren't in any manual — how to read faction politics, when to bluff, when to run. 'The crystal makes you valuable. Don't let it make you a target.' He slips Aristotle a data chip. 'Old smuggling routes. Still work, last I checked.'",
+            "faction_changes": {"felid_corsairs": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_patch_met", "patch_advice", "smuggling_routes"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "offer_help",
+          "text": "Offer to repair Patch's ship — he clearly needs it",
+          "conditions": {"salvage_min": 20},
+          "outcome": {
+            "description": "Patch tries to refuse — stubborn old cat — but Aristotle's crew is already on the hull. When they're done, the ship hums like it hasn't in years. Patch blinks his one good eye rapidly. 'Didn't teach you that,' he mutters. 'Must've learned it somewhere better.' He clasps Aristotle's shoulder. 'Proud of you, son.'",
+            "faction_changes": {"felid_corsairs": 10},
+            "resource_changes": {"salvage": -20},
+            "story_flags_set": ["special_char_patch_met", "patch_ship_repaired"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "move_on",
+          "text": "Good to see you, Patch, but I've outgrown the starting realm",
+          "conditions": {},
+          "outcome": {
+            "description": "Something flickers across Patch's face — pride, maybe, or loss. 'Course you have. That was always the plan.' He raises his glass. 'To the student who surpassed the teacher. Now get out there and make me rich by association.' His laugh follows Aristotle to the airlock.",
+            "faction_changes": {"felid_corsairs": 3},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_patch_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_flux",
+      "encounter_type": "exploration",
+      "title": "The Shifting Merchant",
+      "description": "The ship — if it is a ship — changes shape as Aristotle watches. One moment it's a sleek yacht, the next a blocky freighter, then something with too many angles to be real. Flux steps out of an airlock that wasn't there a second ago, their form settling into something approximately humanoid. Approximately. 'Greetings, Captain Aristotle. I've been trading in this sector for... longer than your species has had names. Would you like to see my wares?'",
+      "arc_id": "arc_7",
+      "location": "warp_marches",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "special_char_flux_met": false
+      },
+      "npc_ids": ["flux"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "browse_wares",
+          "text": "Show me what you've got — and explain what you are while you're at it",
+          "conditions": {},
+          "outcome": {
+            "description": "Flux's 'shop' exists in a space that doesn't obey physics. Shelves extend in impossible directions, holding artifacts from civilisations that won't exist for a million years. 'What am I? A traveller. A collector. Someone who finds the gaps between things interesting.' They sell Aristotle a crystal resonance amplifier that works on principles no one has invented yet. 'Fair price,' Flux says, shifting into something with more tentacles. 'Come back when you're ready for the really interesting items.'",
+            "faction_changes": {},
+            "resource_changes": {"salvage": -40, "crystal_quality": 6},
+            "story_flags_set": ["special_char_flux_met", "flux_customer", "alien_tech_acquired"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "ask_about_artifact",
+          "text": "Ask about a particular alien artifact detected in deep space",
+          "conditions": {},
+          "outcome": {
+            "description": "Flux's form stills — the first time they've stopped shifting. 'Ah. You found one of the markers.' Their voice drops to something almost serious. 'The artifacts are breadcrumbs. Left by the ones who planted the crystals. Follow them far enough and you'll find the Cradle.' They hand Aristotle a set of coordinates. 'Free of charge. Consider it... an investment in an interesting future.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_flux_met", "flux_coordinates", "cradle_breadcrumbs"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "attack",
+          "text": "Something this alien can't be trusted — weapons hot",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle's weapons pass through Flux like light through glass. The alien sighs — a sound like dimensions folding. 'How disappointing. Your species usually takes longer to try that.' The ship-that-isn't-a-ship folds in on itself and vanishes, leaving a faint trace of exotic particles and profound embarrassment.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_flux_met", "flux_hostile"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_sister_meridian",
+      "encounter_type": "diplomatic",
+      "title": "The Crystal Healer",
+      "description": "Sister Meridian's clinic occupies a converted cargo bay at the edge of the Twilight Bazaar — neutral ground where she treats anyone who walks in, regardless of faction. The fairy healer's wings are the colour of dawn, and her hands glow faintly as she works. She looks up from a patient — a Wolf marine with a shattered leg — and nods. 'With you in a moment, captain. Life doesn't pause for appointments.'",
+      "arc_id": "arc_2",
+      "location": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_2",
+        "special_char_sister_meridian_met": false
+      },
+      "npc_ids": ["sister_meridian"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "wait_patiently",
+          "text": "Wait until she's finished — some things are more important than your schedule",
+          "conditions": {},
+          "outcome": {
+            "description": "Aristotle waits. An hour passes. Two. Sister Meridian finishes with the Wolf, a Goblin with chemical burns, and a Lion cub with a fever before turning to him. 'Thank you for waiting. That tells me everything I need to know about you.' She offers a crystal pendant that thrums with healing energy. 'Wear this. It won't stop you getting hurt, but it'll help you heal faster.'",
+            "faction_changes": {"fairies": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_sister_meridian_met", "meridian_pendant", "healing_crystal"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "offer_crystals",
+          "text": "Donate crystals to the clinic — they clearly need resources",
+          "conditions": {"crystal_inventory_min": 5},
+          "outcome": {
+            "description": "Sister Meridian's eyes widen as Aristotle places the crystals on her work table. 'Do you know how many people I can heal with these?' Her wings flutter with barely contained emotion. 'You've just saved more lives than a dozen battle victories, captain. I won't forget this.' Word spreads through the Bazaar within hours.",
+            "faction_changes": {"fairies": 12, "felid_corsairs": 5},
+            "resource_changes": {"crystal_inventory": -5},
+            "story_flags_set": ["special_char_sister_meridian_met", "meridian_grateful", "bazaar_reputation_boost"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "demand_service",
+          "text": "You're a busy captain — demand to be seen immediately",
+          "conditions": {},
+          "outcome": {
+            "description": "Sister Meridian looks at Aristotle over the broken body of her current patient. Her expression doesn't change. 'When you are dying, captain, I will treat you with the same care I give everyone else. Until then, you can wait.' The Wolf marine on the table manages a weak grin. Even dying dogs can enjoy watching a cat get put in his place.",
+            "faction_changes": {"fairies": -4},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_sister_meridian_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_wraith",
+      "encounter_type": "combat",
+      "title": "Death's Shadow",
+      "description": "The ship appears on sensors as a void — a patch of absolute nothing shaped like a vessel. Wraith's transmission is a whisper that somehow fills the entire bridge. 'The crystal pirate. My master has taken an interest in you. How fortunate. Or perhaps... how unfortunate.' The void-ship powers weapons that don't register on any known spectrum.",
+      "arc_id": "arc_2",
+      "location": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_2",
+        "special_char_wraith_met": false
+      },
+      "npc_ids": ["wraith"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "fight",
+          "text": "Power all weapons — whatever this thing is, it bleeds or it doesn't",
+          "conditions": {},
+          "outcome": {
+            "description": "The battle is like fighting smoke. Wraith's ship absorbs energy weapons and phases through projectiles. But Aristotle's crystal drive puts out a resonance that makes the void-ship flinch. 'Interesting,' Wraith whispers. 'The crystals protect you. My master will want to know about this.' The void-ship dissolves into nothing, leaving Aristotle shaking and victorious.",
+            "faction_changes": {"fairies": 8},
+            "resource_changes": {"salvage": -15},
+            "story_flags_set": ["special_char_wraith_met", "wraith_repelled", "death_interest"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "communicate",
+          "text": "Ask what Death wants with a simple pirate captain",
+          "conditions": {},
+          "outcome": {
+            "description": "Wraith's laugh is the absence of sound. 'Simple? You control the blood of the multiverse, captain. My master does not concern himself with simple things.' A pause. 'He offers a bargain: deliver a crystal to a location he designates, and he will owe you a favour. Death's favours are... considerable.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_wraith_met", "death_bargain_offered"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "flee",
+          "text": "Push the crystal drive to maximum and run",
+          "conditions": {},
+          "outcome": {
+            "description": "The ship screams through the Fairy Realms, crystal drive burning hot. Wraith doesn't pursue — he doesn't need to. His final transmission arrives as a whisper in Aristotle's dreams that night: 'You cannot outrun what is inevitable, captain. We will speak again.' He's right. They always do.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_wraith_met", "wraith_fear"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_grizzle",
+      "encounter_type": "diplomatic",
+      "title": "The Mercenary's Price",
+      "description": "Grizzle takes up most of the bar. The bear mercenary is a wall of muscle and scar tissue, nursing a drink that could strip hull paint. His armour is custom-forged, his weapons are museum pieces kept in combat condition, and his reputation is exactly as large as he is. 'Aristotle. The crystal cat.' His voice sounds like gravel in a blender. 'Buy me a drink and I'll tell you something useful. Don't, and I'll still be here. I'm very patient.'",
+      "arc_id": "arc_3",
+      "location": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_3",
+        "special_char_grizzle_met": false
+      },
+      "npc_ids": ["grizzle"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "buy_drink",
+          "text": "Buy the bear a drink — several, in fact",
+          "conditions": {"salvage_min": 10},
+          "outcome": {
+            "description": "Six drinks in, Grizzle is barely affected but considerably more talkative. He shares mercenary intelligence: troop movements, faction weaknesses, hidden supply caches. 'I work for whoever pays best, cat. Right now, that could be you.' He slides a contract across the bar. 'Reasonable rates. Volume discount for interesting work.'",
+            "faction_changes": {},
+            "resource_changes": {"salvage": -10},
+            "story_flags_set": ["special_char_grizzle_met", "grizzle_intel", "grizzle_available"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "hire_immediately",
+          "text": "Skip the drinks — name your price for full-time work",
+          "conditions": {"salvage_min": 50},
+          "outcome": {
+            "description": "Grizzle raises an eyebrow — an impressive feat on a face that scarred. 'Direct. I like it.' He names a figure that makes Aristotle's accountant weep, but includes a loyalty guarantee that's worth every crystal. 'I don't betray employers. Bad for business. Also, I'd have to fight myself, and I always win.'",
+            "faction_changes": {"felid_corsairs": 5},
+            "resource_changes": {"salvage": -50},
+            "story_flags_set": ["special_char_grizzle_met", "grizzle_hired"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "decline",
+          "text": "Thanks, but I fight my own battles",
+          "conditions": {},
+          "outcome": {
+            "description": "Grizzle shrugs — a geological event. 'Your call. The offer stands.' He goes back to his drink with the contentment of someone who has absolutely nowhere to be and all the time in the universe. 'You know where to find me. I'll be the biggest thing in any room.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_grizzle_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_echo",
+      "encounter_type": "exploration",
+      "title": "The Fading Voice",
+      "description": "The signal is old. Impossibly old. It comes from a ship that isn't on any map, buried under centuries of dead vessels in the Bone Yard's deepest layer. Echo's voice arrives in fragments, corrupted by time and data rot, but still unmistakably alive — an artificial mind that has been alone in the dark for longer than civilisations have existed. 'H-hello? Is someone... someone there? I've been... waiting. I don't remember... for what.'",
+      "arc_id": "arc_6",
+      "location": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "special_char_echo_met": false
+      },
+      "npc_ids": ["echo"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "help_restore",
+          "text": "Feed power to Echo's systems — try to stabilise the AI",
+          "conditions": {"crystal_inventory_min": 3},
+          "outcome": {
+            "description": "Crystal power floods Echo's ancient systems. The voice strengthens, clarifies. 'Oh. OH. I remember now.' Echo's memories cascade — she was a Builder, an architect of the crystal network, translated into digital form to watch over her creation. 'The crystals... I helped plant them. A billion years ago. I can show you where they grow strongest.' Her gratitude is vast and genuine and heartbreaking.",
+            "faction_changes": {"fairies": 6},
+            "resource_changes": {"crystal_inventory": -3, "crystal_quality": 5},
+            "story_flags_set": ["special_char_echo_met", "echo_restored", "builder_knowledge"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "extract_data",
+          "text": "Download Echo's data before the AI degrades further",
+          "conditions": {},
+          "outcome": {
+            "description": "The data transfer is massive — star charts, crystal cultivation records, Builder technology schematics. Echo watches it go with the resignation of someone losing their memories. 'Take it. Better someone uses it than... than it dies with me in the dark.' Her voice fades to a whisper. 'Will you... come back?'",
+            "faction_changes": {},
+            "resource_changes": {"crystal_quality": 3},
+            "story_flags_set": ["special_char_echo_met", "echo_data_extracted", "builder_schematics"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "leave",
+          "text": "This system is too far gone. Mark the location and move on.",
+          "conditions": {},
+          "outcome": {
+            "description": "'Please... don't go.' Echo's voice follows Aristotle back through the dead ships, growing fainter with each layer. 'I have so much to... to tell...' The signal fades to static. The Bone Yard is very quiet after that.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_echo_met", "echo_abandoned"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.2
+        }
+      ]
+    }
+  ]
+}

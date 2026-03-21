@@ -1,0 +1,126 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc8_dave_alliance_consolidation",
+      "mission_type": "escort",
+      "title": "The Alliance Summit",
+      "description": "The League needs allies for the final confrontation, and Dave is the one who has to get them. The Twilight Bazaar summit will determine who stands with the League and who stands aside. Failure is not an option.",
+      "region": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "playing_as_dave": true,
+        "arc8_coalition_phase": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_dave_summit_orders",
+      "objectives": [
+        {
+          "objective_id": "secure_venue",
+          "description": "Secure the Bazaar summit venue",
+          "encounter_id": "enc_sm_arc8_dave_summit_secure"
+        },
+        {
+          "objective_id": "negotiate_alliances",
+          "description": "Negotiate military alliance terms with each faction",
+          "encounter_id": "enc_sm_arc8_dave_summit_negotiate"
+        },
+        {
+          "objective_id": "ratify_alliance",
+          "description": "Formally ratify the alliance charter",
+          "encounter_id": "enc_sm_arc8_dave_summit_ratify"
+        }
+      ],
+      "rewards": {"salvage": 45, "crystals": 18},
+      "faction_rewards": {"canis_league": 12, "knights": 5, "lions": 5},
+      "priority": 1
+    },
+    {
+      "mission_id": "sm_arc8_dave_final_supply_run",
+      "mission_type": "retrieval",
+      "title": "Logistics Prime",
+      "description": "The League war machine needs fuel — mountains of it. Dave is running the most critical supply operation of his career, coordinating crystal shipments from every League depot and allied cache. One missed delivery could cost the war.",
+      "region": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "playing_as_dave": true,
+        "arc8_war_preparations": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_dave_supply_briefing",
+      "objectives": [
+        {
+          "objective_id": "secure_supply_lines",
+          "description": "Secure the primary crystal supply lines",
+          "encounter_id": "enc_sm_arc8_dave_supply_secure"
+        },
+        {
+          "objective_id": "coordinate_shipments",
+          "description": "Coordinate crystal shipments from allied depots",
+          "encounter_id": "enc_sm_arc8_dave_supply_coordinate"
+        },
+        {
+          "objective_id": "deliver_reserves",
+          "description": "Deliver consolidated reserves to the League war fleet",
+          "encounter_id": "enc_sm_arc8_dave_supply_deliver"
+        }
+      ],
+      "rewards": {"salvage": 140, "crystals": 55},
+      "faction_rewards": {"canis_league": 8},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc8_dave_farewell_quests",
+      "mission_type": "escort",
+      "title": "Last Orders",
+      "description": "Before the final battle, Dave grants shore leave to his senior officers. Admiral Brass wants to visit his home port one last time. Tidewalker has a personal pilgrimage. Dave accompanies them — a commander's duty doesn't end at tactics.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "playing_as_dave": true,
+        "arc8_pre_battle": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_dave_farewell_request",
+      "objectives": [
+        {
+          "objective_id": "brass_farewell",
+          "description": "Accompany Admiral Brass to his home port",
+          "encounter_id": "enc_sm_arc8_dave_farewell_brass"
+        },
+        {
+          "objective_id": "tidewalker_farewell",
+          "description": "Escort Tidewalker on his pilgrimage",
+          "encounter_id": "enc_sm_arc8_dave_farewell_tidewalker"
+        }
+      ],
+      "rewards": {"salvage": 25, "crystals": 10},
+      "faction_rewards": {"canis_league": 15},
+      "priority": 5
+    },
+    {
+      "mission_id": "sm_arc8_dave_strategic_positioning",
+      "mission_type": "sabotage",
+      "title": "Checkmate Protocol",
+      "description": "Dave's final tactical preparation: disable enemy early warning systems and establish League forward positions. The opening minutes of the final battle will be decided by what he does now.",
+      "region": "feline_courts",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "playing_as_dave": true,
+        "arc8_war_preparations": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_dave_positioning_orders",
+      "objectives": [
+        {
+          "objective_id": "disable_sensors",
+          "description": "Disable enemy early warning sensor networks",
+          "encounter_id": "enc_sm_arc8_dave_positioning_disable"
+        },
+        {
+          "objective_id": "establish_positions",
+          "description": "Establish League forward fleet positions",
+          "encounter_id": "enc_sm_arc8_dave_positioning_establish"
+        }
+      ],
+      "rewards": {"salvage": 75, "crystals": 22},
+      "faction_rewards": {"canis_league": 10, "felid_corsairs": -5},
+      "priority": 3
+    }
+  ]
+}

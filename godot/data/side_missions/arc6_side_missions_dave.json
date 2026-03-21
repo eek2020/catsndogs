@@ -1,0 +1,131 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc6_dave_bone_yard_salvage",
+      "mission_type": "retrieval",
+      "title": "Salvage Operation Bravo",
+      "description": "The League has identified a pre-war crystal refinery in the Bone Yard — strategic value: immeasurable. Dave is tasked with securing the site and cataloguing its contents before scavengers strip it clean.",
+      "region": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "playing_as_dave": true,
+        "arc6_bone_yard_unlocked": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_dave_salvage_orders",
+      "objectives": [
+        {
+          "objective_id": "clear_approach",
+          "description": "Clear a safe approach vector through the debris field",
+          "encounter_id": "enc_sm_arc6_dave_salvage_clear"
+        },
+        {
+          "objective_id": "secure_refinery",
+          "description": "Secure the refinery and neutralise squatter threats",
+          "encounter_id": "enc_sm_arc6_dave_salvage_secure"
+        },
+        {
+          "objective_id": "catalogue_assets",
+          "description": "Catalogue all recoverable assets for League use",
+          "encounter_id": "enc_sm_arc6_dave_salvage_catalogue"
+        }
+      ],
+      "rewards": {"salvage": 110, "crystals": 28},
+      "faction_rewards": {"canis_league": 10},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc6_dave_lion_civil_war",
+      "mission_type": "escort",
+      "title": "Operation Ceasefire",
+      "description": "League command sees the Lion civil war as a destabilising wildcard. Dave is ordered to facilitate ceasefire negotiations — not out of kindness, but because a unified Lion Dominion is a predictable one.",
+      "region": "shattered_prides",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "playing_as_dave": true,
+        "special_char_lady_penumbra_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_dave_lion_orders",
+      "objectives": [
+        {
+          "objective_id": "establish_channel",
+          "description": "Establish a secure communication channel between Lion factions",
+          "encounter_id": "enc_sm_arc6_dave_lion_channel"
+        },
+        {
+          "objective_id": "provide_security",
+          "description": "Provide military security for the peace negotiations",
+          "encounter_id": "enc_sm_arc6_dave_lion_security"
+        }
+      ],
+      "rewards": {"salvage": 65, "crystals": 14},
+      "faction_rewards": {"canis_league": 8, "lions": 10},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc6_dave_goblin_heist",
+      "mission_type": "bounty",
+      "title": "Heist Interdiction",
+      "description": "League intelligence has intercepted Goblin Scrapper communications detailing a planned raid on a Lion crystal vault. Dave's orders are clear: stop the heist and arrest the perpetrators. The fact that it might earn Lion goodwill is a bonus.",
+      "region": "goblin_warrens",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "playing_as_dave": true,
+        "arc6_goblin_contact": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_dave_goblin_intel",
+      "objectives": [
+        {
+          "objective_id": "intercept_plans",
+          "description": "Intercept the detailed heist plans",
+          "encounter_id": "enc_sm_arc6_dave_goblin_intercept"
+        },
+        {
+          "objective_id": "set_ambush",
+          "description": "Set an ambush at the vault perimeter",
+          "encounter_id": "enc_sm_arc6_dave_goblin_ambush"
+        },
+        {
+          "objective_id": "arrest_leaders",
+          "description": "Capture the heist ringleaders",
+          "encounter_id": "enc_sm_arc6_dave_goblin_arrest"
+        }
+      ],
+      "rewards": {"salvage": 90, "crystals": 18},
+      "faction_rewards": {"canis_league": 10, "lions": 8, "goblins": -12},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc6_dave_ancient_tech",
+      "mission_type": "retrieval",
+      "title": "Project Antiquity",
+      "description": "Echo, the degrading Bone Yard AI, has offered Dave a deal: Builder-era technology in exchange for a data preservation effort. The League wants the tech. Dave wonders if preserving an ancient mind is worth the risk.",
+      "region": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "playing_as_dave": true,
+        "special_char_echo_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_dave_ancient_contact",
+      "objectives": [
+        {
+          "objective_id": "negotiate_with_echo",
+          "description": "Negotiate terms with Echo for technology access",
+          "encounter_id": "enc_sm_arc6_dave_ancient_negotiate"
+        },
+        {
+          "objective_id": "disable_defenses",
+          "description": "Disable the Builder automated defense grid",
+          "encounter_id": "enc_sm_arc6_dave_ancient_disable"
+        },
+        {
+          "objective_id": "secure_technology",
+          "description": "Secure Builder technology for League analysis",
+          "encounter_id": "enc_sm_arc6_dave_ancient_secure"
+        }
+      ],
+      "rewards": {"salvage": 75, "crystals": 32},
+      "faction_rewards": {"canis_league": 12},
+      "priority": 1
+    }
+  ]
+}

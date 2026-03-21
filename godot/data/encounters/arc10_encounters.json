@@ -1,0 +1,381 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc10_dave_assault",
+            "encounter_type": "combat",
+            "title": "Cry Havoc",
+            "description": "It was bound to happen. The Canis League has stopped trying to control you and started trying to erase you. A massive armada jumps into the system, guns already firing. Dave's voice echoes over the open channels: \"The experiment is over, Aristotle. Surrender your ships, or die with them.\"",
+            "arc_id": "arc_10",
+            "location": "crystal_forge_prime",
+            "trigger_conditions": {
+                "current_arc": "arc_10",
+                "arc10_dave_assault": false
+            },
+            "npc_ids": [
+                "aristotle",
+                "dave"
+            ],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "dave",
+                    "text": "The comms crackle to life. Dave's face fills the screen—cold, composed, immaculate uniform despite the chaos outside. \"The experiment is over, Aristotle. Surrender your ships and your crystal holdings. This is not a negotiation.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Dave! What a lovely surprise. I was just redecorating. Do you like what I've done with the defence platforms?\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"I have four hundred warships behind me and authorization to use all of them. Your fleet is outnumbered three to one. This does not end well for you.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"You know, Dave, you always lead with the numbers. Has it ever occurred to you that numbers aren't everything?\" Aristotle's grin is wide, but his claws are gripping the armrest. \"I've been outnumbered my entire life. It's practically a hobby.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"This is your last chance. I am offering you terms. Dignified terms. Your crew walks free. Your ships are impounded but your people live.\" A pause. Dave's jaw tightens. \"I would prefer not to kill you, Aristotle.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"'Prefer not to.' That's the most romantic thing you've ever said to me, Commander.\" The grin wavers. Aristotle glances at his crew. At the tactical display showing the wall of League ships. At the crystal fields he built from nothing.",
+                    "choices": [
+                        {
+                            "choice_id": "full_defense",
+                            "text": "\"Hold the line! No dog sets foot on my production facilities!\"",
+                            "next_step": "full_defense_branch",
+                            "outcome": {
+                                "description": "The battle is apocalyptic. Your Corsair fleet holds, but the cost in feline lives and shattered hulls is astronomical.",
+                                "faction_changes": {
+                                    "canis_league": -30,
+                                    "felid_corsairs": 10
+                                },
+                                "resource_changes": {
+                                    "salvage": 100,
+                                    "crystal_inventory": -50
+                                },
+                                "story_flags_set": [
+                                    "arc10_dave_assault"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "tactical_retreat",
+                            "text": "Evacuate the core personnel and scorch the outer facilities to delay them.",
+                            "next_step": "retreat_branch",
+                            "outcome": {
+                                "description": "You lose a massive chunk of your infrastructure, but your veteran crews survive to fight another day.",
+                                "faction_changes": {
+                                    "canis_league": -15,
+                                    "felid_corsairs": -5
+                                },
+                                "resource_changes": {
+                                    "crystal_inventory": -80
+                                },
+                                "story_flags_set": [
+                                    "arc10_dave_assault"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "crystal_overload",
+                            "text": "Weaponize the raw crystal deposits. Detonate an asteroid in the middle of their fleet.",
+                            "next_step": "overload_branch",
+                            "outcome": {
+                                "description": "The explosion tears a hole in reality. A third of the League fleet is annihilated instantly, but the raw energy backlash cripples your own ship.",
+                                "faction_changes": {
+                                    "canis_league": -50
+                                },
+                                "resource_changes": {
+                                    "salvage": 50,
+                                    "crystal_inventory": -100
+                                },
+                                "story_flags_set": [
+                                    "arc10_dave_assault"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "full_defense_branch",
+                    "speaker": "aristotle",
+                    "text": "\"You want my fields, Dave? Come and take them.\" Aristotle slams the comms panel. \"All ships! Battle stations! We hold the line or we die on it!\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave watches the Corsair fleet wheel into defensive formation. Fast, disciplined, desperate. \"He chose the hard way,\" Dave murmurs. Then, louder: \"All ships. Weapons free.\"",
+                    "start_combat": true
+                },
+                {
+                    "step_id": "retreat_branch",
+                    "speaker": "aristotle",
+                    "text": "\"All hands, emergency evacuation protocol! Strip the databanks, torch the outer rings, and get every soul to the transports!\" Aristotle turns back to the screen. \"You'll get the facilities, Dave. But they'll be ash by the time you dock.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "\"Scorched earth. How very pirate of you.\" Dave's voice is quiet. \"Pursue and contain. Do not let the transports reach the nebula.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "overload_branch",
+                    "speaker": "aristotle",
+                    "text": "\"You know what the funny thing about crystals is, Dave?\" Aristotle's grin turns feral. \"They explode.\" He keys in the overload sequence. The asteroid field begins to glow."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "Dave's eyes widen—the first crack in his composure. \"He's overloading the deposits. All ships, emergency evasive! NOW!\" But it is too late for some. The void turns white.",
+                    "start_combat": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc10_death_bid",
+            "encounter_type": "event",
+            "title": "The Knife in the Dark",
+            "description": "While you are focused on the League armada, alarms blare from the Vault. Death has bypassed the security grid and is attempting to seize the core crystal reserves. \"You were a useful distraction, Captain,\" Death whispers over the internal comms. \"But the masters require the prize now.\"",
+            "arc_id": "arc_10",
+            "location": "the_vault",
+            "trigger_conditions": {
+                "current_arc": "arc_10",
+                "arc10_dave_assault": true,
+                "arc10_death_bid": false
+            },
+            "npc_ids": [
+                "aristotle",
+                "death"
+            ],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "death",
+                    "text": "The internal comms hiss with static. Then the purr slides through the speakers like oil through water. \"Captain Aristotle. While you were playing soldiers with Commander Dave, I let myself in. I hope you don't mind.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Death. Of course it's you. Can't a cat fight one existential threat at a time?\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"You were a useful distraction, Captain. Both of you. While the dog barked and the cat hissed, I walked through the front door.\" The shadows in the Vault corridor pulse. \"The masters require the prize now. The crystals belong to something older than your little war.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"The masters. Right. Your mysterious puppet-masters who pull the strings from the shadows.\" Aristotle's fur bristles. \"Here's the thing about puppets, Death. Cut the strings and they're just wood.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Such bravado. Such delightful, pointless bravado.\" The purr drops to a whisper. \"I am already inside the Vault, Captain. Your security grid was... amusing. Like a child's lock on a diary. I am touching the core reserves as we speak. The crystal hums. It knows me.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle stares at the security feeds. Death's spectral form drifts among the crystal racks, shadows licking at the glowing reserves. The alarms scream. The crew looks to their captain.",
+                    "choices": [
+                        {
+                            "choice_id": "personal_combat",
+                            "text": "Grab your plasma-cutlass. You're going down to the Vault to handle this personally.",
+                            "next_step": "combat_branch",
+                            "outcome": {
+                                "description": "A savage duel among the glowing crystals. Aristotle loses an eye, but Death is finally put down for good.",
+                                "faction_changes": {
+                                    "felid_corsairs": 20
+                                },
+                                "resource_changes": {},
+                                "story_flags_set": [
+                                    "arc10_death_bid",
+                                    "death_defeated"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "vent_atmosphere",
+                            "text": "No heroics. Vent the atmosphere in the Vault into the cold vacuum of space.",
+                            "next_step": "vent_branch",
+                            "outcome": {
+                                "description": "Ruthless and effective. Death is blown out into the void, but a massive quantity of refined crystals is lost with them.",
+                                "faction_changes": {
+                                    "felid_corsairs": 5
+                                },
+                                "resource_changes": {
+                                    "crystal_inventory": -50
+                                },
+                                "story_flags_set": [
+                                    "arc10_death_bid",
+                                    "death_defeated"
+                                ],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "combat_branch",
+                    "speaker": "aristotle",
+                    "text": "Aristotle draws the plasma-cutlass from the bridge rack. The blade hums to life, casting blue light across his face. \"Nobody touches my crystals, Death. Nobody.\" He strides toward the Vault lift."
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"Ah. The captain comes personally. How flattering.\" Death's form solidifies among the crystal racks, shadows coalescing into something almost physical. Almost killable. \"Come then, pirate king. Let us see what nine lives are truly worth.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The Vault doors slam open. Aristotle charges. The plasma-cutlass arcs through shadow and crystal light. Death screams—a sound like tearing silk. It is savage. It is personal. When it is over, Aristotle kneels among shattered crystals, one eye gone, blood pooling on the Vault floor. But Death is silent. Finally, blessedly silent.",
+                    "start_combat": true
+                },
+                {
+                    "step_id": "vent_branch",
+                    "speaker": "aristotle",
+                    "text": "\"No heroics. Not today.\" Aristotle's paw hovers over the emergency controls. \"Death, you want the Vault? You can have the vacuum that comes with it.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"You wouldn't. The crystals—your entire fortune—\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Fortune means nothing if a ghost owns it.\" He slams the vent controls. The Vault shrieks as atmosphere erupts outward into the void. Crystal racks tear loose. Death's form shreds apart, shadows ripping into the vacuum like torn cloth. Aristotle watches half his fortune tumble into the stars. \"Worth it,\" he whispers.",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc10_sovereign_intent",
+            "encounter_type": "diplomatic",
+            "title": "The True Masters",
+            "description": "The battlefield goes entirely still. Massive jump-signatures tear open space itself. Depending on who was pulling strings in the shadows, elements of the Lion Sovereignty or the Wolf packs arrive. They aren't here to negotiate. They are here to annex the entire sector.",
+            "arc_id": "arc_10",
+            "location": "sector_zero",
+            "trigger_conditions": {
+                "current_arc": "arc_10",
+                "arc10_death_bid": true,
+                "arc10_sovereign_intent": false
+            },
+            "npc_ids": [],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "defy_sovereigns",
+                    "text": "\"This is Corsair space! Send whatever you have left at them!\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "It's a desperate final stand. The ancient factions are incredibly powerful, pushing your fleet to the absolute breaking point.",
+                        "faction_changes": {
+                            "lions": -30,
+                            "wolves": -30,
+                            "felid_corsairs": 15
+                        },
+                        "resource_changes": {
+                            "salvage": 50,
+                            "crystal_inventory": -20
+                        },
+                        "story_flags_set": [
+                            "arc10_sovereign_intent"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "call_in_chits",
+                    "text": "Broadcast an emergency frequency to every minor faction, pirate, and alien you've ever dealt with. Call in the debts.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A ragtag armada of Goblins, Fairies, and unaligned scavengers warps in to flank the Sovereigns. Chaos reigns.",
+                        "faction_changes": {
+                            "goblins": 20,
+                            "fairies": 20,
+                            "lions": -10,
+                            "wolves": -10
+                        },
+                        "resource_changes": {
+                            "salvage": 100
+                        },
+                        "story_flags_set": [
+                            "arc10_sovereign_intent"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc10_final_choice",
+            "encounter_type": "event",
+            "title": "The Whisper's End",
+            "description": "The battle rages outside, a maelstrom of destruction. Aristotle stands alone in the primary control center of the central forge. His paw rests over the master console. He controls the flow of the crystals. He controls the fuel of the multiverse. The decision he makes now will rewrite the stars.",
+            "arc_id": "arc_10",
+            "location": "the_forge",
+            "trigger_conditions": {
+                "current_arc": "arc_10",
+                "arc10_sovereign_intent": true,
+                "game_completed": false
+            },
+            "npc_ids": [
+                "aristotle"
+            ],
+            "priority": 1,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "ending_a_hold",
+                    "text": "[Ending A - Hold] Overload the defenses and crush the invaders. The monopoly remains ours.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle unleashes the full, terrifying power of the automated forges. The enemy fleets are annihilated. He sits on a throne of crystals, ruling the stars alone. The age of the Pirate King begins.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "game_completed",
+                            "ending_a_hold"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 1.0
+                },
+                {
+                    "choice_id": "ending_b_share",
+                    "text": "[Ending B - Share] Broadcast the refining schematics on all open channels to every corner of the multiverse.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The data bursts outward at faster-than-light speeds. The monopoly is broken. Without scarcity, the wars stop. Aristotle watches his empire dissolve, smiling. He saved the galaxy by giving it away.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "game_completed",
+                            "ending_b_share"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 1.0
+                },
+                {
+                    "choice_id": "ending_c_destroy",
+                    "text": "[Ending C - Destroy] Initiate the core critical overload. Deny the power to everyone.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle types exactly zero into the containment parameters. A blinding flash consumes the sector. The crystals are gone forever. The galaxy is plunged into a dark age, but it is finally free of the great game.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [
+                            "game_completed",
+                            "ending_c_destroy"
+                        ],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 1.0
+                }
+            ]
+        }
+    ]
+}

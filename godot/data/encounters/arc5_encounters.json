@@ -1,0 +1,445 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc5_wolf_hunt",
+            "encounter_type": "combat",
+            "title": "The Hunt Begins",
+            "description": "The distress calls arrive in waves. Wolf dreadnoughts — dozens of them — pour through every jump gate in the Iron Expanse simultaneously. This is not a raid. This is not a border skirmish. This is The Hunt: a full-scale military operation designed to seize crystal production by force. At the vanguard, Iron Fang's flagship cuts through the void like a blade through silk, broadcasting on all frequencies: \"The age of the pirate monopoly ends today. Surrender your refineries, or they will be taken from your ashes.\"",
+            "arc_id": "arc_5",
+            "location": "iron_expanse",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_wolf_offensive": false
+            },
+            "npc_ids": ["aristotle", "iron_fang"],
+            "priority": 10,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "iron_fang",
+                    "text": "Aristotle. You have had your fun playing merchant prince. The Pack has decided: crystals are too important to be left in the paws of a single cat with a gambling habit and a god complex."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Iron Fang. Always a pleasure. I see you've brought the whole kennel. Compensating for something?"
+                },
+                {
+                    "speaker": "iron_fang",
+                    "text": "Laugh while you can. My fleet outnumbers yours three to one. Your clever words will not deflect torpedoes.",
+                    "choices": [
+                        {
+                            "choice_id": "fight_wolves",
+                            "text": "\"Three to one? I've had worse odds over breakfast. All hands — battle stations!\"",
+                            "next_step": "combat_path",
+                            "outcome": {
+                                "faction_changes": { "wolves": -15, "felid_corsairs": 10 },
+                                "resource_changes": { "salvage": -20 },
+                                "story_flags_set": ["arc5_wolf_offensive"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "tactical_retreat",
+                            "text": "\"We can't win a straight fight. Fall back — draw them into the asteroid fields where numbers don't matter.\"",
+                            "next_step": "retreat_path",
+                            "outcome": {
+                                "faction_changes": { "wolves": -5 },
+                                "resource_changes": { "crystal_inventory": -10 },
+                                "story_flags_set": ["arc5_wolf_offensive"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "negotiate_under_fire",
+                            "text": "\"You want crystals? Fine. Let's talk supply contracts before anyone else dies today.\"",
+                            "next_step": "negotiate_path",
+                            "outcome": {
+                                "faction_changes": { "wolves": 10, "felid_corsairs": -10 },
+                                "resource_changes": { "crystal_inventory": -25 },
+                                "story_flags_set": ["arc5_wolf_offensive"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "combat_path",
+                    "speaker": "aristotle",
+                    "text": "The battle is savage. Wolf dreadnoughts are built for sustained punishment, but the Corsairs are faster, meaner, and fight like cornered cats — which is exactly what they are. Iron Fang's vanguard breaks against the Corsair line, but the cost is brutal."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Patch the hull. Count the dead. And someone get me a damage report that doesn't make me want to cry into my whiskey.\" The wolves will be back. This was just the first wave.",
+                    "end": true
+                },
+                {
+                    "step_id": "retreat_path",
+                    "speaker": "aristotle",
+                    "text": "The Corsairs scatter into the asteroid fields, abandoning the outer refineries. It burns like acid to give up ground, but dead cats refine no crystals. In the labyrinthine rocks, the wolf dreadnoughts lumber and stumble while Corsair frigates dance between them like shadows."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"We lost the outer ring. We kept the fleet. That's called winning ugly, and it's the only kind of winning I know.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "negotiate_path",
+                    "speaker": "iron_fang",
+                    "text": "Now you speak sense. The Pack demands forty percent of crystal output, delivered monthly. Non-negotiable. In return, your fleet is... tolerated."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Tolerated. How generous.\" Aristotle signs the contract with a smile that doesn't reach his eyes. Contracts, after all, are just paper. And paper burns beautifully.",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc5_dave_loyalty_crisis",
+            "encounter_type": "diplomatic",
+            "title": "The Good Dog's Dilemma",
+            "description": "An intercepted transmission crackles across the bridge — Canis League internal comms, poorly encrypted. Commander Dave's voice, stripped of its usual bureaucratic composure, arguing with Wolf High Command. Then silence. Then a private channel opens directly to Aristotle's flagship. Dave appears on screen, and for the first time, the consummate soldier looks tired.",
+            "arc_id": "arc_5",
+            "location": "canine_order",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_dave_crisis": false,
+                "arc5_wolf_offensive": true
+            },
+            "npc_ids": ["aristotle", "dave"],
+            "priority": 9,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "dave",
+                    "text": "This channel is not secure. I have approximately four minutes before League intelligence traces this call. Listen carefully. The wolves have gone too far. The Hunt was not sanctioned by the full League council — Iron Fang acted with the backing of the war hawks, and now the moderates are being silenced."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Dave. Are you calling me for help, or are you calling me to confess? Because I charge for both."
+                },
+                {
+                    "speaker": "dave",
+                    "text": "I am calling because I swore an oath to the League, not to the wolves. The League stands for order. What Iron Fang is doing is not order — it is conquest wearing a uniform. But if I act against him openly, I will be court-martialled. Executed, most likely.",
+                    "choices": [
+                        {
+                            "choice_id": "support_dave",
+                            "text": "\"You're a pain in the tail, Dave, but you're an honest pain. Tell me what you need.\"",
+                            "next_step": "support_path",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 15, "wolves": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_dave_crisis"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "exploit_dave",
+                            "text": "\"A League commander calling a pirate for help. I want this moment preserved forever. What's it worth to you?\"",
+                            "next_step": "exploit_path",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -5 },
+                                "resource_changes": { "crystal_inventory": 15 },
+                                "story_flags_set": ["arc5_dave_crisis"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "refuse_dave",
+                            "text": "\"Your internal politics are not my problem, Commander. Sort out your own house.\"",
+                            "next_step": "refuse_path",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_dave_crisis"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "support_path",
+                    "speaker": "dave",
+                    "text": "I need covert supply lines — crystal shipments that bypass wolf-controlled checkpoints. If the moderate League forces can be kept supplied, we can build a coalition from within. It will take time. But it is the only path that does not end in total war."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Smuggling crystals to a League commander so he can stage a bureaucratic revolution. This is either the smartest thing I've ever done or the stupidest. Probably both.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "exploit_path",
+                    "speaker": "dave",
+                    "text": "I expected nothing less from a corsair. Very well. League patrol routes for the next three months. Encrypted. Use them wisely, and do not get caught. If this is traced back to me, I will deny everything."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Pleasure doing business, Commander. And Dave? You're making the right call. Even if you're making it for the wrong reasons.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "refuse_path",
+                    "speaker": "dave",
+                    "text": "Then the wolves will consume the League from within, and what comes next will be far worse than anything Iron Fang could build. When it happens, Captain — and it will — remember that you chose to look away."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"I'm a cat. Looking away is what we do best.\" But as the channel closes, Aristotle stares at the blank screen longer than he'd ever admit.",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc5_knight_declaration",
+            "encounter_type": "diplomatic",
+            "title": "The Oath of Iron and Starlight",
+            "description": "A single Knight vessel drops from hyperspace — not a warship, but a herald's galley, gleaming with ceremonial plating. Ser Galvain, Champion of the Knight Order, stands at the prow in full regalia, broadcasting a formal declaration across all channels. The entire sector holds its breath.",
+            "arc_id": "arc_5",
+            "location": "knight_kingdoms",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_knight_declaration": false,
+                "arc5_wolf_offensive": true
+            },
+            "npc_ids": ["aristotle", "ser_galvain"],
+            "priority": 8,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "ser_galvain",
+                    "text": "By the Code of the Shining Path, I, Ser Galvain of the Verdant Shield, speak for the Knight Order Errant. We have watched. We have deliberated. The wolves make war upon the crystal trade. The League fractures. Death itself has gone mad. In such times, the Order must choose where it stands."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "I hope this speech has a point, Ser Galvain. I've got a war on."
+                },
+                {
+                    "speaker": "ser_galvain",
+                    "text": "The point, Captain, is this: the Order has weighed your actions across four arcs of history. Your choices have shaped the multiverse — for better or worse. And now we must decide whether to stand with you, against you, or apart from all of it.",
+                    "choices": [
+                        {
+                            "choice_id": "accept_knights",
+                            "text": "\"If the Knights want to fight beside us, I won't turn down shining armour. Welcome aboard, Ser.\"",
+                            "next_step": "accept_path",
+                            "outcome": {
+                                "faction_changes": { "knights": 15, "felid_corsairs": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_knight_declaration"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "question_motives",
+                            "text": "\"The Knights sat out three arcs. Why show up now? What's really driving this?\"",
+                            "next_step": "question_path",
+                            "outcome": {
+                                "faction_changes": { "knights": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_knight_declaration"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "reject_knights",
+                            "text": "\"I don't need chaperones. The Corsairs fight their own battles, Ser. Take your oaths elsewhere.\"",
+                            "next_step": "reject_path",
+                            "outcome": {
+                                "faction_changes": { "knights": -15, "felid_corsairs": 10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_knight_declaration"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "accept_path",
+                    "speaker": "ser_galvain",
+                    "text": "Then it is sworn. The Knight Order Errant pledges its fleet, its blades, and its honour to your cause, Captain Aristotle. May we prove worthy of this alliance — and may you prove worthy of our trust."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Trust is earned, Ser. But for now, I'll settle for your cannons. Welcome to the most dysfunctional alliance in multiverse history.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "question_path",
+                    "speaker": "ser_galvain",
+                    "text": "A fair question. The truth? The wolves threaten not just the crystal trade but the balance of power itself. And our oracles have seen... something in the crystal resonance. Something that terrifies even the bravest Knight. We come because we must, Captain. Not because we choose to."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Terrified oracles. That's reassuring. Fine, Ser Galvain — you can stay. But you fight under my flag, not your code. In my fleet, the only oath that matters is 'don't get killed.'\"",
+                    "end": true
+                },
+                {
+                    "step_id": "reject_path",
+                    "speaker": "ser_galvain",
+                    "text": "Pride is a poor shield against what is coming, Captain. The Order will withdraw — but we will be watching. When you need us, and you will, send a signal on the old frequency. We will answer. Once."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Once. How generous. Don't let the airlock hit you on the way out, Ser.\"",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc5_fairy_deep_secret",
+            "encounter_type": "exploration",
+            "title": "The Deepest Root",
+            "description": "The fairy elders have never invited an outsider to the Heart Garden — the oldest living crystal formation in the Fairy Realms, a place where raw whisper crystals grow in spiralling trees of light. Aristotle stands at its threshold, and for once, even his smart mouth falls silent. The crystals here don't just glow; they sing. A harmony so profound it bypasses the ears entirely and resonates directly in the bones.",
+            "arc_id": "arc_5",
+            "location": "fairy_realms",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_fairy_deep_secret": false,
+                "fairy_reputation_high": true
+            },
+            "npc_ids": ["aristotle", "fairy_elder"],
+            "priority": 7,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "fairy_elder",
+                    "text": "You have earned this, Captain. Few outsiders have. What I am about to tell you has been guarded by the Fairy Realms for longer than any faction has existed. The crystals are not minerals. They never were."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "I'm listening. And for the record, that's not something I say often."
+                },
+                {
+                    "speaker": "fairy_elder",
+                    "text": "The whisper crystals are fragments of a consciousness — a vast, ancient mind that shattered itself across the multiverse aeons ago. Every crystal you have ever mined, refined, or sold is a piece of a living thing. And there is a place where the mind was whole. We call it the Cradle of Whispers.",
+                    "choices": [
+                        {
+                            "choice_id": "accept_knowledge",
+                            "text": "\"The Cradle. The chart fragment mentioned it. Show me everything you know.\"",
+                            "next_step": "knowledge_path",
+                            "outcome": {
+                                "faction_changes": { "fairies": 15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_fairy_deep_secret"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "pragmatic_response",
+                            "text": "\"So I've been selling pieces of a god's brain. That explains the profit margins. How do I find this Cradle?\"",
+                            "next_step": "pragmatic_path",
+                            "outcome": {
+                                "faction_changes": { "fairies": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_fairy_deep_secret"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "deny_truth",
+                            "text": "\"Crystals are fuel. Fuel doesn't think. I appreciate the fairy tale, but I deal in reality.\"",
+                            "next_step": "denial_path",
+                            "outcome": {
+                                "faction_changes": { "fairies": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc5_fairy_deep_secret"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "knowledge_path",
+                    "speaker": "fairy_elder",
+                    "text": "The Cradle lies beyond charted space, in a region we call the Bone Yard — a graveyard of civilisations that found the Cradle before and were destroyed by what they found. The chart fragment you carry is one key. There are others. Fairy magic can help you find them, but the journey itself... that is yours alone."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"A graveyard of civilisations. Cheery. But if there's a chance to understand what the crystals really are — what's happening to them — then I have to go. Even if 'going' means 'probably dying in a very dramatic fashion.'\"",
+                    "end": true
+                },
+                {
+                    "step_id": "pragmatic_path",
+                    "speaker": "fairy_elder",
+                    "text": "Ever the merchant. The Cradle cannot be reached by conventional means. You will need the chart fragments, fairy wayfinding magic, and something we cannot provide — the courage to face what you find there. The last civilisation that reached the Cradle chose to weaponise what they found. They no longer exist."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Noted: don't weaponise the ancient cosmic brain. I'll add it to my list of things not to do, right between 'trust a wolf' and 'eat goblin cooking.'\"",
+                    "end": true
+                },
+                {
+                    "step_id": "denial_path",
+                    "speaker": "fairy_elder",
+                    "text": "Then explain why the crystals are destabilising. Explain why Death has gone mad. Explain the resonance that is tearing the multiverse apart. You can deny the truth, Captain, but the truth does not require your belief to destroy you."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle says nothing. But later, alone in his quarters, he holds a crystal up to the light and — just for a moment — he swears he can hear it breathing.",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc5_war_response",
+            "encounter_type": "diplomatic",
+            "title": "The War Room",
+            "description": "The tactical hologram fills the war room with the ugly geometry of total conflict. Red markers for wolf positions. Blue for the fractured League. Gold for the Knights. Green for fairy enclaves. And in the centre, the tiny silver marker of the Corsair fleet — surrounded on all sides. Aristotle's officers wait in silence. Every choice now carries the weight of thousands of lives.",
+            "arc_id": "arc_5",
+            "location": "iron_expanse",
+            "trigger_conditions": {
+                "current_arc": "arc_5",
+                "arc5_wolf_offensive": true,
+                "arc5_dave_crisis": true,
+                "arc5_knight_declaration": true
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "meet_force_with_force",
+                    "text": "\"Enough running. Enough clever plans. We hit the wolves with everything we have and we break their spine.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The Corsair fleet launches a massive counteroffensive, supported by whatever allies remain. It is the bloodiest engagement in living memory. Aristotle stands on the bridge, watching ships burn on both sides, and wonders when he stopped being a pirate and started being a warlord. \"We win this,\" he says quietly, \"or we don't exist tomorrow. Simple as that.\"",
+                        "faction_changes": { "wolves": -15, "felid_corsairs": 10 },
+                        "resource_changes": { "salvage": -30, "crystal_inventory": -15 },
+                        "story_flags_set": ["arc5_war_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "divide_and_conquer",
+                    "text": "\"Turn the factions against each other. Feed the wolves bad intel. Feed the League real intel. Let chaos do the fighting for us.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle becomes the invisible hand, pulling strings across every faction. Misinformation flows through wolf channels. Dave receives just enough intelligence to act. The Knights are pointed at wolf supply lines. It is a masterpiece of manipulation — cold, calculated, and devastating. \"I didn't start this war,\" Aristotle says, cleaning his claws. \"But I'll finish it. From a safe distance.\"",
+                        "faction_changes": { "wolves": -5, "canis_league": 5, "knights": 5 },
+                        "resource_changes": { "crystal_inventory": -5 },
+                        "story_flags_set": ["arc5_war_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "seek_the_source",
+                    "text": "\"This war is a distraction. The real answer is at the Cradle. We go now, while everyone else is busy killing each other.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle pulls the Corsair fleet back from the front lines, redirecting resources toward the impossible journey to the Cradle of Whispers. His officers think he's lost his mind. His enemies think he's running. Neither is true. \"There's a reason the crystals are breaking,\" he says, tracing the ancient chart with one claw. \"And the answer isn't in any war room. It's out there. In the place where all of this began.\"",
+                        "faction_changes": { "fairies": 10, "felid_corsairs": -5, "wolves": 5 },
+                        "resource_changes": { "crystal_inventory": -20 },
+                        "story_flags_set": ["arc5_war_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.15
+                }
+            ]
+        }
+    ]
+}

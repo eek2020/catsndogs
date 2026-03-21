@@ -1,0 +1,122 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc8_alliance_consolidation",
+      "mission_type": "escort",
+      "title": "The Grand Coalition",
+      "description": "The final conflict is coming and Aristotle needs every ally he can muster. The Twilight Bazaar is neutral ground — the perfect place to forge a coalition from the factions who still owe him favours. Getting them all in one room without bloodshed is the hard part.",
+      "region": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "arc8_coalition_phase": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_coalition_call",
+      "objectives": [
+        {
+          "objective_id": "invite_factions",
+          "description": "Send invitations to allied faction leaders",
+          "encounter_id": "enc_sm_arc8_coalition_invite"
+        },
+        {
+          "objective_id": "mediate_disputes",
+          "description": "Mediate disputes between rival allies at the summit",
+          "encounter_id": "enc_sm_arc8_coalition_mediate"
+        },
+        {
+          "objective_id": "seal_pact",
+          "description": "Seal the coalition pact",
+          "encounter_id": "enc_sm_arc8_coalition_seal"
+        }
+      ],
+      "rewards": {"salvage": 50, "crystals": 20},
+      "faction_rewards": {"felid_corsairs": 10, "fairies": 5, "lions": 5, "knights": 5},
+      "priority": 1
+    },
+    {
+      "mission_id": "sm_arc8_final_supply_run",
+      "mission_type": "retrieval",
+      "title": "Last Run",
+      "description": "War burns through crystal reserves faster than anything. Aristotle needs one last massive supply run — hitting every cache, depot, and hidden stash he's built up over the arcs. It's time to cash in every chip.",
+      "region": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "arc8_war_preparations": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_supply_assessment",
+      "objectives": [
+        {
+          "objective_id": "collect_fairy_cache",
+          "description": "Collect the crystal cache from the Fairy Realms",
+          "encounter_id": "enc_sm_arc8_supply_fairy"
+        },
+        {
+          "objective_id": "collect_iron_cache",
+          "description": "Collect the crystal cache from the Iron Expanse",
+          "encounter_id": "enc_sm_arc8_supply_iron"
+        },
+        {
+          "objective_id": "consolidate_reserves",
+          "description": "Consolidate all reserves at the forward staging area",
+          "encounter_id": "enc_sm_arc8_supply_consolidate"
+        }
+      ],
+      "rewards": {"salvage": 150, "crystals": 60},
+      "faction_rewards": {"felid_corsairs": 5},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc8_farewell_quests",
+      "mission_type": "escort",
+      "title": "Unfinished Business",
+      "description": "Before the final battle, Aristotle's closest allies have personal matters to settle. Patch wants to visit an old haunt. Jinx has a score to settle. Everyone has something they need to do — in case they don't come back.",
+      "region": "starting_realm",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "arc8_pre_battle": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_farewell_request",
+      "objectives": [
+        {
+          "objective_id": "patch_farewell",
+          "description": "Help Patch settle an old debt",
+          "encounter_id": "enc_sm_arc8_farewell_patch"
+        },
+        {
+          "objective_id": "jinx_farewell",
+          "description": "Back up Jinx on one last heist",
+          "encounter_id": "enc_sm_arc8_farewell_jinx"
+        }
+      ],
+      "rewards": {"salvage": 30, "crystals": 10},
+      "faction_rewards": {"felid_corsairs": 15},
+      "priority": 5
+    },
+    {
+      "mission_id": "sm_arc8_strategic_positioning",
+      "mission_type": "sabotage",
+      "title": "The Board Is Set",
+      "description": "The final confrontation will be decided by positioning as much as firepower. Aristotle needs to sabotage enemy staging areas and establish his own forward positions. Every advantage matters when the stakes are everything.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_8",
+        "arc8_war_preparations": true
+      },
+      "discovery_encounter_id": "enc_sm_arc8_positioning_intel",
+      "objectives": [
+        {
+          "objective_id": "sabotage_enemy",
+          "description": "Sabotage the enemy's forward staging area",
+          "encounter_id": "enc_sm_arc8_positioning_sabotage"
+        },
+        {
+          "objective_id": "establish_forward_base",
+          "description": "Establish a forward operating position",
+          "encounter_id": "enc_sm_arc8_positioning_base"
+        }
+      ],
+      "rewards": {"salvage": 80, "crystals": 25},
+      "faction_rewards": {"felid_corsairs": 10, "canis_league": -5},
+      "priority": 3
+    }
+  ]
+}

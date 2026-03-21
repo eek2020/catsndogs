@@ -1,433 +1,112 @@
 {
     "encounters": [
         {
-            "encounter_id": "enc_arc4_dave_full_assault",
-            "encounter_type": "combat",
-            "title": "Full Assault",
-            "description": "The League armada drops out of warp in perfect formation. Hundreds of ships, engines cold, weapons hot. Dave stands on the bridge of the flagship, hands clasped behind his back. The crystal fields shimmer in the distance, the prize that every faction has bled for. \"All ships,\" Dave says into the fleet channel. His voice is quiet. It does not need to be loud. \"Begin.\"",
+            "encounter_id": "enc_arc4_dave_fairy_warning",
+            "encounter_type": "exploration",
+            "title": "The Fairy Briefing",
+            "description": "A Fairy Consortium analyst appears on a secure League intelligence channel, her wings flickering with anxiety rather than their usual holographic flair. 'Commander Dave. I am breaking protocol by contacting you directly. The crystals are not what we believed. Our long-range resonance monitors have detected harmonic instabilities — frequencies that should not exist in stable fuel deposits. Something is waking up inside the crystal lattice.' Dave studies the data scrolling across his tactical display. The numbers do not lie. They never do.",
             "arc_id": "arc_4",
-            "location": "crystal_fields",
+            "location": "canis_league_hq",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_dave_assault_begun": false
+                "arc4_fairy_warning": false
             },
             "npc_ids": ["dave"],
             "priority": 10,
             "repeatable": false,
             "choices": [
                 {
-                    "choice_id": "overwhelming_force",
-                    "text": "\"Full bombardment. Suppress their defences. Secure the perimeter.\"",
+                    "choice_id": "full_investigation",
+                    "text": "\"Transmit all resonance data to League Science Division. I want a full spectral analysis within forty-eight hours.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "The armada opens fire in a single, coordinated volley. The void lights up. Corsair defence platforms crumble. Dave watches the tactical display as green markers advance across the crystal fields. Methodical. Relentless. This is not a battle. It is a schedule.",
-                        "faction_changes": { "canis_league": 10, "felid_corsairs": -20 },
-                        "resource_changes": { "salvage": 30 },
-                        "story_flags_set": ["arc4_dave_assault_begun"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.3
-                },
-                {
-                    "choice_id": "surgical_strike",
-                    "text": "\"Precision strikes only. Secure the crystal infrastructure intact.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave's targeting officers paint Corsair military targets with surgical precision, leaving the crystal mining apparatus untouched. It is slower. It costs more ships. But when the dust clears, the crystal fields are functional. War is expensive. Waste is unacceptable.",
-                        "faction_changes": { "canis_league": 5, "felid_corsairs": -10 },
-                        "resource_changes": { "crystal_inventory": 20 },
-                        "story_flags_set": ["arc4_dave_assault_begun"],
+                        "description": "Dave routes the fairy data through three independent analysis teams. The results converge on a single conclusion: the crystal instability is accelerating, and it correlates with increased extraction rates across the multiverse. Someone — everyone — is mining too deep, too fast. Dave files the report under 'Critical' and begins drafting contingency protocols.",
+                        "faction_changes": { "fairies": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_fairy_warning"],
                         "story_flags_cleared": []
                     },
                     "outcome_weight": 0.0
                 },
                 {
-                    "choice_id": "ultimatum_first",
-                    "text": "\"Broadcast on all frequencies. Offer surrender terms. Give them one chance.\"",
+                    "choice_id": "leverage_intel",
+                    "text": "\"Interesting. What does the Consortium want in exchange for exclusive access to this data?\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "\"Felid Corsairs. This is Commander Dave of the Canis League. You are outgunned and surrounded. Surrender your crystal holdings and you will be treated with dignity.\" Silence. Then Aristotle's voice, amused even now: \"Dignity? From a dog? I'd rather burn.\" Dave closes his eyes for one moment. Then opens them. \"Commence the assault.\"",
-                        "faction_changes": { "canis_league": 10, "felid_corsairs": -5, "knights": 10 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc4_dave_assault_begun"],
+                        "description": "The fairy hesitates. She expected alarm, not negotiation. Dave watches her recalculate. 'Trade concessions in the Amber Corridor,' she says finally. Dave nods. The data arrives. The concessions cost less than a single patrol cruiser. Information is always the cheapest weapon.",
+                        "faction_changes": { "fairies": 5, "lions": -5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc4_fairy_warning"],
                         "story_flags_cleared": []
                     },
-                    "outcome_weight": -0.1
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "dismiss_warning",
+                    "text": "\"The Consortium profits from instability. Their data may be fabricated to manipulate crystal markets.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The fairy's wings droop. 'You are making a mistake, Commander.' Dave terminates the channel. But he does not delete the data. He stores it on a private server, accessible only to him. Dismissal and disbelief are not the same thing. Dave dismisses publicly and investigates privately.",
+                        "faction_changes": { "fairies": -10, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_fairy_warning"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
                 }
             ]
         },
         {
-            "encounter_id": "enc_arc4_dave_death_betrayal",
-            "encounter_type": "event",
-            "title": "Death's Betrayal",
-            "description": "Mid-battle, the sensors scream. Ships are dying—but not from Corsair weapons. Ghost ships materialize inside the fleet formation, weapons firing indiscriminately. League. Corsair. It does not matter. Death's fleet tears through both sides with the cold efficiency of a scalpel. The comms crackle with that terrible purr. \"Did you think this was about crystals, Commander? This was never about crystals. This is about the only resource that truly matters: fear.\"",
+            "encounter_id": "enc_arc4_dave_bazaar_intel",
+            "encounter_type": "exploration",
+            "title": "The Twilight Bazaar",
+            "description": "Dave enters the Twilight Bazaar in civilian clothes — a rare concession to operational necessity. The market sprawls across a hollowed-out asteroid, a labyrinth of neon and whispered deals where every faction's spies pretend not to recognise each other. Dave moves through the crowd with rigid efficiency, cataloguing faces, exits, and weapons. A merchant waves him toward a back stall draped in star charts. 'Commander. You look uncomfortable out of uniform. I have something that will make the discomfort worthwhile.'",
             "arc_id": "arc_4",
-            "location": "crystal_fields",
+            "location": "twilight_bazaar",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_dave_assault_begun": true,
-                "arc4_dave_death_betrayal": false
-            },
-            "npc_ids": ["dave", "death"],
-            "priority": 9,
-            "repeatable": false,
-            "choices": [],
-            "dialogue_steps": [
-                {
-                    "speaker": "death",
-                    "text": "The bridge lights die. Every screen flickers to static. Then the purr fills the ship, resonating through the hull itself. \"Did you think this was about crystals, Commander?\" Death's eyes burn on every monitor simultaneously."
-                },
-                {
-                    "speaker": "dave",
-                    "text": "Dave's hand moves to the alarm. It is already triggered. The sensors scream—ghost ships materializing inside his fleet formation. Inside. Not approaching. Already there. \"Battle stations. All sections report.\""
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"This was never about crystals. This was never about cats and dogs squabbling over fuel.\" Ghost ship weapons fire rakes across League and Corsair ships alike. \"This is about the only resource that truly matters: fear. And I have been cultivating it in both of you for four arcs.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"You played us.\" Dave's voice is flat. Not angry. Analytical. Filing the information. Processing the tactical reality. \"Both sides. From the beginning.\""
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"Oh, Commander. You sound almost hurt. Did you think our little arrangement in the Forgotten Realm was genuine?\" The rattling laugh fills the bridge. \"I offered Aristotle the same deal. Different words, same leash. You were both so eager to win that you never asked who was dealing the cards.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "Dave watches three League ships die on the tactical display. His jaw tightens. His crew waits for orders. The ghost fleet tears through both battle lines without discrimination.",
-                    "choices": [
-                        {
-                            "choice_id": "focus_fire_death",
-                            "text": "\"All ships, new priority target. Destroy Death's fleet. Everything else is secondary.\"",
-                            "next_step": "focus_death_branch",
-                            "outcome": {
-                                "description": "Dave redirects the entire armada. The ghost ships are fast and strange, but they are not invincible. League guns hammer them one by one. It costs ships. It costs time. The Corsairs use the chaos to regroup. But Dave will not leave a rabid animal at his back. Not ever.",
-                                "faction_changes": { "canis_league": 5, "felid_corsairs": 5 },
-                                "resource_changes": { "salvage": -20 },
-                                "story_flags_set": ["arc4_dave_death_betrayal"],
-                                "story_flags_cleared": []
-                            }
-                        },
-                        {
-                            "choice_id": "press_forward",
-                            "text": "\"Ignore the ghost ships. Secure the crystal fields. The objective does not change.\"",
-                            "next_step": "press_forward_branch",
-                            "outcome": {
-                                "description": "Dave grips the command rail as another ship dies on the tactical display. He does not flinch. The crystal fields are the objective. Death is a distraction. A lethal distraction, but a distraction nonetheless. The League presses forward through the carnage, eyes on the prize.",
-                                "faction_changes": { "canis_league": 10, "felid_corsairs": -10 },
-                                "resource_changes": { "salvage": -30, "crystal_inventory": 15 },
-                                "story_flags_set": ["arc4_dave_death_betrayal"],
-                                "story_flags_cleared": []
-                            }
-                        },
-                        {
-                            "choice_id": "signal_aristotle",
-                            "text": "\"Open a channel to Aristotle. We have a common enemy now.\"",
-                            "next_step": "signal_aristotle_branch",
-                            "outcome": {
-                                "description": "The channel opens. Aristotle's bridge is on fire. For the first time, dog and cat fight on the same side.",
-                                "faction_changes": { "felid_corsairs": 15, "canis_league": -5 },
-                                "resource_changes": {},
-                                "story_flags_set": ["arc4_dave_death_betrayal"],
-                                "story_flags_cleared": []
-                            }
-                        }
-                    ]
-                },
-                {
-                    "step_id": "focus_death_branch",
-                    "speaker": "dave",
-                    "text": "\"All ships, new priority target. Ghost fleet. Concentrate fire by sector. Standard anti-stealth protocols.\" Dave's voice cuts through the chaos like a blade. \"The cat can wait. The dead thing dies first.\""
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"Ah. The hound turns on the hand that fed it.\" Death's purr wavers for the first time as League guns find their mark. \"You cannot kill what was never alive, Commander.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"Watch me.\" Dave watches the tactical display as ghost ships begin to fracture under coordinated fire. They are fast. They are terrifying. But they are not infinite. And Dave has four hundred guns.",
-                    "start_combat": true
-                },
-                {
-                    "step_id": "press_forward_branch",
-                    "speaker": "dave",
-                    "text": "\"The objective does not change. All ships, maintain course for the crystal fields. Accept losses. Press forward.\" Dave does not look at the casualty reports scrolling across his display. Not yet. Later. When it matters."
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"Remarkable discipline, Commander. Your ships burn and you do not even flinch.\" A pause. \"Or perhaps you simply do not care.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"I care about the objective. Everything else is noise.\" Dave grips the command rail as the ship shudders from a near miss. The crystal fields grow larger on the viewport. Almost there. The cost is acceptable. The cost is always acceptable.",
-                    "end": true
-                },
-                {
-                    "step_id": "signal_aristotle_branch",
-                    "speaker": "dave",
-                    "text": "\"Comms. Open a channel to the Corsair flagship. Unencrypted.\" Dave's officers stare. He does not repeat himself. He never repeats himself."
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "The channel crackles. Aristotle's bridge is on fire. Smoke and sparks. The cat is bleeding from a gash above his eye but grinning—always grinning. \"Well, Dave. This is awkward.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"Coordinate your fire with sector seven. We deal with Death first. Then we resume our disagreement.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"Did you just ask a pirate for help, Commander?\" A beat. Aristotle's grin softens into something almost genuine. \"Agreed. Sector seven. Let's kill a ghost.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"This changes nothing between us.\" But Dave's voice is quieter than it has ever been. On the tactical display, Corsair and League ships wheel into formation together for the first time in history.",
-                    "start_combat": true
-                }
-            ]
-        },
-        {
-            "encounter_id": "enc_arc4_dave_sovereign_intervention",
-            "encounter_type": "diplomatic",
-            "title": "Sovereign Intervention",
-            "description": "In the aftermath of Death's assault, new warp signatures flood the scanners. The Lion Sovereignty's golden fleet arrives from the galactic north. The Wolf Dominion's grey armada from the south. Neither is firing—yet. Both are broadcasting on open channels. The lions demand the crystals be placed under Sovereign stewardship. The wolves demand League forces stand down and share the spoils. Dave stands in the wreckage of his bridge, blood on his uniform, and faces the oldest problem in warfare: allies with agendas.",
-            "arc_id": "arc_4",
-            "location": "crystal_fields",
-            "trigger_conditions": {
-                "current_arc": "arc_4",
-                "arc4_dave_death_betrayal": true,
-                "arc4_dave_sovereign_response": false
+                "arc4_fairy_warning": true,
+                "arc4_ancient_chart": false
             },
             "npc_ids": ["dave"],
             "priority": 8,
             "repeatable": false,
             "choices": [
                 {
-                    "choice_id": "side_with_wolves",
-                    "text": "\"The Dominion's claim is valid. Joint administration with the wolves.\"",
+                    "choice_id": "buy_chart",
+                    "text": "\"Show me. And if this is a waste of my time, I will remember your face.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "Dave transmits the agreement. The wolves howl in triumph. The lions snarl but withdraw rather than fight a combined League-Dominion force. Dave watches the golden fleet retreat. He has gained the wolves and lost the lions. The math works. For now.",
-                        "faction_changes": { "wolves": 15, "lions": -20, "canis_league": 5 },
-                        "resource_changes": { "crystal_inventory": -10 },
-                        "story_flags_set": ["arc4_dave_sovereign_response"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.2
-                },
-                {
-                    "choice_id": "side_with_lions",
-                    "text": "\"The Sovereignty has the infrastructure for governance. Joint stewardship with the lions.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "The lions accept with aristocratic grace. The wolves bare their teeth and withdraw to the outer rim, fury barely contained. Dave has traded raw military power for political legitimacy. The lions will be difficult partners, but they understand order.",
-                        "faction_changes": { "lions": 15, "wolves": -20, "canis_league": 5 },
-                        "resource_changes": {},
-                        "story_flags_set": ["arc4_dave_sovereign_response"],
+                        "description": "The merchant unfurls a star chart older than any League cartography. The crystal deposits are marked — but so are deeper structures, veins that run beneath the known deposits like roots beneath a forest. 'The crystals are the fruit,' the merchant whispers. 'This shows the tree.' Dave pays without haggling. He rolls the chart carefully and tucks it inside his coat. The tree. He has been fighting over fruit.",
+                        "faction_changes": { "goblins": 5 },
+                        "resource_changes": { "salvage": -25 },
+                        "story_flags_set": ["arc4_ancient_chart"],
                         "story_flags_cleared": []
                     },
                     "outcome_weight": 0.0
                 },
                 {
-                    "choice_id": "reject_both",
-                    "text": "\"The League bled for these fields. Neither the Pride nor the Dominion will dictate terms.\"",
+                    "choice_id": "seize_chart",
+                    "text": "\"That chart is a strategic asset. Under League Security Protocol Seven, I am requisitioning it.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "Both fleets bristle. For a terrible moment, a three-way battle seems inevitable. Then Dave transmits his fleet's combat readiness data—unredacted. His ships are damaged but operational. His guns are charged. It is not a threat. It is a fact. Both factions withdraw to a respectful distance. The standoff holds. Dave sits down heavily. His hands are steady.",
-                        "faction_changes": { "wolves": -10, "lions": -10, "canis_league": 15 },
-                        "resource_changes": { "salvage": 20 },
-                        "story_flags_set": ["arc4_dave_sovereign_response"],
+                        "description": "Dave produces his League credentials. The merchant's smile vanishes. The chart changes hands without payment. Dave studies it under the harsh bazaar lights. The deep crystal structures are unmistakable. This is not geology. This is architecture. Something built these veins. The merchant glares at his back. Dave files the expression under 'acceptable consequences.'",
+                        "faction_changes": { "goblins": -10, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_ancient_chart"],
                         "story_flags_cleared": []
                     },
                     "outcome_weight": 0.3
-                }
-            ]
-        },
-        {
-            "encounter_id": "enc_arc4_dave_aristotle_showdown",
-            "encounter_type": "diplomatic",
-            "title": "Aristotle Showdown",
-            "description": "The battle is over. Death's fleet is scattered. The sovereign fleets hold at distance. And there, amid the wreckage, Aristotle's battered flagship limps into view. The comms open. The cat is bleeding from a cut above his eye, his bridge in ruins, but his voice is steady. \"Well, Dave. Here we are. Two captains, one crystal field, and a whole multiverse watching.\" Dave stares at the screen. After everything—the blockades, the betrayals, the blood—it comes down to this. A dog and a cat, deciding the future.",
-            "arc_id": "arc_4",
-            "location": "crystal_fields",
-            "trigger_conditions": {
-                "current_arc": "arc_4",
-                "arc4_dave_sovereign_response": true,
-                "arc4_dave_final_encounter": false
-            },
-            "npc_ids": ["dave", "aristotle"],
-            "priority": 7,
-            "repeatable": false,
-            "choices": [],
-            "dialogue_steps": [
-                {
-                    "speaker": "aristotle",
-                    "text": "The Corsair flagship limps into view through the wreckage. Hull breached in a dozen places. Engines flickering. But the comms light activates. Of course it does. The cat always has something to say."
                 },
                 {
-                    "speaker": "aristotle",
-                    "text": "\"Well, Dave. Here we are.\" Aristotle is bleeding from a cut above his eye. His bridge is in ruins. Sparks rain from shattered consoles. But his voice is steady. \"Two captains, one crystal field, and a whole multiverse watching.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "Dave stares at the screen. The cat looks smaller than he remembers. Thinner. Older. The grin is there, but it costs him something now. \"You should have taken my terms, Aristotle. At the parley. You should have listened.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"Probably. Listening was never my strong suit.\" A cough. Something sparks behind him. \"For what it's worth, Dave, you were the best enemy I ever had. Professional. Consistent. Honest, in your terrible, rigid way.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"This is not a eulogy, Aristotle.\" Dave's voice is quiet. His crew watches him. The entire fleet watches him. The tactical display shows the Corsair flagship, crippled, shields down, dead in the water. One order ends this."
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"Isn't it though?\" The grin flickers. Something vulnerable shows through. Just for a moment. \"So what happens now, Commander? You've won. The fields are yours. The fleet is broken. I'm sitting in a tin can held together by tape and stubbornness.\" He spreads his paws. \"Your move.\"",
-                    "choices": [
-                        {
-                            "choice_id": "demand_surrender",
-                            "text": "\"It is over, Aristotle. Surrender and your crew will be treated fairly. You have my word.\"",
-                            "next_step": "surrender_branch",
-                            "outcome": {
-                                "description": "Aristotle studies Dave's face for a long moment. The cat lowers his head. Terms, not surrender. Dave allows himself the smallest nod.",
-                                "faction_changes": { "felid_corsairs": 5, "canis_league": 10 },
-                                "resource_changes": {},
-                                "story_flags_set": ["arc4_dave_final_encounter"],
-                                "story_flags_cleared": []
-                            }
-                        },
-                        {
-                            "choice_id": "offer_partnership",
-                            "text": "\"We have both lost too much to keep fighting. Share the fields. Shared governance.\"",
-                            "next_step": "partnership_branch",
-                            "outcome": {
-                                "description": "Commander Dave, offering to share. The multiverse truly is ending. Dave extends a hand toward the screen. It is, perhaps, the hardest thing he has ever done.",
-                                "faction_changes": { "felid_corsairs": 15, "canis_league": -5, "knights": 5 },
-                                "resource_changes": {},
-                                "story_flags_set": ["arc4_dave_final_encounter"],
-                                "story_flags_cleared": []
-                            }
-                        },
-                        {
-                            "choice_id": "finish_it",
-                            "text": "\"You had your chance at the parley. All guns, target the Corsair flagship.\"",
-                            "next_step": "finish_branch",
-                            "outcome": {
-                                "description": "Aristotle's grin fades. The League guns train on the crippled flagship. Dave gives the order. His voice does not waver.",
-                                "faction_changes": { "felid_corsairs": -25, "canis_league": 15, "knights": -10 },
-                                "resource_changes": { "crystal_inventory": 25 },
-                                "story_flags_set": ["arc4_dave_final_encounter"],
-                                "story_flags_cleared": []
-                            }
-                        }
-                    ]
-                },
-                {
-                    "step_id": "surrender_branch",
-                    "speaker": "dave",
-                    "text": "\"It is over. Surrender your vessel and your crew will be treated fairly. Officers will be given quarters. Enlisted will be repatriated. You have my word.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "Aristotle studies Dave's face for a long moment. Searching for the lie. Finding none. \"Your word,\" he repeats softly. \"I never thought I'd trust a dog's word. But you've never broken it, have you?\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"No. I have not.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "The cat lowers his head. The grin finally dies. Not in defeat, but in something like exhaustion. \"Terms, Dave. Not surrender. Terms.\" He looks up. \"I'll negotiate. But I won't grovel.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "Dave allows himself the smallest nod. \"Terms.\" It is, in four arcs of war, the first word they have agreed on.",
-                    "end": true
-                },
-                {
-                    "step_id": "partnership_branch",
-                    "speaker": "dave",
-                    "text": "\"We have both lost too much. Ships. People. Years.\" Dave pauses. The words are difficult. He is not built for this. \"Share the fields. Shared governance. Joint administration. No more war.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "Aristotle's eyebrows rise. For once, the cat is genuinely speechless. \"Commander Dave. Offering to share.\" A beat. \"The multiverse truly is ending.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"The multiverse is tired, Aristotle. I am tired. You are tired. We can keep killing each other until there is nothing left to fight over, or we can do something neither of us is good at.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"And what's that?\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"Trust someone.\" Dave extends a hand toward the screen. It is, perhaps, the hardest thing he has ever done. His crew holds their breath."
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "Aristotle stares at the outstretched hand. The grin returns. But it is different now. Smaller. Warmer. Real. \"Alright, dog. Let's build something that doesn't require killing each other. Novel concept.\"",
-                    "end": true
-                },
-                {
-                    "step_id": "finish_branch",
-                    "speaker": "dave",
-                    "text": "\"You had your chance. At the parley. On the derelict station. Every time I offered you a way out, you threw it back in my face.\" Dave's voice does not waver. \"All guns. Target the Corsair flagship.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "The grin fades. For one unguarded moment, Aristotle looks exactly like what he is: a cat who bet everything on himself and lost. \"So that's how it ends. I always figured it would be a dog that got me.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"Evacuate your crew, Aristotle. You have sixty seconds.\" Dave's hand hovers over the fire command. His officers watch him. He does not look away from the screen."
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"Sixty seconds. How generous.\" Aristotle stands. Straightens his coat. Tips an imaginary hat. \"It was a hell of a ride, Commander.\" The escape pods launch. The flagship burns. Dave watches it until there is nothing left to watch. He does not order the escape pod destroyed. Some lines, even he will not cross.",
-                    "end": true
-                }
-            ]
-        },
-        {
-            "encounter_id": "enc_arc4_dave_league_armada",
-            "encounter_type": "combat",
-            "title": "League Armada",
-            "description": "Corsair holdouts launch a desperate attack on League positions around the crystal fields. Burning ships streak across the void, weapons blazing. It is brave. It is futile. Dave watches from the command deck as his fleet responds with practiced efficiency.",
-            "arc_id": "arc_4",
-            "location": "crystal_fields",
-            "trigger_conditions": {
-                "current_arc": "arc_4",
-                "arc4_dave_assault_begun": true
-            },
-            "npc_ids": [],
-            "priority": 4,
-            "repeatable": true,
-            "choices": [
-                {
-                    "choice_id": "crush_resistance",
-                    "text": "\"Standard engagement protocol. Neutralize and move on.\"",
+                    "choice_id": "photograph_only",
+                    "text": "\"I will examine it here. Photograph the relevant sections. Leave no transaction trail.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "League guns speak in controlled bursts. Each Corsair ship is disabled with minimum expenditure. Dave's fleet has become a machine: no wasted motion, no wasted ammunition. The holdouts retreat into the debris field. Dave does not pursue. They will come again. And again they will fail.",
-                        "faction_changes": { "felid_corsairs": -5 },
-                        "resource_changes": { "salvage": 15 },
-                        "story_flags_set": [],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.0
-                },
-                {
-                    "choice_id": "capture_ships",
-                    "text": "\"Disable their engines. Board and capture. We need intelligence, not wreckage.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "League marines storm the disabled Corsair vessels. Prisoners are taken. Databanks are seized. Dave reviews the captured intelligence personally. Every scrap of data brings him one step closer to ending this cleanly.",
-                        "faction_changes": { "felid_corsairs": -10, "canis_league": 5 },
-                        "resource_changes": { "salvage": 25 },
-                        "story_flags_set": [],
+                        "description": "Dave's scanner captures every detail of the ancient chart without leaving a purchase record. The merchant shrugs — payment or not, the information is loose. Dave reviews the scans aboard the Iron Paw. The deep crystal structures are real. They predate every known civilisation in the multiverse. Something ancient built the crystal network. Dave does not speculate. He gathers more data.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_ancient_chart"],
                         "story_flags_cleared": []
                     },
                     "outcome_weight": 0.1
@@ -435,61 +114,175 @@
             ]
         },
         {
-            "encounter_id": "enc_arc4_dave_final_choice",
+            "encounter_id": "enc_arc4_dave_lion_overture",
             "encounter_type": "diplomatic",
-            "title": "Final Choice",
-            "description": "The crystal fields are secured. The factions wait. The multiverse holds its breath. Dave stands alone on the observation deck of the Ironbound, looking out at the crystal fields that have cost so many lives. His reflection stares back from the viewport: tired, scarred, but unbowed. He has fought for duty. For order. For the League. Now the question is not who controls the crystals. The question is what kind of future they will power. Dave closes his eyes. Opens them. Decides.",
+            "title": "The Lion's Gambit",
+            "description": "A Lion Sovereignty envoy arrives at League headquarters with unprecedented ceremony — honour guard, diplomatic flags, a personal letter from the Pride Council sealed in gold wax. The message is extraordinary: the lions propose a military alliance against the growing instability. 'The Pride recognises the League's strength,' the envoy intones. 'Together, we could impose order on the entire crystal network.' Dave reads the letter twice. Three times. The lions have never offered partnership. They have only ever offered subordination dressed in silk.",
             "arc_id": "arc_4",
-            "location": "crystal_fields",
+            "location": "canis_league_hq",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_dave_assault_begun": true,
-                "arc4_dave_death_betrayal": true,
-                "arc4_dave_sovereign_response": true,
-                "arc4_dave_final_encounter": true
+                "arc4_ancient_chart": true,
+                "arc4_lion_fracture": false
             },
             "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "accept_alliance",
+                    "text": "\"The League accepts the Pride Council's proposal. We will draft joint operational parameters.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave shakes the envoy's paw. The grip is warm, practiced, and utterly insincere on both sides. Within days, Lion intelligence officers arrive at League headquarters. They bring data on internal Pride fractures — hardliners versus reformists, old blood versus young ambition. Dave catalogues every name, every schism. The lions came to use him. He will use them first.",
+                        "faction_changes": { "lions": 15, "canis_league": -5 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": ["arc4_lion_fracture"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "conditional_terms",
+                    "text": "\"The League will consider a limited security cooperation. Subject to full intelligence sharing.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The envoy's mane bristles at 'limited.' But the counter-terms are accepted. Intelligence flows — and with it, Dave sees the cracks in the Lion Sovereignty for the first time. The Pride Council is fracturing. Hardliners push for war. Reformists seek stability. The lions are not offering alliance out of strength. They are offering it out of fear.",
+                        "faction_changes": { "lions": 5, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_lion_fracture"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "reject_overture",
+                    "text": "\"The League does not enter alliances with factions that threatened us three arcs ago. Declined.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The envoy departs in cold fury. Dave watches the golden shuttle leave from the observation deck. His intelligence officers are already analysing why the lions came at all. The answer arrives within the hour: internal fractures. The Pride Council is splintering. The lions did not come to ally. They came to survive. Dave files the assessment. Fear is the most reliable intelligence source in the multiverse.",
+                        "faction_changes": { "lions": -15, "canis_league": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_lion_fracture"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc4_dave_death_erratic",
+            "encounter_type": "exploration",
+            "title": "Erratic Contact",
+            "description": "Death's ghost ship has been appearing on League sensors with increasing frequency — and decreasing coherence. Three sightings in as many days, each time in a different sector, each time broadcasting fragmented transmissions on frequencies that should not exist. Dave's signals team has been decoding the fragments. The results are disturbing. Death is not attacking. Death is not scheming. Death is raving. The transmissions are a jumble of ancient languages, crystal harmonic frequencies, and what sounds terrifyingly like prayer.",
+            "arc_id": "arc_4",
+            "location": "forgotten_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_lion_fracture": true,
+                "arc4_death_erratic": false
+            },
+            "npc_ids": ["dave", "death"],
             "priority": 6,
             "repeatable": false,
             "choices": [
                 {
-                    "choice_id": "military_victory",
-                    "text": "\"The League controls the crystals. Order through strength. This is how it must be.\"",
+                    "choice_id": "intercept_death",
+                    "text": "\"Plot an intercept course. If Death is compromised, this is our best chance to neutralise the threat.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "Dave signs the declaration. The Canis League assumes sole governance of all whisper crystal deposits. Trade will be regulated. Distribution will be controlled. The multiverse will have order, enforced by League steel. Dave does not celebrate. He files the paperwork, assigns the garrison rotations, and pours a glass of water. The mission is complete. The next mission begins tomorrow.",
-                        "faction_changes": { "canis_league": 25, "felid_corsairs": -20, "wolves": 5, "lions": -15, "fairies": -15, "knights": -10 },
-                        "resource_changes": { "crystal_inventory": 50, "salvage": 50 },
-                        "story_flags_set": ["ending"],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.5
-                },
-                {
-                    "choice_id": "negotiated_peace",
-                    "text": "\"A treaty. All factions represented. Shared governance, shared responsibility.\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "Dave drafts the Crystal Accord himself. Every clause is precise. Every faction's rights are enumerated. It will be imperfect. It will be messy. Politicians will argue and diplomats will posture. But no one will starve and no one will burn. Dave signs his name at the bottom of the document. His handwriting is neat, steady, and very small.",
-                        "faction_changes": { "canis_league": 5, "felid_corsairs": 10, "wolves": 5, "lions": 10, "fairies": 10, "knights": 15, "goblins": 5, "aliens": 5 },
-                        "resource_changes": { "crystal_inventory": 20 },
-                        "story_flags_set": ["ending"],
+                        "description": "Dave's patrol finds the ghost ship drifting near a dead crystal deposit, its hull pulsing with light that has no source. The ship does not flee. It does not fight. Death's voice whispers across the comms: 'They are waking, Commander. The old ones beneath the crystal. They are waking and they are hungry.' Dave records every word. His analysts will call it madness. Dave is not so sure.",
+                        "faction_changes": {},
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc4_death_erratic"],
                         "story_flags_cleared": []
                     },
                     "outcome_weight": 0.0
                 },
                 {
-                    "choice_id": "energy_independence",
-                    "text": "\"Deploy the alien technology. Make the crystals obsolete. Free everyone.\"",
+                    "choice_id": "monitor_remotely",
+                    "text": "\"Maintain surveillance distance. Do not engage. Record everything.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "Dave activates the alien resonance device. Across the multiverse, new crystal deposits bloom on dead worlds. The monopoly shatters. The resource that launched a thousand wars becomes as common as starlight. Dave watches the crystal markets collapse in real time. Everything he fought for—the blockades, the battles, the blood—rendered meaningless by abundance. He should feel defeated. Instead, he feels something he has not felt in years. Relief. The war is over. Not because someone won. Because winning stopped mattering.",
-                        "faction_changes": { "canis_league": -10, "felid_corsairs": 5, "aliens": 20, "fairies": -15, "goblins": 10 },
-                        "resource_changes": { "crystal_inventory": -30, "salvage": -20 },
-                        "story_flags_set": ["ending"],
+                        "description": "Dave's intelligence drones shadow the ghost ship for seventy-two hours. The data is voluminous and deeply unsettling. Death's vessel visits three dead crystal deposits in sequence, performing what can only be described as rituals. The crystal harmonic frequencies spike during each visit. Dave reviews the data alone in his quarters. Something is using Death. Or Death is trying to communicate with something. Neither option is comforting.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_death_erratic"],
                         "story_flags_cleared": []
                     },
-                    "outcome_weight": -0.3
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "warn_factions",
+                    "text": "\"Broadcast Death's transmissions to all faction intelligence services. This is a multiverse-level threat.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave shares the intelligence openly — an act so uncharacteristic that half the factions assume it is a trick. The fairies respond with alarm; the wolves with contempt; the lions with suspicious silence. But Aristotle's Corsairs transmit a single word in reply: 'Confirmed.' The cat has seen it too. Dave stares at that one word for a long time. If the pirate and the soldier agree, the threat is real.",
+                        "faction_changes": { "felid_corsairs": 5, "fairies": 5, "wolves": -5, "lions": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc4_death_erratic"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc4_dave_response",
+            "encounter_type": "diplomatic",
+            "title": "The Undercurrent Decision",
+            "description": "Dave stands in the war room, the ancient chart pinned beside the fairy resonance data beside the lion intelligence beside Death's mad transmissions. Four data streams, one conclusion: the crystal network is not a resource. It is a system. And that system is destabilising. His officers wait. The League High Command has sent three urgent dispatches demanding a strategic recommendation. Dave ignores them all. He is thinking. When Dave thinks, the multiverse waits.",
+            "arc_id": "arc_4",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_fairy_warning": true,
+                "arc4_ancient_chart": true,
+                "arc4_lion_fracture": true,
+                "arc4_death_erratic": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "investigate_crystals",
+                    "text": "\"Divert fleet resources to deep crystal research. We need to understand what we are dealing with before we act.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave reassigns three cruisers to escort a League science expedition into the deepest crystal deposits. It weakens the blockade. It infuriates High Command. But Dave has read the data, and the data says the crystals are not fuel. They are something else entirely. Understanding that something is now the primary objective. Dave does not explain this to anyone. They will understand when the results arrive.",
+                        "faction_changes": { "canis_league": -5, "fairies": 10, "aliens": 5 },
+                        "resource_changes": { "salvage": -20 },
+                        "story_flags_set": ["arc4_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "consolidate_power",
+                    "text": "\"Reinforce all League positions. Whatever is coming, we face it from a position of strength.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders a full military consolidation. Patrols double. Supply lines harden. Every League outpost receives reinforcements. It is expensive, exhausting, and exactly what the League does best. High Command is satisfied. Dave is not. Fortification is not understanding. But understanding without survival is academic. He chooses survival first.",
+                        "faction_changes": { "canis_league": 15, "wolves": 5 },
+                        "resource_changes": { "salvage": 30, "crystal_inventory": -10 },
+                        "story_flags_set": ["arc4_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "play_all_sides",
+                    "text": "\"Share intelligence selectively. Keep every faction dependent on the League for answers.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave parcels out the intelligence like rations — enough to keep each faction engaged, never enough to make them independent. The fairies receive crystal data. The lions receive threat assessments. Even Aristotle receives a fragment, delivered through three intermediaries. Dave sits at the centre of a web of controlled information. It is not honest. It is not clean. But it keeps the League indispensable, and indispensable is the next best thing to invincible.",
+                        "faction_changes": { "fairies": 5, "lions": 5, "felid_corsairs": 5, "canis_league": 5 },
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": ["arc4_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
                 }
             ]
         }

@@ -1,379 +1,480 @@
 {
     "encounters": [
         {
-            "encounter_id": "enc_arc4_dave_assault",
-            "encounter_type": "combat",
-            "title": "Cry Havoc",
-            "description": "It was bound to happen. The Canis League has stopped trying to control you and started trying to erase you. A massive armada jumps into the system, guns already firing. Dave's voice echoes over the open channels: \"The experiment is over, Aristotle. Surrender your ships, or die with them.\"",
+            "encounter_id": "enc_arc4_fairy_warning",
+            "encounter_type": "diplomatic",
+            "title": "The Dimming Light",
+            "description": "The Fairy Council's audience chamber is a cathedral of living crystal, every surface humming with resonance. But today, the hum is wrong. The harmonics waver and split like a voice cracking mid-sentence. Three elder fairies hover before Aristotle, their wings flickering with colours he has never seen — colours that look like warnings.",
             "arc_id": "arc_4",
-            "location": "crystal_forge_prime",
+            "location": "fairy_realms",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_dave_assault": false
+                "arc4_fairy_warning": false
             },
-            "npc_ids": [
-                "aristotle",
-                "dave"
-            ],
+            "npc_ids": ["aristotle", "fairy_elder"],
             "priority": 10,
             "repeatable": false,
-            "choices": [],
             "dialogue_steps": [
                 {
-                    "speaker": "dave",
-                    "text": "The comms crackle to life. Dave's face fills the screen—cold, composed, immaculate uniform despite the chaos outside. \"The experiment is over, Aristotle. Surrender your ships and your crystal holdings. This is not a negotiation.\""
+                    "speaker": "fairy_elder",
+                    "text": "Captain Aristotle. We do not summon outsiders lightly. The crystals are... changing. Their resonance frequency has shifted three times in the last lunar cycle. This has not happened in ten thousand years."
                 },
                 {
                     "speaker": "aristotle",
-                    "text": "\"Dave! What a lovely surprise. I was just redecorating. Do you like what I've done with the defence platforms?\""
+                    "text": "Changing how? Are we talking a slight off-key or a full orchestra-falling-down-stairs situation?"
                 },
                 {
-                    "speaker": "dave",
-                    "text": "\"I have four hundred warships behind me and authorization to use all of them. Your fleet is outnumbered three to one. This does not end well for you.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"You know, Dave, you always lead with the numbers. Has it ever occurred to you that numbers aren't everything?\" Aristotle's grin is wide, but his claws are gripping the armrest. \"I've been outnumbered my entire life. It's practically a hobby.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"This is your last chance. I am offering you terms. Dignified terms. Your crew walks free. Your ships are impounded but your people live.\" A pause. Dave's jaw tightens. \"I would prefer not to kill you, Aristotle.\""
+                    "speaker": "fairy_elder",
+                    "text": "The latter. Raw deposits are becoming unstable. Two fairy mining vessels have been lost — not attacked, not wrecked. Dissolved. The crystals consumed them from the inside out."
                 },
                 {
                     "speaker": "aristotle",
-                    "text": "\"'Prefer not to.' That's the most romantic thing you've ever said to me, Commander.\" The grin wavers. Aristotle glances at his crew. At the tactical display showing the wall of League ships. At the crystal fields he built from nothing.",
+                    "text": "Consumed. That's a cheerful word for a Monday.",
                     "choices": [
                         {
-                            "choice_id": "full_defense",
-                            "text": "\"Hold the line! No dog sets foot on my production facilities!\"",
-                            "next_step": "full_defense_branch",
+                            "choice_id": "take_seriously",
+                            "text": "\"Show me the data. All of it. If my supply is at risk, I need to understand why.\"",
+                            "next_step": "serious_path",
                             "outcome": {
-                                "description": "The battle is apocalyptic. Your Corsair fleet holds, but the cost in feline lives and shattered hulls is astronomical.",
-                                "faction_changes": {
-                                    "canis_league": -30,
-                                    "felid_corsairs": 10
-                                },
-                                "resource_changes": {
-                                    "salvage": 100,
-                                    "crystal_inventory": -50
-                                },
-                                "story_flags_set": [
-                                    "arc4_dave_assault"
-                                ],
+                                "faction_changes": { "fairies": 15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_fairy_warning"],
                                 "story_flags_cleared": []
                             }
                         },
                         {
-                            "choice_id": "tactical_retreat",
-                            "text": "Evacuate the core personnel and scorch the outer facilities to delay them.",
-                            "next_step": "retreat_branch",
+                            "choice_id": "dismiss_concern",
+                            "text": "\"Crystals are rocks. Rocks don't eat people. Maybe your miners got sloppy.\"",
+                            "next_step": "dismissive_path",
                             "outcome": {
-                                "description": "You lose a massive chunk of your infrastructure, but your veteran crews survive to fight another day.",
-                                "faction_changes": {
-                                    "canis_league": -15,
-                                    "felid_corsairs": -5
-                                },
-                                "resource_changes": {
-                                    "crystal_inventory": -80
-                                },
-                                "story_flags_set": [
-                                    "arc4_dave_assault"
-                                ],
+                                "faction_changes": { "fairies": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_fairy_warning"],
                                 "story_flags_cleared": []
                             }
                         },
                         {
-                            "choice_id": "crystal_overload",
-                            "text": "Weaponize the raw crystal deposits. Detonate an asteroid in the middle of their fleet.",
-                            "next_step": "overload_branch",
+                            "choice_id": "exploit_knowledge",
+                            "text": "\"Unstable crystals sound dangerous. Also sounds like leverage. What's it worth to you that I keep this quiet?\"",
+                            "next_step": "exploit_path",
                             "outcome": {
-                                "description": "The explosion tears a hole in reality. A third of the League fleet is annihilated instantly, but the raw energy backlash cripples your own ship.",
-                                "faction_changes": {
-                                    "canis_league": -50
-                                },
-                                "resource_changes": {
-                                    "salvage": 50,
-                                    "crystal_inventory": -100
-                                },
-                                "story_flags_set": [
-                                    "arc4_dave_assault"
-                                ],
+                                "faction_changes": { "fairies": -5, "felid_corsairs": 5 },
+                                "resource_changes": { "crystal_inventory": 10 },
+                                "story_flags_set": ["arc4_fairy_warning"],
                                 "story_flags_cleared": []
                             }
                         }
                     ]
                 },
                 {
-                    "step_id": "full_defense_branch",
+                    "step_id": "serious_path",
+                    "speaker": "fairy_elder",
+                    "text": "You are wiser than your reputation suggests, Captain. Here — our full resonance logs. The pattern is unmistakable. Something is waking up inside the crystal lattice. Something that was always there, dormant. And it is no longer sleeping."
+                },
+                {
                     "speaker": "aristotle",
-                    "text": "\"You want my fields, Dave? Come and take them.\" Aristotle slams the comms panel. \"All ships! Battle stations! We hold the line or we die on it!\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "Dave watches the Corsair fleet wheel into defensive formation. Fast, disciplined, desperate. \"He chose the hard way,\" Dave murmurs. Then, louder: \"All ships. Weapons free.\"",
-                    "start_combat": true
-                },
-                {
-                    "step_id": "retreat_branch",
-                    "speaker": "aristotle",
-                    "text": "\"All hands, emergency evacuation protocol! Strip the databanks, torch the outer rings, and get every soul to the transports!\" Aristotle turns back to the screen. \"You'll get the facilities, Dave. But they'll be ash by the time you dock.\""
-                },
-                {
-                    "speaker": "dave",
-                    "text": "\"Scorched earth. How very pirate of you.\" Dave's voice is quiet. \"Pursue and contain. Do not let the transports reach the nebula.\"",
+                    "text": "Wonderful. I built my entire empire on top of something that was just... napping. Fine. I'll look into it. But if I find answers, the fairies owe me.",
                     "end": true
                 },
                 {
-                    "step_id": "overload_branch",
-                    "speaker": "aristotle",
-                    "text": "\"You know what the funny thing about crystals is, Dave?\" Aristotle's grin turns feral. \"They explode.\" He keys in the overload sequence. The asteroid field begins to glow."
+                    "step_id": "dismissive_path",
+                    "speaker": "fairy_elder",
+                    "text": "You disappoint us, Captain. We expected a pirate's greed, not a pirate's blindness. When the crystals turn on your fleet — and they will — remember that we tried to warn you."
                 },
                 {
-                    "speaker": "dave",
-                    "text": "Dave's eyes widen—the first crack in his composure. \"He's overloading the deposits. All ships, emergency evasive! NOW!\" But it is too late for some. The void turns white.",
-                    "start_combat": true
+                    "speaker": "aristotle",
+                    "text": "I'll file that under 'ominous prophecies from tiny glowing people.' Right between 'fortune cookies' and 'things that keep me up at night.'",
+                    "end": true
+                },
+                {
+                    "step_id": "exploit_path",
+                    "speaker": "fairy_elder",
+                    "text": "We should have expected nothing less from a corsair. Take your payment. But know this — you cannot profit from a catastrophe that will destroy profit itself. The crystals do not care about your ledgers."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Everything cares about ledgers eventually. Thanks for the tip, though. And the crystals.",
+                    "end": true
                 }
-            ]
+            ],
+            "choices": []
         },
         {
-            "encounter_id": "enc_arc4_death_bid",
-            "encounter_type": "event",
-            "title": "The Knife in the Dark",
-            "description": "While you are focused on the League armada, alarms blare from the Vault. Death has bypassed the security grid and is attempting to seize the core crystal reserves. \"You were a useful distraction, Captain,\" Death whispers over the internal comms. \"But the masters require the prize now.\"",
+            "encounter_id": "enc_arc4_bazaar_merchant",
+            "encounter_type": "exploration",
+            "title": "The Cartographer's Fragment",
+            "description": "The Twilight Bazaar is a floating market strung between dead ships, where anything can be bought if you know how to ask. Between a stall selling dubious \"authentic alien artefacts\" and one hawking crystal-infused catnip, a hooded figure beckons from the shadows. Their stall is empty save for a single object: a fragment of stone covered in constellations that don't match any known chart.",
             "arc_id": "arc_4",
-            "location": "the_vault",
+            "location": "twilight_bazaar",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_dave_assault": true,
-                "arc4_death_bid": false
+                "arc4_ancient_chart": false,
+                "arc4_fairy_warning": true
             },
-            "npc_ids": [
-                "aristotle",
-                "death"
-            ],
+            "npc_ids": ["aristotle", "bazaar_merchant"],
             "priority": 9,
             "repeatable": false,
-            "choices": [],
             "dialogue_steps": [
                 {
-                    "speaker": "death",
-                    "text": "The internal comms hiss with static. Then the purr slides through the speakers like oil through water. \"Captain Aristotle. While you were playing soldiers with Commander Dave, I let myself in. I hope you don't mind.\""
+                    "speaker": "bazaar_merchant",
+                    "text": "Captain Aristotle. Yes, I know who you are. The cat who owns the fuel. I have something you need — though you don't know it yet. This fragment is older than the factions. Older than the multiverse itself, some say."
                 },
                 {
                     "speaker": "aristotle",
-                    "text": "\"Death. Of course it's you. Can't a cat fight one existential threat at a time?\""
+                    "text": "I've heard that pitch before. Usually from someone selling me a haunted compass or a map to the 'lost treasure of El Dogrado.'"
                 },
                 {
-                    "speaker": "death",
-                    "text": "\"You were a useful distraction, Captain. Both of you. While the dog barked and the cat hissed, I walked through the front door.\" The shadows in the Vault corridor pulse. \"The masters require the prize now. The crystals belong to something older than your little war.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "\"The masters. Right. Your mysterious puppet-masters who pull the strings from the shadows.\" Aristotle's fur bristles. \"Here's the thing about puppets, Death. Cut the strings and they're just wood.\""
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"Such bravado. Such delightful, pointless bravado.\" The purr drops to a whisper. \"I am already inside the Vault, Captain. Your security grid was... amusing. Like a child's lock on a diary. I am touching the core reserves as we speak. The crystal hums. It knows me.\""
-                },
-                {
-                    "speaker": "aristotle",
-                    "text": "Aristotle stares at the security feeds. Death's spectral form drifts among the crystal racks, shadows licking at the glowing reserves. The alarms scream. The crew looks to their captain.",
+                    "speaker": "bazaar_merchant",
+                    "text": "This is no trinket. It is a fragment of the Original Chart — a map drawn before the first crystal was ever mined. See these constellations? They mark a place called the Cradle. The place where whisper crystals are born. Twenty crystals. A bargain for the secret of your entire empire's foundation.",
                     "choices": [
                         {
-                            "choice_id": "personal_combat",
-                            "text": "Grab your plasma-cutlass. You're going down to the Vault to handle this personally.",
-                            "next_step": "combat_branch",
+                            "choice_id": "buy_chart",
+                            "text": "\"Twenty crystals for a rock with pretty pictures? ...Fine. I'll bite.\"",
+                            "next_step": "purchased",
                             "outcome": {
-                                "description": "A savage duel among the glowing crystals. Aristotle loses an eye, but Death is finally put down for good.",
-                                "faction_changes": {
-                                    "felid_corsairs": 20
-                                },
-                                "resource_changes": {},
-                                "story_flags_set": [
-                                    "arc4_death_bid",
-                                    "death_defeated"
-                                ],
+                                "faction_changes": {},
+                                "resource_changes": { "crystal_inventory": -20 },
+                                "story_flags_set": ["arc4_ancient_chart"],
                                 "story_flags_cleared": []
                             }
                         },
                         {
-                            "choice_id": "vent_atmosphere",
-                            "text": "No heroics. Vent the atmosphere in the Vault into the cold vacuum of space.",
-                            "next_step": "vent_branch",
+                            "choice_id": "haggle",
+                            "text": "\"Ten crystals. The thing's chipped and I'm allergic to mystical nonsense.\"",
+                            "next_step": "haggle_path",
                             "outcome": {
-                                "description": "Ruthless and effective. Death is blown out into the void, but a massive quantity of refined crystals is lost with them.",
-                                "faction_changes": {
-                                    "felid_corsairs": 5
-                                },
-                                "resource_changes": {
-                                    "crystal_inventory": -50
-                                },
-                                "story_flags_set": [
-                                    "arc4_death_bid",
-                                    "death_defeated"
-                                ],
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": [],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "steal_chart",
+                            "text": "\"Or I could just take it. Pirate, remember?\"",
+                            "next_step": "theft_path",
+                            "outcome": {
+                                "faction_changes": { "goblins": -10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_ancient_chart"],
                                 "story_flags_cleared": []
                             }
                         }
                     ]
                 },
                 {
-                    "step_id": "combat_branch",
-                    "speaker": "aristotle",
-                    "text": "Aristotle draws the plasma-cutlass from the bridge rack. The blade hums to life, casting blue light across his face. \"Nobody touches my crystals, Death. Nobody.\" He strides toward the Vault lift."
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"Ah. The captain comes personally. How flattering.\" Death's form solidifies among the crystal racks, shadows coalescing into something almost physical. Almost killable. \"Come then, pirate king. Let us see what nine lives are truly worth.\""
+                    "step_id": "purchased",
+                    "speaker": "bazaar_merchant",
+                    "text": "A wise investment, Captain. The chart fragment resonates when near other pieces. Find the rest, and you will find the Cradle. But be warned — you will not be the only one looking."
                 },
                 {
                     "speaker": "aristotle",
-                    "text": "The Vault doors slam open. Aristotle charges. The plasma-cutlass arcs through shadow and crystal light. Death screams—a sound like tearing silk. It is savage. It is personal. When it is over, Aristotle kneels among shattered crystals, one eye gone, blood pooling on the Vault floor. But Death is silent. Finally, blessedly silent.",
-                    "start_combat": true
+                    "text": "I never am. Thanks for the overpriced souvenir.",
+                    "end": true
                 },
                 {
-                    "step_id": "vent_branch",
-                    "speaker": "aristotle",
-                    "text": "\"No heroics. Not today.\" Aristotle's paw hovers over the emergency controls. \"Death, you want the Vault? You can have the vacuum that comes with it.\""
-                },
-                {
-                    "speaker": "death",
-                    "text": "\"You wouldn't. The crystals—your entire fortune—\""
+                    "step_id": "haggle_path",
+                    "speaker": "bazaar_merchant",
+                    "text": "Fifteen. I have expenses. The last person who tried to find the Cradle was never seen again — sourcing these fragments is not without risk."
                 },
                 {
                     "speaker": "aristotle",
-                    "text": "\"Fortune means nothing if a ghost owns it.\" He slams the vent controls. The Vault shrieks as atmosphere erupts outward into the void. Crystal racks tear loose. Death's form shreds apart, shadows ripping into the vacuum like torn cloth. Aristotle watches half his fortune tumble into the stars. \"Worth it,\" he whispers.",
+                    "text": "Twelve, and I won't mention to the bazaar authorities that you're selling unregistered artefacts.",
+                    "choices": [
+                        {
+                            "choice_id": "haggle_success",
+                            "text": "Hold firm at twelve.",
+                            "next_step": "haggle_done",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": { "crystal_inventory": -12 },
+                                "story_flags_set": ["arc4_ancient_chart"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "pay_fifteen",
+                            "text": "\"Fine. Fifteen. But throw in that crystal catnip from the next stall.\"",
+                            "next_step": "haggle_done",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": { "crystal_inventory": -15 },
+                                "story_flags_set": ["arc4_ancient_chart"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "haggle_done",
+                    "speaker": "bazaar_merchant",
+                    "text": "Deal. The fragment is yours. May it lead you somewhere worth finding, Captain.",
+                    "end": true
+                },
+                {
+                    "step_id": "theft_path",
+                    "speaker": "bazaar_merchant",
+                    "text": "By all means, try. But know that this stall is protected by the Bazaar Guild — cross them, and every black market in the multiverse closes its doors to you."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "A calculated risk. Aristotle snatches the fragment and vanishes into the crowd before the merchant can signal the guards. The chart fragment pulses warmly in his coat. Worth it — probably.",
                     "end": true
                 }
-            ]
+            ],
+            "choices": []
         },
         {
-            "encounter_id": "enc_arc4_sovereign_intent",
+            "encounter_id": "enc_arc4_lion_fracture",
             "encounter_type": "diplomatic",
-            "title": "The True Masters",
-            "description": "The battlefield goes entirely still. Massive jump-signatures tear open space itself. Depending on who was pulling strings in the shadows, elements of the Lion Sovereignty or the Wolf packs arrive. They aren't here to negotiate. They are here to annex the entire sector.",
+            "title": "The Prince in Exile",
+            "description": "The Shattered Prides are a graveyard of Lion ambition — broken battleships and abandoned outposts scattered across a dying sector. In the wreckage of what was once a grand dreadnought, a figure waits. He is young for a Lion noble, his mane silver-streaked and unkempt. His eyes, however, burn with the particular fury of someone who has been told to sit down one too many times.",
             "arc_id": "arc_4",
-            "location": "sector_zero",
+            "location": "shattered_prides",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_death_bid": true,
-                "arc4_sovereign_intent": false
+                "arc4_lion_fracture": false
             },
-            "npc_ids": [],
+            "npc_ids": ["aristotle", "lord_mane"],
             "priority": 8,
             "repeatable": false,
-            "choices": [
+            "dialogue_steps": [
                 {
-                    "choice_id": "defy_sovereigns",
-                    "text": "\"This is Corsair space! Send whatever you have left at them!\"",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "It's a desperate final stand. The ancient factions are incredibly powerful, pushing your fleet to the absolute breaking point.",
-                        "faction_changes": {
-                            "lions": -30,
-                            "wolves": -30,
-                            "felid_corsairs": 15
-                        },
-                        "resource_changes": {
-                            "salvage": 50,
-                            "crystal_inventory": -20
-                        },
-                        "story_flags_set": [
-                            "arc4_sovereign_intent"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.4
+                    "speaker": "lord_mane",
+                    "text": "Captain Aristotle. I am Lord Mane, third son of the House of Dawnmane. Before you reach for your weapons — I come not as a representative of the Pride Ascendancy, but as a traitor to it. Or a reformist, depending on your perspective."
                 },
                 {
-                    "choice_id": "call_in_chits",
-                    "text": "Broadcast an emergency frequency to every minor faction, pirate, and alien you've ever dealt with. Call in the debts.",
-                    "conditions": {},
-                    "outcome": {
-                        "description": "A ragtag armada of Goblins, Fairies, and unaligned scavengers warps in to flank the Sovereigns. Chaos reigns.",
-                        "faction_changes": {
-                            "goblins": 20,
-                            "fairies": 20,
-                            "lions": -10,
-                            "wolves": -10
+                    "speaker": "aristotle",
+                    "text": "A Lion prince meeting a cat pirate in a junkyard. Your family reunions must be fascinating."
+                },
+                {
+                    "speaker": "lord_mane",
+                    "text": "The Pride Ascendancy is rotting from within. The traditionalists hoard crystals for their palaces while our outer territories starve. Lady Penumbra and her war council would rather burn the multiverse than share a single shard. I want to change that. But I need allies who are not... Lions."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "And you picked the most notorious cat in the multiverse. Bold choice.",
+                    "choices": [
+                        {
+                            "choice_id": "accept_alliance",
+                            "text": "\"A Lion reformist is still a Lion. But the enemy of my enemy is my business partner. Let's talk.\"",
+                            "next_step": "alliance_path",
+                            "outcome": {
+                                "faction_changes": { "lions": 10, "felid_corsairs": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_lion_fracture"],
+                                "story_flags_cleared": []
+                            }
                         },
-                        "resource_changes": {
-                            "salvage": 100
+                        {
+                            "choice_id": "demand_proof",
+                            "text": "\"Pretty words from a pretty prince. Prove you're not a trap.\"",
+                            "next_step": "proof_path",
+                            "outcome": {
+                                "faction_changes": { "lions": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_lion_fracture"],
+                                "story_flags_cleared": []
+                            }
                         },
-                        "story_flags_set": [
-                            "arc4_sovereign_intent"
-                        ],
-                        "story_flags_cleared": []
-                    },
-                    "outcome_weight": 0.1
+                        {
+                            "choice_id": "reject_mane",
+                            "text": "\"I've been burned by Lions before. Find another pawn.\"",
+                            "next_step": "rejection_path",
+                            "outcome": {
+                                "faction_changes": { "lions": -15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_lion_fracture"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "alliance_path",
+                    "speaker": "lord_mane",
+                    "text": "Excellent. I can provide intelligence on the traditionalist fleet movements, supply routes, and — most importantly — the location of Lady Penumbra's private crystal vault. In return, I need your supply lines to feed the outer territories. Hungry Lions make poor revolutionaries."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "A revolution powered by whisper crystals. Now there's a business model I can get behind.",
+                    "end": true
+                },
+                {
+                    "step_id": "proof_path",
+                    "speaker": "lord_mane",
+                    "text": "Wise caution. Here — encrypted transmissions between Lady Penumbra and an unknown party. She is planning something catastrophic, Captain. Something that goes beyond faction politics. Read them. Then decide."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Encrypted transmissions from a Lion war leader. Christmas came early. I'll be in touch, Your Highness.",
+                    "end": true
+                },
+                {
+                    "step_id": "rejection_path",
+                    "speaker": "lord_mane",
+                    "text": "Then the outer territories will continue to starve, and the traditionalists will continue to arm. When the Lions finally march, Captain — and they will — remember that I offered you a way to stop it."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "I'll add it to my collection of missed opportunities. Right next to 'investing in goblin tech stocks.'",
+                    "end": true
                 }
-            ]
+            ],
+            "choices": []
         },
         {
-            "encounter_id": "enc_arc4_final_choice",
+            "encounter_id": "enc_arc4_death_erratic",
             "encounter_type": "event",
-            "title": "The Whisper's End",
-            "description": "The battle rages outside, a maelstrom of destruction. Aristotle stands alone in the primary control center of the central forge. His paw rests over the master console. He controls the flow of the crystals. He controls the fuel of the multiverse. The decision he makes now will rewrite the stars.",
+            "title": "The Broken Scythe",
+            "description": "Alarms scream across three sectors simultaneously. Death's fleet — the shadowy armada that has haunted Aristotle since Arc 1 — is attacking everything. Not strategically. Not surgically. Everything. Fairy traders, Wolf patrols, even ships flying Death's own colours are being fired upon. The tactical display looks like a seizure rendered in light and violence.",
             "arc_id": "arc_4",
-            "location": "the_forge",
+            "location": "fairy_realms",
             "trigger_conditions": {
                 "current_arc": "arc_4",
-                "arc4_sovereign_intent": true,
-                "game_completed": false
+                "arc4_death_erratic": false,
+                "arc4_fairy_warning": true
             },
-            "npc_ids": [
-                "aristotle"
+            "npc_ids": ["aristotle", "death"],
+            "priority": 7,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "aristotle",
+                    "text": "What in the nine lives is happening out there? Death's ships are firing on their own escorts."
+                },
+                {
+                    "speaker": "death",
+                    "text": "A garbled transmission cuts through the static. Death's voice, once silky and controlled, now fractures like a corrupted signal: \"THE FREQUENCY... IT CHANGES... I CAN HEAR THEM SINGING... MAKE THEM STOP SINGING...\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "That's... not normal villain behaviour.",
+                    "choices": [
+                        {
+                            "choice_id": "investigate_death",
+                            "text": "\"Something's wrong with Death. Genuinely wrong. Move in — carefully. I want answers.\"",
+                            "next_step": "investigate_path",
+                            "outcome": {
+                                "faction_changes": { "fairies": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc4_death_erratic"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "exploit_chaos",
+                            "text": "\"Death's distracted. Hit the unguarded supply caches while they're busy having a breakdown.\"",
+                            "next_step": "exploit_path",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": { "crystal_inventory": 15, "salvage": 20 },
+                                "story_flags_set": ["arc4_death_erratic"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "defend_civilians",
+                            "text": "\"Forget Death — there are civilian ships out there getting torn apart. All hands, rescue operations!\"",
+                            "next_step": "rescue_path",
+                            "outcome": {
+                                "faction_changes": { "fairies": 10, "knights": 5 },
+                                "resource_changes": { "salvage": -10 },
+                                "story_flags_set": ["arc4_death_erratic"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "investigate_path",
+                    "speaker": "aristotle",
+                    "text": "The Corsair flagship edges closer to the maelstrom. Amidst the chaos, Aristotle catches something on the deep scanners: the same resonance frequency the fairies warned about. Death's ships are laced with crystals. And those crystals are screaming."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The crystals in Death's fleet are resonating with the same instability the fairies described. Death isn't attacking — Death is in pain. Whatever is happening to the crystals is happening to Death first. And if it can do this to them... \"Wonderful. The fuel that powers my empire is also driving people insane. Just another Tuesday.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "exploit_path",
+                    "speaker": "aristotle",
+                    "text": "While Death's fleet tears itself apart, the Corsairs sweep through abandoned outposts like vultures at a feast. The haul is impressive. Aristotle watches the chaos from a safe distance, crystal cigar glowing in the dark."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Never waste a good crisis. But whatever broke Death... I should probably figure out what that is before it breaks me too.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "rescue_path",
+                    "speaker": "aristotle",
+                    "text": "The Corsairs plunge into the crossfire, hauling damaged fairy traders and civilian vessels out of the kill zone. It costs fuel, ammunition, and hull plating. But when the last transport clears the danger zone, even the hardened Corsair crew raises a cheer."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Don't let anyone say the Felid Corsairs don't have a heart. We just keep it locked in a safe and charge interest.\"",
+                    "end": true
+                }
             ],
-            "priority": 1,
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc4_response_choice",
+            "encounter_type": "diplomatic",
+            "title": "The Captain's Calculus",
+            "description": "Aristotle sits alone in his quarters, surrounded by data. The fairy resonance logs. The ancient chart fragment. Lord Mane's encrypted transmissions. Death's fractured screaming. Every thread points in a different direction, and every direction leads somewhere dark. The multiverse is shifting beneath his paws, and for the first time, Aristotle isn't sure he's the one doing the pushing.",
+            "arc_id": "arc_4",
+            "location": "fairy_realms",
+            "trigger_conditions": {
+                "current_arc": "arc_4",
+                "arc4_fairy_warning": true,
+                "arc4_ancient_chart": true,
+                "arc4_lion_fracture": true,
+                "arc4_death_erratic": true
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 6,
             "repeatable": false,
             "choices": [
                 {
-                    "choice_id": "ending_a_hold",
-                    "text": "[Ending A - Hold] Overload the defenses and crush the invaders. The monopoly remains ours.",
+                    "choice_id": "investigate_crystals",
+                    "text": "\"The crystals are the key to everything. Forget the politics — I need to find out what's happening at the source.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "Aristotle unleashes the full, terrifying power of the automated forges. The enemy fleets are annihilated. He sits on a throne of crystals, ruling the stars alone. The age of the Pirate King begins.",
-                        "faction_changes": {},
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "game_completed",
-                            "ending_a_hold"
-                        ],
+                        "description": "Aristotle plots a course toward the unknown, using the chart fragment as a guide. The fairy data suggests the instability is spreading from somewhere deep — somewhere no faction has ever charted. \"Everyone's fighting over the fuel,\" he mutters, \"and nobody's asking why the fuel is fighting back.\"",
+                        "faction_changes": { "fairies": 10 },
+                        "resource_changes": { "crystal_inventory": -10 },
+                        "story_flags_set": ["arc4_response"],
                         "story_flags_cleared": []
                     },
-                    "outcome_weight": 1.0
+                    "outcome_weight": 0.0
                 },
                 {
-                    "choice_id": "ending_b_share",
-                    "text": "[Ending B - Share] Broadcast the refining schematics on all open channels to every corner of the multiverse.",
+                    "choice_id": "consolidate_power",
+                    "text": "\"Mysteries can wait. I need to lock down my territory before the wolves smell blood.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "The data bursts outward at faster-than-light speeds. The monopoly is broken. Without scarcity, the wars stop. Aristotle watches his empire dissolve, smiling. He saved the galaxy by giving it away.",
-                        "faction_changes": {},
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "game_completed",
-                            "ending_b_share"
-                        ],
+                        "description": "The Corsair fleet mobilises. Aristotle reinforces every supply route, fortifies every outpost, and stockpiles enough crystals to weather a siege. Lord Mane's intelligence feeds into the defence grid. \"Let the multiverse burn,\" Aristotle growls, sharpening his claws on the command console. \"My empire holds.\"",
+                        "faction_changes": { "felid_corsairs": 15, "lions": -5 },
+                        "resource_changes": { "salvage": 30 },
+                        "story_flags_set": ["arc4_response"],
                         "story_flags_cleared": []
                     },
-                    "outcome_weight": 1.0
+                    "outcome_weight": 0.15
                 },
                 {
-                    "choice_id": "ending_c_destroy",
-                    "text": "[Ending C - Destroy] Initiate the core critical overload. Deny the power to everyone.",
+                    "choice_id": "play_all_sides",
+                    "text": "\"Feed the fairies intel on Death. Feed Mane intel on the traditionalists. Feed everyone just enough rope to hang each other.\"",
                     "conditions": {},
                     "outcome": {
-                        "description": "Aristotle types exactly zero into the containment parameters. A blinding flash consumes the sector. The crystals are gone forever. The galaxy is plunged into a dark age, but it is finally free of the great game.",
-                        "faction_changes": {},
-                        "resource_changes": {},
-                        "story_flags_set": [
-                            "game_completed",
-                            "ending_c_destroy"
-                        ],
+                        "description": "Aristotle works the channels like a virtuoso. Every faction gets a piece of the puzzle — just enough to keep them busy and grateful, never enough to see the full picture. It is exhausting, brilliant, and deeply dishonest. In other words, vintage Aristotle. \"When everyone owes you favours,\" he purrs, \"nobody can afford to be your enemy.\"",
+                        "faction_changes": { "fairies": 5, "lions": 5, "goblins": 5, "canis_league": -10 },
+                        "resource_changes": { "crystal_inventory": -5 },
+                        "story_flags_set": ["arc4_response"],
                         "story_flags_cleared": []
                     },
-                    "outcome_weight": 1.0
+                    "outcome_weight": -0.1
                 }
             ]
         }

@@ -1,0 +1,348 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc6_dave_bone_yard",
+            "encounter_type": "exploration",
+            "title": "The Bone Yard",
+            "description": "The Bone Yard is a ship graveyard the size of a small moon — the remains of a war so ancient that no faction claims memory of it. League intelligence flagged it as a potential archaeological site. Dave arrives with a military survey team and finds something far more disturbing than old wreckage. The hulls are not rusted. They are crystallised. Every ship, every bulkhead, every rivet has been converted to whisper crystal at the molecular level. An entire fleet, frozen mid-battle, transmuted into fuel. Dave walks through the crystallised corridors of a warship that died before his species existed, and for the first time in his life, he feels the cold grip of something larger than duty.",
+            "arc_id": "arc_6",
+            "location": "bone_yard",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_bone_yard_explored": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "full_survey",
+                    "text": "\"Establish a perimeter. Full archaeological survey. I want every hull catalogued, every crystal sample analysed.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's teams work for weeks. The data is staggering. The crystallised fleet belongs to a species that predates every known civilisation by millions of years. They were not killed. They were converted. Their ships, their technology, their organic matter — all transmuted into crystal. Dave reads the analysis report in silence. The crystals are not a resource. They are a graveyard. And the multiverse has been burning the dead for fuel.",
+                        "faction_changes": { "aliens": 5 },
+                        "resource_changes": { "salvage": -20, "crystal_inventory": 10 },
+                        "story_flags_set": ["arc6_bone_yard_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "military_assessment",
+                    "text": "\"Threat assessment only. What weapons did they carry? What killed them? Can it kill us?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's military analysts strip the crystallised fleet for tactical data. The weapons technology is beyond anything in the modern multiverse — energy projectors, shield harmonics, hull compositions that should not be physically possible. All of it converted to crystal. All of it useless. Dave stares at the report. A civilisation with god-tier technology was still consumed. The implication is clear: whatever did this does not care about military strength.",
+                        "faction_changes": { "canis_league": 5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc6_bone_yard_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "quarantine_site",
+                    "text": "\"Quarantine the entire sector. No one enters. No one takes samples. Mark it as a biohazard zone.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders a full quarantine. League ships form a perimeter so tight that not even debris drifts past. Inside the cordon, the crystallised fleet glitters in the void — a monument to something terrible. Dave posts the quarantine with a personal annotation: 'Do not disturb the dead.' It is the most sentimental thing he has ever committed to an official document.",
+                        "faction_changes": { "canis_league": 10, "goblins": -5 },
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc6_bone_yard_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc6_dave_ancient_signal",
+            "encounter_type": "exploration",
+            "title": "The Ancient Signal",
+            "description": "League deep-space listening posts detect a signal emanating from beneath the largest crystal deposit in the multiverse. It is not radio. It is not light. It propagates through the crystal network itself, a vibration that travels from deposit to deposit like a pulse through a nervous system. Dave's cryptographers work around the clock. When the signal is finally decoded, Dave reads the translation alone in his quarters. The message is a single phrase, repeated endlessly in a language that predates all known species: 'We remember. We remember. We remember.'",
+            "arc_id": "arc_6",
+            "location": "deep_void",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_bone_yard_explored": true,
+                "arc6_ancient_signal_decoded": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "respond_to_signal",
+                    "text": "\"Transmit a response on the same frequency. Identify ourselves. Open a dialogue.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave authorises a crystal-frequency response. The League's message is simple and military: identification, peaceful intent, request for communication. The response arrives within minutes — not words, but images. A civilisation flourishing. A crystal network growing. A transformation. A sleep. An awakening. Dave watches the images cascade across his tactical display. He is seeing the history of the multiverse told by something that was there at the beginning.",
+                        "faction_changes": { "aliens": 10, "fairies": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc6_ancient_signal_decoded"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "analyse_signal",
+                    "text": "\"Do not respond. Analyse the signal structure. I want to understand the transmission method, not the content.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's signals team disassembles the transmission methodology. The results are revolutionary: the crystal network is not a deposit field. It is a communication system. Every crystal in the multiverse is a node in a network older than stars. The signal they detected is not a broadcast. It is memory. The crystals are remembering. Dave files the analysis and stares at the crystal sample on his desk — a small shard he has carried since the first arc. It stares back.",
+                        "faction_changes": { "canis_league": 5 },
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": ["arc6_ancient_signal_decoded"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "jam_signal",
+                    "text": "\"Suppress the signal. Whatever is waking up, we slow it down until we are ready.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders League transmitters to flood the crystal frequency with interference. The signal weakens. The 'We remember' fades to static. Dave's science officers protest — this is a first contact scenario. Dave overrides them. 'First contact on our terms. Not theirs.' The signal fades. But deep in the crystal network, something notes the interference. Something adjusts. Dave has bought time. How much, he does not know.",
+                        "faction_changes": { "canis_league": 10, "aliens": -10, "fairies": -5 },
+                        "resource_changes": { "crystal_inventory": -10 },
+                        "story_flags_set": ["arc6_ancient_signal_decoded"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc6_dave_lion_civil_war",
+            "encounter_type": "diplomatic",
+            "title": "The Pride Fractures",
+            "description": "The Lion Sovereignty collapses into civil war. Hardliner and reformist factions turn their golden fleets on each other across the Shattered Prides. Refugee ships flood into League space. The conflict spills across borders, dragging neutral sectors into chaos. Dave's intelligence predicted this — his reports from Arc 4 identified the fractures — but prediction does not prevent consequences. The Shattered Prides burn, and the League must decide whether to intervene, exploit, or endure.",
+            "arc_id": "arc_6",
+            "location": "shattered_prides",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_ancient_signal_decoded": true,
+                "arc6_lion_civil_war": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "intervene_reformists",
+                    "text": "\"Support the reformist faction. A stable, moderate Pride is better than a chaotic one.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave diverts League forces to support the reformist lions. It is a calculated risk — the hardliners have more ships, but the reformists have more territory. League cruisers break the hardliner siege at three key systems. The reformist council sends a message of gratitude. Dave does not acknowledge it. Gratitude is not policy. When the civil war ends, the reformists will owe the League. Debts are policy.",
+                        "faction_changes": { "lions": 10, "canis_league": -5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc6_lion_civil_war"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "border_lockdown",
+                    "text": "\"Seal the League border. Accept refugees. Refuse combatants. Let the lions sort themselves out.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders a humanitarian corridor for refugees and an iron wall for warships. League border stations process thousands of displaced lions while turning away armed vessels from both factions. It is orderly, compassionate, and utterly pragmatic. The League gains a grateful diaspora population. The lions gain nothing from the League but a lesson in neutrality.",
+                        "faction_changes": { "lions": -5, "canis_league": 10, "knights": 5 },
+                        "resource_changes": { "salvage": -10, "crystal_inventory": 5 },
+                        "story_flags_set": ["arc6_lion_civil_war"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "exploit_chaos",
+                    "text": "\"While they fight each other, seize the contested crystal deposits in the Amber Corridor.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave moves fast while the lions bleed. League mining ships enter the Amber Corridor under military escort. Crystal deposits that the Pride Council guarded for generations fall under League control in a single week. It is efficient. It is ruthless. Dave signs the annexation orders with the same handwriting he uses for routine requisitions. Opportunity does not knock. It presents a window. Dave climbs through windows.",
+                        "faction_changes": { "lions": -20, "canis_league": 10, "knights": -10 },
+                        "resource_changes": { "crystal_inventory": 25, "salvage": 20 },
+                        "story_flags_set": ["arc6_lion_civil_war"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc6_dave_goblin_heist",
+            "encounter_type": "event",
+            "title": "The Great Heist",
+            "description": "The report arrives at 0300 hours: a goblin raiding flotilla has hit the League's primary crystal supply depot at Station Kilo-Seven. Not a conventional raid — a heist. The goblins burrowed through the station's waste processing system, bypassed forty security checkpoints using counterfeit League credentials, and extracted three hundred tonnes of refined crystal before a single alarm sounded. Dave reads the report. Reads it again. Then quietly orders his security chief replaced.",
+            "arc_id": "arc_6",
+            "location": "trade_routes",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_lion_civil_war": true,
+                "arc6_goblin_heist": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "pursue_goblins",
+                    "text": "\"Scramble interceptors. Track the stolen crystals. Every last gram is recovered or accounted for.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's pursuit force chases the goblin flotilla through three sectors of debris fields and asteroid mazes. The goblins are fast, inventive, and infuriatingly cheerful on open comms. League interceptors recover sixty percent of the stolen crystals. The rest vanishes into the goblin black market within hours. Dave files the loss report. Sixty percent recovery is acceptable. The security overhaul that follows is not optional.",
+                        "faction_changes": { "goblins": -10, "canis_league": 5 },
+                        "resource_changes": { "crystal_inventory": -5, "salvage": -10 },
+                        "story_flags_set": ["arc6_goblin_heist"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "negotiate_return",
+                    "text": "\"Contact the Goblin Syndicate. Offer a finder's fee for the return of the stolen crystals. Cheaper than a war.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave swallows his pride and contacts the goblin black market through intermediaries. The negotiation is absurd — the goblins demand payment for returning stolen goods, and they haggle over every gram. Dave pays. The crystals return, minus a 'handling fee' that amounts to robbery. But the supply line is restored and no ships were lost. Dave adds 'goblin countermeasures' to the station security budget with a note that reads simply: 'Non-negotiable.'",
+                        "faction_changes": { "goblins": 10, "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -10, "salvage": -20 },
+                        "story_flags_set": ["arc6_goblin_heist"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "accept_loss",
+                    "text": "\"Write off the loss. Harden the remaining depots. The goblins are a distraction from the real threat.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave absorbs the loss without pursuit. His officers are stunned — Commander Dave does not accept losses. But Dave has read the crystal research. Three hundred tonnes of refined crystal is nothing compared to what is waking beneath the network. He reassigns the pursuit resources to deep crystal monitoring stations. The goblins celebrate their heist. Dave does not notice. He is reading signal intercepts from the crystal consciousness and wondering if the goblins have just stolen the equivalent of blood from a sleeping god.",
+                        "faction_changes": { "goblins": 5, "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -15 },
+                        "story_flags_set": ["arc6_goblin_heist"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc6_dave_death_escalation",
+            "encounter_type": "event",
+            "title": "Death Comes Calling",
+            "description": "Death's ghost ship appears inside League space — not on the border, not in contested territory, but inside the defensive perimeter of the Iron Paw itself. No warning. No sensor trace. One moment the void is empty; the next, Death's vessel hangs three hundred metres off Dave's port bow like a splinter of absolute darkness. The bridge crew freezes. Dave does not. He has been expecting this. Death's transmissions have been growing more coherent, more focused, and increasingly directed at Dave personally. 'Commander,' the purr slides through the hull. 'We need to discuss your future. Urgently.'",
+            "arc_id": "arc_6",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_goblin_heist": true,
+                "arc6_death_escalation": false
+            },
+            "npc_ids": ["dave", "death"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "confront_death",
+                    "text": "\"You penetrated League defences to deliver a message. Deliver it. Then leave. You will not get a third chance.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death's eyes burn on every screen. 'The crystal consciousness is waking, Commander. When it does, it will consume everything — League, Corsair, Sovereign, all of it. Converted to crystal. Like the Bone Yard. Like the ancient fleet.' A pause. 'I am offering you a choice: help me control the awakening, or be consumed by it.' Dave listens. Files. Processes. 'I do not control things I do not understand,' he replies. Death laughs. 'Then learn faster, dog. Time is running out.' The ghost ship vanishes.",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc6_death_escalation"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "open_fire",
+                    "text": "\"All batteries. Fire. Now.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The Iron Paw's guns speak. Every turret, every missile tube, every energy projector unloads on the ghost ship at point-blank range. The void lights up. When the light fades, Death's ship is still there — undamaged, unhurried. The purr is amused. 'Impressive. Pointless, but impressive.' Death transmits a data packet — crystal consciousness research that makes the fairy data look like a children's primer — then vanishes. Dave stares at the data. He fired everything he had and it meant nothing. The data means everything.",
+                        "faction_changes": { "canis_league": 5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc6_death_escalation"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "negotiate_terms",
+                    "text": "\"If you have intelligence on the crystal awakening, share it. The League will consider cooperation.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Death's purr softens — almost respectful. 'The dog negotiates with the ghost. Progress.' The data that follows is extraordinary: a complete model of the crystal consciousness, its awakening cycle, its intentions, and — most critically — its vulnerabilities. Dave reads it twice. The crystal entity is not malevolent. It is simply vast, and it is waking from a sleep that has lasted eons. The multiverse is a nest built from its own body. 'Cooperation,' Death whispers. 'Not servitude. Not domination. Cooperation. Even I am tired of the game, Commander.' Dave files the data. He does not trust Death. But he trusts the data.",
+                        "faction_changes": { "canis_league": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc6_death_escalation"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc6_dave_fracture_response",
+            "encounter_type": "diplomatic",
+            "title": "The Fracture Decision",
+            "description": "Everything is breaking. The lion civil war has destabilised the south. Goblin raids have crippled supply lines. Death haunts League space with impunity. And beneath it all, the crystal consciousness pulses with increasing urgency. Dave sits in the war room surrounded by data, reports, intelligence assessments, and a single glass of water. His officers have been dismissed. The decision he makes now will determine whether the League survives the coming storm — or is consumed by it. Dave finishes his water. Refills the glass. Finishes it again. Then he begins to write.",
+            "arc_id": "arc_6",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_bone_yard_explored": true,
+                "arc6_ancient_signal_decoded": true,
+                "arc6_lion_civil_war": true,
+                "arc6_goblin_heist": true,
+                "arc6_death_escalation": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 4,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "unite_the_fragments",
+                    "text": "\"Reach out to every faction. Share the crystal intelligence. The threat is bigger than any one of us.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave broadcasts the crystal consciousness data on every diplomatic channel. It is the most radical act of transparency in League history. The responses pour in — disbelief, denial, grudging acknowledgement, and finally fear. Fear is useful. Fear unites. Within days, representatives from six factions arrive at League headquarters for emergency talks. Dave sits at the head of the table and for the first time speaks not as a League commander but as a fellow inhabitant of a multiverse that may be living on borrowed time.",
+                        "faction_changes": { "felid_corsairs": 10, "fairies": 10, "knights": 10, "lions": 5, "goblins": 5, "canis_league": -10 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc6_fracture_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                },
+                {
+                    "choice_id": "let_them_burn",
+                    "text": "\"The other factions created this chaos. Let them suffer the consequences. The League protects its own.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave pulls League forces back to core territory. Let the lions burn. Let the goblins steal from each other. Let the wolves howl in the dark. The League will fortress up, conserve resources, and ride out the storm. When the dust settles, the League will be the last faction standing. It is cold. It is logical. It is exactly the kind of thinking that got the ancient civilisation in the Bone Yard killed. Dave knows this. He does it anyway. Survival first. Conscience later.",
+                        "faction_changes": { "canis_league": 15, "felid_corsairs": -10, "lions": -10, "wolves": -5 },
+                        "resource_changes": { "salvage": 30, "crystal_inventory": 15 },
+                        "story_flags_set": ["arc6_fracture_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.4
+                },
+                {
+                    "choice_id": "restore_order",
+                    "text": "\"Impose League martial law on contested sectors. Stabilise through force. Restore order.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave declares emergency jurisdiction over every contested sector within League reach. It is legal under wartime provisions. It is also the most aggressive expansion the League has ever attempted. Martial law is enforced by League cruisers, League marines, and League supply ships. It is not popular. It is not gentle. But the fighting stops. The supply lines reopen. Order — League order — returns to sectors that were tearing themselves apart. Dave reviews the casualty reports. The numbers are lower than he expected. He does not celebrate. He requisitions more supplies.",
+                        "faction_changes": { "canis_league": 10, "knights": -5, "lions": -5, "felid_corsairs": -10, "goblins": -5 },
+                        "resource_changes": { "salvage": 20, "crystal_inventory": -10 },
+                        "story_flags_set": ["arc6_fracture_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        }
+    ]
+}

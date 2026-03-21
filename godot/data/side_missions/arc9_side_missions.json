@@ -1,0 +1,63 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc9_crystal_mountain",
+      "mission_type": "retrieval",
+      "title": "The Heart of All Things",
+      "description": "The Cradle of Whispers — the mythical source of all whisper crystals. Aristotle has spent his entire career chasing legends, and this one is real. The crystal mountain pulses with an energy that makes his fur stand on end. Whatever he finds here will change everything.",
+      "region": "cradle_of_whispers",
+      "trigger_conditions": {
+        "current_arc": "arc_9",
+        "arc9_cradle_discovered": true
+      },
+      "discovery_encounter_id": "enc_sm_arc9_crystal_mountain_entrance",
+      "objectives": [
+        {
+          "objective_id": "ascend_mountain",
+          "description": "Ascend the crystal mountain through its shifting passages",
+          "encounter_id": "enc_sm_arc9_mountain_ascend"
+        },
+        {
+          "objective_id": "reach_heart",
+          "description": "Reach the crystal heart at the mountain's core",
+          "encounter_id": "enc_sm_arc9_mountain_heart"
+        },
+        {
+          "objective_id": "make_choice",
+          "description": "Decide the fate of the crystal source",
+          "encounter_id": "enc_sm_arc9_mountain_choice"
+        }
+      ],
+      "rewards": {"salvage": 200, "crystals": 100},
+      "faction_rewards": {"felid_corsairs": 20, "fairies": 10},
+      "priority": 1
+    },
+    {
+      "mission_id": "sm_arc9_guardian_lore",
+      "mission_type": "investigation",
+      "title": "Songs of the First",
+      "description": "The Guardians of the Cradle speak in riddles and crystal harmonics. They've watched over the whisper crystal source since before any faction existed. Aristotle needs to earn their trust and learn their secrets — or the crystal heart will remain forever beyond reach.",
+      "region": "cradle_of_whispers",
+      "trigger_conditions": {
+        "current_arc": "arc_9",
+        "arc9_guardians_contacted": true
+      },
+      "discovery_encounter_id": "enc_sm_arc9_guardian_first_contact",
+      "objectives": [
+        {
+          "objective_id": "pass_trials",
+          "description": "Pass the Guardians' trials of worthiness",
+          "encounter_id": "enc_sm_arc9_guardian_trials"
+        },
+        {
+          "objective_id": "learn_history",
+          "description": "Learn the true history of the whisper crystals",
+          "encounter_id": "enc_sm_arc9_guardian_history"
+        }
+      ],
+      "rewards": {"salvage": 100, "crystals": 75},
+      "faction_rewards": {"felid_corsairs": 15, "fairies": 15},
+      "priority": 2
+    }
+  ]
+}

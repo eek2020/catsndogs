@@ -397,7 +397,6 @@
             "trigger_conditions": {
                 "current_arc": "arc_1",
                 "arc1_crystal_discovered": true,
-                "arc1_dave_met": true,
                 "arc1_death_glimpsed": true
             },
             "npc_ids": ["aristotle"],

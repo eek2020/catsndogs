@@ -1,3 +1,122 @@
 {
-  "side_missions": []
+  "side_missions": [
+    {
+      "mission_id": "sm_arc4_crystal_resonance",
+      "mission_type": "investigation",
+      "title": "Harmonic Dissonance",
+      "description": "Strange resonance patterns have been detected in the Fairy Realms — whisper crystals singing in frequencies that shouldn't exist. The Fairy Collective is spooked, and Aristotle's crystal sense is tingling. Something ancient is waking up.",
+      "region": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "arc4_fairy_alliance": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_resonance_discovery",
+      "objectives": [
+        {
+          "objective_id": "locate_resonance_source",
+          "description": "Track the anomalous crystal resonance to its source",
+          "encounter_id": "enc_sm_arc4_resonance_track"
+        },
+        {
+          "objective_id": "collect_resonance_data",
+          "description": "Collect harmonic data from three crystal nodes",
+          "encounter_id": "enc_sm_arc4_resonance_nodes"
+        },
+        {
+          "objective_id": "report_findings",
+          "description": "Report findings to the Fairy Collective",
+          "encounter_id": "enc_sm_arc4_resonance_report"
+        }
+      ],
+      "rewards": {"salvage": 60, "crystals": 15},
+      "faction_rewards": {"fairies": 8, "felid_corsairs": 3},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc4_lion_court_intrigue",
+      "mission_type": "investigation",
+      "title": "Whispers in the Mane Hall",
+      "description": "Lord Mane's court is fracturing. A faction within the Lion Dominion is quietly arming for civil war, and someone is feeding them classified crystal shipment routes. Aristotle needs to find the mole before the Prides shatter entirely.",
+      "region": "shattered_prides",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "special_char_lord_mane_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_lion_intrigue_start",
+      "objectives": [
+        {
+          "objective_id": "infiltrate_court",
+          "description": "Attend the Lion Dominion court gathering",
+          "encounter_id": "enc_sm_arc4_lion_court_visit"
+        },
+        {
+          "objective_id": "identify_mole",
+          "description": "Identify the informant leaking crystal routes",
+          "encounter_id": "enc_sm_arc4_lion_mole_hunt"
+        }
+      ],
+      "rewards": {"salvage": 75, "crystals": 10},
+      "faction_rewards": {"lions": 12, "felid_corsairs": 5},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc4_bazaar_heist",
+      "mission_type": "sabotage",
+      "title": "The Bazaar Job",
+      "description": "An unknown party is stockpiling intelligence on every faction's crystal reserves at the Twilight Bazaar. If that data gets sold to the wrong buyer, the balance of power crumbles overnight. Aristotle needs to get to it first.",
+      "region": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "arc4_bazaar_access": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_bazaar_tip",
+      "objectives": [
+        {
+          "objective_id": "locate_data_cache",
+          "description": "Find the hidden intelligence cache in the Bazaar",
+          "encounter_id": "enc_sm_arc4_bazaar_search"
+        },
+        {
+          "objective_id": "secure_data",
+          "description": "Steal or destroy the crystal intelligence files",
+          "encounter_id": "enc_sm_arc4_bazaar_heist"
+        },
+        {
+          "objective_id": "escape_bazaar",
+          "description": "Escape the Bazaar before security closes in",
+          "encounter_id": "enc_sm_arc4_bazaar_escape"
+        }
+      ],
+      "rewards": {"salvage": 90, "crystals": 8},
+      "faction_rewards": {"felid_corsairs": 10, "goblins": -3},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc4_deaths_trail",
+      "mission_type": "investigation",
+      "title": "The Trail of Cold Stars",
+      "description": "Ships have been vanishing in the outer Fairy Realms — no wreckage, no distress calls, just gone. The locals whisper about Death walking the starlanes. Aristotle decides to follow the trail before it leads to his own crew.",
+      "region": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "arc3_death_revealed": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_deaths_trail_rumour",
+      "objectives": [
+        {
+          "objective_id": "investigate_disappearances",
+          "description": "Search the last known coordinates of missing ships",
+          "encounter_id": "enc_sm_arc4_death_search"
+        },
+        {
+          "objective_id": "confront_shadow",
+          "description": "Confront whatever lurks at the end of the trail",
+          "encounter_id": "enc_sm_arc4_death_confront"
+        }
+      ],
+      "rewards": {"salvage": 50, "crystals": 20},
+      "faction_rewards": {"fairies": 6},
+      "priority": 5
+    }
+  ]
 }

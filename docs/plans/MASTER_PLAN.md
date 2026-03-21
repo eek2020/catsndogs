@@ -1,6 +1,6 @@
 # Whisper Crystals — Master Plan
 
-**Date:** 2026-03-02 (last updated 2026-03-18)
+**Date:** 2026-03-02 (last updated 2026-03-20)
 **Status:** Authoritative — supersedes PLAN-001 and PLAN-002
 **Review source:** See `docs/reviews/REVIEW-002_code_review_2026-03-02.md`
 
@@ -32,7 +32,8 @@ Three endings are reachable based on cumulative choice history. The core loop is
 | Faction System | ✅ Complete | 6+2 factions, relationship matrix, diplomatic states, cascade rules |
 | Faction Conquest AI | ✅ Complete | Background faction warfare, realm control, power rankings |
 | Save / Load | ✅ Complete | SaveManager with 3 slots, atomic writes, settings persistence |
-| All UI States | ✅ Complete | Menu, Navigation, Combat, Trade, Dialogue, Cutscene, Ship Screen, Faction Screen, Pause, Settings, Ending, Mission Log |
+| All UI States | ✅ Complete | Menu, Navigation, Combat, Trade, Dialogue, Cutscene, Ship Screen, Faction Screen, Pause, Settings, Ending, Mission Log, Star Map |
+| Star Map System | ✅ Complete | Per-region fog of war, bounded maps, fixed story POIs, random spawns, purchasable charts, fairy cartographer, full map overlay |
 | Side Missions | ✅ Complete | SideMissionSystem, distress signals, mission log UI, 4 arc-1 missions, 5 distress encounters |
 | Test Coverage | ✅ Complete | 280 tests, 100% pass rate, all headless (no display context needed) |
 | Code Quality | ✅ Complete | Code review done 2026-03-02; 11 critical/medium issues resolved |
@@ -337,6 +338,29 @@ Each crew member fills a ship role and brings unique trait bonuses that enhance 
 
 **Art status:** All crew portraits are placeholders — artwork in development.
 **Story status:** Recruitment narratives are placeholder — story refinement ongoing.
+
+### 6.6 Star Map Feature — COMPLETE (2026-03-20)
+
+**Goal:** Replace the infinite navigation plane with authored, bounded region maps featuring fog of war, fixed story locations, random encounter spawns, purchasable star charts, and a fairy cartographer who reveals hidden treasures.
+
+**Full plan:** `.windsurf/plans/star-map-feature-plan-3f33cd.md`
+
+**Summary of completed work:**
+
+- **Data files created:** `data/maps/region_maps.json` (7 region map definitions with story locations, spawn zones, hidden locations), `data/maps/purchasable_maps.json` (star charts for purchase), `data/encounters/fairy_cartographer.json` (cartographer rescue encounter)
+- **New system:** `StarMapSystem` (`scripts/systems/star_map_system.gd`) — fog of war grid per region using `PackedByteArray`, reveal-around-ship logic, random spawn management with respawn timers, hidden location management, map ownership, cartographer rescue flag, full serialization
+- **New UI:** `star_map_screen.gd` + `star_map_screen.tscn` — full map overlay showing entire region with fog, all POI types, player position, spawn zone outlines, and legend
+- **GameStateData extensions:** `owned_maps: Array[String]`, `star_map_data: Dictionary` fields with save/load serialization
+- **DataLoader methods:** `load_region_maps()`, `load_purchasable_maps()`, `load_cartographer_encounters()`
+- **EventBus signals:** `map_purchased`, `fog_revealed`, `hidden_location_discovered`, `cartographer_rescued`, `region_boundary_reached`
+- **Navigation overhaul:** Ship position clamped to region bounds; fog of war overlay drawn over unrevealed cells (chunked for performance); story POIs rendered at fixed authored positions; hidden/spawn POIs from StarMapSystem; boundary detection with region transition prompt (Enter key)
+- **Minimap upgrade:** Shows fog state, story POIs (gold), hidden POIs (purple), spawn POIs (typed colors), region name header
+- **Purchase screen:** "STAR CHARTS" section added — lists available maps with crystal cost, reveals fog on purchase
+- **Fairy cartographer wiring:** Encounter engine emits `cartographer_rescued` on flag set; GameSession handler reveals hidden locations on all owned maps
+- **Input mapping:** `star_map` action bound to Tab key; controls bar updated with `TAB: MAP` hint
+- **GameSession integration:** StarMapSystem instantiated, loaded on new/load game, fog grids persisted on save, `purchase_map()` and `travel_to_region()` convenience methods
+
+**Art status:** POI icons are color-coded geometric markers — placeholder until sprite assets are ready.
 
 ---
 

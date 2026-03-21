@@ -13,6 +13,7 @@ extends Control
 
 var _upgrade_data: Array = []
 var _ship_data: Array = []
+var _map_data: Array = []
 
 
 func _ready() -> void:
@@ -20,6 +21,7 @@ func _ready() -> void:
 	close_btn.pressed.connect(_on_close)
 	_upgrade_data = GameSession.data_loader.load_upgrades()
 	_ship_data = GameSession.data_loader.load_purchasable_ships()
+	_map_data = GameSession.data_loader.load_purchasable_maps()
 	_refresh()
 	close_btn.grab_focus()
 
@@ -70,6 +72,7 @@ func _refresh() -> void:
 		repair_btn.disabled = true
 	_build_ship_list()
 	_build_upgrade_list()
+	_build_map_list()
 
 
 func _update_ship_preview(ship: Ship) -> void:
@@ -247,4 +250,74 @@ func _on_buy_upgrade(upgrade: Dictionary) -> void:
 	if GameSession.game_state == null:
 		return
 	if GameSession.economy_system.purchase_upgrade(GameSession.game_state, upgrade):
+		_refresh()
+
+
+func _build_map_list() -> void:
+	if not is_instance_valid(upgrade_list):
+		return
+	# Add map section header
+	var header := Label.new()
+	header.text = "STAR CHARTS"
+	header.add_theme_color_override("font_color", Color(0.94, 0.75, 0.25))
+	header.add_theme_font_size_override("font_size", 18)
+	upgrade_list.add_child(header)
+
+	var gs: GameStateData = GameSession.game_state
+	if gs == null:
+		return
+	if _map_data.is_empty():
+		var label := Label.new()
+		label.text = "No star charts available"
+		label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.55))
+		upgrade_list.add_child(label)
+		return
+
+	for map_entry in _map_data:
+		var region_id: String = map_entry.get("region_id", "")
+		var map_name: String = map_entry.get("name", region_id)
+		var description: String = map_entry.get("description", "")
+		var cost: int = map_entry.get("cost_crystals", 0)
+		var reveal_pct: float = map_entry.get("reveal_percentage", 0.6)
+		var already_owned: bool = GameSession.star_map_system.has_map(region_id)
+
+		var row := HBoxContainer.new()
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+		if already_owned:
+			var owned_label := Label.new()
+			owned_label.text = "%s — OWNED" % map_name
+			owned_label.add_theme_color_override("font_color", Color(0.4, 0.7, 0.4))
+			owned_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			row.add_child(owned_label)
+			upgrade_list.add_child(row)
+			continue
+
+		var desc_label := Label.new()
+		desc_label.text = "%s" % map_name
+		desc_label.tooltip_text = description
+		desc_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		desc_label.add_theme_color_override("font_color", Color(0.85, 0.88, 0.95))
+		row.add_child(desc_label)
+
+		var cost_label := Label.new()
+		cost_label.text = "%dC" % cost
+		cost_label.custom_minimum_size.x = 60
+		cost_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		var can_afford: bool = gs.crystal_inventory >= cost
+		cost_label.add_theme_color_override("font_color", Color(0.3, 0.8, 0.9) if can_afford else Color(0.7, 0.3, 0.3))
+		row.add_child(cost_label)
+
+		var buy_btn := Button.new()
+		buy_btn.text = "Buy"
+		buy_btn.custom_minimum_size.x = 60
+		buy_btn.disabled = not can_afford
+		buy_btn.pressed.connect(_on_buy_map.bind(region_id, cost, reveal_pct))
+		row.add_child(buy_btn)
+
+		upgrade_list.add_child(row)
+
+
+func _on_buy_map(region_id: String, cost: int, reveal_pct: float) -> void:
+	if GameSession.purchase_map(region_id, cost, reveal_pct):
 		_refresh()

@@ -1,3 +1,126 @@
 {
-  "side_missions": []
+  "side_missions": [
+    {
+      "mission_id": "sm_arc4_dave_crystal_resonance",
+      "mission_type": "investigation",
+      "title": "Signal Anomaly Report",
+      "description": "League intelligence has flagged unusual crystal resonance signatures emanating from the Fairy Realms. Commander Dave dispatches a recon detail to assess the tactical implications. If these crystals are evolving, the League needs to know first.",
+      "region": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "playing_as_dave": true,
+        "arc4_fairy_contact": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_dave_resonance_briefing",
+      "objectives": [
+        {
+          "objective_id": "deploy_sensors",
+          "description": "Deploy League sensor arrays at the resonance epicenter",
+          "encounter_id": "enc_sm_arc4_dave_resonance_deploy"
+        },
+        {
+          "objective_id": "analyze_frequencies",
+          "description": "Collect and analyze harmonic frequency data",
+          "encounter_id": "enc_sm_arc4_dave_resonance_analyze"
+        },
+        {
+          "objective_id": "file_report",
+          "description": "Submit findings to League High Command",
+          "encounter_id": "enc_sm_arc4_dave_resonance_report"
+        }
+      ],
+      "rewards": {"salvage": 55, "crystals": 12},
+      "faction_rewards": {"canis_league": 10, "fairies": 3},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc4_dave_lion_surveillance",
+      "mission_type": "investigation",
+      "title": "Operation Pride Watch",
+      "description": "The Lion Dominion's internal fractures present both a threat and an opportunity for the League. Dave is ordered to embed an intelligence asset in Lord Mane's court — quietly, before the shooting starts.",
+      "region": "shattered_prides",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "playing_as_dave": true,
+        "special_char_lord_mane_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_dave_lion_orders",
+      "objectives": [
+        {
+          "objective_id": "establish_cover",
+          "description": "Establish a diplomatic cover in Lion territory",
+          "encounter_id": "enc_sm_arc4_dave_lion_cover"
+        },
+        {
+          "objective_id": "gather_intel",
+          "description": "Identify the factions within the Dominion power struggle",
+          "encounter_id": "enc_sm_arc4_dave_lion_intel"
+        }
+      ],
+      "rewards": {"salvage": 70, "crystals": 10},
+      "faction_rewards": {"canis_league": 8, "lions": -2},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc4_dave_bazaar_intercept",
+      "mission_type": "sabotage",
+      "title": "Data Intercept",
+      "description": "League signals intelligence has identified a data broker at the Twilight Bazaar selling classified crystal reserve assessments. Dave needs to intercept the sale and secure the data for the League — or destroy it.",
+      "region": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "playing_as_dave": true,
+        "arc4_bazaar_access": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_dave_bazaar_intel",
+      "objectives": [
+        {
+          "objective_id": "identify_broker",
+          "description": "Locate the data broker in the Bazaar",
+          "encounter_id": "enc_sm_arc4_dave_bazaar_locate"
+        },
+        {
+          "objective_id": "intercept_sale",
+          "description": "Intercept the data before the sale completes",
+          "encounter_id": "enc_sm_arc4_dave_bazaar_intercept"
+        },
+        {
+          "objective_id": "secure_extraction",
+          "description": "Extract from the Bazaar with the data intact",
+          "encounter_id": "enc_sm_arc4_dave_bazaar_extract"
+        }
+      ],
+      "rewards": {"salvage": 85, "crystals": 8},
+      "faction_rewards": {"canis_league": 12, "goblins": -5},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc4_dave_deaths_trail",
+      "mission_type": "investigation",
+      "title": "Operation Cold Trail",
+      "description": "League patrols have been disappearing in the Fairy Realms sector. No mayday, no wreckage recovery. Dave takes it personally — those were his people. He will find out what happened, and someone will answer for it.",
+      "region": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "playing_as_dave": true,
+        "arc3_death_revealed": true
+      },
+      "discovery_encounter_id": "enc_sm_arc4_dave_cold_trail_start",
+      "objectives": [
+        {
+          "objective_id": "search_patrol_routes",
+          "description": "Retrace the last known patrol routes of missing ships",
+          "encounter_id": "enc_sm_arc4_dave_patrol_search"
+        },
+        {
+          "objective_id": "engage_threat",
+          "description": "Identify and engage whatever is taking League ships",
+          "encounter_id": "enc_sm_arc4_dave_threat_engage"
+        }
+      ],
+      "rewards": {"salvage": 50, "crystals": 18},
+      "faction_rewards": {"canis_league": 6},
+      "priority": 5
+    }
+  ]
 }

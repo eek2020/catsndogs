@@ -1,0 +1,245 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc9_dave_singing_core",
+            "encounter_type": "exploration",
+            "title": "The Singing Core",
+            "description": "The Cradle is not a place. It is a presence. Dave steps through the portal and into a space that has no walls, no floor, no ceiling — only crystal, stretching in every direction, pulsing with light that moves like breath. The Singing Core hangs at the centre: a formation so vast and so luminous that Dave's eyes water. It is not beautiful. It is beyond beauty. It is the kind of thing that beauty was invented to describe and fails. The Core sings — a vibration that Dave feels in his teeth, in his bones, in the part of his brain that understands music despite never having learned to play. His tactical training offers nothing. His military discipline offers nothing. For the first time in his life, Commander Dave stands somewhere that his entire skill set cannot touch, and he is awed despite himself.",
+            "arc_id": "arc_9",
+            "location": "the_cradle",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_singing_core": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "document_everything",
+                    "text": "\"All sensors active. Record every frequency, every particle, every photon. We are making history.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's instruments strain against phenomena they were never designed to measure. The data is a torrent — crystal harmonics, energy patterns, temporal distortions, biological signatures woven into mineral matrices. Dave's science officers work in hushed tones, aware they are documenting something sacred. Dave reviews each data stream personally. The Core is alive. It is conscious. It has been singing this song since before the first star ignited. Dave listens to the recording later in his quarters. He plays it three times. His eyes are dry. His chest is not.",
+                        "faction_changes": { "aliens": 5, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc9_singing_core"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "listen_in_silence",
+                    "text": "Dave lowers his instruments. Stands still. Listens. Just listens.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders his team to power down their instruments. They stare at him. He does not repeat himself. In the silence that follows, the Singing Core fills the void with a melody that predates language, that predates life, that predates the concept of melody itself. Dave closes his eyes. The song is grief and joy and patience and fury and love and loneliness — the emotional history of a consciousness that has existed alone for aeons. When Dave opens his eyes, he finds his cheeks are wet. He wipes them with military precision and says nothing. His team says nothing. Some experiences exist beyond the reach of reports.",
+                        "faction_changes": { "aliens": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc9_singing_core"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "assess_strategically",
+                    "text": "\"The Core is the consciousness's critical node. Assess it for vulnerabilities. We need leverage.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave surveys the Singing Core with the cold eye of a siege engineer assessing a fortress. Structural analysis. Energy flow patterns. Potential pressure points. His team identifies three theoretical vulnerabilities where the crystal lattice could be disrupted. Dave logs them all. He does not intend to use them. But a commander without options is not a commander. The Core sings on, indifferent to the small dog cataloguing its weaknesses. Dave wonders if it knows. He suspects it does. He suspects it does not care.",
+                        "faction_changes": { "canis_league": 10, "aliens": -10 },
+                        "resource_changes": { "salvage": 10 },
+                        "story_flags_set": ["arc9_singing_core"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc9_dave_crystal_consciousness",
+            "encounter_type": "diplomatic",
+            "title": "The Crystal Consciousness",
+            "description": "The consciousness addresses Dave directly. Not through crystal harmonics. Not through alien intermediaries. It speaks to him — inside his mind, with a voice that is every voice, a presence that is every presence. 'Commander Dave of the Canis League. You carry weapons into our home. You catalogue our vulnerabilities. You assess us as a threat.' A pause. 'We do not blame you. You are what your nature made you: a guardian. A protector. A soldier. But we must ask: who are you protecting now? Your faction? Your species? Or something larger?'",
+            "arc_id": "arc_9",
+            "location": "the_cradle",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_singing_core": true,
+                "arc9_crystal_consciousness": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "negotiate_terms",
+                    "text": "\"I protect what I am ordered to protect. But I can negotiate terms. State your requirements.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave negotiates with a god the way he negotiates with anyone: clearly, precisely, and without sentiment. The consciousness presents its terms: cessation of extraction from the deepest crystal veins, preservation of the network's core structure, recognition of the consciousness as a sovereign entity. Dave counter-proposes: continued surface extraction under regulated limits, joint monitoring of network health, mutual non-aggression. The consciousness considers. 'You negotiate with an entity that could unmake your fleet with a thought.' Dave replies: 'I negotiate with everyone the same way. Your power is noted but irrelevant to the terms.' A pause. Something that might be amusement radiates from the Core. 'Acceptable.'",
+                        "faction_changes": { "aliens": 10, "canis_league": 10, "fairies": 5 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc9_crystal_consciousness"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "demand_coexistence",
+                    "text": "\"We did not know what you were. Now we do. Coexistence is the only rational option.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave speaks with a directness that surprises even himself. 'We burned you for fuel because we did not know you were alive. That was ignorance. Continuing now would be something worse.' The consciousness responds with a wave of warmth — not emotional manipulation but genuine gratitude. 'You are the first of your kind to say this, Commander. The first to stand in our home and choose understanding over control.' Dave straightens. 'I am a soldier. Soldiers do not control territory. They protect it. This is your territory. I will protect it.' The consciousness hums. It is the closest a god comes to a handshake.",
+                        "faction_changes": { "aliens": 15, "knights": 10, "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -10 },
+                        "story_flags_set": ["arc9_crystal_consciousness"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                },
+                {
+                    "choice_id": "assert_position",
+                    "text": "\"You are a strategic reality. The League will factor you into its operational planning. That is all I can promise.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave refuses to be awed into submission. 'You are vast. You are ancient. You are powerful. Noted. The League has faced vast, ancient, powerful threats before.' The consciousness does not react with anger. It reacts with something worse: patience. 'You are honest, Commander. We appreciate honesty. You will factor us into your plans. We will factor you into ours. The difference is that our plans span millennia.' Dave files the implicit threat with the same composure he files everything. 'Understood,' he says. 'We will correspond through official channels.' The consciousness's amusement is unmistakable.",
+                        "faction_changes": { "canis_league": 10, "aliens": -5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc9_crystal_consciousness"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc9_dave_ancient_guardians",
+            "encounter_type": "combat",
+            "title": "The Ancient Guardians",
+            "description": "The Cradle is not undefended. As Dave's team penetrates deeper toward the consciousness's core, crystal formations shift and coalesce into shapes — enormous constructs of living crystal that move with terrible grace. The Ancient Guardians. They are not attacking. They are testing. Each guardian presents a challenge: a barrier of crystal that must be overcome, a formation that must be navigated, a harmonic that must be matched. Dave's military mind recognises the pattern immediately: this is not combat. It is an entrance exam. The consciousness is determining whether Dave and his team are worthy of reaching the inner sanctum.",
+            "arc_id": "arc_9",
+            "location": "the_cradle",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_crystal_consciousness": true,
+                "arc9_ancient_guardians": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "military_discipline",
+                    "text": "\"Formation. Standard obstacle protocol. We meet each challenge with discipline and precision.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's team moves through the guardian challenges with military precision. Crystal barriers are breached with controlled detonations. Navigation puzzles are solved with cartographic rigour. Harmonic challenges are met by Dave's engineers tuning their equipment with painstaking care. It is not elegant. It is not inspiring. But it works. Every challenge is overcome. Every guardian steps aside. Dave leads his team through the final barrier with the same expression he wears during routine inspections. The consciousness observes and says nothing. Dave takes the silence as approval.",
+                        "faction_changes": { "canis_league": 10 },
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc9_ancient_guardians"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "understand_guardians",
+                    "text": "\"Stand down weapons. The guardians are not enemies. They are teachers. Learn from them.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave orders his team to holster their weapons — an order that takes more courage to give than any attack order he has ever issued. The guardians respond. Their challenges shift from obstacles to lessons. Crystal barriers become doorways when approached with openness. Navigation puzzles resolve when the team stops trying to conquer them and starts trying to understand them. Dave watches his soldiers become students and feels something he cannot name. Pride, perhaps. Or wonder. He files it for later examination.",
+                        "faction_changes": { "aliens": 10, "knights": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc9_ancient_guardians"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "overpower_guardians",
+                    "text": "\"Maximum force. Clear the path. We did not come this far to take a test.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's team hits the guardians with everything they have. League weapons against crystal constructs billions of years old. The guardians shatter, reform, and shatter again. Dave's soldiers push through with brute determination, leaving a trail of cracked crystal and spent ammunition. They reach the inner sanctum battered, exhausted, and victorious. The consciousness watches them arrive. 'You broke our guardians,' it observes. 'Yes,' Dave replies. 'They were in the way.' A silence. 'You are persistent, Commander.' 'I prefer thorough.'",
+                        "faction_changes": { "canis_league": 5, "aliens": -10, "knights": -5 },
+                        "resource_changes": { "salvage": -20, "crystal_inventory": 5 },
+                        "story_flags_set": ["arc9_ancient_guardians"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc9_dave_cradle_choice",
+            "encounter_type": "event",
+            "title": "The Cradle Choice",
+            "description": "Dave stands at the heart of the Cradle. The crystal consciousness surrounds him — not as a threat but as a presence, vast and patient and waiting. The Core pulses with the heartbeat of something older than stars. Dave has all the data. All the intelligence. All the analysis. And now, at the end, none of it matters. The choice is not tactical. It is moral. The consciousness presents four paths, and each path will reshape the multiverse. Dave looks at the Core. The Core looks back. A soldier and a god, measuring each other across an abyss of scale and time. Dave takes a breath. He has made a thousand decisions in his career. This is the one that counts.",
+            "arc_id": "arc_9",
+            "location": "the_cradle",
+            "trigger_conditions": {
+                "current_arc": "arc_9",
+                "arc9_singing_core": true,
+                "arc9_crystal_consciousness": true,
+                "arc9_ancient_guardians": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 1,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "reunite_consciousness",
+                    "text": "\"Reunite the fragments. Let the consciousness wake fully. The multiverse must learn to share space with something greater.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave activates the reunification sequence. The crystal network ignites — not with destruction but with awareness. Across the multiverse, every crystal deposit awakens simultaneously, a trillion fragments of consciousness rejoining into a single, vast entity. The multiverse shakes. Ships stall. Stations shudder. And then... light. The consciousness speaks to every living being at once: 'We remember. We awaken. We are here.' Dave stands in the Cradle as the multiverse transforms around him. He is a soldier in a world that no longer needs soldiers. Or perhaps needs them more than ever — to protect what has been born. 'Welcome back,' he says quietly. It is the most inadequate greeting in history. It is also the most sincere.",
+                        "faction_changes": { "aliens": 20, "fairies": 10, "knights": 10, "felid_corsairs": 5, "canis_league": -15 },
+                        "resource_changes": { "crystal_inventory": -30 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                },
+                {
+                    "choice_id": "mercy_release",
+                    "text": "\"Release the consciousness from its crystal prison. Let it choose its own form. Its own future.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave initiates the release protocol. The crystal lattice dissolves — not into nothing, but into light. The consciousness rises from its ancient shell like a prisoner stepping into sunlight for the first time. The crystal deposits across the multiverse dim and fade. The fuel that powered civilisation evaporates. But something new replaces it: the consciousness, freed, begins to radiate energy on frequencies that any ship can harvest. Not crystal fuel. Something better. Dave watches the old world end and the new one begin. His fleet will need new engines. His strategies will need new parameters. But the consciousness is free, and a freed god is a generous god.",
+                        "faction_changes": { "aliens": 15, "knights": 10, "fairies": -10, "canis_league": -5 },
+                        "resource_changes": { "crystal_inventory": -50 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "harvest_forever",
+                    "text": "\"Stabilise the consciousness in its sleep state. Regulate extraction. Sustainable harvesting. Forever.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave implements the stabilisation protocol with the precision of a surgeon. The consciousness sinks back into sleep — not fully, but enough. The crystal network stabilises. Extraction continues, but at rates the network can sustain indefinitely. It is not freedom. It is not cruelty. It is management. The consciousness murmurs in its enforced slumber, dreaming crystal dreams that will never quite resolve into waking. Dave files the stabilisation parameters. Sustainable. Controllable. Eternal. The multiverse will never run out of fuel. The price is a god that will never wake up. Dave signs the report without hesitation. His hand is steady. His dreams, for the rest of his life, will not be.",
+                        "faction_changes": { "canis_league": 15, "fairies": 10, "wolves": 5, "lions": 5, "aliens": -20, "knights": -10 },
+                        "resource_changes": { "crystal_inventory": 50, "salvage": 30 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "final_silence",
+                    "text": "\"End it. Destroy the Core. No more crystals. No more consciousness. No more war over fuel.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave places the charges himself. His team watches in silence. The consciousness speaks one last time: 'You would choose oblivion. For us. For yourself.' Dave replies: 'I choose an end to the cycle. No more empires built on a sleeping god. No more wars over sacred fuel. No more.' He detonates the charges. The Singing Core shatters. The light dies. Across the multiverse, every crystal deposit cracks and goes dark. Ships stall. Stations lose power. The crystal age ends in a single, terminal heartbeat. Dave stands in the dark. The silence is absolute. 'It is done,' he says to no one. The multiverse will rebuild. Without crystals. Without gods. Without the terrible temptation of power that was never theirs to take.",
+                        "faction_changes": { "canis_league": -10, "felid_corsairs": -10, "fairies": -20, "wolves": -15, "lions": -15, "aliens": -20, "goblins": -10 },
+                        "resource_changes": { "crystal_inventory": -100, "salvage": -50 },
+                        "story_flags_set": ["arc9_cradle_complete", "arc9_cradle_choice"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.5
+                }
+            ]
+        }
+    ]
+}

@@ -33,7 +33,23 @@ const ENCOUNTER_TYPE_COLORS := {
 	"trade": Color(0.52, 1.0, 0.35),
 	"event": Color(0.82, 0.55, 1.0),
 	"distress_signal": Color(1.0, 0.62, 0.35),
+	"rescue": Color(1.0, 0.62, 0.35),
+	"story": Color(1.0, 0.82, 0.25),
+	"hidden": Color(0.75, 0.4, 1.0),
+	"treasure": Color(0.75, 0.4, 1.0),
+	"abandoned_ship": Color(0.75, 0.4, 1.0),
+	"crystal_hoard": Color(0.75, 0.4, 1.0),
 }
+
+# Fog of war
+const FOG_COLOR := Color(0.02, 0.03, 0.05, 0.85)
+const FOG_CHUNK_SIZE: int = 4  # Render fog in chunks of N cells for performance
+
+# Boundary transition
+const BOUNDARY_MARGIN: float = 100.0
+const POI_BOUNDARY_PADDING: float = 150.0  # Keep POIs this far inside region bounds
+var _boundary_prompt_region: String = ""
+var _boundary_prompt_timer: float = 0.0
 
 var _ship_texture: Texture2D = preload("res://assets/ships/ship_r_side.png")
 var _ship_up_texture: Texture2D = preload("res://assets/ships/ship_up_side.png")
@@ -48,6 +64,11 @@ var _bank_angle: float = 0.0      # Current banking tilt in radians
 var _vertical_blend: float = 0.0  # 0 = side sprite, 1 = top-down sprite
 var _heading_angle: float = 0.0   # Smoothed heading for trail/minimap
 var _is_moving: bool = false
+
+# Star map POIs (story locations, hidden locations, random spawns)
+var _story_pois: Array = []
+var _hidden_pois: Array = []
+var _spawn_pois: Array = []
 
 const FLIP_SPEED: float = 6.0
 const BANK_MAX_ANGLE: float = 0.30       # ~17 degrees max banking tilt
@@ -150,7 +171,9 @@ func _process(dt: float) -> void:
 		_update_trail(dt)
 		_update_poi_timer(dt)
 		_update_distress(dt)
+		_update_star_map_spawns(dt)
 		_check_poi_collisions()
+		_check_star_map_poi_collisions()
 	else:
 		_update_trail(dt)  # Let trail fade while paused
 	_update_flash(dt)
@@ -175,6 +198,21 @@ func _handle_movement(dt: float) -> void:
 		direction = direction.normalized()
 		GameSession.game_state.position_x += direction.x * SHIP_SPEED * dt
 		GameSession.game_state.position_y += direction.y * SHIP_SPEED * dt
+
+		# Clamp to region bounds
+		var bounds: Vector2 = GameSession.star_map_system.get_bounds(GameSession.game_state.current_region)
+		GameSession.game_state.position_x = clampf(GameSession.game_state.position_x, 0.0, bounds.x)
+		GameSession.game_state.position_y = clampf(GameSession.game_state.position_y, 0.0, bounds.y)
+
+		# Reveal fog around ship
+		GameSession.star_map_system.reveal_around(
+			GameSession.game_state.current_region,
+			GameSession.game_state.position_x,
+			GameSession.game_state.position_y
+		)
+
+		# Check region boundary for transitions
+		_check_boundary(GameSession.game_state, bounds)
 
 		# --- Horizontal flip detection ---
 		if direction.x > 0.01 and not _facing_right:
@@ -250,11 +288,15 @@ func _update_distress(dt: float) -> void:
 	var gs: GameStateData = GameSession.game_state
 	var angle := randf() * TAU
 	var distance := randf_range(500.0, 900.0)
+	var clamped: Vector2 = _clamp_to_bounds(
+		gs.position_x + cos(angle) * distance,
+		gs.position_y + sin(angle) * distance,
+	)
 	var color: Color = ENCOUNTER_TYPE_COLORS.get("distress_signal", Color(1.0, 0.62, 0.35))
 	_active_pois.append({
 		"encounter": encounter,
-		"x": gs.position_x + cos(angle) * distance,
-		"y": gs.position_y + sin(angle) * distance,
+		"x": clamped.x,
+		"y": clamped.y,
 		"radius": POI_RADIUS,
 		"color": color,
 	})
@@ -290,20 +332,58 @@ func _has_poi_for_encounter(encounter_id: String) -> bool:
 	return false
 
 
+## Clamp a world position to stay within region bounds with padding.
+func _clamp_to_bounds(pos_x: float, pos_y: float) -> Vector2:
+	var bounds: Vector2 = GameSession.star_map_system.get_bounds(GameSession.game_state.current_region)
+	return Vector2(
+		clampf(pos_x, POI_BOUNDARY_PADDING, bounds.x - POI_BOUNDARY_PADDING),
+		clampf(pos_y, POI_BOUNDARY_PADDING, bounds.y - POI_BOUNDARY_PADDING),
+	)
+
+
 func _spawn_poi(encounter: Encounter) -> void:
 	var gs: GameStateData = GameSession.game_state
 	if gs == null:
 		return
-	var angle := randf() * TAU
-	var distance := randf_range(420.0, 960.0)
+	# Check if this encounter has a fixed position on the star map
+	var fixed_pos: Dictionary = _get_fixed_position(encounter.encounter_id, gs.current_region)
 	var color: Color = ENCOUNTER_TYPE_COLORS.get(encounter.encounter_type, Color(1.0, 0.82, 0.45))
-	_active_pois.append({
-		"encounter": encounter,
-		"x": gs.position_x + cos(angle) * distance,
-		"y": gs.position_y + sin(angle) * distance,
-		"radius": POI_RADIUS,
-		"color": color,
-	})
+	if not fixed_pos.is_empty():
+		color = ENCOUNTER_TYPE_COLORS.get("story", Color(1.0, 0.82, 0.25))
+		_active_pois.append({
+			"encounter": encounter,
+			"x": fixed_pos.get("x", 0.0),
+			"y": fixed_pos.get("y", 0.0),
+			"radius": POI_RADIUS,
+			"color": color,
+			"fixed": true,
+			"label": fixed_pos.get("label", encounter.title),
+		})
+	else:
+		var angle := randf() * TAU
+		var distance := randf_range(420.0, 960.0)
+		var clamped: Vector2 = _clamp_to_bounds(
+			gs.position_x + cos(angle) * distance,
+			gs.position_y + sin(angle) * distance,
+		)
+		_active_pois.append({
+			"encounter": encounter,
+			"x": clamped.x,
+			"y": clamped.y,
+			"radius": POI_RADIUS,
+			"color": color,
+		})
+
+
+func _get_fixed_position(encounter_id: String, region_id: String) -> Dictionary:
+	var sms: StarMapSystem = GameSession.star_map_system
+	if sms == null:
+		return {}
+	var map_def: Dictionary = sms.region_maps.get(region_id, {})
+	for loc in map_def.get("story_locations", []):
+		if loc.get("encounter_id", "") == encounter_id:
+			return loc
+	return {}
 
 
 func _check_poi_collisions() -> void:
@@ -326,6 +406,181 @@ func _on_encounter(encounter) -> void:
 		var dialogue_overlay = main.push_overlay("dialogue")
 		if dialogue_overlay and dialogue_overlay.has_method("setup"):
 			dialogue_overlay.setup(encounter)
+
+
+func _update_star_map_spawns(dt: float) -> void:
+	if GameSession.game_state == null:
+		return
+	var region_id: String = GameSession.game_state.current_region
+	GameSession.star_map_system.update_spawns(region_id, dt)
+	# Refresh the visible spawn list
+	_spawn_pois = GameSession.star_map_system.get_visible_spawns(region_id)
+	# Refresh story and hidden POIs — filter story POIs to only show
+	# encounters whose trigger conditions are currently met, so the player
+	# doesn't see interactive-looking markers they can't activate yet.
+	var all_story: Array = GameSession.star_map_system.get_visible_story_pois(region_id, GameSession.game_state)
+	var available: Array = GameSession.encounter_engine.get_available_encounters(GameSession.game_state)
+	var available_ids := {}
+	for enc in available:
+		available_ids[enc.encounter_id] = true
+	# Also skip story POIs that already have an _active_pois entry to avoid
+	# drawing duplicate markers at the same position.
+	var active_enc_ids := {}
+	for apoi in _active_pois:
+		var enc = apoi.get("encounter")
+		if enc != null:
+			active_enc_ids[enc.encounter_id] = true
+	var filtered_story: Array = []
+	for poi in all_story:
+		var eid: String = poi.get("encounter_id", "")
+		if available_ids.has(eid) and not active_enc_ids.has(eid):
+			filtered_story.append(poi)
+	_story_pois = filtered_story
+	_hidden_pois = GameSession.star_map_system.get_visible_hidden_pois(region_id)
+	# Update boundary prompt timer
+	if _boundary_prompt_timer > 0:
+		_boundary_prompt_timer -= dt
+
+
+func _check_star_map_poi_collisions() -> void:
+	var gs: GameStateData = GameSession.game_state
+	if gs == null:
+		return
+	
+	# Check story POI collisions
+	for poi in _story_pois:
+		var dx: float = poi.get("x", 0.0) - gs.position_x
+		var dy: float = poi.get("y", 0.0) - gs.position_y
+		if (dx * dx + dy * dy) <= (POI_RADIUS + SHIP_COLLISION_RADIUS) * (POI_RADIUS + SHIP_COLLISION_RADIUS):
+			var encounter_id: String = poi.get("encounter_id", "")
+			if encounter_id != "":
+				# Find and trigger the story encounter
+				var encounters: Array = GameSession.encounter_engine.get_available_encounters(gs)
+				for enc in encounters:
+					if enc.encounter_id == encounter_id:
+						_on_encounter(enc)
+						_story_pois.erase(poi)
+						return
+	
+	# Check hidden location collisions
+	for poi in _hidden_pois:
+		var dx: float = poi.get("x", 0.0) - gs.position_x
+		var dy: float = poi.get("y", 0.0) - gs.position_y
+		if (dx * dx + dy * dy) <= (POI_RADIUS + SHIP_COLLISION_RADIUS) * (POI_RADIUS + SHIP_COLLISION_RADIUS):
+			var poi_id: String = poi.get("poi_id", "")
+			var rewards: Dictionary = poi.get("rewards", {})
+			var crystals: int = rewards.get("crystals", 0)
+			var salvage_val: int = rewards.get("salvage", 0)
+			if crystals > 0:
+				gs.crystal_inventory += crystals
+			if salvage_val > 0:
+				gs.salvage += salvage_val
+			flash("DISCOVERED: %s (+%dC +%dS)" % [poi.get("label", "Hidden Cache"), crystals, salvage_val], 4.0)
+			EventBus.hidden_location_discovered.emit(poi_id)
+			# Remove from the star map hidden locations so it won't respawn
+			var map_def: Dictionary = GameSession.star_map_system.region_maps.get(gs.current_region, {})
+			var hidden_locs: Array = map_def.get("hidden_locations", [])
+			for i in hidden_locs.size():
+				if hidden_locs[i].get("poi_id", "") == poi_id:
+					hidden_locs.remove_at(i)
+					break
+			_hidden_pois.erase(poi)
+			break
+	# Check spawn POI collisions (combat/rescue/trade)
+	for poi in _spawn_pois:
+		var dx: float = poi.get("x", 0.0) - gs.position_x
+		var dy: float = poi.get("y", 0.0) - gs.position_y
+		if (dx * dx + dy * dy) <= (POI_RADIUS + SHIP_COLLISION_RADIUS) * (POI_RADIUS + SHIP_COLLISION_RADIUS):
+			var spawn_type: String = poi.get("type", "combat")
+			# Find a matching available encounter for this type
+			var encounters: Array = GameSession.encounter_engine.get_available_encounters(gs)
+			for enc in encounters:
+				if enc.encounter_type == spawn_type or (spawn_type == "rescue" and enc.encounter_type == "distress_signal"):
+					GameSession.star_map_system.remove_spawn(gs.current_region, poi.get("poi_id", ""))
+					_spawn_pois.erase(poi)
+					_on_encounter(enc)
+					return
+			# If no matching encounter, just remove the spawn
+			GameSession.star_map_system.remove_spawn(gs.current_region, poi.get("poi_id", ""))
+			_spawn_pois.erase(poi)
+			flash("CONTACT: %s — but nothing found" % poi.get("label", "Unknown"), 2.0)
+			break
+
+
+func _check_boundary(gs: GameStateData, bounds: Vector2) -> void:
+	var at_edge: bool = false
+	var target_region: String = ""
+
+	# Check edges
+	if gs.position_x <= BOUNDARY_MARGIN or gs.position_x >= bounds.x - BOUNDARY_MARGIN:
+		at_edge = true
+	if gs.position_y <= BOUNDARY_MARGIN or gs.position_y >= bounds.y - BOUNDARY_MARGIN:
+		at_edge = true
+
+	if not at_edge:
+		_boundary_prompt_region = ""
+		return
+
+	# Find connected regions
+	var connected: Array = []
+	var exploration_sys: ExplorationSystem = GameSession.exploration
+	if exploration_sys != null:
+		var region: ExplorationSystem.Region = exploration_sys.regions.get(gs.current_region)
+		if region != null:
+			connected = Array(region.connected_regions)
+
+	if connected.is_empty():
+		return
+
+	# Pick the connected region whose galaxy position best matches the exit direction
+	var exit_dir := Vector2.ZERO
+	if gs.position_x <= BOUNDARY_MARGIN:
+		exit_dir.x -= 1.0
+	elif gs.position_x >= bounds.x - BOUNDARY_MARGIN:
+		exit_dir.x += 1.0
+	if gs.position_y <= BOUNDARY_MARGIN:
+		exit_dir.y -= 1.0
+	elif gs.position_y >= bounds.y - BOUNDARY_MARGIN:
+		exit_dir.y += 1.0
+
+	var sms: StarMapSystem = GameSession.star_map_system
+	if sms != null and not sms.galaxy_layout.is_empty() and exit_dir.length() > 0.0:
+		var current_gpos: Vector2 = sms.get_galaxy_node_pos(gs.current_region)
+		var best_dot: float = -2.0
+		exit_dir = exit_dir.normalized()
+		for cid in connected:
+			var cand_gpos: Vector2 = sms.get_galaxy_node_pos(cid)
+			var delta: Vector2 = (cand_gpos - current_gpos).normalized()
+			var dot: float = delta.dot(exit_dir)
+			if dot > best_dot:
+				best_dot = dot
+				target_region = cid
+	if target_region.is_empty():
+		target_region = connected[0]
+	if target_region != _boundary_prompt_region:
+		_boundary_prompt_region = target_region
+		_boundary_prompt_timer = 5.0
+		var region_name: String = target_region.replace("_", " ").capitalize()
+		flash("SECTOR BOUNDARY — Press ENTER to jump to %s" % region_name, 5.0)
+
+
+func _perform_region_transition() -> void:
+	if _boundary_prompt_region.is_empty():
+		return
+	var target: String = _boundary_prompt_region
+	_boundary_prompt_region = ""
+	_boundary_prompt_timer = 0.0
+	var success: bool = GameSession.travel_to_region(target)
+	if success:
+		_active_pois.clear()
+		_story_pois.clear()
+		_hidden_pois.clear()
+		_spawn_pois.clear()
+		_build_starfield()
+		_refresh_pois()
+		flash("Entered %s" % target.replace("_", " ").capitalize(), 3.0)
+	else:
+		flash("Cannot travel to that region yet", 2.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -351,6 +606,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		var main: Control = get_tree().current_scene
 		if main.has_method("push_overlay"):
 			main.push_overlay("purchase")
+	elif event.is_action_pressed("star_map"):
+		var main: Control = get_tree().current_scene
+		if main.has_method("push_overlay"):
+			main.push_overlay("star_map")
+	elif event.is_action_pressed("ui_accept"):
+		if not _boundary_prompt_region.is_empty() and _boundary_prompt_timer > 0:
+			_perform_region_transition()
 
 
 func _update_hud() -> void:
@@ -434,7 +696,10 @@ func _draw() -> void:
 
 	var center := size * 0.5
 	_draw_starfield(center, gs)
+	_draw_fog_of_war(center, gs)
 	_draw_trail(center, gs)
+	_draw_boundary_indicator(gs)
+	_draw_star_map_pois(center, gs)
 	_draw_pois(center, gs)
 	_draw_ship(center)
 	_draw_minimap(gs)
@@ -462,6 +727,284 @@ func _draw_trail(center: Vector2, gs: GameStateData) -> void:
 		var alpha: float = frac * 0.78
 		var radius: float = 2.0 + frac * 4.0
 		draw_circle(Vector2(sx, sy), radius, Color(0.4, 0.7, 1.0, alpha))
+
+
+func _draw_fog_of_war(center: Vector2, gs: GameStateData) -> void:
+	var sms: StarMapSystem = GameSession.star_map_system
+	if sms == null:
+		return
+	var region_id: String = gs.current_region
+	var map_def: Dictionary = sms.region_maps.get(region_id, {})
+	if map_def.is_empty():
+		return
+	var cell_size: int = map_def.get("fog_grid_size", 64)
+	var dims: Vector2i = sms.grid_dimensions.get(region_id, Vector2i.ZERO)
+	if dims == Vector2i.ZERO:
+		return
+	var grid: PackedByteArray = sms.fog_grids.get(region_id, PackedByteArray())
+	if grid.size() == 0:
+		return
+
+	# Calculate visible world area
+	var half_w: float = size.x * 0.5
+	var half_h: float = size.y * 0.5
+	var world_left: float = gs.position_x - half_w
+	var world_top: float = gs.position_y - half_h
+	var world_right: float = gs.position_x + half_w
+	var world_bottom: float = gs.position_y + half_h
+
+	# Convert to grid coordinates (chunked for performance)
+	var chunk: int = cell_size * FOG_CHUNK_SIZE
+	var g_left: int = maxi(0, int(world_left / chunk))
+	var g_top: int = maxi(0, int(world_top / chunk))
+	var g_right: int = mini(ceili(float(dims.x) / FOG_CHUNK_SIZE), ceili(world_right / chunk) + 1)
+	var g_bottom: int = mini(ceili(float(dims.y) / FOG_CHUNK_SIZE), ceili(world_bottom / chunk) + 1)
+
+	# Work per-cell for soft cloud-like edges everywhere.
+	# First pass: find the minimum distance (in cells) from each hidden cell to the
+	# nearest revealed cell within the visible range. We expand the scan area by a
+	# margin so edge cells near the screen border are handled correctly.
+	var soft_radius: int = 3  # cells within this distance of a revealed cell get soft treatment
+	var margin: int = soft_radius + 1
+	var c_left: int = maxi(0, int(world_left / cell_size) - margin)
+	var c_top: int = maxi(0, int(world_top / cell_size) - margin)
+	var c_right: int = mini(dims.x, ceili(world_right / cell_size) + margin)
+	var c_bottom: int = mini(dims.y, ceili(world_bottom / cell_size) + margin)
+
+	# Build a small local map of which cells are revealed in the visible area
+	var local_w: int = c_right - c_left
+	var local_h: int = c_bottom - c_top
+	var revealed_map: PackedByteArray = PackedByteArray()
+	revealed_map.resize(local_w * local_h)
+	revealed_map.fill(0)
+	for ly in range(local_h):
+		for lx in range(local_w):
+			if sms.is_cell_revealed(region_id, c_left + lx, c_top + ly):
+				revealed_map[ly * local_w + lx] = 1
+
+	# For each hidden cell, compute distance to nearest revealed cell (up to soft_radius)
+	for ly in range(local_h):
+		for lx in range(local_w):
+			if revealed_map[ly * local_w + lx] == 1:
+				continue  # revealed cell, skip
+			var cx: int = c_left + lx
+			var cy: int = c_top + ly
+			var wx: float = cx * cell_size
+			var wy: float = cy * cell_size
+			var sx: float = center.x + (wx - gs.position_x)
+			var sy: float = center.y + (wy - gs.position_y)
+			# Skip cells fully off screen (with margin for glow)
+			if sx + cell_size * 2 < 0 or sy + cell_size * 2 < 0 or sx - cell_size > size.x or sy - cell_size > size.y:
+				continue
+
+			# Find minimum distance to a revealed cell
+			var min_dist: int = soft_radius + 1
+			for scan_dy in range(-soft_radius, soft_radius + 1):
+				var sly: int = ly + scan_dy
+				if sly < 0 or sly >= local_h:
+					continue
+				for scan_dx in range(-soft_radius, soft_radius + 1):
+					var slx: int = lx + scan_dx
+					if slx < 0 or slx >= local_w:
+						continue
+					if revealed_map[sly * local_w + slx] == 1:
+						var d: int = absi(scan_dx) + absi(scan_dy)
+						if d < min_dist:
+							min_dist = d
+
+			if min_dist > soft_radius:
+				# Deep interior — draw as a solid rectangle
+				draw_rect(Rect2(sx, sy, cell_size, cell_size), FOG_COLOR)
+			else:
+				# Near the fog boundary — draw soft overlapping circles
+				var cell_cx: float = sx + cell_size * 0.5
+				var cell_cy: float = sy + cell_size * 0.5
+				var cell_pos := Vector2(cell_cx, cell_cy)
+				# t goes from 0.0 (right at boundary) to 1.0 (deep in fog)
+				var t: float = float(min_dist) / float(soft_radius)
+				# Alpha ramps up from soft edge to full fog
+				var base_alpha: float = lerpf(FOG_COLOR.a * 0.15, FOG_COLOR.a, t * t)
+				# Radius shrinks near the edge for a wispy look
+				var r: float = cell_size * lerpf(0.5, 0.82, t)
+				# Outer glow (cloud wisp)
+				draw_circle(cell_pos, r * 1.5, Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, base_alpha * 0.3))
+				# Core fog
+				draw_circle(cell_pos, r, Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, base_alpha))
+
+
+func _draw_star_map_pois(center: Vector2, gs: GameStateData) -> void:
+	var default_font: Font = ThemeDB.fallback_font
+	# Draw story POIs
+	for poi in _story_pois:
+		var px: float = poi.get("x", 0.0)
+		var py: float = poi.get("y", 0.0)
+		var sx: float = center.x + (px - gs.position_x)
+		var sy: float = center.y + (py - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		if screen_pos.x < -50 or screen_pos.y < -50 or screen_pos.x > size.x + 50 or screen_pos.y > size.y + 50:
+			continue
+		var color: Color = ENCOUNTER_TYPE_COLORS.get("story", Color(1.0, 0.82, 0.25))
+		var pulse: float = 1.0 + 0.25 * sin(_elapsed * 2.5 + px * 0.01)
+		# Star-shaped glow
+		draw_circle(screen_pos, POI_RADIUS * 1.3 * pulse, color * Color(1, 1, 1, 0.08))
+		draw_arc(screen_pos, POI_RADIUS * pulse, 0.0, TAU, 48, color, 2.5)
+		draw_circle(screen_pos, 8.0 * pulse, color)
+		# Diamond marker inside
+		var d: float = 5.0
+		var pts: PackedVector2Array = PackedVector2Array([
+			screen_pos + Vector2(0, -d), screen_pos + Vector2(d, 0),
+			screen_pos + Vector2(0, d), screen_pos + Vector2(-d, 0),
+		])
+		draw_colored_polygon(pts, Color(0.1, 0.08, 0.02))
+		if default_font:
+			draw_string(default_font, screen_pos + Vector2(-20, -POI_RADIUS - 18), "STORY", HORIZONTAL_ALIGNMENT_LEFT, 200, 11, color * Color(1, 1, 1, 0.8))
+			draw_string(default_font, screen_pos + Vector2(-20, -POI_RADIUS - 4), poi.get("label", ""), HORIZONTAL_ALIGNMENT_LEFT, 260, 13, Color(0.95, 0.92, 0.8))
+
+	# Draw hidden POIs (cartographer treasures)
+	for poi in _hidden_pois:
+		var px: float = poi.get("x", 0.0)
+		var py: float = poi.get("y", 0.0)
+		var sx: float = center.x + (px - gs.position_x)
+		var sy: float = center.y + (py - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		if screen_pos.x < -50 or screen_pos.y < -50 or screen_pos.x > size.x + 50 or screen_pos.y > size.y + 50:
+			continue
+		var poi_type: String = poi.get("type", "treasure")
+		var color: Color = ENCOUNTER_TYPE_COLORS.get(poi_type, Color(0.75, 0.4, 1.0))
+		var pulse: float = 1.0 + 0.15 * sin(_elapsed * 4.0 + px * 0.02)
+		draw_circle(screen_pos, POI_RADIUS * 1.2 * pulse, color * Color(1, 1, 1, 0.06))
+		draw_arc(screen_pos, POI_RADIUS * 0.8 * pulse, 0.0, TAU, 36, color, 1.5)
+		draw_circle(screen_pos, 5.0, color)
+		if default_font:
+			draw_string(default_font, screen_pos + Vector2(-20, -POI_RADIUS - 8), poi.get("label", "Hidden"), HORIZONTAL_ALIGNMENT_LEFT, 260, 12, color)
+
+	# Draw spawn POIs (combat, rescue, trade)
+	for poi in _spawn_pois:
+		var px: float = poi.get("x", 0.0)
+		var py: float = poi.get("y", 0.0)
+		var sx: float = center.x + (px - gs.position_x)
+		var sy: float = center.y + (py - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		if screen_pos.x < -50 or screen_pos.y < -50 or screen_pos.x > size.x + 50 or screen_pos.y > size.y + 50:
+			continue
+		var spawn_type: String = poi.get("type", "combat")
+		var color: Color = ENCOUNTER_TYPE_COLORS.get(spawn_type, Color(1.0, 0.5, 0.5))
+		var pulse: float = 1.0 + 0.2 * sin(_elapsed * 3.5 + px * 0.015)
+		draw_circle(screen_pos, POI_RADIUS * 0.7 * pulse, color * Color(1, 1, 1, 0.1))
+		draw_arc(screen_pos, POI_RADIUS * 0.6 * pulse, 0.0, TAU, 32, color, 1.5)
+		draw_circle(screen_pos, 4.0, color)
+		if spawn_type == "combat":
+			draw_line(screen_pos + Vector2(-6, -6), screen_pos + Vector2(6, 6), color, 1.5)
+			draw_line(screen_pos + Vector2(6, -6), screen_pos + Vector2(-6, 6), color, 1.5)
+		if default_font:
+			draw_string(default_font, screen_pos + Vector2(-20, -POI_RADIUS * 0.6 - 8), poi.get("label", "Contact"), HORIZONTAL_ALIGNMENT_LEFT, 200, 11, color * Color(1, 1, 1, 0.7))
+
+
+func _draw_boundary_indicator(gs: GameStateData) -> void:
+	var bounds: Vector2 = GameSession.star_map_system.get_bounds(gs.current_region)
+	var center := size * 0.5
+	# The fuzzy edge width in world units that fades to dark
+	var edge_depth: float = 250.0
+	var num_strips: int = 12  # Number of gradient strips per edge
+
+	# For each edge, calculate how far into the boundary fade zone the viewport extends
+	# Left edge: world x = 0
+	var left_world: float = gs.position_x - center.x
+	# Right edge: world x = bounds.x
+	var right_world: float = gs.position_x + center.x
+	# Top edge: world y = 0
+	var top_world: float = gs.position_y - center.y
+	# Bottom edge: world y = bounds.y
+	var bottom_world: float = gs.position_y + center.y
+
+	var edge_base_color := Color(0.01, 0.02, 0.04)
+
+	# Draw gradient strips for each visible boundary edge
+	# Left boundary
+	if left_world < edge_depth:
+		var edge_screen_x: float = center.x - gs.position_x  # screen x where world x=0 is
+		for i in num_strips:
+			var frac: float = float(i) / num_strips
+			var next_frac: float = float(i + 1) / num_strips
+			var alpha: float = 1.0 - frac  # Full opacity at edge, fading inward
+			alpha = alpha * alpha  # Quadratic falloff for smoother look
+			var x0: float = edge_screen_x + frac * edge_depth
+			var x1: float = edge_screen_x + next_frac * edge_depth
+			if x1 < 0 or x0 > size.x:
+				continue
+			x0 = maxf(x0, 0.0)
+			x1 = minf(x1, size.x)
+			draw_rect(Rect2(x0, 0, x1 - x0, size.y), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, alpha * 0.85))
+		# Solid fill beyond the edge
+		if edge_screen_x > 0:
+			draw_rect(Rect2(0, 0, edge_screen_x, size.y), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, 0.92))
+
+	# Right boundary
+	if right_world > bounds.x - edge_depth:
+		var edge_screen_x: float = center.x + (bounds.x - gs.position_x)  # screen x where world x=bounds.x is
+		for i in num_strips:
+			var frac: float = float(i) / num_strips
+			var next_frac: float = float(i + 1) / num_strips
+			var alpha: float = 1.0 - frac
+			alpha = alpha * alpha
+			var x1: float = edge_screen_x - frac * edge_depth
+			var x0: float = edge_screen_x - next_frac * edge_depth
+			if x1 < 0 or x0 > size.x:
+				continue
+			x0 = maxf(x0, 0.0)
+			x1 = minf(x1, size.x)
+			draw_rect(Rect2(x0, 0, x1 - x0, size.y), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, alpha * 0.85))
+		# Solid fill beyond the edge
+		if edge_screen_x < size.x:
+			draw_rect(Rect2(edge_screen_x, 0, size.x - edge_screen_x, size.y), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, 0.92))
+
+	# Top boundary
+	if top_world < edge_depth:
+		var edge_screen_y: float = center.y - gs.position_y
+		for i in num_strips:
+			var frac: float = float(i) / num_strips
+			var next_frac: float = float(i + 1) / num_strips
+			var alpha: float = 1.0 - frac
+			alpha = alpha * alpha
+			var y0: float = edge_screen_y + frac * edge_depth
+			var y1: float = edge_screen_y + next_frac * edge_depth
+			if y1 < 0 or y0 > size.y:
+				continue
+			y0 = maxf(y0, 0.0)
+			y1 = minf(y1, size.y)
+			draw_rect(Rect2(0, y0, size.x, y1 - y0), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, alpha * 0.85))
+		if edge_screen_y > 0:
+			draw_rect(Rect2(0, 0, size.x, edge_screen_y), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, 0.92))
+
+	# Bottom boundary
+	if bottom_world > bounds.y - edge_depth:
+		var edge_screen_y: float = center.y + (bounds.y - gs.position_y)
+		for i in num_strips:
+			var frac: float = float(i) / num_strips
+			var next_frac: float = float(i + 1) / num_strips
+			var alpha: float = 1.0 - frac
+			alpha = alpha * alpha
+			var y1: float = edge_screen_y - frac * edge_depth
+			var y0: float = edge_screen_y - next_frac * edge_depth
+			if y1 < 0 or y0 > size.y:
+				continue
+			y0 = maxf(y0, 0.0)
+			y1 = minf(y1, size.y)
+			draw_rect(Rect2(0, y0, size.x, y1 - y0), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, alpha * 0.85))
+		if edge_screen_y < size.y:
+			draw_rect(Rect2(0, edge_screen_y, size.x, size.y - edge_screen_y), Color(edge_base_color.r, edge_base_color.g, edge_base_color.b, 0.92))
+
+	# Pulsing edge glow when near boundary transition
+	if not _boundary_prompt_region.is_empty() and _boundary_prompt_timer > 0:
+		var edge_color := Color(0.3, 0.6, 1.0, 0.4 + 0.2 * sin(_elapsed * 4.0))
+		if gs.position_x <= BOUNDARY_MARGIN:
+			draw_rect(Rect2(0, 0, 4, size.y), edge_color)
+		elif gs.position_x >= bounds.x - BOUNDARY_MARGIN:
+			draw_rect(Rect2(size.x - 4, 0, 4, size.y), edge_color)
+		if gs.position_y <= BOUNDARY_MARGIN:
+			draw_rect(Rect2(0, 0, size.x, 4), edge_color)
+		elif gs.position_y >= bounds.y - BOUNDARY_MARGIN:
+			draw_rect(Rect2(0, size.y - 4, size.x, 4), edge_color)
 
 
 func _draw_pois(center: Vector2, gs: GameStateData) -> void:
@@ -583,6 +1126,50 @@ func _draw_minimap(gs: GameStateData) -> void:
 	# Border
 	draw_rect(map_rect, Color(0.2, 0.4, 0.7, 0.8), false, 2.0)
 
+	# Fog of war on minimap
+	var sms: StarMapSystem = GameSession.star_map_system
+	if sms != null:
+		var region_id: String = gs.current_region
+		var bounds: Vector2 = sms.get_bounds(region_id)
+		var dims: Vector2i = sms.grid_dimensions.get(region_id, Vector2i.ZERO)
+		var map_def: Dictionary = sms.region_maps.get(region_id, {})
+		var cell_size: int = map_def.get("fog_grid_size", 64)
+		if dims != Vector2i.ZERO and bounds.x > 0 and bounds.y > 0:
+			var half_range: float = MINIMAP_WORLD_RANGE * 0.5
+			# Draw fog chunks on minimap
+			var mini_cell_w: float = (cell_size / MINIMAP_WORLD_RANGE) * MINIMAP_SIZE
+			var mini_chunk: int = maxi(1, int(FOG_CHUNK_SIZE * 2))
+			var world_left: float = gs.position_x - half_range
+			var world_top: float = gs.position_y - half_range
+			var g_left: int = maxi(0, int(world_left / (cell_size * mini_chunk)))
+			var g_top: int = maxi(0, int(world_top / (cell_size * mini_chunk)))
+			var g_right: int = mini(ceili(float(dims.x) / mini_chunk), ceili((gs.position_x + half_range) / (cell_size * mini_chunk)) + 1)
+			var g_bottom: int = mini(ceili(float(dims.y) / mini_chunk), ceili((gs.position_y + half_range) / (cell_size * mini_chunk)) + 1)
+			for gy in range(g_top, g_bottom):
+				for gx in range(g_left, g_right):
+					var all_hidden: bool = true
+					for cy in range(gy * mini_chunk, mini((gy + 1) * mini_chunk, dims.y)):
+						for cx in range(gx * mini_chunk, mini((gx + 1) * mini_chunk, dims.x)):
+							if sms.is_cell_revealed(region_id, cx, cy):
+								all_hidden = false
+								break
+						if not all_hidden:
+							break
+					if all_hidden:
+						var wx: float = gx * cell_size * mini_chunk
+						var wy: float = gy * cell_size * mini_chunk
+						var rel_x: float = wx - gs.position_x
+						var rel_y: float = wy - gs.position_y
+						var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
+						var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
+						var chunk_w: float = (cell_size * mini_chunk / MINIMAP_WORLD_RANGE) * MINIMAP_SIZE
+						var bx: float = map_x + nx * MINIMAP_SIZE
+						var by: float = map_y + ny * MINIMAP_SIZE
+						# Clip to minimap bounds
+						var r := Rect2(bx, by, chunk_w, chunk_w).intersection(map_rect)
+						if r.size.x > 0 and r.size.y > 0:
+							draw_rect(r, Color(0.02, 0.03, 0.05, 0.7))
+
 	# Grid lines
 	for i in range(1, 4):
 		var gx: float = map_x + i * (MINIMAP_SIZE / 4.0)
@@ -590,20 +1177,61 @@ func _draw_minimap(gs: GameStateData) -> void:
 		draw_line(Vector2(gx, map_y), Vector2(gx, map_y + MINIMAP_SIZE), Color(0.12, 0.2, 0.3, 0.6), 1.0)
 		draw_line(Vector2(map_x, gy), Vector2(map_x + MINIMAP_SIZE, gy), Color(0.12, 0.2, 0.3, 0.6), 1.0)
 
-	# POI blips (relative to player position)
 	var half_range: float = MINIMAP_WORLD_RANGE * 0.5
+
+	# Encounter POI blips (relative to player position)
 	for poi in _active_pois:
 		var rel_x: float = poi["x"] - gs.position_x
 		var rel_y: float = poi["y"] - gs.position_y
-		# Skip if outside minimap range
 		if absf(rel_x) > half_range or absf(rel_y) > half_range:
 			continue
 		var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
 		var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
 		var bx: float = map_x + nx * MINIMAP_SIZE
 		var by: float = map_y + ny * MINIMAP_SIZE
-		var poi_color: Color = poi.get("color", Color(1.0, 0.82, 0.45))
-		draw_circle(Vector2(bx, by), 3.0, poi_color)
+		if bx >= map_x and bx <= map_x + MINIMAP_SIZE and by >= map_y and by <= map_y + MINIMAP_SIZE:
+			var poi_color: Color = poi.get("color", Color(1.0, 0.82, 0.45))
+			draw_circle(Vector2(bx, by), 3.0, poi_color)
+
+	# Story POI blips (gold)
+	for poi in _story_pois:
+		var rel_x: float = poi.get("x", 0.0) - gs.position_x
+		var rel_y: float = poi.get("y", 0.0) - gs.position_y
+		if absf(rel_x) > half_range or absf(rel_y) > half_range:
+			continue
+		var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
+		var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
+		var bx: float = map_x + nx * MINIMAP_SIZE
+		var by: float = map_y + ny * MINIMAP_SIZE
+		if bx >= map_x and bx <= map_x + MINIMAP_SIZE and by >= map_y and by <= map_y + MINIMAP_SIZE:
+			draw_circle(Vector2(bx, by), 4.0, ENCOUNTER_TYPE_COLORS.get("story", Color(1.0, 0.82, 0.25)))
+
+	# Hidden POI blips (purple)
+	for poi in _hidden_pois:
+		var rel_x: float = poi.get("x", 0.0) - gs.position_x
+		var rel_y: float = poi.get("y", 0.0) - gs.position_y
+		if absf(rel_x) > half_range or absf(rel_y) > half_range:
+			continue
+		var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
+		var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
+		var bx: float = map_x + nx * MINIMAP_SIZE
+		var by: float = map_y + ny * MINIMAP_SIZE
+		if bx >= map_x and bx <= map_x + MINIMAP_SIZE and by >= map_y and by <= map_y + MINIMAP_SIZE:
+			draw_circle(Vector2(bx, by), 3.0, Color(0.75, 0.4, 1.0))
+
+	# Spawn POI blips (colored by type)
+	for poi in _spawn_pois:
+		var rel_x: float = poi.get("x", 0.0) - gs.position_x
+		var rel_y: float = poi.get("y", 0.0) - gs.position_y
+		if absf(rel_x) > half_range or absf(rel_y) > half_range:
+			continue
+		var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
+		var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
+		var bx: float = map_x + nx * MINIMAP_SIZE
+		var by: float = map_y + ny * MINIMAP_SIZE
+		if bx >= map_x and bx <= map_x + MINIMAP_SIZE and by >= map_y and by <= map_y + MINIMAP_SIZE:
+			var spawn_color: Color = ENCOUNTER_TYPE_COLORS.get(poi.get("type", "combat"), Color(1.0, 0.3, 0.3))
+			draw_circle(Vector2(bx, by), 2.5, spawn_color)
 
 	# Player blip (center)
 	var player_pos := Vector2(map_x + MINIMAP_SIZE * 0.5, map_y + MINIMAP_SIZE * 0.5)
@@ -617,7 +1245,8 @@ func _draw_minimap(gs: GameStateData) -> void:
 	# Label
 	var default_font: Font = ThemeDB.fallback_font
 	if default_font:
-		draw_string(default_font, Vector2(map_x + 4, map_y + 14), "SECTOR MAP", HORIZONTAL_ALIGNMENT_LEFT, 200, 12, Color(0.4, 0.7, 0.86))
+		var region_name: String = gs.current_region.replace("_", " ").to_upper()
+		draw_string(default_font, Vector2(map_x + 4, map_y + 14), region_name, HORIZONTAL_ALIGNMENT_LEFT, MINIMAP_SIZE - 8, 11, Color(0.4, 0.7, 0.86))
 
 
 func _draw_controls_bar() -> void:
@@ -628,7 +1257,7 @@ func _draw_controls_bar() -> void:
 
 	var default_font: Font = ThemeDB.fallback_font
 	if default_font:
-		var hint_text := "WASD: MOVE  |  E: FACTIONS  |  SPACE: SHIP  |  R: REPAIR  |  M: MISSIONS  |  ESC: PAUSE"
+		var hint_text := "WASD: MOVE  |  TAB: MAP  |  E: FACTIONS  |  SPACE: SHIP  |  R: REPAIR  |  M: MISSIONS  |  ESC: PAUSE"
 		draw_string(
 			default_font,
 			Vector2(size.x * 0.5 - 280, bar_y + 18),

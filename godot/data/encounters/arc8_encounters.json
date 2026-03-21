@@ -1,0 +1,343 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc8_alliance_summit",
+            "encounter_type": "diplomatic",
+            "title": "The Last Table",
+            "description": "The Twilight Bazaar has never been this quiet or this crowded. Every faction in the multiverse has sent representatives, and they sit around a table that wasn't here yesterday — a vast slab of uncut crystal that someone dragged from a derelict and polished until it reflected every face in the room like a dark mirror. The air crackles with old grudges and new fear. Canis League admirals sit across from Feline Pride warlords. Alien emissaries shimmer at the edges, tolerated for the first time in living memory. The Fairy delegation has brought wine, because of course they have. Every eye turns to Aristotle as he enters, because somehow — through luck, stubbornness, and a truly inadvisable series of life choices — the alley cat from nowhere has become the fulcrum on which the multiverse balances.",
+            "arc_id": "arc_8",
+            "location": "twilight_bazaar",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc8_alliances_locked": false
+            },
+            "npc_ids": ["aristotle", "dave", "void_singer"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "dave",
+                    "text": "The room falls silent as Aristotle takes his seat. Dave nods from across the table — tight, professional, but there's something behind it. Respect, maybe. Or just exhaustion. \"We're here because the alternative is extinction,\" Dave says. \"Not from war. From running out of time.\""
+                },
+                {
+                    "speaker": "void_singer",
+                    "text": "The Void Singer's harmonics translate through the chamber's crystal acoustics, each word resonating in the bones of every being present. \"The Song fades. Each crystal burned is a syllable lost. When the last fragment dies, the silence that follows will unmake the stars themselves. This is not theology. This is physics.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Right.\" Aristotle surveys the table — every faction, every grudge, every unpaid debt. \"Let me be blunt. I didn't call this meeting to hold hands and sing about unity. I called it because I've looked at the numbers, and the numbers say we're all dead in a generation unless we stop being idiots.\" He pauses. \"I include myself in that assessment.\"",
+                    "choices": [
+                        {
+                            "choice_id": "unite_all",
+                            "text": "\"Full coalition. Every faction contributes, every faction sacrifices. No exceptions, no special deals.\"",
+                            "next_step": "summit_united",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 5, "feline_prides": 5, "aliens": 10, "fairy_realm": 5 },
+                                "resource_changes": { "crystal_inventory": -20 },
+                                "story_flags_set": ["arc8_alliances_locked", "arc8_full_coalition"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "inner_circle",
+                            "text": "\"Core alliance only. Those I trust, those who've earned it. The rest can follow or get out of the way.\"",
+                            "next_step": "summit_selective",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 10, "feline_prides": -5, "aliens": 5 },
+                                "resource_changes": { "crystal_inventory": -10 },
+                                "story_flags_set": ["arc8_alliances_locked", "arc8_inner_circle"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "pirate_king",
+                            "text": "\"I don't need your alliance. I need your obedience. I control the crystals, and I control the truth. Fall in line.\"",
+                            "next_step": "summit_dominated",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -15, "feline_prides": -10, "aliens": -20, "fairy_realm": -15 },
+                                "resource_changes": { "crystal_inventory": 30, "salvage": 60 },
+                                "story_flags_set": ["arc8_alliances_locked", "arc8_pirate_king"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "summit_united",
+                    "speaker": "dave",
+                    "text": "The table erupts. Arguments, counter-arguments, centuries of grievance thrown like knives. It takes four hours, three near-fistfights, and one incident where the Fairy ambassador threatens to turn the Canis League admiral into a decorative shrub. But when the shouting dies, signatures appear on the crystal table — etched by claw, paw, tentacle, and light. Dave is the last to sign. He looks at Aristotle. \"This is either the greatest alliance in history or the most spectacular failure.\" He signs. \"I'm hoping for the former.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"History is written by whoever's still alive to hold the pen.\" Aristotle looks at the signatures glowing on the crystal surface. For a moment — just a moment — the crystal hums, and every signature resonates in harmony. \"The consciousness approves,\" he murmurs. \"Or it's indigestion. Hard to tell with an entity that old.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "summit_selective",
+                    "speaker": "dave",
+                    "text": "Half the table stands. Some storm out. Others linger, calculating. The ones who remain — Dave, the Void Singer, a handful of others who've bled alongside Aristotle across seven arcs of chaos — draw closer. \"A smaller table,\" Dave observes. \"Easier to watch everyone's hands.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"That's the idea.\" Aristotle meets each remaining face in turn. \"I trust everyone in this room exactly as much as they've earned. Some of you that's a lot. Some of you that's barely enough.\" His tail curls. \"But barely enough is enough. Let's make a plan that works with what we have, not what we wish we had.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "summit_dominated",
+                    "speaker": "dave",
+                    "text": "The silence that follows is absolute. Dave's face goes through several expressions — shock, anger, something that might be grief — before settling on stone. \"You sound like every tyrant I've ever fought,\" he says quietly. Chairs scrape. Delegations leave, but not before Aristotle sees what he's done reflected in every pair of eyes: not fear, exactly, but the cold recognition that the scrappy pirate captain they almost trusted has become something else entirely."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The room empties until it's just Aristotle and the crystal table, which reflects his face back at him in its dark surface. The crystal drive, far away in his ship's hold, hums a single low note. It sounds like a door closing. \"They'll come around,\" he tells himself. The table reflects a captain who doesn't quite believe it.",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc8_death_transformation",
+            "encounter_type": "event",
+            "title": "What Death Became",
+            "description": "The distress signal is wrong. Not wrong like corrupted data or a failing transmitter — wrong like a scream that has learned to harmonise. Aristotle follows it to a region of deep space where the stars have gone quiet, their light bending around something massive and invisible. Then the ship's crystal drive begins to weep. Not sing, not hum — weep. Each crystal in the hold fractures along lines of light, and through the fractures, something watches. Death is here. But Death is not what it was. The entity that once stalked the spaces between stars, collecting the expired and the abandoned, has been caught in the crystal consciousness's resonance field for too long. It has absorbed fragments. It has begun to dream. And the dreams of Death, it turns out, are achingly, terrifyingly beautiful.",
+            "arc_id": "arc_8",
+            "location": "deep_space",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc7_crystal_communion": true,
+                "arc8_death_transformed": false
+            },
+            "npc_ids": ["aristotle", "death"],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "death",
+                    "text": "Death's voice has changed. Where once it was silence given form, now it carries undertones — harmonics borrowed from the crystal consciousness, layered with something that might be wonder or might be madness. \"I have heard the Song, Captain. I who was made to end things have heard the thing that has no ending. Do you know what that does to a being like me?\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"I'm guessing it's not a spa day.\""
+                },
+                {
+                    "speaker": "death",
+                    "text": "\"I am become a contradiction. The collector of endings now carries within me a fragment of the infinite. I cannot die — I never could — but now I cannot stop... feeling. Every soul I have ever collected, every story I have ever closed... I remember them all, and for the first time, I understand what was lost.\" Death's form shudders, and for an instant, it blazes with crystal light — a skeleton of stars wearing a cloak of frozen music. \"I am not Death anymore, Aristotle. I do not know what I am.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle watches the transformed entity pulse between forms — the old darkness and the new light, flickering like a candle in a hurricane.",
+                    "choices": [
+                        {
+                            "choice_id": "show_compassion",
+                            "text": "\"Whatever you are, you're still here. That's a start. We'll figure the rest out together.\"",
+                            "next_step": "death_comforted",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc8_death_transformed", "arc8_death_comforted"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "practical_approach",
+                            "text": "\"Can you still fight? Because I need allies, not a philosophical crisis.\"",
+                            "next_step": "death_recruited",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc8_death_transformed", "arc8_death_recruited"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "fear_response",
+                            "text": "\"A Death that feels? That's the most dangerous thing I've ever heard of. Stay away from my crew.\"",
+                            "next_step": "death_rejected",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc8_death_transformed", "arc8_death_rejected"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "death_comforted",
+                    "speaker": "death",
+                    "text": "Death is quiet for a long time. The crystal harmonics soften. \"In all the epochs of my existence, no living being has ever offered me comfort.\" A sound emerges from the entity — strange, broken, unmistakable. Death is laughing. \"A cat pirate, offering compassion to the Reaper. The universe has a sense of humour after all.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"The universe has a terrible sense of humour. I'm living proof.\" He extends a paw toward the shimmering entity. \"Come on. The war's coming, and I'd rather have a confused ex-death-god on my side than not.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "death_recruited",
+                    "speaker": "death",
+                    "text": "\"Fight?\" Death's crystal-threaded form solidifies, the harmonics sharpening into something that sounds like a blade being drawn. \"I am the ending of all things, now laced with the beginning of all things. I am the most potent weapon the multiverse has ever produced.\" A beat. \"I am also, apparently, capable of anxiety, which is new and unwelcome. But yes, Captain. I can fight.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Anxious Death. That's my crew in a nutshell.\" He pulls up the tactical display. \"Welcome aboard. Don't touch anything in the galley, and if you collect anyone's soul without asking, you're on latrine duty for eternity.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "death_rejected",
+                    "speaker": "death",
+                    "text": "Death's light dims. The harmonics drop to a whisper. \"You fear what I have become. This is... rational. I feared it too, when the first crystal shard sang through my essence.\" The entity draws back into the void, its form dissolving at the edges. \"I will not force my presence. But know this, Aristotle: when the final battle comes, the thing I have become will be there. Whether as your ally or as a witness to the ending, I will be there. I cannot help it. Endings are still mine.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The entity fades into the dark between stars. Aristotle exhales. His fur lies flat only slowly. \"Well,\" he says to the empty bridge, \"add 'insulted a death god' to the list of things I'll regret when I'm old.\" He pauses. \"If I get old.\"",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc8_cradle_portal",
+            "encounter_type": "exploration",
+            "title": "The Door That Remembers",
+            "description": "It manifests at the heart of the Twilight Bazaar at exactly midnight — not station midnight, not any time zone's midnight, but midnight in some absolute, primal sense, as if the universe itself paused between one breath and the next. The portal is not made of energy or matter. It is made of memory. Looking at it, Aristotle sees every clue that led here: the fairy's deep secret whispered in crystal caves, the ancient signal decoded from dead ships in the Bone Yard, the communion that cracked open his understanding, the fragments gathered from the Warp Marches and the Shattered Prides. The Oracle and The Keeper materialise on either side like bookends to a story that has been waiting to be read. \"You found all the pages,\" The Oracle says. The Keeper says nothing. The Keeper never needs to.",
+            "arc_id": "arc_8",
+            "location": "twilight_bazaar",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc5_fairy_deep_secret": true,
+                "arc6_ancient_signal_decoded": true,
+                "arc7_crystal_communion": true,
+                "cradle_clue_bone_yard": true,
+                "cradle_clue_warp_marches": true,
+                "cradle_clue_shattered_prides": true,
+                "special_char_oracle_met": true,
+                "special_char_keeper_met": true,
+                "arc8_cradle_accessible": false
+            },
+            "npc_ids": ["aristotle", "the_oracle", "the_keeper"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "the_oracle",
+                    "text": "\"Most who seek the Cradle find only one or two fragments of the path. You found them all. Every clue. Every secret. Every whisper that the multiverse tried to bury.\" The Oracle's ancient eyes hold something that might be pride. \"The Cradle of Whispers is where the crystals were born — where the consciousness was whole, before the Shattering. It has been sealed since before your species discovered fire.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"And you've been guarding it all this time? The two of you?\""
+                },
+                {
+                    "speaker": "the_oracle",
+                    "text": "\"Guarding implies we had a choice.\" The Oracle glances at The Keeper, who inclines its head fractionally. \"We are echoes of the consciousness itself — splinters given purpose. We remember what it was. We cannot forget. And now, after eons of waiting, someone has assembled the key.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle stares at the portal. Through its shifting surface, he catches glimpses of something impossible — crystal mountains, living light, colours that don't exist in normal space. His crystal drive sings a single pure note, and the portal sings back.",
+                    "choices": [
+                        {
+                            "choice_id": "enter_cradle",
+                            "text": "\"I've come too far to stop at the door. Open it.\"",
+                            "next_step": "cradle_opened",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc8_cradle_accessible", "arc8_cradle_entered"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "prepare_first",
+                            "text": "\"A sealed door usually means something sealed it for a reason. What's waiting on the other side?\"",
+                            "next_step": "cradle_warned",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc8_cradle_accessible", "arc8_cradle_warned"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "cradle_opened",
+                    "speaker": "the_oracle",
+                    "text": "The Oracle smiles — a rare, real smile. \"Brave. Or foolish. The distinction has never mattered as much as people think.\" The portal widens. The song intensifies. The Keeper steps aside and, for the first time, speaks. A single word, in a voice like tectonic plates shifting: \"Remember.\" Then the light takes him."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The portal swallows the ship whole. The last thing Aristotle sees of the Twilight Bazaar is the faces of those watching — awe, terror, hope, and the dawning realisation that the scrappy pirate cat is about to do something no one has done in four billion years. \"Well,\" he says as reality dissolves around him, \"I hope there's a bar on the other side.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "cradle_warned",
+                    "speaker": "the_oracle",
+                    "text": "\"What waits is the truth, Aristotle. The full, unbroken truth of what the crystal consciousness was before the Shattering. There are guardians — ancient constructs that will test you. Not your combat skill, not your cunning. Your choices. Every decision you've made across every arc will be weighed.\" The Oracle's voice drops. \"Some who enter the Cradle do not leave. Not because they die, but because they cannot bear what they learn about themselves.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"What I learn about myself.\" Aristotle's ears flatten. \"I already know I'm a smuggler, a liar, and a cat who sold a god for profit. What's left to learn?\" But he squares his shoulders. \"Open it. I'd rather know than wonder.\"",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc8_final_preparations",
+            "encounter_type": "diplomatic",
+            "title": "Before the Storm",
+            "description": "The Twilight Bazaar hums with the frantic energy of a port preparing for war — or a wake. Traders sell at cost. Mechanics work through the night, sparks showering from jury-rigged hulls. In quiet corners, old enemies share drinks and older stories. The multiverse holds its breath. Aristotle walks the bazaar's corridors one last time, and for once, the eternal hustler, the cat who always has an angle, is not looking for a deal. He is looking at faces. Memorising them. Because after what comes next, some of these faces will be gone, and Aristotle has learned — slowly, painfully, across eight arcs of chaos — that people are worth more than crystals.",
+            "arc_id": "arc_8",
+            "location": "twilight_bazaar",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc8_alliances_locked": true,
+                "arc8_preparations_complete": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "stock_weapons",
+                    "text": "Focus on armaments. Load every torpedo tube, sharpen every blade. We're going in heavy.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle empties the war budget. Every crystal allocated to weapons, every salvage credit spent on hull plating and torpedo reloads. The ship bristles with ordnance. The crew checks and rechecks their stations with the grim efficiency of veterans who know what's coming. \"We're not going to talk our way out of this one,\" Aristotle says, running a claw along a freshly loaded torpedo. \"So let's make sure the other side does the dying.\" It's bravado. The crew knows it. But bravado is its own kind of armour.",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": -15, "salvage": -30 },
+                        "story_flags_set": ["arc8_preparations_complete", "arc8_prepared_weapons"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "stock_crystals",
+                    "text": "Stockpile crystal reserves. We'll need power more than firepower where we're going.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle trades every favour, calls every debt, and fills the hold with raw crystals until the ship practically vibrates with stored energy. The crystal drive hums contentedly — or maybe that's the consciousness, pleased to have so many of its fragments in one place. \"More crystals means more options,\" Aristotle tells the crew. \"Options keep you alive. Trust me. I've survived this long on options and sheer bloody-mindedness.\" He doesn't mention the quiet conversation he had with the crystal consciousness — the one where it thanked him for bringing its pieces closer together. Some things a captain keeps to himself.",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": 40, "salvage": -20 },
+                        "story_flags_set": ["arc8_preparations_complete", "arc8_prepared_crystals"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.05
+                },
+                {
+                    "choice_id": "say_goodbyes",
+                    "text": "The supplies can wait. Walk the bazaar. Talk to the people who got you here. They deserve that.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle walks the bazaar for six hours. He shares a drink with Dave, who tells a terrible joke about a dog and a postman and laughs too hard at his own punchline. He sits with the Void Singer in companionable silence, watching light refract through its crystalline body. He finds his crew in a back-alley bar and says nothing at all — just sits with them, ear to ear, the way cats do when words are insufficient. He scratches a message into the bar's wall with one claw: 'Aristotle was here. He was scared. He went anyway.' Then he walks back to his ship, and he doesn't look back, because looking back is how you lose your nerve. \"All right,\" he says to the bridge. \"Let's go save the bloody multiverse.\"",
+                        "faction_changes": { "canis_league": 5, "aliens": 5, "feline_prides": 5, "fairy_realm": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc8_preparations_complete", "arc8_said_goodbyes"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ],
+            "dialogue_steps": []
+        }
+    ]
+}

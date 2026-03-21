@@ -49,6 +49,10 @@ extends Resource
 # Side missions
 @export var side_missions: Dictionary = {}
 
+# Star maps
+@export var owned_maps: Array[String] = []
+@export var star_map_data: Dictionary = {}
+
 # Stats
 @export var combat_victories: int = 0
 
@@ -99,6 +103,8 @@ func to_dict() -> Dictionary:
 		"player_decisions": decision_arr,
 		"completed_encounters": Array(completed_encounters),
 		"side_missions": mission_dict,
+		"owned_maps": Array(owned_maps),
+		"star_map_data": star_map_data.duplicate(),
 		"combat_victories": combat_victories,
 	}
 
@@ -141,6 +147,8 @@ static func from_dict(data: Dictionary) -> GameStateData:
 		state.supply_routes[rid] = CrystalDeposit.SupplyRoute.from_dict(data["supply_routes"][rid])
 	for mid in data.get("side_missions", {}):
 		state.side_missions[mid] = SideMission.from_dict(data["side_missions"][mid])
+	state.owned_maps = Array(data.get("owned_maps", []), TYPE_STRING, "", null)
+	state.star_map_data = data.get("star_map_data", {})
 	state.combat_victories = data.get("combat_victories", 0)
 	return state
 

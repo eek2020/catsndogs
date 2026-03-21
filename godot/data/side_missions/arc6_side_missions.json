@@ -1,0 +1,127 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc6_bone_yard_salvage",
+      "mission_type": "retrieval",
+      "title": "Grave Robbers",
+      "description": "The Bone Yard is a starship graveyard stretching across three systems. Somewhere in that tangle of dead hulls lies a pre-war crystal refinery — intact, sealed, and worth a king's ransom. Aristotle smells profit through the vacuum.",
+      "region": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "arc6_bone_yard_unlocked": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_salvage_tip",
+      "objectives": [
+        {
+          "objective_id": "navigate_graveyard",
+          "description": "Navigate through the Bone Yard's debris fields",
+          "encounter_id": "enc_sm_arc6_salvage_navigate"
+        },
+        {
+          "objective_id": "breach_refinery",
+          "description": "Breach the sealed crystal refinery",
+          "encounter_id": "enc_sm_arc6_salvage_breach"
+        },
+        {
+          "objective_id": "extract_cargo",
+          "description": "Extract the refined crystal stores",
+          "encounter_id": "enc_sm_arc6_salvage_extract"
+        }
+      ],
+      "rewards": {"salvage": 120, "crystals": 30},
+      "faction_rewards": {"felid_corsairs": 8},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc6_lion_civil_war",
+      "mission_type": "escort",
+      "title": "Pride and Prejudice",
+      "description": "The Lion Dominion civil war has spilled into open space combat. Lady Penumbra has reached out — she wants Aristotle to broker a ceasefire between the warring prides. A cat mediating between lions. The irony isn't lost on anyone.",
+      "region": "shattered_prides",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "special_char_lady_penumbra_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_lion_plea",
+      "objectives": [
+        {
+          "objective_id": "contact_factions",
+          "description": "Make contact with both warring Lion factions",
+          "encounter_id": "enc_sm_arc6_lion_contact"
+        },
+        {
+          "objective_id": "escort_mediator",
+          "description": "Escort Lady Penumbra to the neutral zone for talks",
+          "encounter_id": "enc_sm_arc6_lion_escort"
+        }
+      ],
+      "rewards": {"salvage": 70, "crystals": 15},
+      "faction_rewards": {"lions": 15, "felid_corsairs": 5},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc6_goblin_heist",
+      "mission_type": "sabotage",
+      "title": "The Big Score",
+      "description": "Goblin Scrappers are planning their most ambitious heist yet — raiding a Lion Dominion crystal vault during the civil war chaos. Aristotle can stop them and earn Lion gratitude, or help them and take a cut. Decisions, decisions.",
+      "region": "goblin_warrens",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "arc6_goblin_contact": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_goblin_proposition",
+      "objectives": [
+        {
+          "objective_id": "scout_vault",
+          "description": "Scout the Lion crystal vault defenses",
+          "encounter_id": "enc_sm_arc6_goblin_scout"
+        },
+        {
+          "objective_id": "choose_side",
+          "description": "Decide whether to help or hinder the heist",
+          "encounter_id": "enc_sm_arc6_goblin_choose"
+        },
+        {
+          "objective_id": "execute_plan",
+          "description": "Execute your chosen plan",
+          "encounter_id": "enc_sm_arc6_goblin_execute"
+        }
+      ],
+      "rewards": {"salvage": 100, "crystals": 20},
+      "faction_rewards": {"goblins": 10, "lions": -5},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc6_ancient_tech",
+      "mission_type": "retrieval",
+      "title": "Echoes of the Builders",
+      "description": "Deep in the Bone Yard, Echo — the ancient AI — has revealed the location of a Builder-era technology cache. It could revolutionise crystal refinement. It could also wake things that should stay sleeping.",
+      "region": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "special_char_echo_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc6_ancient_discovery",
+      "objectives": [
+        {
+          "objective_id": "find_cache",
+          "description": "Locate the Builder technology cache",
+          "encounter_id": "enc_sm_arc6_ancient_find"
+        },
+        {
+          "objective_id": "bypass_guardians",
+          "description": "Bypass the automated guardian systems",
+          "encounter_id": "enc_sm_arc6_ancient_guardians"
+        },
+        {
+          "objective_id": "recover_tech",
+          "description": "Recover the Builder technology",
+          "encounter_id": "enc_sm_arc6_ancient_recover"
+        }
+      ],
+      "rewards": {"salvage": 80, "crystals": 35},
+      "faction_rewards": {"felid_corsairs": 12, "fairies": 5},
+      "priority": 1
+    }
+  ]
+}

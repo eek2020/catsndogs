@@ -1,0 +1,135 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_fairy_cartographer_rescue",
+            "encounter_type": "exploration",
+            "title": "The Lost Cartographer",
+            "description": "A faint distress signal pulses from a debris field — not a standard beacon, but something older, stranger. Between shattered asteroids, a tiny fairy vessel spins helplessly, its wings of light flickering. Inside, a fairy clutches rolls of shimmering star charts, eyes wide with panic.",
+            "arc_id": "arc_1",
+            "location": "starting_realm",
+            "trigger_conditions": {
+                "current_arc": "arc_1",
+                "fairy_cartographer_rescued": false,
+                "arc1_crystal_discovered": "!null"
+            },
+            "npc_ids": ["fairy_cartographer"],
+            "priority": 4,
+            "repeatable": false,
+            "spawn_weight": 1.0,
+            "dialogue_steps": [
+                {
+                    "speaker": "fairy_cartographer",
+                    "text": "Oh! Oh thank the starlight! I thought I was done for! Those goblin scrappers chased me into this wretched field and my navigation crystal shattered!"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Easy there, little one. You're safe now. What's a fairy doing out here in the Fringe?"
+                },
+                {
+                    "speaker": "fairy_cartographer",
+                    "text": "I am Pip, cartographer of the Fairy Realms! I map the hidden places — the treasure caches, the lost ships, the crystal gardens that no one else can find. I was charting this sector when those brutes attacked!"
+                },
+                {
+                    "speaker": "fairy_cartographer",
+                    "text": "Please, Captain, take me aboard! I'll share everything I've mapped. Secret locations across every region — treasures, abandoned ships, crystal hoards hidden away for centuries!",
+                    "choices": [
+                        {
+                            "choice_id": "rescue_cartographer",
+                            "text": "\"Welcome aboard, Pip. A cartographer is worth their weight in crystals.\"",
+                            "next_step": "rescue_success",
+                            "outcome": {
+                                "description": "",
+                                "faction_changes": { "fairies": 10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["fairy_cartographer_rescued"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "rescue_for_payment",
+                            "text": "\"I don't run a charity. What's in it for me, specifically?\"",
+                            "next_step": "negotiate",
+                            "outcome": {
+                                "description": "",
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": [],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "leave_cartographer",
+                            "text": "\"Sorry, little one. I've got my own problems.\"",
+                            "next_step": "abandoned",
+                            "outcome": {
+                                "description": "",
+                                "faction_changes": { "fairies": -15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["fairy_cartographer_abandoned"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "rescue_success",
+                    "speaker": "fairy_cartographer",
+                    "text": "Oh, wonderful! Wonderful! Here — look at these charts! I've marked every hidden cache, every lost vessel, every crystal garden I've ever found. They'll appear on your star maps now. You won't regret this, Captain!"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Star charts showing hidden locations across the sector? Now that's what I call a proper rescue reward.",
+                    "end": true
+                },
+                {
+                    "step_id": "negotiate",
+                    "speaker": "fairy_cartographer",
+                    "text": "I — well — I have crystals! A few, anyway. And my charts! They show hidden treasures across every region. Lost ships full of salvage, crystal hoards buried in asteroids... Please, it's all I have!"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Charts showing hidden treasure? Now you're speaking my language.",
+                    "choices": [
+                        {
+                            "choice_id": "accept_deal",
+                            "text": "\"The charts are payment enough. Get aboard.\"",
+                            "next_step": "deal_done",
+                            "outcome": {
+                                "description": "",
+                                "faction_changes": { "fairies": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["fairy_cartographer_rescued"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "take_crystals_too",
+                            "text": "\"Charts AND the crystals. A cat's got to eat.\"",
+                            "next_step": "deal_done",
+                            "outcome": {
+                                "description": "",
+                                "faction_changes": { "fairies": -2 },
+                                "resource_changes": { "crystal_inventory": 10 },
+                                "story_flags_set": ["fairy_cartographer_rescued"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "deal_done",
+                    "speaker": "fairy_cartographer",
+                    "text": "Thank you, Captain! The hidden locations are now marked on your star charts. May the starlight guide you to every one of them!",
+                    "end": true
+                },
+                {
+                    "step_id": "abandoned",
+                    "speaker": "fairy_cartographer",
+                    "text": "No! Wait! Please! I'll — I'll die out here! The goblins will come back! Captain! CAPTAIN!",
+                    "end": true
+                }
+            ],
+            "choices": []
+        }
+    ]
+}

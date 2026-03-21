@@ -126,8 +126,8 @@
           "text": "Bring the pod aboard",
           "conditions": {},
           "outcome": {
-            "description": "The survivor turns out to be a fairy cartographer with star charts of uncharted crystal deposits. She offers to share the data in gratitude.",
-            "faction_changes": {"fairies": 4},
+            "description": "The survivor is a retired merchant navigator clutching a lockbox of emergency crystals. Grateful for the rescue, he insists you take them — 'better in a captain's hands than drifting in the void.'",
+            "faction_changes": {"felid_corsairs": 4},
             "resource_changes": {"crystal_inventory": 6},
             "story_flags_set": [],
             "story_flags_cleared": []
@@ -267,6 +267,276 @@
             "story_flags_cleared": []
           },
           "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_iron_expanse_patrol",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Damaged Wolf Patrol",
+      "description": "An Iron Wolf patrol vessel drifts through the Expanse, hull breached and engines cold. The pack frequency carries a terse distress call — wolves asking for help is nearly unheard of. Whatever hit them, it hit hard.",
+      "arc_id": "any",
+      "location": "iron_expanse",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 0.7,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Render assistance — even wolves deserve a second chance",
+          "conditions": {},
+          "outcome": {
+            "description": "The Wolf patrol leader is a scarred veteran who accepts help with a stiff nod. No words of gratitude — that's not the Wolf way. But as you leave, she transmits a single data packet: safe passage codes through Wolf territory. From a wolf, that's practically a love letter.",
+            "faction_changes": {"wolves": 10},
+            "resource_changes": {"salvage": -10},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Offer repairs in exchange for Wolf patrol route data",
+          "conditions": {},
+          "outcome": {
+            "description": "The Wolf leader's lip curls — bargaining with a cat pirate. But survival trumps pride. She transmits patrol schedules and territorial boundaries in exchange for hull patches and crystal charge. 'This buys you nothing next time we meet in open space, cat.'",
+            "faction_changes": {"wolves": 3},
+            "resource_changes": {"salvage": 20},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ignore",
+          "text": "Wolves in distress are still wolves. Keep your distance.",
+          "conditions": {},
+          "outcome": {
+            "description": "You give the crippled patrol a wide berth. The Wolf frequency goes silent as you pass — whether they survived or not, you'll never know. The Iron Expanse keeps its secrets.",
+            "faction_changes": {"wolves": -5},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_warp_anomaly",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Spatial Anomaly Trap",
+      "description": "A merchant vessel is caught in a spatial anomaly — the ship phases in and out of reality, its hull flickering between solid and transparent. The crew's terrified transmissions are fragmented, looping, sometimes arriving before they're sent. Time is broken here.",
+      "arc_id": "any",
+      "location": "warp_marches",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 3,
+      "repeatable": true,
+      "spawn_weight": 0.6,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Use your crystal drive to stabilise the anomaly and pull them free",
+          "conditions": {},
+          "outcome": {
+            "description": "Your crystal drive resonates with the anomaly, creating a stable corridor. The merchant vessel lurches free, solidifying with a shudder. The captain — a dazed fox trader — transmits coordinates to a hidden cache as thanks. 'You just saved us from being stuck between seconds for eternity.'",
+            "faction_changes": {"felid_corsairs": 5},
+            "resource_changes": {"crystal_inventory": -3, "salvage": 35},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Offer to help — but the anomaly data is yours to keep",
+          "conditions": {},
+          "outcome": {
+            "description": "The merchant agrees to anything. You pull them free and record every reading the anomaly produces. The data is scientifically priceless — the Fairy Collective or the League would pay handsomely for it. Knowledge is the most portable currency.",
+            "faction_changes": {"felid_corsairs": 3},
+            "resource_changes": {"crystal_inventory": -2},
+            "story_flags_set": ["warp_anomaly_data"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ignore",
+          "text": "The Warp Marches are treacherous — getting close risks your own ship",
+          "conditions": {},
+          "outcome": {
+            "description": "You plot a careful course around the anomaly. The merchant's transmissions grow more distorted, more desperate, then loop back to the beginning. You fly on. The anomaly pulses once, twice, then collapses. The merchant is gone — pulled into a gap between moments.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_bone_yard_trapped",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Trapped Scavenger",
+      "description": "Deep in the Bone Yard, a scavenger's ship is pinned under a collapsing derelict — thousands of tons of dead starship slowly crushing their hull. Their distress call is calm, methodical, resigned. They've calculated exactly how long they have before the hull gives. Not long.",
+      "arc_id": "any",
+      "location": "bone_yard",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 0.8,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Use tractor beams to lift the derelict and free the scavenger",
+          "conditions": {},
+          "outcome": {
+            "description": "Your crystal drive strains as tractor beams fight gravity and momentum. Metal screams. The scavenger's ship slides free with seconds to spare. The grateful scavenger — a weathered raccoon with cybernetic eyes — shares the location of a pristine wreck she found before getting trapped. 'Fair trade. Life for treasure.'",
+            "faction_changes": {"felid_corsairs": 4},
+            "resource_changes": {"salvage": 45},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Help them — but you get first pick of whatever they've salvaged",
+          "conditions": {},
+          "outcome": {
+            "description": "The scavenger doesn't hesitate. 'Take whatever you want, just GET ME OUT.' You free the ship and help yourself to a hold full of pre-war components and crystal fragments. The scavenger watches you pick through her life's work with hollow eyes, but she's alive. That's worth more than salvage.",
+            "faction_changes": {},
+            "resource_changes": {"salvage": 60, "crystal_inventory": 4},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ignore",
+          "text": "The Bone Yard claims everyone eventually. Move on.",
+          "conditions": {},
+          "outcome": {
+            "description": "You navigate around the collapsing section, sensors tracking the slow compression of the scavenger's hull. The distress call cuts off mid-sentence. Another ship joins the graveyard. The Bone Yard grows by one.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_bazaar_smuggler",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Smuggler Under Fire",
+      "description": "Near the approaches to the Twilight Bazaar, a small fast ship is taking fire from two larger vessels — customs enforcers from the look of them. The smuggler's transmission is rapid, breathless, and laced with creative profanity. 'Any ship in range — I'm carrying medical supplies, I swear on my mother's grave! These goons don't care!'",
+      "arc_id": "any",
+      "location": "twilight_bazaar",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 0.7,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Intervene — drive off the attackers",
+          "conditions": {},
+          "outcome": {
+            "description": "Your ship drops between the smuggler and her pursuers. The enforcers, outgunned, break off with threats about jurisdiction. The smuggler docks gratefully. She WAS carrying medical supplies — along with a considerable quantity of contraband spices. She splits the profit without being asked. 'You're good people, captain. Rare commodity out here.'",
+            "faction_changes": {"felid_corsairs": 5, "goblins": 3},
+            "resource_changes": {"salvage": 30},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Hail the enforcers — offer to inspect the cargo yourself as a neutral party",
+          "conditions": {},
+          "outcome": {
+            "description": "Both sides agree to your arbitration — the Bazaar respects neutral mediators. You find the medical supplies, the contraband, and a third hidden compartment with crystal samples. You keep the crystals as your 'mediation fee.' Everyone grumbles. Nobody shoots. Diplomacy.",
+            "faction_changes": {"felid_corsairs": 3},
+            "resource_changes": {"crystal_inventory": 4},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ignore",
+          "text": "Smugglers and enforcers — not your fight",
+          "conditions": {},
+          "outcome": {
+            "description": "You watch the chase play out from a safe distance. The smuggler makes a run for the Bazaar's neutral zone — and just barely makes it, trailing smoke. The enforcers pull off, cursing. You continue on your way, uninvolved and unbothered.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "distress_prides_refugee",
+      "encounter_type": "distress_signal",
+      "title": "Distress: Lion Refugees",
+      "description": "A civilian convoy of Lion refugees broadcasts a weak distress signal from the edge of the Shattered Prides. Three transports packed with families, elders, and cubs — fleeing the civil war with nothing but what they could carry. Their crystal reserves are empty. They're running on fumes and prayer.",
+      "arc_id": "any",
+      "location": "shattered_prides",
+      "trigger_conditions": {},
+      "npc_ids": [],
+      "priority": 2,
+      "repeatable": true,
+      "spawn_weight": 0.6,
+      "choices": [
+        {
+          "choice_id": "help",
+          "text": "Share your crystal reserves and escort them to safety",
+          "conditions": {},
+          "outcome": {
+            "description": "You distribute crystals across the three transports and escort the convoy to the Twilight Bazaar's refugee quarter. A Lion elder clasps your paw — his grip is weak but his eyes are fierce. 'The Prides will remember this, captain. When the war ends, you will have a friend in every pride that survives.'",
+            "faction_changes": {"lions": 12},
+            "resource_changes": {"crystal_inventory": -6},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "negotiate",
+          "text": "Help them — but they must share any intelligence about the civil war",
+          "conditions": {},
+          "outcome": {
+            "description": "The refugees hesitate, then agree. They have no resources, but they have information — troop positions, faction leaders, supply routes. It's a refugee's only currency. You refuel their ships and absorb every detail. 'Use it well,' the elder says. 'Use it to end this.'",
+            "faction_changes": {"lions": 6},
+            "resource_changes": {"crystal_inventory": -3},
+            "story_flags_set": ["lion_civil_war_intel"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ignore",
+          "text": "The Lion civil war is not your problem. Fly on.",
+          "conditions": {},
+          "outcome": {
+            "description": "The convoy drifts on, growing smaller in the viewport. Three ships full of families, heading nowhere, running on nothing. The Shattered Prides earned their name. You turn away and set a new course. The void feels colder than usual.",
+            "faction_changes": {"lions": -6},
+            "resource_changes": {},
+            "story_flags_set": [],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
         }
       ]
     }

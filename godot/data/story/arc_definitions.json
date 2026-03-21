@@ -8,7 +8,8 @@
             "exit_conditions": {
                 "arc1_crystal_discovered": true,
                 "arc1_dave_met": true,
-                "arc1_death_glimpsed": true
+                "arc1_death_glimpsed": true,
+                "arc1_stance": true
             },
             "next_arc_id": "arc_2",
             "key_events": [
@@ -31,7 +32,8 @@
             "entry_conditions": {
                 "arc1_crystal_discovered": true,
                 "arc1_dave_met": true,
-                "arc1_death_glimpsed": true
+                "arc1_death_glimpsed": true,
+                "arc1_stance": true
             },
             "exit_conditions": {
                 "arc2_route_resolved": "!null",
@@ -83,26 +85,214 @@
         },
         {
             "arc_id": "arc_4",
-            "title": "The Reckoning",
-            "theme": "Final conflict — what is Aristotle willing to become?",
+            "title": "The Undercurrent",
+            "theme": "Secrets beneath the surface — the multiverse is not what it seems",
             "entry_conditions": {
                 "arc3_alien_contact": true,
                 "arc3_dave_parley": true,
                 "arc3_death_allegiance": "!null"
             },
-            "exit_conditions": {},
-            "next_arc_id": null,
+            "exit_conditions": {
+                "arc4_fairy_warning": true,
+                "arc4_ancient_chart": true,
+                "arc4_lion_fracture": true,
+                "arc4_death_erratic": true
+            },
+            "next_arc_id": "arc_5",
             "key_events": [
-                "enc_arc4_dave_assault",
-                "enc_arc4_death_grab",
-                "enc_arc4_lion_wolf_declaration"
+                "enc_arc4_fairy_warning",
+                "enc_arc4_bazaar_merchant",
+                "enc_arc4_lion_fracture",
+                "enc_arc4_death_erratic"
             ],
             "decision_points": [
                 {
-                    "decision_id": "arc4_final_choice",
+                    "decision_id": "arc4_response_choice",
+                    "flag_name": "arc4_response",
+                    "options": ["investigate_crystals", "consolidate_power", "play_all_sides"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_5",
+            "title": "The Iron Tide",
+            "theme": "Total war — every faction mobilises",
+            "entry_conditions": {
+                "arc4_fairy_warning": true,
+                "arc4_ancient_chart": true,
+                "arc4_lion_fracture": true,
+                "arc4_death_erratic": true
+            },
+            "exit_conditions": {
+                "arc5_wolf_offensive": true,
+                "arc5_dave_crisis": true,
+                "arc5_knight_declaration": "!null"
+            },
+            "next_arc_id": "arc_6",
+            "key_events": [
+                "enc_arc5_wolf_hunt",
+                "enc_arc5_dave_loyalty_crisis",
+                "enc_arc5_knight_declaration",
+                "enc_arc5_fairy_deep_secret"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc5_war_response",
+                    "flag_name": "arc5_war_response",
+                    "options": ["meet_force_with_force", "divide_and_conquer", "seek_the_source"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_6",
+            "title": "The Fracture",
+            "theme": "Nothing holds — alliances crumble, the multiverse splinters",
+            "entry_conditions": {
+                "arc5_wolf_offensive": true,
+                "arc5_dave_crisis": true,
+                "arc5_knight_declaration": "!null"
+            },
+            "exit_conditions": {
+                "arc6_bone_yard_explored": true,
+                "arc6_lion_civil_war": true,
+                "arc6_goblin_heist": true,
+                "arc6_death_escalation": true
+            },
+            "next_arc_id": "arc_7",
+            "key_events": [
+                "enc_arc6_bone_yard_discovery",
+                "enc_arc6_ancient_signal",
+                "enc_arc6_lion_civil_war",
+                "enc_arc6_goblin_heist",
+                "enc_arc6_death_escalation"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc6_fracture_response",
+                    "flag_name": "arc6_fracture_response",
+                    "options": ["unite_the_fragments", "let_them_burn", "restore_order"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_7",
+            "title": "The Communion",
+            "theme": "Revelation — the crystals speak",
+            "entry_conditions": {
+                "arc6_bone_yard_explored": true,
+                "arc6_lion_civil_war": true,
+                "arc6_goblin_heist": true,
+                "arc6_death_escalation": true
+            },
+            "exit_conditions": {
+                "arc7_warp_explored": true,
+                "arc7_alien_agenda": true,
+                "arc7_dave_pivot": "!null"
+            },
+            "next_arc_id": "arc_8",
+            "key_events": [
+                "enc_arc7_warp_entry",
+                "enc_arc7_crystal_communion",
+                "enc_arc7_alien_agenda",
+                "enc_arc7_dave_pivot"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc7_communion_response",
+                    "flag_name": "arc7_communion_response",
+                    "options": ["embrace_the_voice", "weaponise_knowledge", "share_the_truth"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_8",
+            "title": "The Gathering Storm",
+            "theme": "The calm before the final war — last chance to prepare",
+            "entry_conditions": {
+                "arc7_warp_explored": true,
+                "arc7_alien_agenda": true,
+                "arc7_dave_pivot": "!null"
+            },
+            "exit_conditions": {
+                "arc8_alliances_locked": true,
+                "arc8_death_transformed": true,
+                "arc8_preparations_complete": true
+            },
+            "next_arc_id": "arc_10",
+            "key_events": [
+                "enc_arc8_alliance_summit",
+                "enc_arc8_death_transformation",
+                "enc_arc8_cradle_portal",
+                "enc_arc8_final_preparations"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc8_final_preparation",
+                    "flag_name": "arc8_final_preparation",
+                    "options": ["war_council", "peace_summit", "seek_the_cradle"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_9",
+            "title": "The Cradle",
+            "theme": "Origin of everything — the truth behind Whisper Crystals",
+            "entry_conditions": {
+                "current_arc": "arc_8",
+                "arc3_alien_contact": true,
+                "arc5_fairy_deep_secret": true,
+                "arc6_ancient_signal_decoded": true,
+                "arc7_crystal_communion": true,
+                "fairy_cartographer_rescued": true,
+                "cradle_clue_bone_yard": true,
+                "cradle_clue_warp_marches": true,
+                "cradle_clue_shattered_prides": true,
+                "special_char_oracle_met": true,
+                "special_char_keeper_met": true
+            },
+            "exit_conditions": {
+                "arc9_cradle_complete": true,
+                "arc9_cradle_choice": "!null"
+            },
+            "next_arc_id": "arc_10",
+            "is_hidden": true,
+            "is_optional": true,
+            "key_events": [
+                "enc_arc9_singing_core",
+                "enc_arc9_crystal_consciousness",
+                "enc_arc9_ancient_guardians",
+                "enc_arc9_cradle_choice"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc9_cradle_choice",
+                    "flag_name": "arc9_cradle_choice",
+                    "options": ["reunite_consciousness", "mercy_release", "harvest_forever", "final_silence"]
+                }
+            ]
+        },
+        {
+            "arc_id": "arc_10",
+            "title": "The Reckoning",
+            "theme": "Final conflict — what is Aristotle willing to become?",
+            "entry_conditions": {
+                "arc8_alliances_locked": true,
+                "arc8_death_transformed": true,
+                "arc8_preparations_complete": true
+            },
+            "exit_conditions": {},
+            "next_arc_id": null,
+            "key_events": [
+                "enc_arc10_dave_assault",
+                "enc_arc10_death_grab",
+                "enc_arc10_lion_wolf_declaration"
+            ],
+            "decision_points": [
+                {
+                    "decision_id": "arc10_final_choice",
                     "flag_name": "ending",
-                    "options": ["hold_monopoly", "share_crystals", "destroy_sites"],
-                    "note": "Determined by cumulative outcome_weights, not direct selection"
+                    "options": ["hold_monopoly", "share_crystals", "destroy_sites", "reunite_consciousness"],
+                    "note": "First three determined by cumulative outcome_weights. Fourth requires arc9_cradle_choice == reunite_consciousness AND balanced outcome_weight"
                 }
             ]
         }
@@ -110,6 +300,14 @@
     "ending_thresholds": {
         "ending_a_hold": { "min_weight": 0.5, "max_weight": null },
         "ending_b_share": { "min_weight": -0.2, "max_weight": 0.5 },
-        "ending_c_destroy": { "min_weight": null, "max_weight": -0.2 }
+        "ending_c_destroy": { "min_weight": null, "max_weight": -0.2 },
+        "ending_d_reunite": {
+            "min_weight": -0.3,
+            "max_weight": 0.3,
+            "requires": {
+                "arc9_cradle_choice": "reunite_consciousness"
+            },
+            "note": "Hidden 4th ending — only available if the Cradle was found and the player chose to reunite the crystal consciousness"
+        }
     }
 }

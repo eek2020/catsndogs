@@ -1,0 +1,235 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc8_dave_alliance_summit",
+            "encounter_type": "diplomatic",
+            "title": "The Alliance Summit",
+            "description": "Dave convenes the summit aboard a decommissioned League space station in neutral territory. Representatives from every faction arrive: wolf admirals with barely concealed hunger, lion dignitaries nursing wounded pride, fairy brokers calculating profit margins, knight commanders radiating moral certainty, goblin chieftains stealing the silverware, and — most improbably — Aristotle, leaning against a bulkhead with his arms crossed and his tail flicking. Dave stands at the head of the table in full dress uniform. He has not worn the medals in years. They weigh more than he remembers. 'We are here,' he begins, 'because the alternative is extinction. I will keep this brief.'",
+            "arc_id": "arc_8",
+            "location": "neutral_zone",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc8_alliances_locked": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "war_council",
+                    "text": "\"This is a military operation. I need ships, guns, and obedience. Everything else is decoration.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave lays out the tactical plan with ruthless efficiency. Fleet dispositions, attack vectors, supply logistics, casualty projections. The wolves nod — they understand war. The knights salute — they understand duty. The lions bristle — they do not take orders from dogs. The goblins fidget — military precision bores them. Aristotle watches with an unreadable expression. 'You are asking us to fight under your command,' the cat says quietly. Dave meets his eyes. 'I am asking you to survive. My command is the mechanism.' The summit ends with a war alliance. Imperfect, fractious, and armed to the teeth.",
+                        "faction_changes": { "canis_league": 10, "wolves": 10, "knights": 5, "lions": -10, "felid_corsairs": -5, "goblins": -5 },
+                        "resource_changes": { "salvage": 25 },
+                        "story_flags_set": ["arc8_alliances_locked"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "peace_summit",
+                    "text": "\"Before we fight together, we must stop fighting each other. Formal ceasefire. All factions. Non-negotiable.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave spends fourteen hours negotiating a multiverse-wide ceasefire. Every clause is contested. Every faction demands exceptions. Dave concedes nothing. By dawn, the ceasefire document is signed by every representative except the goblins, who sign it and then steal the pen. It is the first time in recorded history that all major factions have agreed to stop killing each other. Dave does not celebrate. He files the ceasefire and begins planning the next phase. Peace is not a destination. Peace is a staging area.",
+                        "faction_changes": { "felid_corsairs": 10, "wolves": 5, "lions": 10, "knights": 15, "fairies": 5, "goblins": 5, "canis_league": -5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc8_alliances_locked"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "seek_the_cradle",
+                    "text": "\"The crystal consciousness has an origin point. A cradle. We find it, we find answers. Military force is secondary.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave presents the alien research: somewhere in the deepest crystal formations, the consciousness has a core — the Cradle, where it first emerged. Understanding the Cradle may be the only way to guide the awakening without catastrophe. The summit shifts from military planning to exploration coordination. Fairy cartographers contribute star charts. Alien caretakers provide resonance maps. Even the goblins offer salvaged navigation data from the Bone Yard. Dave coordinates the expedition with the same precision he would apply to a fleet engagement. Discovery is just warfare with different objectives.",
+                        "faction_changes": { "aliens": 15, "fairies": 10, "knights": 5, "canis_league": -5, "wolves": -10 },
+                        "resource_changes": { "salvage": -15, "crystal_inventory": 5 },
+                        "story_flags_set": ["arc8_alliances_locked"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc8_dave_death_transformation",
+            "encounter_type": "event",
+            "title": "Death's Transformation",
+            "description": "Death arrives at the summit uninvited. The ghost ship materialises in the docking bay without clearance, without warning, without regard for the dozen gun batteries trained on it. But something is different. Death's ship is not dark. It is crystallising — the hull transforming from shadow-metal to whisper crystal in real time, glowing with the same frequencies Dave heard during the communion. Death's voice echoes through the station: 'I have served the consciousness for longer than your species has existed. I was its guardian. Its servant. Its weapon. And now it is waking, and I am becoming... something else. Help me, Commander. Or destroy me. I can no longer tell which is the mercy.'",
+            "arc_id": "arc_8",
+            "location": "neutral_zone",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc8_alliances_locked": true,
+                "arc8_death_transformed": false
+            },
+            "npc_ids": ["dave", "death"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "help_death",
+                    "text": "\"Medical teams to the docking bay. Containment protocols. We treat this as a rescue operation.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's medical teams approach Death's crystallising vessel with the caution of bomb disposal experts. The transformation is accelerating — shadow-flesh becoming crystal, consciousness fragmenting between the ancient guardian and the awakening entity. Dave watches from the observation deck as his people work to stabilise something they do not understand. It is reckless. It is compassionate. It is not what anyone expected from Commander Dave. 'Everyone deserves a chance,' he tells his first officer. The words surprise them both.",
+                        "faction_changes": { "felid_corsairs": 5, "knights": 10, "aliens": 5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc8_death_transformed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "contain_death",
+                    "text": "\"Quarantine the vessel. Full containment field. Death is a tactical asset or a tactical threat. We determine which.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave seals Death's ship in a containment field rated for antimatter. Through the shimmering energy barrier, the transformation continues — shadow becoming crystal, the ghost ship becoming a monument. Death's voice grows distant, fragmented. 'The consciousness... absorbs... I was its servant... now I am its... extension...' Dave records every word. The transformation completes. Where Death's ghost ship floated, a crystal structure now hangs in the containment field — beautiful, ancient, and broadcasting the communion frequency at maximum intensity. Death is gone. Something else remains.",
+                        "faction_changes": { "canis_league": 10 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc8_death_transformed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "destroy_death",
+                    "text": "\"All batteries. Maximum yield. Destroy that vessel before the transformation completes.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The station's guns obliterate Death's ship in a blinding flash. Crystal fragments scatter across the docking bay. Death's final transmission is a single word: 'Mercy.' Dave watches the debris settle. His summit guests watch him. The wolf admirals nod — they understand the elimination of threats. The knights look away — they understand what mercy costs when it is refused. Dave turns back to the conference table. 'One less variable,' he says. His voice does not waver. His hands, beneath the table, are shaking.",
+                        "faction_changes": { "canis_league": 5, "knights": -15, "felid_corsairs": -5, "aliens": -10 },
+                        "resource_changes": { "salvage": 20 },
+                        "story_flags_set": ["arc8_death_transformed"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc8_dave_cradle_portal",
+            "encounter_type": "exploration",
+            "title": "The Cradle Portal",
+            "description": "Deep in the Warp Marches, the crystal formations converge on a single point — a structure that defies physics, a doorway made of living crystal that pulses with the heartbeat of the consciousness itself. The Cradle Portal. Beyond it lies the origin point of the crystal network, the place where the consciousness first emerged aeons ago. Dave's scanners cannot penetrate the portal. His instruments register nothing beyond it — not void, not matter, not energy. Nothing. It is, his science officer notes with academic understatement, 'quite unprecedented.' Dave stares at the portal and sees, reflected in its surface, a dog who has spent his entire life preparing for something he could not have imagined.",
+            "arc_id": "arc_8",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc8_death_transformed": true,
+                "arc8_preparations_complete": false,
+                "arc5_fairy_deep_secret": true,
+                "arc6_ancient_signal_decoded": true,
+                "arc7_crystal_communion": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "enter_portal",
+                    "text": "\"Prepare an expeditionary force. We go through. Full military readiness.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave assembles the finest soldiers, scientists, and specialists the League possesses. They approach the portal in formation — disciplined, prepared, terrified. Dave leads from the front. He always leads from the front. The portal opens like a mouth and swallows them. What lies beyond defies description: a space that is not space, filled with crystal light and the presence of something vast and ancient and patient. Dave's tactical training is useless here. His discipline is not. 'Mark positions. Document everything. Move as a unit.' The Cradle awaits.",
+                        "faction_changes": { "aliens": 10, "canis_league": 5 },
+                        "resource_changes": { "salvage": -20 },
+                        "story_flags_set": ["arc8_preparations_complete", "cradle_clue_warp_marches"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "send_probe",
+                    "text": "\"Send a probe first. No commander enters unknown territory without reconnaissance.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's probe enters the portal and immediately loses telemetry. Then, three hours later, it returns — transformed. The probe's hull is crystallised, its sensors rewritten with data in the communion frequency. Dave's analysts decode it: the Cradle is real, it is accessible, and the consciousness is waiting. The probe also carries a message, addressed specifically to Dave: 'You are expected, Commander. You have been expected for a very long time.' Dave stares at the message. Being expected by something eternal is not comforting. But it is informative.",
+                        "faction_changes": { "canis_league": 10 },
+                        "resource_changes": { "salvage": -10 },
+                        "story_flags_set": ["arc8_preparations_complete"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "seal_portal",
+                    "text": "\"Mine the approach. Establish a quarantine perimeter. Nothing goes in or out until we are ready.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave surrounds the Cradle Portal with every defensive measure the League possesses. Mines, gun platforms, sensor arrays, interdiction fields. The portal pulses serenely in the centre of a ring of steel. It does not seem impressed. Dave files the defensive positions and begins the slow, methodical process of preparing for an expedition that may redefine existence. He will go through that portal. But he will go prepared. And he will go on his own schedule. The consciousness has waited aeons. It can wait for Dave to finish his preparations.",
+                        "faction_changes": { "canis_league": 10, "aliens": -5 },
+                        "resource_changes": { "salvage": -25 },
+                        "story_flags_set": ["arc8_preparations_complete"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc8_dave_final_preparations",
+            "encounter_type": "diplomatic",
+            "title": "Final Preparations",
+            "description": "The night before the final campaign, Dave walks the corridors of the Iron Paw alone. The ship is quiet — the crew sleeps or pretends to sleep, each carrying the weight of what tomorrow may bring. Dave stops at the observation deck. The crystal formations of the Warp Marches glow beyond the viewport, vast and ancient and patient. He has spent his entire career preparing for war. Every drill, every exercise, every sleepless night reviewing tactical manuals — all of it leading here. Not to a battle. To a meeting with something that has existed since before stars had names. Dave straightens his uniform. Checks his sidearm. Verifies his comm frequency. Then he does something he has not done since the Academy: he writes a letter. Not a report. Not orders. A letter.",
+            "arc_id": "arc_8",
+            "location": "canis_league_hq",
+            "trigger_conditions": {
+                "current_arc": "arc_8",
+                "arc8_alliances_locked": true,
+                "arc8_death_transformed": true,
+                "arc8_preparations_complete": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "letter_to_league",
+                    "text": "Write to the League. A final report. A summary of everything learned. A recommendation for the future.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The letter is twenty pages long. Every conclusion supported by data. Every recommendation actionable. It is the most comprehensive strategic document Dave has ever produced, and it begins with a sentence that no League document has ever contained: 'We were wrong.' The crystals are not a resource. The multiverse is not a territory to be controlled. The future requires cooperation, not domination. Dave signs it, seals it, and deposits it in the League's archive with instructions: 'To be opened in the event of my death.' Then he puts on his coat and walks to the bridge.",
+                        "faction_changes": { "canis_league": 10, "knights": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc8_final_preparation"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "letter_to_aristotle",
+                    "text": "Write to Aristotle. Not a tactical briefing. Not terms. Something personal. Something honest.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "'Aristotle. If you are reading this, I did not come back. I want you to know: you were the best enemy I ever had. You were brave, infuriating, reckless, and more honest than you pretended to be. The multiverse was better for having you in it. Even when you were stealing my supply convoys. Keep the crystals safe. Not for profit. For whatever lives inside them. Yours in perpetual exasperation, Dave.' He seals the letter and gives it to his first officer with a single instruction: 'If I do not return, deliver this to the cat.' The first officer does not ask which cat.",
+                        "faction_changes": { "felid_corsairs": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc8_final_preparation"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "no_letter",
+                    "text": "No letter. No sentiment. Dave prepares the fleet, checks every system, and deploys in silence.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave reviews every fleet readiness report. Every weapon system. Every supply manifest. Every evacuation protocol. He finds three errors, corrects them, and files the updated documents. His officers watch him work through the night with the same relentless focus he has always shown. If Dave is afraid, there is no evidence. If Dave has doubts, they are filed in a drawer he will never open. The fleet deploys at 0600 hours. Dave is on the bridge, uniform pressed, posture perfect, water glass within reach. The mission begins. Sentiment is for after.",
+                        "faction_changes": { "canis_league": 5 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc8_final_preparation"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        }
+    ]
+}

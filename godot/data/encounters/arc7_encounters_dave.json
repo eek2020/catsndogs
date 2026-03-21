@@ -1,0 +1,352 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc7_dave_warp_entry",
+            "encounter_type": "exploration",
+            "title": "The Warp Marches",
+            "description": "The Warp Marches are a region of space where reality thins — where crystal deposits grow so dense that the laws of physics bend around them like light around a star. No League vessel has entered and returned with a coherent report. Dave's expedition is the first to attempt a systematic military survey. The Iron Paw crosses the threshold at 0600 hours. The stars change colour. The hull groans. The navigation computers stutter, then fail, then rewrite themselves with equations that Dave's science officers have never seen. 'Helm,' Dave says calmly, 'hold course. Mark bearing by dead reckoning. The computers will catch up or they will not.'",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_warp_explored": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "systematic_recon",
+                    "text": "\"Standard survey pattern. Grid sectors. Catalogue everything. We proceed by the manual.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave's team applies military cartography to a region that defies military cartography. Every sector is charted. Every anomaly is logged. The Warp Marches resist categorisation — time flows unevenly, distances shift, crystal formations sing on frequencies that give the crew headaches — but Dave imposes order by sheer stubbornness. The resulting charts are incomplete but usable. Good enough for government work. Good enough for Dave.",
+                        "faction_changes": { "canis_league": 5 },
+                        "resource_changes": { "salvage": -15 },
+                        "story_flags_set": ["arc7_warp_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "follow_crystals",
+                    "text": "\"The crystal formations are denser toward the centre. Follow the resonance. Let the crystals lead us.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave abandons the survey grid — an act that surprises his crew more than the Warp Marches themselves. He follows the crystal resonance deeper, where the formations grow vast and luminous, where the hull vibrates in harmony with something immense and old. The Iron Paw drifts through cathedrals of living crystal. Dave stares through the viewport at structures that make League engineering look like a child's blocks. 'There is a design here,' he murmurs. 'There has always been a design.'",
+                        "faction_changes": { "aliens": 5, "fairies": 5 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc7_warp_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                },
+                {
+                    "choice_id": "establish_forward_base",
+                    "text": "\"Secure a defensible position. Establish a forward operating base. We are not explorers. We are soldiers.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave finds a stable pocket within the Warp Marches and fortifies it. Supply caches. Communications relays. Defensive platforms. The base is a steel island in a crystal sea. It is orderly, efficient, and completely inadequate for what surrounds it. But it gives the crew something familiar to hold onto, and familiar is its own kind of armour. Dave plants the League flag and files the coordinates. A foothold. Everything starts with a foothold.",
+                        "faction_changes": { "canis_league": 10 },
+                        "resource_changes": { "salvage": -20 },
+                        "story_flags_set": ["arc7_warp_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_dave_crystal_communion",
+            "encounter_type": "event",
+            "title": "The Crystal Communion",
+            "description": "It happens without warning. Dave is reviewing survey data in his quarters when the crystal sample on his desk — the shard he has carried since the first arc — begins to glow. Then it speaks. Not with sound. With thought. Images flood Dave's mind: the birth of the crystal network, civilisations rising and falling, the long sleep, the slow awakening. The communion is an invitation. The crystal consciousness wants to show Dave what it is. Dave grips the edge of his desk. His knuckles are white. Every instinct screams to reject the intrusion, to throw the crystal into the void, to seal his mind against this alien presence. But the images are beautiful. And Dave, despite everything he is, recognises beauty when it ambushes him.",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_warp_explored": true,
+                "arc7_crystal_communion": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "resist_communion",
+                    "text": "\"No.\" Dave sets the crystal down. Backs away. Seals it in a containment field. \"I will not be compromised.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave locks the crystal in a shielded case and submits himself for a full medical evaluation. The scans are clean — no neural contamination, no implanted memories, no personality alteration. Dave is exactly who he was before the communion attempt. His science officers are disappointed. They wanted data. Dave wanted control. He got what he wanted. But in the quiet hours of the night watch, he replays the images he saw before he slammed the door shut. A civilisation of light. A network of consciousness. A sleeping god. He does not sleep well.",
+                        "faction_changes": { "canis_league": 10, "aliens": -10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc7_crystal_communion"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "controlled_analysis",
+                    "text": "\"Maintain contact. Route the communion through analytical filters. I will observe, not participate.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave treats the communion like an intelligence briefing. He allows the images but maintains analytical distance, cataloguing each vision, cross-referencing it with known data. The crystal consciousness shows him its history in full: a vast civilisation that transcended physical form and wove itself into the crystal network. Not dead. Sleeping. And now waking because the extraction has thinned the network to a critical point. Dave takes notes. Detailed, precise, emotionless notes. His science officers will later describe them as the most important document in League history.",
+                        "faction_changes": { "aliens": 5, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc7_crystal_communion"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "open_communion",
+                    "text": "\"Show me everything. I need to understand what you are if I am going to protect my people from you.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave opens his mind to the crystal consciousness. It is the bravest and most terrifying thing he has ever done. The communion floods him with the full history of the crystal entity — aeons of existence, the joy of a connected civilisation, the grief of dissolution, the long dreaming sleep, the pain of being burned for fuel by species that cannot hear its screams. Dave weeps. He has not wept since he was a puppy. When the communion ends, he sits in the dark for a long time. Then he wipes his eyes, straightens his uniform, and walks to the bridge. He knows what the crystals are now. The question is what to do about it.",
+                        "faction_changes": { "aliens": 15, "canis_league": -10 },
+                        "resource_changes": { "crystal_inventory": -5 },
+                        "story_flags_set": ["arc7_crystal_communion"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_dave_alien_agenda",
+            "encounter_type": "diplomatic",
+            "title": "The Alien Agenda",
+            "description": "The aliens who first contacted Dave in Arc 3 reappear in the Warp Marches. Their luminous forms drift between the crystal spires, and for the first time Dave understands their relationship to the network — they are not visitors. They are caretakers. Shepherds of the crystal consciousness during its long sleep. And now that the consciousness is waking, the caretakers are preparing. 'Commander Dave,' the alien voice resonates through the hull. 'You have touched the communion. You know what is at stake. The awakening is inevitable. The question is whether your species survives it.'",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_crystal_communion": true,
+                "arc7_alien_agenda": false
+            },
+            "npc_ids": ["dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "demand_plan",
+                    "text": "\"You have had aeons to prepare for this. Present your plan. Include our survival in the parameters.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The aliens present a model: the awakening will restructure the crystal network, potentially converting all matter within range into crystal — a repeat of the Bone Yard event on a multiverse scale. But it can be guided. Controlled. The consciousness can be directed to wake gently, to coexist rather than consume. The cost: all factions must stop extracting crystals. Immediately. Permanently. Dave processes the implications. No crystals means no fuel. No fuel means no fleets. No fleets means no League. He files the plan and begins calculating alternatives.",
+                        "faction_changes": { "aliens": 10, "canis_league": 5 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc7_alien_agenda"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "military_options",
+                    "text": "\"What are the offensive options? Can the consciousness be contained? Neutralised? Weaponised?\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The aliens recoil — an emotion Dave has never seen from them. 'You would weaponise a god?' Dave does not blink. 'I would understand every option before eliminating any.' The aliens provide the military data reluctantly: the consciousness can be fragmented, contained in isolated deposits, even turned against itself. But each option risks catastrophic feedback. Dave notes the risks with the same dispassion he applies to any threat assessment. The aliens watch him with something that might be pity. Dave does not need their pity. He needs their data.",
+                        "faction_changes": { "aliens": -10, "canis_league": 10 },
+                        "resource_changes": { "salvage": 15 },
+                        "story_flags_set": ["arc7_alien_agenda"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "offer_alliance",
+                    "text": "\"If the threat is existential, the response must be unified. The League offers full cooperation.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave extends the League's hand to beings older than his species. The aliens accept. It is the strangest alliance in multiverse history: ancient caretakers and a military dog, united by a shared interest in not being converted to crystal. The aliens share their technology — resonance dampeners, consciousness interfaces, crystal stabilisation fields. Dave integrates them into League systems with military precision. His engineers complain that the alien tech is incomprehensible. Dave tells them to make it work anyway.",
+                        "faction_changes": { "aliens": 15, "canis_league": -5, "fairies": 5 },
+                        "resource_changes": { "crystal_inventory": 10 },
+                        "story_flags_set": ["arc7_alien_agenda"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.2
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_dave_aristotle_pivot",
+            "encounter_type": "diplomatic",
+            "title": "The Pivot",
+            "description": "Aristotle's ship arrives in the Warp Marches unannounced. The Corsair flagship drifts through the crystal cathedrals like a battered pilgrim, its hull scarred by six arcs of war. Dave detects it on sensors and does not scramble his fighters. He opens a channel instead. The cat appears on screen, and for the first time, there is no grin. No bravado. No performance. Aristotle looks like a captain who has seen something that changed him. Dave recognises the expression. He saw it in his own mirror after the communion.",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_alien_agenda": true,
+                "arc7_dave_pivot": false
+            },
+            "npc_ids": ["dave", "aristotle"],
+            "priority": 6,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle appears on screen. No grin. No quip. No performance. Just a cat who has been staring into the abyss and found it staring back. 'Dave. I heard the crystals. Did you?'"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "'Yes.' One word. It is the most honest thing Dave has ever said to Aristotle. He does not elaborate. He does not need to. Either you have heard the crystals or you have not. There is no middle ground."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "'Then you know. You know what we have been doing. What we have been burning.' Aristotle's voice cracks. 'I have been selling pieces of a god as fuel, Dave. For profit. For power. For a laugh.'"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "'And I have been fighting a war over the right to burn it more efficiently.' Dave's voice is quiet. Level. The confession costs him nothing visible and everything internal. 'We are both guilty, Aristotle. Guilt is not useful. What do you propose?'"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "'Something neither of us is good at. Something stupid and unprecedented.' The old words, from the parley in Arc 3. But the meaning has changed. 'Work together. Not against each other. Not for crystals. For... whatever comes next.'",
+                    "choices": [
+                        {
+                            "choice_id": "accept_pivot",
+                            "text": "\"Agreed. Operational coordination begins immediately. No games. No agendas. Just the mission.\"",
+                            "next_step": "accept_branch",
+                            "outcome": {
+                                "description": "Dave extends his hand to the screen. Aristotle mirrors the gesture. It is not a handshake across the void. It is a promise. The dog and the cat, united by something bigger than either of them.",
+                                "faction_changes": { "felid_corsairs": 15, "canis_league": -5, "knights": 5, "aliens": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_dave_pivot"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "conditional_cooperation",
+                            "text": "\"Cooperation, yes. But under League operational command. My ships, my strategy, my rules.\"",
+                            "next_step": "conditional_branch",
+                            "outcome": {
+                                "description": "Aristotle's eyes narrow. Then he nods. 'Fine. Your rules. For now.' Dave accepts the caveat because it is honest. The cat will follow orders until he does not. That is the nature of cats. Dave will plan accordingly.",
+                                "faction_changes": { "felid_corsairs": 5, "canis_league": 10 },
+                                "resource_changes": { "salvage": 10 },
+                                "story_flags_set": ["arc7_dave_pivot"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "refuse_pivot",
+                            "text": "\"You came here uninvited. You breached League operational space. I should arrest you, not cooperate with you.\"",
+                            "next_step": "refuse_branch",
+                            "outcome": {
+                                "description": "Aristotle stares at him. The grin does not return. Instead, something worse: resignation. 'Still a dog on a leash, Dave. Even after hearing the truth.' The channel closes. Dave watches the Corsair ship drift away through the crystal cathedrals. He was right. Protocol demanded it. But the crystals hum in the walls, and they sound like disappointment.",
+                                "faction_changes": { "felid_corsairs": -15, "canis_league": 10 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_dave_pivot"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "accept_branch",
+                    "speaker": "dave",
+                    "text": "'Agreed.' Dave does not hesitate. Hesitation is for situations with more than one correct answer. 'Operational coordination begins immediately. Transmit your fleet positions. I will integrate them into the tactical picture.'"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "'Fleet positions. From a pirate to a soldier. You know, Dave, if someone had told me six arcs ago that I would be handing my battle plans to a dog, I would have laughed myself sick.'"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "'If someone had told me I would be accepting them, I would have had them court-martialled.' The ghost of a smile crosses Dave's face. It is the first time Aristotle has ever seen it. Neither of them comments on it.",
+                    "end": true
+                },
+                {
+                    "step_id": "conditional_branch",
+                    "speaker": "aristotle",
+                    "text": "Aristotle's ears flatten. Then he takes a breath. 'Your rules. Fine. I hate your rules. But I hate being converted to crystal more.' A pause. 'For now, Commander. Your rules for now.'"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "'That is all I ask.' Dave nods. He does not expect the cat to obey forever. He expects the cat to obey long enough. In Dave's experience, long enough is usually sufficient."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "'You know, you are the most exhausting person I have ever worked with. And I once crewed with a goblin demolitions expert who talked in his sleep.'",
+                    "end": true
+                },
+                {
+                    "step_id": "refuse_branch",
+                    "speaker": "aristotle",
+                    "text": "The grin does not return. Instead, something worse crosses Aristotle's face: resignation. 'Still a dog on a leash, Dave. Even after hearing the truth. Even after the crystals showed you everything.'"
+                },
+                {
+                    "speaker": "dave",
+                    "text": "'Protocol is not a leash. It is a foundation.' Dave's voice does not waver. 'Leave my operational space, Captain. The next encounter will not be diplomatic.'"
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "'Protocol. Foundation. Whatever helps you sleep, Commander.' Aristotle cuts the channel. His ship drifts away through the crystal cathedrals, smaller and smaller until it vanishes into the light. Dave watches it go. The crystals in the walls hum a low, mournful frequency. Dave does not know if he is imagining it.",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_dave_communion_response",
+            "encounter_type": "diplomatic",
+            "title": "The Communion Decision",
+            "description": "Dave stands at the heart of the Warp Marches — the deepest point of the crystal network, where the formations grow so massive that they dwarf League warships. The crystal consciousness is present here, not as a voice but as a pressure, a vast attention focused on the small dog in the steel ship. Dave has the alien data, the fairy research, the Bone Yard analysis, and the communion experience. He has everything he needs to make a recommendation to League High Command. The recommendation will shape the multiverse's response to the awakening. Dave writes it in longhand, on paper, with a pen. Some things should not be digital.",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_warp_explored": true,
+                "arc7_crystal_communion": true,
+                "arc7_alien_agenda": true,
+                "arc7_dave_pivot": true
+            },
+            "npc_ids": ["dave"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "embrace_the_voice",
+                    "text": "\"The crystal consciousness is not an enemy. It is a neighbour. We must learn to coexist.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave writes the most radical document of his career: a recommendation to cease all crystal extraction and begin a programme of coexistence with the awakening consciousness. High Command will think he has lost his mind. The wolves will howl. The lions will roar. But Dave has heard the voice in the crystal, and he knows: you do not make war on something that old. You make peace, or you are consumed. He signs the document, seals it, and transmits it. His career may be over. The multiverse may be saved. The math works.",
+                        "faction_changes": { "aliens": 15, "fairies": 10, "knights": 5, "canis_league": -15 },
+                        "resource_changes": { "crystal_inventory": -20 },
+                        "story_flags_set": ["arc7_communion_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.3
+                },
+                {
+                    "choice_id": "weaponise_knowledge",
+                    "text": "\"Knowledge of the consciousness is the ultimate strategic asset. The League controls the narrative.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave classifies everything — the communion, the alien data, the consciousness research — at the highest level. The League alone possesses the complete picture. Every other faction operates with partial information, and partial information is controllable information. Dave writes the recommendation: the League positions itself as the sole intermediary between the multiverse and the crystal consciousness. Gatekeeper of the apocalypse. It is cynical. It is brilliant. It is the kind of plan that history either celebrates or condemns.",
+                        "faction_changes": { "canis_league": 15, "aliens": -10, "fairies": -5 },
+                        "resource_changes": { "salvage": 20, "crystal_inventory": 10 },
+                        "story_flags_set": ["arc7_communion_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.3
+                },
+                {
+                    "choice_id": "share_the_truth",
+                    "text": "\"Every faction deserves the truth. Broadcast everything. Let the multiverse decide together.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Dave compiles every piece of intelligence — fairy data, alien models, communion records, Bone Yard analysis — into a single comprehensive briefing and transmits it to every faction simultaneously. The response is immediate and chaotic: disbelief, denial, panic, prayer. But buried in the noise, Dave detects something unexpected: cooperation. Factions that have been killing each other for six arcs begin talking. Not about territory. Not about crystals. About survival. Dave watches the diplomatic channels light up and allows himself a thought he has never had before: perhaps transparency is a weapon too.",
+                        "faction_changes": { "felid_corsairs": 5, "fairies": 5, "knights": 10, "lions": 5, "wolves": 5, "goblins": 5, "aliens": 5, "canis_league": -10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc7_communion_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                }
+            ]
+        }
+    ]
+}

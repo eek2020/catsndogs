@@ -14,6 +14,7 @@ var faction_conquest: FactionConquestAI
 var realm_control: RealmControlSystem
 var side_mission_system: SideMissionSystem
 var crew_trait_system: CrewTraitSystem
+var star_map_system: StarMapSystem
 var save_manager: SaveManager
 
 # Runtime state
@@ -33,6 +34,7 @@ func _ready() -> void:
 	realm_control = RealmControlSystem.new()
 	side_mission_system = SideMissionSystem.new(data_loader)
 	crew_trait_system = CrewTraitSystem.new(data_loader)
+	star_map_system = StarMapSystem.new()
 	save_manager = SaveManager.new()
 
 	# Wire EventBus signals
@@ -40,6 +42,7 @@ func _ready() -> void:
 	EventBus.game_ending_reached.connect(_on_game_ending_reached)
 	EventBus.crew_member_recruited.connect(_on_crew_member_recruited)
 	EventBus.combat_victory.connect(_on_combat_victory)
+	EventBus.cartographer_rescued.connect(_on_cartographer_rescued)
 
 
 # ------------------------------------------------------------------
@@ -55,10 +58,19 @@ func start_new_game(protagonist_id: String = "aristotle") -> void:
 	side_mission_system.load_distress_signals()
 	side_mission_system.load_crew_missions(protagonist_id, data_loader)
 	_load_crew_encounters(protagonist_id)
+	_load_cartographer_encounters()
 	realm_control.initialize_realms(game_state)
 	var region_data: Array = data_loader.load_regions()
 	exploration.load_regions(region_data)
+	_init_star_maps()
 	if game_state:
+		game_state.owned_maps = [game_state.current_region]
+		star_map_system.owned_maps = game_state.owned_maps.duplicate()
+		# Place ship at center of starting region
+		var bounds: Vector2 = star_map_system.get_bounds(game_state.current_region)
+		game_state.position_x = bounds.x * 0.5
+		game_state.position_y = bounds.y * 0.5
+		star_map_system.reveal_around(game_state.current_region, game_state.position_x, game_state.position_y, 300.0)
 		MusicManager.on_arc_change(game_state.current_arc)
 		MusicManager.on_state_change("navigation")
 
@@ -130,6 +142,9 @@ func get_protagonist_config() -> Dictionary:
 func save_game(slot: int = 0) -> bool:
 	if game_state == null:
 		return false
+	# Persist star map state before saving
+	game_state.owned_maps = star_map_system.owned_maps.duplicate()
+	game_state.star_map_data = star_map_system.to_dict()
 	return save_manager.save_game(game_state, slot)
 
 
@@ -145,7 +160,14 @@ func load_game(slot: int = 0) -> bool:
 	side_mission_system.load_distress_signals()
 	side_mission_system.load_crew_missions(game_state.protagonist_id, data_loader)
 	_load_crew_encounters(game_state.protagonist_id)
+	_load_cartographer_encounters()
 	realm_control.initialize_realms(game_state)
+	_init_star_maps()
+	# Restore star map state from save
+	star_map_system.owned_maps = game_state.owned_maps.duplicate()
+	star_map_system.cartographer_rescued = game_state.story_flags.get("fairy_cartographer_rescued", false)
+	if not game_state.star_map_data.is_empty():
+		star_map_system.load_from_dict(game_state.star_map_data)
 	MusicManager.on_arc_change(game_state.current_arc)
 	MusicManager.on_state_change("navigation")
 	return true
@@ -227,3 +249,52 @@ func recruit_crew_member(crew_id: String) -> void:
 		return
 	var protagonist_id: String = game_state.protagonist_id
 	EventBus.crew_member_recruited.emit(crew_id, protagonist_id)
+
+
+# ------------------------------------------------------------------
+# Star map
+# ------------------------------------------------------------------
+
+func _init_star_maps() -> void:
+	var region_map_data: Dictionary = data_loader.load_region_maps()
+	star_map_system.load_region_maps(region_map_data)
+	var galaxy_data: Dictionary = data_loader.load_galaxy_layout()
+	star_map_system.load_galaxy_layout(galaxy_data)
+
+
+func _load_cartographer_encounters() -> void:
+	var encounters: Array = data_loader.load_cartographer_encounters()
+	for enc in encounters:
+		encounter_engine.encounter_table.append(enc)
+
+
+func _on_cartographer_rescued() -> void:
+	if game_state == null:
+		return
+	game_state.story_flags["fairy_cartographer_rescued"] = true
+
+
+func purchase_map(region_id: String, cost_crystals: int, reveal_pct: float) -> bool:
+	if game_state == null:
+		return false
+	if game_state.crystal_inventory < cost_crystals:
+		return false
+	if star_map_system.has_map(region_id):
+		return false
+	game_state.crystal_inventory -= cost_crystals
+	star_map_system.purchase_map(region_id, reveal_pct)
+	game_state.owned_maps = star_map_system.owned_maps.duplicate()
+	return true
+
+
+func travel_to_region(target_region: String) -> bool:
+	if game_state == null:
+		return false
+	var success: bool = exploration.travel_to_region(game_state, target_region)
+	if success:
+		var entry_pos: Vector2 = star_map_system.get_entry_position(game_state.current_region, target_region)
+		game_state.position_x = entry_pos.x
+		game_state.position_y = entry_pos.y
+		star_map_system.reveal_around(target_region, entry_pos.x, entry_pos.y, 300.0)
+		EventBus.region_changed.emit(game_state.current_region, target_region)
+	return success

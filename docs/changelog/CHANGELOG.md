@@ -6,6 +6,151 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-21 — Major Content Expansion: Maps, Arcs, Characters
+
+**Feature:** Massive content expansion adding 6 new maps, 6 new story arcs, 22 special characters, and a hidden map with a secret 4th ending.
+
+### Maps (7 → 13 regions)
+
+- **The Shattered Prides** — Dedicated Lion sovereign territory with palace ruins, political intrigue
+- **The Iron Expanse** — Dedicated Wolf military frontier with fortresses and weapons testing
+- **The Twilight Bazaar** — Neutral free port hub for cross-faction encounters and special characters
+- **The Warp Marches** — Unstable alien frontier with reality distortions and high-risk exploration
+- **The Bone Yard** — Ancient starship graveyard with massive salvage rewards and lore
+- **The Cradle of Whispers** — Hidden map (10 complex unlock requirements), origin of all Whisper Crystals, secret 4th ending
+
+### Story Arcs (4 → 10 arcs)
+
+- Current Arc 4 "The Reckoning" repositioned as Arc 10 (finale)
+- **Arc 4 "The Undercurrent"** — Crystal instability, Lion fracture, Death erratic
+- **Arc 5 "The Iron Tide"** — Wolf total war campaign, Dave loyalty crisis
+- **Arc 6 "The Fracture"** — Bone Yard discovery, Lion civil war, ancient signal
+- **Arc 7 "The Communion"** — Warp Marches, crystal consciousness contact
+- **Arc 8 "The Gathering Storm"** — Final alliances, Cradle portal
+- **Arc 9 "The Cradle"** — Hidden optional arc inside Cradle of Whispers
+- **Ending D "Reunite"** — Hidden 4th ending for balanced players who find the Cradle
+
+### Special Characters (22 new)
+
+- 12 faction-aligned: Lord Mane, Iron Fang, Glimmer, Cogsworth, Ser Galvain, Tidewalker, Lady Penumbra, Rustclaw, The Void Singer, Brother Hemlock, Snarl, Admiral Brass
+- 10 independent: The Oracle, The Keeper, Jinx, The Debt Collector, Patch, Flux, Sister Meridian, Wraith, Grizzle, Echo
+- Mix of significant (determines faction outcomes) and flavor (world-building richness)
+
+### Files Changed
+
+- `data/story/arc_definitions.json` — Expanded from 4 to 10 arcs, added ending_d_reunite threshold
+- `data/maps/galaxy_layout.json` — Added 6 new region nodes
+- `data/maps/region_maps.json` — Added 6 new region definitions with POIs, spawn zones, hidden locations
+- `data/maps/purchasable_maps.json` — Added 5 new purchasable star charts
+- `scripts/core/data_loader.gd` — Added `load_cradle_encounters()` and `load_special_character_encounters()`
+
+### Files Added
+
+- `data/encounters/arc4_encounters.json` through `arc9_encounters.json` — Aristotle path encounters
+- `data/encounters/arc4_encounters_dave.json` through `arc9_encounters_dave.json` — Dave path encounters
+- `data/encounters/arc10_encounters.json` + `arc10_encounters_dave.json` — Renamed from old arc4
+- `data/encounters/special_characters.json` — 22 special character encounters
+- `data/side_missions/arc4_side_missions.json` through `arc9_side_missions.json` — Aristotle side missions
+- `data/side_missions/arc4_side_missions_dave.json` through `arc9_side_missions_dave.json` — Dave side missions
+- `data/side_missions/arc10_side_missions.json` + `arc10_side_missions_dave.json` — Renamed from old arc4
+- `data/side_missions/distress_signals.json` — Added 5 new region-specific distress signals
+
+---
+
+## 2026-03-21 — Celestial Codex: 3-Layer Map System
+
+**Feature:** Replaced the single-region star map with the "Celestial Codex" — a three-layer map overlay accessible via TAB.
+
+- **Galaxy Layer** — shows all 7 regions as connected nodes with discovery state, fog reveal progress arcs, and danger level indicators. Arrow keys navigate between nodes, ENTER drills into a region.
+- **Region Layer** — the existing circular map view with fog of war, POIs, player position, and breadcrumb navigation. ESC returns to galaxy, ENTER drills to local scan.
+- **Local Layer** — zoomed-in player-centered view with detailed fog, labeled POIs, vision range circle, region boundary indicators, and coordinate readout.
+- **Directional boundary transitions** — flying off a region edge now picks the neighbor whose galaxy position matches the exit direction (no longer always picks the first connected region).
+- **Directional entry positions** — entering a region places the player on the edge closest to where they came from.
+
+### Files Changed
+
+- `data/maps/galaxy_layout.json` — New: galaxy node positions and colors for all 7 regions
+- `scripts/core/data_loader.gd` — Added `load_galaxy_layout()` method
+- `scripts/systems/star_map_system.gd` — Added galaxy layout storage, `get_galaxy_node_pos()`, `get_galaxy_node_color()`, `get_region_fog_percentage()`, and directional `get_entry_position()`
+- `scripts/autoload/game_session.gd` — Wired galaxy layout loading in `_init_star_maps()`
+- `scripts/ui/star_map_screen.gd` — Major rewrite: 3-layer renderer with galaxy/region/local draw methods, layer transitions, galaxy node navigation, per-layer input handling
+- `scripts/ui/navigation.gd` — Directional boundary neighbor selection using galaxy layout positions
+- `scripts/autoload/event_bus.gd` — Added `codex_layer_changed` signal
+- `scenes/ui/star_map_screen.tscn` — Updated title to "CELESTIAL CODEX"
+
+---
+
+## 2026-03-20 — Fix Arc 1 ending prematurely after "Eyes in the Dark"
+
+**Bug Fix:** Completing the "Eyes in the Dark" encounter immediately triggered the arc 1 exit, skipping "The Captain's Doctrine" stance choice. Added `arc1_stance` to arc 1 exit conditions so the player must make their doctrine decision before advancing to arc 2.
+
+### Files Changed
+
+- `data/story/arc_definitions.json` — Added `arc1_stance: true` to arc 1 exit conditions and arc 2 entry conditions
+
+---
+
+## 2026-03-20 — Fix dialogue title shifting outside parchment with 3+ choices
+
+**Bug Fix:** When encounters displayed more than 2 choice options, the title label shifted outside the parchment background. The panel and dialogue background had a fixed 280px height that couldn't accommodate the extra buttons. The panel now dynamically resizes upward to fit its content when choices are added, and resets when choices are cleared between dialogue steps.
+
+### Files Changed
+
+- `scripts/ui/dialogue_ui.gd` — Added `_resize_panel_to_fit()` to grow panel/background height based on content; called after building choices in both legacy and dialogue-step paths; reset height on choice clear
+
+---
+
+## 2026-03-20 — Dialogue Background for All Interactions + Soft Fog Edges
+
+**Enhancement:** The dialogue background texture is now shown for all encounter types, not just multi-step dialogue encounters. Legacy single-choice encounters now also display the parchment background with matching text styling.
+
+**Enhancement:** Fog of war edges in both the navigation view and star map screen are now rendered with soft, cloud-like edges instead of sharp rectangles. Boundary cells use overlapping circles with alpha gradients based on proximity to revealed areas, creating a natural nebula/cloud aesthetic.
+
+### Files Changed
+
+- `scripts/ui/dialogue_ui.gd` — Always show dialogue background and parchment styling for all encounter types
+- `scripts/ui/navigation.gd` — Soft circle-based fog rendering at revealed/hidden boundaries
+- `scripts/ui/star_map_screen.gd` — Per-cell soft circle fog with neighbor-based alpha at boundaries
+
+---
+
+## 2026-03-20 — Star Map Fog, Cartographer Balance, and Distress Signal Fix
+
+**Enhancement:** Replaced solid black fog of war on the star map with a translucent nebula-style fog. Unrevealed cells now render with subtle colour variation and partial transparency, while boundary cells between revealed and hidden areas get a softer fade for a more atmospheric look.
+
+**Balance:** The fairy cartographer encounter now requires completing the Crystal Discovery encounter first (`arc1_crystal_discovered` flag) and is placed at a fixed location in the far corner of The Fringe (5400, 5600), making Pip much harder to find early on.
+
+**Enhancement:** Rescuing the cartographer now reveals fog only around the hidden locations Pip has charted (radius 400 around each hidden location across all regions), rather than making everything visible. Players must still explore or purchase maps to uncover the rest.
+
+**Bug Fix:** Removed the fairy cartographer reference from the repeatable `distress_escape_pod` encounter. The rescue outcome now features a retired merchant navigator instead, eliminating the conflict with the dedicated one-time cartographer encounter.
+
+### Files Changed
+- `scripts/ui/star_map_screen.gd` — Fog of war rendering: nebula colours, edge-cell blending, translucent density
+- `scripts/systems/star_map_system.gd` — `on_cartographer_rescued()` reveals fog around hidden locations only
+- `data/encounters/fairy_cartographer.json` — Added `arc1_crystal_discovered` trigger condition
+- `data/maps/region_maps.json` — Added fixed story location for cartographer in starting_realm
+- `data/side_missions/distress_signals.json` — Changed escape pod rescue outcome from fairy cartographer to merchant navigator
+
+---
+
+## 2026-03-20 — Fix POIs Spawning Outside Region Bounds + Boundary Edge Effect
+
+**Bug Fix:** Story encounters, distress signals, combat spawns, and other POIs could spawn outside the navigable region boundary, making them unreachable. All POI spawn points (random encounters, distress signals, and star map spawn zones) are now clamped to stay within region bounds with a 150-unit padding.
+
+**Enhancement:** Added a fuzzy gradient edge effect at region boundaries. As the player approaches the edge of the map, a smooth quadratic dark gradient fades in, with a solid dark overlay beyond the boundary. This clearly communicates inaccessible areas. The existing pulsing blue glow for region transitions is preserved on top.
+
+### Files Changed
+- `scripts/ui/navigation.gd` — Added `_clamp_to_bounds()` helper, clamped POI positions in `_spawn_poi()` and `_update_distress()`, replaced thin boundary line with multi-strip gradient fade effect
+- `scripts/systems/star_map_system.gd` — Clamped random spawn zone POI positions to region bounds
+
+---
+
+## 2026-03-20 — Dialogue Overlay Visibility
+
+**Enhancement:** Added a semi-transparent dark backdrop behind dialogue encounters so the dialogue panel clearly stands out from the gameplay scene underneath. The backdrop fades in smoothly when the dialogue opens.
+
+---
+
 ## 2026-03-19 — Arc Transition: Stats Summary + Hyperspace Jump
 
 **Feature:** When a story arc completes, a full-screen stats summary and hyperspace jump animation play before entering the next sector.

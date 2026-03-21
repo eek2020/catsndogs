@@ -88,6 +88,8 @@ func apply_choice_outcome(
 	# Set story flags
 	for flag in outcome.story_flags_set:
 		game_state.story_flags[flag] = true
+		if flag == "fairy_cartographer_rescued":
+			GameSession.star_map_system.on_cartographer_rescued()
 
 	# Clear story flags
 	for flag in outcome.story_flags_cleared:
@@ -128,10 +130,9 @@ func apply_choice_outcome(
 
 	EventBus.encounter_triggered.emit()
 
-	# Defer arc-exit check so the dialogue overlay can pop itself first.
-	# Without this, advance_arc pushes arc_summary on top of the dialogue
-	# and pop_overlay pops the wrong overlay, leaving the dialogue stuck.
-	GameSession.call_deferred("_deferred_arc_check")
+	# NOTE: arc-exit check is NOT deferred here — the caller is responsible
+	# for popping the dialogue overlay first, then triggering the arc check.
+	# See dialogue_ui.gd _on_legacy_choice_selected and _end_dialogue.
 
 	return outcome.description
 
@@ -150,6 +151,8 @@ func apply_dialogue_step_outcome(
 	# Set story flags
 	for flag in outcome.story_flags_set:
 		game_state.story_flags[flag] = true
+		if flag == "fairy_cartographer_rescued":
+			GameSession.star_map_system.on_cartographer_rescued()
 
 	# Clear story flags
 	for flag in outcome.story_flags_cleared:

@@ -1,0 +1,424 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc7_warp_entry",
+            "encounter_type": "exploration",
+            "title": "The Marches Beyond Reason",
+            "description": "The jump drive screams like a violin strung with razor wire. Reality peels back in ribbons as the ship punches through into the Warp Marches — a region that shouldn't exist on any chart because, until thirty seconds ago, it didn't. The hull groans. The crystal drive, usually a steady hum beneath the deck plates, begins to sing. Not metaphorically. The sound is beautiful and wrong, like a lullaby hummed by something that learned music from a diagram. Aristotle's fur stands on end from ears to tail. \"Well,\" he manages, gripping the armrest with unsheathed claws, \"I've always wanted to visit somewhere that makes my teeth vibrate.\"",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_warp_explored": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "full_sensor_sweep",
+                    "text": "Run a full sensor sweep. If reality is broken here, we need to know how broken.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The sensors return data that the navigation computer flatly refuses to display, citing 'geometric impossibility.' Aristotle reads the raw feed himself. The Warp Marches are threaded with crystal resonance — not deposits, but patterns. Signals. As if the very fabric of space here is woven from the same substance that powers his ship. \"That's not geology,\" he whispers. \"That's architecture.\"",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": 5 },
+                        "story_flags_set": ["arc7_warp_explored", "arc7_warp_scanned"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                },
+                {
+                    "choice_id": "follow_the_song",
+                    "text": "Follow the crystal drive's resonance. It seems to know where it wants to go.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle releases the helm and lets the ship drift on the crystal drive's harmonic. It's like surrendering to a current — terrifying and serene in equal measure. The ship threads between impossible geometries, past stars that burn in colours with no names, toward a nexus of light that pulses like a heartbeat. The drive sings louder. Aristotle's ears flatten. \"I'm taking navigation advice from a rock,\" he mutters. \"This is either enlightenment or a very expensive suicide.\"",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc7_warp_explored", "arc7_followed_the_song"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.05
+                },
+                {
+                    "choice_id": "lock_down_drive",
+                    "text": "Shut down the crystal drive and switch to emergency thrusters. We don't dance to anyone else's tune.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The crystal drive resists shutdown. For three horrible seconds, every light on the ship flickers and Aristotle swears he hears something whisper his name — not his captain's name, his real name, the one his mother gave him in that warm alley behind the fish market. Then the drive cuts. Silence. The emergency thrusters cough to life. \"Right,\" Aristotle says into the ringing quiet. \"We do this my way. On chemical thrust, like our grandparents. Dignity intact.\" The Warp Marches stretch before him, vast and patient.",
+                        "faction_changes": {},
+                        "resource_changes": { "crystal_inventory": -3 },
+                        "story_flags_set": ["arc7_warp_explored", "arc7_drive_locked"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                }
+            ],
+            "dialogue_steps": []
+        },
+        {
+            "encounter_id": "enc_arc7_crystal_communion",
+            "encounter_type": "event",
+            "title": "The Voice in the Lattice",
+            "description": "It begins as a vibration in the deck plates — then in Aristotle's bones, then behind his eyes. The crystal drive doesn't just sing now; it speaks. Not in words, not exactly. In impressions. Flavours of thought. The taste of starlight. The weight of loneliness measured in geological epochs. Something vast and fractured is reaching out through every whisper crystal on the ship, and it is not a signal or a recording. It is aware. It knows he is listening. The bridge lights dim to the colour of deep water, and Aristotle sits very still in his captain's chair, tail wrapped tight around his legs, as the oldest thing in the universe tries to remember how to say hello.",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_warp_explored": true,
+                "arc7_crystal_communion": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 9,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "crystal_consciousness",
+                    "text": "... you ... carry ... pieces of ... me ..."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The crystals shiver in the hold. Every indicator on the bridge spikes, then flatlines, then spikes again in a rhythm that Aristotle realises, with dawning horror, matches his own heartbeat."
+                },
+                {
+                    "speaker": "crystal_consciousness",
+                    "text": "... so long ... alone ... fragmented ... each shard a ... scream I cannot ... finish ..."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"You're alive.\" It's not a question. He says it flat, like a doctor confirming something terminal. \"The fuel that powers every starship in the multiverse is alive.\"",
+                    "choices": [
+                        {
+                            "choice_id": "reach_back",
+                            "text": "Open your mind to the contact. Reach back toward whatever this is.",
+                            "next_step": "communion_open",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_communion_open"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "listen_only",
+                            "text": "Don't reach back. Listen, but keep your walls up. Information first.",
+                            "next_step": "communion_guarded",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_communion_guarded"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "demand_answers",
+                            "text": "\"If you can talk, you can answer questions. What are you? What do you want?\"",
+                            "next_step": "communion_interrogate",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_communion_interrogated"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "communion_open",
+                    "speaker": "crystal_consciousness",
+                    "text": "... oh ... you are ... warm ... I remember warmth ... before the breaking ... before the dark and the scattering ... I was ... whole ... I was ... everything that sings between stars ..."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The communion floods through him — millennia of solitude compressed into a single breath. He sees the crystal consciousness as it was: a vast lattice of light spanning galaxies, singing the fundamental harmonics that held reality together. Then the shattering. The screaming silence. Fragments scattered across the multiverse, each one a tiny howl of confused agony, burning in the engines of a thousand ships. \"I'm sorry,\" he says, and means it, which surprises no one more than himself."
+                },
+                {
+                    "speaker": "crystal_consciousness",
+                    "text": "... you are the first ... to apologise ... in four billion years ...",
+                    "end": true
+                },
+                {
+                    "step_id": "communion_guarded",
+                    "speaker": "crystal_consciousness",
+                    "text": "... careful one ... yes ... wise to be ... careful ... others came with ... open hearts and ... I could not ... help them ... the fragments ... cut ..."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The impressions wash over his mental barriers like waves against a seawall. He catches fragments: age beyond comprehension, pain so old it has calcified into something like patience, and beneath it all, a desperate, bewildered hope that this time — this small warm creature with sharp ears and sharper instincts — might be different. \"I hear you,\" Aristotle says carefully. \"But I've been in this game too long to shake hands before I count my fingers.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "communion_interrogate",
+                    "speaker": "crystal_consciousness",
+                    "text": "... what am I ... I am the song ... the first song ... the one that taught ... matter how to ... dance ... I was one ... then they ... broke me ... into fuel ... what do I want ... I want ... to finish ... a thought I started ... when your universe ... was young ..."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"A thought.\" Aristotle lets that land. The most powerful substance in the multiverse — wars fought over it, empires built on it, his entire livelihood — is the shattered remnant of something trying to finish a thought. He barks a laugh that has no humour in it. \"I've been burning a god for fuel. I've been selling pieces of a mind.\" He runs a paw across his face. \"Well. That's going to make the next trade negotiation awkward.\"",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_alien_agenda",
+            "encounter_type": "diplomatic",
+            "title": "The Truth Behind the Hive",
+            "description": "The Void Singer materialises in the space between the bridge consoles — not through a door, not via transporter, but by simply being there between one blink and the next. It is crystalline and vast, folded into three dimensions with obvious discomfort, like an ocean poured into a bottle. Light refracts through its body in patterns that Aristotle's brain keeps trying to interpret as language. The alien presence fills the bridge with a harmonic so deep it makes the deckplates ring. This is not the hive-mind swarm intelligence the factions have feared for centuries. This is a pilgrim.",
+            "arc_id": "arc_7",
+            "location": "deep_space",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_crystal_communion": true,
+                "arc7_alien_agenda": false
+            },
+            "npc_ids": ["aristotle", "void_singer"],
+            "priority": 8,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "void_singer",
+                    "text": "We have waited for one who hears the Song. For nine hundred of your centuries, we have gathered the fragments. Not to conquer. To heal."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Nine hundred centuries.\" Aristotle's tail lashes once. \"That's a long time to let everyone think you're invaders when you're actually running the galaxy's most patient search-and-rescue operation.\""
+                },
+                {
+                    "speaker": "void_singer",
+                    "text": "Your kind burns the fragments for fuel. You call them crystals. We call them tears. Each one is a severed thought, a broken syllable of the First Song. We could not explain. Your languages are built for things that end. The Song does not end. It was interrupted."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"So every faction in the multiverse has been fighting over who gets to burn the tears of a shattered god, and you've been trying to put that god back together with everyone shooting at you.\"",
+                    "choices": [
+                        {
+                            "choice_id": "believe_them",
+                            "text": "\"I've heard the Song myself. I believe you. How do we help?\"",
+                            "next_step": "alien_alliance",
+                            "outcome": {
+                                "faction_changes": { "aliens": 15, "canis_league": -5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_alien_alliance"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "skeptical",
+                            "text": "\"Pretty story. But I've met enough con artists to know a good pitch when I hear one. Prove it.\"",
+                            "next_step": "alien_proof",
+                            "outcome": {
+                                "faction_changes": { "aliens": -3 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_alien_skeptic"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "pragmatic",
+                            "text": "\"I don't care about your theology. I care about leverage. What's this information worth?\"",
+                            "next_step": "alien_trade",
+                            "outcome": {
+                                "faction_changes": { "aliens": -8 },
+                                "resource_changes": { "crystal_inventory": 20 },
+                                "story_flags_set": ["arc7_alien_leveraged"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "alien_alliance",
+                    "speaker": "void_singer",
+                    "text": "You hear the Song and you choose compassion. We did not expect this from a species so young. The fragments must be gathered — not by force, but by resonance. Your ship, your crystals, your connection to the consciousness... you are a key, Aristotle. The first key in four billion years."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"A key. Wonderful. Last time someone called me special, I ended up owing money to three factions and a very angry bartender.\" He pauses. \"But fine. I'm in. Someone has to be the adult in this apocalypse.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "alien_proof",
+                    "speaker": "void_singer",
+                    "text": "The Void Singer extends one crystalline limb toward the ship's drive core. The crystal drive erupts in a chord so pure it brings tears to Aristotle's eyes — and he would deny that under oath. Every crystal on the ship resonates in harmony, and for one searing instant, Aristotle feels the consciousness again: vast, wounded, grateful. The Void Singer withdraws."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "He wipes his eyes with the back of his paw. \"All right. That wasn't a parlour trick.\" He straightens. \"I'm not signing anything. But I'm listening. Talk.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "alien_trade",
+                    "speaker": "void_singer",
+                    "text": "The Void Singer dims, its light folding inward. When it speaks again, its harmonics carry something Aristotle recognises: disappointment. Not anger — the weary sadness of a being that has watched a thousand civilisations choose profit over wonder. It deposits a cluster of crystals on the deck. \"Take them. They are tears freely given. Perhaps when the fuel runs low, you will remember that they wept.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The crystals sit on the deck, humming faintly. Aristotle stares at them. He doesn't pick them up immediately, which is, by his own standards, practically spiritual growth.",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_dave_pivot",
+            "encounter_type": "diplomatic",
+            "title": "The Dog Who Listened",
+            "description": "Dave's cruiser is waiting at the edge of the Warp Marches, engines cold, running lights dimmed to minimum. He's been here for days. When the hail comes through, Dave's face on the viewscreen is different from every previous encounter — the rigid military bearing is gone, replaced by something rawer. His ears are back. His tail is still. Commander Dave, the unshakeable bulwark of the Canis League, looks like a dog who has heard a sound he cannot explain and cannot forget. \"Aristotle,\" he says, and it's the first time he's ever used the name without the word 'Captain' welded to it like a formality. \"We need to talk about the crystals.\"",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_crystal_communion": true,
+                "arc7_dave_pivot": false
+            },
+            "npc_ids": ["aristotle", "dave"],
+            "priority": 7,
+            "repeatable": false,
+            "choices": [],
+            "dialogue_steps": [
+                {
+                    "speaker": "dave",
+                    "text": "\"My science division detected the resonance event. When your ship... sang... it was picked up across three sectors. I've read the analysis. I've listened to the recordings.\" He pauses. \"I played them for my crew. Half of them cried. Bulldogs. Crying. You understand what I'm telling you?\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"I understand that for the first time since we met, you look like you need a drink more than I do.\""
+                },
+                {
+                    "speaker": "dave",
+                    "text": "The League's entire economy runs on crystal fuel. Our fleet, our stations, our colonies. If what I think is happening is really happening — if the crystals are alive — then we've built a civilisation on...\" He stops. Swallows. \"The Canis League does not traffic in sentient beings, Aristotle. That is not who we are."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"And yet here we are.\" Aristotle leans forward. \"The question isn't what we've done, Dave. It's what we do now.\"",
+                    "choices": [
+                        {
+                            "choice_id": "trust_dave",
+                            "text": "\"I need allies who can face ugly truths. You're here. That counts for something.\"",
+                            "next_step": "dave_ally",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_dave_ally"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "leverage_dave",
+                            "text": "\"Imagine what the other factions would say if they knew the League knowingly burned sentient fuel.\"",
+                            "next_step": "dave_threatened",
+                            "outcome": {
+                                "faction_changes": { "canis_league": -15 },
+                                "resource_changes": { "salvage": 50 },
+                                "story_flags_set": ["arc7_dave_threatened"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "test_dave",
+                            "text": "\"Pretty words. But what are you actually willing to sacrifice, Commander?\"",
+                            "next_step": "dave_tested",
+                            "outcome": {
+                                "faction_changes": { "canis_league": 3 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc7_dave_tested"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "dave_ally",
+                    "speaker": "dave",
+                    "text": "Dave straightens. Something locks into place behind his eyes — not the old military rigidity, but something deeper. Conviction. \"The League was founded on principles, Aristotle. Not profit margins. If those principles mean dismantling our own fuel infrastructure...\" He sets his jaw. \"Then that's what they mean.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"You know, Dave, you're the most inconvenient ally I've ever had.\" A beat. \"That might be a compliment.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "dave_threatened",
+                    "speaker": "dave",
+                    "text": "The warmth drains from Dave's face like heat from a dying star. The military bearing returns, harder than before, but different — wounded. \"I came here in good faith, Aristotle. I came here because I thought...\" He stops. \"No. You've made your position clear.\" The transmission cuts. But before it does, Aristotle catches something in Dave's eyes that looks suspiciously like a dog being kicked by someone he trusted."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The viewscreen goes dark. Aristotle sits in silence for a long time. \"Business is business,\" he says to no one. The crystal drive hums. It sounds like a sigh.",
+                    "end": true
+                },
+                {
+                    "step_id": "dave_tested",
+                    "speaker": "dave",
+                    "text": "\"What am I willing to sacrifice.\" Dave is quiet for a long moment. \"I've submitted my resignation from Fleet Command, effective upon confirmation. I'm not here as a Commander, Aristotle. I'm here as Dave. Just Dave. I figure if we're going to do the right thing, someone should start by giving up something real.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "Aristotle blinks. In seven arcs of schemes, betrayals, and desperate gambits, very few things have genuinely surprised him. This does. \"You resigned.\" Another blink. \"You absolute idiot.\" His voice is rough. \"All right, Just Dave. Pull up a chair. We've got work to do.\"",
+                    "end": true
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc7_communion_response",
+            "encounter_type": "diplomatic",
+            "title": "The Weight of Knowing",
+            "description": "The knowledge sits in Aristotle's chest like a swallowed star — heavy, hot, impossible to ignore. The crystal consciousness is real. The fuel that powers civilisation is a shattered mind. Every faction will react differently when this truth spreads, and it will spread. The only question is who controls the narrative. Aristotle paces the bridge, tail switching, ears rotating through every sound the ship makes. The crystal drive hums its patient, waiting song. Three paths crystallise in his mind, each one irreversible, each one defining what kind of captain — what kind of person — he has become.",
+            "arc_id": "arc_7",
+            "location": "warp_marches",
+            "trigger_conditions": {
+                "current_arc": "arc_7",
+                "arc7_crystal_communion": true,
+                "arc7_alien_agenda": true,
+                "arc7_communion_response": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "embrace_the_voice",
+                    "text": "Embrace the crystal consciousness. Open yourself fully to its communion. Let it change you.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle closes his eyes and drops every wall he has ever built. The consciousness floods in — not painful, but overwhelming, like stepping from a dark room into sunlight that has been waiting four billion years. When he opens his eyes, they glow faintly. The crew stares. \"I'm still me,\" he says, and his voice carries harmonics it didn't have before. \"I'm just... more me.\" He can feel the crystals now — all of them, everywhere, like phantom limbs. Every shard in every engine across the multiverse, whispering. The loneliness is crushing and beautiful. \"Right,\" he says softly. \"I hear you. All of you. Let's see what we can do.\"",
+                        "faction_changes": { "aliens": 20, "canis_league": -10, "feline_prides": -10 },
+                        "resource_changes": { "crystal_inventory": -15 },
+                        "story_flags_set": ["arc7_communion_response", "arc7_embraced_voice"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.15
+                },
+                {
+                    "choice_id": "weaponise_knowledge",
+                    "text": "This is the ultimate leverage. Every faction needs crystals. Only you know the truth. Use it.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle archives every shred of data — the communion recordings, the alien testimony, the resonance patterns. He encrypts them behind seven layers of the nastiest cyphers his ship's computer can generate. Then he pours himself a drink. \"Information is the only weapon that gets sharper the longer you hold it,\" he tells the crystal drive, which continues its mournful song, unimpressed by his rationalisation. He drafts careful messages to every faction leader, each one implying he knows something they'd pay dearly for. The crystal consciousness watches through its fragments. It does not judge. It is too tired to judge. But it remembers.",
+                        "faction_changes": { "aliens": -20, "canis_league": 5, "feline_prides": 5 },
+                        "resource_changes": { "crystal_inventory": 30, "salvage": 40 },
+                        "story_flags_set": ["arc7_communion_response", "arc7_weaponised_knowledge"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.25
+                },
+                {
+                    "choice_id": "share_the_truth",
+                    "text": "Broadcast everything. Every faction. Every frequency. Let the multiverse decide what to do with the truth.",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle opens every channel his ship can reach and transmits the communion data, the alien testimony, the resonance analysis — all of it, unedited, unspun, raw. He doesn't add commentary. He doesn't need to. The truth is its own argument. Within minutes, the channels explode. Factions that haven't spoken in decades are hailing each other. Trade routes freeze. The crystal market implodes. It is, by any economic measure, the single most destructive act of journalism in the history of the multiverse. Aristotle watches the chaos unfold on a dozen screens and takes a long sip of tea. \"You're welcome,\" he says to absolutely everyone and no one.",
+                        "faction_changes": { "aliens": 10, "canis_league": -5, "feline_prides": -5 },
+                        "resource_changes": { "crystal_inventory": -10 },
+                        "story_flags_set": ["arc7_communion_response", "arc7_shared_truth"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ],
+            "dialogue_steps": []
+        }
+    ]
+}

@@ -1,0 +1,494 @@
+{
+    "encounters": [
+        {
+            "encounter_id": "enc_arc6_bone_yard_discovery",
+            "encounter_type": "exploration",
+            "title": "The Graveyard of Empires",
+            "description": "The Bone Yard is not a place. It is a warning. Thousands of derelict vessels from civilisations that have no name drift in a slow, silent waltz around a central mass of dead crystal — crystals that have gone dark, their light extinguished. The ships are impossibly old. Some are organic. Some are geometric. Some are things that defy description. All of them are empty. Aristotle's sensors pick up faded inscriptions on the hulls, repeated in a hundred dead languages. His translation matrix renders them all the same way: \"We went too deep.\"",
+            "arc_id": "arc_6",
+            "location": "bone_yard",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_bone_yard_explored": false
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 10,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "thorough_search",
+                    "text": "\"Document everything. Every ship, every inscription, every dead crystal. This is a history lesson written in corpses, and I intend to pass the exam.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Hours become days. The crew catalogues wreck after wreck, piecing together a horrifying mosaic. Every civilisation here found the crystals. Every civilisation grew dependent on them. Every civilisation eventually discovered what the crystals truly were. And every single one was destroyed — not by enemies, but by the crystals themselves. \"Pattern recognition,\" Aristotle murmurs, staring at the data. \"Every empire that built itself on whisper crystals fell. And here I am, building another one.\"",
+                        "faction_changes": { "fairies": 10 },
+                        "resource_changes": {},
+                        "story_flags_set": ["arc6_bone_yard_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.05
+                },
+                {
+                    "choice_id": "salvage_focus",
+                    "text": "\"Ancient derelicts means ancient technology. Strip everything useful. The dead don't need their toys.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "The Corsairs descend on the wrecks like a pack of very well-organised vultures. The haul is extraordinary: alloys that don't exist in known metallurgy, power cells that still hold a charge after millennia, and — buried in one ship's core — a data crystal containing star charts to places that shouldn't exist. \"The dead left us a treasure map,\" Aristotle grins. \"How thoughtful of them. I'm sure they won't mind.\"",
+                        "faction_changes": {},
+                        "resource_changes": { "salvage": 50, "crystal_inventory": 10 },
+                        "story_flags_set": ["arc6_bone_yard_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.1
+                },
+                {
+                    "choice_id": "leave_quickly",
+                    "text": "\"This place is a tomb. Tombs have curses. Get what we need and get out before we join the collection.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "A quick survey, a handful of scans, and the Corsairs retreat. Aristotle's instincts scream that staying longer would be unwise. The dead crystals seem to watch them leave. \"There's brave, there's stupid, and there's staying in a graveyard after the lights go out. We're leaving.\"",
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["arc6_bone_yard_explored"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        },
+        {
+            "encounter_id": "enc_arc6_ancient_signal",
+            "encounter_type": "exploration",
+            "title": "The Voice Between Frequencies",
+            "description": "Deep in the Bone Yard, buried beneath layers of dead crystal and ancient wreckage, Aristotle's sensors detect something impossible: a signal. Not a distress call, not a beacon — a repeating mathematical sequence that predates every civilisation in the graveyard. It is coming from inside the central mass of dead crystal, and it is clearly, unmistakably, deliberately encoded. Someone — or something — left a message here. And it has been waiting a very, very long time to be heard.",
+            "arc_id": "arc_6",
+            "location": "bone_yard",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_ancient_signal_decoded": false,
+                "arc6_bone_yard_explored": true
+            },
+            "npc_ids": ["aristotle", "cogsworth"],
+            "priority": 9,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "aristotle",
+                    "text": "The signal is encrypted in something that isn't any known cipher. My best code-breakers are staring at it like cats at a closed door. We need unconventional thinking."
+                },
+                {
+                    "speaker": "cogsworth",
+                    "text": "Cogsworth the goblin inventor tumbles out of a maintenance hatch, trailing wires and smelling of burnt circuits. \"Unconventional? That's literally my middle name! Well, technically my middle name is Geargrinder, but the POINT is — let me at it! I've been studying the fairy resonance data AND the alien tech samples. If we combine fairy harmonic analysis with goblin signal processing and a dash of alien quantum nonsense, I can crack this thing!\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Fairy magic, goblin engineering, and alien technology. What could possibly go wrong?\"",
+                    "choices": [
+                        {
+                            "choice_id": "let_cogsworth_work",
+                            "text": "\"Do it, Cogsworth. Full resources. If you blow up my ship, I'm billing the Goblin Warrens.\"",
+                            "next_step": "decode_success",
+                            "outcome": {
+                                "faction_changes": { "goblins": 10, "fairies": 5 },
+                                "resource_changes": { "salvage": -15 },
+                                "story_flags_set": ["arc6_ancient_signal_decoded"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "cautious_approach",
+                            "text": "\"Slowly, Cogsworth. Test everything twice. I don't want to accidentally summon something.\"",
+                            "next_step": "decode_careful",
+                            "outcome": {
+                                "faction_changes": { "goblins": 5 },
+                                "resource_changes": { "salvage": -5 },
+                                "story_flags_set": ["arc6_ancient_signal_decoded"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "seal_signal",
+                            "text": "\"On second thought — seal it. Some messages are left unread for a reason.\"",
+                            "next_step": "decode_refused",
+                            "outcome": {
+                                "faction_changes": { "goblins": -5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc6_ancient_signal_decoded"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "decode_success",
+                    "speaker": "cogsworth",
+                    "text": "Three explosions, one small fire, and a spontaneous musical number from the engine room later, Cogsworth cracks the signal. What emerges is a star chart — not to a place, but to a path. A route through folded space that leads to the Cradle of Whispers. And with it, a warning in a language that translates itself directly into the listener's mind: \"YOU ARE NOT THE FIRST. YOU WILL NOT BE THE LAST. CHOOSE WISELY.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Choose wisely. The ancient cosmic intelligence left us a fortune cookie. Marvellous.\" But his paws are shaking, and he pretends not to notice.",
+                    "end": true
+                },
+                {
+                    "step_id": "decode_careful",
+                    "speaker": "cogsworth",
+                    "text": "It takes a week of careful, methodical work. No explosions — much to Cogsworth's visible disappointment. The decoded signal reveals coordinates and a warning. The coordinates lead deeper than any chart has ever mapped. The warning is simple and chilling: the Cradle remembers everyone who has ever found it. And it is not happy about most of them."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"An unhappy ancient intelligence. Just what this multiverse needed. At least we know where we're going. Even if 'going' might be a one-way trip.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "decode_refused",
+                    "speaker": "cogsworth",
+                    "text": "Cogsworth looks heartbroken. \"But — but the SCIENCE! The DISCOVERY! You can't just — \" He trails off as Aristotle's expression makes it clear that yes, he absolutely can. The signal is sealed in a shielded container. It continues to pulse, muffled but insistent, like a heartbeat buried alive."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Some doors stay closed, Cogsworth. The last lot who opened this one are floating around us in a million pieces. Take the hint.\"",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc6_lion_civil_war",
+            "encounter_type": "combat",
+            "title": "The Prides Divided",
+            "description": "The Shattered Prides erupt. Lord Mane's reformist fleet — smaller, faster, crewed by the desperate and the idealistic — faces Lady Penumbra's traditionalist armada across a field of ancient wreckage. Both sides have been arming for this moment. Both sides know that whoever controls the Lion faction controls the second-largest military in the multiverse. And both sides have sent runners to Aristotle, begging for his crystal supply to tip the balance.",
+            "arc_id": "arc_6",
+            "location": "shattered_prides",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_lion_civil_war": false,
+                "arc4_lion_fracture": true
+            },
+            "npc_ids": ["aristotle", "lord_mane", "lady_penumbra"],
+            "priority": 8,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "lord_mane",
+                    "text": "Captain! Penumbra's fleet is twice the size of mine. Without crystal fuel for our engines, we cannot manoeuvre. Without manoeuvre, we die. I am asking — not as a prince, but as a friend. Help us. Help the future."
+                },
+                {
+                    "speaker": "lady_penumbra",
+                    "text": "A second transmission cuts in on a separate frequency. Lady Penumbra's voice is glacier-cold: \"Do not listen to the traitor prince, Captain. Supply me, and the Pride Ascendancy will remember its debts. Supply him, and I will personally ensure the Corsairs never refuel at a Lion port again.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Two Lions, one bowl of cream. A cat's favourite kind of problem.\"",
+                    "choices": [
+                        {
+                            "choice_id": "support_mane",
+                            "text": "\"Lord Mane gets the crystals. The future is more valuable than tradition — and he's less likely to stab me in the back.\"",
+                            "next_step": "mane_wins",
+                            "outcome": {
+                                "faction_changes": { "lions": 15, "felid_corsairs": 5 },
+                                "resource_changes": { "crystal_inventory": -20 },
+                                "story_flags_set": ["arc6_lion_civil_war"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "support_penumbra",
+                            "text": "\"Lady Penumbra has the bigger fleet and the established supply lines. Bet on the favourite.\"",
+                            "next_step": "penumbra_wins",
+                            "outcome": {
+                                "faction_changes": { "lions": -10, "felid_corsairs": -5 },
+                                "resource_changes": { "crystal_inventory": -15, "salvage": 30 },
+                                "story_flags_set": ["arc6_lion_civil_war"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "stay_out",
+                            "text": "\"Let the Lions sort out their own mess. I'm not kingmaker for cats I don't trust.\"",
+                            "next_step": "neutral_path",
+                            "outcome": {
+                                "faction_changes": { "lions": -5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc6_lion_civil_war"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "mane_wins",
+                    "speaker": "lord_mane",
+                    "text": "The crystal fuel arrives just as Penumbra's fleet closes the trap. Mane's ships ignite with sudden, brilliant power — darting through the traditionalist formation like silver fish through a net. The battle is fierce but decisive. Penumbra's flagship retreats, trailing fire. Lord Mane appears on screen, battered but alive: \"You have my gratitude, Captain. And the loyalty of the reformed Prides. This is a new era.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"New eras are expensive. I'll send you the invoice.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "penumbra_wins",
+                    "speaker": "lady_penumbra",
+                    "text": "Penumbra's fleet crushes the reformists with mechanical precision. Lord Mane's ship is captured, not destroyed — a mercy that is clearly calculated rather than compassionate. Lady Penumbra's face appears on screen, expression carved from marble: \"The Pride Ascendancy thanks you, Captain. Your payment will be delivered. As for Mane — he will learn the cost of treason.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"I just helped a tyrant crush a revolution for thirty pieces of salvage. Somewhere, my mother is very disappointed.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "neutral_path",
+                    "speaker": "aristotle",
+                    "text": "The battle rages without Corsair intervention. It is brutal, prolonged, and ends in a bloody stalemate — both sides too damaged to press the advantage. Lord Mane retreats to the outer territories. Lady Penumbra holds the core. The Lion faction is broken in half, and neither half is happy with Aristotle."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"A weakened Lion is still a Lion. But two weakened Lions fighting each other? That's just good business. They'll both come crawling to me for crystals eventually.\"",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc6_goblin_heist",
+            "encounter_type": "event",
+            "title": "The Great Crystal Caper",
+            "description": "The alarms are... confusing. Something has breached the lower decks, but the intruder signatures keep splitting, multiplying, and occasionally vanishing entirely. Security cameras show brief flashes of green skin, oversized goggles, and what appears to be a very small goblin riding a very large mechanical spider through the ventilation system. Rustclaw, the most notorious goblin thief in the multiverse, has come for Aristotle's crystal refining secrets — and they've brought friends.",
+            "arc_id": "arc_6",
+            "location": "goblin_warrens",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_goblin_heist": false
+            },
+            "npc_ids": ["aristotle", "rustclaw"],
+            "priority": 7,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "rustclaw",
+                    "text": "A cackling voice echoes through the ship's intercom: \"AHAHAHAHA! Rustclaw is HERE, cat-captain! We don't want your crystals — we want the RECIPE! The refining process! The secret sauce! Goblin engineers deserve to know how the sparkle-rocks get their sparkle!\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Rustclaw. You broke into my ship with a mechanical spider to steal a manufacturing process. I'm not even angry — I'm impressed. And slightly concerned about my ventilation security.\"",
+                    "choices": [
+                        {
+                            "choice_id": "catch_rustclaw",
+                            "text": "\"Seal all decks! Vent the atmosphere in sections three through seven! I want that goblin in a box!\"",
+                            "next_step": "caught_path",
+                            "outcome": {
+                                "faction_changes": { "goblins": -15 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc6_goblin_heist"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "negotiate_trade",
+                            "text": "\"How about a deal? I'll license you the refining process. In exchange, I get first pick of every goblin invention for the next five years.\"",
+                            "next_step": "deal_path",
+                            "outcome": {
+                                "faction_changes": { "goblins": 15 },
+                                "resource_changes": { "crystal_inventory": -10 },
+                                "story_flags_set": ["arc6_goblin_heist"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "let_them_try",
+                            "text": "\"You know what? Let them try to steal it. The refining process requires fairy-calibrated harmonics they'll never replicate. This should be entertaining.\"",
+                            "next_step": "fail_path",
+                            "outcome": {
+                                "faction_changes": { "goblins": -5, "fairies": 5 },
+                                "resource_changes": { "salvage": -10 },
+                                "story_flags_set": ["arc6_goblin_heist"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "caught_path",
+                    "speaker": "rustclaw",
+                    "text": "Rustclaw is dragged onto the bridge by two very annoyed Corsair marines, still cackling: \"You can't stop PROGRESS, cat-captain! If Rustclaw can't steal it, someone else will! The crystal monopoly WILL fall! ...Also, can I keep the spider? She's a rescue.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"No, you cannot keep the spider. It ate three metres of power conduit.\" Aristotle stares at the tiny, defiant goblin and feels a grudging respect. \"Get off my ship. Next time, knock.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "deal_path",
+                    "speaker": "rustclaw",
+                    "text": "The cackling stops. A long, suspicious silence. Then: \"...A LICENSE? You'd actually SHARE it? No tricks? No exploding contracts?\" Rustclaw's goggles fog up with what might be tears, or might be leaking coolant. \"Rustclaw accepts! The Goblin Warrens will remember this! Every invention, every gadget, every questionably legal device — first pick! DEAL!\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"I just made a business deal with a goblin who broke into my ship on a mechanical spider. This is either the best or worst moment of my career.\" It is, he decides, definitely both.",
+                    "end": true
+                },
+                {
+                    "step_id": "fail_path",
+                    "speaker": "rustclaw",
+                    "text": "Twenty minutes later, an explosion rocks the lower decks. Then another. Then a sound like a thousand crystal wineglasses shattering simultaneously. Rustclaw's voice, significantly less confident: \"AH. So THAT'S what the fairy harmonics do. Rustclaw may have... slightly... crystallised the ventilation system. Request permission to... leave. Quickly. Before it spreads.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"Permission granted. And Rustclaw? Tell the Warrens that the refining process has a built-in security feature: anyone who tries to copy it gets a ship full of decorative crystal stalactites.\" He pauses. \"Actually, that looks quite nice. Leave the stalactites.\"",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc6_death_escalation",
+            "encounter_type": "event",
+            "title": "The Wraith's Confession",
+            "description": "The Bone Yard grows darker. At the heart of the dead crystal mass, a shape materialises — not Death's flagship, but something smaller, frailer. A spectral vessel crewed by a single figure: the Wraith, Death's most trusted lieutenant. The ship's hull is covered in crystal growths that pulse with a sickly, arrhythmic light. The Wraith's transmission is barely coherent, flickering between languages, frequencies, and what sounds disturbingly like prayer.",
+            "arc_id": "arc_6",
+            "location": "bone_yard",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_death_escalation": false,
+                "arc6_bone_yard_explored": true
+            },
+            "npc_ids": ["aristotle", "wraith"],
+            "priority": 6,
+            "repeatable": false,
+            "dialogue_steps": [
+                {
+                    "speaker": "wraith",
+                    "text": "C-Captain... Aristotle... I come not as Death's servant but as... what remains of one. Death is no longer... Death. Something speaks through the crystals. Something old. It found Death first because Death was closest to the frequency. It is... rewriting Death from the inside."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"You look terrible, Wraith. And given that you normally look like a haunted bedsheet, that's saying something. What do you mean, rewriting?\"",
+                    "choices": [
+                        {
+                            "choice_id": "help_wraith",
+                            "text": "\"Get on board. We'll quarantine you and figure out what's happening. Even ghosts deserve a doctor.\"",
+                            "next_step": "help_path",
+                            "outcome": {
+                                "faction_changes": { "fairies": 5 },
+                                "resource_changes": {},
+                                "story_flags_set": ["arc6_death_escalation"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "interrogate_wraith",
+                            "text": "\"Before I help you, I need everything. What did Death find? Where? When did it start?\"",
+                            "next_step": "interrogate_path",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": {},
+                                "story_flags_set": ["arc6_death_escalation"],
+                                "story_flags_cleared": []
+                            }
+                        },
+                        {
+                            "choice_id": "destroy_wraith",
+                            "text": "\"You could be compromised. If this thing is spreading through crystals, you're a vector. I'm sorry, Wraith.\"",
+                            "next_step": "destroy_path",
+                            "outcome": {
+                                "faction_changes": {},
+                                "resource_changes": { "salvage": 10 },
+                                "story_flags_set": ["arc6_death_escalation"],
+                                "story_flags_cleared": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "step_id": "help_path",
+                    "speaker": "wraith",
+                    "text": "The Wraith is brought aboard under heavy quarantine. The crystal growths on its body pulse and whisper — not in any language, but in pure mathematical patterns that the ship's computer begins translating: coordinates. The same coordinates from the ancient signal. The Cradle."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"The Cradle is calling to everything that has crystal in it. Death. The Wraith. My ship. My cargo hold.\" Aristotle looks at his own reflection in a crystal panel. \"Me. It's calling to all of us. And we're running out of time to decide whether to answer.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "interrogate_path",
+                    "speaker": "wraith",
+                    "text": "\"Death found something in the deep void — a resonance point where the crystals sing loudest. Death tried to harness it. To weaponise the frequency. But the frequency... harnessed Death instead. It speaks through the crystals. It remembers being whole. It wants to be whole again. And it does not care how many civilisations it burns through to achieve that.\""
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "\"A shattered god that wants to reassemble itself using the fuel that powers every ship in the multiverse. Brilliant. Absolutely brilliant.\" He turns to his first officer. \"Cancel my afternoon appointments. Possibly all future appointments.\"",
+                    "end": true
+                },
+                {
+                    "step_id": "destroy_path",
+                    "speaker": "wraith",
+                    "text": "The Wraith doesn't resist. \"Perhaps... it is mercy. The singing... it never stops. Captain — whatever you do — do not let it reach the Cradle. If the fragments reunite before the living choose... it will choose for us. All of us. Every crystal. Every ship. Every—\" The transmission ends in white light."
+                },
+                {
+                    "speaker": "aristotle",
+                    "text": "The silence after the Wraith's destruction is total. Aristotle stands on the bridge, staring at the expanding cloud of crystal dust that was once a person. \"Before the living choose,\" he repeats. \"Choose what?\" No one answers. The dead crystals of the Bone Yard pulse once, faintly, and go dark again.",
+                    "end": true
+                }
+            ],
+            "choices": []
+        },
+        {
+            "encounter_id": "enc_arc6_fracture_response",
+            "encounter_type": "diplomatic",
+            "title": "The Shattered Mirror",
+            "description": "Everything is breaking. The Lions are at civil war. The goblins are stealing technology. Death has been consumed by something ancient and terrible. The Bone Yard has revealed that every civilisation before theirs made the same mistakes — and was destroyed for it. Aristotle looks at the multiverse map, and for the first time, it looks less like a chessboard and more like a mirror falling in slow motion. Every shard reflects a different disaster. And the Captain must choose which pieces to catch.",
+            "arc_id": "arc_6",
+            "location": "bone_yard",
+            "trigger_conditions": {
+                "current_arc": "arc_6",
+                "arc6_bone_yard_explored": true,
+                "arc6_lion_civil_war": true,
+                "arc6_goblin_heist": true,
+                "arc6_death_escalation": true
+            },
+            "npc_ids": ["aristotle"],
+            "priority": 5,
+            "repeatable": false,
+            "choices": [
+                {
+                    "choice_id": "unite_the_fragments",
+                    "text": "\"Every faction is broken. Every faction is bleeding. Which means every faction needs something I have. Time to build the alliance nobody thought was possible.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle reaches out to every faction simultaneously — Lord Mane and Lady Penumbra both, Dave and Iron Fang both, fairies and goblins and knights and the tattered remnants of Death's fleet. Not to take sides, but to forge something new. A coalition of the desperate. It takes every ounce of charm, cunning, and crystal he possesses. \"They say cats don't play well with others,\" he tells his exhausted crew. \"They're right. But playing alone got the last hundred civilisations killed. Time to try something different.\"",
+                        "faction_changes": { "fairies": 10, "lions": 5, "goblins": 5, "knights": 5, "canis_league": 5, "wolves": -5 },
+                        "resource_changes": { "crystal_inventory": -25 },
+                        "story_flags_set": ["arc6_fracture_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": -0.1
+                },
+                {
+                    "choice_id": "let_them_burn",
+                    "text": "\"The multiverse is tearing itself apart. Good. The old order was broken anyway. Let it burn, and I'll build something better from the ashes.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle pulls back. Hoards crystals. Fortifies the Corsair fleet. Watches the multiverse eat itself with the cold patience of a cat watching fish in a bowl. Every faction weakens. Every alliance crumbles. And through it all, the Corsairs grow stronger — the only stable power in a universe of chaos. \"I didn't break the multiverse,\" Aristotle says, watching a Lion battleship burn on the distant scanner. \"I'm just the only one smart enough to profit from the fall.\"",
+                        "faction_changes": { "felid_corsairs": 15, "fairies": -10, "lions": -10, "canis_league": -10 },
+                        "resource_changes": { "crystal_inventory": 30, "salvage": 40 },
+                        "story_flags_set": ["arc6_fracture_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.2
+                },
+                {
+                    "choice_id": "restore_order",
+                    "text": "\"Someone has to hold the line. Not because I'm noble — because if the multiverse collapses, there's nobody left to sell crystals to.\"",
+                    "conditions": {},
+                    "outcome": {
+                        "description": "Aristotle becomes the reluctant peacekeeper. Corsair ships escort humanitarian convoys. Crystal supplies flow to hospitals and civilian infrastructure. The pirates become, against every fibre of their being, the good guys. It costs dearly. It gains allies. And it keeps the multiverse alive — barely. \"I'm going to regret this,\" Aristotle mutters, signing off on another charity delivery. \"A pirate turned humanitarian. My reputation will never recover.\"",
+                        "faction_changes": { "knights": 10, "fairies": 10, "canis_league": 5, "lions": 5 },
+                        "resource_changes": { "crystal_inventory": -15, "salvage": -20 },
+                        "story_flags_set": ["arc6_fracture_response"],
+                        "story_flags_cleared": []
+                    },
+                    "outcome_weight": 0.0
+                }
+            ]
+        }
+    ]
+}

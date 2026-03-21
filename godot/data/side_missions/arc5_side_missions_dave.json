@@ -1,0 +1,126 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc5_dave_wolf_intelligence",
+      "mission_type": "investigation",
+      "title": "Pack Movements",
+      "description": "League High Command wants a full tactical assessment of Iron Wolf fleet capabilities. Dave knows that means getting close — dangerously close — to wolves who shoot first and don't bother with questions.",
+      "region": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "playing_as_dave": true,
+        "arc5_wolves_active": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_dave_wolf_briefing",
+      "objectives": [
+        {
+          "objective_id": "recon_wolf_fleet",
+          "description": "Conduct reconnaissance on Iron Wolf fleet formations",
+          "encounter_id": "enc_sm_arc5_dave_wolf_recon"
+        },
+        {
+          "objective_id": "plant_trackers",
+          "description": "Plant tracking beacons on Wolf capital ships",
+          "encounter_id": "enc_sm_arc5_dave_wolf_trackers"
+        },
+        {
+          "objective_id": "report_command",
+          "description": "Relay tactical data to League Command",
+          "encounter_id": "enc_sm_arc5_dave_wolf_report"
+        }
+      ],
+      "rewards": {"salvage": 75, "crystals": 12},
+      "faction_rewards": {"canis_league": 12, "wolves": -10},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc5_dave_knight_allegiance",
+      "mission_type": "escort",
+      "title": "The Honour Accord",
+      "description": "The Knight Orders are fractured, and Dave sees an opportunity. If the League can secure an alliance with the breakaway faction, it shifts the entire balance of power. But knights have long memories and longer grudges.",
+      "region": "knight_kingdoms",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "playing_as_dave": true,
+        "special_char_ser_galvain_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_dave_knight_dispatch",
+      "objectives": [
+        {
+          "objective_id": "negotiate_terms",
+          "description": "Negotiate alliance terms with the Knight dissidents",
+          "encounter_id": "enc_sm_arc5_dave_knight_negotiate"
+        },
+        {
+          "objective_id": "protect_delegation",
+          "description": "Protect the Knight delegation from loyalist attackers",
+          "encounter_id": "enc_sm_arc5_dave_knight_defend"
+        }
+      ],
+      "rewards": {"salvage": 60, "crystals": 14},
+      "faction_rewards": {"canis_league": 10, "knights": 8},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc5_dave_iron_exploration",
+      "mission_type": "retrieval",
+      "title": "Resource Claim Delta",
+      "description": "League surveyors have identified a potential crystal deposit in the Iron Expanse. Dave is tasked with securing the site and establishing a League mining outpost before competitors arrive. Standard procedure — except nothing in the Expanse is standard.",
+      "region": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "playing_as_dave": true,
+        "arc5_iron_expanse_unlocked": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_dave_iron_orders",
+      "objectives": [
+        {
+          "objective_id": "survey_site",
+          "description": "Survey and verify the crystal deposit",
+          "encounter_id": "enc_sm_arc5_dave_iron_survey"
+        },
+        {
+          "objective_id": "secure_perimeter",
+          "description": "Establish a defensive perimeter around the site",
+          "encounter_id": "enc_sm_arc5_dave_iron_secure"
+        },
+        {
+          "objective_id": "begin_extraction",
+          "description": "Begin preliminary crystal extraction",
+          "encounter_id": "enc_sm_arc5_dave_iron_extract"
+        }
+      ],
+      "rewards": {"salvage": 95, "crystals": 22},
+      "faction_rewards": {"canis_league": 8},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc5_dave_loyalty_probe",
+      "mission_type": "investigation",
+      "title": "Chain of Command",
+      "description": "Intelligence suggests Aristotle has been making side deals with factions hostile to the League. Dave's superiors want proof. Dave wants the truth — even if it means questioning everything he thought he knew about the cat pirate.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "playing_as_dave": true,
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_dave_loyalty_orders",
+      "objectives": [
+        {
+          "objective_id": "review_records",
+          "description": "Review Aristotle's trade records and contacts",
+          "encounter_id": "enc_sm_arc5_dave_loyalty_records"
+        },
+        {
+          "objective_id": "determine_truth",
+          "description": "Determine the truth behind the allegations",
+          "encounter_id": "enc_sm_arc5_dave_loyalty_truth"
+        }
+      ],
+      "rewards": {"salvage": 35, "crystals": 10},
+      "faction_rewards": {"canis_league": 8, "felid_corsairs": 3},
+      "priority": 5
+    }
+  ]
+}

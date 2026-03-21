@@ -2,6 +2,9 @@
 ## Supports both legacy single-step encounters and new two-sided dialogue_steps encounters.
 extends Control
 
+@onready var dim_backdrop: ColorRect = $DimBackdrop
+@onready var dialogue_background: TextureRect = $DialogueBackground
+@onready var panel: PanelContainer = $Panel
 @onready var title_label: Label = $Panel/HBox/VBox/Title
 @onready var description_label: RichTextLabel = $Panel/HBox/VBox/Description
 @onready var choices_container: VBoxContainer = $Panel/HBox/VBox/ChoicesContainer
@@ -31,6 +34,7 @@ var _step_map: Dictionary = {}  # step_id -> index in dialogue_steps
 var _steps_visited: int = 0
 const MAX_STEPS: int = 50
 
+const BASE_PANEL_HEIGHT: float = 280.0
 const DESCRIPTION_REVEAL_CPS: float = 95.0
 const AUTO_ADVANCE_DELAY_MIN: float = 2.0
 const READING_SEC_PER_WORD: float = 0.24  # ~250 WPM comfortable reading pace
@@ -40,6 +44,7 @@ const CHARACTER_PORTRAITS := {
 	"aristotle": "res://assets/characters/aristotle_head.png",
 	"dave": "res://assets/characters/dave_head.png",
 	"death": "res://assets/characters/death_head.png",
+	"fairy_cartographer": "res://assets/characters/support/fairy_cartographer.png",
 	"nine_lives": "res://assets/characters/crew/nine_lives.png",
 	"no_tail": "res://assets/characters/crew/no_tail.png",
 	"silky": "res://assets/characters/crew/silky.png",
@@ -57,6 +62,10 @@ func setup(p_encounter: Encounter) -> void:
 
 
 func _ready() -> void:
+	# Fade in the dim backdrop so the dialogue stands out
+	dim_backdrop.color.a = 0.0
+	var backdrop_tween := create_tween()
+	backdrop_tween.tween_property(dim_backdrop, "color:a", 0.55, 0.25)
 	_build_ui()
 
 
@@ -107,6 +116,16 @@ func _build_ui() -> void:
 		return
 
 	title_label.text = encounter.title
+
+	# Always show the dialogue background for all interaction types
+	dialogue_background.visible = true
+	var transparent_style := StyleBoxEmpty.new()
+	transparent_style.content_margin_left = 50.0
+	transparent_style.content_margin_right = 50.0
+	transparent_style.content_margin_top = 16.0
+	transparent_style.content_margin_bottom = 16.0
+	panel.add_theme_stylebox_override("panel", transparent_style)
+	_apply_parchment_text_style()
 
 	if encounter.has_dialogue_steps():
 		_using_dialogue_steps = true
@@ -181,14 +200,10 @@ func _show_step(index: int) -> void:
 
 
 func _show_dialogue_choices(choices: Array) -> void:
+	_collapse_description_for_choices(choices.size())
 	for i in range(choices.size()):
 		var choice: Encounter.DialogueStepChoice = choices[i]
-		var btn := Button.new()
-		btn.text = "[%d] %s" % [i + 1, choice.text]
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.modulate.a = 0.0
-		btn.position.x = 14.0
+		var btn := _create_choice_button(i, _strip_outer_quotes(choice.text), choices.size())
 		btn.pressed.connect(_on_dialogue_choice_selected.bind(i))
 		choices_container.add_child(btn)
 		var tween := create_tween()
@@ -214,9 +229,10 @@ func _on_dialogue_choice_selected(choice_index: int) -> void:
 		GameSession.game_state, encounter, choice
 	)
 
-	# Clear choices
+	# Clear choices and restore description
 	for child in choices_container.get_children():
 		child.queue_free()
+	_restore_description()
 
 	# Jump to the target step
 	if not choice.next_step.is_empty():
@@ -357,14 +373,10 @@ func _setup_legacy_portrait() -> void:
 func _build_legacy_choices() -> void:
 	for child in choices_container.get_children():
 		child.queue_free()
+	_collapse_description_for_choices(encounter.choices.size())
 	for i in range(encounter.choices.size()):
 		var choice: Encounter.EncounterChoice = encounter.choices[i]
-		var btn := Button.new()
-		btn.text = "[%d] %s" % [i + 1, choice.text]
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.modulate.a = 0.0
-		btn.position.x = 14.0
+		var btn := _create_choice_button(i, _strip_outer_quotes(choice.text), encounter.choices.size())
 		btn.pressed.connect(_on_legacy_choice_selected.bind(i))
 		choices_container.add_child(btn)
 		var tween := create_tween()
@@ -387,31 +399,105 @@ func _on_legacy_choice_selected(index: int) -> void:
 		return
 	# Check for crew recruitment completion
 	var recruited_crew_id := _check_crew_recruitment(choice)
-	# Show outcome briefly — wait for typewriter reveal to finish before starting close timer
-	_set_description(outcome_text)
+	# Show outcome briefly — restore description, clear choices
 	for child in choices_container.get_children():
 		child.queue_free()
+	_restore_description()
+	_set_description(outcome_text)
 	while _revealing_description:
 		await get_tree().process_frame
 	# If crew member was recruited, show confirmation then trigger recruitment
 	if not recruited_crew_id.is_empty():
 		await _show_crew_recruitment_confirmation(recruited_crew_id)
 	await get_tree().create_timer(2.0).timeout
-	# Return to navigation
+	# Pop ourselves BEFORE triggering the arc check, so that if advance_arc
+	# pushes arc_summary it goes on top of navigation, not on top of us.
 	var main: Control = get_tree().current_scene
 	if main.has_method("pop_overlay"):
 		main.pop_overlay()
+	# Now trigger the arc-exit check (may push arc_summary overlay)
+	GameSession.call_deferred("_deferred_arc_check")
+
+
+# ---------------------------------------------------------------------------
+# Parchment text styling
+# ---------------------------------------------------------------------------
+const PARCHMENT_TITLE_COLOR := Color(0.35, 0.15, 0.05, 1.0)
+const PARCHMENT_DESC_COLOR := Color(0.2, 0.12, 0.05, 1.0)
+const PARCHMENT_NAME_COLOR := Color(0.3, 0.12, 0.0, 1.0)
+const DEFAULT_TITLE_COLOR := Color(0.94, 0.75, 0.25, 1.0)
+const DEFAULT_NAME_COLOR := Color(0.3, 0.8, 0.9, 1.0)
+
+
+func _apply_parchment_text_style() -> void:
+	title_label.add_theme_color_override("font_color", PARCHMENT_TITLE_COLOR)
+	title_label.add_theme_font_size_override("font_size", 26)
+	description_label.add_theme_color_override("default_color", PARCHMENT_DESC_COLOR)
+	left_name_label.add_theme_color_override("font_color", PARCHMENT_NAME_COLOR)
+	right_name_label.add_theme_color_override("font_color", PARCHMENT_NAME_COLOR)
+
+
+func _restore_default_text_style() -> void:
+	title_label.add_theme_color_override("font_color", DEFAULT_TITLE_COLOR)
+	title_label.remove_theme_font_size_override("font_size")
+	description_label.remove_theme_color_override("default_color")
+	left_name_label.add_theme_color_override("font_color", DEFAULT_NAME_COLOR)
+	right_name_label.add_theme_color_override("font_color", DEFAULT_NAME_COLOR)
 
 
 # ---------------------------------------------------------------------------
 # Shared helpers
 # ---------------------------------------------------------------------------
+static func _strip_outer_quotes(text: String) -> String:
+	if text.length() >= 2 and text.begins_with("\"") and text.ends_with("\""):
+		return text.substr(1, text.length() - 2)
+	return text
+
+
 func _set_description(text: String) -> void:
 	_active_description_text = text
-	description_label.text = text
+	description_label.clear()
+	description_label.push_color(description_label.get_theme_color("default_color"))
+	description_label.append_text(text)
+	description_label.pop()
 	description_label.visible_characters = 0
 	_reveal_accumulator = 0.0
 	_revealing_description = true
+
+
+## Shrink the description area so choices fit within the fixed panel height.
+## The player has already read the description via the typewriter reveal,
+## so we can safely reduce it to a single-line summary.
+func _collapse_description_for_choices(choice_count: int) -> void:
+	if choice_count <= 2:
+		return  # Fits fine at current size
+	# Fade-shrink the description to make room — keep one visible line as context
+	var tw := create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(description_label, "custom_minimum_size:y", 0.0, 0.2)
+	tw.tween_property(description_label, "modulate:a", 0.0, 0.15)
+	# Tighten spacing between choice buttons
+	choices_container.add_theme_constant_override("separation", 2)
+
+
+## Create a choice button styled to fit compactly when many options exist.
+func _create_choice_button(index: int, text: String, total_choices: int) -> Button:
+	var btn := Button.new()
+	btn.text = text
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	btn.modulate.a = 0.0
+	btn.position.x = 14.0
+	if total_choices > 2:
+		btn.add_theme_font_size_override("font_size", 13)
+	return btn
+
+
+## Restore description visibility after choices are cleared.
+func _restore_description() -> void:
+	description_label.custom_minimum_size.y = 80.0
+	description_label.modulate.a = 1.0
+	choices_container.remove_theme_constant_override("separation")
 
 
 static func _remove_near_white_bg(

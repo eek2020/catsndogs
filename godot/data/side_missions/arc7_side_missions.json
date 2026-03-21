@@ -1,0 +1,122 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc7_warp_navigation",
+      "mission_type": "retrieval",
+      "title": "Through the Looking Glass",
+      "description": "The Warp Marches are shifting. Navigation beacons are failing, routes that worked yesterday now lead to dead space. Aristotle needs to chart a new path through the chaos — and whatever's causing the shifts is probably worth finding.",
+      "region": "warp_marches",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "arc7_warp_marches_unlocked": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_warp_alert",
+      "objectives": [
+        {
+          "objective_id": "calibrate_nav",
+          "description": "Calibrate navigation systems for Warp March anomalies",
+          "encounter_id": "enc_sm_arc7_warp_calibrate"
+        },
+        {
+          "objective_id": "chart_route",
+          "description": "Chart a stable route through the shifting lanes",
+          "encounter_id": "enc_sm_arc7_warp_chart"
+        },
+        {
+          "objective_id": "mark_beacons",
+          "description": "Deploy replacement navigation beacons",
+          "encounter_id": "enc_sm_arc7_warp_beacons"
+        }
+      ],
+      "rewards": {"salvage": 90, "crystals": 20},
+      "faction_rewards": {"felid_corsairs": 10, "fairies": 5},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc7_alien_artifact",
+      "mission_type": "retrieval",
+      "title": "The Object",
+      "description": "Flux, the shape-shifting trader, has tipped Aristotle off about an alien artifact adrift in the deep space beyond the Warp Marches. It predates every known civilization. It hums with a frequency that makes whisper crystals vibrate in sympathy.",
+      "region": "deep_space",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "special_char_flux_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_artifact_tip",
+      "objectives": [
+        {
+          "objective_id": "locate_artifact",
+          "description": "Follow Flux's coordinates to the artifact's location",
+          "encounter_id": "enc_sm_arc7_artifact_locate"
+        },
+        {
+          "objective_id": "recover_artifact",
+          "description": "Safely recover the alien artifact",
+          "encounter_id": "enc_sm_arc7_artifact_recover"
+        }
+      ],
+      "rewards": {"salvage": 60, "crystals": 40},
+      "faction_rewards": {"felid_corsairs": 8, "fairies": 8},
+      "priority": 1
+    },
+    {
+      "mission_id": "sm_arc7_crystal_experiments",
+      "mission_type": "investigation",
+      "title": "Resonance Cascade",
+      "description": "The crystal resonance anomalies from Arc 4 have intensified. The Fairy Collective's top researchers believe they can unlock a new tier of crystal refinement — but the experiments could destabilize entire regions if they go wrong.",
+      "region": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "sm_arc4_crystal_resonance_complete": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_resonance_summons",
+      "objectives": [
+        {
+          "objective_id": "gather_samples",
+          "description": "Gather crystal samples from three distinct regions",
+          "encounter_id": "enc_sm_arc7_resonance_gather"
+        },
+        {
+          "objective_id": "conduct_experiment",
+          "description": "Assist with the resonance cascade experiment",
+          "encounter_id": "enc_sm_arc7_resonance_experiment"
+        },
+        {
+          "objective_id": "contain_fallout",
+          "description": "Contain any dangerous fallout from the experiment",
+          "encounter_id": "enc_sm_arc7_resonance_contain"
+        }
+      ],
+      "rewards": {"salvage": 70, "crystals": 50},
+      "faction_rewards": {"fairies": 15, "felid_corsairs": 5},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc7_diplomatic_intelligence",
+      "mission_type": "investigation",
+      "title": "The Web of Whispers",
+      "description": "Every faction is positioning for the endgame. Aristotle needs a clear picture of who's allied with whom, who's about to betray whom, and where the hidden knives are pointed. Time to call in every favour he's ever earned.",
+      "region": "twilight_bazaar",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "arc7_diplomacy_active": true
+      },
+      "discovery_encounter_id": "enc_sm_arc7_web_start",
+      "objectives": [
+        {
+          "objective_id": "contact_network",
+          "description": "Activate Aristotle's intelligence network across all regions",
+          "encounter_id": "enc_sm_arc7_web_activate"
+        },
+        {
+          "objective_id": "verify_alliances",
+          "description": "Verify the current state of inter-faction alliances",
+          "encounter_id": "enc_sm_arc7_web_verify"
+        }
+      ],
+      "rewards": {"salvage": 50, "crystals": 15},
+      "faction_rewards": {"felid_corsairs": 12},
+      "priority": 4
+    }
+  ]
+}

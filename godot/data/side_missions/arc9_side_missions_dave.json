@@ -1,0 +1,65 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc9_dave_crystal_mountain",
+      "mission_type": "retrieval",
+      "title": "Operation Genesis",
+      "description": "The Cradle of Whispers is real, and Dave is standing at the foot of the crystal mountain. League command wants the source secured. Dave's instincts tell him some things shouldn't be owned — but orders are orders. Or are they?",
+      "region": "cradle_of_whispers",
+      "trigger_conditions": {
+        "current_arc": "arc_9",
+        "playing_as_dave": true,
+        "arc9_cradle_discovered": true
+      },
+      "discovery_encounter_id": "enc_sm_arc9_dave_mountain_approach",
+      "objectives": [
+        {
+          "objective_id": "secure_approach",
+          "description": "Establish a secure perimeter around the mountain base",
+          "encounter_id": "enc_sm_arc9_dave_mountain_secure"
+        },
+        {
+          "objective_id": "reach_core",
+          "description": "Navigate to the crystal core",
+          "encounter_id": "enc_sm_arc9_dave_mountain_core"
+        },
+        {
+          "objective_id": "final_decision",
+          "description": "Make the final decision about the crystal source",
+          "encounter_id": "enc_sm_arc9_dave_mountain_decision"
+        }
+      ],
+      "rewards": {"salvage": 190, "crystals": 95},
+      "faction_rewards": {"canis_league": 20},
+      "priority": 1
+    },
+    {
+      "mission_id": "sm_arc9_dave_guardian_lore",
+      "mission_type": "investigation",
+      "title": "First Contact Protocol",
+      "description": "The Guardians of the Cradle are unlike anything in League records. Dave approaches them as a soldier and a diplomat, following first-contact protocols that suddenly feel woefully inadequate. These beings remember a time before factions, before wars, before whisper crystals had a name.",
+      "region": "cradle_of_whispers",
+      "trigger_conditions": {
+        "current_arc": "arc_9",
+        "playing_as_dave": true,
+        "arc9_guardians_contacted": true
+      },
+      "discovery_encounter_id": "enc_sm_arc9_dave_guardian_approach",
+      "objectives": [
+        {
+          "objective_id": "establish_communication",
+          "description": "Establish meaningful communication with the Guardians",
+          "encounter_id": "enc_sm_arc9_dave_guardian_comms"
+        },
+        {
+          "objective_id": "learn_truth",
+          "description": "Learn the truth about the crystal source's origins",
+          "encounter_id": "enc_sm_arc9_dave_guardian_truth"
+        }
+      ],
+      "rewards": {"salvage": 95, "crystals": 70},
+      "faction_rewards": {"canis_league": 15},
+      "priority": 2
+    }
+  ]
+}

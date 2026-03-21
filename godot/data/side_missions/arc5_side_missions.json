@@ -1,0 +1,122 @@
+{
+  "side_missions": [
+    {
+      "mission_id": "sm_arc5_wolf_intelligence",
+      "mission_type": "investigation",
+      "title": "Wolves at the Gate",
+      "description": "The Iron Wolves have been running silent through the Iron Expanse, and that never means anything good. Aristotle needs eyes on their fleet movements before they make their play for the crystal lanes.",
+      "region": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "arc5_wolves_active": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_wolf_sighting",
+      "objectives": [
+        {
+          "objective_id": "scout_wolf_positions",
+          "description": "Scout Iron Wolf fleet positions in the Expanse",
+          "encounter_id": "enc_sm_arc5_wolf_scout"
+        },
+        {
+          "objective_id": "intercept_comms",
+          "description": "Intercept and decode Wolf pack communications",
+          "encounter_id": "enc_sm_arc5_wolf_comms"
+        },
+        {
+          "objective_id": "deliver_intel",
+          "description": "Deliver the intelligence to your allies",
+          "encounter_id": "enc_sm_arc5_wolf_deliver"
+        }
+      ],
+      "rewards": {"salvage": 80, "crystals": 12},
+      "faction_rewards": {"felid_corsairs": 10, "wolves": -8},
+      "priority": 3
+    },
+    {
+      "mission_id": "sm_arc5_knight_allegiance",
+      "mission_type": "escort",
+      "title": "The Knight's Gambit",
+      "description": "Ser Galvain has reached out through back channels. A faction of the Knight Orders wants to break from their ancient alliance and chart an independent course. They need someone to vouch for them — someone with crystal leverage.",
+      "region": "knight_kingdoms",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "special_char_ser_galvain_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_knight_message",
+      "objectives": [
+        {
+          "objective_id": "meet_knights",
+          "description": "Meet the dissident Knight faction at the neutral point",
+          "encounter_id": "enc_sm_arc5_knight_meeting"
+        },
+        {
+          "objective_id": "escort_envoy",
+          "description": "Escort the Knight envoy through contested space",
+          "encounter_id": "enc_sm_arc5_knight_escort"
+        }
+      ],
+      "rewards": {"salvage": 65, "crystals": 15},
+      "faction_rewards": {"knights": 12, "felid_corsairs": 5},
+      "priority": 4
+    },
+    {
+      "mission_id": "sm_arc5_iron_exploration",
+      "mission_type": "retrieval",
+      "title": "Iron Veins",
+      "description": "Deep in the Iron Expanse lies a decommissioned mining station rumoured to sit atop an untapped crystal vein. Every faction wants it. Aristotle plans to get there first and stake a claim the old-fashioned way.",
+      "region": "iron_expanse",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "arc5_iron_expanse_unlocked": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_iron_rumour",
+      "objectives": [
+        {
+          "objective_id": "navigate_expanse",
+          "description": "Navigate the hazardous Iron Expanse to the station",
+          "encounter_id": "enc_sm_arc5_iron_navigate"
+        },
+        {
+          "objective_id": "secure_station",
+          "description": "Clear and secure the abandoned mining station",
+          "encounter_id": "enc_sm_arc5_iron_secure"
+        },
+        {
+          "objective_id": "extract_crystals",
+          "description": "Extract crystal samples from the vein",
+          "encounter_id": "enc_sm_arc5_iron_extract"
+        }
+      ],
+      "rewards": {"salvage": 100, "crystals": 25},
+      "faction_rewards": {"felid_corsairs": 8},
+      "priority": 2
+    },
+    {
+      "mission_id": "sm_arc5_loyalty_probe",
+      "mission_type": "investigation",
+      "title": "Trust, but Verify",
+      "description": "Rumours have reached Aristotle that Dave has been making moves behind his back — or maybe someone wants him to think that. Either way, trust is a currency that's running low. Time to find out who's spending it.",
+      "region": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "arc1_dave_met": true
+      },
+      "discovery_encounter_id": "enc_sm_arc5_loyalty_whisper",
+      "objectives": [
+        {
+          "objective_id": "investigate_rumours",
+          "description": "Track the source of the loyalty rumours",
+          "encounter_id": "enc_sm_arc5_loyalty_investigate"
+        },
+        {
+          "objective_id": "confront_truth",
+          "description": "Confront the truth — whatever it is",
+          "encounter_id": "enc_sm_arc5_loyalty_confront"
+        }
+      ],
+      "rewards": {"salvage": 40, "crystals": 10},
+      "faction_rewards": {"felid_corsairs": 5, "canis_league": 5},
+      "priority": 5
+    }
+  ]
+}
