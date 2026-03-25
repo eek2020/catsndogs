@@ -227,13 +227,16 @@ func _draw_galaxy_layer() -> void:
 		var hint_color := Color(0.5, 0.6, 0.7, 0.7)
 		var hint_bg_color := Color(0.02, 0.03, 0.07, 0.5)
 		map_canvas.draw_rect(Rect2(0, canvas_size.y - 36, canvas_size.x, 36), hint_bg_color)
-		var hint1: String = "Use ARROW KEYS to select a region, ENTER to view sector map"
+		var hint1: String = "ARROWS select region, ENTER view sector, SPACE travel to region"
 		var hint2: String = "TAB to close the Codex"
 		map_canvas.draw_string(default_font, Vector2(pad, canvas_size.y - 22), hint1, HORIZONTAL_ALIGNMENT_LEFT, int(canvas_size.x - pad * 2), 11, hint_color)
 		map_canvas.draw_string(default_font, Vector2(pad, canvas_size.y - 8), hint2, HORIZONTAL_ALIGNMENT_LEFT, int(canvas_size.x - pad * 2), 11, hint_color * Color(1, 1, 1, 0.7))
 
 	# Galaxy legend
 	_draw_galaxy_legend(area_origin, area_size, canvas_size)
+
+	# Travel confirmation overlay
+	_draw_travel_confirm(canvas_size)
 
 
 func _galaxy_node_screen_pos(region_id: String, area_origin: Vector2, area_size: Vector2, nodes: Dictionary) -> Vector2:
@@ -830,6 +833,16 @@ func _input(event: InputEvent) -> void:
 
 
 func _handle_galaxy_input(event: InputEvent) -> void:
+	# Travel confirmation dialog intercepts input
+	if _travel_confirm_visible:
+		if event.is_action_pressed("ui_accept"):
+			get_viewport().set_input_as_handled()
+			_confirm_travel()
+		elif event.is_action_pressed("cancel") or event.is_action_pressed("pause"):
+			get_viewport().set_input_as_handled()
+			_cancel_travel()
+		return
+
 	if event.is_action_pressed("star_map"):
 		get_viewport().set_input_as_handled()
 		_on_close()
@@ -839,6 +852,10 @@ func _handle_galaxy_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled()
 		_drill_to_region()
+	elif event.is_action_pressed("fire"):
+		# Space bar — request travel to selected region
+		get_viewport().set_input_as_handled()
+		_request_travel()
 	elif event.is_action_pressed("ui_left"):
 		get_viewport().set_input_as_handled()
 		_move_galaxy_selection(Vector2.LEFT)
@@ -957,3 +974,94 @@ func _on_close() -> void:
 	var main: Control = get_tree().current_scene
 	if main.has_method("pop_overlay"):
 		main.pop_overlay()
+
+
+# ---------------------------------------------------------------------------
+# Travel to world scene
+# ---------------------------------------------------------------------------
+
+var _travel_confirm_visible: bool = false
+var _travel_target_region: String = ""
+
+const WORLD_SCENE_MAP := {
+	"starting_realm": "res://scenes/world/world.tscn",
+	"tavern": "res://scenes/world/tavern.tscn",
+}
+
+
+func _request_travel() -> void:
+	if _selected_region.is_empty():
+		return
+	if _selected_region == _region_id:
+		# Already here — offer to enter world view
+		_travel_target_region = _selected_region
+		_travel_confirm_visible = true
+		return
+	# Check if travel is possible
+	var exploration: ExplorationSystem = GameSession.exploration
+	if exploration == null:
+		return
+	var region: ExplorationSystem.Region = exploration.regions.get(_selected_region)
+	if region == null or not region.is_discovered:
+		return
+	_travel_target_region = _selected_region
+	_travel_confirm_visible = true
+
+
+func _confirm_travel() -> void:
+	_travel_confirm_visible = false
+	if _travel_target_region.is_empty():
+		return
+
+	# Try to travel if it's a different region
+	if _travel_target_region != _region_id:
+		var success: bool = GameSession.travel_to_region(_travel_target_region)
+		if not success:
+			return
+		_region_id = _travel_target_region
+
+	# Load the world scene for this region
+	var scene_path: String = WORLD_SCENE_MAP.get(_travel_target_region, "res://scenes/world/world.tscn")
+	GameSession.set_meta("world_entry_region", _travel_target_region)
+	_on_close()
+	# Deferred scene change to avoid issues during overlay pop
+	get_tree().call_deferred("change_scene_to_file", scene_path)
+
+
+func _cancel_travel() -> void:
+	_travel_confirm_visible = false
+	_travel_target_region = ""
+
+
+func _draw_travel_confirm(canvas_size: Vector2) -> void:
+	if not _travel_confirm_visible:
+		return
+	var default_font: Font = ThemeDB.fallback_font
+	if default_font == null:
+		return
+
+	# Dim overlay
+	map_canvas.draw_rect(Rect2(Vector2.ZERO, canvas_size), Color(0, 0, 0, 0.5))
+
+	# Confirm box
+	var box_w: float = 320.0
+	var box_h: float = 100.0
+	var box_x: float = (canvas_size.x - box_w) * 0.5
+	var box_y: float = (canvas_size.y - box_h) * 0.5
+	map_canvas.draw_rect(Rect2(box_x, box_y, box_w, box_h), Color(0.05, 0.07, 0.12, 0.95))
+	map_canvas.draw_rect(Rect2(box_x, box_y, box_w, box_h), Color(0.3, 0.5, 0.7, 0.6), false, 2.0)
+
+	var region_name: String = _get_region_display_name(_travel_target_region)
+	var is_current: bool = _travel_target_region == _region_id
+	var prompt: String
+	if is_current:
+		prompt = "Enter %s world view?" % region_name
+	else:
+		prompt = "Travel to %s?" % region_name
+
+	var pw: float = default_font.get_string_size(prompt, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+	map_canvas.draw_string(default_font, Vector2(canvas_size.x * 0.5 - pw * 0.5, box_y + 30), prompt, HORIZONTAL_ALIGNMENT_LEFT, int(box_w), 13, Color(0.8, 0.85, 0.95))
+
+	var hint: String = "ENTER to confirm  |  ESC to cancel"
+	var hw: float = default_font.get_string_size(hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+	map_canvas.draw_string(default_font, Vector2(canvas_size.x * 0.5 - hw * 0.5, box_y + 65), hint, HORIZONTAL_ALIGNMENT_LEFT, int(box_w), 11, Color(0.5, 0.6, 0.7, 0.8))

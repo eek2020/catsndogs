@@ -6,6 +6,48 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-25 — Feature: 2D World Gameplay Layer
+
+**Feature:** Added a full 2D world layer on top of the existing UI-screen-based game systems. Includes tilemap-based world scenes, a playable CharacterBody2D player, NPC state machines with pathfinding and dialogue triggers, scene transitions with fade effects, and an example interior (tavern). The Celestial Codex star map now supports travel-to-world-scene flow.
+
+### Phase 1: Tileset Atlas Generator
+
+- **Created** `tools/godot-dev/tiles/tileset_generator.py` — Pillow-based script generating a 288×256 atlas PNG with 32×32px tiles
+- **Created** `tools/godot-dev/tiles/requirements.txt` — Pillow dependency
+- **Output** `godot/assets/tiles/world_atlas.png` — 9×8 grid atlas with 6 terrain types (Grass, Dirt, Stone, Wall, Water, Roof) in 3×3 autotile layout, plus 18 decor/furniture tiles
+
+### Phase 2: TileSet & TileMap World Scene
+
+- **Created** `godot/resources/world_tileset.tres` — TileSet resource with 32×32 tile size, physics layer for collision, 6 terrain sets for autotiling
+- **Created** `godot/scenes/world/world.tscn` — Main world scene with Node2D root (y_sort), GroundLayer/DecorLayer/RoofLayer TileMapLayer nodes, NavigationRegion2D, and Entities container
+
+### Phase 3: Player Controller
+
+- **Created** `godot/scripts/world/player_controller.gd` — 8-direction movement via existing input map (WASD/arrows), `move_and_slide()` physics, animation state machine (idle/walk × 4 directions), interact action emits EventBus signal
+- **Created** `godot/scenes/world/player.tscn` — CharacterBody2D with AnimatedSprite2D, RectangleShape2D collision, Camera2D with smoothing
+
+### Phase 4: NPC System
+
+- **Created** `godot/scripts/world/npc_controller.gd` — State machine (IDLE/PATROL/TALK), NavigationAgent2D pathfinding, Area2D interaction zone, faction-aware dialogue triggering via EventBus
+- **Created** `godot/scenes/world/npc.tscn` — CharacterBody2D with AnimatedSprite2D, collision, NavigationAgent2D, CircleShape2D interact zone (radius 40)
+- **Created** `godot/scripts/world/dialogue_manager.gd` — Bridges NPC interactions to existing dialogue UI; loads dialogue JSON, builds Encounter objects, supports dialogue_steps branching; faction-reputation-aware generic barks
+
+### Phase 5: Scene Transitions & Interiors
+
+- **Created** `godot/scripts/world/scene_transition.gd` — Area2D-based door detection, fade-out/fade-in transitions via TransitionOverlay, stores return position in GameSession
+- **Created** `godot/scenes/world/tavern.tscn` — Example interior with TileMapLayers, NavigationRegion2D, Innkeeper NPC, Patron NPC, exit door with scene_transition back to world
+
+### Phase 6: Overworld Map Enhancement
+
+- **Modified** `godot/scripts/ui/star_map_screen.gd` — Added travel-to-world-scene flow: SPACE key requests travel, confirmation dialog with ENTER/ESC, `WORLD_SCENE_MAP` lookup, deferred scene change; updated galaxy layer control hints
+
+### Integration
+
+- **Modified** `godot/scripts/autoload/game_session.gd` — Added `_return_scene_path`, `_return_position`, `_return_facing` tracking variables; `store_return_position()`, `get_return_position()`, `has_return_position()`, `clear_return_position()` helper methods
+- **Modified** `godot/scripts/autoload/event_bus.gd` — Added 5 world layer signals: `world_scene_entered`, `world_scene_exited`, `npc_interaction_started`, `npc_interaction_ended`, `door_transition`
+
+---
+
 ## 2026-03-25 — Art: Aristotle spritesheet on planet screen
 
 **Enhancement:** Replaced placeholder circle with animated spritesheets for both Aristotle and Dave in the top-down planet exploration mode. The sprite renders 8-direction walk cycles and falls back to idle frames when stationary. The correct spritesheet loads automatically based on the selected protagonist.

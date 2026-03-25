@@ -107,6 +107,13 @@ signal artifact_acquired(artifact_id: String)
 # --- Celestial Codex events ---
 signal codex_layer_changed(layer_name: String)
 
+# --- World layer events ---
+signal world_scene_entered(region_id: String)
+signal world_scene_exited(region_id: String)
+signal npc_interaction_started(npc_id: String)
+signal npc_interaction_ended(npc_id: String)
+signal door_transition(from_scene: String, to_scene: String)
+
 # --- UI navigation ---
 signal ui_select
 signal ui_cancel

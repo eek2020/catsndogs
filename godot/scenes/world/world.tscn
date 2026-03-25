@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="TileSet" path="res://resources/world_tileset.tres" id="1"]
+
+[node name="World" type="Node2D"]
+y_sort_enabled = true
+
+[node name="GroundLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1")
+z_index = 0
+
+[node name="DecorLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1")
+z_index = 1
+
+[node name="RoofLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1")
+z_index = 2
+
+[node name="NavigationRegion" type="NavigationRegion2D" parent="."]
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true

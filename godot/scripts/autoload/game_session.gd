@@ -26,6 +26,11 @@ var save_manager: SaveManager
 var game_state: GameStateData = null
 var running: bool = true
 
+# World scene transition tracking
+var _return_scene_path: String = ""
+var _return_position: Vector2 = Vector2.ZERO
+var _return_facing: String = "down"
+
 
 func _ready() -> void:
 	data_loader = DataLoader.new()
@@ -234,12 +239,47 @@ func open_trade_screen(_faction_id: String) -> void:
 
 func quit_to_menu() -> void:
 	game_state = null
+	_return_scene_path = ""
+	_return_position = Vector2.ZERO
+	_return_facing = "down"
 	MusicManager.on_state_change("menu")
 
 
 func quit_game() -> void:
 	running = false
 	get_tree().quit()
+
+
+# ------------------------------------------------------------------
+# World scene transitions
+# ------------------------------------------------------------------
+
+func store_return_position(scene_path: String, position: Vector2, facing: String = "down") -> void:
+	_return_scene_path = scene_path
+	_return_position = position
+	_return_facing = facing
+
+
+func get_return_scene_path() -> String:
+	return _return_scene_path
+
+
+func get_return_position() -> Vector2:
+	return _return_position
+
+
+func get_return_facing() -> String:
+	return _return_facing
+
+
+func has_return_position() -> bool:
+	return not _return_scene_path.is_empty()
+
+
+func clear_return_position() -> void:
+	_return_scene_path = ""
+	_return_position = Vector2.ZERO
+	_return_facing = "down"
 
 
 # ------------------------------------------------------------------
