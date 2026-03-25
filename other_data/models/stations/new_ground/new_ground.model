@@ -1,0 +1,56 @@
+version 2
+
+# This model is based in part on geometry and textures by "Willi Hames"
+# The original mesh and textures are available from here for free:
+# http://www.scifi3d.com/details.asp?intGenreID=10&intCatID=17&key=85
+#
+# The original mesh required a lot of cleanup.
+#
+# New textures were made by Keeper1st
+
+
+material "pads" {
+	shader "multi"
+	diffuse 0.9 0.9 0.9
+	specular 0.5 0.5 0.5
+	texture diffuse  "pad_diff.dds"
+	texture specular "pad_spec.dds"
+	texture glow     "pad_glow.dds"
+	texture normal   "pad_norm.dds"
+}
+
+material "building" {
+	shader "multi"
+	diffuse 0.9 0.9 0.9
+	specular 0.5 0.5 0.5
+	texture diffuse  "building_diff.dds"
+	texture specular "building_spec.dds"
+	texture glow     "building_glow.dds"
+	texture normal   "building_norm.dds"
+}
+
+material "Glass" {
+	shader "multi"
+	diffuse 0.9 0.9 0.9
+	specular 0.5 0.5 0.5
+	opacity 60
+	texture diffuse  "building_diff.dds"
+	texture specular "building_spec.dds"
+	texture glow     "building_glow.dds"
+	texture normal   "building_norm.dds"
+}
+
+lod 500 {
+	mesh "new_ground_hi.dae"
+	mesh "new_ground_landing.dae"
+}
+
+lod 200 {
+	mesh "new_ground_mid.dae"
+}
+
+lod 50 {
+	mesh "new_ground_lo.dae"
+}
+
+collision "new_ground_coll.dae"

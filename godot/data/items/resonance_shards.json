@@ -1,0 +1,44 @@
+{
+	"resonance_shards": [
+		{
+			"shard_id": "shard_arc1_fringe",
+			"name": "Echo of the Fringe",
+			"description": "A faint crystal echo found in the debris fields of the Starting Realm.",
+			"arc_id": "arc_1",
+			"location": "starting_realm",
+			"bonus_points": 1
+		},
+		{
+			"shard_id": "shard_arc2_corsair",
+			"name": "Corsair's Resonance",
+			"description": "Harvested from the core of a smuggler's hidden cache in the Feline Courts.",
+			"arc_id": "arc_2",
+			"location": "feline_courts",
+			"bonus_points": 1
+		},
+		{
+			"shard_id": "shard_arc3_alliance",
+			"name": "Pact Crystal",
+			"description": "A rare dual-frequency shard formed when rival crystals resonate together.",
+			"arc_id": "arc_3",
+			"location": "fairy_realms",
+			"bonus_points": 1
+		},
+		{
+			"shard_id": "shard_arc4_undercurrent",
+			"name": "Depth Fragment",
+			"description": "Pulled from an unstable crystal vein deep beneath the Goblin Warrens.",
+			"arc_id": "arc_4",
+			"location": "goblin_warrens",
+			"bonus_points": 1
+		},
+		{
+			"shard_id": "shard_arc6_boneyard",
+			"name": "Revenant Shard",
+			"description": "A crystallised remnant found aboard an ancient derelict in the Bone Yard.",
+			"arc_id": "arc_6",
+			"location": "bone_yard",
+			"bonus_points": 2
+		}
+	]
+}

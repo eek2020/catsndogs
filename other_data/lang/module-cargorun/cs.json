@@ -1,0 +1,754 @@
+{
+  "ACCEPTED_1": {
+    "description": "",
+    "message": "Vynikající. Naložím zboží na vaši loď."
+  },
+  "ACCEPTED_2": {
+    "description": "",
+    "message": "Velmi dobře."
+  },
+  "ACCEPTED_3": {
+    "description": "",
+    "message": "OK. Doufám, že vám můžu věřit."
+  },
+  "ACCEPTED_4": {
+    "description": "",
+    "message": "Dohodnuto!"
+  },
+  "ACCEPTED_PICKUP_1": {
+    "description": "",
+    "message": "Dobře, ujistím se, že je zboží připraveno k vyzvednutí."
+  },
+  "ACCEPTED_PICKUP_2": {
+    "description": "",
+    "message": "Domluveno! Dám svým kolegům vědět, že jste na cestě."
+  },
+  "ADTEXT_1": {
+    "description": "",
+    "message": "Ship needed for delivery of cargo to the {system} system."
+  },
+  "ADTEXT_2": {
+    "description": "",
+    "message": "Transport of goods to the {system} system needed. Pay {cash}."
+  },
+  "ADTEXT_EXPENSIVE_1": {
+    "description": "",
+    "message": "Deliver valuable cargo to the {system} system. {cash} to an experienced pilot."
+  },
+  "ADTEXT_LOCAL_1": {
+    "description": "",
+    "message": "Haulers wanted for in-system transport. Move of goods to {starport}."
+  },
+  "ADTEXT_LOCAL_2": {
+    "description": "",
+    "message": "Need local delivery of personal cargo to {starport}."
+  },
+  "ADTEXT_LOCAL_3": {
+    "description": "",
+    "message": "Private cargo delivery contract. Need certified delivery of goods to {starport}."
+  },
+  "ADTEXT_PICKUP_1": {
+    "description": "",
+    "message": "Pickup of cargo from the {system} system required. Details available on request."
+  },
+  "ADTEXT_PICKUP_LOCAL_1": {
+    "description": "",
+    "message": "Cargo relocation service needed. Move of cargo to this starport from {starport} required."
+  },
+  "ADTEXT_WHOLESALER_1": {
+    "description": "",
+    "message": "Qualified contractor needed for cargo run. We require a ship for a bulk delivery to {system} system."
+  },
+  "ADTITLE_1": {
+    "description": "",
+    "message": "CARGO RUN"
+  },
+  "ADTITLE_2": {
+    "description": "",
+    "message": "NEED CARGO TRANSPORT"
+  },
+  "ADTITLE_EXPENSIVE_1": {
+    "description": "",
+    "message": "INSURED DELIVERY"
+  },
+  "ADTITLE_LOCAL_1": {
+    "description": "",
+    "message": "SHORT-RANGE FREIGHT"
+  },
+  "ADTITLE_LOCAL_2": {
+    "description": "",
+    "message": "LOCAL FREIGHT TRANSPORT"
+  },
+  "ADTITLE_LOCAL_3": {
+    "description": "",
+    "message": "LOCAL CARGO RUN"
+  },
+  "ADTITLE_PICKUP_1": {
+    "description": "",
+    "message": "CARGO PICKUP"
+  },
+  "ADTITLE_PICKUP_LOCAL_1": {
+    "description": "",
+    "message": "IN-SYSTEM RELOCATION"
+  },
+  "ADTITLE_WHOLESALER_1": {
+    "description": "",
+    "message": "BULK CARGO SERVICE"
+  },
+  "ALUMINIUM_TUBES": {
+    "description": "custom cargo",
+    "message": "aluminium tubes"
+  },
+  "AMOUNT": {
+    "description": "Shown in mission summary. The amount of cargo",
+    "message": "Množství:"
+  },
+  "ART_OBJECTS": {
+    "description": "custom cargo",
+    "message": "art objects"
+  },
+  "ART_OBJECTS_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Unless you consider art critics a risk, no."
+  },
+  "ART_OBJECTS_RISK_MESSAGE_2": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Between you and me... Don't look at the art and you'll be fine."
+  },
+  "ART_OBJECTS_RISK_MESSAGE_3": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "The only danger of 25th century impressionism was to the original artist, you should be safe."
+  },
+  "CARGO": {
+    "description": "",
+    "message": "Náklad:"
+  },
+  "CARGORUN": {
+    "description": "Name of mission type",
+    "message": "Cargo run"
+  },
+  "CARGO_IS_LOADED": {
+    "description": "",
+    "message": "načteno"
+  },
+  "CARGO_IS_NOT_LOADED": {
+    "description": "",
+    "message": "not loaded"
+  },
+  "CEASE_FIRE": {
+    "description": "",
+    "message": "Zastavte palbu, zastavte palbu! Jsem na vaší straně!"
+  },
+  "CLUS": {
+    "description": "custom cargo",
+    "message": "containerized living units"
+  },
+  "COULD_YOU_REPEAT_THE_ORIGINAL_REQUEST": {
+    "description": "",
+    "message": "Můžete mi znovu zopakovat váš požadavek?"
+  },
+  "DANGER": {
+    "description": "the risk level",
+    "message": "Nebezpečí:"
+  },
+  "DEADLINE": {
+    "description": "Must be delivered by",
+    "message": "Termín:"
+  },
+  "DELIVER_TO": {
+    "description": "Deliver to this location",
+    "message": "Doručit do:"
+  },
+  "DENY_1": {
+    "description": "",
+    "message": "Je mi líto, ale tento náklad je příliš cenný na to, abych ho svěřil nezkušenému pilotovi."
+  },
+  "DENY_2": {
+    "description": "",
+    "message": "Nikdy jsem o tobě neslyšel. Neznám tě a nevěřím ti."
+  },
+  "DENY_3": {
+    "description": "",
+    "message": "Je mi líto, ale hledám zkušeného pilota."
+  },
+  "DENY_4": {
+    "description": "",
+    "message": "Promiňte, ale nemyslím si, že tuto práci zvládnete."
+  },
+  "DENY_5": {
+    "description": "",
+    "message": "Don't waste my time! You are too wet behind the ears."
+  },
+  "DENY_6": {
+    "description": "",
+    "message": "Ozvi se, až budeš mít víc zkušeností."
+  },
+  "DENY_AGAIN_1": {
+    "description": "",
+    "message": "Sorry, we already have a deal. However, I would be happy to do business with you again after a successful delivery."
+  },
+  "DENY_AGAIN_2": {
+    "description": "",
+    "message": "Excuse me sir, please complete our existing contract first. Then we can negotiate another delivery."
+  },
+  "DENY_AGAIN_3": {
+    "description": "",
+    "message": "Sir, please deliver my cargo first. Then I will do more business with you."
+  },
+  "DIAMONDS": {
+    "description": "custom cargo",
+    "message": "diamonds"
+  },
+  "DIGESTERS": {
+    "description": "custom cargo",
+    "message": "digesters"
+  },
+  "DISTANCE": {
+    "description": "distance in space, between two locations",
+    "message": "Vzdálenost:"
+  },
+  "ELECTRICAL_APPLIANCES": {
+    "description": "custom cargo",
+    "message": "electrical appliances"
+  },
+  "ESCORT_CHATTER_1": {
+    "description": "",
+    "message": "Bylo zjištěno nepřátelské plavidlo. Pojďme společně zaútočit."
+  },
+  "ESCORT_CHATTER_2": {
+    "description": "",
+    "message": "Skvělé. Tenhle pirát bude mým prvním úlovkem."
+  },
+  "ESCORT_CHATTER_3": {
+    "description": "",
+    "message": "Spatřen nepřítel. Zahajte útok."
+  },
+  "ESCORT_CHATTER_4": {
+    "description": "",
+    "message": "Pokračuj do cíle. Kreju tě."
+  },
+  "ESCORT_CHATTER_5": {
+    "description": "",
+    "message": "Tally ho. This will be my first catch today."
+  },
+  "EXPLOSIVES": {
+    "description": "custom cargo",
+    "message": "explosives"
+  },
+  "EXPLOSIVES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "No. Well, it's explosives, just don't drop it."
+  },
+  "FAILUREMSG_1": {
+    "description": "",
+    "message": "Jsem velmi zklamaný z pozdního doručení. Nezaplatím."
+  },
+  "FAILUREMSG_2": {
+    "description": "",
+    "message": "Jsi tu pozdě! Co s tím mám teď dělat? Je to bezcenné!"
+  },
+  "FAILUREMSG_3": {
+    "description": "",
+    "message": "Měli jsme jasně domluvený termín. Na peníze můžeš zapomenout."
+  },
+  "FAILUREMSG_4": {
+    "description": "",
+    "message": "From now on, I will reject all job requests from you."
+  },
+  "FAILUREMSG_FLUFFY_1": {
+    "description": "",
+    "message": "Ty jsi netvor! Na tuto dodávku jsme čekali příliš dlouho. Všichni moji chlupatí mazlíčci hladoví!"
+  },
+  "FURNITURE": {
+    "description": "custom cargo",
+    "message": "furniture"
+  },
+  "GO_BACK": {
+    "description": "Shown on a button in a sub-menu, to move back, to previous menu",
+    "message": "Go back."
+  },
+  "GREENHOUSES": {
+    "description": "custom cargo",
+    "message": "greenhouses"
+  },
+  "GUNS_GUNS_GUNS": {
+    "description": "Military radio call to avoid friendly fire. It indicates that the cannon has been activated and should ensure that other friendly pilots do not maneuver into the path of harm.",
+    "message": "Zbraně, zbraně, zbraně."
+  },
+  "HAZARDOUS_SUBSTANCES": {
+    "description": "custom cargo",
+    "message": "hazardous substances"
+  },
+  "HAZARDOUS_SUBSTANCES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "I guess you shouldn't open the containers."
+  },
+  "HOWMUCH_1": {
+    "description": "regarding mass, always more than 1t",
+    "message": "{amount} metrických tun."
+  },
+  "HOWMUCH_2": {
+    "description": "regarding mass, always more than 1t",
+    "message": "{amount} t"
+  },
+  "HOWMUCH_3": {
+    "description": "regarding mass, always more than 1t",
+    "message": "The mass is {amount} t."
+  },
+  "HOWMUCH_4": {
+    "description": "regarding mass, always more than 1t",
+    "message": "There are {amount} t."
+  },
+  "HOWMUCH_SINGULAR_1": {
+    "description": "This string is only used for 1 metric ton (singular)",
+    "message": "It's only {amount} t."
+  },
+  "HOWMUCH_WHOLESALER_1": {
+    "description": "",
+    "message": "There are {amount} t of {cargoname}."
+  },
+  "HOWMUCH_WHOLESALER_2": {
+    "description": "",
+    "message": "{amount} t {cargoname}"
+  },
+  "HOW_MUCH_MASS": {
+    "description": "",
+    "message": "Kolik toho je?"
+  },
+  "HOW_SOON_MUST_IT_BE_DELIVERED": {
+    "description": "",
+    "message": "Dokdy musí být zásilka doručena?"
+  },
+  "INTROTEXT_1": {
+    "description": "",
+    "message": "Ahoj, jmenuji se {name}. Zaplatím {cash}, pokud doručíte {cargoname} do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), ve vzdálenosti {dist} ly."
+  },
+  "INTROTEXT_2": {
+    "description": "{name} is the full name of a person",
+    "message": "Zdravím! Služba {name} Transport Services žádá doručení {cargoname} do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), {dist} ly daleko. Za bezpečné a kompletní doručení zaplatíme {cash}."
+  },
+  "INTROTEXT_3": {
+    "description": "",
+    "message": "Dobrý den. Jsem {name}, zakladatel společnosti {name} Ltd. Potřebuji někoho důvěryhodného, aby doručil {cargoname} do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}). Za let dlouhý {dist} ly zaplatím {cash}."
+  },
+  "INTROTEXT_EXPENSIVE_1": {
+    "description": "",
+    "message": "Ahoj. Potřebujeme někoho, kdo má zkušenosti s potenciálně nebezpečným letem do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}). Zaplatíme {cash}. Vzdálenost je {dist} ly."
+  },
+  "INTROTEXT_FLUFFY_1": {
+    "description": "this is used for the delivery of Quibbles, which is a nod to Tribble (star trek ref. see wikipedia)",
+    "message": "Ahoj, jmenuji se {name}. Mám načechranou zásilku {cargoname}, kterou potřebuji doručit do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}). Vzdálenost je {dist} ly. Za tuto dodávku vám zaplatím {cash}."
+  },
+  "INTROTEXT_INFRASTRUCTURE_1": {
+    "description": "",
+    "message": "Zdravím. Jmenuji se {name}. Vláda {system} chce dodat {cargoname} do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}). Platba je {cash}. {system} se nachází {dist} ly odsud."
+  },
+  "INTROTEXT_LOCAL_1": {
+    "description": "",
+    "message": "Rád vás poznávám. Jsem {name} a pracuji pro správu {starport}. Zaplatíme {cash} někomu, kdo je schopen převézt {cargoname} do {starport}."
+  },
+  "INTROTEXT_LOCAL_2": {
+    "description": "",
+    "message": "Ahoj. Jsem {name} a zaplatím {cash} za krátkou dodávku {cargoname} do {starport}."
+  },
+  "INTROTEXT_LOCAL_3": {
+    "description": "",
+    "message": "Jmenuji se {name} a potřebuji doručit klientovi {cargoname} do {starport}. Za tuto dopravu vám zaplatím {cash}."
+  },
+  "INTROTEXT_MINING_1": {
+    "description": "{name} is the full name of a person",
+    "message": "Ahoj. Těžařská společnost {name} potřebuje dodat {cargoname} do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), vzdáleného {dist} ly, aby mohla postavit nový důl. Zaplatíme {cash}."
+  },
+  "INTROTEXT_PICKUP_1": {
+    "description": "",
+    "message": "Jak se máš? Jmenuji se {name} a potřebuji loď, která je schopná doletět do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), vyzvednout {cargoname} a vrátit se do {dom_starport} v systému {dom_system} ({dom_sectorx}, {dom_sectory}, {dom_sectorz}). Za dopravu nabízím {cash}. Vzdálenost do {system} je {dist} ly."
+  },
+  "INTROTEXT_PICKUP_2": {
+    "description": "",
+    "message": "Jak se máte? Jsem {name}. Jeden z mých klientů by chtěl dopravit {cargoname} z {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), vzdálený {dist} ly. Za tuto přepravu je ochoten zaplatit {cash}. Vraťte se s {cargoname} sem na {dom_starport} v systému {dom_system} ({dom_sectorx}, {dom_sectory}, {dom_sectorz}) a vyložte náklad."
+  },
+  "INTROTEXT_PICKUP_LOCAL_1": {
+    "description": "",
+    "message": "Zdarec. Jmenuji se {name} a zaplatím {cash} někomu, kdo přepraví {cargoname} z {starport} do {dom_starport}."
+  },
+  "INTROTEXT_PICKUP_LOCAL_2": {
+    "description": "",
+    "message": "Ahoj. Jmenuji se {name}. Můj zaměstnavatel je ochoten vás najmout za {cash}, aby jste nám pomohl přemístit náš sklad s {cargoname} ze {starport} do našeho nového sídla v {dom_starport}."
+  },
+  "INTROTEXT_WEDDING_1": {
+    "description": "",
+    "message": "Nazdar. Slyšel jsi o svatební sezóně v {starport} v systému {system} ({sectorx}, {sectory}, {sectorz})? Chceme tam přepravit {cargoname}. Je to {dist} ly daleko. Zaplatíme ti {cash}. Co ty na to?"
+  },
+  "INTROTEXT_WHOLESALER_1": {
+    "description": "",
+    "message": "Dobrý den, jmenuji se {name} a jsem velkoobchodním prodejcem v systému {system}. Zaplatím {cash} za doručení do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), {dist} ly."
+  },
+  "INTROTEXT_WHOLESALER_2": {
+    "description": "",
+    "message": "Zdravím, jmenuji se {name} a pracuji pro Haber Corp. Zaplatíme {cash} za dodávku do {starport} v systému {system} ({sectorx}, {sectory}, {sectorz}), vzdáleného {dist} ly."
+  },
+  "IS_IT_NEGOTIABLE": {
+    "description": "",
+    "message": "Is the amount of cargo negotiable?"
+  },
+  "I_AM_ON_MY_WAY": {
+    "description": "",
+    "message": "Sensors show that you are taking damage. I'm on my way."
+  },
+  "I_HAVE_DEBITED_YOUR_ACCOUNT": {
+    "description": "",
+    "message": "I've debited your account with the missing goods."
+  },
+  "I_NEED_HELP": {
+    "description": "",
+    "message": "Utrpěl jsem poškození. Potřebuji pomoci."
+  },
+  "MACHINE_TOOLS": {
+    "description": "custom cargo",
+    "message": "machine tools"
+  },
+  "NEGOTIABLE_1": {
+    "description": "regarding mass, always more than 1t",
+    "message": "I can offer the following freight runs:"
+  },
+  "NEGOTIABLE_2": {
+    "description": "regarding mass, always more than 1t",
+    "message": "{amount} t {cargoname} can be divided as follows:"
+  },
+  "NEGOTIABLE_3": {
+    "description": "regarding mass, always more than 1t",
+    "message": "Yes, we can split the cargo."
+  },
+  "NEGOTIABLE_NO_1": {
+    "description": "regarding mass, always more than 1t",
+    "message": "No, sorry. It is not possible to split the cargo. You have to transport the whole {amount} tons at once."
+  },
+  "NEGOTIABLE_SINGULAR_1": {
+    "description": "This string is only used for 1 metric ton (singular)",
+    "message": "No it is not. It's only {amount} t."
+  },
+  "NEPTUNIUM": {
+    "description": "custom cargo",
+    "message": "neptunium"
+  },
+  "OFFER": {
+    "description": "",
+    "message": "Transport {amount} t for {reward}"
+  },
+  "OK_AGREED": {
+    "description": "",
+    "message": "OK, souhlasím."
+  },
+  "OK_WE_AGREE": {
+    "description": "",
+    "message": "OK, we agree on {amount} t for {reward}."
+  },
+  "PICKUP_FROM": {
+    "description": "from a location",
+    "message": "Vyzvednutí nákladu z:"
+  },
+  "PIRATE_GRIPES_1": {
+    "description": "",
+    "message": "Sakra! Za to zaplatíš!"
+  },
+  "PIRATE_GRIPES_2": {
+    "description": "",
+    "message": "To ne. Moje ubohá loď!"
+  },
+  "PIRATE_GRIPES_3": {
+    "description": "said with vengeance",
+    "message": "Počkej, já ti ukážu."
+  },
+  "PIRATE_TAUNTS_1": {
+    "description": "",
+    "message": "Tohle bude tvůj poslední let!"
+  },
+  "PIRATE_TAUNTS_2": {
+    "description": "",
+    "message": "Ty pracuješ pro {client}? To bude tvůj konec!"
+  },
+  "PIRATE_TAUNTS_3": {
+    "description": "",
+    "message": "Hej kámo, naval zboží. Hned!"
+  },
+  "PIRATE_TAUNTS_4": {
+    "description": "",
+    "message": "Kámo, nikdy se nedostaneš do cíle."
+  },
+  "PIRATE_TAUNTS_5": {
+    "description": "",
+    "message": "Oh, další neditá husa na cestě do {location}."
+  },
+  "PIRATE_TAUNTS_6": {
+    "description": "",
+    "message": "Koukám, že toho vezeš víc, než zvládneš. Pomůžu ti s tím."
+  },
+  "PIRATE_TAUNTS_7": {
+    "description": "",
+    "message": "Tvé štěstí právě skončilo!"
+  },
+  "PLUTONIUM": {
+    "description": "custom cargo",
+    "message": "plutonium"
+  },
+  "QUIBBLES": {
+    "description": "custom cargo, also used in the NewsEventCommodity module, a nod to Star Trek's Tribble (check wikipedia)",
+    "message": "quibbles"
+  },
+  "QUIBBLES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "No. Just don't get them wet and never feed them after midnight."
+  },
+  "QUIBBLES_RISK_MESSAGE_2": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Of course not! Look at them, they're so fluffy!"
+  },
+  "RISK_1": {
+    "description": "",
+    "message": "I expect no hassle."
+  },
+  "RISK_2": {
+    "description": "",
+    "message": "Ne víc než normálně."
+  },
+  "RISK_3": {
+    "description": "",
+    "message": "Je to cenný náklad, měl bys mít oči otevřené."
+  },
+  "RISK_4": {
+    "description": "",
+    "message": "Může to být nebezpečné. Ujisti se, že jsi na to dostatečně připraven(a)."
+  },
+  "RISK_5": {
+    "description": "",
+    "message": "Může to být velmi riskantní a můžeš narazit na značný odpor."
+  },
+  "RISK_6": {
+    "description": "",
+    "message": "Nepočítej s tím, že dorazítš do cíle bez úhony."
+  },
+  "RISK_ART_1": {
+    "description": "",
+    "message": "Zboží je velmi vyhledávané milovníky umění."
+  },
+  "RISK_EXPENSIVE_1": {
+    "description": "",
+    "message": "Udělali jsme vše pro to, abychom dodávku udrželi v tajnosti. Ale nikdy si nemůžeme být jistí."
+  },
+  "RISK_EXPENSIVE_2": {
+    "description": "",
+    "message": "Policie nás informovala, že v tomto systému operuje neznámá skupina pirátů."
+  },
+  "RISK_GEMS_1": {
+    "description": "",
+    "message": "Je možné, že se bezohledný obchodník s klenoty pokusí tento náklad získat."
+  },
+  "RISK_WHOLESALER_1": {
+    "description": "",
+    "message": "Neboj se. V případě problémů je připravena policejní hlídka."
+  },
+  "RISK_WHOLESALER_2": {
+    "description": "",
+    "message": "Možná, existuje jisté riziko. Policie nám však slíbila, že bude hlídat oblast."
+  },
+  "RISK_WHOLESALER_3": {
+    "description": "",
+    "message": "Je to velmi riskantní. Ale doprovod je připraven vás hlídat."
+  },
+  "SEMI_FINISHED_PRODUCTS": {
+    "description": "custom cargo",
+    "message": "semi-finished products"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Nastavit jako cíl navigace"
+  },
+  "SET_RETURN_ROUTE": {
+    "description": "",
+    "message": "Nastavit zpáteční trasu"
+  },
+  "SPACEPORT": {
+    "description": "",
+    "message": "Stanice:"
+  },
+  "SPACESHIP_PARTS": {
+    "description": "custom cargo",
+    "message": "spaceship parts"
+  },
+  "STEM_BOLTS": {
+    "description": "custom cargo, used in Star Trek DS9 as something with unclear usefulness",
+    "message": "self-sealing stem bolts"
+  },
+  "SUCCESSMSG_1": {
+    "description": "",
+    "message": "Děkuji za doručení. Vše je zaplaceno."
+  },
+  "SUCCESSMSG_2": {
+    "description": "",
+    "message": "Díky za včasné doručení. Peníze byly převedeny."
+  },
+  "SUCCESSMSG_3": {
+    "description": "",
+    "message": "Výborně, bylo mi potěšením s tebou pracovat. Zaplatil jsem účet."
+  },
+  "SUCCESSMSG_4": {
+    "description": "",
+    "message": "Díky! Určitě tě doporučím. Peníze byly převedeny."
+  },
+  "SUCCESSMSG_FLUFFY_1": {
+    "description": "Said when receiving a shipment of Quibbles (see wikipedia Tribble)",
+    "message": "Oh dear, what to do with so many fluffy beings. Either way, money has been sent."
+  },
+  "SYSTEM": {
+    "description": "",
+    "message": "Systém:"
+  },
+  "TARGET_DESTROYED": {
+    "description": "",
+    "message": "Cíl zničen."
+  },
+  "TITANIUM": {
+    "description": "custom cargo",
+    "message": "titanium"
+  },
+  "TOO_LATE_TO_PICK_UP": {
+    "description": "",
+    "message": "You are much too late! Your performance is so bad that I am cancelling my contract with you."
+  },
+  "TUNGSTEN": {
+    "description": "custom cargo",
+    "message": "tungsten"
+  },
+  "URANIUM": {
+    "description": "custom cargo",
+    "message": "uranium"
+  },
+  "URGENCY_1": {
+    "description": "",
+    "message": "Nespěchá to. Musí to být doručeno do {date}."
+  },
+  "URGENCY_2": {
+    "description": "",
+    "message": "Musí být nutně doručeno do {date}."
+  },
+  "URGENCY_3": {
+    "description": "",
+    "message": "Kvůli naplánovanému harmonogramu musí být doručeno do {date}."
+  },
+  "URGENCY_4": {
+    "description": "",
+    "message": "Spěchá to, takže to musí být doručeno do {date}."
+  },
+  "URGENCY_5": {
+    "description": "",
+    "message": "Je nezbytné, aby zboží bylo dodáno do {date}."
+  },
+  "URGENCY_FLUFFY_1": {
+    "description": "",
+    "message": "Vzhledem k rychlosti rozmnožování přepravované zvěře a omezenému množství potravy v kontejneru musí být dodávka doručena do {date}."
+  },
+  "URGENCY_RADIOACTIVE_1": {
+    "description": "",
+    "message": "Because of the half-life period of this isotope, delivery must be completed by {date}."
+  },
+  "WEDDING_DRESSES": {
+    "description": "custom cargo",
+    "message": "wedding dresses"
+  },
+  "WEDDING_DRESSES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Over wedding dresses?"
+  },
+  "WE_HAVE_LOADED_UP_THE_CARGO_ON_YOUR_SHIP": {
+    "description": "",
+    "message": "Naložili jsme náklad na vaši loď."
+  },
+  "WHAT_IS_THIS": {
+    "description": "",
+    "message": "Co to má znamenat? Odhodil jsi můj náklad? Zbláznil jsi se?"
+  },
+  "WHYSOMUCH_1": {
+    "description": "",
+    "message": "Jedná se o standardní poplatek."
+  },
+  "WHYSOMUCH_2": {
+    "description": "",
+    "message": "Přijměte to nebo nechte být."
+  },
+  "WHYSOMUCH_3": {
+    "description": "",
+    "message": "What is considered \"much\" is relative."
+  },
+  "WHYSOMUCH_4": {
+    "description": "",
+    "message": "Výplata odráží naše přání, aby bylo zboží doručeno včas a v jednom kuse."
+  },
+  "WHYSOMUCH_5": {
+    "description": "",
+    "message": "Je v tom bonus za vaší diskrétnost o této dodávce."
+  },
+  "WHYSOMUCH_6": {
+    "description": "",
+    "message": "Rádi vám zaplatíme méně."
+  },
+  "WHYSOMUCH_CENTRIFUGES_1": {
+    "description": "",
+    "message": "Některé {cargoname} byly zničeny kvůli chybě softwaru a je nutné je co nejdříve vyměnit."
+  },
+  "WHYSOMUCH_CHEMICAL_1": {
+    "description": "",
+    "message": "Výroba v chemickém závodě závisí na tomto zboží a nesmí být přerušena. Stroj nesmí nic zastavit."
+  },
+  "WHYSOMUCH_EXPENSIVE_1": {
+    "description": "",
+    "message": "Cenné zboží je velmi žádané."
+  },
+  "WHYSOMUCH_EXPENSIVE_2": {
+    "description": "",
+    "message": "Protože toto zboží je docela drahé."
+  },
+  "WHYSOMUCH_FLUFFY_1": {
+    "description": "",
+    "message": "{cargoname} je rychloobrátkové zboží. Pokud chcete vydělat spoustu peněz, měli byste investovat do akcií {cargoname}."
+  },
+  "WHYSOMUCH_INFRASTRUCTURE_1": {
+    "description": "",
+    "message": "Toto zboží je pro stavební projekt zásadní."
+  },
+  "WHYSOMUCH_MINING_1": {
+    "description": "",
+    "message": "Toto zboží je důležité pro stavbu nového dolu."
+  },
+  "WHYSOMUCH_URGENT_1": {
+    "description": "",
+    "message": "Můj oblíbený pilot je nemocný a času je málo."
+  },
+  "WHYSOMUCH_URGENT_2": {
+    "description": "",
+    "message": "Pokud nedodržíme termín dodání, projekt se zastaví."
+  },
+  "WHYSOMUCH_URGENT_3": {
+    "description": "",
+    "message": "Je to nezbytně nutné zboží."
+  },
+  "WHYSOMUCH_WEDDING_1": {
+    "description": "",
+    "message": "Zatím jsem nenašel nikoho, kdo by provedl tento transport. Po skončení sezóny je moje zboží bezcenné."
+  },
+  "WHY_SO_MUCH_MONEY": {
+    "description": "",
+    "message": "Proč tolik peněz?"
+  },
+  "WILL_I_BE_IN_ANY_DANGER": {
+    "description": "",
+    "message": "Ocitnu se v nějakém nebezpečí?"
+  },
+  "YOU_DO_NOT_HAVE_ENOUGH_CARGO_SPACE_ON_YOUR_SHIP": {
+    "description": "",
+    "message": "Na lodi nemáte dostatek nákladního prostoru."
+  },
+  "YOU_DO_NOT_HAVE_ENOUGH_EMPTY_CARGO_SPACE": {
+    "description": "",
+    "message": "Ozvi se, až budeš mít dostatek nákladového prostoru."
+  }
+}

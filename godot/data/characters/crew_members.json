@@ -17,7 +17,8 @@
       "trait_bonuses": {
         "crew_casualty_reduction": 0.15,
         "hull_repair_rate": 0.10,
-        "post_combat_recovery": 0.05
+        "post_combat_recovery": 0.05,
+        "hazard_piloting": 0.12
       },
       "join_type": "willing"
     },
@@ -37,7 +38,8 @@
       "trait_description": "Increases weapon damage and grants bonus chance for critical hits.",
       "trait_bonuses": {
         "firepower_bonus": 0.10,
-        "critical_hit_chance": 0.05
+        "critical_hit_chance": 0.05,
+        "hazard_shielding": 0.08
       },
       "join_type": "persuade"
     },
@@ -57,7 +59,8 @@
       "trait_description": "Unlocks hidden routes, reduces travel time, and increases exploration discovery rate.",
       "trait_bonuses": {
         "exploration_discovery_rate": 0.12,
-        "fuel_efficiency": 0.08
+        "fuel_efficiency": 0.08,
+        "hazard_magic": 0.10
       },
       "join_type": "willing"
     },
@@ -78,7 +81,8 @@
       "trait_bonuses": {
         "morale_recovery": 0.10,
         "hull_repair_rate": 0.08,
-        "post_combat_recovery": 0.10
+        "post_combat_recovery": 0.10,
+        "hazard_veteran": 0.08
       },
       "join_type": "persuade"
     },
@@ -98,7 +102,8 @@
       "trait_description": "Boosts crew morale, reduces desertion chance, and grants bonus to leadership checks.",
       "trait_bonuses": {
         "morale_recovery": 0.12,
-        "crew_casualty_reduction": 0.08
+        "crew_casualty_reduction": 0.08,
+        "hazard_veteran": 0.10
       },
       "join_type": "willing"
     },
@@ -118,7 +123,8 @@
       "trait_description": "Increases firepower, area damage bonus, and chance to disable enemy systems.",
       "trait_bonuses": {
         "firepower_bonus": 0.12,
-        "critical_hit_chance": 0.06
+        "critical_hit_chance": 0.06,
+        "hazard_shielding": 0.10
       },
       "join_type": "persuade"
     },
@@ -139,7 +145,8 @@
       "trait_bonuses": {
         "exploration_discovery_rate": 0.10,
         "ambush_detection": 0.10,
-        "fuel_efficiency": 0.10
+        "fuel_efficiency": 0.10,
+        "hazard_piloting": 0.12
       },
       "join_type": "willing"
     },
@@ -160,7 +167,8 @@
       "trait_bonuses": {
         "morale_recovery": 0.10,
         "hull_repair_rate": 0.06,
-        "post_combat_recovery": 0.12
+        "post_combat_recovery": 0.12,
+        "hazard_magic": 0.08
       },
       "join_type": "persuade"
     }

@@ -1,0 +1,54 @@
+{
+	"artifacts": [
+		{
+			"artifact_id": "aeolian_tuning_fork",
+			"name": "The Aeolian Tuning Fork",
+			"description": "A silver tool used by ancient Goblins to 'play' the wind currents of the multiverse. Reveals hidden paths within Storm Clouds.",
+			"arc_utility": "Essential for navigating the Shattered Soundscape arc.",
+			"cost_crystals": 25,
+			"cost_salvage": 40,
+			"passive_bonus": { "hazard_detection_radius": 0.3 },
+			"story_flag_on_acquire": "has_aeolian_tuning_fork"
+		},
+		{
+			"artifact_id": "bottled_solar_flare",
+			"name": "Bottled Solar Flare",
+			"description": "A piece of a dying sun corked inside a Whisper Crystal vial. Provides light and heat in the darkest reaches.",
+			"arc_utility": "Required to survive the Deep Dark or Frozen Realm arcs.",
+			"cost_crystals": 30,
+			"cost_salvage": 20,
+			"passive_bonus": { "hazard_damage_reduction": 0.15 },
+			"story_flag_on_acquire": "has_bottled_solar_flare"
+		},
+		{
+			"artifact_id": "chrono_compass",
+			"name": "Chrono-Compass",
+			"description": "A finicky device favored by Aristotle for those 'purr-fect' escapes. Allows a brief rewind of ship movement.",
+			"arc_utility": "Facilitates branching narrative choices by allowing a vision of outcomes.",
+			"cost_crystals": 40,
+			"cost_salvage": 30,
+			"passive_bonus": { "dodge_bonus": 0.05 },
+			"story_flag_on_acquire": "has_chrono_compass"
+		},
+		{
+			"artifact_id": "midas_grapnel",
+			"name": "Midas's Grapnel",
+			"description": "An enchanted golden claw that never loses its grip on treasure. Adds a grapple mechanic to combat.",
+			"arc_utility": "Used in mid-game arcs to scavenge derelict knight-ships.",
+			"cost_crystals": 35,
+			"cost_salvage": 50,
+			"passive_bonus": { "salvage_bonus": 0.25 },
+			"story_flag_on_acquire": "has_midas_grapnel"
+		},
+		{
+			"artifact_id": "fairy_dust_scrubber",
+			"name": "Fairy Dust Scrubber",
+			"description": "Bellows and brushes that coat the ship in shimmering invisibility. Reduces detection and passes magical barriers.",
+			"arc_utility": "Necessary for the Diplomatic arcs involving the Fae Courts.",
+			"cost_crystals": 30,
+			"cost_salvage": 35,
+			"passive_bonus": { "detection_reduction": 0.30 },
+			"story_flag_on_acquire": "has_fairy_dust_scrubber"
+		}
+	]
+}

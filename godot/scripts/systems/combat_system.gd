@@ -54,11 +54,15 @@ class CombatLog extends RefCounted:
 
 
 ## Damage = attacker_firepower - defender_armour, min 1, with +/-20% variance.
-## If the attacker is the player, crew trait bonuses are applied.
+## If the attacker is the player, crew trait bonuses and character combat_skill are applied.
 static func calculate_damage(attacker_fp: int, defender_armour: int, is_player: bool = false) -> int:
 	var effective_fp: float = float(attacker_fp)
 	if is_player and GameSession.game_state != null:
 		effective_fp *= (1.0 + GameSession.crew_trait_system.get_bonus(GameSession.game_state.player_ship, "firepower_bonus"))
+		# Character combat_skill adds up to +20% firepower at skill 10
+		if GameSession.game_state.player_character != null:
+			var combat_bonus: float = GameSession.game_state.player_character.combat_skill * 0.02
+			effective_fp *= (1.0 + combat_bonus)
 	var base := maxi(1, int(effective_fp) - defender_armour)
 	var variance := randf_range(0.8, 1.2)
 	var damage := maxi(1, int(base * variance))
@@ -70,5 +74,10 @@ static func calculate_damage(attacker_fp: int, defender_armour: int, is_player: 
 
 
 ## Dodge probability based on speed: speed 10 -> 40%, speed 1 -> 4%.
-static func dodge_chance(defender_speed: int) -> float:
-	return minf(0.45, defender_speed * 0.04)
+## Player's stealth stat adds up to +10% dodge at stealth 10.
+static func dodge_chance(defender_speed: int, is_player: bool = false) -> float:
+	var base_dodge: float = minf(0.45, defender_speed * 0.04)
+	if is_player and GameSession.game_state != null and GameSession.game_state.player_character != null:
+		var stealth_bonus: float = GameSession.game_state.player_character.stealth * 0.01
+		base_dodge = minf(0.55, base_dodge + stealth_bonus)
+	return base_dodge

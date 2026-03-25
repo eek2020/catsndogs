@@ -1,0 +1,2890 @@
+{
+  "ABOUT": {
+    "description": "main menu button (implied 'about' the game)",
+    "message": "About"
+  },
+  "ABOVE_AVERAGE": {
+    "description": "",
+    "message": "高于平均值"
+  },
+  "ACTIVE": {
+    "description": "",
+    "message": "开启"
+  },
+  "ADD_BOOKMARK": {
+    "description": "Button to add a singular bookmark",
+    "message": "Add Bookmark"
+  },
+  "ADD_JUMP": {
+    "description": "UI-button: Add hyper jump to list of planned jumps",
+    "message": "添加跳跃"
+  },
+  "AFTER_TRADE_IN": {
+    "description": "",
+    "message": "换购之后"
+  },
+  "ALLEGIANCE": {
+    "description": "",
+    "message": "所属:"
+  },
+  "ALL_PARAMETERS_WERE_RECOVERED_SUCCESSFULLY": {
+    "description": "Message when restoring savegame",
+    "message": "所有参数已成功恢复。"
+  },
+  "ALL_UP_WEIGHT": {
+    "description": "",
+    "message": "总重"
+  },
+  "AMOUNT": {
+    "description": "",
+    "message": "数量"
+  },
+  "ANISOTROPIC_FILTERING_DESC": {
+    "description": "",
+    "message": "在多个mip级别上采样纹理，以在较浅的角度查看时产生更清晰的纹理。防止纹理变得模糊;然而，它可能会付出沉重的性能代价。"
+  },
+  "AN_ERROR_HAS_OCCURRED": {
+    "description": "",
+    "message": "发生了一个错误"
+  },
+  "ARRIVAL_DATE": {
+    "description": "Time of arrival, used in flight log",
+    "message": "到达日期"
+  },
+  "ATMOSPHERIC_SHIELDING": {
+    "description": "Used in ShipInfo view, followed by a yes/no depending on if the ship can carry atmospheric shields",
+    "message": "可安装大气护盾"
+  },
+  "ATMO_PRESS_LIMIT": {
+    "description": "Base external pressure limit of a ship (without atmo shield)",
+    "message": "气压极限"
+  },
+  "ATTEMPTING_TO_RECOVER_GAME_PROGRESS_FROM_SAVE_X": {
+    "description": "Message when restoring savegame",
+    "message": "正在尝试从保存：{save}中恢复游戏进度。"
+  },
+  "ATTEMPT_TO_REPAIR_HULL": {
+    "description": "",
+    "message": "尝试修理船体"
+  },
+  "AUTOMATED_MESSAGE": {
+    "description": "For comm messages from bots",
+    "message": "AUTOMATED MESSAGE"
+  },
+  "AUTO_ROUTE": {
+    "description": "Automatically find shortest jump route (measured in time) in star map",
+    "message": "自动路线"
+  },
+  "AVAILABLE_FOR_PURCHASE": {
+    "description": "Market header when buying items",
+    "message": "可供购买"
+  },
+  "AVAILABLE_STOCK": {
+    "description": "Market stat showing number of items in stock",
+    "message": "可用库存"
+  },
+  "AVERAGE": {
+    "description": "",
+    "message": "平均值"
+  },
+  "BACKWARD_ACCEL": {
+    "description": "",
+    "message": "向后加速度"
+  },
+  "BODY_IN_ROUTE": {
+    "description": "Label indicating a star is part of a planned hyperjump route",
+    "message": "Body in planned HyperJump Route"
+  },
+  "BOOKMARK": {
+    "description": "Label introducing a bookmark",
+    "message": "Bookmark"
+  },
+  "BOOKMARKS": {
+    "description": "Label introducing a list of bookmarks",
+    "message": "Bookmarks"
+  },
+  "BULLETIN_BOARD": {
+    "description": "",
+    "message": "公告板"
+  },
+  "BUY": {
+    "description": "Commodities and equipment prices",
+    "message": "购买"
+  },
+  "BUY_EQUIP": {
+    "description": "Button text to buy selected equipment. May be used in a singular or plural context.",
+    "message": "购买 {name}"
+  },
+  "BUY_PRICE": {
+    "description": "Title for buy-price column in commodity market",
+    "message": "购买"
+  },
+  "BUY_SHIP": {
+    "description": "",
+    "message": "购买飞船"
+  },
+  "CABINS": {
+    "description": "For passengers",
+    "message": "客舱"
+  },
+  "CABIN_FREE": {
+    "description": "Free capacity for passengers",
+    "message": "{amount} 空闲"
+  },
+  "CABIN_USED": {
+    "description": "Passengers using cabins",
+    "message": "{amount} 已使用"
+  },
+  "CANCEL": {
+    "description": "",
+    "message": "取消"
+  },
+  "CANNOT_SELL_ITEM": {
+    "description": "",
+    "message": "此商品不能出售"
+  },
+  "CANNOT_SELL_NONEMPTY_EQUIP": {
+    "description": "",
+    "message": "除非装备槽为空，否则无法出售装备物品。"
+  },
+  "CANT_FIND_PATH": {
+    "description": "Message when restoring savegame, file path",
+    "message": "找不到路径：%s"
+  },
+  "CANT_FIND_PLAYERS_SHIP_IN_SPACE": {
+    "description": "Message when restoring savegame",
+    "message": "在太空中没有找到玩家的飞船"
+  },
+  "CAPACITY": {
+    "description": "Capacity of ship to fit more equipment",
+    "message": "容量"
+  },
+  "CAPACITY_USED": {
+    "description": "",
+    "message": "已占用容量"
+  },
+  "CARGO": {
+    "description": "",
+    "message": "货仓"
+  },
+  "CARGO_CAPACITY": {
+    "description": "Label to show a ship's total cargo space.",
+    "message": "货物容量"
+  },
+  "CARGO_SPACE": {
+    "description": "",
+    "message": "货仓空间"
+  },
+  "CARGO_SPACE_USED": {
+    "description": "",
+    "message": "货仓空间已被占用"
+  },
+  "CARGO_T_FREE": {
+    "description": "t for tonne",
+    "message": "{amount}吨空置"
+  },
+  "CARGO_T_USED": {
+    "description": "t for tonne",
+    "message": "{amount}吨已用"
+  },
+  "CASE_SENSITIVE": {
+    "description": "",
+    "message": "区分大小写"
+  },
+  "CASH": {
+    "description": "",
+    "message": "现金"
+  },
+  "CASH_N": {
+    "description": "",
+    "message": "现金: {money}"
+  },
+  "CENTER_ON_CURRENT_SYSTEM": {
+    "description": "Center on current star system",
+    "message": "Center on Current System"
+  },
+  "CENTER_ON_SYSTEM": {
+    "description": "Center on selected star system",
+    "message": "星系中心"
+  },
+  "CHANGE": {
+    "description": "Face feature option",
+    "message": "更换形象:"
+  },
+  "CHANGE_BINDING": {
+    "description": "Key binding option",
+    "message": "改变绑定"
+  },
+  "CHANGE_COLOR": {
+    "description": "Paintshop button",
+    "message": "更改颜色"
+  },
+  "CHANGE_PATTERN": {
+    "description": "Paintshop button",
+    "message": "更改图案"
+  },
+  "CHARACTER": {
+    "description": "",
+    "message": "角色"
+  },
+  "CHARISMA": {
+    "description": "Character parameter",
+    "message": "魅力"
+  },
+  "CHIEF_MECHANIC": {
+    "description": "",
+    "message": "首席机械师"
+  },
+  "CIRCULAR_ORBIT_SPEED": {
+    "description": "",
+    "message": "圆形轨道速度"
+  },
+  "CITY_DETAIL_LEVEL": {
+    "description": "Game graphics option",
+    "message": "城市细节等级"
+  },
+  "CLEAN": {
+    "description": "Legal status of player",
+    "message": "无记录"
+  },
+  "CLEAR": {
+    "description": "Clear an option in game settings/options menu",
+    "message": "清除"
+  },
+  "CLEAR_ROUTE": {
+    "description": "Clear a planned route of hyperjumps",
+    "message": "清除路线"
+  },
+  "CLIENT": {
+    "description": "",
+    "message": "客户端"
+  },
+  "CLOSE": {
+    "description": "",
+    "message": "关闭"
+  },
+  "COLLAPSE": {
+    "description": "Close / collapse an open folder or group",
+    "message": "折叠"
+  },
+  "COLOR": {
+    "description": "",
+    "message": "颜色"
+  },
+  "COMBAT": {
+    "description": "Headline for kills and combat rating",
+    "message": "战斗"
+  },
+  "COMMANDER": {
+    "description": "",
+    "message": "指挥官"
+  },
+  "COMMODITY": {
+    "description": "Title for commodity name column in commodity market",
+    "message": "商品"
+  },
+  "COMMODITY_MARKET": {
+    "description": "",
+    "message": "商品市场"
+  },
+  "COMMODITY_TRADE_ANALYSIS": {
+    "description": "",
+    "message": "商品贸易分析:"
+  },
+  "COMMODITY_TRADE_ANALYSIS_SYSTEM": {
+    "description": "",
+    "message": "全系统范围的贸易分析："
+  },
+  "COMMODITY_TRADE_ANALYSIS_TOOLTIP_1": {
+    "description": "",
+    "message": "系统内所有买卖商品的平均星际贸易流量。"
+  },
+  "COMMODITY_TRADE_ANALYSIS_TOOLTIP_2": {
+    "description": "",
+    "message": "数据可能不反映个别市场价格。"
+  },
+  "COMPETENT": {
+    "description": "Combat rating",
+    "message": "胜任"
+  },
+  "COMPLETED": {
+    "description": "",
+    "message": "已完成"
+  },
+  "COMPRESS_TEXTURES": {
+    "description": "graphics option in game settings menu ",
+    "message": "压缩贴图文件"
+  },
+  "CONFIRM_PURCHASE": {
+    "description": "",
+    "message": "确认购买"
+  },
+  "CONFIRM_SALE": {
+    "description": "",
+    "message": "确认出售"
+  },
+  "CONSTABLE": {
+    "description": "",
+    "message": "警官"
+  },
+  "CONTINUE_GAME": {
+    "description": "",
+    "message": "继续游戏"
+  },
+  "CONTRACT_FRAUD": {
+    "description": "Crime committed by intentionally breaking a contract",
+    "message": "合同欺诈"
+  },
+  "CONTROLS": {
+    "description": "",
+    "message": "控制"
+  },
+  "CONTROL_OPTIONS": {
+    "description": "",
+    "message": "控制选项"
+  },
+  "COPY": {
+    "description": "As for clipboard",
+    "message": "复制"
+  },
+  "COULD_NOT_DELETE_SAVE": {
+    "description": "",
+    "message": "无法删除保存的数据"
+  },
+  "COULD_NOT_FIND_SYSTEM_BODY_FOR_FRAME": {
+    "description": "Message when restoring savegame",
+    "message": "无法找到系统主体"
+  },
+  "COULD_NOT_LOAD_GAME": {
+    "description": "Label indicating a specific file could not be loaded",
+    "message": "无法加载游戏:"
+  },
+  "COULD_NOT_LOAD_SAVE_FILES": {
+    "description": "Label indicating the list of save files could not be loaded",
+    "message": "无法加载存档文件"
+  },
+  "COULD_NOT_READ_THE_SAVE_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "无法读取保存版本"
+  },
+  "COULD_NOT_SAVE_GAME": {
+    "description": "Label indicating a specific file could not be saved",
+    "message": "无法保存游戏："
+  },
+  "CREDIBLE": {
+    "description": "For player reputation",
+    "message": "可信的"
+  },
+  "CREDITS": {
+    "description": "in game currency",
+    "message": "信用点"
+  },
+  "CREW": {
+    "description": "Tab item in the start game menu",
+    "message": "船员"
+  },
+  "CREW_CABINS": {
+    "description": "",
+    "message": "船员舱"
+  },
+  "CREW_ROSTER": {
+    "description": "",
+    "message": "船员名册"
+  },
+  "CRIME": {
+    "description": "Heading introducing a single crime name or list of crime names",
+    "message": "犯罪"
+  },
+  "CRIMINAL": {
+    "description": "Legal status of player",
+    "message": "犯人"
+  },
+  "CRIMINAL_RECORD": {
+    "description": "Heading for past crimes / crime history of character, proper noun",
+    "message": "犯罪记录"
+  },
+  "CURRENT_FUEL": {
+    "description": "Label indicating the current fuel state",
+    "message": "Current Fuel"
+  },
+  "CURRENT_SAVEGAME_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "无法读取保存版本：%s"
+  },
+  "CURRENT_SHIP": {
+    "description": "For tooltip comparing current ship specs to one in the shipyard",
+    "message": "当前飞船"
+  },
+  "CURRENT_SYSTEM": {
+    "description": "Label indicating the system the player currently occupies",
+    "message": "Current System"
+  },
+  "CUT": {
+    "description": "As for clipboard",
+    "message": "剪切"
+  },
+  "DANGEROUS": {
+    "description": "Player combat rating",
+    "message": "危险"
+  },
+  "DATE": {
+    "description": "Date of an event, used in flight log",
+    "message": "日期"
+  },
+  "DEADLY": {
+    "description": "Player combat rating",
+    "message": "致命的"
+  },
+  "DECREASE": {
+    "description": "Decrease something.",
+    "message": "减少"
+  },
+  "DELETE": {
+    "description": "",
+    "message": "删除"
+  },
+  "DELETE_BOOKMARK": {
+    "description": "Button to remove a singular bookmark",
+    "message": "Delete Bookmark"
+  },
+  "DELETE_SAVE_CONFIRMATION": {
+    "description": "",
+    "message": "你确定想要删除这个保存的数据吗？"
+  },
+  "DELTA_V": {
+    "description": "",
+    "message": "速度增量"
+  },
+  "DELTA_V_EMPTY": {
+    "description": "Delta-v capacity of a ship with no cargo or upgrades",
+    "message": "速度增量(空载)"
+  },
+  "DELTA_V_FULL": {
+    "description": "Delta-v capacity of a ship with maximum cargo",
+    "message": "速度增量(满载)"
+  },
+  "DELTA_V_MAX": {
+    "description": "Delta-v capacity of a ship with cargo bay fully loaded with propellant",
+    "message": "速度增量(最大)"
+  },
+  "DEMAND": {
+    "description": "Column label for commodity demand at a market.",
+    "message": "需求"
+  },
+  "DEPARTURE_DATE": {
+    "description": "Time of departure, used in flight log",
+    "message": "出发日期"
+  },
+  "DESCRIPTION": {
+    "description": "Start game parameter, e.g. 'This is an easy start from Cydonia'",
+    "message": "描述"
+  },
+  "DESTROY_ENEMY_SHIP": {
+    "description": "",
+    "message": "摧毁敌人飞船"
+  },
+  "DETAIL_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "越低，性能越好，但要牺牲视觉美观"
+  },
+  "DISABLE_SCREENSHOT_INFO": {
+    "description": "",
+    "message": "禁用屏幕信息"
+  },
+  "DISABLE_SCREENSHOT_INFO_DESC": {
+    "description": "",
+    "message": "在屏幕截图模式(切换HUD模式)下隐藏所有显示的信息，包括系统坐标。"
+  },
+  "DISMISS": {
+    "description": "Terminate crew member's contract",
+    "message": "解散"
+  },
+  "DISPLAY_HUD_TRAILS": {
+    "description": "",
+    "message": "显示HUD轨迹"
+  },
+  "DISPLAY_HUD_TRAILS_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "通过显示HUD上船只的轨迹来引导眼睛"
+  },
+  "DISPLAY_NAV_TUNNELS": {
+    "description": "Settings option: hyperspace tunnel effect",
+    "message": "显示导航路径"
+  },
+  "DISPLAY_NAV_TUNNELS_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "显示到HUD上当前选定目标的虚拟通道"
+  },
+  "DISPLAY_SPEED_LINES": {
+    "description": "Settings option: effect when travelling in space",
+    "message": "显示速度矢量"
+  },
+  "DISPLAY_SPEED_LINES_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "协助空间运动方向感"
+  },
+  "DOCKED_AT": {
+    "description": "",
+    "message": "停靠在"
+  },
+  "DOCKED_TO_A_BODY_THAT_IS_NOT_A_STATION": {
+    "description": "Message when restoring savegame",
+    "message": "停靠到的主体并非一座空间站"
+  },
+  "DOCK_AT_CURRENT_TARGET": {
+    "description": "",
+    "message": "停靠在当前目标"
+  },
+  "DRIVE_ACTIVE": {
+    "description": "Ship jump status",
+    "message": "驱动器激活"
+  },
+  "DUE": {
+    "description": "mission deadline date",
+    "message": "到期"
+  },
+  "DUMPING": {
+    "description": "The illegal act of dumping waste",
+    "message": "倾倒"
+  },
+  "D_DAYS_LEFT": {
+    "description": "",
+    "message": "时限："
+  },
+  "ECONOMY_TRADE": {
+    "description": "",
+    "message": "经济 & 贸易"
+  },
+  "EDIT": {
+    "description": "Tooltip, to edit a flight log entry",
+    "message": "编辑"
+  },
+  "EDIT_BOOKMARK": {
+    "description": "Button to edit a singular bookmark",
+    "message": "Edit Bookmark"
+  },
+  "EDIT_NOTE": {
+    "description": "",
+    "message": "Edit Note"
+  },
+  "EFFECTS": {
+    "description": "",
+    "message": "影响:"
+  },
+  "ELITE": {
+    "description": "Player combat rating",
+    "message": "精英"
+  },
+  "EMPLOYMENT": {
+    "description": "",
+    "message": "雇佣"
+  },
+  "ENABLE_ANISOTROPIC_FILTERING": {
+    "description": "Use Anisotropic Filtering",
+    "message": "各向异性过滤"
+  },
+  "ENABLE_AUTOSAVE": {
+    "description": "Allow the game to autosave when docking",
+    "message": "允许自动保存"
+  },
+  "ENABLE_AUTOSAVE_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "停靠时保存状态，可能会导致一些延迟，具体取决于磁盘访问时间。"
+  },
+  "ENABLE_COCKPIT": {
+    "description": "Game settings option: to use a cockpit 3D model",
+    "message": "启用座舱(实验性)"
+  },
+  "ENABLE_COCKPIT_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "显示飞行员驾驶舱的三维模型。（当前仪表板是占位符）"
+  },
+  "ENABLE_JOYSTICK": {
+    "description": "",
+    "message": "启用摇杆"
+  },
+  "END_GAME": {
+    "description": "",
+    "message": "结束游戏"
+  },
+  "ENGINEERING": {
+    "description": "Engineering skills of crew",
+    "message": "工程"
+  },
+  "ENTER_CUSTOM_NOTE": {
+    "description": "Label indicating a note should be entered here",
+    "message": "Enter custom note..."
+  },
+  "ENTRY": {
+    "description": "A note/entry/record into the flight log",
+    "message": "进入"
+  },
+  "EQUIPMENT": {
+    "description": "",
+    "message": "装备"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "This equipment item is already installed here."
+  },
+  "EQUIPMENT_CAPACITY": {
+    "description": "The equipment capacity of a ship",
+    "message": "装备容量"
+  },
+  "EQUIPMENT_MARKET": {
+    "description": "",
+    "message": "装备市场"
+  },
+  "EQUIPPED": {
+    "description": "",
+    "message": "已装备"
+  },
+  "ERROR": {
+    "description": "",
+    "message": "错误"
+  },
+  "ERROR_APPLYING_PATCH": {
+    "description": "Message when restoring savegame",
+    "message": "应用补丁时出错"
+  },
+  "ERROR_LANDING_GEAR_DOWN": {
+    "description": "",
+    "message": "无法启动超跳；起落架未收回！"
+  },
+  "ESCAPE_SPEED": {
+    "description": "",
+    "message": "逃逸速度:"
+  },
+  "EXIT_THIS_GAME": {
+    "description": "",
+    "message": "退出游戏"
+  },
+  "EXPAND": {
+    "description": "Open / expand a collapsed folder or group",
+    "message": "展开"
+  },
+  "EXPERIENCED": {
+    "description": "For player reputation",
+    "message": "有经验的"
+  },
+  "EXPERIMENTAL": {
+    "description": "Indicates feature/option is experimental",
+    "message": "实验性的"
+  },
+  "EXPERT": {
+    "description": "For player reputation",
+    "message": "专家"
+  },
+  "FACTION": {
+    "description": "Label indicating the factional allegiance of an object",
+    "message": "Faction"
+  },
+  "FACTIONS": {
+    "description": "Button to toggle the display of factions on the sector map",
+    "message": "派系"
+  },
+  "FAILED": {
+    "description": "When failed mission",
+    "message": "失败"
+  },
+  "FAILED_TO_RECOVER_SOME_EQUIPMENT": {
+    "description": "",
+    "message": "部分装备恢复失败"
+  },
+  "FEATURE_ACCESSORIES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "配件"
+  },
+  "FEATURE_ARMOUR": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "装甲"
+  },
+  "FEATURE_CLOTHES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "衣服"
+  },
+  "FEATURE_EYES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "眼睛"
+  },
+  "FEATURE_GENDER": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "性别"
+  },
+  "FEATURE_HAIRSTYLE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "发型"
+  },
+  "FEATURE_HEAD": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "头部"
+  },
+  "FEATURE_MOUTH": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "嘴"
+  },
+  "FEATURE_NOSE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "鼻子"
+  },
+  "FEATURE_RACE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "种族"
+  },
+  "FEATURE_SPECIES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "物种"
+  },
+  "FEMALE": {
+    "description": "",
+    "message": "女性"
+  },
+  "FILE_SAVEGAME_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "文件保存的游戏版本：%s"
+  },
+  "FINAL_TARGET": {
+    "description": "Hyperjump planner, referring to star system target",
+    "message": "Final Target"
+  },
+  "FINANCE": {
+    "description": "Financial statement of player, e.g. cash",
+    "message": "财务"
+  },
+  "FINE": {
+    "description": "Cost of a criminal action",
+    "message": "罚款"
+  },
+  "FLIGHTLOG_DOCKING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name",
+    "message": "停靠在{primary_info}"
+  },
+  "FLIGHTLOG_FLYING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the name of a space body",
+    "message": "在{primary_info}外太空飞行"
+  },
+  "FLIGHTLOG_HYPERSPACE": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the star system targeted for hyperspace jump.",
+    "message": "从超空间，去 {primary_info}"
+  },
+  "FLIGHTLOG_JUMPING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the star system targeted for hyperspace jump.",
+    "message": "超空间跳跃前往 {primary_info}"
+  },
+  "FLIGHTLOG_LANDED": {
+    "description": "Used in Flight Log, to indicate player's position, 'primary_info' is the name of a space body, typically a planet, the other two variables are latitude and longitude as floating point number, e.g. 'Landed on Trantor, position (-43.23, 67.89)'",
+    "message": "登陆到{primary_info},位于({secondary_info}, {tertiary_info})"
+  },
+  "FLIGHTLOG_STARPORT_ORBITAL": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name, 'secondary_info' is a space body (planet, moon/satelite, star) name",
+    "message": "停靠于{primary_info}, 位于环绕{secondary_info}的轨道"
+  },
+  "FLIGHTLOG_STARPORT_SURFACE": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name, 'secondary_info' is a space body (planet, moon/satelite, star) name",
+    "message": "停靠于 {primary_info}, 位于 {secondary_info}"
+  },
+  "FLIGHTLOG_UNDOCKING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name",
+    "message": "脱离{primary_info}"
+  },
+  "FLIGHT_LOG": {
+    "description": "Title for flight log screen, in info view",
+    "message": "飞行日志"
+  },
+  "FLIGHT_STATE": {
+    "description": "",
+    "message": "飞行状态"
+  },
+  "FLYING": {
+    "description": "",
+    "message": "飞行"
+  },
+  "FORWARD_ACCEL": {
+    "description": "",
+    "message": "向前加速度"
+  },
+  "FORWARD_ACCEL_EMPTY": {
+    "description": "",
+    "message": "向前加速度(空载)"
+  },
+  "FORWARD_ACCEL_FULL": {
+    "description": "",
+    "message": "向前加速度(满载)"
+  },
+  "FREE": {
+    "description": "Used in Ship Information view as in Capacity: 10t (5t free)",
+    "message": "空闲"
+  },
+  "FRONT_WEAPON": {
+    "description": "",
+    "message": "前置武器"
+  },
+  "FUEL": {
+    "description": "",
+    "message": "燃料"
+  },
+  "FUEL_TANK_FULL": {
+    "description": "",
+    "message": "燃料箱已满."
+  },
+  "FUEL_WEIGHT": {
+    "description": "",
+    "message": "燃料重量"
+  },
+  "FUGITIVE": {
+    "description": "Legal status of player",
+    "message": "逃犯"
+  },
+  "FULL_SCREEN": {
+    "description": "",
+    "message": "全屏"
+  },
+  "GAME_OPTIONS": {
+    "description": "GameOptions - tooltip for the Game Options tab in the Settings Window",
+    "message": "游戏选项"
+  },
+  "GAME_TIME": {
+    "description": "",
+    "message": "游戏时间"
+  },
+  "GENERAL_CREW": {
+    "description": "",
+    "message": "一般船员"
+  },
+  "GIVE_ORDERS_TO_CREW": {
+    "description": "",
+    "message": "命令船员"
+  },
+  "GOOD_RIDDANCE_TO_YOU_TOO": {
+    "description": "",
+    "message": "也祝你好运."
+  },
+  "GO_BACK": {
+    "description": "",
+    "message": "返回"
+  },
+  "GPU_JOBS": {
+    "description": "",
+    "message": "GPU作业"
+  },
+  "GPU_JOBS_DESC": {
+    "description": "",
+    "message": "使用GPU执行某些操作，可能会提高性能。"
+  },
+  "HANG_UP": {
+    "description": "",
+    "message": "挂断."
+  },
+  "HARMLESS": {
+    "description": "Player combat rating",
+    "message": "人畜无害的"
+  },
+  "HEAVY_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "重型货运穿梭机"
+  },
+  "HEAVY_COURIER": {
+    "description": "",
+    "message": "重型信使"
+  },
+  "HEAVY_FIGHTER": {
+    "description": "",
+    "message": "重型战斗机"
+  },
+  "HEAVY_FREIGHTER": {
+    "description": "",
+    "message": "重型货船"
+  },
+  "HEAVY_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "重型客运穿梭机"
+  },
+  "HEAVY_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "重型客运船"
+  },
+  "HIGH": {
+    "description": "Game settings option: for graphics resolution",
+    "message": "高"
+  },
+  "HUD_2D_RADAR": {
+    "description": "Popup text: the name of the azimuthal equidistant projection radar",
+    "message": "2D 方位等距投影"
+  },
+  "HUD_3D_RADAR": {
+    "description": "Popup text: the name of the planar projection radar (traditional frontier-style)",
+    "message": "3D 平面投影"
+  },
+  "HUD_ARRIVAL_DATE": {
+    "description": "Label for Hyperspace Cloud arrival date",
+    "message": "Arrival Date"
+  },
+  "HUD_ATMOSPHERIC_PRESSURE": {
+    "description": "Tooltip: Atmospheric Pressure.",
+    "message": "大气压力"
+  },
+  "HUD_BACKWARD_GUN_TEMPERATURE": {
+    "description": "Tooltip: Backward Gun Temperature.",
+    "message": "后炮温度"
+  },
+  "HUD_BRAKE_DISTANCE_MAIN_THRUSTERS": {
+    "description": "Tooltip: The braking distance using the main thrusters.",
+    "message": "使用主推进器的制动距离"
+  },
+  "HUD_BUTTON_AUTOPILOT_DOCKING": {
+    "description": "Tooltip: Autopilot docking",
+    "message": "自动驾驶停靠"
+  },
+  "HUD_BUTTON_AUTOPILOT_ENTERING_ORBIT": {
+    "description": "Tooltip: Autopilot entering orbit",
+    "message": "自动驾驶进入轨道"
+  },
+  "HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET": {
+    "description": "Tooltip: Autopilot flying to target",
+    "message": "自动驾驶飞向目标"
+  },
+  "HUD_BUTTON_BLASTOFF": {
+    "description": "Tooltip: Blastoff",
+    "message": "发射"
+  },
+  "HUD_BUTTON_CRUISE_FORWARD": {
+    "description": "Tooltip for button",
+    "message": "向前巡航模式"
+  },
+  "HUD_BUTTON_CRUISE_UP": {
+    "description": "Tooltip for button",
+    "message": "向上巡航模式"
+  },
+  "HUD_BUTTON_DISABLE_AUTOPILOT": {
+    "description": "Tooltip for button",
+    "message": "禁用自动驾驶"
+  },
+  "HUD_BUTTON_DISABLE_CRUISE": {
+    "description": "Tooltip for button",
+    "message": "禁用巡航模式"
+  },
+  "HUD_BUTTON_DISABLE_FIXHEADING": {
+    "description": "Tooltip for button",
+    "message": "禁用固定模式"
+  },
+  "HUD_BUTTON_DISABLE_FOLLOW_MODE": {
+    "description": "Tooltip for button",
+    "message": "禁用跟随模式"
+  },
+  "HUD_BUTTON_EQUIPMENT": {
+    "description": "Tooltip: Equipment",
+    "message": "装备"
+  },
+  "HUD_BUTTON_EXTERNAL_VIEW": {
+    "description": "Tooltip: External camera view",
+    "message": "外部视角"
+  },
+  "HUD_BUTTON_FIX_ANTINORMAL": {
+    "description": "Tooltip: fix heading antinormal",
+    "message": "固定异常朝向"
+  },
+  "HUD_BUTTON_FIX_NORMAL": {
+    "description": "Tooltip: fix heading normal",
+    "message": "固定正常朝向"
+  },
+  "HUD_BUTTON_FIX_PROGRADE": {
+    "description": "Tooltip: fix heading prograde",
+    "message": "固定朝向前进"
+  },
+  "HUD_BUTTON_FIX_RADIAL_IN": {
+    "description": "Tooltip: fix heading radially inward",
+    "message": "固定螺旋向内航向"
+  },
+  "HUD_BUTTON_FIX_RADIAL_OUT": {
+    "description": "Tooltip: fix heading radially outward",
+    "message": "固定螺旋向外航向"
+  },
+  "HUD_BUTTON_FIX_RETROGRADE": {
+    "description": "Tooltip: fix heading retrograde",
+    "message": "固定逆行航向"
+  },
+  "HUD_BUTTON_FLYBY_VIEW": {
+    "description": "Tooltip: Flyby camera view",
+    "message": "飞越视图"
+  },
+  "HUD_BUTTON_HYPERDRIVE_DISABLED": {
+    "description": "Tooltip: Hyperdrive disabled (docked or landed)",
+    "message": "超空间引擎关闭"
+  },
+  "HUD_BUTTON_INITIATE_HYPERJUMP": {
+    "description": "Tooltip: Initiate legal hyperjump",
+    "message": "启动超跳跃"
+  },
+  "HUD_BUTTON_INITIATE_ILLEGAL_HYPERJUMP": {
+    "description": "Tooltip: Initiate illegal hyperjump",
+    "message": "启动非法超跳跃"
+  },
+  "HUD_BUTTON_INTERNAL_VIEW": {
+    "description": "Tooltip: Internal camera view",
+    "message": "内部视角"
+  },
+  "HUD_BUTTON_KILL_ROTATION": {
+    "description": "Tooltip: kill rotation",
+    "message": "消除旋转"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_DOWN": {
+    "description": "Tooltip: Landing gear is down",
+    "message": "放下起落架"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_MOVING": {
+    "description": "Tooltip: Landing gear is moving",
+    "message": "移动起落架"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_UP": {
+    "description": "Tooltip: Landing gear is up",
+    "message": "收起起落架"
+  },
+  "HUD_BUTTON_MANUAL_CONTROL": {
+    "description": "Tooltip: Manual control",
+    "message": "手动控制"
+  },
+  "HUD_BUTTON_ROTATION_DAMPING_IS_OFF": {
+    "description": "Tooltip: Rotation damping is off",
+    "message": "关闭旋转阻尼"
+  },
+  "HUD_BUTTON_ROTATION_DAMPING_IS_ON": {
+    "description": "Tooltip: Rotation damping is on",
+    "message": "开启旋转阻尼"
+  },
+  "HUD_BUTTON_SET_SPEED": {
+    "description": "Tooltip: set speed",
+    "message": "设定速度"
+  },
+  "HUD_BUTTON_SHOW_COMMS": {
+    "description": "Tooltip: Show comms",
+    "message": "显示通讯"
+  },
+  "HUD_BUTTON_SHOW_PERSONAL_INFO": {
+    "description": "Tooltip: Show personal info",
+    "message": "显示个人信息"
+  },
+  "HUD_BUTTON_SIDEREAL_VIEW": {
+    "description": "Tooltip: Sidereal camera view",
+    "message": "恒星视角"
+  },
+  "HUD_BUTTON_SWITCH_TO_CURRENT_SYSTEM": {
+    "description": "Tooltip: Switch to current system",
+    "message": "切换到当前系统"
+  },
+  "HUD_BUTTON_SWITCH_TO_GALAXY_MAP": {
+    "description": "Tooltip: Switch to galaxy map",
+    "message": "切换到星系地图"
+  },
+  "HUD_BUTTON_SWITCH_TO_SECTOR_MAP": {
+    "description": "Tooltip: Switch to sector map",
+    "message": "切换到扇区图"
+  },
+  "HUD_BUTTON_SWITCH_TO_SELECTED_SYSTEM": {
+    "description": "Tooltip: Switch to selected system",
+    "message": "切换选择的系统"
+  },
+  "HUD_BUTTON_SWITCH_TO_SYSTEM_MAP": {
+    "description": "Tooltip: Switch to system map",
+    "message": "切换到系统图"
+  },
+  "HUD_BUTTON_SWITCH_TO_SYSTEM_OVERVIEW": {
+    "description": "Tooltip: Switch to system overview",
+    "message": "切换到系统概述"
+  },
+  "HUD_BUTTON_SWITCH_TO_WORLD_VIEW": {
+    "description": "Tooltip: Switch to world view",
+    "message": "切换到世界视图"
+  },
+  "HUD_BUTTON_UNDOCK": {
+    "description": "Tooltip: Undock",
+    "message": "出船坞"
+  },
+  "HUD_CARGO_MASS": {
+    "description": "Cargo Mass",
+    "message": "货物质量"
+  },
+  "HUD_CRUISE_SPEED": {
+    "description": "Tooltip for cruise speed indicator",
+    "message": "巡航速度"
+  },
+  "HUD_CURRENT_COMBAT_TARGET": {
+    "description": "Tooltip: The current combat target.",
+    "message": "当前作战目标"
+  },
+  "HUD_CURRENT_FRAME": {
+    "description": "Tooltip: The current frame of reference.",
+    "message": "当前参照系"
+  },
+  "HUD_CURRENT_HEADING": {
+    "description": "Tooltip: the current heading.",
+    "message": "当前航向"
+  },
+  "HUD_CURRENT_NAV_TARGET": {
+    "description": "Tooltip: The current navigational target.",
+    "message": "当前导航目标"
+  },
+  "HUD_CURRENT_PITCH": {
+    "description": "Tooltip: the current pitch.",
+    "message": "当前倾斜"
+  },
+  "HUD_CURRENT_ROLL": {
+    "description": "Tooltip: the current roll.",
+    "message": "当前滚动"
+  },
+  "HUD_DELTA_V": {
+    "description": "Tooltip: The remaining Δv.",
+    "message": "剩余Δv"
+  },
+  "HUD_DELTA_V_OF_MANEUVER_BURN": {
+    "description": "Tooltip: The Δv for the maneuver burn.",
+    "message": "机动燃烧的ΔV"
+  },
+  "HUD_DELTA_V_PERCENT": {
+    "description": "Tooltip: The remaining Δv in percent.",
+    "message": "% 最大 Δv"
+  },
+  "HUD_DISTANCE_TO_SURFACE_OF_FRAME": {
+    "description": "Tooltip: Distance to the surface of the frame of reference.",
+    "message": "到参考系表面的距离"
+  },
+  "HUD_DISTANCE_TO_SURFACE_OF_TARGET": {
+    "description": "Tooltip: Distance to the surface of the target.",
+    "message": "到目标的距离"
+  },
+  "HUD_DURATION_OF_MANEUVER_BURN": {
+    "description": "Tooltip: The approximate duration of the maneuver burn with main thrusters.",
+    "message": "主推进器机动燃烧的大致持续时间"
+  },
+  "HUD_DURATION_UNTIL_MANEUVER_BURN": {
+    "description": "Tooltip: The duration until the middle of the maneuver burn.",
+    "message": "持续到动作中间燃烧的时间"
+  },
+  "HUD_FOLLOW_ORIENTATION": {
+    "description": "Tooltip for follow mode 'orientation' button",
+    "message": "跟随:{targetname}"
+  },
+  "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE": {
+    "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object.",
+    "message": "无法跟随:{targetname}"
+  },
+  "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE_TOO_FAR": {
+    "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object, because it's too far.",
+    "message": "无法跟随{targetname}:太远"
+  },
+  "HUD_FOLLOW_POSITION": {
+    "description": "Tooltip for follow mode 'position' button",
+    "message": "跟随{targetname}:位置"
+  },
+  "HUD_FOLLOW_POSITION_NOT_AVAILABLE": {
+    "description": "Tooltip for follow mode 'position' button, when it's not available for the current object.",
+    "message": "无法跟随{targetname}:位置"
+  },
+  "HUD_FOLLOW_POSITION_NOT_AVAILABLE_TOO_FAR": {
+    "description": "Tooltip for follow mode 'position' button, when it's not available for the current object, because it's too far.",
+    "message": "无法跟随{targetname}:位置-太远"
+  },
+  "HUD_FOLLOW_TARGET": {
+    "description": "Tooltip for followed target's name in reticule",
+    "message": "跟随目标"
+  },
+  "HUD_FORWARD_GUN_TEMPERATURE": {
+    "description": "Tooltip: Forward Gun Temperature.",
+    "message": "前炮温度"
+  },
+  "HUD_HULL_STRENGTH": {
+    "description": "Tooltip: Hull Strength.",
+    "message": "船体强度"
+  },
+  "HUD_HULL_TEMPERATURE": {
+    "description": "Tooltip: Hull Temperature.",
+    "message": "船体温度"
+  },
+  "HUD_HYPERSPACE_DESTINATION": {
+    "description": "HUD Label indicating the hyperspace destination system. Should just be Destination.",
+    "message": "目的地"
+  },
+  "HUD_HYPERSPACE_ORIGIN": {
+    "description": "HUD Label indicating the hyperspace origin system. Should just be Origin.",
+    "message": "起源"
+  },
+  "HUD_HYPERSPACING_TO_N_IN_N_SECONDS": {
+    "description": "",
+    "message": "在{countdown}秒后超间跳跃到{destination}"
+  },
+  "HUD_INDICATOR_AWAY_FROM_FRAME": {
+    "description": "Indicator: Away from the current frame.",
+    "message": "远离当前帧"
+  },
+  "HUD_INDICATOR_COMBAT_TARGET_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current combat target.",
+    "message": "前往当前作战目标"
+  },
+  "HUD_INDICATOR_COMBAT_TARGET_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current combat target.",
+    "message": "远离当前作战目标"
+  },
+  "HUD_INDICATOR_FRAME_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current frame.",
+    "message": "相对于当前参照系的推进"
+  },
+  "HUD_INDICATOR_FRAME_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current frame.",
+    "message": "相对于当前参照系逆行"
+  },
+  "HUD_INDICATOR_MANEUVER_PROGRADE": {
+    "description": "Indicator: The prograde direction for the maneuver burn.",
+    "message": "引擎助推前进"
+  },
+  "HUD_INDICATOR_NAV_TARGET_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current navigational target.",
+    "message": "相对于当前导航目标的前进"
+  },
+  "HUD_INDICATOR_NAV_TARGET_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current navigational target.",
+    "message": "相对于当前导航目标逆行"
+  },
+  "HUD_IN_TRANSIT_TO_N_X_X_X": {
+    "description": "",
+    "message": "运输至{system} [{x},{y},{z}]"
+  },
+  "HUD_JUMP_COMPLETE": {
+    "description": "",
+    "message": "跳跃完成: {percent}%"
+  },
+  "HUD_MASS": {
+    "description": "Mass",
+    "message": "质量"
+  },
+  "HUD_RADAR_DISTANCE": {
+    "description": "Tooltip: Current distance of the radar.",
+    "message": "有效雷达距离"
+  },
+  "HUD_RADAR_TOGGLE_MODE": {
+    "description": "Tooltip: Toggle radar mode.",
+    "message": "在2D和3D模式之间切换雷达"
+  },
+  "HUD_RADAR_ZOOM_MODE_AUTOMATIC": {
+    "description": "Tooltip: Current radar zoom mode.",
+    "message": "自动缩放"
+  },
+  "HUD_RADAR_ZOOM_MODE_MANUAL": {
+    "description": "Tooltip: Current radar zoom mode.",
+    "message": "手动缩放"
+  },
+  "HUD_REQUEST_TIME_ACCEL": {
+    "description": "Tooltip: Request time acceleration {time}",
+    "message": "请求时间加速： {time}"
+  },
+  "HUD_SHIELD_STRENGTH": {
+    "description": "Tooltip: Shield Strength.",
+    "message": "护盾强度"
+  },
+  "HUD_SHOW_COMBAT_TARGET": {
+    "description": "Tooltip: Show the current combat target.",
+    "message": "显示当前作战目标"
+  },
+  "HUD_SHOW_FRAME": {
+    "description": "Tooltip: Show the current frame of reference.",
+    "message": "显示当前参照系"
+  },
+  "HUD_SHOW_NAV_TARGET": {
+    "description": "Tooltip: Show current navigational target.",
+    "message": "显示当前导航目标"
+  },
+  "HUD_SPEED_LIMITER_ACTIVE": {
+    "description": "Tooltip for the icon in the reticule that appears if the speed limiter is active",
+    "message": "激活限速"
+  },
+  "HUD_SPEED_OF_APPROACH_TO_FRAME": {
+    "description": "Tooltip: The speed of approach towards the frame of reference.",
+    "message": "接近参考系的速度"
+  },
+  "HUD_SPEED_OF_APPROACH_TO_TARGET": {
+    "description": "Tooltip: The speed of approach relative to target.",
+    "message": "相对于目标的接近速度"
+  },
+  "HUD_SPEED_RELATIVE_TO_TARGET": {
+    "description": "Tooltip: The speed relative to the target.",
+    "message": "相对于目标的速度"
+  },
+  "HUD_THRUST_INDICATOR": {
+    "description": "Tooltip: describe what the thrust/velocity indicator shows",
+    "message": "显示每个方向（细线）和推力（厚背景）的当前速度"
+  },
+  "HUD_WARNING_DESCENT_RATE": {
+    "description": "Shown on HUD as a warning flasher",
+    "message": "下降率"
+  },
+  "HUD_WARNING_IMPACT": {
+    "description": "Alert tooltip",
+    "message": "撞击警告"
+  },
+  "HUD_WARNING_IMPACT_IMMINENT": {
+    "description": "Alert tooltip",
+    "message": "即将碰撞"
+  },
+  "HULL_DOES_NOT_REQUIRE_REPAIR": {
+    "description": "",
+    "message": "船体无需维修"
+  },
+  "HULL_INTEGRITY": {
+    "description": "",
+    "message": "船体完整性"
+  },
+  "HULL_REPAIRED_BY_NAME_NOW_AT_N_PERCENT": {
+    "description": "",
+    "message": "{name} 修复了船体,现船体为 {repairPercent}%"
+  },
+  "HULL_REPAIR_ATTEMPT_FAILED_HULL_SUFFERED_MINOR_DAMAGE": {
+    "description": "",
+    "message": "船体修理失败. 船体受到了部分损伤."
+  },
+  "HYPERDRIVE": {
+    "description": "",
+    "message": "超空间引擎"
+  },
+  "HYPERDRIVE_FITTED": {
+    "description": "",
+    "message": "装载超空间引擎:"
+  },
+  "HYPERJUMP_ROUTE": {
+    "description": "",
+    "message": "超跳跃路线"
+  },
+  "HYPERJUMP_ROUTING": {
+    "description": "Label indicating a category division",
+    "message": "HyperJump Routing"
+  },
+  "HYPERSPACE_RANGE": {
+    "description": "",
+    "message": "超空间范围"
+  },
+  "ILLEGAL_COMMODITIES": {
+    "description": "Commodities illegal in the current system or polity",
+    "message": "非法商品"
+  },
+  "ILLEGAL_IN_SYSTEM": {
+    "description": "An illegal action or commodity",
+    "message": "系统违禁"
+  },
+  "ILLEGAL_JUMP": {
+    "description": "A finable crime",
+    "message": "已记录鲁莽的超空间跳跃"
+  },
+  "IM_TIRED_OF_WORKING_FOR_NOTHING_DONT_YOU_KNOW_WHAT_A_CONTRACT_IS": {
+    "description": "",
+    "message": "我已经厌倦了无报酬的工作。你知道什么是合同吗？"
+  },
+  "INACTIVE": {
+    "description": "",
+    "message": "未启用"
+  },
+  "INCOMPETENT": {
+    "description": "For player reputation",
+    "message": "无能的"
+  },
+  "INCREASE": {
+    "description": "Increase something.",
+    "message": "增加"
+  },
+  "INEXPERIENCED": {
+    "description": "For player reputation",
+    "message": "缺乏经验的"
+  },
+  "INITIATED": {
+    "description": "Ship jump status",
+    "message": "发动"
+  },
+  "INSTALL": {
+    "description": "Install something",
+    "message": "安装"
+  },
+  "INSTALLED": {
+    "description": "Label indicating something is installed",
+    "message": "已安装"
+  },
+  "INSUFFICIENT_FUEL": {
+    "description": "Ship jump status",
+    "message": "燃料不足"
+  },
+  "INSUFFICIENT_FUNDS": {
+    "description": "",
+    "message": "资金不足。"
+  },
+  "INTELLIGENCE": {
+    "description": "Character parameter",
+    "message": "才智"
+  },
+  "INTERSTELLAR_TRADE_AVG": {
+    "description": "Label displaying commodity flow at a per-system level",
+    "message": "星际贸易:"
+  },
+  "INVERT_MOUSE_Y": {
+    "description": "",
+    "message": "反转鼠标Y轴"
+  },
+  "IN_CARGO_HOLD": {
+    "description": "",
+    "message": "在货仓内"
+  },
+  "IN_HOLD": {
+    "description": "Column title of the Commodity Market screen",
+    "message": "在库存中"
+  },
+  "IN_STOCK": {
+    "description": "Column title of Commodity and Ship Equipment markets showing current station stock level.",
+    "message": "库存"
+  },
+  "IN_SYSTEM": {
+    "description": "Used in flight log, show which star system we are/were in",
+    "message": "进入星系"
+  },
+  "ITEM_IS_OUT_OF_STOCK": {
+    "description": "",
+    "message": "该商品没有存货了"
+  },
+  "ITS_BEEN_GREAT_WORKING_FOR_YOU_IF_YOU_NEED_ME_AGAIN_ILL_BE_HERE_A_WHILE": {
+    "description": "",
+    "message": "和你合作非常愉快。如果你还需要我，我会在这里待一会儿。"
+  },
+  "JETTISON": {
+    "description": "",
+    "message": "抛弃"
+  },
+  "JETTISON_MODE": {
+    "description": "",
+    "message": "抛弃模式"
+  },
+  "JUMPING": {
+    "description": "Flight State",
+    "message": "跳跃"
+  },
+  "KILLS": {
+    "description": "",
+    "message": "击杀数量:"
+  },
+  "KNOWN_AS": {
+    "description": "Indicates alternate names/aliases for an object",
+    "message": "Known as"
+  },
+  "LANGUAGE": {
+    "description": "",
+    "message": "语言"
+  },
+  "LANGUAGE_RESTART_GAME_TO_APPLY": {
+    "description": "",
+    "message": "语言(重启游戏生效)"
+  },
+  "LAUNCH_PERMISSION_DENIED_BUSY": {
+    "description": "",
+    "message": "发射许可被拒绝：对接舱忙碌。"
+  },
+  "LAUNCH_PERMISSION_DENIED_CREW": {
+    "description": "",
+    "message": "发射许可被拒绝：没有足够的船员来操作这艘飞船。"
+  },
+  "LAUNCH_PERMISSION_DENIED_FINED": {
+    "description": "",
+    "message": "发射许可被拒绝：您有未支付的罚款。"
+  },
+  "LAUNCH_PERMISSION_GRANTED": {
+    "description": "",
+    "message": "已授予启动许可。"
+  },
+  "LAUNCH_PERMISSION_GRANTED_DEPART_QUICK": {
+    "description": "",
+    "message": "已授予许可。请不要把降落区弄得乱七八糟，赶快离开。"
+  },
+  "LAUNCH_PERMISSION_GRANTED_WATCH_TRAFFIC": {
+    "description": "",
+    "message": "已授予许可。出发时注意交通。"
+  },
+  "LAWFULNESS": {
+    "description": "Character parameter",
+    "message": "合法性"
+  },
+  "LEGAL_RULES": {
+    "description": "Refers to laws, rules and regulations",
+    "message": "适用于控制站空间的法律规则。在以下距离内，法律由传感器执行：{distance}"
+  },
+  "LEGAL_RULES_AND_REGULATIONS": {
+    "description": "Heading on a tab, keep it short",
+    "message": "规则与规章"
+  },
+  "LEGAL_STATUS": {
+    "description": "",
+    "message": "法律状况"
+  },
+  "LIGHT_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "轻型货运穿梭机"
+  },
+  "LIGHT_COURIER": {
+    "description": "",
+    "message": "轻型信使"
+  },
+  "LIGHT_FIGHTER": {
+    "description": "",
+    "message": "轻型战斗机"
+  },
+  "LIGHT_FREIGHTER": {
+    "description": "",
+    "message": "轻型货船"
+  },
+  "LIGHT_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "轻型客运穿梭机"
+  },
+  "LIGHT_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "轻型客运船"
+  },
+  "LOAD": {
+    "description": "",
+    "message": "装载"
+  },
+  "LOAD_GAME": {
+    "description": "",
+    "message": "载入游戏"
+  },
+  "LOBBY": {
+    "description": "",
+    "message": "大厅"
+  },
+  "LOCAL_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "猎户臂"
+  },
+  "LOCATED_N_KM_FROM_THE_CENTRE_OF_NAME": {
+    "description": "",
+    "message": "与 {name} 相距 {distance} km:"
+  },
+  "LOCATION": {
+    "description": "",
+    "message": "地点"
+  },
+  "LOG_CUSTOM": {
+    "description": "Label tab for showing custom logged events",
+    "message": "自定义日志"
+  },
+  "LOG_EARLIEST_FIRST": {
+    "description": "Show the log entries in chronological order, earliest first",
+    "message": "按时间先后顺序排序"
+  },
+  "LOG_EXPORT": {
+    "description": "Export the log",
+    "message": "导出"
+  },
+  "LOG_HTML": {
+    "description": "Export the log as HTML or not",
+    "message": "HTML"
+  },
+  "LOG_NEW": {
+    "description": "Indicate to make an entry into flight log system",
+    "message": "新条目"
+  },
+  "LOG_STATION": {
+    "description": "Label tab for showing logged station events",
+    "message": "空间站日志"
+  },
+  "LOG_SYSTEM": {
+    "description": "Label tab for showing logged system events",
+    "message": "系统日志"
+  },
+  "LOW": {
+    "description": "",
+    "message": "低"
+  },
+  "LUCK": {
+    "description": "Character parameter",
+    "message": "幸运"
+  },
+  "LY": {
+    "description": "Light year",
+    "message": "光年"
+  },
+  "MAJOR_EXPORT": {
+    "description": "For displaying commodity information",
+    "message": "主要出口"
+  },
+  "MAJOR_IMPORT": {
+    "description": "For displaying commodity information",
+    "message": "主要入口"
+  },
+  "MAKE_NEW_FACE": {
+    "description": "",
+    "message": "生成新面孔"
+  },
+  "MALE": {
+    "description": "",
+    "message": "男性"
+  },
+  "MARKET_BUYLINE": {
+    "description": "",
+    "message": "买 {amount} 件消费{price}"
+  },
+  "MARKET_SELLINE": {
+    "description": "",
+    "message": "卖{amount} 件换取{price}"
+  },
+  "MASS": {
+    "description": "",
+    "message": "质量"
+  },
+  "MASTER": {
+    "description": "For player reputation",
+    "message": "大师"
+  },
+  "MASTER_VOL": {
+    "description": "Master sound in settings option",
+    "message": "主音量:"
+  },
+  "MAX": {
+    "description": "",
+    "message": "最大"
+  },
+  "MAXIMUM_CREW": {
+    "description": "",
+    "message": "最大船员"
+  },
+  "MEDIUM": {
+    "description": "Game settings option: graphics resolution",
+    "message": "中等"
+  },
+  "MEDIUM_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "中型货运穿梭机"
+  },
+  "MEDIUM_COURIER": {
+    "description": "",
+    "message": "中型信使"
+  },
+  "MEDIUM_FIGHTER": {
+    "description": "",
+    "message": "中型战斗机"
+  },
+  "MEDIUM_FREIGHTER": {
+    "description": "",
+    "message": "中型货船"
+  },
+  "MEDIUM_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "中型客运穿梭机"
+  },
+  "MEDIUM_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "中型客运船"
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "合金"
+  },
+  "MILITARY": {
+    "description": "",
+    "message": "军事"
+  },
+  "MINIMAL_TRADE": {
+    "description": "Indicates a system does not have a significant amount of trade in a commodity.",
+    "message": "最小贸易额"
+  },
+  "MINIMUM_CREW": {
+    "description": "",
+    "message": "最小成员数"
+  },
+  "MINOR_EXPORT": {
+    "description": "For displaying commodity information",
+    "message": "次要出口"
+  },
+  "MINOR_IMPORT": {
+    "description": "For displaying commodity information",
+    "message": "次要入口"
+  },
+  "MISSILE_MOUNTS": {
+    "description": "",
+    "message": "导弹挂点"
+  },
+  "MISSIONS": {
+    "description": "",
+    "message": "任务"
+  },
+  "MISSION_DETAILS": {
+    "description": "",
+    "message": "任务细节"
+  },
+  "MODEL": {
+    "description": "3d model of the ship",
+    "message": "模型"
+  },
+  "MONEY": {
+    "description": "",
+    "message": "货币"
+  },
+  "MORE_INFO": {
+    "description": "",
+    "message": "更多信息..."
+  },
+  "MORE_THAN_ONE_PLAYERS_SHIP_FOUND_IN_SPACE": {
+    "description": "Message when restoring savegame",
+    "message": "在太空中发现了多艘玩家的飞船"
+  },
+  "MOSTLY_HARMLESS": {
+    "description": "",
+    "message": "几乎无害的"
+  },
+  "MOVE_DOWN": {
+    "description": "move selection down in list",
+    "message": "向下移动"
+  },
+  "MOVE_UP": {
+    "description": "move selection up in list",
+    "message": "向上移动"
+  },
+  "MULTISAMPLING": {
+    "description": "",
+    "message": "多重采样"
+  },
+  "MULTISAMPLING_DESC": {
+    "description": "",
+    "message": "一种图形化的微调功能，用于减少锯齿状的像素化轮廓。它可能会消耗更多资源。"
+  },
+  "MURDER": {
+    "description": "",
+    "message": "谋杀"
+  },
+  "MUSIC": {
+    "description": "",
+    "message": "音乐:"
+  },
+  "MUTE": {
+    "description": "",
+    "message": "静音"
+  },
+  "NAME_OBJECT": {
+    "description": "For an item or object",
+    "message": "名称"
+  },
+  "NAME_PERSON": {
+    "description": "For a person",
+    "message": "姓名"
+  },
+  "NAVIGATION": {
+    "description": "Crew skill",
+    "message": "导航"
+  },
+  "NAVIGATOR": {
+    "description": "",
+    "message": "导航员"
+  },
+  "NEGOTIATE": {
+    "description": "",
+    "message": "谈判"
+  },
+  "NEW_GAME": {
+    "description": "Main menu item",
+    "message": "新游戏"
+  },
+  "NEW_PAINTJOB_APPLIED": {
+    "description": "Paintshop popup",
+    "message": "新图案已应用于您的飞船上。"
+  },
+  "NEXT_FACE_FEATURE": {
+    "description": "Face feature switch button for FaceGenerator in the PersonalInfo view",
+    "message": "下一项"
+  },
+  "NEXT_PAID": {
+    "description": "",
+    "message": "下一项支付"
+  },
+  "NO": {
+    "description": "Negative answer to a question",
+    "message": "否"
+  },
+  "NOBODY": {
+    "description": "For player reputation",
+    "message": "无名小卒"
+  },
+  "NONE": {
+    "description": "",
+    "message": "无"
+  },
+  "NONE_FOR_SALE_IN_THIS_STATION": {
+    "description": "",
+    "message": "本站无售。"
+  },
+  "NORMA_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "矩尺臂"
+  },
+  "NOTES": {
+    "description": "",
+    "message": "笔记:"
+  },
+  "NOTORIETY": {
+    "description": "Character parameter",
+    "message": "臭名昭著"
+  },
+  "NOT_ENOUGH_ALLOY_TO_ATTEMPT_A_REPAIR": {
+    "description": "",
+    "message": "没有足够的 {alloy} 用于修理"
+  },
+  "NOT_SUPPORTED_ON_THIS_SHIP": {
+    "description": "",
+    "message": "{equipment} 无法安装在该飞船上"
+  },
+  "NO_AVAILABLE_DATA": {
+    "description": "Message displaying no stored data available",
+    "message": "无可用数据"
+  },
+  "NO_BOOKMARKS_FOUND": {
+    "description": "Label indicating a lack of bookmarks to display",
+    "message": "No Bookmarks Found"
+  },
+  "NO_CARGO": {
+    "description": "Message displayed when the player has no cargo in their hold.",
+    "message": "没有货物"
+  },
+  "NO_DRIVE": {
+    "description": "Ship jump status",
+    "message": "没有驱动器"
+  },
+  "NO_FILTER_MATCHES": {
+    "description": "No matches to this filter.",
+    "message": "没有与该筛选器匹配的内容"
+  },
+  "NO_MISSIONS": {
+    "description": "",
+    "message": "没有任务."
+  },
+  "NO_VALID_ROUTE": {
+    "description": "Message in the sector map, issued by the autoroute function.",
+    "message": "没有到达选择星系的可用路径"
+  },
+  "N_LIGHT_YEARS_N_MAX": {
+    "description": "",
+    "message": "{range} 光年 (最大 {maxRange})"
+  },
+  "N_OCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "{quantity} 个已满客舱"
+  },
+  "N_SHIELD_GENERATORS": {
+    "description": "",
+    "message": "{quantity} 台护盾生成器"
+  },
+  "N_UNOCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "{quantity} 个空客舱"
+  },
+  "OCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "客舱已满"
+  },
+  "OFF": {
+    "description": "",
+    "message": "关闭"
+  },
+  "OFFENDER": {
+    "description": "Legal status of player",
+    "message": "罪犯"
+  },
+  "OK": {
+    "description": "",
+    "message": "确认"
+  },
+  "OPEN_USER_FOLDER": {
+    "description": "",
+    "message": "用户文件夹"
+  },
+  "OPTIONS": {
+    "description": "",
+    "message": "选项"
+  },
+  "ORBIT": {
+    "description": "",
+    "message": "轨道"
+  },
+  "ORBIT_APOAPSIS": {
+    "description": "Label for the point of an orbit furthest from the orbited body",
+    "message": "最远点"
+  },
+  "ORBIT_PERIAPSIS": {
+    "description": "Label for the point of an orbit nearest to the orbited body",
+    "message": "最近点"
+  },
+  "OUTER_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "外部臂"
+  },
+  "OUTLAW": {
+    "description": "Legal status of player",
+    "message": "逃犯"
+  },
+  "OUTSTANDING_FINES": {
+    "description": "Unpaid fines for crimes committed",
+    "message": "未支付的罚款"
+  },
+  "OUT_OF_RANGE": {
+    "description": "Ship jump status",
+    "message": "超出范围"
+  },
+  "OUT_OF_STOCK": {
+    "description": "Equipment availability",
+    "message": "缺货"
+  },
+  "OVERVIEW_NAME_FILTER": {
+    "description": "Filter overview window entries by name",
+    "message": "按名称筛选概述窗口项"
+  },
+  "OWED": {
+    "description": "Player owing money to crew members",
+    "message": "拖欠"
+  },
+  "PAINTSHOP": {
+    "description": "Station tab title",
+    "message": "图案商店"
+  },
+  "PAINTSHOP_NOT_AVAILABLE": {
+    "description": "",
+    "message": "这个太空港没有图案商店。"
+  },
+  "PAINTSHOP_WELCOME_0": {
+    "description": "Welcome message to the paintshop.",
+    "message": "欢迎！我们会把你的飞船画得漂亮！"
+  },
+  "PAINTSHOP_WELCOME_1": {
+    "description": "Welcome message to the paintshop.",
+    "message": "你好！想改变飞船外观吗？"
+  },
+  "PAINTSHOP_WELCOME_2": {
+    "description": "Welcome message to the paintshop.",
+    "message": "我们不能让你的飞船飞得很快，但我们可以让它飞得很漂亮！"
+  },
+  "PAINTSHOP_WELCOME_3": {
+    "description": "Welcome message to the paintshop.",
+    "message": "欢迎，旅行者。请慢慢来，尽情发挥你的创造力。"
+  },
+  "PAINTSHOP_WELCOME_4": {
+    "description": "Welcome message to the paintshop.",
+    "message": "寻找银河系中最好的人从未如此容易！"
+  },
+  "PASSENGER_CABIN_CAPACITY": {
+    "description": "Entry for ship info",
+    "message": "客舱容量"
+  },
+  "PASTE": {
+    "description": "As for clipboard",
+    "message": "粘贴"
+  },
+  "PATH_FOUND_BUT_VERIFICATION_FAILED": {
+    "description": "Message when restoring savegame",
+    "message": "找到了路径，但验证失败：%s"
+  },
+  "PATTERN": {
+    "description": "Ship painting pattern.",
+    "message": "图案"
+  },
+  "PAY": {
+    "description": "Pay for a transaction of services, e.g. for paying fines, (or repairs)",
+    "message": "支付"
+  },
+  "PAY_FINE_OF_N": {
+    "description": "",
+    "message": "缴纳 {amount} 罚金"
+  },
+  "PENDING_RETURN": {
+    "description": "Status if the mission has not yet been fully completed",
+    "message": "待完成任务"
+  },
+  "PERSEUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "英仙臂"
+  },
+  "PERSONAL_INFORMATION": {
+    "description": "",
+    "message": "个人信息"
+  },
+  "PILOT": {
+    "description": "",
+    "message": "飞行员"
+  },
+  "PILOTING": {
+    "description": "Crew skill",
+    "message": "导航"
+  },
+  "PILOT_SEAT_IS_NOW_OCCUPIED_BY_NAME": {
+    "description": "",
+    "message": "驾驶座上的是 {name}"
+  },
+  "PIRACY": {
+    "description": "",
+    "message": "海盗行为"
+  },
+  "PLANET_DETAIL_DISTANCE": {
+    "description": "",
+    "message": "行星细节距离"
+  },
+  "PLANET_TEXTURES": {
+    "description": "",
+    "message": "行星贴图"
+  },
+  "PLEASE_DESIGN_NEW_PAINTJOB": {
+    "description": "",
+    "message": "请设计新的油漆作业："
+  },
+  "PLEASE_REPORT_THIS_ERROR": {
+    "description": "Informational text mentioning the error and asking the player to report it.",
+    "message": "哎呀，这里出问题了！请向Github上的Pioneer issue tracker报告复制此错误的步骤、输出日志和保存文件。\n您可以在以下位置找到输出日志：{path}/output.txt"
+  },
+  "POLICE": {
+    "description": "",
+    "message": "警察"
+  },
+  "POOR": {
+    "description": "Player combat rating",
+    "message": "穷"
+  },
+  "POSESSION_OF_COMMODITIES_ILLEGAL": {
+    "description": "",
+    "message": "在这个系统中，持有某些商品是非法的。"
+  },
+  "POSITION": {
+    "description": "The job title/position of crew memeber",
+    "message": "位置"
+  },
+  "PRESS_A_KEY_OR_CONTROLLER_BUTTON": {
+    "description": "",
+    "message": "按下按键或控制器按钮或退出以清除"
+  },
+  "PREVIOUS_FACE_FEATURE": {
+    "description": "Face feature switch button for FaceGenerator in the PersonalInfo view",
+    "message": "上一项"
+  },
+  "PRICE": {
+    "description": "",
+    "message": "价格"
+  },
+  "PROFESSIONAL": {
+    "description": "For player reputation",
+    "message": "专家"
+  },
+  "PROFITABLE_TRADE": {
+    "description": "Indicates a profitable trade route.",
+    "message": "赢利贸易"
+  },
+  "PUMP_DOWN": {
+    "description": "Drain the fuel tank",
+    "message": "抽空"
+  },
+  "PUMP_DOWN_FROM_CARGO_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pump %i t from cargo"
+  },
+  "PUMP_DOWN_FROM_HYPERDRIVE_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pump %i t from hyperdrive to fuel tanks"
+  },
+  "PUMP_DOWN_TO_CARGO_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pump %i t to cargo"
+  },
+  "PUMP_DOWN_TO_HYPERDRIVE_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pump %i t to hyperdrive from fuel tanks"
+  },
+  "PURCHASE_PAINTJOB": {
+    "description": "Paintshop button",
+    "message": "购买喷漆作业"
+  },
+  "QUALIFICATION_SCORES": {
+    "description": "",
+    "message": "评判分数"
+  },
+  "QUIT": {
+    "description": "",
+    "message": "退出"
+  },
+  "QUIT_CONFIRMATION": {
+    "description": "For the checkbox in settings window",
+    "message": "确认退出"
+  },
+  "RANDOM_COLORS": {
+    "description": "Paint shop. Randomize colors",
+    "message": "随机颜色"
+  },
+  "RANDOM_FACE": {
+    "description": "Generate random face",
+    "message": "随机"
+  },
+  "RANK": {
+    "description": "",
+    "message": "排行:"
+  },
+  "RATING": {
+    "description": "",
+    "message": "等级:"
+  },
+  "RAYLEIGH_ACCURATE": {
+    "description": "",
+    "message": "Rayleigh/Mie（精确，每像素数）"
+  },
+  "RAYLEIGH_FAST": {
+    "description": "",
+    "message": "Rayleigh/Mie （快速，每顶点数）"
+  },
+  "REALISTIC_SCATTERING": {
+    "description": "",
+    "message": "大气散射"
+  },
+  "REALISTIC_SCATTERING_DESC": {
+    "description": "",
+    "message": "在渲染大气时选择散射。(对于低端PC来说，不建议选择Rayleigh/Mie)"
+  },
+  "REAR_WEAPON": {
+    "description": "",
+    "message": "后武器"
+  },
+  "RECOVER": {
+    "description": "Saveload menu button",
+    "message": "恢复"
+  },
+  "RECOVERED_BUT_NOT_VALID": {
+    "description": "Message when restoring savegame",
+    "message": "已恢复但无效"
+  },
+  "RECOVER_SAVEGAME": {
+    "description": "",
+    "message": "恢复保存游戏"
+  },
+  "REFUEL": {
+    "description": "",
+    "message": "补充燃料"
+  },
+  "REFUEL_FULL": {
+    "description": "",
+    "message": "补满燃料"
+  },
+  "REGISTRATION_NUMBER": {
+    "description": "",
+    "message": "注册号"
+  },
+  "RELIABLE": {
+    "description": "For player reputation",
+    "message": "可靠的"
+  },
+  "REMOVE": {
+    "description": "Remove, e.g. deleting a log entry",
+    "message": "移除"
+  },
+  "REMOVE_JUMP": {
+    "description": "UI-button: remove hyper jump from list of planned jumps",
+    "message": "移除跳跃"
+  },
+  "REMOVE_WHEN_COMPLETED": {
+    "description": "For UI hyperjump planner, referring to jump target system",
+    "message": "拆除引擎完成"
+  },
+  "REPAIR_X_HULL_DAMAGE_FOR_X": {
+    "description": "",
+    "message": "花 {price} 修理船体的 {damage}%"
+  },
+  "REPLACE_EQUIPMENT": {
+    "description": "Market header when replacing equipped items",
+    "message": "更换装备"
+  },
+  "REPUTATION": {
+    "description": "",
+    "message": "声誉"
+  },
+  "REQUEST_LAUNCH": {
+    "description": "",
+    "message": "请求发射"
+  },
+  "REQUIRED_FUEL": {
+    "description": "Fuel usage for traveling to star system",
+    "message": "Required Fuel"
+  },
+  "RESET": {
+    "description": "",
+    "message": "重置"
+  },
+  "RESET_ORIENTATION_AND_ZOOM": {
+    "description": "",
+    "message": "重置方向和缩放"
+  },
+  "RESET_PREVIEW": {
+    "description": "Paintshop button",
+    "message": "重置预览"
+  },
+  "RESET_VIEW_ON_HYPERSPACE_EXIT": {
+    "description": "Reset View on Hyperspace Exit option",
+    "message": "重置超空间退出时的视图"
+  },
+  "RESET_VIEW_ON_HYPERSPACE_EXIT_DESC": {
+    "description": "The tooltip of Reset View on Hyperspace Exit in the settings menu",
+    "message": "从超空间退出时将视图重置为主游戏视图"
+  },
+  "RETURN_TO_GAME": {
+    "description": "",
+    "message": "返回游戏"
+  },
+  "RETURN_TO_MENU": {
+    "description": "",
+    "message": "返回主菜单"
+  },
+  "REVERSE_ACCEL_EMPTY": {
+    "description": "",
+    "message": "向后加速度 (空载)"
+  },
+  "REVERSE_ACCEL_FULL": {
+    "description": "",
+    "message": "向后加速度 (满载)"
+  },
+  "REWARD": {
+    "description": "",
+    "message": "报酬"
+  },
+  "ROTATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to rotate camera view with mouse",
+    "message": "按住可旋转视图"
+  },
+  "ROUTE_INFO": {
+    "description": "For hyperjump planner",
+    "message": "线路信息"
+  },
+  "ROUTE_JUMPS": {
+    "description": "For hyperjump planner",
+    "message": "跳跃路线"
+  },
+  "SAFETY_LOCKOUT": {
+    "description": "Ship jump status",
+    "message": "安全锁定"
+  },
+  "SAGITTARIUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "射手臂"
+  },
+  "SAVE": {
+    "description": "",
+    "message": "保存"
+  },
+  "SAVED_GAMES": {
+    "description": "Header for save/load window",
+    "message": "保存的游戏"
+  },
+  "SAVE_AS": {
+    "description": "",
+    "message": "保存为"
+  },
+  "SAVE_DELETED_SUCCESSFULLY": {
+    "description": "",
+    "message": "保存已成功删除"
+  },
+  "SCATTERING_OLD": {
+    "description": "",
+    "message": "旧版"
+  },
+  "SCOOP_MOUNTS": {
+    "description": "How many slots or mounts exist on the ship for fitting SCOOPS (e.g. cargo scoop, fuel scoop, multi-scoop) ",
+    "message": "收集器挂点"
+  },
+  "SCUTUM_CENTAURUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "半人马臂"
+  },
+  "SELECT": {
+    "description": "",
+    "message": "选择"
+  },
+  "SELECTED": {
+    "description": "Label indicating the following item is selected",
+    "message": "已选择"
+  },
+  "SELECTED_SAVE_DOESNT_EXISTS": {
+    "description": "",
+    "message": "所选保存并不存在"
+  },
+  "SELECTED_SAVE_IS_NOT_A_VALID_SAVE": {
+    "description": "",
+    "message": "所选保存并非一个有效的保存"
+  },
+  "SELECT_A_FILE_TO_SAVE_TO_OR_ENTER_A_NEW_FILENAME": {
+    "description": "",
+    "message": "选择一个文件或输入一个文件名进行保存"
+  },
+  "SELECT_FILE": {
+    "description": "",
+    "message": "选择文件..."
+  },
+  "SELECT_GAME_TO_LOAD": {
+    "description": "",
+    "message": "载入游戏..."
+  },
+  "SELECT_START_PROFILE": {
+    "description": "Combo box for selecting the starting position",
+    "message": "用于选择起始位置的组合框"
+  },
+  "SELL": {
+    "description": "Commodities and equipment prices",
+    "message": "价格"
+  },
+  "SELL_EQUIP": {
+    "description": "Button text to sell installed equipment. May be used in a singular or plural context.",
+    "message": "出售 {name}"
+  },
+  "SELL_EQUIPPED": {
+    "description": "Button text to sell selected ship equipment",
+    "message": "出售装备"
+  },
+  "SELL_PRICE": {
+    "description": "Title for sell-price column in commodity market",
+    "message": "价格"
+  },
+  "SENSORS": {
+    "description": "Crew skill",
+    "message": "传感器"
+  },
+  "SENSORS_AND_DEFENCE": {
+    "description": "",
+    "message": "传感器与防御"
+  },
+  "SETTINGS": {
+    "description": "UI option",
+    "message": "设置"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "将目的地设置为导航目标. "
+  },
+  "SET_JUMP_TARGET": {
+    "description": "Button tooltip which sets the jump route to the selected body",
+    "message": "Set Jump Target"
+  },
+  "SET_RETURN_ROUTE": {
+    "description": "",
+    "message": "设置返程航线"
+  },
+  "SET_TO_45PERCENT_OF_DELTAV": {
+    "description": "For the speed limiter button",
+    "message": "设置为剩余速度增量的45%"
+  },
+  "SET_TO_CURRENT_VELOCITY": {
+    "description": "For the speed limiter button",
+    "message": "设置为当前速度"
+  },
+  "SET_TO_ZERO": {
+    "description": "For the speed limiter button",
+    "message": "设置为零"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "飞船"
+  },
+  "SHIPS_ENGINEER": {
+    "description": "",
+    "message": "飞船工程师"
+  },
+  "SHIP_INFORMATION": {
+    "description": "",
+    "message": "飞船信息"
+  },
+  "SHIP_IS_ALREADY_FULLY_REPAIRED": {
+    "description": "",
+    "message": "你的飞船状态棒极了."
+  },
+  "SHIP_IS_FULLY_EQUIPPED": {
+    "description": "",
+    "message": "你的飞船已经装满了设备."
+  },
+  "SHIP_IS_FULLY_LADEN": {
+    "description": "",
+    "message": "你的飞船已经装满了货物."
+  },
+  "SHIP_MARKET": {
+    "description": "",
+    "message": "飞船市场"
+  },
+  "SHIP_NAME": {
+    "description": "",
+    "message": "飞船名称"
+  },
+  "SHIP_PARAMETERS": {
+    "description": "",
+    "message": "飞船参数"
+  },
+  "SHIP_REPAIRS": {
+    "description": "Station tab name",
+    "message": "飞船修理和喷漆车间"
+  },
+  "SHIP_TYPE": {
+    "description": "",
+    "message": "飞船类型"
+  },
+  "SHOW_AUTOSAVES": {
+    "description": "Button tooltip indicating whether to show autosave files",
+    "message": "显示自动保存"
+  },
+  "SIMULATING_UNIVERSE_EVOLUTION_N_BYEARS": {
+    "description": "",
+    "message": "正在模拟宇宙演化进程: {age} Gyr ;-)"
+  },
+  "SOME_PARAMETERS_ARE_NOT_OK": {
+    "description": "Diagnostics at game start",
+    "message": "某些参数尚未准备就绪："
+  },
+  "SORT_COMMODITY": {
+    "description": "Indicates the list of objects should be sorted by commodity",
+    "message": "商品"
+  },
+  "SORT_DISTANCE": {
+    "description": "Indicates the list of objects should be sorted by distance",
+    "message": "Distance"
+  },
+  "SORT_MODE": {
+    "description": "Label indicating the current sorting mode of a list of objects",
+    "message": "Sort Mode"
+  },
+  "SORT_NAME": {
+    "description": "Indicates the list of objects should be sorted by name",
+    "message": "姓名"
+  },
+  "SOUND": {
+    "description": "",
+    "message": "声音"
+  },
+  "STANDARD_GAME_START_TIME": {
+    "description": "Standard game start time, current moment + 1200 years",
+    "message": "标准游戏开始时间"
+  },
+  "START_AT_BARNARDS_STAR": {
+    "description": "",
+    "message": "从巴纳德星开始"
+  },
+  "START_AT_BARNARDS_STAR_DESC": {
+    "description": "",
+    "message": "这是一个艰难的开始，从星系管理休息监狱站。"
+  },
+  "START_AT_MARS": {
+    "description": "",
+    "message": "从火星开始"
+  },
+  "START_AT_MARS_DESC": {
+    "description": "",
+    "message": "这是一个简单的开始，从塞多尼亚在火星上的太阳系。"
+  },
+  "START_AT_NEW_HOPE": {
+    "description": "New Hope is an in game location",
+    "message": "从新希望开始"
+  },
+  "START_AT_NEW_HOPE_DESC": {
+    "description": "",
+    "message": "这是一个温和的开始，从伊扎莱恩对新希望的Epsilon-Eridani系统。"
+  },
+  "START_GAME": {
+    "description": "Button",
+    "message": "开始游戏"
+  },
+  "START_LOG_ENTRY_1": {
+    "description": "First custom log message when starting a new game, giving backstory to the character. Importantly we here hint at what actions the player is best to take: buy fuel, get reputation, ask for take off clearance.",
+    "message": "不幸的是，叔叔生前从未教过我如何操作这艘旧飞船，但我想我现在要在航海日志上做个记录。很奇怪，我还能感觉到他，好像他就在这艘飞船船体里。也许他可以成为我的副驾驶，我们将一起在巨大的虚空中展现我们的命运。但首先，我只需要买些氢燃料来做跳跃式驾驶，规划出一条通往利润丰厚的交易机会的路线，并向上天祈祷，交通管制会允许像我这样没有经验的飞行员起飞，然后我们看看这个婴儿能做些什么。是时候让自己出名了！"
+  },
+  "START_LOG_ENTRY_2": {
+    "description": "First custom log message when starting a new game, giving backstory to the character, here going for a Blade Runner feeling",
+    "message": "我的靴子还是湿的，因为昨晚回家时下大雨，人行道被淹没。似乎是为了报复，夜空被霓虹灯的反射光照亮了，这些霓虹灯从潮湿的街道上往下看。但我还是冒雨赶到了去星港的转机航班，在那里我的新飞船正等着我。当我告诉星港安全官员我来接飞船时，他给了我一个有趣的眼神。我想我看起来不像一个典型的清洁工，我把所有投资在这个生锈的旧水桶里的东西都卖掉了，当时我正站在他面前，穿着湿靴子什么的。但我真的觉得，从现在起，我的未来将写在星星上。现在，我只需要找到启动键。"
+  },
+  "START_LOG_ENTRY_3": {
+    "description": "First custom log message when starting a new game, giving backstory to the character. Here explaining why there's no hyperdrive in the ship, and what to do about it.",
+    "message": "经过漫长的官僚主义程序，我终于把我的飞船从扣押处拿了回来，但他们已经把它剥光了，以偿还他们声称我欠下的“债务”。他们不仅抢走了我最喜欢的咖啡机，而且那些混蛋还抢走了超空间驱动器，所以我现在只能呆在这个星系里了，除非我卖掉船上剩下的东西来买个驱动器。但正如他们所说：当生活给了你柠檬——做柠檬水吧；所以即使我回到原点，我也会把这看作一次机会，而不是挫折，第二次机会。没有咖啡。放下我的本来面目，我就会变成我可能的样子。世界将转向一边，让我过去，就像对那些知道他们要去哪里的人一样，而我正走向星空。"
+  },
+  "STAR_FIELD_DENSITY": {
+    "description": "",
+    "message": "星场密度"
+  },
+  "STAR_FIELD_STAR_SIZE_FACTOR": {
+    "description": "",
+    "message": "恒星场中恒星的大小"
+  },
+  "STATION": {
+    "description": "Flight log info, will refer to a station by name",
+    "message": "站点"
+  },
+  "STATION_DOCKS": {
+    "description": "Information shown in the station lobby, for total number of docking pads",
+    "message": "我们的总容量是 {total_docking_pads} 对接垫."
+  },
+  "STATION_LOCAL_GRAVITY": {
+    "description": "",
+    "message": "局部重力%.2f g."
+  },
+  "STATION_LOCAL_GRAVITY_PRESSURE": {
+    "description": "",
+    "message": "局部重力 %.2f g, 与气压 %.2f atm."
+  },
+  "STATION_MANAGER": {
+    "description": "",
+    "message": "空间站管理者"
+  },
+  "STATION_ORBIT": {
+    "description": "Information shown in the station loby",
+    "message": "我们在{orbit_period}日周期轨道上围绕{parent_body}运行。"
+  },
+  "STATION_TECH_TOO_LOW": {
+    "description": "",
+    "message": "空间站技术水平太低，无法出售此商品"
+  },
+  "STATUS": {
+    "description": "",
+    "message": "状态"
+  },
+  "SUMMARY": {
+    "description": "Tab item in the start game menu",
+    "message": "摘要"
+  },
+  "SYSTEM_BODY_INDEX_IS_OUT_OF_RANGE": {
+    "description": "Message when restoring savegame",
+    "message": "系统主体索引超出范围"
+  },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Controlling faction jurisdiction"
+  },
+  "SYSTEM_INFORMATION": {
+    "description": "Tooltip / label indicating information about a selected star system",
+    "message": "System Information"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Number of stars in system"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Safe"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "几乎无害的"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "危险"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Very Dangerous"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "致命的"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "System safety rating"
+  },
+  "TECH_CERTIFIED": {
+    "description": "Lobby screen shows the tech level (an integer number) of the station",
+    "message": "该站拥有{tech_level}级的技术证书。"
+  },
+  "TECH_CERTIFIED_MILITARY": {
+    "description": "Lobby screen shows the tech level of the station",
+    "message": "这个装置有军事技术许可证。"
+  },
+  "TECH_LEVEL": {
+    "description": "System view label for technology level",
+    "message": "科技等级"
+  },
+  "TEXTURE_COMPRESSION": {
+    "description": "",
+    "message": "这为图形卡释放了更多的内存，这很可能是您想要的，但在游戏开始时会以压缩它们为代价。"
+  },
+  "THANKS_AND_REMEMBER_TO_BUY_FUEL": {
+    "description": "",
+    "message": "感谢你的购买.记得在出发之前装载设备和并添加燃料."
+  },
+  "THERE_IS_NOBODY_ELSE_ON_BOARD_ABLE_TO_FLY_THIS_SHIP": {
+    "description": "",
+    "message": "飞船上没别人可以驾驶它了."
+  },
+  "THERE_WERE_ERRORS_IN_RECOVERY": {
+    "description": "Message when restoring savegame",
+    "message": "在恢复过程中出现错误："
+  },
+  "THESE_ITEMS_ARE_PUNISHABLE_BY_FINE": {
+    "description": "",
+    "message": "购买、销售和运输这些物品将受到罚款和可能的没收处罚"
+  },
+  "THE_SHIP_IS_UNDER_STATION_CONTROL_COMMANDER": {
+    "description": "",
+    "message": "飞船处于空间站控制下了, 指挥官."
+  },
+  "THIS_IS_FACTION_POLICE": {
+    "description": "Greeting message in police station. 'faction' is one of (English, non-translatable) strings: 'Solar Federation', 'Commonwealth of Independent Worlds', or 'Haber Corporation', and 'faction_police' is one of: 'SolFed Police Force', 'Confederal Police' or, 'Haber Enforcement Division'",
+    "message": "这是 {faction_police} 的 {faction}"
+  },
+  "THREE_KPC_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "3k秒差距旋臂"
+  },
+  "TOGGLE_CARGO_WINDOW": {
+    "description": "Label for a button toggling the cargo display window.",
+    "message": "切换货仓窗口"
+  },
+  "TOGGLE_FULL_COMMS_WINDOW": {
+    "description": "on world view / main screen",
+    "message": "切换完整通信窗口"
+  },
+  "TOGGLE_MALE_FEMALE": {
+    "description": "player gender",
+    "message": "切换 男/女"
+  },
+  "TOGGLE_OVERVIEW_SHOW_MOONS": {
+    "description": "toggle whether the overview window shows moons or not",
+    "message": "在概述中切换显示卫星"
+  },
+  "TOGGLE_OVERVIEW_SHOW_STATIONS": {
+    "description": "toggle whether the overview window shows stations or not",
+    "message": "切换显示总览中的电台"
+  },
+  "TOGGLE_OVERVIEW_SORT_BY_PLAYER_DISTANCE": {
+    "description": "toggle whether the overview window sorts by distance from the player or from the system center",
+    "message": "按玩家距离和系统中心距离切换排序"
+  },
+  "TOGGLE_OVERVIEW_WINDOW": {
+    "description": "show/hide the overview window / navigation window",
+    "message": "切换概述窗口"
+  },
+  "TOO_SMALL_FOR_CURRENT_CREW": {
+    "description": "",
+    "message": "飞船对于现在的船员来说太小了."
+  },
+  "TOO_SMALL_TO_TRANSSHIP": {
+    "description": "Ship market error message",
+    "message": "新飞船无法装配当前货物与超空间引擎。"
+  },
+  "TOTAL": {
+    "description": "",
+    "message": "总计:"
+  },
+  "TOTAL_DISTANCE": {
+    "description": "Total distance of a (possibly series) of hyper jump(s)",
+    "message": "Total Distance"
+  },
+  "TOTAL_DURATION": {
+    "description": "Total duration of a (possibly series) of hyper jump(s)",
+    "message": "Total Duration"
+  },
+  "TOTAL_MASS": {
+    "description": "",
+    "message": "总质量"
+  },
+  "TO_PICK_UP": {
+    "description": "Mission status",
+    "message": "To pick up"
+  },
+  "TRADING_AT": {
+    "description": "Indicates the current system for inspecting commodities.",
+    "message": "在 {system}:"
+  },
+  "TRADING_FROM": {
+    "description": "Indicates the source system of a commodity trade.",
+    "message": "来自{system}:"
+  },
+  "TRADING_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "交易非法货物"
+  },
+  "TRADING_TO": {
+    "description": "Indicates the destination system of a commodity trade.",
+    "message": "去{system}:"
+  },
+  "TRANSFER_FUEL": {
+    "description": "Label indicating the ability to transfer fuel between equipment tanks",
+    "message": "转移燃料"
+  },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Hold down to Translate view"
+  },
+  "TRUSTWORTHY": {
+    "description": "For player reputation",
+    "message": "可信的"
+  },
+  "TURN_OFF": {
+    "description": "",
+    "message": "关闭"
+  },
+  "TYPE": {
+    "description": "",
+    "message": "种类"
+  },
+  "UNKNOWN_CUSTOM_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "未知的自定义日志条目格式"
+  },
+  "UNKNOWN_FACTION": {
+    "description": "For entry in the flight log",
+    "message": "未知的派别"
+  },
+  "UNKNOWN_LOCATION_IN_SECTOR_X": {
+    "description": "For entry in the flight log",
+    "message": "未知扇区{sector}中的位置"
+  },
+  "UNKNOWN_STATION_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "未知的空间站日志条目格式"
+  },
+  "UNKNOWN_SYSTEM_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "未知的系统日志条目格式"
+  },
+  "UNLAWFUL_ECM_DISCHARGE": {
+    "description": "",
+    "message": "Unlawful ECM discharge"
+  },
+  "UNLAWFUL_WEAPONS_DISCHARGE": {
+    "description": "",
+    "message": "武器违法射击"
+  },
+  "UNOCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "未占用的乘客舱"
+  },
+  "UNPROFITABLE_TRADE": {
+    "description": "Indicates an unprofitable trade route.",
+    "message": "无利可图的贸易"
+  },
+  "UNRELIABLE": {
+    "description": "",
+    "message": "不可靠的"
+  },
+  "UNSUCCESSFULLY_RECOVERED_PARAMETERS_ARE_NOW_UNLOCKED_PLEASE_SET_THEM_MANUALLY": {
+    "description": "Message when restoring savegame",
+    "message": "未能成功恢复的参数现已解锁，请手动设置。"
+  },
+  "UP_ACCEL": {
+    "description": "",
+    "message": "向上加速度"
+  },
+  "USED": {
+    "description": "",
+    "message": "已使用"
+  },
+  "VERY_HIGH": {
+    "description": "Game settings option: graphic resolution",
+    "message": "非常高"
+  },
+  "VERY_LOW": {
+    "description": "Game settings option: graphic resolution",
+    "message": "非常低"
+  },
+  "VICINITY_OF": {
+    "description": "",
+    "message": "接近"
+  },
+  "VIDEO": {
+    "description": "",
+    "message": "视频"
+  },
+  "VIDEO_CONFIGURATION_RESTART_GAME_TO_APPLY": {
+    "description": "",
+    "message": "视频设置(重启游戏生效)"
+  },
+  "VIDEO_RESOLUTION": {
+    "description": "",
+    "message": "屏幕分辨率"
+  },
+  "VIDEO_RESOLUTION_DESC": {
+    "description": "Tooltip for video mode/resultion setting",
+    "message": "更高的分辨率以更小的尺寸显示更多的信息，可能会降低性能。"
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "View Destination"
+  },
+  "VISIT_PAINTSHOP": {
+    "description": "Ship Repair tab button.",
+    "message": "访问油漆店"
+  },
+  "VISIT_REPAIR_SERVICES": {
+    "description": "Ship Repair tab button.",
+    "message": "访问维修服务"
+  },
+  "VOLUME": {
+    "description": "The volume property of some object",
+    "message": "音量"
+  },
+  "VSYNC": {
+    "description": "For the checkbox in settings window",
+    "message": "垂直同步"
+  },
+  "VSYNC_DESC": {
+    "description": "",
+    "message": "垂直同步可以消除视觉撕裂或重影，以及输入延迟。"
+  },
+  "WAGE": {
+    "description": "Salary of crew shown in crew roster",
+    "message": "工资"
+  },
+  "WEIGHT_EMPTY": {
+    "description": "",
+    "message": "空重"
+  },
+  "WEIGHT_FULLY_LOADED": {
+    "description": "",
+    "message": "载重全满"
+  },
+  "WE_ARE_IN_HYPERSPACE_COMMANDER": {
+    "description": "",
+    "message": "进入超空间,指挥官."
+  },
+  "WE_HAVE_NO_BUSINESS_WITH_YOU": {
+    "description": "Said by the police to law abiding player",
+    "message": "我们现在跟你没生意做."
+  },
+  "X_CANNOT_BE_TOLERATED_HERE": {
+    "description": "Message to be sent over comms by police when crime is committed by player",
+    "message": "{crime}不能容忍犯罪！"
+  },
+  "YES": {
+    "description": "Positive answer to a question",
+    "message": "是"
+  },
+  "YOURE_GOING_TO_REGRET_SACKING_ME": {
+    "description": "",
+    "message": "你会后悔抢劫我的!"
+  },
+  "YOUR_HULL_IS_AT_X_INTEGRITY": {
+    "description": "",
+    "message": "你的船体完整性为 {value}%."
+  },
+  "YOU_DONT_HAVE_ENOUGH_MONEY_FOR_THAT_OPTION": {
+    "description": "",
+    "message": "你没有足够的钱购买."
+  },
+  "YOU_HAVE_X_UNITS_IN_YOUR_CARGOHOLD": {
+    "description": "",
+    "message": "你的货物仓库中有{units}个单位"
+  },
+  "YOU_MUST_FIRST_SELECT_A_COMBAT_TARGET_COMMANDER": {
+    "description": "",
+    "message": "你必须选择一个战斗目标,指挥官."
+  },
+  "YOU_MUST_FIRST_SELECT_A_SUITABLE_NAVIGATION_TARGET_COMMANDER": {
+    "description": "",
+    "message": "你必须选择一个合适的导航目标,指挥官."
+  },
+  "YOU_MUST_LAUNCH_FIRST_COMMANDER": {
+    "description": "",
+    "message": "你必须先发射升空,指挥官."
+  },
+  "YOU_MUST_REQUEST_LAUNCH_CLEARANCE_FIRST_COMMANDER": {
+    "description": "",
+    "message": "你必须先请求发射许可,指挥官."
+  },
+  "YOU_NOT_ENOUGH_MONEY": {
+    "description": "",
+    "message": "你没有足够的钱."
+  },
+  "ZOOM": {
+    "description": "Label for a zoom (magnification) control bar.",
+    "message": "缩放"
+  }
+}

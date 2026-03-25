@@ -280,3 +280,66 @@ func load_special_character_encounters() -> Array:
 	for e in data.get("encounters", []):
 		encounters.append(Encounter.from_dict(e))
 	return encounters
+
+
+func load_astral_hazards() -> Dictionary:
+	var data: Variant = _load_json("hazards/astral_hazards.json")
+	if data == null:
+		return {}
+	return data
+
+
+func load_static_hazards() -> Dictionary:
+	var data: Variant = _load_json("hazards/static_hazards.json")
+	if data == null:
+		return {}
+	return data
+
+
+func load_planet_registry() -> Array:
+	var data: Variant = _load_json("planets/planet_registry.json")
+	if data == null:
+		return []
+	return data.get("planets", [])
+
+
+func load_biomes() -> Dictionary:
+	var data: Variant = _load_json("planets/biomes.json")
+	if data == null:
+		return {}
+	return data
+
+
+func load_star_bases() -> Array:
+	var data: Variant = _load_json("star_bases/star_bases.json")
+	if data == null:
+		return []
+	return data.get("star_bases", [])
+
+
+func load_artifacts() -> Array:
+	var data: Variant = _load_json("star_bases/artifacts.json")
+	if data == null:
+		return []
+	return data.get("artifacts", [])
+
+
+func load_resonance_shards() -> Array:
+	var data: Variant = _load_json("items/resonance_shards.json")
+	if data == null:
+		return []
+	return data.get("resonance_shards", [])
+
+
+func load_karma_config() -> Dictionary:
+	var data: Variant = _load_json("karma/karma_config.json")
+	if data == null:
+		return {}
+	return data
+
+
+func load_karma_triggers() -> Dictionary:
+	var data: Variant = _load_json("karma/karma_triggers.json")
+	if data == null:
+		return {}
+	return data

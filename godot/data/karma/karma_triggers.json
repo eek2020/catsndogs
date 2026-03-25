@@ -1,0 +1,30 @@
+{
+	"encounter_karma_overrides": {
+		"enc_arc1_crystal_discovery": {
+			"choice_share_discovery": 5,
+			"choice_hoard_discovery": -5
+		},
+		"enc_arc1_goblin_blockade": {
+			"choice_negotiate": 3,
+			"choice_attack": -5,
+			"choice_bribe": -2
+		},
+		"enc_arc1_dave_first_meeting": {
+			"choice_cooperate": 5,
+			"choice_threaten": -5,
+			"choice_ignore": 0
+		}
+	},
+	"default_action_karma": {
+		"spare_enemy": 5,
+		"execute_prisoner": -10,
+		"donate_crystals": 3,
+		"steal_cargo": -8,
+		"rescue_crew": 5,
+		"abandon_crew": -7,
+		"help_civilian": 4,
+		"extort_merchant": -6,
+		"complete_escort": 3,
+		"betray_ally": -10
+	}
+}

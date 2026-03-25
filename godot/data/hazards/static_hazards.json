@@ -1,0 +1,152 @@
+{
+  "static_hazards": {
+    "starting_realm": [
+      {
+        "hazard_id": "singularity",
+        "x": 5000,
+        "y": 2800,
+        "zone_radius": 250,
+        "label": "Fringe Anomaly"
+      }
+    ],
+    "feline_courts": [
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 1200,
+        "y": 4800,
+        "zone_radius": 300,
+        "label": "Dead Star of Bastet"
+      }
+    ],
+    "canine_order": [
+      {
+        "hazard_id": "singularity",
+        "x": 3500,
+        "y": 5500,
+        "zone_radius": 280,
+        "label": "Gravity Rift Alpha"
+      },
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 6200,
+        "y": 1200,
+        "zone_radius": 320,
+        "label": "Nova Scar"
+      }
+    ],
+    "fairy_realms": [
+      {
+        "hazard_id": "singularity",
+        "x": 4200,
+        "y": 4000,
+        "zone_radius": 260,
+        "label": "Fae Gravity Well"
+      }
+    ],
+    "goblin_warrens": [
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 4000,
+        "y": 4200,
+        "zone_radius": 280,
+        "label": "Scrapyard Blaze"
+      }
+    ],
+    "knight_kingdoms": [
+      {
+        "hazard_id": "singularity",
+        "x": 1800,
+        "y": 5800,
+        "zone_radius": 300,
+        "label": "The Maw"
+      },
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 5800,
+        "y": 1200,
+        "zone_radius": 280,
+        "label": "Crusader's Pyre"
+      }
+    ],
+    "deep_space": [
+      {
+        "hazard_id": "singularity",
+        "x": 2000,
+        "y": 2000,
+        "zone_radius": 350,
+        "label": "The Great Attractor"
+      },
+      {
+        "hazard_id": "singularity",
+        "x": 6500,
+        "y": 6500,
+        "zone_radius": 300,
+        "label": "Void Sinkhole"
+      },
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 7000,
+        "y": 1000,
+        "zone_radius": 350,
+        "label": "Primordial Detonation"
+      }
+    ],
+    "shattered_prides": [
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 4500,
+        "y": 5200,
+        "zone_radius": 300,
+        "label": "The Lion's Funeral Pyre"
+      }
+    ],
+    "iron_expanse": [
+      {
+        "hazard_id": "singularity",
+        "x": 4000,
+        "y": 6000,
+        "zone_radius": 300,
+        "label": "Iron Singularity"
+      },
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 1200,
+        "y": 1200,
+        "zone_radius": 280,
+        "label": "Wolf Star Remnant"
+      }
+    ],
+    "twilight_bazaar": [
+      {
+        "hazard_id": "singularity",
+        "x": 3800,
+        "y": 3800,
+        "zone_radius": 220,
+        "label": "Bazaar Black Hole"
+      }
+    ],
+    "warp_marches": [
+      {
+        "hazard_id": "singularity",
+        "x": 2500,
+        "y": 5500,
+        "zone_radius": 350,
+        "label": "Reality Fracture"
+      },
+      {
+        "hazard_id": "singularity",
+        "x": 5500,
+        "y": 2500,
+        "zone_radius": 300,
+        "label": "Dimensional Tear"
+      },
+      {
+        "hazard_id": "supernova_remnant",
+        "x": 7500,
+        "y": 1500,
+        "zone_radius": 350,
+        "label": "Warp Detonation"
+      }
+    ]
+  }
+}

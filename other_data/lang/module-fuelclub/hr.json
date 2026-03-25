@@ -1,0 +1,138 @@
+{
+  "APPLY_FOR_MEMBERSHIP": {
+    "description": "",
+    "message": "Prijavite se za članstvo"
+  },
+  "BEGIN_TRADE": {
+    "description": "",
+    "message": "Započnite trgovinu"
+  },
+  "FLAVOUR_0_CLUBNAME": {
+    "description": "",
+    "message": "Zadruga za gorivo međuzvjezdanih pilota"
+  },
+  "FLAVOUR_0_DESC": {
+    "description": "",
+    "message": "Kontaktirajte lokalnog predstavnika Interstellar Pilots' Fuel Co-operative."
+  },
+  "FLAVOUR_0_MEMBER_INTRO": {
+    "description": "",
+    "message": "Ovdje možete kupiti gorivo i odložiti {radioaktivne tvari}."
+  },
+  "FLAVOUR_0_NONMEMBER_INTRO": {
+    "description": "",
+    "message": "{clubname} je neovisna organizacija posvećena pružanju sniženih cijena goriva za svemirske brodove svojim članovima. Podružnice se mogu pronaći diljem galaksije. Prednosti članstva uključuju:"
+  },
+  "FLAVOUR_0_TITLE": {
+    "description": "Title of the BBS advertisement",
+    "message": "PILOTSKA ZADRUGA ZA GORIVO"
+  },
+  "FLAVOUR_0_WELCOME": {
+    "description": "",
+    "message": "Dobrodošli u {clubname}"
+  },
+  "FLAVOUR_1_CLUBNAME": {
+    "description": "Fuel club for the Federation faction",
+    "message": "Federalna zaklada za gorivo"
+  },
+  "FLAVOUR_1_DESC": {
+    "description": "Fuel club for the Federation faction",
+    "message": "Ovlašteni kontakt za Federalnu zakladu za gorivo."
+  },
+  "FLAVOUR_1_NONMEMBER_INTRO": {
+    "description": "For the Solar Federation faction",
+    "message": "{clubname} je vodeći dobavljač goriva s popustom za svemirske brodove svojih članova u Solarnoj Federaciji. Članstvo vam omogućuje sljedeće:"
+  },
+  "FLAVOUR_1_TITLE": {
+    "description": "Title of the BBS advertisement",
+    "message": "SAVEZNA ZAKLADA ZA GORIVO"
+  },
+  "FLAVOUR_2_CLUBNAME": {
+    "description": "Fuel club for the CIW (Commonwealth of Independent Worlds) faction",
+    "message": "Unija za gorivo Commonwealtha"
+  },
+  "FLAVOUR_2_DESC": {
+    "description": "Fuel club for the CIW (Commonwealth of Independent Worlds) faction",
+    "message": "Zakažite sastanak za razgovor s Commonwealth Fuel Union."
+  },
+  "FLAVOUR_2_NONMEMBER_INTRO": {
+    "description": "Commonwealth of Independent Worlds is the name of the CIW faction",
+    "message": "Diljem širokog dosega slobodnog Commonwealtha Neovisnih Svjetova, {clubname} ćete pronaći kao najboljeg pružatelja usluga sniženog goriva i gospodarenja otpadom. Za naše članove nudimo:"
+  },
+  "FLAVOUR_2_TITLE": {
+    "description": "Title of the BBS advertisement",
+    "message": "UNIJA ZA GORIVO KOMONVEALTA"
+  },
+  "FLAVOUR_2_WELCOME": {
+    "description": "",
+    "message": "Lijepi pozdravi! Nadamo se da ćete uživati ​​u našim uslugama."
+  },
+  "FLAVOUR_3_CLUBNAME": {
+    "description": "Fuel club for the Haber faction",
+    "message": "Haber Odjel za pogonska goriva i kvarljivu robu"
+  },
+  "FLAVOUR_3_DESC": {
+    "description": "Fuel club for the Haber faction",
+    "message": "Podružnica Haberove divizije za pogonska goriva i kvarljivu robu."
+  },
+  "FLAVOUR_3_MEMBER_INTRO": {
+    "description": "For the greedy Haber faction, very corporate formulated",
+    "message": "Pozdrav pilotu. Vaša prava na punjenje gorivom i uvjetno odlaganje nusproizvoda su odobrena."
+  },
+  "FLAVOUR_3_NONMEMBER_INTRO": {
+    "description": "for the Haber faction",
+    "message": "Pozdrav pilotu. Ovdje Haberov odjel za pogonska goriva i kvarljivu robu, zadužen za upravljanje distribucijom goriva u cijelom prostoru u vlasništvu Habera."
+  },
+  "FLAVOUR_3_TITLE": {
+    "description": "Title of the BBS advertisement",
+    "message": "HABER POGONSKO PLIN"
+  },
+  "FUEL_LEVEL": {
+    "description": "",
+    "message": "Trenutna razina goriva je {level}%."
+  },
+  "LIST_BENEFITS_DISPOSAL": {
+    "description": "",
+    "message": "{radioactives}, slobodno odlaganje"
+  },
+  "LIST_BENEFITS_FUEL": {
+    "description": "",
+    "message": "{fuel} po sniženim cijenama"
+  },
+  "LIST_BENEFITS_FUEL_INTRO": {
+    "description": "",
+    "message": "Naše vlastite zalihe goriva, neovisne o općem tržištu"
+  },
+  "LIST_BENEFITS_FUEL_TANK": {
+    "description": "",
+    "message": "Punjenje spremnika goriva, jednom dnevno"
+  },
+  "LIST_BENEFITS_JOIN": {
+    "description": "",
+    "message": "Pridružite se odmah! Godišnja članarina košta samo {membership_fee}"
+  },
+  "REFUEL_FREE": {
+    "description": "",
+    "message": "Besplatno dopunite spremnik goriva."
+  },
+  "WE_WILL_ONLY_DISPOSE_OF": {
+    "description": "",
+    "message": "Zbrinut ćemo samo onoliko tona  {radioactives} koliko ste od nas kupili tona  {military_fuel}."
+  },
+  "WHAT_CONDITIONS_APPLY": {
+    "description": "",
+    "message": "Koji se uvjeti primjenjuju na odlaganje {radioactives}?"
+  },
+  "YOUR_MEMBERSHIP_APPLICATION_HAS_BEEN_DECLINED": {
+    "description": "",
+    "message": "Vaša prijava za članstvo je odbijena."
+  },
+  "YOU_ARE_NOW_A_MEMBER": {
+    "description": "",
+    "message": "Sada ste član. Vaše članstvo istječe {expiry_date}."
+  },
+  "YOU_MUST_BUY": {
+    "description": "",
+    "message": "Morate kupiti naše {military_fuel} prije nego što preuzmemo vaše {radioactives}"
+  }
+}

@@ -1,0 +1,24 @@
+version 2
+
+material "lodos" {
+	shader "multi"
+	diffuse 1.0 1.0 1.0
+	specular 0.8 0.8 0.8
+	use_patterns
+	texture diffuse  "lodos-diffuse.dds"
+	texture specular "lodos-specular.dds"
+	texture glow     "lodos-glow.dds"
+}
+
+lod 100 {
+	mesh "lodos-hi.dae"
+}
+
+lod 20 {
+	mesh "lodos-lo.dae"
+}
+
+anim "gear_down" 1 121
+
+collision "lodos-col.dae"
+

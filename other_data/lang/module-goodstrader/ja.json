@@ -1,0 +1,74 @@
+{
+  "ADTITLE_0": {
+    "description": "",
+    "message": "CARGO EMPORIUM"
+  },
+  "ADTITLE_1": {
+    "description": "",
+    "message": "TRADING HOUSE"
+  },
+  "ADTITLE_2": {
+    "description": "",
+    "message": "TRADE WAREHOUSE"
+  },
+  "ADTITLE_3": {
+    "description": "",
+    "message": "GOODS EXCHANGE"
+  },
+  "GOODS_TRADER_0": {
+    "description": "",
+    "message": "誠実な{name}の商品百貨店"
+  },
+  "GOODS_TRADER_1": {
+    "description": "",
+    "message": "{name}の商社"
+  },
+  "GOODS_TRADER_2": {
+    "description": "",
+    "message": "{name}の倉庫"
+  },
+  "GOODS_TRADER_3": {
+    "description": "",
+    "message": "{name}の商品取引所"
+  },
+  "GOODS_TRADER_4": {
+    "description": "",
+    "message": "{name}ホールディング"
+  },
+  "GOODS_TRADER_5": {
+    "description": "",
+    "message": "{name}親子"
+  },
+  "SLOGAN_0": {
+    "description": "",
+    "message": "我々はほかの人が扱わないようなものを扱っている。"
+  },
+  "SLOGAN_1": {
+    "description": "",
+    "message": "真に自由な市場"
+  },
+  "SLOGAN_2": {
+    "description": "",
+    "message": "もっとも斬新な商品をあなたに!"
+  },
+  "SLOGAN_3": {
+    "description": "",
+    "message": "私たちはこの市場では制限がないと信じているよ。"
+  },
+  "SLOGAN_4": {
+    "description": "",
+    "message": "あなたの自由のための無法市場。"
+  },
+  "SLOGAN_5": {
+    "description": "",
+    "message": "信頼できるディーラー。"
+  },
+  "SLOGAN_6": {
+    "description": "",
+    "message": "Always a special price just for you."
+  },
+  "WELCOME_TO": {
+    "description": "",
+    "message": "ようこそ"
+  }
+}

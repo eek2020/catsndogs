@@ -53,6 +53,29 @@ extends Resource
 @export var owned_maps: Array[String] = []
 @export var star_map_data: Dictionary = {}
 
+# Astral hazards
+@export var active_status_effects: Array = []
+@export var astral_hazard_data: Dictionary = {}
+
+# Skill allocation
+@export var bonus_skill_points: int = 0
+@export var resonance_shards_found: Array[String] = []
+
+# Planets
+@export var current_planet_id: String = ""
+@export var planet_states: Dictionary = {}
+@export var planet_inventory: Dictionary = {}
+
+# Star bases
+@export var docked_base_id: String = ""
+@export var discovered_bases: Array[String] = []
+@export var acquired_artifacts: Array[String] = []
+@export var base_state_overrides: Dictionary = {}
+
+# Karma
+@export var karma: int = 0
+@export var karma_history: Array = []
+
 # Stats
 @export var combat_victories: int = 0
 
@@ -105,7 +128,20 @@ func to_dict() -> Dictionary:
 		"side_missions": mission_dict,
 		"owned_maps": Array(owned_maps),
 		"star_map_data": star_map_data.duplicate(),
+		"active_status_effects": active_status_effects.duplicate(true),
+		"astral_hazard_data": astral_hazard_data.duplicate(true),
 		"combat_victories": combat_victories,
+		"current_planet_id": current_planet_id,
+		"planet_states": planet_states.duplicate(true),
+		"planet_inventory": planet_inventory.duplicate(true),
+		"docked_base_id": docked_base_id,
+		"discovered_bases": Array(discovered_bases),
+		"acquired_artifacts": Array(acquired_artifacts),
+		"base_state_overrides": base_state_overrides.duplicate(true),
+		"bonus_skill_points": bonus_skill_points,
+		"resonance_shards_found": Array(resonance_shards_found),
+		"karma": karma,
+		"karma_history": karma_history.duplicate(true),
 	}
 
 
@@ -149,7 +185,20 @@ static func from_dict(data: Dictionary) -> GameStateData:
 		state.side_missions[mid] = SideMission.from_dict(data["side_missions"][mid])
 	state.owned_maps = Array(data.get("owned_maps", []), TYPE_STRING, "", null)
 	state.star_map_data = data.get("star_map_data", {})
+	state.active_status_effects = data.get("active_status_effects", [])
+	state.astral_hazard_data = data.get("astral_hazard_data", {})
 	state.combat_victories = data.get("combat_victories", 0)
+	state.current_planet_id = data.get("current_planet_id", "")
+	state.planet_states = data.get("planet_states", {})
+	state.planet_inventory = data.get("planet_inventory", {})
+	state.docked_base_id = data.get("docked_base_id", "")
+	state.discovered_bases = Array(data.get("discovered_bases", []), TYPE_STRING, "", null)
+	state.acquired_artifacts = Array(data.get("acquired_artifacts", []), TYPE_STRING, "", null)
+	state.base_state_overrides = data.get("base_state_overrides", {})
+	state.bonus_skill_points = data.get("bonus_skill_points", 0)
+	state.resonance_shards_found = Array(data.get("resonance_shards_found", []), TYPE_STRING, "", null)
+	state.karma = data.get("karma", 0)
+	state.karma_history = data.get("karma_history", [])
 	return state
 
 

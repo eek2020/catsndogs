@@ -1,0 +1,2034 @@
+{
+  "AIR_PROCESSORS": {
+    "description": "",
+    "message": "Въздухопречистватели"
+  },
+  "ALERT_CANCELLED": {
+    "description": "",
+    "message": "Предупреждението е анулирано."
+  },
+  "ALLEGIANCE": {
+    "description": "",
+    "message": "Преданост:"
+  },
+  "ALT": {
+    "description": "Alt key on keyboard",
+    "message": "Alt"
+  },
+  "AND_HIGHLY_COMPLEX_ECOSYSTEM": {
+    "description": "",
+    "message": "\" и изключително сложна екосистема.\""
+  },
+  "AND_INDIGENOUS_MICROBIAL_LIFE": {
+    "description": "",
+    "message": "\" и местен микробен живот.\""
+  },
+  "AND_INDIGENOUS_PLANT_LIFE": {
+    "description": "",
+    "message": "\" и местен растителен живот.\""
+  },
+  "ANIMAL_MEAT": {
+    "description": "",
+    "message": "Животинско месо"
+  },
+  "AN_AR_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от аргон"
+  },
+  "AN_O2_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от кислород"
+  },
+  "APOAPSIS_DISTANCE": {
+    "description": "",
+    "message": "Разстояние при апоапсидата"
+  },
+  "AR_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от аргон"
+  },
+  "ASTEROID": {
+    "description": "",
+    "message": "Астероид"
+  },
+  "AUTOMATIC_SYSTEM_SELECTION": {
+    "description": "for star map, select star system when mouse close to it",
+    "message": "Автоматичен избор на система"
+  },
+  "AUTOPILOT_CONTROL": {
+    "description": "Indicating that ship is flying under autopilot control",
+    "message": "Автоматично управление"
+  },
+  "AUTOPILOT_DOCK_WITH_STATION": {
+    "description": "",
+    "message": "Автопилот: Скачване с {target}"
+  },
+  "AUTOPILOT_ENTER_HIGH_ORBIT_AROUND": {
+    "description": "",
+    "message": "Автопилот: Висока орбита около {target}"
+  },
+  "AUTOPILOT_ENTER_LOW_ORBIT_AROUND": {
+    "description": "",
+    "message": "Автопилот: Ниска орбита около {target}"
+  },
+  "AUTOPILOT_ENTER_MEDIUM_ORBIT_AROUND": {
+    "description": "",
+    "message": "Автопилот: Средна орбита около {target}"
+  },
+  "AUTOPILOT_FLY_TO_VICINITY_OF": {
+    "description": "",
+    "message": "Автопилот: Полет към {target}"
+  },
+  "AUTOPILOT_ON": {
+    "description": "",
+    "message": "Автопилотът е включен"
+  },
+  "AXIAL_TILT": {
+    "description": "",
+    "message": "Наклон на оста"
+  },
+  "A_CH4_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от метан"
+  },
+  "A_CO2_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от въглероден диоксид"
+  },
+  "A_CO_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от въглероден монооксид"
+  },
+  "A_FEW_THOUSAND": {
+    "description": "regarding population",
+    "message": "Само няколко хиляди"
+  },
+  "A_HE_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от хелий"
+  },
+  "A_H_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от водород"
+  },
+  "A_N_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от азот"
+  },
+  "A_S_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от сяра"
+  },
+  "BATTLE_WEAPONS": {
+    "description": "",
+    "message": "Големи оръжия"
+  },
+  "BINARY_SYSTEM": {
+    "description": "",
+    "message": "Двойна система"
+  },
+  "BODIES": {
+    "description": "space bodies",
+    "message": "тела"
+  },
+  "BODY": {
+    "description": "",
+    "message": "тяло"
+  },
+  "BROWN_DWARF": {
+    "description": "",
+    "message": "Кафяво джудже"
+  },
+  "CAMERA_BOTTOM_VIEW": {
+    "description": "",
+    "message": "Долна камера"
+  },
+  "CAMERA_FRONT_VIEW": {
+    "description": "",
+    "message": "Предна камера"
+  },
+  "CAMERA_LEFT_VIEW": {
+    "description": "",
+    "message": "Лява камера"
+  },
+  "CAMERA_REAR_VIEW": {
+    "description": "",
+    "message": "Задна камера"
+  },
+  "CAMERA_RIGHT_VIEW": {
+    "description": "",
+    "message": "Дясна камера"
+  },
+  "CAMERA_TOP_VIEW": {
+    "description": "",
+    "message": "Горна камера"
+  },
+  "CANT_SAVE_DEAD_PLAYER": {
+    "description": "",
+    "message": "Играта не може да бъде запазена след като играчът е гушнал букета"
+  },
+  "CANT_SAVE_IN_HYPERSPACE": {
+    "description": "",
+    "message": "Играта не може да бъде запазена в хиперпространството"
+  },
+  "CAPITALIST": {
+    "description": "",
+    "message": "Капитализъм"
+  },
+  "CARBON_ORE": {
+    "description": "",
+    "message": "Въглеродна руда"
+  },
+  "CARGO": {
+    "description": "",
+    "message": "Товар"
+  },
+  "CARGO_BAY_LIFE_SUPPORT_LOST": {
+    "description": "",
+    "message": "Сензорите отчитат критични нива на животоподдържащите системи в товарното отделение."
+  },
+  "CARGO_N": {
+    "description": "",
+    "message": "Товар: %{mass} т."
+  },
+  "CARGO_SCOOP_ACTIVE_1_TONNE_X_COLLECTED": {
+    "description": "",
+    "message": "Товарачът за стока е активен. Натоварен е 1 тон %item."
+  },
+  "CARGO_SCOOP_ATTEMPTED": {
+    "description": "",
+    "message": "Товарачът за стока не е активен. Корабът е пълен."
+  },
+  "CENTER": {
+    "description": "",
+    "message": "Центриране"
+  },
+  "CH4_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от метан"
+  },
+  "CO2_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от въглероден диоксид"
+  },
+  "COMMA_HIGHLY_VOLCANIC": {
+    "description": "",
+    "message": ", силно вулканична"
+  },
+  "COMMODITY_NONE": {
+    "description": "When no commodities exist",
+    "message": "Няма намерени"
+  },
+  "COMMODITY_TRADE_ANALYSIS_COMPARE": {
+    "description": "",
+    "message": "Анализ на стоковата търговия на #ff0%selected_system#fff (избрана система) и #ff0%current_system#fff (текуща система):"
+  },
+  "COMMODITY_TRADE_ANALYSIS_SELF": {
+    "description": "",
+    "message": "Анализ на стоковата търговия на #fff%system#fff"
+  },
+  "COMMS": {
+    "description": "Title of communications log window, on world view",
+    "message": "Съобщения"
+  },
+  "COMMUNIST": {
+    "description": "",
+    "message": "Комунизъм"
+  },
+  "COMPASS_E": {
+    "description": "Abbreviation for compass direction: East",
+    "message": "И"
+  },
+  "COMPASS_N": {
+    "description": "Abbreviation for compass direction: North",
+    "message": "С"
+  },
+  "COMPASS_NE": {
+    "description": "Abbreviation for compass direction: North East",
+    "message": "СИ"
+  },
+  "COMPASS_NW": {
+    "description": "Abbreviation for compass direction: North West",
+    "message": "СЗ"
+  },
+  "COMPASS_S": {
+    "description": "Abbreviation for compass direction: South",
+    "message": "Ю"
+  },
+  "COMPASS_SE": {
+    "description": "Abbreviation for compass direction: South East",
+    "message": "ЮИ"
+  },
+  "COMPASS_SW": {
+    "description": "Abbreviation for compass direction: South West",
+    "message": "ЮЗ"
+  },
+  "COMPASS_W": {
+    "description": "Abbreviation for compass direction: West",
+    "message": "З"
+  },
+  "COMPUTERS": {
+    "description": "",
+    "message": "Компютри"
+  },
+  "COMPUTER_HEADING_CONTROL": {
+    "description": "",
+    "message": "Компютърно управление на посоката"
+  },
+  "COMPUTER_SPEED_CONTROL": {
+    "description": "",
+    "message": "Компютърно управление на скоростта"
+  },
+  "CONSUMER_GOODS": {
+    "description": "",
+    "message": "Потребителски стоки"
+  },
+  "CONTROLS": {
+    "description": "",
+    "message": "Управление"
+  },
+  "CORPORATE_SYSTEM": {
+    "description": "",
+    "message": "Корпоративна система"
+  },
+  "COULD_NOT_OPEN_FILENAME": {
+    "description": "",
+    "message": "%path не може да бъде отворен"
+  },
+  "COUNT_ON_SURFACE": {
+    "description": "",
+    "message": "\" (%surfacecount на повърхността)\""
+  },
+  "COUNT_STARPORTS": {
+    "description": "",
+    "message": "космодруми"
+  },
+  "CO_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от въглероден монооксид"
+  },
+  "CTRL": {
+    "description": "Ctrl key on keyboard",
+    "message": "Ctrl"
+  },
+  "CURRENT_SYSTEM": {
+    "description": "selected current star system",
+    "message": "Текуща система"
+  },
+  "DATE_DUE_N": {
+    "description": "",
+    "message": "Крайна дата: %date"
+  },
+  "DAY_LENGTH": {
+    "description": "",
+    "message": "Денонощие"
+  },
+  "DECREASE_RADAR_RANGE": {
+    "description": "",
+    "message": "Намаляване на радарния обхват"
+  },
+  "DECREASE_SET_SPEED": {
+    "description": "",
+    "message": "Намаляване на зададената скорост"
+  },
+  "DECREASE_TIME_ACCELERATION": {
+    "description": "",
+    "message": "Намаляване на ускорението на времето"
+  },
+  "DEMOGRAPHICS": {
+    "description": "",
+    "message": "Демография"
+  },
+  "DESTINATION": {
+    "description": "",
+    "message": "Дестинация"
+  },
+  "DISTANCE_LY": {
+    "description": "",
+    "message": "Разстояние: %distance{f.2} сг"
+  },
+  "DOCKED": {
+    "description": "",
+    "message": "Скачен"
+  },
+  "DOCKING": {
+    "description": "",
+    "message": "Скачване"
+  },
+  "DOWNGRADING_ALERT_STATUS": {
+    "description": "",
+    "message": "В последните 60 секунди не е открит огън, нивото за предупреждения е понижено."
+  },
+  "DRAW_OUT_RANGE_LABELS": {
+    "description": "",
+    "message": "Наименования на далечните системи"
+  },
+  "DRAW_UNINHABITED_LABELS": {
+    "description": "",
+    "message": "Наименования на необитаемите системи"
+  },
+  "DRAW_VERTICAL_LINES": {
+    "description": "",
+    "message": "Показване на вертикалните линии"
+  },
+  "DWARF_PLANET_CONTAINING_LIQUID_WATER": {
+    "description": "",
+    "message": "Планета джудже с наличие на течна вода"
+  },
+  "DWARF_PLANET_CONTAINING_SOME_LIQUIDS": {
+    "description": "",
+    "message": "Планета джудже с наличие на течни вещества,"
+  },
+  "DWARF_PLANET_MOSTLY_COVERED_IN_ICE": {
+    "description": "",
+    "message": "Планета джудже с покритие от лед"
+  },
+  "DWARF_PLANET_TERRESTRIAL": {
+    "description": "",
+    "message": "Планета джудже"
+  },
+  "EARTH_FEDERATION_COLONIAL_RULE": {
+    "description": "",
+    "message": "Колониално управление на Земната федерация"
+  },
+  "EARTH_FEDERATION_DEMOCRACY": {
+    "description": "",
+    "message": "Земна федерална демокрация"
+  },
+  "ECCENTRICITY": {
+    "description": "",
+    "message": "Ексцентрицитет"
+  },
+  "ECONOMIC_INFO": {
+    "description": "",
+    "message": "Икономика"
+  },
+  "ECONOMY_TYPE": {
+    "description": "",
+    "message": "Икономика"
+  },
+  "EQUATORIAL_RADIUS_TO_POLAR_RADIUS_RATIO": {
+    "description": "",
+    "message": "Съотношение на екваториалния към полярния радиус"
+  },
+  "ESCAPE_VELOCITY": {
+    "description": "",
+    "message": "Втора космическа скорост"
+  },
+  "EXACT_MATCH_X": {
+    "description": "",
+    "message": "Точно съвпадение: %system"
+  },
+  "EXTENSIVE_MINING": {
+    "description": "",
+    "message": "Обширни минни операции."
+  },
+  "EXTERNAL_ATMOSPHERIC_PRESSURE": {
+    "description": "",
+    "message": "Външно атмосферно налягане"
+  },
+  "EXTERNAL_VIEW": {
+    "description": "",
+    "message": "Външен изглед"
+  },
+  "FARM_MACHINERY": {
+    "description": "",
+    "message": "Селскостопанско оборудване"
+  },
+  "FERTILIZER": {
+    "description": "",
+    "message": "Тор"
+  },
+  "FIRE_LASER": {
+    "description": "",
+    "message": "Откриване на огън"
+  },
+  "FIRE_MISSILE": {
+    "description": "",
+    "message": "Изстрелване на ракета"
+  },
+  "FLYBY_VIEW": {
+    "description": "camera view setting",
+    "message": "Прелитащ изглед"
+  },
+  "FOLLOWING_SELECTION": {
+    "description": "",
+    "message": "Следване на избора"
+  },
+  "FRUIT_AND_VEG": {
+    "description": "",
+    "message": "Плодове и зеленчуци"
+  },
+  "FUEL": {
+    "description": "",
+    "message": "Гориво"
+  },
+  "FUEL_SCOOP_ACTIVE_N_TONNES_H_COLLECTED": {
+    "description": "",
+    "message": "Товарачът за гориво е активен. Натоварени са %quantity тона водород."
+  },
+  "GALACTIC_VIEW": {
+    "description": "view galactic map",
+    "message": "Галактически изглед"
+  },
+  "GALAXY_SECTOR_VIEW": {
+    "description": "",
+    "message": "Изглед на галактическия сектор"
+  },
+  "GAME_LOAD_CANNOT_OPEN": {
+    "description": "",
+    "message": "Запазената игра „%filename“ не може да бъде намерена (или програмата няма достъп до нея)."
+  },
+  "GAME_LOAD_CORRUPT": {
+    "description": "",
+    "message": "Тази игра не може да бъде заредена, защото съдържа грешки."
+  },
+  "GAME_LOAD_WRONG_VERSION": {
+    "description": "",
+    "message": "Тази игра не може да бъде заредена, защото е създадена в друга версия на „Pioneer“."
+  },
+  "GAME_SAVED_TO": {
+    "description": "",
+    "message": "\"Играта е запазена в \""
+  },
+  "GAME_SAVE_CANNOT_WRITE": {
+    "description": "",
+    "message": "Запазената игра не може да бъде записана, поради системна грешка."
+  },
+  "GAME_SAVE_INVALID_NAME": {
+    "description": "",
+    "message": "Запазената игра не може да бъде записана, поради неправилно име."
+  },
+  "GENERAL_VIEW_CONTROLS": {
+    "description": "",
+    "message": "Камера"
+  },
+  "GOVERNMENT_TYPE": {
+    "description": "",
+    "message": "Правителство"
+  },
+  "GRAIN": {
+    "description": "like wheat or barley",
+    "message": "Жито"
+  },
+  "GRID_DISPLAY_MODE": {
+    "description": "Label for grid display modes",
+    "message": "Изглед на решетката"
+  },
+  "GRID_DISPLAY_MODE_GRID_AND_LEGS": {
+    "description": "Combobox option for Grid with Legs",
+    "message": "Решетка с етапи"
+  },
+  "GRID_DISPLAY_MODE_GRID_ONLY": {
+    "description": "Combobox option for Grid Only",
+    "message": "Решетка без етапи"
+  },
+  "GRID_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for Grid display off.",
+    "message": "Изключен"
+  },
+  "GRID_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for toggle grid display button.",
+    "message": "Видимост на решетката."
+  },
+  "HAND_WEAPONS": {
+    "description": "",
+    "message": "Малки оръжия"
+  },
+  "HARD_CAPITALIST": {
+    "description": "",
+    "message": "Капитализъм, без правителствени социални помощи"
+  },
+  "HEADING_LOCK_ANTINORMAL": {
+    "description": "Autopilot direction (perpendicular, down), relative to plane of orbit",
+    "message": "Задържане на {target} в обратната посока"
+  },
+  "HEADING_LOCK_BACKWARD": {
+    "description": "Autopilot points/holds/faces you retrograde (backwards rel. orbital direction)",
+    "message": "Ретроградно задържане на {target}"
+  },
+  "HEADING_LOCK_FORWARD": {
+    "description": "Autopilot points/holds/faces you prograde (tangent to the orbit, i.e. forward), http://wiki.kerbalspaceprogram.com/wiki/Maneuver_node",
+    "message": "Проградно задържане на {target}"
+  },
+  "HEADING_LOCK_KILLROT": {
+    "description": "",
+    "message": "Прекратяване на завъртането"
+  },
+  "HEADING_LOCK_NORMAL": {
+    "description": "Autopilot direction (perpendicular, up), relative to plane of orbit. ",
+    "message": "Задържане на {target} в текущата посока"
+  },
+  "HEADING_LOCK_RADIALLY_INWARD": {
+    "description": "Autopilot direction, relative to orbit (face towards planet)",
+    "message": "Задържане на {target} в радиала"
+  },
+  "HEADING_LOCK_RADIALLY_OUTWARD": {
+    "description": "Autopilot direction, relative to orbit (face away from palent)",
+    "message": "Задържане на {target} извън радиала"
+  },
+  "HEAVY_INDUSTRY": {
+    "description": "",
+    "message": "Тежка индустрия."
+  },
+  "HE_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от хелий"
+  },
+  "HIGHLY_VOLCANIC": {
+    "description": "",
+    "message": "Силно вулканична"
+  },
+  "HIGH_POPULATION_OUTDOOR_WORLD": {
+    "description": "",
+    "message": "Пренаселен отворен свят."
+  },
+  "HULL_INTEGRITY": {
+    "description": "",
+    "message": "Здравина на корпуса"
+  },
+  "HULL_TEMP": {
+    "description": "",
+    "message": "Температура на корпуса"
+  },
+  "HYDROGEN": {
+    "description": "",
+    "message": "Водород"
+  },
+  "HYPERSPACE": {
+    "description": "",
+    "message": "Хиперпространство"
+  },
+  "HYPERSPACE_ARRIVAL_CLOUD": {
+    "description": "",
+    "message": "Хиперпространствен облак от пристигане"
+  },
+  "HYPERSPACE_ARRIVAL_CLOUD_REMNANT": {
+    "description": "",
+    "message": "Останки на хиперпространствен облак от пристигане"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE": {
+    "description": "Label for hyperspace cloud display modes.",
+    "message": "Изглед на хиперпространствените облаци"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ALL": {
+    "description": "Combobox option for all hyperspace clouds.",
+    "message": "Всички"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ARRIVAL_ONLY": {
+    "description": "Combobox option for arrival hyperspace clouds.",
+    "message": "От пристигане"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_DEPARTURE_ONLY": {
+    "description": "Combobox option for departure hyperspace clouds.",
+    "message": "От тръгване"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the button which toggles the display mode of hyperspace clouds.",
+    "message": "Видимост на хиперпространствените облаци"
+  },
+  "HYPERSPACE_DEPARTURE_CLOUD": {
+    "description": "",
+    "message": "Хиперпространствен облак от тръгване"
+  },
+  "HYPERSPACE_JUMP_ABORT": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Изключване на хипердвигателя"
+  },
+  "HYPERSPACE_JUMP_ABORTED": {
+    "description": "",
+    "message": "Хиперпространственият скок е прекъснат."
+  },
+  "HYPERSPACE_JUMP_DISABLED": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Хипердвигателят е изключен"
+  },
+  "HYPERSPACE_JUMP_ENGAGE": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Включване на хипердвигателя"
+  },
+  "HYPERSPACE_JUMP_FORBIDDEN": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Забранена зона за хипердвигатели"
+  },
+  "HYPERSPACE_TARGET": {
+    "description": "",
+    "message": "Хиперпространствена цел"
+  },
+  "H_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от водород"
+  },
+  "ICE_DWARF_PLANET": {
+    "description": "",
+    "message": "Ледена планета джудже"
+  },
+  "ICE_MOON": {
+    "description": "",
+    "message": "\" ледена луна\""
+  },
+  "ICE_WORLD": {
+    "description": "",
+    "message": "\" ледена планета\""
+  },
+  "ILLEGAL_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of commodity (singular) status in the system the player is currently in",
+    "message": "Незаконно (текуща система):"
+  },
+  "ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Незаконни стоки:"
+  },
+  "IMPERIAL_RULE": {
+    "description": "",
+    "message": "Имперско управление"
+  },
+  "INCREASE_RADAR_RANGE": {
+    "description": "",
+    "message": "Увеличаване на радарния обхват"
+  },
+  "INCREASE_SET_SPEED": {
+    "description": "",
+    "message": "Увеличаване на зададената скорост"
+  },
+  "INCREASE_TIME_ACCELERATION": {
+    "description": "",
+    "message": "Увеличаване на ускорението на времето"
+  },
+  "INDUSTRIAL_COLONY": {
+    "description": "",
+    "message": "Индустриална колония."
+  },
+  "INDUSTRIAL_HUB_SYSTEM": {
+    "description": "",
+    "message": "Индустриална система."
+  },
+  "INDUSTRIAL_MACHINERY": {
+    "description": "",
+    "message": "Индустриално оборудване"
+  },
+  "INTERNAL_VIEW": {
+    "description": "",
+    "message": "Вътрешен изглед"
+  },
+  "JOY": {
+    "description": "Short for Joystick",
+    "message": "Джойстик"
+  },
+  "JOYSTICK_INPUT": {
+    "description": "",
+    "message": "Управление с джойстик"
+  },
+  "L4L5_DISPLAY_MODE": {
+    "description": "Label for the lagrange point display modes.",
+    "message": "Изглед на точките на Лагранж"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_AND_TEXT": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Икони и наименования"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_ONLY": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Икони"
+  },
+  "L4L5_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for lagrange point display off.",
+    "message": "Изключен"
+  },
+  "L4L5_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the L4/L5 Lagrange points toggle button.",
+    "message": "Видимост на точките на Лагранж L4 и L5."
+  },
+  "LANDED": {
+    "description": "",
+    "message": "Приземен"
+  },
+  "LANG_NAME": {
+    "description": "The name that native speakers use for this language. This will be used in the language selection screen.",
+    "message": "Български"
+  },
+  "LARGE": {
+    "description": "regarding terrestrial planet size (mass actually)",
+    "message": "Голяма"
+  },
+  "LARGE_GAS_GIANT": {
+    "description": "",
+    "message": "Голям газов гигант"
+  },
+  "LASER_FIRE_DETECTED": {
+    "description": "",
+    "message": "Открит е огън."
+  },
+  "LATITUDE": {
+    "description": "Short for latitude",
+    "message": "Шир:"
+  },
+  "LATITUDE_NORTH_ABBREV": {
+    "description": "Abbreviation letter for latitude 'north'",
+    "message": "С"
+  },
+  "LATITUDE_SOUTH_ABBREV": {
+    "description": "Abbreviation letter for latitude 'south'",
+    "message": "Ю"
+  },
+  "LEGAL_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of commodity (singular) status in the system the player is currently in",
+    "message": "Законно (текуща система):"
+  },
+  "LIBERAL_DEMOCRACY": {
+    "description": "",
+    "message": "Либерална демокрация"
+  },
+  "LIQUID_OXYGEN": {
+    "description": "",
+    "message": "Течен кислород"
+  },
+  "LIQUOR": {
+    "description": "",
+    "message": "Алкохол"
+  },
+  "LIVE_ANIMALS": {
+    "description": "",
+    "message": "Живи животни"
+  },
+  "LOCKED": {
+    "description": "to lock a hyperspace target",
+    "message": "заключена"
+  },
+  "LONGITUDE": {
+    "description": "Short for longitude",
+    "message": "Дълж:"
+  },
+  "LONGITUDE_EAST_ABBREV": {
+    "description": "Abbreviation letter for longitude 'east'",
+    "message": "И"
+  },
+  "LONGITUDE_WEST_ABBREV": {
+    "description": "Abbreviation letter for latitude 'west'",
+    "message": "З"
+  },
+  "MAJOR_EXPORTS": {
+    "description": "",
+    "message": "Основен износ:"
+  },
+  "MAJOR_EXPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Основен износ (текуща система)"
+  },
+  "MAJOR_IMPORTS": {
+    "description": "",
+    "message": "Основен внос:"
+  },
+  "MAJOR_IMPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Основен внос (текуща система)"
+  },
+  "MANUAL_CONTROL": {
+    "description": "",
+    "message": "Ръчно управление"
+  },
+  "MANUAL_CONTROL_MODE": {
+    "description": "",
+    "message": "Режим на ръчно управление"
+  },
+  "MASS": {
+    "description": "",
+    "message": "Маса"
+  },
+  "MASSIVE": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Масивна"
+  },
+  "MASS_N_TONNES": {
+    "description": "",
+    "message": "Маса: %{mass} т."
+  },
+  "MEAN_DENSITY": {
+    "description": "",
+    "message": "Средна плътност"
+  },
+  "MEDICINES": {
+    "description": "",
+    "message": "Лекарства"
+  },
+  "MEDIUM": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Средна"
+  },
+  "MEDIUM_GAS_GIANT": {
+    "description": "",
+    "message": "Среден газов гигант"
+  },
+  "MESSAGE_FROM_X": {
+    "description": "",
+    "message": "Съобщение от %sender:"
+  },
+  "META": {
+    "description": "'Meta' key on keyboard",
+    "message": "Meta"
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "Метални сплави"
+  },
+  "METAL_ORE": {
+    "description": "",
+    "message": "Желязна руда"
+  },
+  "MILITARY_DICTATORSHIP": {
+    "description": "",
+    "message": "Военна диктатура"
+  },
+  "MILITARY_FUEL": {
+    "description": "",
+    "message": "Военно гориво"
+  },
+  "MINING_COLONY": {
+    "description": "",
+    "message": "Минна колония."
+  },
+  "MINING_MACHINERY": {
+    "description": "",
+    "message": "Минно оборудване"
+  },
+  "MINOR_EXPORTS": {
+    "description": "",
+    "message": "Незначителен износ:"
+  },
+  "MINOR_EXPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Незначителен износ (текуща система)"
+  },
+  "MINOR_IMPORTS": {
+    "description": "",
+    "message": "Незначителен внос:"
+  },
+  "MINOR_IMPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Незначителен внос (текуща система)"
+  },
+  "MISCELLANEOUS": {
+    "description": "",
+    "message": "Разни"
+  },
+  "MISSILE": {
+    "description": "",
+    "message": "ракета"
+  },
+  "MISSILE_DETECTED": {
+    "description": "",
+    "message": "Засечена е ракета"
+  },
+  "MIXED_ECONOMY": {
+    "description": "",
+    "message": "Смесена икономика"
+  },
+  "MONTH_APR": {
+    "description": "",
+    "message": "Апр"
+  },
+  "MONTH_AUG": {
+    "description": "",
+    "message": "Авг"
+  },
+  "MONTH_DEC": {
+    "description": "",
+    "message": "Дек"
+  },
+  "MONTH_FEB": {
+    "description": "",
+    "message": "Фев"
+  },
+  "MONTH_JAN": {
+    "description": "",
+    "message": "Яну"
+  },
+  "MONTH_JUL": {
+    "description": "",
+    "message": "Юли"
+  },
+  "MONTH_JUN": {
+    "description": "",
+    "message": "Юни"
+  },
+  "MONTH_MAR": {
+    "description": "",
+    "message": "Мар"
+  },
+  "MONTH_MAY": {
+    "description": "",
+    "message": "Май"
+  },
+  "MONTH_NOV": {
+    "description": "",
+    "message": "Ное"
+  },
+  "MONTH_OCT": {
+    "description": "",
+    "message": "Окт"
+  },
+  "MONTH_SEP": {
+    "description": "",
+    "message": "Сеп"
+  },
+  "MOON_CONTAINING_LIQUID_WATER": {
+    "description": "",
+    "message": "\" луна с наличие на течна вода\""
+  },
+  "MOON_WITH_SOME_ICE": {
+    "description": "",
+    "message": "\" луна с наличие на лед\""
+  },
+  "NAME_OBJECT": {
+    "description": "For an item or object",
+    "message": "Наименование"
+  },
+  "NAME_PERSON": {
+    "description": "For a person",
+    "message": "Име"
+  },
+  "NARCOTICS": {
+    "description": "",
+    "message": "Наркотици"
+  },
+  "NAVIGATION_STAR_MAPS": {
+    "description": "",
+    "message": "Навигация и звездни карти"
+  },
+  "NAVIGATION_TARGETS_IN_THIS_SYSTEM": {
+    "description": "",
+    "message": "Навигационни цели в тази система"
+  },
+  "NERVE_GAS": {
+    "description": "",
+    "message": "Нервопаралитичен газ"
+  },
+  "NONE": {
+    "description": "To indicate the absence of something",
+    "message": "<None>"
+  },
+  "NOT_FOUND": {
+    "description": "searching star system in sector view",
+    "message": "Не е намерена"
+  },
+  "NOT_FOUND_BEST_MATCH_X": {
+    "description": "",
+    "message": "Няма резултати. Най-добро съвпадение: %system"
+  },
+  "NOW": {
+    "description": "In System Orbit View",
+    "message": "Нормална скорост"
+  },
+  "NO_ALERT": {
+    "description": "",
+    "message": "Няма предупреждение"
+  },
+  "NO_AUTOPILOT_INSTALLED": {
+    "description": "",
+    "message": "Корабът няма инсталиран автопилот"
+  },
+  "NO_CENTRAL_GOVERNANCE": {
+    "description": "",
+    "message": "Няма централно управление"
+  },
+  "NO_ESTABLISHED_ORDER": {
+    "description": "",
+    "message": "Няма установен ред"
+  },
+  "NO_HYPERDRIVE": {
+    "description": "",
+    "message": "Няма хипердвигател"
+  },
+  "NO_REGISTERED_INHABITANTS": {
+    "description": "",
+    "message": "Няма обитатели"
+  },
+  "NO_TARGET_SELECTED": {
+    "description": "",
+    "message": "Корабен компютър: Целта не е избрана"
+  },
+  "NUMBER_DAYS": {
+    "description": "",
+    "message": "%days{f.0} дни"
+  },
+  "NUMBER_DECIMAL_POINT": {
+    "description": "Decimal delimiter used in numbers.",
+    "message": ","
+  },
+  "NUMBER_G": {
+    "description": "",
+    "message": "%acceleration{f.1} G"
+  },
+  "NUMBER_GROUP_MIN": {
+    "description": "Smallest number to start grouping of digits for. (E.g. if \"10000\" start grouping thousands with 10,000, and not 1,000).",
+    "message": "1000"
+  },
+  "NUMBER_GROUP_NUM": {
+    "description": "For large number, group digits by this many. European languages use 3 (group thousands). 0 means no grouping.",
+    "message": "3"
+  },
+  "NUMBER_GROUP_SEP": {
+    "description": "For large number, separator used when grouping digits. E.g. 1,000 or 1 000 or 1'000.",
+    "message": "​ "
+  },
+  "NUMBER_HOURS": {
+    "description": "",
+    "message": "%hours{f.1} часа"
+  },
+  "NUMBER_LY": {
+    "description": "",
+    "message": "%distance{f.2} сг"
+  },
+  "NUMBER_TONNES": {
+    "description": "",
+    "message": "%{mass} т."
+  },
+  "N_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от азот"
+  },
+  "N_CELSIUS": {
+    "description": "",
+    "message": "%temperature ° C"
+  },
+  "N_DAYS": {
+    "description": "",
+    "message": "%days{f.1} дни"
+  },
+  "N_DEGREES": {
+    "description": "",
+    "message": "%angle{f.1} градуса"
+  },
+  "N_EARTH_DAYS": {
+    "description": "",
+    "message": "%days{f.1} земни дни"
+  },
+  "N_EARTH_MASSES": {
+    "description": "",
+    "message": "%mass{f.3} земни маси"
+  },
+  "N_EARTH_RADII": {
+    "description": "Used in system info view. E.g.: \"0.17 Earth radii (118235 km)\"",
+    "message": "%radius{f.3} земни радиуса (%radkm{f.0} км.)"
+  },
+  "N_SOLAR_MASSES": {
+    "description": "",
+    "message": "%mass{f.3} слънчеви маси"
+  },
+  "N_SOLAR_RADII": {
+    "description": "Used in system info view. E.g. for Barnard's star: \"0.17 Solar radii (118235 km)\"",
+    "message": "%radius{f.3} слънчеви радиуса (%radkm{f.0} км.)"
+  },
+  "N_YEARS": {
+    "description": "",
+    "message": "%years{f.1} години"
+  },
+  "O2_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от кислород"
+  },
+  "OBJECT_INFO": {
+    "description": "Originally for use as a window title and a button tooltip in the system map",
+    "message": "Информация за обекта"
+  },
+  "OCEANICMOON": {
+    "description": "",
+    "message": "\" водна луна\""
+  },
+  "OCEANICWORLD": {
+    "description": "",
+    "message": "\" водна планета\""
+  },
+  "ORBITAL_PERIOD": {
+    "description": "",
+    "message": "Орбитален период"
+  },
+  "ORBITAL_STARPORT": {
+    "description": "",
+    "message": "Орбитален космодрум"
+  },
+  "ORBIT_PLANNER": {
+    "description": "",
+    "message": "Орбитален плановник"
+  },
+  "OUTDOOR_AGRICULTURAL_WORLD": {
+    "description": "",
+    "message": "Селскостопански свят на открито."
+  },
+  "OVER_N_BILLION": {
+    "description": "",
+    "message": "Над %population млрд."
+  },
+  "OVER_N_MILLION": {
+    "description": "",
+    "message": "Над %population млн."
+  },
+  "PASSENGER_CABIN": {
+    "description": "",
+    "message": "Заета пасажерска кабина"
+  },
+  "PAUSED": {
+    "description": "",
+    "message": "НА ПАУЗА"
+  },
+  "PAY_FINE_REMOTELY": {
+    "description": "",
+    "message": "Заплащане на глобата с кредитен превод от (%amount)"
+  },
+  "PERIAPSIS_DISTANCE": {
+    "description": "",
+    "message": "Разстояние при периапсидата"
+  },
+  "PIONEER": {
+    "description": "",
+    "message": "ПИОНЕР"
+  },
+  "PITCH": {
+    "description": "",
+    "message": "Наклоняване"
+  },
+  "PITCH_DOWN": {
+    "description": "",
+    "message": "Наклоняване надолу"
+  },
+  "PITCH_UP": {
+    "description": "",
+    "message": "Наклоняване нагоре"
+  },
+  "PLANETARY_INFO": {
+    "description": "",
+    "message": "Система"
+  },
+  "PLANET_CONTAINING_LIQUID_WATER": {
+    "description": "",
+    "message": "\" планета с наличие на течна вода\""
+  },
+  "PLANET_WITH_SOME_ICE": {
+    "description": "",
+    "message": "\" планета с наличие на лед\""
+  },
+  "PLANNED_ECONOMY": {
+    "description": "",
+    "message": "Централно планирана икономика"
+  },
+  "PLANNER_RESET_FACTOR": {
+    "description": "For system orbit view",
+    "message": "Скорост на нарастване на стойностите на Δ-v. Натиснете за нулиране."
+  },
+  "PLANNER_RESET_NORMAL": {
+    "description": "For system orbit view",
+    "message": "Нормална Δ-v. Натиснете за нулиране."
+  },
+  "PLANNER_RESET_PROGRADE": {
+    "description": "For system orbit view",
+    "message": "Проградна Δ-v. Натиснете за нулиране."
+  },
+  "PLANNER_RESET_RADIAL": {
+    "description": "For system orbit view",
+    "message": "Радиална Δ-v. Натиснете за нулиране."
+  },
+  "PLANNER_RESET_START": {
+    "description": "For system orbit view",
+    "message": "Стартиране на маневрата. Натиснете за нулиране."
+  },
+  "PLASTICS": {
+    "description": "",
+    "message": "Пластмаси"
+  },
+  "PLUTOCRATIC_DICTATORSHIP": {
+    "description": "",
+    "message": "Плутократична диктатура"
+  },
+  "POPULATION": {
+    "description": "",
+    "message": "Популация"
+  },
+  "PRECIOUS_METALS": {
+    "description": "",
+    "message": "Скъпоценни метали"
+  },
+  "PRESSURE_N_ATMOSPHERES": {
+    "description": "",
+    "message": "Н: %pressure{f.2} атм."
+  },
+  "QUADRUPLE_SYSTEM": {
+    "description": "",
+    "message": "Четворна система"
+  },
+  "RADAR_CONTROL": {
+    "description": "",
+    "message": "Радарно управление"
+  },
+  "RADIOACTIVES": {
+    "description": "",
+    "message": "Радиоактивни отпадъци"
+  },
+  "RADIUS": {
+    "description": "",
+    "message": "Радиус"
+  },
+  "RECENTLY_EXPLORED_SYSTEM": {
+    "description": "",
+    "message": "Тази система е проучена на %date."
+  },
+  "REQUEST_DOCKING_CLEARANCE": {
+    "description": "",
+    "message": "Заявяване на скачване с {target}"
+  },
+  "RESET": {
+    "description": "",
+    "message": "Нулиране"
+  },
+  "ROBOTS": {
+    "description": "",
+    "message": "Роботи"
+  },
+  "ROCKY_MOON": {
+    "description": "",
+    "message": "\" скалиста луна\""
+  },
+  "ROCKY_MOON_CONTAINING_SOME_LIQUIDS": {
+    "description": "",
+    "message": "\" скалиста луна с наличие на течни вещества,\""
+  },
+  "ROCKY_PLANET": {
+    "description": "",
+    "message": "\" скалиста планета\""
+  },
+  "ROCKY_PLANET_CONTAINING_COME_LIQUIDS": {
+    "description": "",
+    "message": "\" скалиста планета с наличие на течни вещества,\""
+  },
+  "ROLL": {
+    "description": "",
+    "message": "Завъртане"
+  },
+  "ROLL_LEFT": {
+    "description": "",
+    "message": "Завъртане наляво"
+  },
+  "ROLL_RIGHT": {
+    "description": "",
+    "message": "Завъртане надясно"
+  },
+  "ROTATE_DOWN": {
+    "description": "",
+    "message": "Завъртане надолу"
+  },
+  "ROTATE_LEFT": {
+    "description": "",
+    "message": "Завъртане наляво"
+  },
+  "ROTATE_RIGHT": {
+    "description": "",
+    "message": "Завъртане надясно"
+  },
+  "ROTATE_UP": {
+    "description": "",
+    "message": "Завъртане нагоре"
+  },
+  "ROTATIONAL_PERIOD": {
+    "description": "",
+    "message": "\" (период на въртене)\""
+  },
+  "ROTATION_DAMPING_OFF": {
+    "description": "",
+    "message": "Изключване на плавното завъртане"
+  },
+  "ROTATION_DAMPING_ON": {
+    "description": "",
+    "message": "Включване на плавното завъртане"
+  },
+  "RUBBISH": {
+    "description": "",
+    "message": "Боклуци"
+  },
+  "SCOOP": {
+    "description": "Is followed by a number, representing scoop mounts/slots available to fit cargo scoop and/or fuel scoop",
+    "message": "Товарачи"
+  },
+  "SCREENSHOT_FILENAME_TEMPLATE": {
+    "description": "",
+    "message": "изображение%index{d08}.png"
+  },
+  "SEARCH": {
+    "description": "",
+    "message": "Търсене"
+  },
+  "SEARCH_MAP": {
+    "description": "",
+    "message": "Карта за търсене"
+  },
+  "SECTOR_COORDINATES": {
+    "description": "",
+    "message": "Секторни координати:"
+  },
+  "SECTOR_MAP_VIEW": {
+    "description": "",
+    "message": "Изглед на секторната карта"
+  },
+  "SECTOR_X_Y_Z": {
+    "description": "",
+    "message": "Сектор: {sectorX}, {sectorY}, {sectorZ}"
+  },
+  "SELECTED_SYSTEM": {
+    "description": "",
+    "message": "Избрана система"
+  },
+  "SELECT_A_TARGET": {
+    "description": "",
+    "message": "Задаване на цел"
+  },
+  "SELECT_LOW_THRUST_POWER_LEVEL": {
+    "description": "",
+    "message": "Изберете ниво на ниска тягата"
+  },
+  "SEMI_MAJOR_AXIS": {
+    "description": "",
+    "message": "Голяма полуос"
+  },
+  "SET_AS_COMBAT_TARGET": {
+    "description": "",
+    "message": "Задаване за бойна цел"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Задаване за навигационна цел"
+  },
+  "SET_HYPERSPACE_DESTINATION_TO": {
+    "description": "",
+    "message": "Задаване на %system като хиперпространствена дестинация"
+  },
+  "SET_HYPERSPACE_TARGET_TO_FOLLOW_THIS_DEPARTURE": {
+    "description": "",
+    "message": "Анализатор на хиперпространствените облаци: Задайте хиперпространствената цел за да проследите пътуването"
+  },
+  "SET_LOW_THRUST_POWER_LEVEL_TO_X_PERCENT": {
+    "description": "",
+    "message": "Задаване нивото на ниска тяга на %power%%"
+  },
+  "SET_MAXIMUM_SPEED_LIMIT": {
+    "description": "Speed limiter tooltip.",
+    "message": "Задаване на максималната скорост"
+  },
+  "SET_NAVTARGET_TO": {
+    "description": "",
+    "message": "Задаване на навигационната цел: "
+  },
+  "SET_SPEED_KM_S": {
+    "description": "",
+    "message": "Зададена скорост: %speed{f.2} км/с"
+  },
+  "SET_SPEED_M_S": {
+    "description": "",
+    "message": "Зададена скорост: %speed{f.0} м/с"
+  },
+  "SHIELD_INTEGRITY": {
+    "description": "",
+    "message": "Здравина на щитовете"
+  },
+  "SHIELD_STRENGTH_N": {
+    "description": "",
+    "message": "Здравина на щита: %shields{f.2}"
+  },
+  "SHIFT": {
+    "description": "Shift key on keyboard",
+    "message": "Shift"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Кораб"
+  },
+  "SHIPS_DISPLAY_MODE": {
+    "description": "Label for ship display modes.",
+    "message": "Изглед на корабите"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ONLY": {
+    "description": "Combobox option for ships only.",
+    "message": "Кораби без орбити"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ORBITS": {
+    "description": "Combobox option for ships with orbits.",
+    "message": "Кораби с орбити"
+  },
+  "SHIPS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for ship display toggle button.",
+    "message": "Видимост на корабите."
+  },
+  "SHIP_DETECTED_NEARBY": {
+    "description": "",
+    "message": "Наблизо е открит кораб."
+  },
+  "SHIP_INFORMATION": {
+    "description": "",
+    "message": "Информация за кораба"
+  },
+  "SHIP_MASS_N_TONNES": {
+    "description": "",
+    "message": "Корабна маса: %{mass} т."
+  },
+  "SHIP_NEARBY": {
+    "description": "",
+    "message": "Наблизо има кораб"
+  },
+  "SHIP_ORIENTATION": {
+    "description": "",
+    "message": "Корабна ориентация"
+  },
+  "SHIP_VELOCITY_BY_REFERENCE_OBJECT": {
+    "description": "",
+    "message": "Скорост на кораба, спрямо отправния обект"
+  },
+  "SIDEREAL_VIEW": {
+    "description": "camera view setting",
+    "message": "Звезден изглед"
+  },
+  "SLAVES": {
+    "description": "",
+    "message": "Роби"
+  },
+  "SMALL": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Малка"
+  },
+  "SMALL_GAS_GIANT": {
+    "description": "",
+    "message": "Малък газов гигант"
+  },
+  "SMALL_INDUSTRIAL_OUTPOST": {
+    "description": "",
+    "message": "Малък индустриален аванпост."
+  },
+  "SMALL_SCALE_PROSPECTING_NO_SETTLEMENTS": {
+    "description": "",
+    "message": "Няма достатъчно информация. Липсват населени места."
+  },
+  "SOCIAL_DEMOCRACY": {
+    "description": "",
+    "message": "Социална демокрация"
+  },
+  "SOME_ESTABLISHED_MINING": {
+    "description": "",
+    "message": "Има установено минно дело."
+  },
+  "SOURCE": {
+    "description": "tell source system of hyperjump entry cloud",
+    "message": "Произход"
+  },
+  "SPEED_CONTROL_MODE": {
+    "description": "",
+    "message": "Режим на управление на скоростта"
+  },
+  "STABLE_SYSTEM_WITH_N_MAJOR_BODIES_STARPORTS": {
+    "description": "",
+    "message": "Стабилна система с %bodycount големи %{body(s)} и %portcount %{starport(s)}"
+  },
+  "STARPORT": {
+    "description": "",
+    "message": "Космодрум"
+  },
+  "STARPORTS": {
+    "description": "",
+    "message": "Космодруми"
+  },
+  "STAR_A": {
+    "description": "",
+    "message": "Гореща бяла звезда клас А"
+  },
+  "STAR_AF_GIANT": {
+    "description": "",
+    "message": "Бял гигант"
+  },
+  "STAR_AF_HYPER_GIANT": {
+    "description": "",
+    "message": "Бял хипергигант"
+  },
+  "STAR_AF_SUPER_GIANT": {
+    "description": "",
+    "message": "Бял свръхгигант"
+  },
+  "STAR_B": {
+    "description": "",
+    "message": "Ярка синя звезда клас Б"
+  },
+  "STAR_B_GIANT": {
+    "description": "",
+    "message": "Син гигант"
+  },
+  "STAR_B_HYPER_GIANT": {
+    "description": "",
+    "message": "Син хипергигант"
+  },
+  "STAR_B_SUPER_GIANT": {
+    "description": "",
+    "message": "Син свръхгигант"
+  },
+  "STAR_B_WF": {
+    "description": "",
+    "message": "Звезда на Волф-Райе – риск от разпадане"
+  },
+  "STAR_F": {
+    "description": "",
+    "message": "Бяла звезда клас Ф"
+  },
+  "STAR_G": {
+    "description": "",
+    "message": "Жълта звезда клас Г"
+  },
+  "STAR_G_GIANT": {
+    "description": "",
+    "message": "Жълт гигант – нестабилен"
+  },
+  "STAR_G_HYPER_GIANT": {
+    "description": "",
+    "message": "Жълт хипергигант – нестабилен"
+  },
+  "STAR_G_SUPER_GIANT": {
+    "description": "",
+    "message": "Жълт свръхгигант"
+  },
+  "STAR_IM_BH": {
+    "description": "",
+    "message": "Черна дупка с междинна маса"
+  },
+  "STAR_K": {
+    "description": "",
+    "message": "Оранжева звезда клас К"
+  },
+  "STAR_K_GIANT": {
+    "description": "",
+    "message": "Оранжев гигант – нестабилен"
+  },
+  "STAR_K_HYPER_GIANT": {
+    "description": "",
+    "message": "Оранжев хипергигант – нестабилен"
+  },
+  "STAR_K_SUPER_GIANT": {
+    "description": "",
+    "message": "Оранжев свръхгигант"
+  },
+  "STAR_M": {
+    "description": "",
+    "message": "Червена звезда клас М"
+  },
+  "STAR_M_GIANT": {
+    "description": "",
+    "message": "Червен гигант"
+  },
+  "STAR_M_HYPER_GIANT": {
+    "description": "",
+    "message": "Червен хипергигант"
+  },
+  "STAR_M_SUPER_GIANT": {
+    "description": "",
+    "message": "Червен свръхгигант"
+  },
+  "STAR_M_WF": {
+    "description": "",
+    "message": "Звезда на Волф-Райе – нестабилна"
+  },
+  "STAR_O": {
+    "description": "",
+    "message": "Масивна гореща звезда клас О"
+  },
+  "STAR_O_GIANT": {
+    "description": "",
+    "message": "Горещ син гигант"
+  },
+  "STAR_O_HYPER_GIANT": {
+    "description": "",
+    "message": "Горещ син хипергигант"
+  },
+  "STAR_O_SUPER_GIANT": {
+    "description": "",
+    "message": "Горещ син свръхгигант"
+  },
+  "STAR_O_WF": {
+    "description": "",
+    "message": "Звезда на Волф-Райе – предстоящо разпадане"
+  },
+  "STAR_SM_BH": {
+    "description": "",
+    "message": "Галактичен център"
+  },
+  "STAR_SYSTEM_INFORMATION": {
+    "description": "",
+    "message": "Информация за звездната система"
+  },
+  "STAR_S_BH": {
+    "description": "",
+    "message": "Звездна черна дупка"
+  },
+  "SUGGESTED_RESPONSES": {
+    "description": "",
+    "message": "Предложени отговори:"
+  },
+  "SURFACE_GRAVITY": {
+    "description": "",
+    "message": "Повърхностна гравитация"
+  },
+  "SURFACE_PRESSURE": {
+    "description": "",
+    "message": "Повърхностно налягане"
+  },
+  "SURFACE_TEMPERATURE": {
+    "description": "",
+    "message": "Повърхностна температура"
+  },
+  "SWAP_SELECTED_HYPERSPACE_TARGET": {
+    "description": "",
+    "message": "Размяна на целта за хисперскок и избраната цел"
+  },
+  "SWITCHED_TO_PARENT": {
+    "description": "Show ship's heading, coordinates are on the celestial sphere (defined by the ecliptic).",
+    "message": "Използване на системните координати"
+  },
+  "SWITCHED_TO_ROTATIONAL": {
+    "description": "Show ship's heading in planetary coordinates. heading 0 = north, 90 = east, 180 = south, 270 = west.",
+    "message": "Използване на планетните координати"
+  },
+  "SYSTEM": {
+    "description": "star system",
+    "message": "Система"
+  },
+  "SYSTEM_NUMBER": {
+    "description": "",
+    "message": "Системен номер:"
+  },
+  "SYSTEM_ORBIT_VIEW": {
+    "description": "",
+    "message": "Орбитален изглед на системата"
+  },
+  "SYSTEM_TYPE": {
+    "description": "",
+    "message": "Вид на системата:"
+  },
+  "S_ATMOSPHERE": {
+    "description": "",
+    "message": "атмосфера от сяра"
+  },
+  "TAKEOFF": {
+    "description": "",
+    "message": "Излитане"
+  },
+  "TARGET_OBJECT_IN_SIGHTS": {
+    "description": "",
+    "message": "Целта е в прицела"
+  },
+  "TENUOUS": {
+    "description": "atmosphere thickness",
+    "message": "\"разредена \""
+  },
+  "TEXTILES": {
+    "description": "",
+    "message": "Текстилни изделия"
+  },
+  "THICK": {
+    "description": "",
+    "message": "\"гъста \""
+  },
+  "THIN": {
+    "description": "",
+    "message": "\"тънка \""
+  },
+  "THRIVING_OUTDOOR_WORLD": {
+    "description": "",
+    "message": "Процъфтяващ свят на открито."
+  },
+  "THRUSTER_DORSAL": {
+    "description": "",
+    "message": "Тяга надолу"
+  },
+  "THRUSTER_MAIN": {
+    "description": "",
+    "message": "Тяга напред"
+  },
+  "THRUSTER_PORT": {
+    "description": "",
+    "message": "Тяга наляво"
+  },
+  "THRUSTER_RETRO": {
+    "description": "",
+    "message": "Тяга назад"
+  },
+  "THRUSTER_STARBOARD": {
+    "description": "",
+    "message": "Тяга надясно"
+  },
+  "THRUSTER_VENTRAL": {
+    "description": "",
+    "message": "Тяга нагоре"
+  },
+  "TIME_POINT": {
+    "description": "",
+    "message": "Час и дата: "
+  },
+  "TINY": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Дребна"
+  },
+  "TOGGLE_EQUIPMENT_VIEW": {
+    "description": "Tooltip for the Equipment View button",
+    "message": "Изглед на оборудването"
+  },
+  "TOGGLE_HUD_MODE": {
+    "description": "",
+    "message": "Режим кабина"
+  },
+  "TOGGLE_RADAR_MODE": {
+    "description": "",
+    "message": "Режим на радара"
+  },
+  "TOGGLE_RADAR_VIEW": {
+    "description": "Tooltip for the Radar View button",
+    "message": "Радарен изглед"
+  },
+  "TOGGLE_ROTATION_DAMPING": {
+    "description": "",
+    "message": "Плавно завъртане"
+  },
+  "TOMBSTONE_EPITAPH": {
+    "description": "shown on tombstone when player dies",
+    "message": "RIP OLD BEAN"
+  },
+  "TRADING_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Търговия с незаконни стоки"
+  },
+  "TRIPLE_SYSTEM": {
+    "description": "",
+    "message": "Тройна система"
+  },
+  "UNDOCKING": {
+    "description": "Flight state of ship when leaving station",
+    "message": "Излитане"
+  },
+  "UNEXPLORED_SYSTEM_NO_DATA": {
+    "description": "",
+    "message": "Неизследвана система. Няма налични данни."
+  },
+  "UNEXPLORED_SYSTEM_NO_SYSTEM_VIEW": {
+    "description": "",
+    "message": "Неизследвана система. Системният изглед не е наличен."
+  },
+  "UNEXPLORED_SYSTEM_STAR_INFO_ONLY": {
+    "description": "",
+    "message": "Неизследвана система. Информацията за звездата е предоставена от отдалечен телескоп, не е налична информация за планетите."
+  },
+  "UNIT_AU": {
+    "description": "Distance unit: an astronomical unit, radius of Earth's orbit",
+    "message": "АЕ"
+  },
+  "UNIT_CREDITS": {
+    "description": "Unit of money, used when $ isn't specific enough",
+    "message": "Кр"
+  },
+  "UNIT_CUBIC_METERS": {
+    "description": "Volume unit: cubic meter",
+    "message": "м³"
+  },
+  "UNIT_DAYS": {
+    "description": "Duration unit: one 24-hour day",
+    "message": "д"
+  },
+  "UNIT_DENSITY": {
+    "description": "Density unit: kilos per cubic meter",
+    "message": "кг/м³"
+  },
+  "UNIT_EARTH_GRAVITY": {
+    "description": "Acceleration unit: one earth gravity (g)",
+    "message": "g"
+  },
+  "UNIT_GIGATONNES": {
+    "description": "Mass unit: one gigatonne",
+    "message": "гт"
+  },
+  "UNIT_HECTARES": {
+    "description": "Area unit: one hectare (ha) -10,000 m²",
+    "message": "ха"
+  },
+  "UNIT_HOURS": {
+    "description": "Duration unit: one 60-minute hour",
+    "message": "ч"
+  },
+  "UNIT_KILOGRAMS": {
+    "description": "Mass unit: one kilogram",
+    "message": "кг"
+  },
+  "UNIT_KILOMETERS": {
+    "description": "Distance unit: one kilometer",
+    "message": "км"
+  },
+  "UNIT_KILOMETERS_PER_SECOND": {
+    "description": "Speed unit: one kilometer per second",
+    "message": "км/с"
+  },
+  "UNIT_KILOTONNES": {
+    "description": "Mass unit: one kilotonne",
+    "message": "кт"
+  },
+  "UNIT_LY": {
+    "description": "Distance unit: a light year",
+    "message": "сг"
+  },
+  "UNIT_MEGATONNES": {
+    "description": "Mass unit: one megatonne",
+    "message": "мт"
+  },
+  "UNIT_METERS": {
+    "description": "Distance unit: one meter",
+    "message": "м"
+  },
+  "UNIT_METERS_PER_SECOND": {
+    "description": "Speed unit: one meter per second",
+    "message": "м/с"
+  },
+  "UNIT_MILLION_METERS": {
+    "description": "Distance unit: one million meters",
+    "message": "Мм"
+  },
+  "UNIT_MILLION_METERS_PER_SECOND": {
+    "description": "Speed unit: one million meters per second",
+    "message": "Мм/с"
+  },
+  "UNIT_MINUTES": {
+    "description": "Duration unit: one 60-second minute",
+    "message": "м"
+  },
+  "UNIT_PETATONNES": {
+    "description": "Mass unit: one petatonne",
+    "message": "пт"
+  },
+  "UNIT_PRESSURE_ATMOSPHERES": {
+    "description": "Pressure unit: one earth atmosphere (atm)",
+    "message": "атм"
+  },
+  "UNIT_SECONDS": {
+    "description": "Duration unit: one second",
+    "message": "с"
+  },
+  "UNIT_SQUARE_KILOMETERS": {
+    "description": "Area unit: square kilometer (km²) - 1,000,000 m²",
+    "message": "км²"
+  },
+  "UNIT_SQUARE_MEGAMETERS": {
+    "description": "Area unit: square megameter (Mm²) - 10^12 m²",
+    "message": "Мм²"
+  },
+  "UNIT_SQUARE_METERS": {
+    "description": "Area unit: square meter (m²)",
+    "message": "м²"
+  },
+  "UNIT_TEMPERATURE_CELSIUS": {
+    "description": "Temperature unit: degrees Celsius (°C)",
+    "message": "°C"
+  },
+  "UNIT_TEMPERATURE_FAHRENHEIT": {
+    "description": "Temperature unit: Fahrenheit (°F)",
+    "message": "°F"
+  },
+  "UNIT_TEMPERATURE_KELVIN": {
+    "description": "Temperature unit: degrees Kelvin (K)",
+    "message": "K"
+  },
+  "UNIT_TERATONNES": {
+    "description": "Mass unit: one teratonne",
+    "message": "тт"
+  },
+  "UNIT_TONNES": {
+    "description": "Mass unit: one tonne (t)",
+    "message": "т"
+  },
+  "UNIT_WEEKS": {
+    "description": "Duration unit: one 7-day week",
+    "message": "с"
+  },
+  "UNKNOWN": {
+    "description": "",
+    "message": "<unknown>"
+  },
+  "UNSET_NAVTARGET": {
+    "description": "",
+    "message": "Премахване навигационната цел."
+  },
+  "USE_LOW_THRUST": {
+    "description": "",
+    "message": "Използване на ниска тяга"
+  },
+  "VAST_STRIP_MINE": {
+    "description": "",
+    "message": "Колония с обширен повърхностен минодобив."
+  },
+  "VERY_DENSE": {
+    "description": "",
+    "message": "\"много плътна \""
+  },
+  "VERY_LARGE_GAS_GIANT": {
+    "description": "",
+    "message": "Много голям газов гигант"
+  },
+  "VIEW": {
+    "description": "",
+    "message": "Изглед"
+  },
+  "VIOLENT_ANARCHY": {
+    "description": "",
+    "message": "Анархия – управлява се от въоръжени групировки"
+  },
+  "WATER": {
+    "description": "",
+    "message": "Вода"
+  },
+  "WEAPONS": {
+    "description": "",
+    "message": "Оръжия"
+  },
+  "WEAPON_TEMP": {
+    "description": "",
+    "message": "Температура на оръжията"
+  },
+  "WHEELS_ARE_DOWN": {
+    "description": "",
+    "message": "Колесниците са спуснати"
+  },
+  "WHEELS_ARE_UP": {
+    "description": "",
+    "message": "Колесниците са прибрани"
+  },
+  "WHITE_DWARF": {
+    "description": "",
+    "message": "Бяло джудже"
+  },
+  "WITH": {
+    "description": "",
+    "message": "\" с \""
+  },
+  "WITH_NO_SIGNIFICANT_ATMOSPHERE": {
+    "description": "",
+    "message": "\" с незначителна атмосфера\""
+  },
+  "YAW": {
+    "description": "",
+    "message": "Отклоняване"
+  },
+  "YAW_LEFT": {
+    "description": "",
+    "message": "Отклоняване наляво"
+  },
+  "YAW_RIGHT": {
+    "description": "",
+    "message": "Отклоняване надясно"
+  },
+  "YOUNG_FARMING_COLONY": {
+    "description": "",
+    "message": "Млада фермерска колония."
+  },
+  "ZOOM_IN": {
+    "description": "",
+    "message": "Приближаване"
+  },
+  "ZOOM_OUT": {
+    "description": "",
+    "message": "Отдалечаване"
+  }
+}

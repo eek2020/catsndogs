@@ -29,6 +29,9 @@ const SCENES := {
 	"ending": "res://scenes/ui/ending_screen.tscn",
 	"arc_summary": "res://scenes/ui/arc_summary.tscn",
 	"star_map": "res://scenes/ui/star_map_screen.tscn",
+	"skill_allocation": "res://scenes/ui/skill_allocation.tscn",
+	"station": "res://scenes/ui/station_screen.tscn",
+	"planet": "res://scenes/ui/planet_screen.tscn",
 }
 
 var _overlay_stack: Array[Control] = []

@@ -7,6 +7,7 @@ extends Control
 @onready var crystals_label: Label = $HUD/TopBar/CrystalsLabel
 @onready var salvage_label: Label = $HUD/TopBar/SalvageLabel
 @onready var hull_label: Label = $HUD/TopBar/HullLabel
+@onready var karma_label: Label = $HUD/TopBar/KarmaLabel
 @onready var flash_label: Label = $HUD/FlashLabel
 
 var _flash_timer: float = 0.0
@@ -69,6 +70,16 @@ var _is_moving: bool = false
 var _story_pois: Array = []
 var _hidden_pois: Array = []
 var _spawn_pois: Array = []
+
+# Astral hazard state
+var _visible_hazards: Array = []
+var _off_course_drift: Vector2 = Vector2.ZERO
+
+# Star base docking
+var _nearby_base_id: String = ""
+
+# Planet landing
+var _nearby_planet_id: String = ""
 
 const FLIP_SPEED: float = 6.0
 const BANK_MAX_ANGLE: float = 0.30       # ~17 degrees max banking tilt
@@ -172,8 +183,11 @@ func _process(dt: float) -> void:
 		_update_poi_timer(dt)
 		_update_distress(dt)
 		_update_star_map_spawns(dt)
+		_update_astral_hazards(dt)
 		_check_poi_collisions()
 		_check_star_map_poi_collisions()
+		_check_base_proximity()
+		_check_planet_proximity()
 	else:
 		_update_trail(dt)  # Let trail fade while paused
 	_update_flash(dt)
@@ -196,6 +210,17 @@ func _handle_movement(dt: float) -> void:
 	_is_moving = direction != Vector2.ZERO
 	if _is_moving:
 		direction = direction.normalized()
+
+		# Apply off-course drift from singularity status effect
+		var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+		if ahs != null and ahs.has_active_effect("off_course"):
+			_off_course_drift = _off_course_drift.rotated(randf_range(-0.3, 0.3) * dt * 10.0)
+			if _off_course_drift.length() < 0.01:
+				_off_course_drift = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * 0.4
+			direction = (direction + _off_course_drift * 0.5).normalized()
+		else:
+			_off_course_drift = Vector2.ZERO
+
 		GameSession.game_state.position_x += direction.x * SHIP_SPEED * dt
 		GameSession.game_state.position_y += direction.y * SHIP_SPEED * dt
 
@@ -204,11 +229,15 @@ func _handle_movement(dt: float) -> void:
 		GameSession.game_state.position_x = clampf(GameSession.game_state.position_x, 0.0, bounds.x)
 		GameSession.game_state.position_y = clampf(GameSession.game_state.position_y, 0.0, bounds.y)
 
-		# Reveal fog around ship
+		# Reveal fog around ship (halved when fog_blind)
+		var reveal_radius: float = 300.0
+		if ahs != null and ahs.has_active_effect("fog_blind"):
+			reveal_radius = 150.0
 		GameSession.star_map_system.reveal_around(
 			GameSession.game_state.current_region,
 			GameSession.game_state.position_x,
-			GameSession.game_state.position_y
+			GameSession.game_state.position_y,
+			reveal_radius
 		)
 
 		# Check region boundary for transitions
@@ -400,6 +429,39 @@ func _check_poi_collisions() -> void:
 			break
 
 
+func _check_base_proximity() -> void:
+	var gs: GameStateData = GameSession.game_state
+	if gs == null or GameSession.star_base_system == null:
+		_nearby_base_id = ""
+		return
+	_nearby_base_id = GameSession.star_base_system.check_dock_proximity(gs, gs.position_x, gs.position_y)
+	if not _nearby_base_id.is_empty():
+		var base: StarBase = GameSession.star_base_system.get_base(_nearby_base_id)
+		if base != null and GameSession.star_base_system.can_dock(gs, _nearby_base_id):
+			flash("[E] Dock at %s" % base.base_name, 0.5)
+
+
+func _land_on_planet() -> void:
+	if _nearby_planet_id.is_empty():
+		return
+	if GameSession.land_on_planet(_nearby_planet_id):
+		var main: Control = get_tree().current_scene
+		if main.has_method("switch_scene"):
+			main.switch_scene("planet")
+
+
+func _check_planet_proximity() -> void:
+	var gs: GameStateData = GameSession.game_state
+	if gs == null or GameSession.planet_system == null:
+		_nearby_planet_id = ""
+		return
+	_nearby_planet_id = GameSession.planet_system.check_landing_proximity(gs, gs.position_x, gs.position_y)
+	if not _nearby_planet_id.is_empty() and _nearby_base_id.is_empty():
+		var planet: Planet = GameSession.planet_system.get_planet(_nearby_planet_id)
+		if planet != null:
+			flash("[L] Land on %s" % planet.planet_name, 0.5)
+
+
 func _on_encounter(encounter) -> void:
 	var main: Control = get_tree().current_scene
 	if main.has_method("push_overlay"):
@@ -440,6 +502,36 @@ func _update_star_map_spawns(dt: float) -> void:
 	# Update boundary prompt timer
 	if _boundary_prompt_timer > 0:
 		_boundary_prompt_timer -= dt
+
+
+func _update_astral_hazards(dt: float) -> void:
+	var gs: GameStateData = GameSession.game_state
+	if gs == null:
+		return
+	var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+	if ahs == null:
+		return
+	var region_id: String = gs.current_region
+	ahs.update(region_id, dt, gs)
+	_visible_hazards = ahs.get_visible_hazards(region_id)
+	# Check ship-hazard collisions
+	var hit: Dictionary = ahs.check_ship_collision(region_id, gs.position_x, gs.position_y)
+	if not hit.is_empty():
+		var result: Dictionary = ahs.resolve_hazard(hit, gs)
+		var bark: String = result.get("bark", "")
+		if result.get("mitigated", false):
+			flash(bark, 4.0)
+		else:
+			var dmg: int = result.get("damage", 0)
+			var effect: Dictionary = result.get("status_effect", {})
+			var msg: String = bark
+			if dmg > 0:
+				msg += "  Hull -%d" % dmg
+			if not effect.is_empty():
+				var eid: String = effect.get("effect_id", "")
+				msg += "  [%s]" % eid.replace("_", " ").to_upper()
+			flash(msg, 5.0)
+		_update_hud()
 
 
 func _check_star_map_poi_collisions() -> void:
@@ -591,6 +683,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		if main.has_method("push_overlay"):
 			main.push_overlay("pause")
 	elif event.is_action_pressed("interact"):
+		# Dock at nearby star base if in range
+		if not _nearby_base_id.is_empty() and GameSession.star_base_system != null:
+			if GameSession.star_base_system.can_dock(GameSession.game_state, _nearby_base_id):
+				GameSession.star_base_system.dock(GameSession.game_state, _nearby_base_id)
+				var main2: Control = get_tree().current_scene
+				if main2.has_method("push_overlay"):
+					main2.push_overlay("station")
+				return
 		var main: Control = get_tree().current_scene
 		if main.has_method("push_overlay"):
 			main.push_overlay("faction")
@@ -611,8 +711,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		if main.has_method("push_overlay"):
 			main.push_overlay("star_map")
 	elif event.is_action_pressed("ui_accept"):
-		if not _boundary_prompt_region.is_empty() and _boundary_prompt_timer > 0:
+		if not _nearby_planet_id.is_empty() and GameSession.planet_system != null:
+			_land_on_planet()
+		elif not _boundary_prompt_region.is_empty() and _boundary_prompt_timer > 0:
 			_perform_region_transition()
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_L:
+		if not _nearby_planet_id.is_empty() and GameSession.planet_system != null:
+			_land_on_planet()
 
 
 func _update_hud() -> void:
@@ -638,6 +743,12 @@ func _update_hud() -> void:
 			gs.player_ship.current_hull, gs.player_ship.max_hull,
 			gs.player_ship.crew.size(), gs.player_ship.crew_capacity,
 		]
+	# Karma HUD
+	if karma_label != null and GameSession.karma_system != null:
+		var tier_label_text: String = GameSession.karma_system.get_tier_label(gs)
+		var color_hex: String = GameSession.karma_system.get_tier_color(gs)
+		karma_label.text = "Karma: %s (%d)" % [tier_label_text, gs.karma]
+		karma_label.add_theme_color_override("font_color", Color(color_hex))
 
 
 func _show_welcome() -> void:
@@ -697,12 +808,16 @@ func _draw() -> void:
 	var center := size * 0.5
 	_draw_starfield(center, gs)
 	_draw_fog_of_war(center, gs)
+	_draw_hazards(center, gs)
 	_draw_trail(center, gs)
 	_draw_boundary_indicator(gs)
 	_draw_star_map_pois(center, gs)
+	_draw_planets(center, gs)
+	_draw_star_bases(center, gs)
 	_draw_pois(center, gs)
 	_draw_ship(center)
 	_draw_minimap(gs)
+	_draw_status_effects()
 	_draw_controls_bar()
 
 
@@ -830,6 +945,95 @@ func _draw_fog_of_war(center: Vector2, gs: GameStateData) -> void:
 				draw_circle(cell_pos, r * 1.5, Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, base_alpha * 0.3))
 				# Core fog
 				draw_circle(cell_pos, r, Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, base_alpha))
+
+
+func _draw_hazards(center: Vector2, gs: GameStateData) -> void:
+	var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+	if ahs == null:
+		return
+	var default_font: Font = ThemeDB.fallback_font
+	for hazard in _visible_hazards:
+		var px: float = hazard.get("x", 0.0)
+		var py: float = hazard.get("y", 0.0)
+		var sx: float = center.x + (px - gs.position_x)
+		var sy: float = center.y + (py - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		var radius: float = hazard.get("zone_radius", 200.0)
+		# Skip if fully off-screen (with generous margin for glow)
+		if sx + radius < -100 or sy + radius < -100 or sx - radius > size.x + 100 or sy - radius > size.y + 100:
+			continue
+		var hazard_id: String = hazard.get("hazard_id", "")
+		var defn: Dictionary = ahs.get_definition(hazard_id)
+		var visual_type: String = defn.get("visual_type", "debris")
+		var color_hex: String = defn.get("visual_color", "#FF5555")
+		var base_color := Color(color_hex)
+		var pulse: float = 1.0 + 0.15 * sin(_elapsed * 2.0 + px * 0.005)
+
+		match visual_type:
+			"light_burst":
+				# Solar flare / supernova — pulsing radial glow
+				for i in range(4, 0, -1):
+					var ring_r: float = radius * (float(i) / 4.0) * pulse
+					var alpha: float = 0.04 * (5 - i)
+					draw_circle(screen_pos, ring_r, Color(base_color.r, base_color.g, base_color.b, alpha))
+				# Radiating lines
+				for j in 12:
+					var angle: float = (TAU / 12.0) * j + _elapsed * 0.5
+					var len_val: float = radius * 0.8 * pulse * randf_range(0.7, 1.0)
+					var end_pos := screen_pos + Vector2(cos(angle), sin(angle)) * len_val
+					draw_line(screen_pos, end_pos, Color(base_color.r, base_color.g, base_color.b, 0.12), 1.5)
+				# Core
+				draw_circle(screen_pos, 12.0 * pulse, Color(base_color.r, base_color.g, base_color.b, 0.5))
+			"debris":
+				# Asteroid field — scattered grey/brown circles
+				var rng := RandomNumberGenerator.new()
+				rng.seed = int(px * 1000 + py)
+				for j in 18:
+					var angle: float = rng.randf() * TAU
+					var dist: float = rng.randf_range(20.0, radius * 0.9)
+					var rock_r: float = rng.randf_range(3.0, 10.0)
+					var jitter := Vector2(sin(_elapsed * 2.0 + j), cos(_elapsed * 1.5 + j)) * 3.0
+					var rock_pos := screen_pos + Vector2(cos(angle), sin(angle)) * dist + jitter
+					draw_circle(rock_pos, rock_r, Color(base_color.r, base_color.g, base_color.b, 0.35))
+				# Warning ring
+				draw_arc(screen_pos, radius * pulse, 0.0, TAU, 48, Color(base_color.r, base_color.g, base_color.b, 0.15), 2.0)
+			"nebula":
+				# Mana void — overlapping translucent purple circles
+				var rng2 := RandomNumberGenerator.new()
+				rng2.seed = int(px * 1000 + py)
+				for j in 10:
+					var angle: float = rng2.randf() * TAU
+					var dist: float = rng2.randf_range(0.0, radius * 0.7)
+					var cloud_r: float = rng2.randf_range(30.0, 80.0) * pulse
+					var shimmer: float = 0.06 + 0.03 * sin(_elapsed * 3.0 + j * 0.7)
+					var cloud_pos := screen_pos + Vector2(cos(angle), sin(angle)) * dist
+					draw_circle(cloud_pos, cloud_r, Color(base_color.r, base_color.g, base_color.b, shimmer))
+				draw_arc(screen_pos, radius, 0.0, TAU, 48, Color(base_color.r, base_color.g, base_color.b, 0.1), 1.5)
+			"distortion":
+				# Singularity — dark core with swirling rings
+				draw_circle(screen_pos, radius * 0.3, Color(0.0, 0.0, 0.0, 0.6))
+				for i in 5:
+					var ring_r: float = radius * (0.3 + 0.15 * i) * pulse
+					var ring_angle: float = _elapsed * (1.0 + i * 0.3)
+					draw_arc(screen_pos, ring_r, ring_angle, ring_angle + TAU * 0.7, 36, Color(0.4, 0.3, 0.6, 0.12 - i * 0.02), 2.0)
+				# Gravitational lens distortion lines
+				for j in 8:
+					var angle: float = (TAU / 8.0) * j + _elapsed * 0.8
+					var start_pos := screen_pos + Vector2(cos(angle), sin(angle)) * radius * 0.4
+					var end_pos := screen_pos + Vector2(cos(angle + 0.3), sin(angle + 0.3)) * radius * 0.9
+					draw_line(start_pos, end_pos, Color(0.5, 0.4, 0.7, 0.08), 1.5)
+			_:
+				# Fallback — simple warning ring
+				draw_arc(screen_pos, radius * pulse, 0.0, TAU, 48, Color(base_color.r, base_color.g, base_color.b, 0.2), 2.0)
+				draw_circle(screen_pos, 8.0, Color(base_color.r, base_color.g, base_color.b, 0.4))
+
+		# Warning ring border
+		draw_arc(screen_pos, radius, 0.0, TAU, 48, Color(1.0, 0.3, 0.2, 0.08 + 0.04 * sin(_elapsed * 3.0)), 1.0)
+
+		# Label
+		if default_font:
+			var label: String = hazard.get("label", defn.get("display_name", "HAZARD"))
+			draw_string(default_font, screen_pos + Vector2(-30, -radius - 12), label, HORIZONTAL_ALIGNMENT_LEFT, 200, 11, Color(1.0, 0.5, 0.4, 0.7))
 
 
 func _draw_star_map_pois(center: Vector2, gs: GameStateData) -> void:
@@ -1061,6 +1265,114 @@ func _draw_pois(center: Vector2, gs: GameStateData) -> void:
 			)
 
 
+func _draw_planets(center: Vector2, gs: GameStateData) -> void:
+	if GameSession.planet_system == null:
+		return
+	var planets: Array = GameSession.planet_system.get_planets_in_region(gs.current_region)
+	var default_font: Font = ThemeDB.fallback_font
+	for planet in planets:
+		var sx: float = center.x + (planet.position_x - gs.position_x)
+		var sy: float = center.y + (planet.position_y - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		if screen_pos.x < -60 or screen_pos.y < -60 or screen_pos.x > size.x + 60 or screen_pos.y > size.y + 60:
+			continue
+		# Planet colour based on biome
+		var planet_color := Color(0.4, 0.7, 0.3)
+		match planet.biome:
+			"settlement":
+				planet_color = Color(0.6, 0.5, 0.35)
+			"industrial":
+				planet_color = Color(0.5, 0.55, 0.65)
+			"enchanted":
+				planet_color = Color(0.3, 0.7, 0.5)
+			"wilderness":
+				planet_color = Color(0.5, 0.6, 0.3)
+		# Outer glow
+		var pulse: float = 1.0 + 0.08 * sin(_elapsed * 1.5 + planet.position_x * 0.01)
+		draw_circle(screen_pos, 22.0 * pulse, planet_color * Color(1, 1, 1, 0.12))
+		# Planet body
+		draw_circle(screen_pos, 14.0, planet_color * Color(1, 1, 1, 0.6))
+		draw_circle(screen_pos, 10.0, planet_color)
+		# Ring
+		draw_arc(screen_pos, 16.0, 0.0, TAU, 32, planet_color.lightened(0.3), 1.5)
+		# Label
+		if default_font != null:
+			draw_string(
+				default_font,
+				screen_pos + Vector2(-30, -20),
+				planet.planet_name,
+				HORIZONTAL_ALIGNMENT_LEFT,
+				200,
+				11,
+				planet_color.lightened(0.4)
+			)
+			# Landing prompt
+			if planet.planet_id == _nearby_planet_id:
+				draw_string(
+					default_font,
+					screen_pos + Vector2(-20, 24),
+					"[L] LAND",
+					HORIZONTAL_ALIGNMENT_LEFT,
+					100,
+					11,
+					Color(0.6, 1.0, 0.6)
+				)
+
+
+func _draw_star_bases(center: Vector2, gs: GameStateData) -> void:
+	if GameSession.star_base_system == null:
+		return
+	var bases: Array = GameSession.star_base_system.get_visible_bases(gs, gs.current_region)
+	var default_font: Font = ThemeDB.fallback_font
+	for base in bases:
+		var sx: float = center.x + (base.position_x - gs.position_x)
+		var sy: float = center.y + (base.position_y - gs.position_y)
+		var screen_pos := Vector2(sx, sy)
+		if screen_pos.x < -60 or screen_pos.y < -60 or screen_pos.x > size.x + 60 or screen_pos.y > size.y + 60:
+			continue
+		var base_color := Color(0.9, 0.75, 0.3)
+		if base.base_type == "stronghold":
+			base_color = Color(0.8, 0.3, 0.3)
+		elif base.base_type == "hidden":
+			base_color = Color(0.5, 0.7, 0.9)
+		# Outer diamond shape
+		var r: float = 18.0
+		var pulse: float = 1.0 + 0.1 * sin(_elapsed * 2.0)
+		var pr: float = r * pulse
+		var diamond := PackedVector2Array([
+			screen_pos + Vector2(0, -pr),
+			screen_pos + Vector2(pr, 0),
+			screen_pos + Vector2(0, pr),
+			screen_pos + Vector2(-pr, 0),
+		])
+		draw_polygon(diamond, [base_color * Color(1, 1, 1, 0.25)])
+		draw_polyline(diamond + PackedVector2Array([diamond[0]]), base_color, 2.0)
+		# Inner dot
+		draw_circle(screen_pos, 4.0, base_color)
+		# Label
+		if default_font != null:
+			draw_string(
+				default_font,
+				screen_pos + Vector2(-30, -pr - 8),
+				base.base_name,
+				HORIZONTAL_ALIGNMENT_LEFT,
+				200,
+				12,
+				base_color
+			)
+			# Dock prompt if in range
+			if base.base_id == _nearby_base_id:
+				draw_string(
+					default_font,
+					screen_pos + Vector2(-20, pr + 16),
+					"[E] DOCK",
+					HORIZONTAL_ALIGNMENT_LEFT,
+					100,
+					11,
+					Color(1.0, 1.0, 0.6)
+				)
+
+
 func _draw_ship(center: Vector2) -> void:
 	if _ship_texture == null and _ship_up_texture == null:
 		draw_circle(center, SHIP_COLLISION_RADIUS, Color(0.72, 0.34, 0.9))
@@ -1233,6 +1545,20 @@ func _draw_minimap(gs: GameStateData) -> void:
 			var spawn_color: Color = ENCOUNTER_TYPE_COLORS.get(poi.get("type", "combat"), Color(1.0, 0.3, 0.3))
 			draw_circle(Vector2(bx, by), 2.5, spawn_color)
 
+	# Hazard blips (red/orange warning)
+	for hazard in _visible_hazards:
+		var rel_x: float = hazard.get("x", 0.0) - gs.position_x
+		var rel_y: float = hazard.get("y", 0.0) - gs.position_y
+		if absf(rel_x) > half_range or absf(rel_y) > half_range:
+			continue
+		var nx: float = (rel_x / MINIMAP_WORLD_RANGE) + 0.5
+		var ny: float = (rel_y / MINIMAP_WORLD_RANGE) + 0.5
+		var bx: float = map_x + nx * MINIMAP_SIZE
+		var by: float = map_y + ny * MINIMAP_SIZE
+		if bx >= map_x and bx <= map_x + MINIMAP_SIZE and by >= map_y and by <= map_y + MINIMAP_SIZE:
+			var hazard_color := Color(1.0, 0.35, 0.2, 0.7 + 0.3 * sin(_elapsed * 4.0))
+			draw_circle(Vector2(bx, by), 3.5, hazard_color)
+
 	# Player blip (center)
 	var player_pos := Vector2(map_x + MINIMAP_SIZE * 0.5, map_y + MINIMAP_SIZE * 0.5)
 	draw_circle(player_pos, 3.0, Color(0.43, 0.84, 1.0))
@@ -1247,6 +1573,46 @@ func _draw_minimap(gs: GameStateData) -> void:
 	if default_font:
 		var region_name: String = gs.current_region.replace("_", " ").to_upper()
 		draw_string(default_font, Vector2(map_x + 4, map_y + 14), region_name, HORIZONTAL_ALIGNMENT_LEFT, MINIMAP_SIZE - 8, 11, Color(0.4, 0.7, 0.86))
+
+
+func _draw_status_effects() -> void:
+	var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+	if ahs == null or ahs.status_effects.is_empty():
+		return
+	var default_font: Font = ThemeDB.fallback_font
+	if default_font == null:
+		return
+	var effect_colors: Dictionary = {
+		"fog_blind": Color(1.0, 0.85, 0.3),
+		"crystal_drain": Color(0.8, 0.4, 1.0),
+		"off_course": Color(0.4, 0.7, 1.0),
+		"hull_weakness": Color(1.0, 0.3, 0.3),
+	}
+	var x_pos: float = 12.0
+	var y_pos: float = 72.0
+	for effect in ahs.status_effects:
+		var eid: String = effect.get("effect_id", "")
+		var remaining: float = effect.get("remaining", 0.0)
+		var color: Color = effect_colors.get(eid, Color(1.0, 0.5, 0.5))
+		var label: String = eid.replace("_", " ").to_upper()
+		var timer_str: String = "%ds" % ceili(remaining)
+		# Background pill
+		draw_rect(Rect2(x_pos - 2, y_pos - 12, 140, 18), Color(0.05, 0.05, 0.1, 0.7))
+		# Colored bar showing remaining time proportion
+		var max_dur: float = 60.0
+		match eid:
+			"fog_blind": max_dur = 60.0
+			"crystal_drain": max_dur = 30.0
+			"off_course": max_dur = 15.0
+			"hull_weakness": max_dur = 45.0
+		var bar_frac: float = clampf(remaining / max_dur, 0.0, 1.0)
+		draw_rect(Rect2(x_pos - 2, y_pos - 12, 140 * bar_frac, 18), Color(color.r, color.g, color.b, 0.15))
+		# Icon dot
+		draw_circle(Vector2(x_pos + 5, y_pos - 3), 4.0, color)
+		# Label + timer
+		draw_string(default_font, Vector2(x_pos + 14, y_pos), label, HORIZONTAL_ALIGNMENT_LEFT, 100, 11, color)
+		draw_string(default_font, Vector2(x_pos + 110, y_pos), timer_str, HORIZONTAL_ALIGNMENT_LEFT, 40, 11, Color(0.8, 0.8, 0.8))
+		y_pos += 22.0
 
 
 func _draw_controls_bar() -> void:

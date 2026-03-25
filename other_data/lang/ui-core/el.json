@@ -1,0 +1,2890 @@
+{
+  "ABOUT": {
+    "description": "main menu button (implied 'about' the game)",
+    "message": "Σχετικά"
+  },
+  "ABOVE_AVERAGE": {
+    "description": "",
+    "message": "Άνω του μέσου όρου"
+  },
+  "ACTIVE": {
+    "description": "",
+    "message": "Ενεργό"
+  },
+  "ADD_BOOKMARK": {
+    "description": "Button to add a singular bookmark",
+    "message": "Προσθέστε σελιδοδείκτη"
+  },
+  "ADD_JUMP": {
+    "description": "UI-button: Add hyper jump to list of planned jumps",
+    "message": "Προσθήκη άλματος"
+  },
+  "AFTER_TRADE_IN": {
+    "description": "",
+    "message": "Μετά την συναλλαγή"
+  },
+  "ALLEGIANCE": {
+    "description": "",
+    "message": "Συμμαχία:"
+  },
+  "ALL_PARAMETERS_WERE_RECOVERED_SUCCESSFULLY": {
+    "description": "Message when restoring savegame",
+    "message": "All parameters were recovered successfully."
+  },
+  "ALL_UP_WEIGHT": {
+    "description": "",
+    "message": "Συνολικό βάρος"
+  },
+  "AMOUNT": {
+    "description": "",
+    "message": "Ποσότητα"
+  },
+  "ANISOTROPIC_FILTERING_DESC": {
+    "description": "",
+    "message": "Δειγματοληπτεί την υφή σε πολλαπλά επίπεδα mip για να παράγει μια πολύ πιο καθαρή υφή όταν την βλέπεις από ρηχές γωνίες. Εμποδίζει τις υφές να γίνουν τόσο θολές- ωστόσο, μπορεί να έχει μεγάλο κόστος απόδοσης."
+  },
+  "AN_ERROR_HAS_OCCURRED": {
+    "description": "",
+    "message": "Εμφανίστηκε σφάλμα"
+  },
+  "ARRIVAL_DATE": {
+    "description": "Time of arrival, used in flight log",
+    "message": "Ημερομηνία άφιξης"
+  },
+  "ATMOSPHERIC_SHIELDING": {
+    "description": "Used in ShipInfo view, followed by a yes/no depending on if the ship can carry atmospheric shields",
+    "message": "Ατμοσφαιρική θωράκιση"
+  },
+  "ATMO_PRESS_LIMIT": {
+    "description": "Base external pressure limit of a ship (without atmo shield)",
+    "message": "Όριο ατμ. πίεσης"
+  },
+  "ATTEMPTING_TO_RECOVER_GAME_PROGRESS_FROM_SAVE_X": {
+    "description": "Message when restoring savegame",
+    "message": "Attempting to recover game progress from save: {save}"
+  },
+  "ATTEMPT_TO_REPAIR_HULL": {
+    "description": "",
+    "message": "Απόπειρα επισκευής του κύτους"
+  },
+  "AUTOMATED_MESSAGE": {
+    "description": "For comm messages from bots",
+    "message": "Αυτοματοποιημένο μήνυμα"
+  },
+  "AUTO_ROUTE": {
+    "description": "Automatically find shortest jump route (measured in time) in star map",
+    "message": "Αυτοματοποιημένη διαδρομή"
+  },
+  "AVAILABLE_FOR_PURCHASE": {
+    "description": "Market header when buying items",
+    "message": "Διαθέσιμο για αγορά."
+  },
+  "AVAILABLE_STOCK": {
+    "description": "Market stat showing number of items in stock",
+    "message": "Σε απόθεμα."
+  },
+  "AVERAGE": {
+    "description": "",
+    "message": "Μέσος όρος"
+  },
+  "BACKWARD_ACCEL": {
+    "description": "",
+    "message": "Επιτάχυνση προς τα πίσω"
+  },
+  "BODY_IN_ROUTE": {
+    "description": "Label indicating a star is part of a planned hyperjump route",
+    "message": "Σώμα σε σχεδιασμένη διαδρομή υπεράλματος"
+  },
+  "BOOKMARK": {
+    "description": "Label introducing a bookmark",
+    "message": "Σελιδοδείκτης"
+  },
+  "BOOKMARKS": {
+    "description": "Label introducing a list of bookmarks",
+    "message": "Σελιδοδείκτες"
+  },
+  "BULLETIN_BOARD": {
+    "description": "",
+    "message": "Πίνακας ανακοινώσεων"
+  },
+  "BUY": {
+    "description": "Commodities and equipment prices",
+    "message": "Αγορά"
+  },
+  "BUY_EQUIP": {
+    "description": "Button text to buy selected equipment. May be used in a singular or plural context.",
+    "message": "Αγορά"
+  },
+  "BUY_PRICE": {
+    "description": "Title for buy-price column in commodity market",
+    "message": "Αγορά"
+  },
+  "BUY_SHIP": {
+    "description": "",
+    "message": "Αγόρασέ το"
+  },
+  "CABINS": {
+    "description": "For passengers",
+    "message": "Καμπίνες"
+  },
+  "CABIN_FREE": {
+    "description": "Free capacity for passengers",
+    "message": "{amount} ελεύθερα"
+  },
+  "CABIN_USED": {
+    "description": "Passengers using cabins",
+    "message": "{amount} σε χρήση"
+  },
+  "CANCEL": {
+    "description": "",
+    "message": "Ακύρωση"
+  },
+  "CANNOT_SELL_ITEM": {
+    "description": "",
+    "message": "Αυτό το αντικείμενο δεν μπορεί να πωληθεί"
+  },
+  "CANNOT_SELL_NONEMPTY_EQUIP": {
+    "description": "",
+    "message": "Αδύνατο να πωληθεί ένα κομμάτι εξοπλισμού εκτός αν είναι κενό"
+  },
+  "CANT_FIND_PATH": {
+    "description": "Message when restoring savegame, file path",
+    "message": "Can't find path: %s"
+  },
+  "CANT_FIND_PLAYERS_SHIP_IN_SPACE": {
+    "description": "Message when restoring savegame",
+    "message": "Can't find player's ship in space"
+  },
+  "CAPACITY": {
+    "description": "Capacity of ship to fit more equipment",
+    "message": "Χωρητικότητα"
+  },
+  "CAPACITY_USED": {
+    "description": "",
+    "message": "Χωρητικότητα εν χρήση"
+  },
+  "CARGO": {
+    "description": "",
+    "message": "Φορτίο"
+  },
+  "CARGO_CAPACITY": {
+    "description": "Label to show a ship's total cargo space.",
+    "message": "Χωρητικότητα φορτίου"
+  },
+  "CARGO_SPACE": {
+    "description": "",
+    "message": "Χώρος φόρτωσης"
+  },
+  "CARGO_SPACE_USED": {
+    "description": "",
+    "message": "Χώρος φόρτωσης εν χρήση"
+  },
+  "CARGO_T_FREE": {
+    "description": "t for tonne",
+    "message": "{amount}t ελεύθερα"
+  },
+  "CARGO_T_USED": {
+    "description": "t for tonne",
+    "message": "{amount}t εν χρήση"
+  },
+  "CASE_SENSITIVE": {
+    "description": "",
+    "message": "Case-sensitive"
+  },
+  "CASH": {
+    "description": "",
+    "message": "Μετρητά"
+  },
+  "CASH_N": {
+    "description": "",
+    "message": "Μετρητά: {money}"
+  },
+  "CENTER_ON_CURRENT_SYSTEM": {
+    "description": "Center on current star system",
+    "message": "Επικεντρώστε στο τρέχον σύστημα"
+  },
+  "CENTER_ON_SYSTEM": {
+    "description": "Center on selected star system",
+    "message": "Κεντράρισε στο σύστημα"
+  },
+  "CHANGE": {
+    "description": "Face feature option",
+    "message": "Αλλαγή:"
+  },
+  "CHANGE_BINDING": {
+    "description": "Key binding option",
+    "message": "Αλλαγή δέσμευσης"
+  },
+  "CHANGE_COLOR": {
+    "description": "Paintshop button",
+    "message": "Αλλαγή χρώματος"
+  },
+  "CHANGE_PATTERN": {
+    "description": "Paintshop button",
+    "message": "Change Pattern"
+  },
+  "CHARACTER": {
+    "description": "",
+    "message": "Χαρακτήρας"
+  },
+  "CHARISMA": {
+    "description": "Character parameter",
+    "message": "Charisma"
+  },
+  "CHIEF_MECHANIC": {
+    "description": "",
+    "message": "Αρχιμηχανικός"
+  },
+  "CIRCULAR_ORBIT_SPEED": {
+    "description": "",
+    "message": "Ταχύτητα κυκλικής περιφοράς"
+  },
+  "CITY_DETAIL_LEVEL": {
+    "description": "Game graphics option",
+    "message": "Λεπτομέρεια πόλεων"
+  },
+  "CLEAN": {
+    "description": "Legal status of player",
+    "message": "Λευκό μητρώο"
+  },
+  "CLEAR": {
+    "description": "Clear an option in game settings/options menu",
+    "message": "Όρισε κενό"
+  },
+  "CLEAR_ROUTE": {
+    "description": "Clear a planned route of hyperjumps",
+    "message": "Κενή διαδρομή"
+  },
+  "CLIENT": {
+    "description": "",
+    "message": "Πελάτης"
+  },
+  "CLOSE": {
+    "description": "",
+    "message": "Κλείσε"
+  },
+  "COLLAPSE": {
+    "description": "Close / collapse an open folder or group",
+    "message": "Σύμπτηξη"
+  },
+  "COLOR": {
+    "description": "",
+    "message": "Χρώμα"
+  },
+  "COMBAT": {
+    "description": "Headline for kills and combat rating",
+    "message": "Μάχη"
+  },
+  "COMMANDER": {
+    "description": "",
+    "message": "Κυβερνήτης"
+  },
+  "COMMODITY": {
+    "description": "Title for commodity name column in commodity market",
+    "message": "Εμπόρευμα."
+  },
+  "COMMODITY_MARKET": {
+    "description": "",
+    "message": "Αγορά εμπορευμάτων"
+  },
+  "COMMODITY_TRADE_ANALYSIS": {
+    "description": "",
+    "message": "Ανάλυση συναλλαγών μεταξύ των:"
+  },
+  "COMMODITY_TRADE_ANALYSIS_SYSTEM": {
+    "description": "",
+    "message": "Ανάλυση εμπορίου του συστήματος"
+  },
+  "COMMODITY_TRADE_ANALYSIS_TOOLTIP_1": {
+    "description": "",
+    "message": "Μέση ροή εμπορίου μεταξύ συστημάτων για όλα τα εμπορεύματα."
+  },
+  "COMMODITY_TRADE_ANALYSIS_TOOLTIP_2": {
+    "description": "",
+    "message": "Η πληροφορία μπορεί να μην αντανακλά τις επιμέρους τιμές στην αγορά"
+  },
+  "COMPETENT": {
+    "description": "Combat rating",
+    "message": "Ικανός"
+  },
+  "COMPLETED": {
+    "description": "",
+    "message": "Ολοκληρώθηκε"
+  },
+  "COMPRESS_TEXTURES": {
+    "description": "graphics option in game settings menu ",
+    "message": "Συμπίεση υφής"
+  },
+  "CONFIRM_PURCHASE": {
+    "description": "",
+    "message": "Επιβεβαίωση αγοράς"
+  },
+  "CONFIRM_SALE": {
+    "description": "",
+    "message": "Επιβεβαίωση πώλησης"
+  },
+  "CONSTABLE": {
+    "description": "",
+    "message": "Αστυφύλαξ"
+  },
+  "CONTINUE_GAME": {
+    "description": "",
+    "message": "Συνέχιση παιχνιδιού"
+  },
+  "CONTRACT_FRAUD": {
+    "description": "Crime committed by intentionally breaking a contract",
+    "message": "Απάτη κατά συμφωνίας"
+  },
+  "CONTROLS": {
+    "description": "",
+    "message": "Χειρισμοί"
+  },
+  "CONTROL_OPTIONS": {
+    "description": "",
+    "message": "Επιλογές χειρισμού"
+  },
+  "COPY": {
+    "description": "As for clipboard",
+    "message": "Αντιγραφή"
+  },
+  "COULD_NOT_DELETE_SAVE": {
+    "description": "",
+    "message": "Could not delete save"
+  },
+  "COULD_NOT_FIND_SYSTEM_BODY_FOR_FRAME": {
+    "description": "Message when restoring savegame",
+    "message": "Could not find system body for frame"
+  },
+  "COULD_NOT_LOAD_GAME": {
+    "description": "Label indicating a specific file could not be loaded",
+    "message": "Δεν μπόρεσε να φορτωθεί το παιχνίδι: "
+  },
+  "COULD_NOT_LOAD_SAVE_FILES": {
+    "description": "Label indicating the list of save files could not be loaded",
+    "message": "Αδυναμία φόρτωσης του παιχνιδιού."
+  },
+  "COULD_NOT_READ_THE_SAVE_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "Could not read the save version"
+  },
+  "COULD_NOT_SAVE_GAME": {
+    "description": "Label indicating a specific file could not be saved",
+    "message": "Αδυναμία αποθήκευσης παιχνιδιού"
+  },
+  "CREDIBLE": {
+    "description": "For player reputation",
+    "message": "Αξιόπιστος"
+  },
+  "CREDITS": {
+    "description": "in game currency",
+    "message": "Πιστώσεις"
+  },
+  "CREW": {
+    "description": "Tab item in the start game menu",
+    "message": "Πλήρωμα"
+  },
+  "CREW_CABINS": {
+    "description": "",
+    "message": "Καμπίνες πληρώματος"
+  },
+  "CREW_ROSTER": {
+    "description": "",
+    "message": "Πίνακας Πληρώματος"
+  },
+  "CRIME": {
+    "description": "Heading introducing a single crime name or list of crime names",
+    "message": "¨Εγκλημα."
+  },
+  "CRIMINAL": {
+    "description": "Legal status of player",
+    "message": "Εγκληματίας"
+  },
+  "CRIMINAL_RECORD": {
+    "description": "Heading for past crimes / crime history of character, proper noun",
+    "message": "Ποινικό μητρώο."
+  },
+  "CURRENT_FUEL": {
+    "description": "Label indicating the current fuel state",
+    "message": "Καύσιμο"
+  },
+  "CURRENT_SAVEGAME_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "Current savegame version: %s"
+  },
+  "CURRENT_SHIP": {
+    "description": "For tooltip comparing current ship specs to one in the shipyard",
+    "message": "Current Ship"
+  },
+  "CURRENT_SYSTEM": {
+    "description": "Label indicating the system the player currently occupies",
+    "message": "Τρέχον σύστημα"
+  },
+  "CUT": {
+    "description": "As for clipboard",
+    "message": "Αποκοπή"
+  },
+  "DANGEROUS": {
+    "description": "Player combat rating",
+    "message": "Επικίνδυνος"
+  },
+  "DATE": {
+    "description": "Date of an event, used in flight log",
+    "message": "Ημερομηνία:"
+  },
+  "DEADLY": {
+    "description": "Player combat rating",
+    "message": "Θανάσιμος"
+  },
+  "DECREASE": {
+    "description": "Decrease something.",
+    "message": "Μείωση"
+  },
+  "DELETE": {
+    "description": "",
+    "message": "Delete"
+  },
+  "DELETE_BOOKMARK": {
+    "description": "Button to remove a singular bookmark",
+    "message": "Αφαίρεση σελιδοδείκτη"
+  },
+  "DELETE_SAVE_CONFIRMATION": {
+    "description": "",
+    "message": "Are you sure you want to delete this save?"
+  },
+  "DELTA_V": {
+    "description": "",
+    "message": "Δέλτα-v"
+  },
+  "DELTA_V_EMPTY": {
+    "description": "Delta-v capacity of a ship with no cargo or upgrades",
+    "message": "Δέλτα-v (κενό)"
+  },
+  "DELTA_V_FULL": {
+    "description": "Delta-v capacity of a ship with maximum cargo",
+    "message": "Δέλτα-v (πλήρες)"
+  },
+  "DELTA_V_MAX": {
+    "description": "Delta-v capacity of a ship with cargo bay fully loaded with propellant",
+    "message": "Δέλτα-v (μέγιστο)"
+  },
+  "DEMAND": {
+    "description": "Column label for commodity demand at a market.",
+    "message": "Demand"
+  },
+  "DEPARTURE_DATE": {
+    "description": "Time of departure, used in flight log",
+    "message": "Ημερομηνία αναχώρησης"
+  },
+  "DESCRIPTION": {
+    "description": "Start game parameter, e.g. 'This is an easy start from Cydonia'",
+    "message": "Description"
+  },
+  "DESTROY_ENEMY_SHIP": {
+    "description": "",
+    "message": "Καταστρέψτε το εχθρικό σκάφος"
+  },
+  "DETAIL_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Όσο χαμηλότερα τόσο καλύτερες επιδόσεις, με κόστος την οπτική αισθητική"
+  },
+  "DISABLE_SCREENSHOT_INFO": {
+    "description": "",
+    "message": "Όχι πληροφορίες σε στιγμιότυπα οθόνης"
+  },
+  "DISABLE_SCREENSHOT_INFO_DESC": {
+    "description": "",
+    "message": "Απόκρυψη όλων των εμφανιζόμενων πληροφοριών, συμπεριλαμβανομένων των συντεταγμένων του συστήματος, όταν βρίσκεστε σε λειτουργία στιγμιότυπου οθόνης (εναλλαγή της λειτουργίας HUD)."
+  },
+  "DISMISS": {
+    "description": "Terminate crew member's contract",
+    "message": "Απολύεστε"
+  },
+  "DISPLAY_HUD_TRAILS": {
+    "description": "",
+    "message": "Εμφάνιση μονοπατιών HUD"
+  },
+  "DISPLAY_HUD_TRAILS_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Καθοδηγεί το μάτι δείχνοντας την τροχιά των σκαφών στο HUD"
+  },
+  "DISPLAY_NAV_TUNNELS": {
+    "description": "Settings option: hyperspace tunnel effect",
+    "message": "Εμφάνιση σηράγγων πλοήγησης"
+  },
+  "DISPLAY_NAV_TUNNELS_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Εμφανίζει μια εικονική σήραγγα προς τον τρέχοντα επιλεγμένο προορισμό στο HUD"
+  },
+  "DISPLAY_SPEED_LINES": {
+    "description": "Settings option: effect when travelling in space",
+    "message": "Εμφάνιση γραμμών ταχύτητας"
+  },
+  "DISPLAY_SPEED_LINES_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Βοηθά στην αίσθηση της κατεύθυνσης της κίνησης στο διάστημα"
+  },
+  "DOCKED_AT": {
+    "description": "",
+    "message": "Προδετήθηκε στο"
+  },
+  "DOCKED_TO_A_BODY_THAT_IS_NOT_A_STATION": {
+    "description": "Message when restoring savegame",
+    "message": "Docked to a body that is not a station"
+  },
+  "DOCK_AT_CURRENT_TARGET": {
+    "description": "",
+    "message": "Προδέτησε στον τρέχοντα προορισμό"
+  },
+  "DRIVE_ACTIVE": {
+    "description": "Ship jump status",
+    "message": "ενεργός υπερκινητήρας"
+  },
+  "DUE": {
+    "description": "mission deadline date",
+    "message": "Λήξη"
+  },
+  "DUMPING": {
+    "description": "The illegal act of dumping waste",
+    "message": " Απόρριψη αποβλήτων  "
+  },
+  "D_DAYS_LEFT": {
+    "description": "",
+    "message": "Εναπομένων χρόνος."
+  },
+  "ECONOMY_TRADE": {
+    "description": "",
+    "message": "Οικονομία & Εμπόριο"
+  },
+  "EDIT": {
+    "description": "Tooltip, to edit a flight log entry",
+    "message": "Επεξεργασία"
+  },
+  "EDIT_BOOKMARK": {
+    "description": "Button to edit a singular bookmark",
+    "message": "Επεξεργασία σελιδοδείκτη"
+  },
+  "EDIT_NOTE": {
+    "description": "",
+    "message": "Επεξεργασία σημείωσης"
+  },
+  "EFFECTS": {
+    "description": "",
+    "message": "Εφέ:"
+  },
+  "ELITE": {
+    "description": "Player combat rating",
+    "message": "Εκλεκτός"
+  },
+  "EMPLOYMENT": {
+    "description": "",
+    "message": "Απασχόληση"
+  },
+  "ENABLE_ANISOTROPIC_FILTERING": {
+    "description": "Use Anisotropic Filtering",
+    "message": "Ανισοτροπικό φιλτράρισμα"
+  },
+  "ENABLE_AUTOSAVE": {
+    "description": "Allow the game to autosave when docking",
+    "message": "Ενεργοποίηση αυτόματης αποθήκευσης"
+  },
+  "ENABLE_AUTOSAVE_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Αποθήκευση παιγνιδιού κατά την προδέτηση. Μπορεί να προκαλέσει κάποια καθυστέρηση ανάλογα με το χρόνο πρόσβασης στον σκληρό δίσκο"
+  },
+  "ENABLE_COCKPIT": {
+    "description": "Game settings option: to use a cockpit 3D model",
+    "message": "Ενεργοποίηση πιλοτηρίου (ΠΕΙΡΑΜΑΤΙΚΟ)"
+  },
+  "ENABLE_COCKPIT_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Εμφανίζει ένα τρισδιάστατο μοντέλο του πιλοτηρίου του πιλότου. (Επί του παρόντος, είναι ένα απλός πίνακας τοποθεσίας οργάνων)"
+  },
+  "ENABLE_JOYSTICK": {
+    "description": "",
+    "message": "Ενεργοποίηση joystick"
+  },
+  "END_GAME": {
+    "description": "",
+    "message": "Τέλος παιχνιδιού"
+  },
+  "ENGINEERING": {
+    "description": "Engineering skills of crew",
+    "message": "Engineering"
+  },
+  "ENTER_CUSTOM_NOTE": {
+    "description": "Label indicating a note should be entered here",
+    "message": "Προσθήκη σημείωσης"
+  },
+  "ENTRY": {
+    "description": "A note/entry/record into the flight log",
+    "message": "Καταχώρηση"
+  },
+  "EQUIPMENT": {
+    "description": "",
+    "message": "Εξοπλισμός"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Το εν λόγω εξάρτημα είναι ήδη εγκατεστημένο εδώ."
+  },
+  "EQUIPMENT_CAPACITY": {
+    "description": "The equipment capacity of a ship",
+    "message": "Χωρητικότητα σε εξοπλισμό"
+  },
+  "EQUIPMENT_MARKET": {
+    "description": "",
+    "message": "Αγορά εξοπλισμού"
+  },
+  "EQUIPPED": {
+    "description": "",
+    "message": "Εγκατεστημένος εξοπλισμός"
+  },
+  "ERROR": {
+    "description": "",
+    "message": "Σφάλμα"
+  },
+  "ERROR_APPLYING_PATCH": {
+    "description": "Message when restoring savegame",
+    "message": "Error applying patch"
+  },
+  "ERROR_LANDING_GEAR_DOWN": {
+    "description": "",
+    "message": "Δεν μπορεί να ξεκινήσει υπεράλμα - το σύστημα προσγείωσης δεν έχει ανακληθεί!"
+  },
+  "ESCAPE_SPEED": {
+    "description": "",
+    "message": "Ταχύτητα διαφυγής:"
+  },
+  "EXIT_THIS_GAME": {
+    "description": "",
+    "message": "Έξοδος από αυτό το παιχνίδι"
+  },
+  "EXPAND": {
+    "description": "Open / expand a collapsed folder or group",
+    "message": "Ανάπτυξη"
+  },
+  "EXPERIENCED": {
+    "description": "For player reputation",
+    "message": "Έμπειρος"
+  },
+  "EXPERIMENTAL": {
+    "description": "Indicates feature/option is experimental",
+    "message": "Experimental"
+  },
+  "EXPERT": {
+    "description": "For player reputation",
+    "message": "Ειδικός"
+  },
+  "FACTION": {
+    "description": "Label indicating the factional allegiance of an object",
+    "message": "Φατρία"
+  },
+  "FACTIONS": {
+    "description": "Button to toggle the display of factions on the sector map",
+    "message": "Φατρίες"
+  },
+  "FAILED": {
+    "description": "When failed mission",
+    "message": "Αποτυχία"
+  },
+  "FAILED_TO_RECOVER_SOME_EQUIPMENT": {
+    "description": "",
+    "message": "Αδυναμία ανάκτησης όλου του εξοπλισμού"
+  },
+  "FEATURE_ACCESSORIES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Παρελκόμενα"
+  },
+  "FEATURE_ARMOUR": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Θώρακας"
+  },
+  "FEATURE_CLOTHES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Ρούχα"
+  },
+  "FEATURE_EYES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Μάτια"
+  },
+  "FEATURE_GENDER": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Φύλο"
+  },
+  "FEATURE_HAIRSTYLE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Χτένισμα"
+  },
+  "FEATURE_HEAD": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Κεφάλι"
+  },
+  "FEATURE_MOUTH": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Στόμα"
+  },
+  "FEATURE_NOSE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Μύτη"
+  },
+  "FEATURE_RACE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Φυλή"
+  },
+  "FEATURE_SPECIES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Είδος"
+  },
+  "FEMALE": {
+    "description": "",
+    "message": "Θήλυ"
+  },
+  "FILE_SAVEGAME_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "File savegame version: %s"
+  },
+  "FINAL_TARGET": {
+    "description": "Hyperjump planner, referring to star system target",
+    "message": "Τελικός στόχος"
+  },
+  "FINANCE": {
+    "description": "Financial statement of player, e.g. cash",
+    "message": "Οικονομικά"
+  },
+  "FINE": {
+    "description": "Cost of a criminal action",
+    "message": "Πρόστιμο"
+  },
+  "FLIGHTLOG_DOCKING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name",
+    "message": "Προδέτηση στο {primary_info}"
+  },
+  "FLIGHTLOG_FLYING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the name of a space body",
+    "message": "Πτήση στο διάστημα, σχετικά με το {primary_info}"
+  },
+  "FLIGHTLOG_HYPERSPACE": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the star system targeted for hyperspace jump.",
+    "message": "Στο υπερδιάστημα, με πορεία προς το {primary_info}"
+  },
+  "FLIGHTLOG_JUMPING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the star system targeted for hyperspace jump.",
+    "message": "Υπεράλμα προς το {primary_info}"
+  },
+  "FLIGHTLOG_LANDED": {
+    "description": "Used in Flight Log, to indicate player's position, 'primary_info' is the name of a space body, typically a planet, the other two variables are latitude and longitude as floating point number, e.g. 'Landed on Trantor, position (-43.23, 67.89)'",
+    "message": "Προσγειώθηκε στο {primary_info}, συντεταγμένες ({secondary_info}, {tertiary_info})"
+  },
+  "FLIGHTLOG_STARPORT_ORBITAL": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name, 'secondary_info' is a space body (planet, moon/satelite, star) name",
+    "message": "Προδετήθηκε στο {primary_info}, σε τροχιά γύρω από το {secondary_info}"
+  },
+  "FLIGHTLOG_STARPORT_SURFACE": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name, 'secondary_info' is a space body (planet, moon/satelite, star) name",
+    "message": "Προδετήθηκε στο {primary_info} του {secondary_info}"
+  },
+  "FLIGHTLOG_UNDOCKING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name",
+    "message": "Απόπλους από το {primary_info}"
+  },
+  "FLIGHT_LOG": {
+    "description": "Title for flight log screen, in info view",
+    "message": "Ημερολόγιο πτήσης"
+  },
+  "FLIGHT_STATE": {
+    "description": "",
+    "message": "Κατάσταση πτήσης"
+  },
+  "FLYING": {
+    "description": "",
+    "message": "Εν πτήση"
+  },
+  "FORWARD_ACCEL": {
+    "description": "",
+    "message": "Επιτάχυνση προς τα μπρος"
+  },
+  "FORWARD_ACCEL_EMPTY": {
+    "description": "",
+    "message": "Επιτάχυνση προς τα εμπρός (κενό)"
+  },
+  "FORWARD_ACCEL_FULL": {
+    "description": "",
+    "message": "Επιτάχυνση προς τα εμπρός (πλήρες)"
+  },
+  "FREE": {
+    "description": "Used in Ship Information view as in Capacity: 10t (5t free)",
+    "message": "ελεύθερα"
+  },
+  "FRONT_WEAPON": {
+    "description": "",
+    "message": "Εμπρόσθιο όπλο"
+  },
+  "FUEL": {
+    "description": "",
+    "message": "Καύσιμα"
+  },
+  "FUEL_TANK_FULL": {
+    "description": "",
+    "message": "Δεξαμενή καυσίμων γεμάτη."
+  },
+  "FUEL_WEIGHT": {
+    "description": "",
+    "message": "Βάρος καυσίμων"
+  },
+  "FUGITIVE": {
+    "description": "Legal status of player",
+    "message": "Φυγάς"
+  },
+  "FULL_SCREEN": {
+    "description": "",
+    "message": "Ολόκληρη οθόνη"
+  },
+  "GAME_OPTIONS": {
+    "description": "GameOptions - tooltip for the Game Options tab in the Settings Window",
+    "message": "Επιλογές."
+  },
+  "GAME_TIME": {
+    "description": "",
+    "message": "Ώρα παιχνιδιού"
+  },
+  "GENERAL_CREW": {
+    "description": "",
+    "message": "Πλήρωμα γενικών καθηκόντων"
+  },
+  "GIVE_ORDERS_TO_CREW": {
+    "description": "",
+    "message": "Δώστε εντολές στο πλήρωμα"
+  },
+  "GOOD_RIDDANCE_TO_YOU_TOO": {
+    "description": "",
+    "message": "Καλά ξεκουμπίδια και σε σένα."
+  },
+  "GO_BACK": {
+    "description": "",
+    "message": "Επιστρέψτε"
+  },
+  "GPU_JOBS": {
+    "description": "",
+    "message": "Εργασίες GPU"
+  },
+  "GPU_JOBS_DESC": {
+    "description": "",
+    "message": "Αξιοποίηση της GPU για ορισμένες ενέργειες, βελτιώνοντας ενδεχομένως τις επιδόσεις."
+  },
+  "HANG_UP": {
+    "description": "",
+    "message": "Διακοπή επικοινωνίας"
+  },
+  "HARMLESS": {
+    "description": "Player combat rating",
+    "message": "Αβλαβής"
+  },
+  "HEAVY_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "Βαρύ μεταφορικό εμπορευμάτων"
+  },
+  "HEAVY_COURIER": {
+    "description": "",
+    "message": "Βαρύ ταχυμεταφορικό"
+  },
+  "HEAVY_FIGHTER": {
+    "description": "",
+    "message": "Βαρύ μαχητικό"
+  },
+  "HEAVY_FREIGHTER": {
+    "description": "",
+    "message": "Μεγάλη φορτηγίδα"
+  },
+  "HEAVY_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "Βαρύ επιβατικό"
+  },
+  "HEAVY_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "Βαρύ σκάφος Μαζικής Μεταφοράς Επιβατών"
+  },
+  "HIGH": {
+    "description": "Game settings option: for graphics resolution",
+    "message": "Υψηλή"
+  },
+  "HUD_2D_RADAR": {
+    "description": "Popup text: the name of the azimuthal equidistant projection radar",
+    "message": "2Δ αζιμουθιακή προβολή ίσων αποστάσεων"
+  },
+  "HUD_3D_RADAR": {
+    "description": "Popup text: the name of the planar projection radar (traditional frontier-style)",
+    "message": "3Δ επίπεδη προβολή"
+  },
+  "HUD_ARRIVAL_DATE": {
+    "description": "Label for Hyperspace Cloud arrival date",
+    "message": "Ημερομηνία Άφιξης"
+  },
+  "HUD_ATMOSPHERIC_PRESSURE": {
+    "description": "Tooltip: Atmospheric Pressure.",
+    "message": "Ατμοσφαιρική πίεση"
+  },
+  "HUD_BACKWARD_GUN_TEMPERATURE": {
+    "description": "Tooltip: Backward Gun Temperature.",
+    "message": "Θερμοκρασία οπίσθιου όπλου"
+  },
+  "HUD_BRAKE_DISTANCE_MAIN_THRUSTERS": {
+    "description": "Tooltip: The braking distance using the main thrusters.",
+    "message": "Η απόσταση πέδησης χρησιμοποιώντας τους κύριους προωθητήρες"
+  },
+  "HUD_BUTTON_AUTOPILOT_DOCKING": {
+    "description": "Tooltip: Autopilot docking",
+    "message": "Προδέτηση με αυτόματο πιλότο"
+  },
+  "HUD_BUTTON_AUTOPILOT_ENTERING_ORBIT": {
+    "description": "Tooltip: Autopilot entering orbit",
+    "message": "Ο αυτόματος πιλότος εισέρχεται σε τροχιά"
+  },
+  "HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET": {
+    "description": "Tooltip: Autopilot flying to target",
+    "message": "Ο αυτόματος πιλότος πετάει προς τον προορισμό"
+  },
+  "HUD_BUTTON_BLASTOFF": {
+    "description": "Tooltip: Blastoff",
+    "message": "Εκτόξευση"
+  },
+  "HUD_BUTTON_CRUISE_FORWARD": {
+    "description": "Tooltip for button",
+    "message": "Forward cruise mode"
+  },
+  "HUD_BUTTON_CRUISE_UP": {
+    "description": "Tooltip for button",
+    "message": "Up cruise mode"
+  },
+  "HUD_BUTTON_DISABLE_AUTOPILOT": {
+    "description": "Tooltip for button",
+    "message": "Κατάργηση αυτόματου πιλότου"
+  },
+  "HUD_BUTTON_DISABLE_CRUISE": {
+    "description": "Tooltip for button",
+    "message": "Disable cruise mode"
+  },
+  "HUD_BUTTON_DISABLE_FIXHEADING": {
+    "description": "Tooltip for button",
+    "message": "Disable fixheading mode"
+  },
+  "HUD_BUTTON_DISABLE_FOLLOW_MODE": {
+    "description": "Tooltip for button",
+    "message": "Disable follow mode"
+  },
+  "HUD_BUTTON_EQUIPMENT": {
+    "description": "Tooltip: Equipment",
+    "message": "Εξοπλισμός"
+  },
+  "HUD_BUTTON_EXTERNAL_VIEW": {
+    "description": "Tooltip: External camera view",
+    "message": "Εξωτερική άποψη"
+  },
+  "HUD_BUTTON_FIX_ANTINORMAL": {
+    "description": "Tooltip: fix heading antinormal",
+    "message": "Θέσε αντι-κάθετη κατεύθυνση"
+  },
+  "HUD_BUTTON_FIX_NORMAL": {
+    "description": "Tooltip: fix heading normal",
+    "message": "Θέσε κάθετη κατεύθυνση"
+  },
+  "HUD_BUTTON_FIX_PROGRADE": {
+    "description": "Tooltip: fix heading prograde",
+    "message": "Θέσεις κατεύθυνση ορθόδρομη"
+  },
+  "HUD_BUTTON_FIX_RADIAL_IN": {
+    "description": "Tooltip: fix heading radially inward",
+    "message": "Θέσεις κατεύθυνση έσω-ακτινική "
+  },
+  "HUD_BUTTON_FIX_RADIAL_OUT": {
+    "description": "Tooltip: fix heading radially outward",
+    "message": "Θέσεις κατεύθυνση έξω-ακτινική "
+  },
+  "HUD_BUTTON_FIX_RETROGRADE": {
+    "description": "Tooltip: fix heading retrograde",
+    "message": "Θέσεις κατεύθυνση ανάδρομη"
+  },
+  "HUD_BUTTON_FLYBY_VIEW": {
+    "description": "Tooltip: Flyby camera view",
+    "message": "Προβολή πτήσης"
+  },
+  "HUD_BUTTON_HYPERDRIVE_DISABLED": {
+    "description": "Tooltip: Hyperdrive disabled (docked or landed)",
+    "message": "Ο υπερκινητήρας απενεργοποιήθηκε"
+  },
+  "HUD_BUTTON_INITIATE_HYPERJUMP": {
+    "description": "Tooltip: Initiate legal hyperjump",
+    "message": "Έναρξή υπεράλματος"
+  },
+  "HUD_BUTTON_INITIATE_ILLEGAL_HYPERJUMP": {
+    "description": "Tooltip: Initiate illegal hyperjump",
+    "message": "Έναρξή παράνομου υπεράλματος"
+  },
+  "HUD_BUTTON_INTERNAL_VIEW": {
+    "description": "Tooltip: Internal camera view",
+    "message": "Εσωτερική άποψη"
+  },
+  "HUD_BUTTON_KILL_ROTATION": {
+    "description": "Tooltip: kill rotation",
+    "message": "Παύση περιστροφής"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_DOWN": {
+    "description": "Tooltip: Landing gear is down",
+    "message": "Σύστημα προσγείωσης κατεβασμένο"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_MOVING": {
+    "description": "Tooltip: Landing gear is moving",
+    "message": "Σύστημα προσγείωσης εν κινήσει"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_UP": {
+    "description": "Tooltip: Landing gear is up",
+    "message": "Σύστημα προσγείωσης ανεβασμένο"
+  },
+  "HUD_BUTTON_MANUAL_CONTROL": {
+    "description": "Tooltip: Manual control",
+    "message": "Χειροκίνητος έλεγχος"
+  },
+  "HUD_BUTTON_ROTATION_DAMPING_IS_OFF": {
+    "description": "Tooltip: Rotation damping is off",
+    "message": "Η απόσβεση περιστροφής είναι απενεργοποιημένη"
+  },
+  "HUD_BUTTON_ROTATION_DAMPING_IS_ON": {
+    "description": "Tooltip: Rotation damping is on",
+    "message": "Η απόσβεση περιστροφής είναι ενεργοποιημένη"
+  },
+  "HUD_BUTTON_SET_SPEED": {
+    "description": "Tooltip: set speed",
+    "message": "Καθόρισε ταχύτητα"
+  },
+  "HUD_BUTTON_SHOW_COMMS": {
+    "description": "Tooltip: Show comms",
+    "message": "Εμφάνιση επικοινωνιών"
+  },
+  "HUD_BUTTON_SHOW_PERSONAL_INFO": {
+    "description": "Tooltip: Show personal info",
+    "message": "Εμφάνιση προσωπικών πληροφοριών"
+  },
+  "HUD_BUTTON_SIDEREAL_VIEW": {
+    "description": "Tooltip: Sidereal camera view",
+    "message": "Πλευρική άποψη"
+  },
+  "HUD_BUTTON_SWITCH_TO_CURRENT_SYSTEM": {
+    "description": "Tooltip: Switch to current system",
+    "message": "Γυρίστε στο τρέχων ηλιακό σύστημα"
+  },
+  "HUD_BUTTON_SWITCH_TO_GALAXY_MAP": {
+    "description": "Tooltip: Switch to galaxy map",
+    "message": "Αλλαγή σε γαλαξιακό χάρτη "
+  },
+  "HUD_BUTTON_SWITCH_TO_SECTOR_MAP": {
+    "description": "Tooltip: Switch to sector map",
+    "message": "Αλλαγή σε χάρτη τομέα "
+  },
+  "HUD_BUTTON_SWITCH_TO_SELECTED_SYSTEM": {
+    "description": "Tooltip: Switch to selected system",
+    "message": "Γυρίστε στο επιλεγμένο ηλιακό σύστημα"
+  },
+  "HUD_BUTTON_SWITCH_TO_SYSTEM_MAP": {
+    "description": "Tooltip: Switch to system map",
+    "message": "Αλλαγή σε χάρτη συστήματος"
+  },
+  "HUD_BUTTON_SWITCH_TO_SYSTEM_OVERVIEW": {
+    "description": "Tooltip: Switch to system overview",
+    "message": "Αλλαγή σε επισκόπηση συστήματος"
+  },
+  "HUD_BUTTON_SWITCH_TO_WORLD_VIEW": {
+    "description": "Tooltip: Switch to world view",
+    "message": "Αλλαγή σε κοσμική άποψη"
+  },
+  "HUD_BUTTON_UNDOCK": {
+    "description": "Tooltip: Undock",
+    "message": "Απόπλευσε"
+  },
+  "HUD_CARGO_MASS": {
+    "description": "Cargo Mass",
+    "message": "Μάζα Φορτίου"
+  },
+  "HUD_CRUISE_SPEED": {
+    "description": "Tooltip for cruise speed indicator",
+    "message": "Cruise speed"
+  },
+  "HUD_CURRENT_COMBAT_TARGET": {
+    "description": "Tooltip: The current combat target.",
+    "message": "Ο τρέχων στόχος μάχης"
+  },
+  "HUD_CURRENT_FRAME": {
+    "description": "Tooltip: The current frame of reference.",
+    "message": "Το τρέχον σύστημα αναφοράς"
+  },
+  "HUD_CURRENT_HEADING": {
+    "description": "Tooltip: the current heading.",
+    "message": "Η τρέχουσα κατεύθυνση"
+  },
+  "HUD_CURRENT_NAV_TARGET": {
+    "description": "Tooltip: The current navigational target.",
+    "message": "Ο τρέχων προορισμός πλοήγησης"
+  },
+  "HUD_CURRENT_PITCH": {
+    "description": "Tooltip: the current pitch.",
+    "message": "Η τρέχουσα πρόνευση"
+  },
+  "HUD_CURRENT_ROLL": {
+    "description": "Tooltip: the current roll.",
+    "message": "Ο τρέχων διατοιχισμός"
+  },
+  "HUD_DELTA_V": {
+    "description": "Tooltip: The remaining Δv.",
+    "message": "Απομένουσα Δv"
+  },
+  "HUD_DELTA_V_OF_MANEUVER_BURN": {
+    "description": "Tooltip: The Δv for the maneuver burn.",
+    "message": "Απαιτούμενο, προς καύση, Δv του ελιγμού"
+  },
+  "HUD_DELTA_V_PERCENT": {
+    "description": "Tooltip: The remaining Δv in percent.",
+    "message": "% του μέγιστου Δv"
+  },
+  "HUD_DISTANCE_TO_SURFACE_OF_FRAME": {
+    "description": "Tooltip: Distance to the surface of the frame of reference.",
+    "message": "Απόσταση από την επιφάνεια του συστήματος αναφοράς"
+  },
+  "HUD_DISTANCE_TO_SURFACE_OF_TARGET": {
+    "description": "Tooltip: Distance to the surface of the target.",
+    "message": "Απόσταση από την επιφάνεια του σώματος του προορισμού "
+  },
+  "HUD_DURATION_OF_MANEUVER_BURN": {
+    "description": "Tooltip: The approximate duration of the maneuver burn with main thrusters.",
+    "message": "Η, με τους κύριους προωθητήρες, κατά προσέγγιση διάρκεια της απαραίτητης καύσης ελιγμού"
+  },
+  "HUD_DURATION_UNTIL_MANEUVER_BURN": {
+    "description": "Tooltip: The duration until the middle of the maneuver burn.",
+    "message": "Η διάρκεια μέχρι το μέσο της καύσης ελιγμού"
+  },
+  "HUD_FOLLOW_ORIENTATION": {
+    "description": "Tooltip for follow mode 'orientation' button",
+    "message": "{targetname}: Follow orientation"
+  },
+  "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE": {
+    "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object.",
+    "message": "{targetname}: Follow orientation is not available."
+  },
+  "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE_TOO_FAR": {
+    "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object, because it's too far.",
+    "message": "{targetname}: Follow orientation is not available - too far."
+  },
+  "HUD_FOLLOW_POSITION": {
+    "description": "Tooltip for follow mode 'position' button",
+    "message": "{targetname}: Follow position"
+  },
+  "HUD_FOLLOW_POSITION_NOT_AVAILABLE": {
+    "description": "Tooltip for follow mode 'position' button, when it's not available for the current object.",
+    "message": "{targetname}: Follow position is not available."
+  },
+  "HUD_FOLLOW_POSITION_NOT_AVAILABLE_TOO_FAR": {
+    "description": "Tooltip for follow mode 'position' button, when it's not available for the current object, because it's too far.",
+    "message": "{targetname}: Follow position is not available - too far."
+  },
+  "HUD_FOLLOW_TARGET": {
+    "description": "Tooltip for followed target's name in reticule",
+    "message": "Ακολουθήστε τον στόχο"
+  },
+  "HUD_FORWARD_GUN_TEMPERATURE": {
+    "description": "Tooltip: Forward Gun Temperature.",
+    "message": "Θερμοκρασία εμπρόσθιου όπλου"
+  },
+  "HUD_HULL_STRENGTH": {
+    "description": "Tooltip: Hull Strength.",
+    "message": "Αντοχή κύτους"
+  },
+  "HUD_HULL_TEMPERATURE": {
+    "description": "Tooltip: Hull Temperature.",
+    "message": "Θερμοκρασία κύτους"
+  },
+  "HUD_HYPERSPACE_DESTINATION": {
+    "description": "HUD Label indicating the hyperspace destination system. Should just be Destination.",
+    "message": "Προορισμός"
+  },
+  "HUD_HYPERSPACE_ORIGIN": {
+    "description": "HUD Label indicating the hyperspace origin system. Should just be Origin.",
+    "message": "Προέλευση"
+  },
+  "HUD_HYPERSPACING_TO_N_IN_N_SECONDS": {
+    "description": "",
+    "message": "Πραγματοποίηση υπεράλματος προς τον {destination} σε {countdown} δευτερόλεπτα"
+  },
+  "HUD_INDICATOR_AWAY_FROM_FRAME": {
+    "description": "Indicator: Away from the current frame.",
+    "message": "Αντίθετα από το τρέχον σύστημα αναφοράς"
+  },
+  "HUD_INDICATOR_COMBAT_TARGET_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current combat target.",
+    "message": "Ορθόδρομη σε σχέση με τον τρέχοντα στόχο μάχης"
+  },
+  "HUD_INDICATOR_COMBAT_TARGET_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current combat target.",
+    "message": "Ανάδρομη σε σχέση με τον τρέχοντα στόχο μάχης"
+  },
+  "HUD_INDICATOR_FRAME_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current frame.",
+    "message": "Ορθόδρομη σε σχέση με το τρέχον σύστημα αναφοράς"
+  },
+  "HUD_INDICATOR_FRAME_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current frame.",
+    "message": "Ανάδρομη σε σχέση με το τρέχον σύστημα αναφοράς"
+  },
+  "HUD_INDICATOR_MANEUVER_PROGRADE": {
+    "description": "Indicator: The prograde direction for the maneuver burn.",
+    "message": "Ορθόδρομη της καύσης ελιγμού"
+  },
+  "HUD_INDICATOR_NAV_TARGET_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current navigational target.",
+    "message": "Ορθόδρομη σε σχέση με τον τρέχοντα προορισμό πλοήγησης"
+  },
+  "HUD_INDICATOR_NAV_TARGET_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current navigational target.",
+    "message": "Ανάδρομη σε σχέση με τον τρέχοντα προορισμό πλοήγησης"
+  },
+  "HUD_IN_TRANSIT_TO_N_X_X_X": {
+    "description": "",
+    "message": "Καθ' οδόν προς το {system} [{x},{y},{z}]"
+  },
+  "HUD_JUMP_COMPLETE": {
+    "description": "",
+    "message": "Ολοκλήρωση άλματος: {percent}%"
+  },
+  "HUD_MASS": {
+    "description": "Mass",
+    "message": "Μάζα"
+  },
+  "HUD_RADAR_DISTANCE": {
+    "description": "Tooltip: Current distance of the radar.",
+    "message": "Ενεργή εμβέλεια ραντάρ"
+  },
+  "HUD_RADAR_TOGGLE_MODE": {
+    "description": "Tooltip: Toggle radar mode.",
+    "message": "Εναλλαγή της απεικόνισης του ραντάρ μεταξύ 2D και 3D."
+  },
+  "HUD_RADAR_ZOOM_MODE_AUTOMATIC": {
+    "description": "Tooltip: Current radar zoom mode.",
+    "message": "Αυτόματη εστίαση."
+  },
+  "HUD_RADAR_ZOOM_MODE_MANUAL": {
+    "description": "Tooltip: Current radar zoom mode.",
+    "message": "Χειροκίνητη εστίαση."
+  },
+  "HUD_REQUEST_TIME_ACCEL": {
+    "description": "Tooltip: Request time acceleration {time}",
+    "message": "Επιτάχυνση χρόνου: {time}"
+  },
+  "HUD_SHIELD_STRENGTH": {
+    "description": "Tooltip: Shield Strength.",
+    "message": "Αντοχή ασπίδας"
+  },
+  "HUD_SHOW_COMBAT_TARGET": {
+    "description": "Tooltip: Show the current combat target.",
+    "message": "Εμφάνιση του τρέχοντος στόχου μάχης"
+  },
+  "HUD_SHOW_FRAME": {
+    "description": "Tooltip: Show the current frame of reference.",
+    "message": "Εμφάνιση του τρέχοντος συστήματος αναφοράς"
+  },
+  "HUD_SHOW_NAV_TARGET": {
+    "description": "Tooltip: Show current navigational target.",
+    "message": "Εμφάνιση του τρέχοντος προορισμού πλοήγησης"
+  },
+  "HUD_SPEED_LIMITER_ACTIVE": {
+    "description": "Tooltip for the icon in the reticule that appears if the speed limiter is active",
+    "message": "Speed limiter is active"
+  },
+  "HUD_SPEED_OF_APPROACH_TO_FRAME": {
+    "description": "Tooltip: The speed of approach towards the frame of reference.",
+    "message": "Η ταχύτητα προσέγγισης προς το σύστημα αναφοράς"
+  },
+  "HUD_SPEED_OF_APPROACH_TO_TARGET": {
+    "description": "Tooltip: The speed of approach relative to target.",
+    "message": "Η ταχύτητα προσέγγισης σε σχέση με το στόχο"
+  },
+  "HUD_SPEED_RELATIVE_TO_TARGET": {
+    "description": "Tooltip: The speed relative to the target.",
+    "message": "Η ταχύτητα σε σχέση με το στόχο"
+  },
+  "HUD_THRUST_INDICATOR": {
+    "description": "Tooltip: describe what the thrust/velocity indicator shows",
+    "message": "Εμφάνιση της τρέχουσας ταχύτητας σε κάθε κατεύθυνση (λεπτές γραμμές) και της ώθησης (παχύ φόντο)"
+  },
+  "HUD_WARNING_DESCENT_RATE": {
+    "description": "Shown on HUD as a warning flasher",
+    "message": "ΣΑΣ ΠΑΙΡΝΕΙ Η ΚΑΤΗΦΟΡΑ"
+  },
+  "HUD_WARNING_IMPACT": {
+    "description": "Alert tooltip",
+    "message": "Προειδοποίηση πρόσκρουσης"
+  },
+  "HUD_WARNING_IMPACT_IMMINENT": {
+    "description": "Alert tooltip",
+    "message": "Επικείμενη πρόσκρουση"
+  },
+  "HULL_DOES_NOT_REQUIRE_REPAIR": {
+    "description": "",
+    "message": "Δεν απαιτείται επισκευή του κύτους"
+  },
+  "HULL_INTEGRITY": {
+    "description": "",
+    "message": "Ακεραιότητα κύτους"
+  },
+  "HULL_REPAIRED_BY_NAME_NOW_AT_N_PERCENT": {
+    "description": "",
+    "message": "Το κύτος επισκευάστηκε από τον {name}, τώρα στο {repairPercent}%"
+  },
+  "HULL_REPAIR_ATTEMPT_FAILED_HULL_SUFFERED_MINOR_DAMAGE": {
+    "description": "",
+    "message": "Η προσπάθεια επισκευής του κύτους απέτυχε. Το κύτος υπέστη μικρές ζημιές."
+  },
+  "HYPERDRIVE": {
+    "description": "",
+    "message": "Υπερκινητήρας"
+  },
+  "HYPERDRIVE_FITTED": {
+    "description": "",
+    "message": "Τοποθετήθηκε Υπερκινητήρας:"
+  },
+  "HYPERJUMP_ROUTE": {
+    "description": "",
+    "message": "Διαδρομή υπεραλμάτων"
+  },
+  "HYPERJUMP_ROUTING": {
+    "description": "Label indicating a category division",
+    "message": "Σχεδιασμός υπεράλματος"
+  },
+  "HYPERSPACE_RANGE": {
+    "description": "",
+    "message": "Υπερδιαστημική εμβέλεια"
+  },
+  "ILLEGAL_COMMODITIES": {
+    "description": "Commodities illegal in the current system or polity",
+    "message": "Απαγορευμένα εμπορεύματα."
+  },
+  "ILLEGAL_IN_SYSTEM": {
+    "description": "An illegal action or commodity",
+    "message": "Παράνομο στο σύστημα"
+  },
+  "ILLEGAL_JUMP": {
+    "description": "A finable crime",
+    "message": "Καταχωρήθηκε απερίσκεπτο υπεράλμα"
+  },
+  "IM_TIRED_OF_WORKING_FOR_NOTHING_DONT_YOU_KNOW_WHAT_A_CONTRACT_IS": {
+    "description": "",
+    "message": "Κουράστηκα να δουλεύω για το τίποτα. Δεν ξέρεις τι είναι το συμβόλαιο;"
+  },
+  "INACTIVE": {
+    "description": "",
+    "message": "Ανενεργό"
+  },
+  "INCOMPETENT": {
+    "description": "For player reputation",
+    "message": "Ανίκανος"
+  },
+  "INCREASE": {
+    "description": "Increase something.",
+    "message": "Αύξηση"
+  },
+  "INEXPERIENCED": {
+    "description": "For player reputation",
+    "message": "Άπειρος"
+  },
+  "INITIATED": {
+    "description": "Ship jump status",
+    "message": "Εκκίνησε"
+  },
+  "INSTALL": {
+    "description": "Install something",
+    "message": "Εγκαταστήστε"
+  },
+  "INSTALLED": {
+    "description": "Label indicating something is installed",
+    "message": "Εγκατεστημένο"
+  },
+  "INSUFFICIENT_FUEL": {
+    "description": "Ship jump status",
+    "message": "Ανεπαρκή καύσιμα"
+  },
+  "INSUFFICIENT_FUNDS": {
+    "description": "",
+    "message": "Ανεπάρκεια κεφαλαίων."
+  },
+  "INTELLIGENCE": {
+    "description": "Character parameter",
+    "message": "Intelligence"
+  },
+  "INTERSTELLAR_TRADE_AVG": {
+    "description": "Label displaying commodity flow at a per-system level",
+    "message": "Διαστρικό εμπόριο"
+  },
+  "INVERT_MOUSE_Y": {
+    "description": "",
+    "message": "Αντιστροφή ποντικιού Y"
+  },
+  "IN_CARGO_HOLD": {
+    "description": "",
+    "message": "Στον χώρο αποσκευών"
+  },
+  "IN_HOLD": {
+    "description": "Column title of the Commodity Market screen",
+    "message": "Στο σκάφος"
+  },
+  "IN_STOCK": {
+    "description": "Column title of Commodity and Ship Equipment markets showing current station stock level.",
+    "message": "Σε απόθεμα"
+  },
+  "IN_SYSTEM": {
+    "description": "Used in flight log, show which star system we are/were in",
+    "message": "Στο σύστημα"
+  },
+  "ITEM_IS_OUT_OF_STOCK": {
+    "description": "",
+    "message": "Αυτό το προϊόν έχει εξαντληθεί."
+  },
+  "ITS_BEEN_GREAT_WORKING_FOR_YOU_IF_YOU_NEED_ME_AGAIN_ILL_BE_HERE_A_WHILE": {
+    "description": "",
+    "message": "Ήταν υπέροχο που δούλεψα για εσάς. Αν με χρειαστείτε ξανά, θα είμαι εδώ για λίγο ακόμα."
+  },
+  "JETTISON": {
+    "description": "",
+    "message": "Απόρριψη στο διάστημα"
+  },
+  "JETTISON_MODE": {
+    "description": "",
+    "message": "Jettison Mode"
+  },
+  "JUMPING": {
+    "description": "Flight State",
+    "message": "Σε άλμα"
+  },
+  "KILLS": {
+    "description": "",
+    "message": "Φόνοι:"
+  },
+  "KNOWN_AS": {
+    "description": "Indicates alternate names/aliases for an object",
+    "message": "Γνωστό και ως"
+  },
+  "LANGUAGE": {
+    "description": "",
+    "message": "Γλώσσα"
+  },
+  "LANGUAGE_RESTART_GAME_TO_APPLY": {
+    "description": "",
+    "message": "Γλώσσα (επανεκκινήστε το παιχνίδι για να εφαρμοστεί)"
+  },
+  "LAUNCH_PERMISSION_DENIED_BUSY": {
+    "description": "",
+    "message": "Απορρίπτεται το αίτημα απογείωσης: η αποβάθρα προδέτησης είναι κατειλημμένη."
+  },
+  "LAUNCH_PERMISSION_DENIED_CREW": {
+    "description": "",
+    "message": "Απορρίπτεται το αίτημα απογείωσης: δεν έχετε επαρκές πλήρωμα για χειρισμό αυτού του σκάφους."
+  },
+  "LAUNCH_PERMISSION_DENIED_FINED": {
+    "description": "",
+    "message": "Απορρίπτεται το αίτημα απογείωσης: έχετε εκκρεμή πρόστιμα."
+  },
+  "LAUNCH_PERMISSION_GRANTED": {
+    "description": "",
+    "message": "Η άδεια απογείωσης χορηγήθηκε."
+  },
+  "LAUNCH_PERMISSION_GRANTED_DEPART_QUICK": {
+    "description": "",
+    "message": "Η άδεια χορηγείται. Παρακαλούμε, μην δημιουργήσετε αναστάτωση στους χώρους προσγείωσης και να αναχωρήστε γρήγορα."
+  },
+  "LAUNCH_PERMISSION_GRANTED_WATCH_TRAFFIC": {
+    "description": "",
+    "message": "Η άδεια χορηγείται. Προσέξτε την κυκλοφορία κατά την αναχώρησή σας."
+  },
+  "LAWFULNESS": {
+    "description": "Character parameter",
+    "message": "Lawfulness"
+  },
+  "LEGAL_RULES": {
+    "description": "Refers to laws, rules and regulations",
+    "message": "Οι κανόνες που ισχύουν εντός της περιοχής του κοσμοδρομίου. Η εφαρμογή τους ισχύει σε ακτίνα: {distance}"
+  },
+  "LEGAL_RULES_AND_REGULATIONS": {
+    "description": "Heading on a tab, keep it short",
+    "message": "Νόμοι και κανονισμοί."
+  },
+  "LEGAL_STATUS": {
+    "description": "",
+    "message": "Νομική κατάσταση"
+  },
+  "LIGHT_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "Ελαφρύ μεταφορικό εμπορευμάτων"
+  },
+  "LIGHT_COURIER": {
+    "description": "",
+    "message": "Ελαφρύ ταχυμεταφορικό"
+  },
+  "LIGHT_FIGHTER": {
+    "description": "",
+    "message": "Ελαφρύ μαχητικό"
+  },
+  "LIGHT_FREIGHTER": {
+    "description": "",
+    "message": "Ελαφρά φορτηγίδα"
+  },
+  "LIGHT_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "Ελαφρύ επιβατικό"
+  },
+  "LIGHT_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "Ελαφρύ σκάφος Μαζικής Μεταφοράς Επιβατών"
+  },
+  "LOAD": {
+    "description": "",
+    "message": "Φορτώστε"
+  },
+  "LOAD_GAME": {
+    "description": "",
+    "message": "Φόρτωση παιχνιδιού"
+  },
+  "LOBBY": {
+    "description": "",
+    "message": "Χώρος υποδοχής"
+  },
+  "LOCAL_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Τοπικός βραχίονας"
+  },
+  "LOCATED_N_KM_FROM_THE_CENTRE_OF_NAME": {
+    "description": "",
+    "message": "Βρίσκεται {distance} χιλιόμετρα από το κέντρο του {name}:"
+  },
+  "LOCATION": {
+    "description": "",
+    "message": "Θέση"
+  },
+  "LOG_CUSTOM": {
+    "description": "Label tab for showing custom logged events",
+    "message": "Προσαρμοσμένο ημερολόγιο"
+  },
+  "LOG_EARLIEST_FIRST": {
+    "description": "Show the log entries in chronological order, earliest first",
+    "message": "Order earliest first"
+  },
+  "LOG_EXPORT": {
+    "description": "Export the log",
+    "message": "Export"
+  },
+  "LOG_HTML": {
+    "description": "Export the log as HTML or not",
+    "message": "HTML"
+  },
+  "LOG_NEW": {
+    "description": "Indicate to make an entry into flight log system",
+    "message": "Νέα καταχώριση"
+  },
+  "LOG_STATION": {
+    "description": "Label tab for showing logged station events",
+    "message": "Ημερολόγιο σταθμών"
+  },
+  "LOG_SYSTEM": {
+    "description": "Label tab for showing logged system events",
+    "message": "Ημερολόγιο συστημάτων"
+  },
+  "LOW": {
+    "description": "",
+    "message": "Χαμηλά"
+  },
+  "LUCK": {
+    "description": "Character parameter",
+    "message": "Τύχη"
+  },
+  "LY": {
+    "description": "Light year",
+    "message": "ly"
+  },
+  "MAJOR_EXPORT": {
+    "description": "For displaying commodity information",
+    "message": "Κύρια Εξαγωγή:"
+  },
+  "MAJOR_IMPORT": {
+    "description": "For displaying commodity information",
+    "message": "Κύρια Εισαγωγή"
+  },
+  "MAKE_NEW_FACE": {
+    "description": "",
+    "message": "Δημιουργία νέου προσώπου"
+  },
+  "MALE": {
+    "description": "",
+    "message": "Άρρεν"
+  },
+  "MARKET_BUYLINE": {
+    "description": "",
+    "message": "Αγορά {amount} μονάδων για {price}"
+  },
+  "MARKET_SELLINE": {
+    "description": "",
+    "message": "Πώληση {amount} μονάδων για {price}"
+  },
+  "MASS": {
+    "description": "",
+    "message": "Μάζα"
+  },
+  "MASTER": {
+    "description": "For player reputation",
+    "message": "Δάσκαλος"
+  },
+  "MASTER_VOL": {
+    "description": "Master sound in settings option",
+    "message": "Κύριος ήχος:"
+  },
+  "MAX": {
+    "description": "",
+    "message": "μέγιστο"
+  },
+  "MAXIMUM_CREW": {
+    "description": "",
+    "message": "Μέγιστο πλήρωμα"
+  },
+  "MEDIUM": {
+    "description": "Game settings option: graphics resolution",
+    "message": "Μέση"
+  },
+  "MEDIUM_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "Μέσο μεταφορικό εμπορευμάτων"
+  },
+  "MEDIUM_COURIER": {
+    "description": "",
+    "message": "Μέσο ταχυμεταφορικό"
+  },
+  "MEDIUM_FIGHTER": {
+    "description": "",
+    "message": "Μέσο μαχητικό"
+  },
+  "MEDIUM_FREIGHTER": {
+    "description": "",
+    "message": "Μέση φορτηγίδα"
+  },
+  "MEDIUM_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "Μέσο επιβατικό"
+  },
+  "MEDIUM_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "Μέσο σκάφος Μαζικής Μεταφοράς Επιβατών"
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "Κράματα Μετάλλου"
+  },
+  "MILITARY": {
+    "description": "",
+    "message": "Στρατιωτικό"
+  },
+  "MINIMAL_TRADE": {
+    "description": "Indicates a system does not have a significant amount of trade in a commodity.",
+    "message": "Ελάχιστες συναλλαγές"
+  },
+  "MINIMUM_CREW": {
+    "description": "",
+    "message": "Ελάχιστο πλήρωμα"
+  },
+  "MINOR_EXPORT": {
+    "description": "For displaying commodity information",
+    "message": "Δευτερεύουσα Εξαγωγή"
+  },
+  "MINOR_IMPORT": {
+    "description": "For displaying commodity information",
+    "message": "Δευτερεύουσα Εισαγωγή"
+  },
+  "MISSILE_MOUNTS": {
+    "description": "",
+    "message": "Υποδοχές πυραύλων"
+  },
+  "MISSIONS": {
+    "description": "",
+    "message": "Αποστολές"
+  },
+  "MISSION_DETAILS": {
+    "description": "",
+    "message": "Λεπτομέρειες αποστολής"
+  },
+  "MODEL": {
+    "description": "3d model of the ship",
+    "message": "Model"
+  },
+  "MONEY": {
+    "description": "",
+    "message": "Money"
+  },
+  "MORE_INFO": {
+    "description": "",
+    "message": "Περισσότερα..."
+  },
+  "MORE_THAN_ONE_PLAYERS_SHIP_FOUND_IN_SPACE": {
+    "description": "Message when restoring savegame",
+    "message": "More than one player's ship found in space"
+  },
+  "MOSTLY_HARMLESS": {
+    "description": "",
+    "message": "Κατά βάση ακίνδυνος"
+  },
+  "MOVE_DOWN": {
+    "description": "move selection down in list",
+    "message": "Μια θέση προς τα κάτω"
+  },
+  "MOVE_UP": {
+    "description": "move selection up in list",
+    "message": "Μια θέση προς τα πάνω"
+  },
+  "MULTISAMPLING": {
+    "description": "",
+    "message": "Πολυδειγματοληψία"
+  },
+  "MULTISAMPLING_DESC": {
+    "description": "",
+    "message": "Ένα χαρακτηριστικό γραφικής τελειοποίησης, που χρησιμοποιείται για τη μείωση των πριονωτών, εικονοστοιχειωδών περιγραμμάτων. Μπορεί να είναι αρκετά απαιτητική σε πόρους."
+  },
+  "MURDER": {
+    "description": "",
+    "message": "Φόνος"
+  },
+  "MUSIC": {
+    "description": "",
+    "message": "Μουσική:"
+  },
+  "MUTE": {
+    "description": "",
+    "message": "Σίγαση"
+  },
+  "NAME_OBJECT": {
+    "description": "For an item or object",
+    "message": "Είδος"
+  },
+  "NAME_PERSON": {
+    "description": "For a person",
+    "message": "Ονοματεπώνυμο"
+  },
+  "NAVIGATION": {
+    "description": "Crew skill",
+    "message": "Πλοήγηση"
+  },
+  "NAVIGATOR": {
+    "description": "",
+    "message": "Πλοηγός"
+  },
+  "NEGOTIATE": {
+    "description": "",
+    "message": "Διαπραγμάτευση"
+  },
+  "NEW_GAME": {
+    "description": "Main menu item",
+    "message": "Νέο παιχνίδι"
+  },
+  "NEW_PAINTJOB_APPLIED": {
+    "description": "Paintshop popup",
+    "message": "The new paintjob has been applied to your ship."
+  },
+  "NEXT_FACE_FEATURE": {
+    "description": "Face feature switch button for FaceGenerator in the PersonalInfo view",
+    "message": "Επόμενο"
+  },
+  "NEXT_PAID": {
+    "description": "",
+    "message": "Επόμενη πληρωμή"
+  },
+  "NO": {
+    "description": "Negative answer to a question",
+    "message": "'Οχι"
+  },
+  "NOBODY": {
+    "description": "For player reputation",
+    "message": "Κανένας"
+  },
+  "NONE": {
+    "description": "",
+    "message": "Κανένα"
+  },
+  "NONE_FOR_SALE_IN_THIS_STATION": {
+    "description": "",
+    "message": "Κανένα προς πώληση σε αυτό το σταθμό."
+  },
+  "NORMA_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Βραχίονας Κανών"
+  },
+  "NOTES": {
+    "description": "",
+    "message": "Σημειώσεις:"
+  },
+  "NOTORIETY": {
+    "description": "Character parameter",
+    "message": "Notoriety"
+  },
+  "NOT_ENOUGH_ALLOY_TO_ATTEMPT_A_REPAIR": {
+    "description": "",
+    "message": "Δεν διαθέτετε αρκετό {alloy} για να επιχειρήσετε επισκευή."
+  },
+  "NOT_SUPPORTED_ON_THIS_SHIP": {
+    "description": "",
+    "message": "{equipment}. Δεν υποστηρίζεται σε αυτό το μοντέλο σκάφους"
+  },
+  "NO_AVAILABLE_DATA": {
+    "description": "Message displaying no stored data available",
+    "message": "Δεν υπάρχουν διαθέσιμα δεδομένα"
+  },
+  "NO_BOOKMARKS_FOUND": {
+    "description": "Label indicating a lack of bookmarks to display",
+    "message": "Δεν βρέθηκαν σελιδοδείκτες"
+  },
+  "NO_CARGO": {
+    "description": "Message displayed when the player has no cargo in their hold.",
+    "message": "NO CARGO"
+  },
+  "NO_DRIVE": {
+    "description": "Ship jump status",
+    "message": "Δεν διαθέτε υπερκινητήρα"
+  },
+  "NO_FILTER_MATCHES": {
+    "description": "No matches to this filter.",
+    "message": "Τίποτα δεν ταιριάζει στο συγκεκριμένο φίλτρο"
+  },
+  "NO_MISSIONS": {
+    "description": "",
+    "message": "Καμία αποστολή."
+  },
+  "NO_VALID_ROUTE": {
+    "description": "Message in the sector map, issued by the autoroute function.",
+    "message": "Δεν υπάρχει έγκυρη διαδρομή προς το επιλεγμένο σύστημα."
+  },
+  "N_LIGHT_YEARS_N_MAX": {
+    "description": "",
+    "message": "{range} έτη φωτός ({maxRange} μέγιστο)"
+  },
+  "N_OCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "{quantity} Κατειλημμένες καμπίνες επιβατών"
+  },
+  "N_SHIELD_GENERATORS": {
+    "description": "",
+    "message": "{quantity} Γεννήτριες ασπίδας"
+  },
+  "N_UNOCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "{quantity} Άδειες καμπίνες επιβατών"
+  },
+  "OCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "Occupied Passenger Cabins"
+  },
+  "OFF": {
+    "description": "",
+    "message": "Απενεργοποίηση"
+  },
+  "OFFENDER": {
+    "description": "Legal status of player",
+    "message": "Παραβάτης"
+  },
+  "OK": {
+    "description": "",
+    "message": "Εντάξει"
+  },
+  "OPEN_USER_FOLDER": {
+    "description": "",
+    "message": "ΧρήσηΦακέλου"
+  },
+  "OPTIONS": {
+    "description": "",
+    "message": "Επιλογές"
+  },
+  "ORBIT": {
+    "description": "",
+    "message": "Τροχιά"
+  },
+  "ORBIT_APOAPSIS": {
+    "description": "Label for the point of an orbit furthest from the orbited body",
+    "message": "Apoapsis"
+  },
+  "ORBIT_PERIAPSIS": {
+    "description": "Label for the point of an orbit nearest to the orbited body",
+    "message": "Periapsis"
+  },
+  "OUTER_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Δακτύλιος του Μονόκερω"
+  },
+  "OUTLAW": {
+    "description": "Legal status of player",
+    "message": "Παράνομος"
+  },
+  "OUTSTANDING_FINES": {
+    "description": "Unpaid fines for crimes committed",
+    "message": "Ληξιπρόθεσμα πρόστιμα."
+  },
+  "OUT_OF_RANGE": {
+    "description": "Ship jump status",
+    "message": "Εκτός εμβέλειας"
+  },
+  "OUT_OF_STOCK": {
+    "description": "Equipment availability",
+    "message": "Εξαντλημένο"
+  },
+  "OVERVIEW_NAME_FILTER": {
+    "description": "Filter overview window entries by name",
+    "message": "Φιλτράρισμα των καταχωρήσεων του παραθύρου επισκόπησης με βάση το όνομα"
+  },
+  "OWED": {
+    "description": "Player owing money to crew members",
+    "message": "Οφειλόμενα"
+  },
+  "PAINTSHOP": {
+    "description": "Station tab title",
+    "message": "Paintshop"
+  },
+  "PAINTSHOP_NOT_AVAILABLE": {
+    "description": "",
+    "message": "Paintshop is not available in this spaceport."
+  },
+  "PAINTSHOP_WELCOME_0": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Καλως ήρθατε! Θα κάνουμε ένα πολύ ωραίο βάψιμο στο σκάφος σας!"
+  },
+  "PAINTSHOP_WELCOME_1": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Γεια σου. Ψάχνεις για μια αισθητική αλλαγή;"
+  },
+  "PAINTSHOP_WELCOME_2": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Δεν μπορούμε να κάνουμε το σκάφος σας να πετάει γρήγορα, μπορούμε όμως να το κάνουμε να πετάει με στυλ."
+  },
+  "PAINTSHOP_WELCOME_3": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Καλως ήρθες ταξιδιώτη. Χαλάρωσε, και εξωτερίκευσε τη δημιουργικότητά σου."
+  },
+  "PAINTSHOP_WELCOME_4": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Looking the best in the galaxy has never been easier!"
+  },
+  "PASSENGER_CABIN_CAPACITY": {
+    "description": "Entry for ship info",
+    "message": "Passenger cabin capacity"
+  },
+  "PASTE": {
+    "description": "As for clipboard",
+    "message": "Επικόλληση"
+  },
+  "PATH_FOUND_BUT_VERIFICATION_FAILED": {
+    "description": "Message when restoring savegame",
+    "message": "Path found but verification failed: %s"
+  },
+  "PATTERN": {
+    "description": "Ship painting pattern.",
+    "message": "Pattern"
+  },
+  "PAY": {
+    "description": "Pay for a transaction of services, e.g. for paying fines, (or repairs)",
+    "message": "Πληρωμή"
+  },
+  "PAY_FINE_OF_N": {
+    "description": "",
+    "message": "Πληρωμή προστίμου ύψους {amount}"
+  },
+  "PENDING_RETURN": {
+    "description": "Status if the mission has not yet been fully completed",
+    "message": "Αναμονή για επιστροφή"
+  },
+  "PERSEUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Βραχίονας Περσεύς"
+  },
+  "PERSONAL_INFORMATION": {
+    "description": "",
+    "message": "Προσωπικές πληροφορίες"
+  },
+  "PILOT": {
+    "description": "",
+    "message": "Πιλότος"
+  },
+  "PILOTING": {
+    "description": "Crew skill",
+    "message": "Piloting"
+  },
+  "PILOT_SEAT_IS_NOW_OCCUPIED_BY_NAME": {
+    "description": "",
+    "message": "Στη θέση του πιλότου κάθεται τώρα ο {name}"
+  },
+  "PIRACY": {
+    "description": "",
+    "message": "Πειρατεία"
+  },
+  "PLANET_DETAIL_DISTANCE": {
+    "description": "",
+    "message": "Απόσταση λεπτομερειών"
+  },
+  "PLANET_TEXTURES": {
+    "description": "",
+    "message": "Υφές πλανήτη"
+  },
+  "PLEASE_DESIGN_NEW_PAINTJOB": {
+    "description": "",
+    "message": "Please design your new paintjob:"
+  },
+  "PLEASE_REPORT_THIS_ERROR": {
+    "description": "Informational text mentioning the error and asking the player to report it.",
+    "message": "Oops, something went wrong here! Please report the steps to reproduce this error, the output log, and your save file to the Pioneer issue tracker on Github.\nYou can find your output log at: {path}/output.txt"
+  },
+  "POLICE": {
+    "description": "",
+    "message": "Αστυνομία"
+  },
+  "POOR": {
+    "description": "Player combat rating",
+    "message": "Κακόμοιρος"
+  },
+  "POSESSION_OF_COMMODITIES_ILLEGAL": {
+    "description": "",
+    "message": "Η κατοχή ορισμένων εμπορευμάτων είναι παράνομη στο σύστημα."
+  },
+  "POSITION": {
+    "description": "The job title/position of crew memeber",
+    "message": "Ειδικότητα/Θέση"
+  },
+  "PRESS_A_KEY_OR_CONTROLLER_BUTTON": {
+    "description": "",
+    "message": "Πατήστε ένα πλήκτρο ή ένα κουμπί του χειριστηρίου ή escape για εκκαθάριση."
+  },
+  "PREVIOUS_FACE_FEATURE": {
+    "description": "Face feature switch button for FaceGenerator in the PersonalInfo view",
+    "message": "Προηγούμενο"
+  },
+  "PRICE": {
+    "description": "",
+    "message": "Τιμή"
+  },
+  "PROFESSIONAL": {
+    "description": "For player reputation",
+    "message": "Επαγγελματίας"
+  },
+  "PROFITABLE_TRADE": {
+    "description": "Indicates a profitable trade route.",
+    "message": "Επικερδείς συναλλαγές"
+  },
+  "PUMP_DOWN": {
+    "description": "Drain the fuel tank",
+    "message": "Αντλήστε κάτω"
+  },
+  "PUMP_DOWN_FROM_CARGO_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Μεταφορά &i τόνων από το αμπάρι"
+  },
+  "PUMP_DOWN_FROM_HYPERDRIVE_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Μεταφορά &i τόνων από τον υπερκινητήρα στις εσωτερικές δεξαμενές"
+  },
+  "PUMP_DOWN_TO_CARGO_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Μεταφορά &i τόνων στο αμπάρι"
+  },
+  "PUMP_DOWN_TO_HYPERDRIVE_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Μεταφορά %i τόνων στον υπερκινητήρα από τις εσωτερικές δεξαμενές"
+  },
+  "PURCHASE_PAINTJOB": {
+    "description": "Paintshop button",
+    "message": "Purchase Paintjob"
+  },
+  "QUALIFICATION_SCORES": {
+    "description": "",
+    "message": "Βαθμολογία προσόντων"
+  },
+  "QUIT": {
+    "description": "",
+    "message": "Παραίτηση"
+  },
+  "QUIT_CONFIRMATION": {
+    "description": "For the checkbox in settings window",
+    "message": "Επιβεβαίωση παραίτησης"
+  },
+  "RANDOM_COLORS": {
+    "description": "Paint shop. Randomize colors",
+    "message": "Τυχαία χρώματα"
+  },
+  "RANDOM_FACE": {
+    "description": "Generate random face",
+    "message": "Τυχαίο"
+  },
+  "RANK": {
+    "description": "",
+    "message": "Βαθμός:"
+  },
+  "RATING": {
+    "description": "",
+    "message": "Αξιολόγηση:"
+  },
+  "RAYLEIGH_ACCURATE": {
+    "description": "",
+    "message": "Rayleigh/Mie (accurate, per-pixel)"
+  },
+  "RAYLEIGH_FAST": {
+    "description": "",
+    "message": "Rayleigh/Mie (fast, per-vertex)"
+  },
+  "REALISTIC_SCATTERING": {
+    "description": "",
+    "message": "Scattering"
+  },
+  "REALISTIC_SCATTERING_DESC": {
+    "description": "",
+    "message": "Select scattering when rendering atmospheres. (Rayleigh/Mie is not recommended for low-end PCs)"
+  },
+  "REAR_WEAPON": {
+    "description": "",
+    "message": "Οπίσθιο όπλο"
+  },
+  "RECOVER": {
+    "description": "Saveload menu button",
+    "message": "Recover"
+  },
+  "RECOVERED_BUT_NOT_VALID": {
+    "description": "Message when restoring savegame",
+    "message": "Recovered but not valid"
+  },
+  "RECOVER_SAVEGAME": {
+    "description": "",
+    "message": "Recover savegame"
+  },
+  "REFUEL": {
+    "description": "",
+    "message": "Ανεφοδιασμός"
+  },
+  "REFUEL_FULL": {
+    "description": "",
+    "message": "Ανεφοδιασμός πλήρης"
+  },
+  "REGISTRATION_NUMBER": {
+    "description": "",
+    "message": "Αριθμός μητρώου"
+  },
+  "RELIABLE": {
+    "description": "For player reputation",
+    "message": "Αξιόπιστος"
+  },
+  "REMOVE": {
+    "description": "Remove, e.g. deleting a log entry",
+    "message": "Αφαίρεση"
+  },
+  "REMOVE_JUMP": {
+    "description": "UI-button: remove hyper jump from list of planned jumps",
+    "message": "Αφαίρεση άλματος"
+  },
+  "REMOVE_WHEN_COMPLETED": {
+    "description": "For UI hyperjump planner, referring to jump target system",
+    "message": "Αφαίρεση άλματος όταν ολοκληρωθεί"
+  },
+  "REPAIR_X_HULL_DAMAGE_FOR_X": {
+    "description": "",
+    "message": " Επισκευή {damage}% ζημιάς κύτους για {price}"
+  },
+  "REPLACE_EQUIPMENT": {
+    "description": "Market header when replacing equipped items",
+    "message": "Αντικατάσταση εξοπλισμού"
+  },
+  "REPUTATION": {
+    "description": "",
+    "message": "Υπόληψη"
+  },
+  "REQUEST_LAUNCH": {
+    "description": "",
+    "message": "Αίτημα απογείωσης"
+  },
+  "REQUIRED_FUEL": {
+    "description": "Fuel usage for traveling to star system",
+    "message": "Απαιτούμενο καύσιμο"
+  },
+  "RESET": {
+    "description": "",
+    "message": "Επαναφορά"
+  },
+  "RESET_ORIENTATION_AND_ZOOM": {
+    "description": "",
+    "message": "Επαναφορά προσανατολισμού και αυξομείωσης"
+  },
+  "RESET_PREVIEW": {
+    "description": "Paintshop button",
+    "message": "Reset Preview"
+  },
+  "RESET_VIEW_ON_HYPERSPACE_EXIT": {
+    "description": "Reset View on Hyperspace Exit option",
+    "message": "Επαναφορά της κάμερας κατά την έξοδο από το υπερδιάστημα"
+  },
+  "RESET_VIEW_ON_HYPERSPACE_EXIT_DESC": {
+    "description": "The tooltip of Reset View on Hyperspace Exit in the settings menu",
+    "message": "Επαναφέρει την κάμερα στην αρχική, κατά την έξοδο από το υπερδιάστημα."
+  },
+  "RETURN_TO_GAME": {
+    "description": "",
+    "message": "Επιστροφή στο παιχνίδι"
+  },
+  "RETURN_TO_MENU": {
+    "description": "",
+    "message": "Επιστροφή στο μενού"
+  },
+  "REVERSE_ACCEL_EMPTY": {
+    "description": "",
+    "message": "Αντίστροφη επιτάχυνση (κενό)"
+  },
+  "REVERSE_ACCEL_FULL": {
+    "description": "",
+    "message": "Αντίστροφη επιτάχυνση (πλήρες)"
+  },
+  "REWARD": {
+    "description": "",
+    "message": "Ανταμοιβή"
+  },
+  "ROTATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to rotate camera view with mouse",
+    "message": "Κρατήστε πατημένο για να περιστρέψετε την προβολή"
+  },
+  "ROUTE_INFO": {
+    "description": "For hyperjump planner",
+    "message": "Πληροφορίες διαδρομής"
+  },
+  "ROUTE_JUMPS": {
+    "description": "For hyperjump planner",
+    "message": "Άλματα διαδρομής"
+  },
+  "SAFETY_LOCKOUT": {
+    "description": "Ship jump status",
+    "message": "Κλείδωμα ασφαλείας"
+  },
+  "SAGITTARIUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Βραχίονας Τρόπιδος"
+  },
+  "SAVE": {
+    "description": "",
+    "message": "Αποθήκευση"
+  },
+  "SAVED_GAMES": {
+    "description": "Header for save/load window",
+    "message": "Αποθηκευμένα παιχνίδια"
+  },
+  "SAVE_AS": {
+    "description": "",
+    "message": "Αποθηκεύστε ως"
+  },
+  "SAVE_DELETED_SUCCESSFULLY": {
+    "description": "",
+    "message": "Save deleted successfully"
+  },
+  "SCATTERING_OLD": {
+    "description": "",
+    "message": "Legacy"
+  },
+  "SCOOP_MOUNTS": {
+    "description": "How many slots or mounts exist on the ship for fitting SCOOPS (e.g. cargo scoop, fuel scoop, multi-scoop) ",
+    "message": "Υποδοχείς συλλεκτών"
+  },
+  "SCUTUM_CENTAURUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Βραχίονας Κύκνου"
+  },
+  "SELECT": {
+    "description": "",
+    "message": "Επιλέξτε"
+  },
+  "SELECTED": {
+    "description": "Label indicating the following item is selected",
+    "message": "Επιλεγμένο"
+  },
+  "SELECTED_SAVE_DOESNT_EXISTS": {
+    "description": "",
+    "message": "Selected save doesn't exist"
+  },
+  "SELECTED_SAVE_IS_NOT_A_VALID_SAVE": {
+    "description": "",
+    "message": "Selected save is not a valid save"
+  },
+  "SELECT_A_FILE_TO_SAVE_TO_OR_ENTER_A_NEW_FILENAME": {
+    "description": "",
+    "message": "Επιλέξτε ένα αρχείο για αποθήκευση ή εισαγάγετε ένα νέο όνομα αρχείου."
+  },
+  "SELECT_FILE": {
+    "description": "",
+    "message": "Επιλέξτε αρχείο..."
+  },
+  "SELECT_GAME_TO_LOAD": {
+    "description": "",
+    "message": "Επιλέξτε παιχνίδι για φόρτωση..."
+  },
+  "SELECT_START_PROFILE": {
+    "description": "Combo box for selecting the starting position",
+    "message": "Select start profile:"
+  },
+  "SELL": {
+    "description": "Commodities and equipment prices",
+    "message": "Πώληση"
+  },
+  "SELL_EQUIP": {
+    "description": "Button text to sell installed equipment. May be used in a singular or plural context.",
+    "message": "Πουλήστε {name}"
+  },
+  "SELL_EQUIPPED": {
+    "description": "Button text to sell selected ship equipment",
+    "message": "Sell Equipped"
+  },
+  "SELL_PRICE": {
+    "description": "Title for sell-price column in commodity market",
+    "message": "Πώληση"
+  },
+  "SENSORS": {
+    "description": "Crew skill",
+    "message": "Αισθητήρες"
+  },
+  "SENSORS_AND_DEFENCE": {
+    "description": "",
+    "message": "Αισθητήρες και άμυνα"
+  },
+  "SETTINGS": {
+    "description": "UI option",
+    "message": "Ρυθμίσεις"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Ορίστε τον προορισμό ως προορισμό πλοήγησης."
+  },
+  "SET_JUMP_TARGET": {
+    "description": "Button tooltip which sets the jump route to the selected body",
+    "message": "Θέστε στόχο υπεράλματος"
+  },
+  "SET_RETURN_ROUTE": {
+    "description": "",
+    "message": "Ορίστε την διαδρομή επιστροφής"
+  },
+  "SET_TO_45PERCENT_OF_DELTAV": {
+    "description": "For the speed limiter button",
+    "message": "Set to 45% of remaining delta-v"
+  },
+  "SET_TO_CURRENT_VELOCITY": {
+    "description": "For the speed limiter button",
+    "message": "Set to current velocity"
+  },
+  "SET_TO_ZERO": {
+    "description": "For the speed limiter button",
+    "message": "Set to zero"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Σκάφος"
+  },
+  "SHIPS_ENGINEER": {
+    "description": "",
+    "message": "Μηχανικός σκάφους"
+  },
+  "SHIP_INFORMATION": {
+    "description": "",
+    "message": "Πληροφορίες σκάφους"
+  },
+  "SHIP_IS_ALREADY_FULLY_REPAIRED": {
+    "description": "",
+    "message": "Το σκάφος σας είναι σε άριστη κατάσταση λειτουργίας."
+  },
+  "SHIP_IS_FULLY_EQUIPPED": {
+    "description": "",
+    "message": "Το σκάφος σας είναι πλήρες σε αυτόν τον εξοπλισμό."
+  },
+  "SHIP_IS_FULLY_LADEN": {
+    "description": "",
+    "message": "Το σκάφος σας είναι πλήρως φορτωμένο."
+  },
+  "SHIP_MARKET": {
+    "description": "",
+    "message": "Αγορά σκαφών"
+  },
+  "SHIP_NAME": {
+    "description": "",
+    "message": "Ship name"
+  },
+  "SHIP_PARAMETERS": {
+    "description": "",
+    "message": "Ship parameters"
+  },
+  "SHIP_REPAIRS": {
+    "description": "Station tab name",
+    "message": "Ship Repairs & Paintshop"
+  },
+  "SHIP_TYPE": {
+    "description": "",
+    "message": "Τύπος σκάφους"
+  },
+  "SHOW_AUTOSAVES": {
+    "description": "Button tooltip indicating whether to show autosave files",
+    "message": "Δείξτε τα αυτο-αποθηκευμένα παιχνίδια."
+  },
+  "SIMULATING_UNIVERSE_EVOLUTION_N_BYEARS": {
+    "description": "",
+    "message": "Προσομοίωση της εξέλιξης του σύμπαντος: {age} δισεκατομμύρια χρόνια ;-)"
+  },
+  "SOME_PARAMETERS_ARE_NOT_OK": {
+    "description": "Diagnostics at game start",
+    "message": "Some parameters are not OK:"
+  },
+  "SORT_COMMODITY": {
+    "description": "Indicates the list of objects should be sorted by commodity",
+    "message": "Εμπόρευμα."
+  },
+  "SORT_DISTANCE": {
+    "description": "Indicates the list of objects should be sorted by distance",
+    "message": "Απόσταση"
+  },
+  "SORT_MODE": {
+    "description": "Label indicating the current sorting mode of a list of objects",
+    "message": "Τρόπος κατάταξης"
+  },
+  "SORT_NAME": {
+    "description": "Indicates the list of objects should be sorted by name",
+    "message": "Ονοματεπώνυμο"
+  },
+  "SOUND": {
+    "description": "",
+    "message": "Ήχος"
+  },
+  "STANDARD_GAME_START_TIME": {
+    "description": "Standard game start time, current moment + 1200 years",
+    "message": "Standard game start time"
+  },
+  "START_AT_BARNARDS_STAR": {
+    "description": "",
+    "message": "Ξεκινήστε από τον Αστέρα του Barnard"
+  },
+  "START_AT_BARNARDS_STAR_DESC": {
+    "description": "",
+    "message": "Πρόκειται για μια δύσκολη εκκίνηση από το σταθμό της φυλακής 'Για μια Ήρεμη Διαχείριση Συστήματος'."
+  },
+  "START_AT_MARS": {
+    "description": "",
+    "message": "Ξεκινήστε από τον Άρη"
+  },
+  "START_AT_MARS_DESC": {
+    "description": "",
+    "message": "Αυτή είναι μια εύκολη εκκίνηση από την Κυδωνία του Άρη του Ηλιακού συστήματος."
+  },
+  "START_AT_NEW_HOPE": {
+    "description": "New Hope is an in game location",
+    "message": "Ξεκινήστε από τη Νέα Ελπίδα"
+  },
+  "START_AT_NEW_HOPE_DESC": {
+    "description": "",
+    "message": "Πρόκειται για μια μέτρια εκκίνηση από το Itzalean της Νέας Ελπίδας του συστήματος έψιλον (ε) Ηριδανού."
+  },
+  "START_GAME": {
+    "description": "Button",
+    "message": "¨Εναρξη παιχνιδιού"
+  },
+  "START_LOG_ENTRY_1": {
+    "description": "First custom log message when starting a new game, giving backstory to the character. Importantly we here hint at what actions the player is best to take: buy fuel, get reputation, ask for take off clearance.",
+    "message": "Δυστυχώς, ο θείος δεν μου έδειξε ποτέ πώς να χειρίζομαι αυτή την παλιά φορτηγίδα όταν ζούσε, αλλά νομίζω ότι τώρα κάνω μια καταχώρηση στο ημερολόγιο του πλοίου. Είναι παράξενο, τον νιώθω ακόμα, σαν να είναι μέσα στους τοίχους αυτού του σκάφους. Ίσως μπορεί να γίνει ο συγκυβερνήτης μου, και μαζί θα εκδηλώσουμε το πεπρωμένο μας στο μεγάλο κενό. Αλλά πρώτα, πρέπει να αγοράσω λίγο υδρογόνο για τον κινητήρα άλματος, να χαράξω μια πορεία προς επικερδείς εμπορικές ευκαιρίες, και να προσευχηθώ στους ουρανούς ότι ο έλεγχος κυκλοφορίας θα επιτρέψει σε έναν άπειρο πιλότο σαν εμένα να απογειωθεί, και μετά θα δούμε τι μπορεί να κάνει αυτό το μωρό. Ώρα να φτιάξω μια φήμη για μένα!"
+  },
+  "START_LOG_ENTRY_2": {
+    "description": "First custom log message when starting a new game, giving backstory to the character, here going for a Blade Runner feeling",
+    "message": "Οι μπότες μου είναι ακόμα βρεγμένες από την έντονη βροχόπτωση χθες το βράδυ, στο σπίτι μου. Το πεζοδρόμιο βράχηκε τόσο πολύ που - φαινομενικά, σαν μια πράξη εκδίκησης - έλουσε τον νυχτερινό ουρανό με την αντανάκλαση της λάμψης από τις πινακίδες νέον που κοίταζαν προς τα κάτω στον βρεγμένο δρόμο. Αλλά τα κατάφερα, μέσα στη βροχή, να προφτάσω την πτήση ανταπόκρισης για το κοσμοδρόμιο όπου με περίμενε το νέο μου σκάφος. Ο αξιωματικός ασφαλείας του κοσμοδρομίου με κοίταξε περίεργα όταν του είπα ότι ήρθα να παραλάβω ένα σκάφος. Υποθέτω ότι δεν έμοιαζα με τον τυπικό διαστημάνθρωπο, έχοντας πουλήσει ό,τι είχα και δεν είχα για να επενδύσω σε αυτήν την παλιά σκουριασμένη σακαράκα, καθώς στεκόμουν μπροστά του, με βρεγμένες μπότες και όλα τα συναφή. Αλλά πραγματικά αισθάνομαι, ότι από τώρα και στο εξής, το μέλλον μου θα είναι γραμμένο στα αστέρια. Τώρα, απλά πρέπει να βρω το κλειδί της εκκίνησης."
+  },
+  "START_LOG_ENTRY_3": {
+    "description": "First custom log message when starting a new game, giving backstory to the character. Here explaining why there's no hyperdrive in the ship, and what to do about it.",
+    "message": "Μετά από μια μακρά γραφειοκρατική διαδικασία, πήρα τελικά πίσω το πλοίο μου από το κατασχετήριο, αλλά το είχαν απογυμνώσει μέχρι το γυμνό μέταλλο, για να πληρώσουν το \"χρέος\" που ισχυρίζονταν ότι είχα. Όχι μόνο πήραν την αγαπημένη μου καφετιέρα, αλλά αυτοί οι μπάσταρδοι έβγαλαν και τον υπερκινητήρα, οπότε έχω κολλήσει προς το παρόν σε αυτό το σύστημα, εκτός αν πουλήσω ό,τι έχει απομείνει στο σκάφος, για να χρηματοδοτήσω έναν νέο κινητήρα. Αλλά όπως λένε: όταν η ζωή σου δίνει λεμόνια - φτιάξε λεμονάδα- έτσι, ακόμα κι αν ξαναγυρίσω στο σημείο μηδέν, θα το θεωρήσω ως ευκαιρία αντί για αποτυχία, ως μια δεύτερη ευκαιρία. Χωρίς καφέ. Αφήνοντας αυτό που είμαι, θα γίνω αυτό που θα μπορούσα να είμαι. Ο κόσμος θα κάνει στην άκρη και θα με αφήσει να περάσω, όπως κάνει για όσους ξέρουν πού πηγαίνουν, και εγώ κατευθύνομαι προς τα αστέρια."
+  },
+  "STAR_FIELD_DENSITY": {
+    "description": "",
+    "message": "Πυκνότητα πεδίου αστέρων"
+  },
+  "STAR_FIELD_STAR_SIZE_FACTOR": {
+    "description": "",
+    "message": "Size of stars in star field"
+  },
+  "STATION": {
+    "description": "Flight log info, will refer to a station by name",
+    "message": "Σταθμός"
+  },
+  "STATION_DOCKS": {
+    "description": "Information shown in the station lobby, for total number of docking pads",
+    "message": "Η συνολική χωρητικότητα μας είναι {total_docking_pads} βάσεις προδέτησης."
+  },
+  "STATION_LOCAL_GRAVITY": {
+    "description": "",
+    "message": "Η τοπική βαρύτητα εδώ είναι %.2f g."
+  },
+  "STATION_LOCAL_GRAVITY_PRESSURE": {
+    "description": "",
+    "message": "Η τοπική βαρύτητα εδώ είναι %.2f g, και η ατμοσφαιρική πίεση είναι %.2f atm."
+  },
+  "STATION_MANAGER": {
+    "description": "",
+    "message": "Διευθυντής σταθμού"
+  },
+  "STATION_ORBIT": {
+    "description": "Information shown in the station loby",
+    "message": "Βρισκόμαστε σε τροχιά περιφοράς {orbit_period} ημερών γύρω από το {parent_body}."
+  },
+  "STATION_TECH_TOO_LOW": {
+    "description": "",
+    "message": "Το επίπεδο τεχνολογίας του σταθμού είναι πολύ χαμηλό για να πουληθεί αυτό το αντικείμενο"
+  },
+  "STATUS": {
+    "description": "",
+    "message": "Κατάσταση"
+  },
+  "SUMMARY": {
+    "description": "Tab item in the start game menu",
+    "message": "Σύνοψη"
+  },
+  "SYSTEM_BODY_INDEX_IS_OUT_OF_RANGE": {
+    "description": "Message when restoring savegame",
+    "message": "System body index is out of range"
+  },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Εξουσιάζεται από"
+  },
+  "SYSTEM_INFORMATION": {
+    "description": "Tooltip / label indicating information about a selected star system",
+    "message": "Πληφορορίες συστήματος"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Αριθμός αστέρων στο σύστημα"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Ασφαλές"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Κατά βάση ακίνδυνος"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Επικίνδυνος"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Πολύ επικίνδυνο"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Θανάσιμος"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Επίπεδο ασφαλείας συστήματος"
+  },
+  "TECH_CERTIFIED": {
+    "description": "Lobby screen shows the tech level (an integer number) of the station",
+    "message": "Αυτός ο σταθμός διαθέτει πιστοποιητικό τεχνολογίας επιπέδου {tech_level}."
+  },
+  "TECH_CERTIFIED_MILITARY": {
+    "description": "Lobby screen shows the tech level of the station",
+    "message": "Η εγκατάσταση αυτή διαθέτει άδεια στρατιωτικής τεχνολογίας."
+  },
+  "TECH_LEVEL": {
+    "description": "System view label for technology level",
+    "message": "Τεχνολογικό επίπεδο"
+  },
+  "TEXTURE_COMPRESSION": {
+    "description": "",
+    "message": "Απελευθερώνει περισσότερη μνήμη για την κάρτα γραφικών, το οποίο είναι πιθανότατα αυτό που θέλετε, με το κόστος ότι συμπιέζεται κατά την έναρξη του παιχνιδιού."
+  },
+  "THANKS_AND_REMEMBER_TO_BUY_FUEL": {
+    "description": "",
+    "message": "Σας ευχαριστούμε για την αγορά σας. Θυμηθείτε να τοποθετήσετε τον εξοπλισμό και να αγοράσετε καύσιμα πριν αναχωρήσετε."
+  },
+  "THERE_IS_NOBODY_ELSE_ON_BOARD_ABLE_TO_FLY_THIS_SHIP": {
+    "description": "",
+    "message": "Δεν υπάρχει κανένας άλλος εδώ πέρα που να μπορεί να πετάξει αυτό το σκάφος."
+  },
+  "THERE_WERE_ERRORS_IN_RECOVERY": {
+    "description": "Message when restoring savegame",
+    "message": "There were errors in recovery:"
+  },
+  "THESE_ITEMS_ARE_PUNISHABLE_BY_FINE": {
+    "description": "",
+    "message": "Η αγορά, πώληση και μεταφορά αυτών των εμπορευμάτων τιμωρείται με πρόστιμο και πιθανή κατάσχεση του σκάφους."
+  },
+  "THE_SHIP_IS_UNDER_STATION_CONTROL_COMMANDER": {
+    "description": "",
+    "message": "Το σκάφος είναι υπό τον έλεγχο του σταθμού, Κυβερνήτη."
+  },
+  "THIS_IS_FACTION_POLICE": {
+    "description": "Greeting message in police station. 'faction' is one of (English, non-translatable) strings: 'Solar Federation', 'Commonwealth of Independent Worlds', or 'Haber Corporation', and 'faction_police' is one of: 'SolFed Police Force', 'Confederal Police' or, 'Haber Enforcement Division'",
+    "message": "Εδώ {faction_police} της {faction}"
+  },
+  "THREE_KPC_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Βραχίονας των 3 χιλιοπαρσέκ"
+  },
+  "TOGGLE_CARGO_WINDOW": {
+    "description": "Label for a button toggling the cargo display window.",
+    "message": "Toggle Cargo Window"
+  },
+  "TOGGLE_FULL_COMMS_WINDOW": {
+    "description": "on world view / main screen",
+    "message": "Toggle full comms window"
+  },
+  "TOGGLE_MALE_FEMALE": {
+    "description": "player gender",
+    "message": "Εναλλαγή αρσενικού/θηλυκού"
+  },
+  "TOGGLE_OVERVIEW_SHOW_MOONS": {
+    "description": "toggle whether the overview window shows moons or not",
+    "message": "Εναλλαγή εμφάνισης φεγγαριών στην επισκόπηση"
+  },
+  "TOGGLE_OVERVIEW_SHOW_STATIONS": {
+    "description": "toggle whether the overview window shows stations or not",
+    "message": "Εναλλαγή εμφάνισης σταθμών στην επισκόπηση"
+  },
+  "TOGGLE_OVERVIEW_SORT_BY_PLAYER_DISTANCE": {
+    "description": "toggle whether the overview window sorts by distance from the player or from the system center",
+    "message": "Εναλλαγή μεταξύ ταξινόμησης με βάση την απόσταση από τον παίκτη και την απόσταση από το κέντρο του συστήματος"
+  },
+  "TOGGLE_OVERVIEW_WINDOW": {
+    "description": "show/hide the overview window / navigation window",
+    "message": "Εναλλαγή του παραθύρου επισκόπησης"
+  },
+  "TOO_SMALL_FOR_CURRENT_CREW": {
+    "description": "",
+    "message": "Το σκάφος είναι πολύ μικρό για το τρέχον πλήρωμα."
+  },
+  "TOO_SMALL_TO_TRANSSHIP": {
+    "description": "Ship market error message",
+    "message": "Το νέο σκάφος δεν έχει χωρητικότητα για το τρέχον φορτίο και τον υπερκινητήρα."
+  },
+  "TOTAL": {
+    "description": "",
+    "message": "Συνολικά:"
+  },
+  "TOTAL_DISTANCE": {
+    "description": "Total distance of a (possibly series) of hyper jump(s)",
+    "message": "Συνολική απόσταση"
+  },
+  "TOTAL_DURATION": {
+    "description": "Total duration of a (possibly series) of hyper jump(s)",
+    "message": "Συνολική διάρκεια ταξιδιού"
+  },
+  "TOTAL_MASS": {
+    "description": "",
+    "message": "Ολική μάζα"
+  },
+  "TO_PICK_UP": {
+    "description": "Mission status",
+    "message": "Προς παραλαβή"
+  },
+  "TRADING_AT": {
+    "description": "Indicates the current system for inspecting commodities.",
+    "message": "At {system}:"
+  },
+  "TRADING_FROM": {
+    "description": "Indicates the source system of a commodity trade.",
+    "message": "Από {system}:"
+  },
+  "TRADING_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Εμπόριο παράνομων αγαθών"
+  },
+  "TRADING_TO": {
+    "description": "Indicates the destination system of a commodity trade.",
+    "message": "Στο {system}:"
+  },
+  "TRANSFER_FUEL": {
+    "description": "Label indicating the ability to transfer fuel between equipment tanks",
+    "message": "Μεταφορά καυσίμου"
+  },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Πατήστε και κρατήστε για αλλαγή οπτικής γωνίας"
+  },
+  "TRUSTWORTHY": {
+    "description": "For player reputation",
+    "message": "Αξιόπιστος"
+  },
+  "TURN_OFF": {
+    "description": "",
+    "message": "Turn off"
+  },
+  "TYPE": {
+    "description": "",
+    "message": "Type"
+  },
+  "UNKNOWN_CUSTOM_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "Unknown custom log entry format"
+  },
+  "UNKNOWN_FACTION": {
+    "description": "For entry in the flight log",
+    "message": "Unknown faction"
+  },
+  "UNKNOWN_LOCATION_IN_SECTOR_X": {
+    "description": "For entry in the flight log",
+    "message": "Unknown location in sector {sector}"
+  },
+  "UNKNOWN_STATION_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "Unknown station log entry format"
+  },
+  "UNKNOWN_SYSTEM_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "Unknown system log entry format"
+  },
+  "UNLAWFUL_ECM_DISCHARGE": {
+    "description": "",
+    "message": "Παράνομη ενεργοποίηση ECM"
+  },
+  "UNLAWFUL_WEAPONS_DISCHARGE": {
+    "description": "",
+    "message": "Παράνομη απόρριψη όπλων"
+  },
+  "UNOCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "Κενές καμπίνες επιβατών"
+  },
+  "UNPROFITABLE_TRADE": {
+    "description": "Indicates an unprofitable trade route.",
+    "message": "Ζημιογόνες συναλλαγές"
+  },
+  "UNRELIABLE": {
+    "description": "",
+    "message": "Αναξιόπιστος"
+  },
+  "UNSUCCESSFULLY_RECOVERED_PARAMETERS_ARE_NOW_UNLOCKED_PLEASE_SET_THEM_MANUALLY": {
+    "description": "Message when restoring savegame",
+    "message": "Unsuccessfully recovered parameters are now unlocked, please set them manually."
+  },
+  "UP_ACCEL": {
+    "description": "",
+    "message": "Επιτάχυνση προς τα πάνω"
+  },
+  "USED": {
+    "description": "",
+    "message": "Εν χρήση"
+  },
+  "VERY_HIGH": {
+    "description": "Game settings option: graphic resolution",
+    "message": "Πολύ υψηλή"
+  },
+  "VERY_LOW": {
+    "description": "Game settings option: graphic resolution",
+    "message": "Πολύ χαμηλή"
+  },
+  "VICINITY_OF": {
+    "description": "",
+    "message": "Στη γειτονιά του"
+  },
+  "VIDEO": {
+    "description": "",
+    "message": "Εικόνα"
+  },
+  "VIDEO_CONFIGURATION_RESTART_GAME_TO_APPLY": {
+    "description": "",
+    "message": "Ρύθμιση εικόνας (επανεκκινήστε το παιχνίδι για να εφαρμοστεί)"
+  },
+  "VIDEO_RESOLUTION": {
+    "description": "",
+    "message": "Ανάλυση εικόνας"
+  },
+  "VIDEO_RESOLUTION_DESC": {
+    "description": "Tooltip for video mode/resultion setting",
+    "message": "Οι υψηλότερες αναλύσεις εμφανίζουν περισσότερες πληροφορίες σε μικρότερο μέγεθος και μπορεί να μειώσουν την απόδοση."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Προβολή προορισμού"
+  },
+  "VISIT_PAINTSHOP": {
+    "description": "Ship Repair tab button.",
+    "message": "Visit Paintshop"
+  },
+  "VISIT_REPAIR_SERVICES": {
+    "description": "Ship Repair tab button.",
+    "message": "Visit Repair Services"
+  },
+  "VOLUME": {
+    "description": "The volume property of some object",
+    "message": "Όγκος"
+  },
+  "VSYNC": {
+    "description": "For the checkbox in settings window",
+    "message": "VSync"
+  },
+  "VSYNC_DESC": {
+    "description": "",
+    "message": "Ο κάθετος συγχρονισμός μπορεί να εξαλείψει το οπτικό σκίσιμο ή τα τεχνουργήματα και την καθυστέρηση εισόδου."
+  },
+  "WAGE": {
+    "description": "Salary of crew shown in crew roster",
+    "message": "Μισθός"
+  },
+  "WEIGHT_EMPTY": {
+    "description": "",
+    "message": "Βάρος άδειου"
+  },
+  "WEIGHT_FULLY_LOADED": {
+    "description": "",
+    "message": "Βάρος πλήρως φορτωμένου"
+  },
+  "WE_ARE_IN_HYPERSPACE_COMMANDER": {
+    "description": "",
+    "message": "Είμαστε στο υπερδιάστημα, Κυβερνήτη."
+  },
+  "WE_HAVE_NO_BUSINESS_WITH_YOU": {
+    "description": "Said by the police to law abiding player",
+    "message": "Δεν έχουμε καμία δουλειά μαζί σας αυτή τη στιγμή."
+  },
+  "X_CANNOT_BE_TOLERATED_HERE": {
+    "description": "Message to be sent over comms by police when crime is committed by player",
+    "message": "{crime}. Δεν το ανεχόμαστε εδώ!"
+  },
+  "YES": {
+    "description": "Positive answer to a question",
+    "message": "Ναι"
+  },
+  "YOURE_GOING_TO_REGRET_SACKING_ME": {
+    "description": "",
+    "message": "Θα το μετανιώσεις που μ' απέλυσες!"
+  },
+  "YOUR_HULL_IS_AT_X_INTEGRITY": {
+    "description": "",
+    "message": "Το κύτος σας είναι κατά {value}% ακέραιο."
+  },
+  "YOU_DONT_HAVE_ENOUGH_MONEY_FOR_THAT_OPTION": {
+    "description": "",
+    "message": "Δεν έχετε αρκετά χρήματα για αυτή την επιλογή."
+  },
+  "YOU_HAVE_X_UNITS_IN_YOUR_CARGOHOLD": {
+    "description": "",
+    "message": "Έχετε {units} μονάδες στο χώρο αποσκευών σας"
+  },
+  "YOU_MUST_FIRST_SELECT_A_COMBAT_TARGET_COMMANDER": {
+    "description": "",
+    "message": "Πρέπει πρώτα να επιλέξετε έναν στόχο μάχης, Κυβερνήτη."
+  },
+  "YOU_MUST_FIRST_SELECT_A_SUITABLE_NAVIGATION_TARGET_COMMANDER": {
+    "description": "",
+    "message": "Πρέπει πρώτα να επιλέξετε έναν κατάλληλο προορισμό πλοήγησης, Κυβερνήτη."
+  },
+  "YOU_MUST_LAUNCH_FIRST_COMMANDER": {
+    "description": "",
+    "message": "Πρέπει να απογειωθείτε πρώτα, Κυβερνήτη."
+  },
+  "YOU_MUST_REQUEST_LAUNCH_CLEARANCE_FIRST_COMMANDER": {
+    "description": "",
+    "message": "Πρέπει πρώτα να ζητήσετε άδεια απογείωσης, Κυβερνήτη."
+  },
+  "YOU_NOT_ENOUGH_MONEY": {
+    "description": "",
+    "message": "Δεν διαθέτετε αρκετά χρήματα"
+  },
+  "ZOOM": {
+    "description": "Label for a zoom (magnification) control bar.",
+    "message": "Μεγέθυνση"
+  }
+}

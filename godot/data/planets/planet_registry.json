@@ -1,0 +1,111 @@
+{
+	"planets": [
+		{
+			"planet_id": "fringe_haven",
+			"planet_name": "Fringe Haven",
+			"planet_type": "charted",
+			"region_id": "starting_realm",
+			"biome": "settlement",
+			"controlling_faction": "felid_corsairs",
+			"danger_level": 1,
+			"position_x": 250.0,
+			"position_y": 500.0,
+			"description": "A small corsair settlement clinging to the edge of civilised space. Dusty markets and rowdy taverns line the main strip.",
+			"merchants": [
+				{
+					"merchant_id": "fringe_trader",
+					"name": "Whiskers the Trader",
+					"faction_id": "felid_corsairs",
+					"goods": ["crystals", "salvage_parts"]
+				}
+			],
+			"crew_available": [],
+			"treasures": [
+				{
+					"treasure_id": "fringe_cache",
+					"name": "Hidden Corsair Cache",
+					"description": "A buried stash beneath the old docking bay.",
+					"reward_crystals": 8,
+					"reward_salvage": 15
+				}
+			],
+			"hostiles": []
+		},
+		{
+			"planet_id": "goblin_bazaar",
+			"planet_name": "Goblin Market World",
+			"planet_type": "charted",
+			"region_id": "goblin_warrens",
+			"biome": "industrial",
+			"controlling_faction": "goblins",
+			"danger_level": 2,
+			"position_x": 550.0,
+			"position_y": 350.0,
+			"description": "An entire planetoid converted into a sprawling bazaar. Steam vents and neon signs compete for attention among towers of scrap.",
+			"merchants": [
+				{
+					"merchant_id": "goblin_tinkerer",
+					"name": "Sprocket",
+					"faction_id": "goblins",
+					"goods": ["tech_scrap", "salvage_parts", "ship_upgrades"]
+				},
+				{
+					"merchant_id": "goblin_crystal_dealer",
+					"name": "Glintfang",
+					"faction_id": "goblins",
+					"goods": ["crystals", "refined_crystals"]
+				}
+			],
+			"crew_available": [],
+			"treasures": [
+				{
+					"treasure_id": "goblin_blueprint",
+					"name": "Experimental Blueprint",
+					"description": "Schematics for a goblin-engineered crystal amplifier.",
+					"reward_crystals": 5,
+					"reward_salvage": 25
+				}
+			],
+			"hostiles": [
+				{
+					"hostile_id": "scrap_guardian",
+					"name": "Scrap Guardian",
+					"description": "An automated defence golem protecting the deeper workshops.",
+					"combat_skill": 6,
+					"health": 40
+				}
+			]
+		},
+		{
+			"planet_id": "fairy_glade",
+			"planet_name": "Moonpetal Glade",
+			"planet_type": "charted",
+			"region_id": "fairy_realms",
+			"biome": "enchanted",
+			"controlling_faction": "fairies",
+			"danger_level": 1,
+			"position_x": 400.0,
+			"position_y": 600.0,
+			"description": "A luminescent forest world where the trees sing and the rivers flow with liquid starlight. The Fairies welcome visitors — cautiously.",
+			"merchants": [
+				{
+					"merchant_id": "fairy_enchanter",
+					"name": "Dewdrop",
+					"faction_id": "fairies",
+					"goods": ["fairy_enchantments", "crystals"]
+				}
+			],
+			"crew_available": [],
+			"treasures": [
+				{
+					"treasure_id": "moonpetal_relic",
+					"name": "Ancient Moonpetal",
+					"description": "A crystallised flower that resonates with Whisper Crystal frequencies.",
+					"reward_crystals": 12,
+					"reward_salvage": 5
+				}
+			],
+			"hostiles": []
+		}
+	]
+}

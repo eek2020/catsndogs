@@ -64,6 +64,21 @@ func _evaluate_conditions(conditions: Dictionary, game_state: GameStateData) -> 
 		if key == "current_arc":
 			if game_state.current_arc != expected:
 				return false
+		elif key == "highest_stat":
+			if game_state.player_character == null:
+				return false
+			if StatEvaluator.get_highest_stat(game_state.player_character) != expected:
+				return false
+		elif key.begins_with("min_"):
+			if game_state.player_character == null:
+				return false
+			var stat_name: String = key.substr(4)
+			if not StatEvaluator.check_threshold(game_state.player_character, stat_name, int(expected)):
+				return false
+		elif key == "karma_tier":
+			if GameSession.karma_system != null:
+				if GameSession.karma_system.get_tier(game_state) != expected:
+					return false
 		else:
 			var actual = game_state.story_flags.get(key)
 			if expected is String and expected == "!null":
@@ -113,6 +128,11 @@ func apply_choice_outcome(
 			faction.reputation_with_player = clampi(faction.reputation_with_player + delta, -100, 100)
 			faction.update_diplomatic_state()
 			EventBus.faction_score_changed.emit(faction_id, delta)
+
+	# Apply karma change
+	if outcome.karma_delta != 0 and GameSession.karma_system != null:
+		var karma_reason: String = "%s:%s" % [encounter.encounter_id, choice.choice_id]
+		GameSession.karma_system.change_karma(game_state, outcome.karma_delta, karma_reason)
 
 	# Record decision
 	var pd := GameStateData.PlayerDecision.new()
@@ -176,6 +196,11 @@ func apply_dialogue_step_outcome(
 			faction.reputation_with_player = clampi(faction.reputation_with_player + delta, -100, 100)
 			faction.update_diplomatic_state()
 			EventBus.faction_score_changed.emit(faction_id, delta)
+
+	# Apply karma change
+	if outcome.karma_delta != 0 and GameSession.karma_system != null:
+		var karma_reason: String = "%s:%s" % [encounter.encounter_id, choice.choice_id]
+		GameSession.karma_system.change_karma(game_state, outcome.karma_delta, karma_reason)
 
 	# Record decision
 	var pd := GameStateData.PlayerDecision.new()

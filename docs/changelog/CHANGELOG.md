@@ -6,6 +6,107 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-25 — Art: Aristotle spritesheet on planet screen
+
+**Enhancement:** Replaced placeholder circle with animated spritesheets for both Aristotle and Dave in the top-down planet exploration mode. The sprite renders 8-direction walk cycles and falls back to idle frames when stationary. The correct spritesheet loads automatically based on the selected protagonist.
+
+### Changes
+
+- Copied `aristotle_spritesheet.png` and `dave_spritesheet.png` to `assets/sprites/`
+- `planet_screen.gd` — loads spritesheet based on `protagonist_id`, tracks facing octant, cycles walk/idle animation rows, draws correct frame via `draw_texture_rect_region()`
+
+---
+
+## 2026-03-23 — Feature: Planetary Exploration (Top-Down Mode)
+
+**Feature:** Top-down exploration mode for planetary surfaces with merchants, treasures, and NPC interaction.
+
+### New System
+
+- `Planet` entity (`scripts/entities/planet.gd`) — planet data model with biome, merchants, treasures, hostiles
+- `PlanetSystem` (`scripts/systems/planet_system.gd`) — manages planet loading, landing/departure, treasure collection, state persistence
+- Planet screen (`scripts/ui/planet_screen.gd`) — top-down exploration with 4-way movement, merchant trading, treasure hunting
+- 3 charted planets: Fringe Haven (settlement), Goblin Market World (industrial), Moonpetal Glade (enchanted)
+- 4 biome types defined in `data/planets/biomes.json`
+
+### Integration
+
+- Navigation screen renders planet markers with biome-coloured circles and `[L] LAND` proximity prompt
+- `[L]` key or `[Enter]` lands on nearby planets, transitioning to the planet screen
+- Depart button returns to navigation with collected loot merged into main inventory
+- Planet state persists: cleared treasures and visit history survive save/load
+- `EventBus` emits `planet_landed`, `planet_departed`, `planet_treasure_found`, `planet_merchant_interacted`
+- `GameStateData` tracks `current_planet_id`, `planet_states`, `planet_inventory` (save/load compatible)
+
+---
+
+## 2026-03-23 — Feature: Star Bases (Dockable Space Stations)
+
+**Feature:** Dockable space stations on the star map with services, artifacts, and three base variants.
+
+### New System
+
+- `StarBase` entity (`scripts/entities/star_base.gd`) — base data model with type, faction, services, artifacts
+- `StarBaseSystem` (`scripts/systems/star_base_system.gd`) — manages base loading, visibility, docking, artifact purchases, proximity detection
+- Station screen UI (`scripts/ui/station_screen.gd`) — overlay menu for docked services (refuel, repair, trade, salvage drop-off, artifact market)
+- 6 star bases across regions: Fringe Outpost, Corsair Haven, Iron Dock, Twilight Exchange, Scrapheap Station (hidden), Wolf Citadel (stronghold)
+- 5 exclusive artifacts: Aeolian Tuning Fork, Bottled Solar Flare, Chrono-Compass, Midas's Grapnel, Fairy Dust Scrubber
+
+### Integration
+
+- Navigation screen renders diamond-shaped base markers with proximity dock prompt
+- `[E]` key docks at nearby bases (overrides faction screen when in range)
+- Three base variants: Open (always dockable), Hidden (requires discovery flag), Stronghold (requires faction reputation)
+- Artifact passive bonuses tracked via `get_artifact_bonuses()` for use by other systems
+- `EventBus` emits `base_docked`, `base_undocked`, `artifact_acquired` signals
+- `GameStateData` tracks `docked_base_id`, `discovered_bases`, `acquired_artifacts`, `base_state_overrides` (save/load compatible)
+
+---
+
+## 2026-03-23 — Feature: Skill Point Allocation ("Harmonic Attunement")
+
+**Feature:** New game start skill redistribution screen and stat evaluation system.
+
+### New System
+
+- `StatEvaluator` (`scripts/systems/stat_evaluator.gd`) — utility for checking skill thresholds, finding highest stat, percentage calculations
+- Skill allocation screen (`scripts/ui/skill_allocation.gd`) — redistribute starting points across 6 stats with +/- controls
+- Presets: Default, Warrior, Diplomat, Shadow
+- Resonance Shards (`data/items/resonance_shards.json`) — in-game items that expand the skill point pool
+
+### Integration
+
+- Character select now routes through skill allocation before cutscene
+- `EncounterEngine` supports `min_<stat>`, `highest_stat`, and `karma_tier` trigger conditions
+- `CombatSystem` factors `combat_skill` into damage (+2% per point) and `stealth` into dodge (+1% per point)
+- `GameStateData` tracks `bonus_skill_points` and `resonance_shards_found` (save/load compatible)
+- `EventBus` emits `stats_changed` and `resonance_shard_found` signals
+
+---
+
+## 2026-03-23 — Feature: Karma System (Global Reputation Meter)
+
+**Feature:** Added a global karma system that tracks moral alignment on a -100 to +100 scale, separate from per-faction reputation.
+
+### New System
+
+- `KarmaSystem` (`scripts/systems/karma_system.gd`) — core logic for karma tracking, tier calculation, price/NPC modifiers
+- Five karma tiers: Tyrant, Ruthless, Neutral, Virtuous, Paragon
+- Karma-based merchant price modifiers (Tyrant: +40%, Paragon: -20%)
+- NPC disposition offsets per tier
+- JSON-driven configuration (`data/karma/karma_config.json`, `data/karma/karma_triggers.json`)
+
+### Integration
+
+- `EncounterOutcome` now supports `karma_delta` field for encounter choices
+- `EncounterEngine` applies karma changes when processing choice and dialogue outcomes
+- `EconomySystem` applies karma price modifier to buy prices
+- `GameStateData` tracks `karma` score and `karma_history` (save/load compatible)
+- `EventBus` emits `karma_changed` and `karma_tier_changed` signals
+- Navigation HUD displays karma tier and score with colour coding
+
+---
+
 ## 2026-03-21 — Major Content Expansion: Maps, Arcs, Characters
 
 **Feature:** Massive content expansion adding 6 new maps, 6 new story arcs, 22 special characters, and a hidden map with a secret 4th ending.

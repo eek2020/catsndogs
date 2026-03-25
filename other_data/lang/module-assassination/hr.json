@@ -1,0 +1,370 @@
+{
+  "ASSASSINATION": {
+    "description": "",
+    "message": "Atentat"
+  },
+  "COULD_YOU_REPEAT_THE_ORIGINAL_REQUEST": {
+    "description": "",
+    "message": "Možete li ponoviti izvorni zahtjev?"
+  },
+  "DENY_0": {
+    "description": "",
+    "message": "Žao mi je, ali ne vjerujem ti."
+  },
+  "DENY_1": {
+    "description": "",
+    "message": "Vrati se kad budeš imao neke kvalifikacije."
+  },
+  "DENY_2": {
+    "description": "",
+    "message": "Mislim da nisi ti onaj/ona kojeg/koju tražim."
+  },
+  "DENY_3": {
+    "description": "",
+    "message": "Ne izgledaš kao netko tko je sposoban učiniti ono što treba učiniti."
+  },
+  "DENY_4": {
+    "description": "",
+    "message": "Očito nisi pravi za ovaj posao."
+  },
+  "DENY_5": {
+    "description": "",
+    "message": "Čini se da ste previše neiskusni za rješavanje ovako važnog ugovora."
+  },
+  "DENY_6": {
+    "description": "",
+    "message": "Nikad nisam čuo/čula za vas. Trebam nekoga s iskustvom za ovaj ugovor."
+  },
+  "DENY_7": {
+    "description": "",
+    "message": "Nisam spreman riskirati ovaj ugovor dajući ga nekome tko je tako neiskusan kao ti."
+  },
+  "DISTANCE": {
+    "description": "",
+    "message": "Udaljenost:"
+  },
+  "EXCELLENT": {
+    "description": "",
+    "message": "Izvrsno."
+  },
+  "FLAVOUR_0_ADTEXT": {
+    "description": "",
+    "message": "Traži se: Uklanjanje {target} iz sustava {system}."
+  },
+  "FLAVOUR_0_ADTITLE": {
+    "description": "",
+    "message": "UKLONI TRAŽENI STATUS"
+  },
+  "FLAVOUR_0_FAILUREMSG": {
+    "description": "",
+    "message": "Jako mi je žao što sam saznao/la da je {target} još uvijek živ/a. Nepotrebno je reći da nećete primiti nikakvu uplatu."
+  },
+  "FLAVOUR_0_FAILUREMSG2": {
+    "description": "",
+    "message": "Uklanjanje korisnika {target} nije izvršeno od strane vas. Ovaj put nema plaćanja."
+  },
+  "FLAVOUR_0_INTROTEXT": {
+    "description": "",
+    "message": "Bok, ja sam {name}. Platit ću ti {cash} da se riješiš {target}."
+  },
+  "FLAVOUR_0_SUCCESSMSG": {
+    "description": "",
+    "message": "Vijest o dugom odmoru korisnika {target} s zahvalnošću je primljena. Čestitamo, izvršio/la sam vašu punu uplatu."
+  },
+  "FLAVOUR_1_ADTEXT": {
+    "description": "",
+    "message": "Traži se: Netko tko će ubiti {target} iz sustava {system}."
+  },
+  "FLAVOUR_1_ADTITLE": {
+    "description": "",
+    "message": "ELIMINACIJA METE"
+  },
+  "FLAVOUR_1_FAILUREMSG": {
+    "description": "",
+    "message": "Čujem da je {target} dobrog zdravlja. To me boli."
+  },
+  "FLAVOUR_1_FAILUREMSG2": {
+    "description": "",
+    "message": "Smrt korisnika {target} nije vaša krivnja, stoga nemojte tražiti isplatu."
+  },
+  "FLAVOUR_1_INTROTEXT": {
+    "description": "",
+    "message": "Trebam da se {target} ukloni iz slike. Platit ću vam {cash} za to."
+  },
+  "FLAVOUR_1_SUCCESSMSG": {
+    "description": "",
+    "message": "Jako mi je žao što sam čuo za smrt korisnika {target}. Isplaćeni ste u cijelosti."
+  },
+  "FLAVOUR_2_ADTEXT": {
+    "description": "",
+    "message": "{target} je tragično više nepoželjan u sustavu {system}. Potreban je stručnjak za uklanjanje."
+  },
+  "FLAVOUR_2_ADTITLE": {
+    "description": "",
+    "message": "OPERACIJA UKLANJANJA"
+  },
+  "FLAVOUR_2_FAILUREMSG": {
+    "description": "",
+    "message": "Najžalosnije je što je {target} još uvijek živ i zdrav. Nećete primiti nikakvu uplatu jer niste ispunili svoj ugovor."
+  },
+  "FLAVOUR_2_FAILUREMSG2": {
+    "description": "",
+    "message": "Ugovor je ispunio netko drugi. Sljedeći put budi brži!"
+  },
+  "FLAVOUR_2_INTROTEXT": {
+    "description": "",
+    "message": "Ja sam {name} i platit ću vam {cash} za raskid ugovora s {target}."
+  },
+  "FLAVOUR_2_SUCCESSMSG": {
+    "description": "",
+    "message": "U potpunosti ste plaćeni za dovršetak tog važnog ugovora."
+  },
+  "FLAVOUR_3_ADTEXT": {
+    "description": "",
+    "message": "Potreban plaćeni ubojica za eliminaciju {target}."
+  },
+  "FLAVOUR_3_ADTITLE": {
+    "description": "",
+    "message": "RASKID"
+  },
+  "FLAVOUR_3_FAILUREMSG": {
+    "description": "",
+    "message": "Platit ćeš što nisi eliminirao/la {target}!"
+  },
+  "FLAVOUR_3_FAILUREMSG2": {
+    "description": "",
+    "message": "Tražiš li novac za posao koji je obavio netko drugi? Gubi se."
+  },
+  "FLAVOUR_3_INTROTEXT": {
+    "description": "",
+    "message": "{target} mora biti sveden na svemirsku prašinu. Nagradit ću te novcem (cash) da to učiniš."
+  },
+  "FLAVOUR_3_SUCCESSMSG": {
+    "description": "",
+    "message": "{target} je mrtav. Evo tvoje nagrade."
+  },
+  "FLAVOUR_4_ADTEXT": {
+    "description": "",
+    "message": "Potreban je diskretni operater kako bi se osigurala fatalna mirovina  {target}."
+  },
+  "FLAVOUR_4_ADTITLE": {
+    "description": "",
+    "message": "MIROVINA"
+  },
+  "FLAVOUR_4_FAILUREMSG": {
+    "description": "",
+    "message": "{target} još diše i ne dajem ti novac."
+  },
+  "FLAVOUR_4_FAILUREMSG2": {
+    "description": "",
+    "message": "Umirovljenje {target} izvršio je netko drugi."
+  },
+  "FLAVOUR_4_INTROTEXT": {
+    "description": "",
+    "message": "Za {cash} želimo potaknuti {target} da trajno prekine rad."
+  },
+  "FLAVOUR_4_SUCCESSMSG": {
+    "description": "",
+    "message": "Vijest o umirovljenju {target}-a dobivena je s oduševljenjem. Evo vašeg novca."
+  },
+  "FLAVOUR_5_ADTEXT": {
+    "description": "",
+    "message": "Neki obožavatelji žele da {target} umre. Kvalificirani stručnjaci za terminaciju prijavljuju se unutra."
+  },
+  "FLAVOUR_5_ADTITLE": {
+    "description": "",
+    "message": "BIOGRAFSKI"
+  },
+  "FLAVOUR_5_FAILUREMSG": {
+    "description": "",
+    "message": "Otkrili smo da {target} ipak radi. To nas žalosti."
+  },
+  "FLAVOUR_5_FAILUREMSG2": {
+    "description": "",
+    "message": "Metu je neutralizirao netko drugi."
+  },
+  "FLAVOUR_5_INTROTEXT": {
+    "description": "",
+    "message": "Želimo da {target} dostojanstveno završi karijeru u sustavu {system} za {cash}."
+  },
+  "FLAVOUR_5_SUCCESSMSG": {
+    "description": "",
+    "message": "Poruka o {target}-ovoj uspješno završenoj karijeri. Evo vašeg {casha}."
+  },
+  "HOW_SOON_MUST_IT_BE_DONE": {
+    "description": "",
+    "message": "Koliko brzo se to mora obaviti?"
+  },
+  "HOW_WILL_I_BE_PAID": {
+    "description": "",
+    "message": "Kako ću biti plaćen/a?"
+  },
+  "IT_MUST_BE_DONE_AFTER": {
+    "description": "",
+    "message": "To se mora učiniti nakon što {target} napusti {spaceport}. Ne propustite ovu priliku."
+  },
+  "IT_MUST_BE_DONE_AFTER_FEMALE": {
+    "description": "",
+    "message": "To se mora učiniti nakon što napusti {svemirsku luku}. Ne propustite ovu priliku."
+  },
+  "IT_MUST_BE_DONE_AFTER_MALE": {
+    "description": "",
+    "message": "To se mora učiniti nakon što napusti {svemirsku luku}. Ne propustite ovu priliku."
+  },
+  "OK_AGREED": {
+    "description": "",
+    "message": "U redu, dogovreno."
+  },
+  "RETURN_HERE_ON_THE_COMPLETION_OF_THE_CONTRACT_AND_YOU_WILL_BE_PAID": {
+    "description": "",
+    "message": "Vratite se ovdje nakon završetka ugovora i bit ćete plaćeni."
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Postavi kao cilj navigacije"
+  },
+  "SET_RETURN_ROUTE": {
+    "description": "",
+    "message": "Postavi povratnu rutu"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Brod:"
+  },
+  "SHIP_ID": {
+    "description": "",
+    "message": "ID broda:"
+  },
+  "SPACEPORT": {
+    "description": "",
+    "message": "Svemirska luka:"
+  },
+  "SYSTEM": {
+    "description": "",
+    "message": "Sustav:"
+  },
+  "TARGET_NAME": {
+    "description": "",
+    "message": "Naziv mete:"
+  },
+  "TARGET_WILL_BE_LEAVING_SPACEPORT_AT": {
+    "description": "",
+    "message": "Meta će napustiti svemirsku luku u:"
+  },
+  "TITLE_0": {
+    "description": "",
+    "message": "Admiral"
+  },
+  "TITLE_1": {
+    "description": "",
+    "message": "Veleposlanik"
+  },
+  "TITLE_10": {
+    "description": "",
+    "message": "Zastavnik"
+  },
+  "TITLE_11": {
+    "description": "",
+    "message": "General"
+  },
+  "TITLE_12": {
+    "description": "",
+    "message": "Sudac"
+  },
+  "TITLE_13": {
+    "description": "",
+    "message": "Odvjetnik"
+  },
+  "TITLE_14": {
+    "description": "",
+    "message": "Poručnik"
+  },
+  "TITLE_15": {
+    "description": "",
+    "message": "Maršal"
+  },
+  "TITLE_16": {
+    "description": "",
+    "message": "Trgovac"
+  },
+  "TITLE_17": {
+    "description": "",
+    "message": "Časnik"
+  },
+  "TITLE_18": {
+    "description": "",
+    "message": "Vojniče"
+  },
+  "TITLE_19": {
+    "description": "",
+    "message": "Profesor"
+  },
+  "TITLE_2": {
+    "description": "",
+    "message": "Brigadir"
+  },
+  "TITLE_20": {
+    "description": "",
+    "message": "Tužitelj"
+  },
+  "TITLE_21": {
+    "description": "",
+    "message": "Prorektor"
+  },
+  "TITLE_22": {
+    "description": "",
+    "message": "Pomorac"
+  },
+  "TITLE_23": {
+    "description": "",
+    "message": "Senator"
+  },
+  "TITLE_24": {
+    "description": "",
+    "message": "Narednik"
+  },
+  "TITLE_3": {
+    "description": "",
+    "message": "Kadet"
+  },
+  "TITLE_4": {
+    "description": "",
+    "message": "Kapetan"
+  },
+  "TITLE_5": {
+    "description": "",
+    "message": "Kardinal"
+  },
+  "TITLE_6": {
+    "description": "",
+    "message": "Pukovnik"
+  },
+  "TITLE_7": {
+    "description": "",
+    "message": "Zapovjednik"
+  },
+  "TITLE_8": {
+    "description": "",
+    "message": "Komandir"
+  },
+  "TITLE_9": {
+    "description": "",
+    "message": "Kaplar"
+  },
+  "WHERE_CAN_I_FIND_X": {
+    "description": "",
+    "message": "Gdje mogu pronaći metu?"
+  },
+  "X_WILL_BE_LEAVING": {
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} će napustiti {spaceport} u sustavu {system} ({sectorX}, {sectorY}, {sectorZ}), udaljenost {dist} ly, u {date}. Brod je {ship_indef} i ima registracijski ID {shipregid}."
+  },
+  "X_WILL_BE_LEAVING_FEMALE": {
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} će napustiti {spaceport} u sustavu {system} ({sectorX}, {sectorY}, {sectorZ}), udaljenost {dist} ly, u {date}. Njezin brod je {ship_indef} i ima registracijski ID {shipregid}."
+  },
+  "X_WILL_BE_LEAVING_MALE": {
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} će napustiti {spaceport} u sustavu {system} ({sectorX}, {sectorY}, {sectorZ}), udaljenost {dist} ly, u {date}. Njegov brod je {ship_indef} i ima registracijski ID {shipregid}."
+  }
+}

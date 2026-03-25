@@ -1,0 +1,30 @@
+{
+	"tiers": [
+		{ "id": "tyrant", "label": "Tyrant", "min": -100, "max": -76 },
+		{ "id": "ruthless", "label": "Ruthless", "min": -75, "max": -26 },
+		{ "id": "neutral", "label": "Neutral", "min": -25, "max": 25 },
+		{ "id": "virtuous", "label": "Virtuous", "min": 26, "max": 75 },
+		{ "id": "paragon", "label": "Paragon", "min": 76, "max": 100 }
+	],
+	"price_modifiers": {
+		"tyrant": 1.40,
+		"ruthless": 1.15,
+		"neutral": 1.00,
+		"virtuous": 0.90,
+		"paragon": 0.80
+	},
+	"npc_disposition_offsets": {
+		"tyrant": -20,
+		"ruthless": -10,
+		"neutral": 0,
+		"virtuous": 10,
+		"paragon": 20
+	},
+	"tier_colors": {
+		"tyrant": "#cc2222",
+		"ruthless": "#cc6622",
+		"neutral": "#aaaaaa",
+		"virtuous": "#44aacc",
+		"paragon": "#44cc44"
+	}
+}

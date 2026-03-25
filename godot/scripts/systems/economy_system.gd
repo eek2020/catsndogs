@@ -98,7 +98,12 @@ func get_buy_price(game_state: GameStateData, faction_id: String, quantity: int 
 	var unit_price: int = game_state.crystal_market.calculate_price(
 		faction_id, faction.reputation_with_player
 	)
-	return unit_price * quantity
+	var total: int = unit_price * quantity
+	# Apply karma-based price modifier
+	if GameSession.karma_system != null:
+		var karma_mod: float = GameSession.karma_system.get_price_modifier(game_state)
+		total = maxi(1, int(total * karma_mod))
+	return total
 
 
 func get_sell_price(game_state: GameStateData, faction_id: String, quantity: int = 1) -> int:

@@ -1,0 +1,34 @@
+{
+  "ADTEXT": {
+    "description": "",
+    "message": "Wanted: {commodity}. Will pay {price} per tonne"
+  },
+  "AMOUNT": {
+    "description": "The amount (for now in tonne) of goods person wants to buy",
+    "message": "Θα αγοράσω οτιδήποτε έχετε, μέχρι το μέγιστο των {amount}t που χρειάζομαι."
+  },
+  "MESSAGE": {
+    "description": "",
+    "message": "Ονομάζομαι {name}. Χρειάζομαι επειγόντως {commodity}, και θα πληρώσω το διπλάσιο της τιμής της αγοράς ({price})."
+  },
+  "NOT_IN_STOCK": {
+    "description": "Regarding selling more than the player has",
+    "message": "Δεν υπάρχει αρκετό {commodity} σε απόθεμα."
+  },
+  "SELL_1": {
+    "description": "Sell one single unit (probably tonne)",
+    "message": "Πώληση 1"
+  },
+  "SELL_ALL": {
+    "description": "Sell everything player has of the good/commodity",
+    "message": "Πώληση όλων"
+  },
+  "SELL_N": {
+    "description": "Sell several units (probably in tonne), i.e. N > 1",
+    "message": "Πώληση {N}"
+  },
+  "TITLE": {
+    "description": "",
+    "message": "COMMODITY WANTED"
+  }
+}

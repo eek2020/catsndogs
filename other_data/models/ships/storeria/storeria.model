@@ -1,0 +1,23 @@
+version 2
+
+material "Material" {
+	shader "multi"
+	diffuse 1.0 1.0 1.0
+	specular 0.8 0.8 0.8
+	use_patterns
+	texture diffuse  "storeria_dif.dds"
+	texture specular "storeria_spec.dds"
+	texture glow     "storeria_glow.dds"
+}
+
+lod 300 {
+	mesh "storeria_hi.dae"
+}
+
+lod 100 {
+	mesh "storeria_med.dae"
+}
+
+anim "gear_down" 0 70
+
+collision "storeria_col.obj"

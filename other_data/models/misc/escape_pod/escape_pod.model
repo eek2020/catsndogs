@@ -1,0 +1,26 @@
+version 2
+
+material "Escape_pod" {
+	shader "multi"
+	texture diffuse  "escape_pod_DIFF.dds"
+	texture glow     "escape_pod_GLOW.dds"
+	texture specular "escape_pod_SPEC.dds"
+	texture normal   "escape_pod_NORM.dds"
+	specular 0.7 0.7 0.7
+	shininess 40
+	use_patterns
+}
+
+lod 300 {
+	mesh "escape_pod_HIGH.dae"
+}
+
+lod 100 {
+	mesh "escape_pod_MED.dae"
+}
+
+lod 50 {
+	mesh "escape_pod_LOW.dae"
+}
+
+collision "escape_pod_COLL.dae"

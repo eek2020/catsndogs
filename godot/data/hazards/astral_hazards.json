@@ -1,0 +1,145 @@
+{
+  "hazard_types": [
+    {
+      "hazard_id": "solar_flare",
+      "display_name": "Solar Flare",
+      "description": "A high-intensity burst of stellar radiation scorches everything in its path.",
+      "category": "dynamic",
+      "visual_type": "light_burst",
+      "visual_color": "#FFD54F",
+      "zone_radius": 200,
+      "damage_min_pct": 0.05,
+      "damage_max_pct": 0.15,
+      "mitigation_trait": "hazard_shielding",
+      "mitigation_threshold": 0.08,
+      "status_effect": {
+        "effect_id": "fog_blind",
+        "duration_seconds": 60,
+        "description": "Solar radiation jams sensors — fog of war vision halved."
+      },
+      "entropy_weight": 30,
+      "dialogue_barks": {
+        "aristotle": {
+          "mitigated": "The shields hold. Aristotle breathes a sigh of relief — hull repairs are expensive.",
+          "failed": "The flare slams into the hull. Aristotle curses at the repair bill."
+        },
+        "dave": {
+          "mitigated": "Shields absorb the blast. Dave nods — training pays off.",
+          "failed": "Solar fire rakes the hull. Dave grits his teeth and checks damage reports."
+        }
+      }
+    },
+    {
+      "hazard_id": "asteroid_field",
+      "display_name": "Asteroid Field",
+      "description": "A dense cloud of tumbling rock and debris tears through the flight path.",
+      "category": "dynamic",
+      "visual_type": "debris",
+      "visual_color": "#8D6E63",
+      "zone_radius": 250,
+      "damage_min_pct": 0.01,
+      "damage_max_pct": 0.05,
+      "mitigation_trait": "hazard_piloting",
+      "mitigation_threshold": 0.10,
+      "status_effect": null,
+      "entropy_weight": 35,
+      "dialogue_barks": {
+        "aristotle": {
+          "mitigated": "The navigator threads through the debris like silk. Aristotle purrs with approval.",
+          "failed": "Rocks hammer the hull. Aristotle winces at every impact."
+        },
+        "dave": {
+          "mitigated": "Expert piloting weaves them through unscathed. Dave exhales slowly.",
+          "failed": "Asteroids clip the hull. Dave braces against the console as sparks fly."
+        }
+      }
+    },
+    {
+      "hazard_id": "mana_void",
+      "display_name": "Mana Void",
+      "description": "A shimmering nebula of anti-magic energy that drains whisper crystal fuel.",
+      "category": "dynamic",
+      "visual_type": "nebula",
+      "visual_color": "#CE93D8",
+      "zone_radius": 220,
+      "damage_min_pct": 0.0,
+      "damage_max_pct": 0.05,
+      "mitigation_trait": "hazard_magic",
+      "mitigation_threshold": 0.08,
+      "status_effect": {
+        "effect_id": "crystal_drain",
+        "duration_seconds": 30,
+        "description": "Mana void siphons whisper crystals — losing 1 crystal every 10 seconds."
+      },
+      "entropy_weight": 20,
+      "dialogue_barks": {
+        "aristotle": {
+          "mitigated": "Fairy wards flare — the void parts harmlessly around the ship.",
+          "failed": "The void latches on. Aristotle watches the crystal gauge drop with horror."
+        },
+        "dave": {
+          "mitigated": "Arcane countermeasures neutralise the void. The crystals are safe.",
+          "failed": "Crystal reserves bleed away. Dave orders rationing immediately."
+        }
+      }
+    },
+    {
+      "hazard_id": "singularity",
+      "display_name": "Singularity",
+      "description": "A gravitational distortion that warps space and pulls ships off course.",
+      "category": "static",
+      "visual_type": "distortion",
+      "visual_color": "#263238",
+      "zone_radius": 300,
+      "damage_min_pct": 0.10,
+      "damage_max_pct": 0.20,
+      "mitigation_trait": "hazard_veteran",
+      "mitigation_threshold": 0.08,
+      "status_effect": {
+        "effect_id": "off_course",
+        "duration_seconds": 15,
+        "description": "Gravitational pull disrupts navigation — random drift applied to movement."
+      },
+      "entropy_weight": 15,
+      "dialogue_barks": {
+        "aristotle": {
+          "mitigated": "A veteran hand steadies the helm. The singularity's pull fades behind them.",
+          "failed": "The ship lurches violently. Aristotle is thrown against the bulkhead."
+        },
+        "dave": {
+          "mitigated": "Experience prevails — the crew fights free of the gravity well.",
+          "failed": "Gravity tears at the hull. Dave shouts orders over the groaning metal."
+        }
+      }
+    },
+    {
+      "hazard_id": "supernova_remnant",
+      "display_name": "Supernova Remnant",
+      "description": "The expanding shockwave of a dead star — intense radiation and debris.",
+      "category": "static",
+      "visual_type": "light_burst",
+      "visual_color": "#FF8A65",
+      "zone_radius": 350,
+      "damage_min_pct": 0.08,
+      "damage_max_pct": 0.18,
+      "mitigation_trait": "hazard_shielding",
+      "mitigation_threshold": 0.10,
+      "status_effect": {
+        "effect_id": "hull_weakness",
+        "duration_seconds": 45,
+        "description": "Residual radiation weakens hull plating — next hazard damage increased by 50%."
+      },
+      "entropy_weight": 0,
+      "dialogue_barks": {
+        "aristotle": {
+          "mitigated": "The shields strain but hold. Aristotle makes a note to avoid dead stars.",
+          "failed": "Radiation scorches the hull. The ship creaks ominously."
+        },
+        "dave": {
+          "mitigated": "Shielding absorbs the worst of it. Dave orders a full systems check.",
+          "failed": "The shockwave hits hard. Warning klaxons fill the bridge."
+        }
+      }
+    }
+  ]
+}

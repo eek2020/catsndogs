@@ -77,7 +77,7 @@ func _on_select(protagonist_id: String) -> void:
 	EventBus.protagonist_selected.emit(protagonist_id)
 	var main: Control = get_tree().current_scene
 	if main.has_method("switch_scene"):
-		main.switch_scene("cutscene")
+		main.switch_scene("skill_allocation")
 
 
 func _on_back() -> void:

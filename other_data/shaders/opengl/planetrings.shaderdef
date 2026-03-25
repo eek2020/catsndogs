@@ -1,0 +1,13 @@
+## Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
+## Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
+
+Shader planetrings
+
+Texture sampler2D texture0
+Texture sampler2D texture1
+
+Buffer LightData binding=0
+Buffer DrawData binding=1
+
+Vertex "planetrings.vert"
+Fragment "planetrings.frag"

@@ -78,6 +78,32 @@ signal hidden_location_discovered(poi_id: String)
 signal cartographer_rescued
 signal region_boundary_reached(from_region: String, to_region: String)
 
+# --- Astral hazard events ---
+signal hazard_entered(hazard_id: String, hazard_type: String)
+signal hazard_mitigated(hazard_id: String, crew_id: String)
+signal hazard_damage(hazard_id: String, damage: int)
+signal hazard_status_applied(effect_id: String, duration: float)
+signal hazard_status_expired(effect_id: String)
+
+# --- Stat events ---
+signal stats_changed(character_id: String)
+signal resonance_shard_found(shard_id: String)
+
+# --- Karma events ---
+signal karma_changed(old_value: int, new_value: int, reason: String)
+signal karma_tier_changed(old_tier: String, new_tier: String)
+
+# --- Planet events ---
+signal planet_landed(planet_id: String)
+signal planet_departed(planet_id: String)
+signal planet_treasure_found(treasure_id: String)
+signal planet_merchant_interacted(merchant_id: String)
+
+# --- Star base events ---
+signal base_docked(base_id: String)
+signal base_undocked(base_id: String)
+signal artifact_acquired(artifact_id: String)
+
 # --- Celestial Codex events ---
 signal codex_layer_changed(layer_name: String)
 

@@ -1,0 +1,2890 @@
+{
+  "ABOUT": {
+    "description": "main menu button (implied 'about' the game)",
+    "message": "À propos"
+  },
+  "ABOVE_AVERAGE": {
+    "description": "",
+    "message": "Au-dessus de la moyenne"
+  },
+  "ACTIVE": {
+    "description": "",
+    "message": "Actif"
+  },
+  "ADD_BOOKMARK": {
+    "description": "Button to add a singular bookmark",
+    "message": "Ajouter marque-page"
+  },
+  "ADD_JUMP": {
+    "description": "UI-button: Add hyper jump to list of planned jumps",
+    "message": "Ajouter ce saut"
+  },
+  "AFTER_TRADE_IN": {
+    "description": "",
+    "message": "Après échange"
+  },
+  "ALLEGIANCE": {
+    "description": "",
+    "message": "Allégeance :"
+  },
+  "ALL_PARAMETERS_WERE_RECOVERED_SUCCESSFULLY": {
+    "description": "Message when restoring savegame",
+    "message": "Tous les paramètres ont été récupérés avec succès"
+  },
+  "ALL_UP_WEIGHT": {
+    "description": "",
+    "message": "Poids maxi."
+  },
+  "AMOUNT": {
+    "description": "",
+    "message": "Montant"
+  },
+  "ANISOTROPIC_FILTERING_DESC": {
+    "description": "",
+    "message": "Echantillonne la texture en de multiples niveaux de mip afin de produire une texture bien plus claire quand elle est observée à des angles faibles. Le filtre anisotropique empêche le floutage des textures, mais peut ralentir les performances."
+  },
+  "AN_ERROR_HAS_OCCURRED": {
+    "description": "",
+    "message": "Une erreur est survenue"
+  },
+  "ARRIVAL_DATE": {
+    "description": "Time of arrival, used in flight log",
+    "message": "Date d'arrivée"
+  },
+  "ATMOSPHERIC_SHIELDING": {
+    "description": "Used in ShipInfo view, followed by a yes/no depending on if the ship can carry atmospheric shields",
+    "message": "Boucliers thermiques"
+  },
+  "ATMO_PRESS_LIMIT": {
+    "description": "Base external pressure limit of a ship (without atmo shield)",
+    "message": "Limite pression atmos."
+  },
+  "ATTEMPTING_TO_RECOVER_GAME_PROGRESS_FROM_SAVE_X": {
+    "description": "Message when restoring savegame",
+    "message": "Tentative de récupérer la progression de jeu depuis la sauvegarde: {save}"
+  },
+  "ATTEMPT_TO_REPAIR_HULL": {
+    "description": "",
+    "message": "Tentative de réparation de la coque."
+  },
+  "AUTOMATED_MESSAGE": {
+    "description": "For comm messages from bots",
+    "message": "MESSAGE AUTOMATISÉ"
+  },
+  "AUTO_ROUTE": {
+    "description": "Automatically find shortest jump route (measured in time) in star map",
+    "message": "Auto-itinéraire"
+  },
+  "AVAILABLE_FOR_PURCHASE": {
+    "description": "Market header when buying items",
+    "message": "Disponible à l'achat"
+  },
+  "AVAILABLE_STOCK": {
+    "description": "Market stat showing number of items in stock",
+    "message": "Stock disponible"
+  },
+  "AVERAGE": {
+    "description": "",
+    "message": "Moyen"
+  },
+  "BACKWARD_ACCEL": {
+    "description": "",
+    "message": "Déccélération"
+  },
+  "BODY_IN_ROUTE": {
+    "description": "Label indicating a star is part of a planned hyperjump route",
+    "message": "Corps sur l'itinéraire HyperSaut"
+  },
+  "BOOKMARK": {
+    "description": "Label introducing a bookmark",
+    "message": "Marque-page"
+  },
+  "BOOKMARKS": {
+    "description": "Label introducing a list of bookmarks",
+    "message": "Marque-pages"
+  },
+  "BULLETIN_BOARD": {
+    "description": "",
+    "message": "Tableau d'affichage"
+  },
+  "BUY": {
+    "description": "Commodities and equipment prices",
+    "message": "Achat"
+  },
+  "BUY_EQUIP": {
+    "description": "Button text to buy selected equipment. May be used in a singular or plural context.",
+    "message": "Acheter {name}"
+  },
+  "BUY_PRICE": {
+    "description": "Title for buy-price column in commodity market",
+    "message": "Achat"
+  },
+  "BUY_SHIP": {
+    "description": "",
+    "message": "Acheter vaisseau"
+  },
+  "CABINS": {
+    "description": "For passengers",
+    "message": "Cabines"
+  },
+  "CABIN_FREE": {
+    "description": "Free capacity for passengers",
+    "message": "{amount} libre"
+  },
+  "CABIN_USED": {
+    "description": "Passengers using cabins",
+    "message": "{amount} utilisé"
+  },
+  "CANCEL": {
+    "description": "",
+    "message": "Annuler"
+  },
+  "CANNOT_SELL_ITEM": {
+    "description": "",
+    "message": "Cet objet ne peut pas être vendu"
+  },
+  "CANNOT_SELL_NONEMPTY_EQUIP": {
+    "description": "",
+    "message": "L'équipement doit être vidé avant de pouvoir être vendu"
+  },
+  "CANT_FIND_PATH": {
+    "description": "Message when restoring savegame, file path",
+    "message": "Impossible de trouver le chemin: %s"
+  },
+  "CANT_FIND_PLAYERS_SHIP_IN_SPACE": {
+    "description": "Message when restoring savegame",
+    "message": "Impossible de trouver le vaisseau du joueur dans l'espace"
+  },
+  "CAPACITY": {
+    "description": "Capacity of ship to fit more equipment",
+    "message": "Capacité"
+  },
+  "CAPACITY_USED": {
+    "description": "",
+    "message": "Capacité utilisée"
+  },
+  "CARGO": {
+    "description": "",
+    "message": "Cargaison"
+  },
+  "CARGO_CAPACITY": {
+    "description": "Label to show a ship's total cargo space.",
+    "message": "Capacité Cargaison"
+  },
+  "CARGO_SPACE": {
+    "description": "",
+    "message": "Espace cargo"
+  },
+  "CARGO_SPACE_USED": {
+    "description": "",
+    "message": "Espace de cargaison utilisé"
+  },
+  "CARGO_T_FREE": {
+    "description": "t for tonne",
+    "message": "{amount}t libre"
+  },
+  "CARGO_T_USED": {
+    "description": "t for tonne",
+    "message": "{amount}t utilisé"
+  },
+  "CASE_SENSITIVE": {
+    "description": "",
+    "message": "Sensible à la casse"
+  },
+  "CASH": {
+    "description": "",
+    "message": "Argent"
+  },
+  "CASH_N": {
+    "description": "",
+    "message": "Argent:{money}"
+  },
+  "CENTER_ON_CURRENT_SYSTEM": {
+    "description": "Center on current star system",
+    "message": "Centrer sur le système actuel"
+  },
+  "CENTER_ON_SYSTEM": {
+    "description": "Center on selected star system",
+    "message": "Centrer sur le système"
+  },
+  "CHANGE": {
+    "description": "Face feature option",
+    "message": "Changer:"
+  },
+  "CHANGE_BINDING": {
+    "description": "Key binding option",
+    "message": "Change"
+  },
+  "CHANGE_COLOR": {
+    "description": "Paintshop button",
+    "message": "Changer la couleur"
+  },
+  "CHANGE_PATTERN": {
+    "description": "Paintshop button",
+    "message": "Changer le motif"
+  },
+  "CHARACTER": {
+    "description": "",
+    "message": "Caractère"
+  },
+  "CHARISMA": {
+    "description": "Character parameter",
+    "message": "Charisme"
+  },
+  "CHIEF_MECHANIC": {
+    "description": "",
+    "message": "Chef mécanicien"
+  },
+  "CIRCULAR_ORBIT_SPEED": {
+    "description": "",
+    "message": "Vitesse orbitale"
+  },
+  "CITY_DETAIL_LEVEL": {
+    "description": "Game graphics option",
+    "message": "Détails des villes"
+  },
+  "CLEAN": {
+    "description": "Legal status of player",
+    "message": "Vierge"
+  },
+  "CLEAR": {
+    "description": "Clear an option in game settings/options menu",
+    "message": "Vide"
+  },
+  "CLEAR_ROUTE": {
+    "description": "Clear a planned route of hyperjumps",
+    "message": "Effacer l'itinéraire"
+  },
+  "CLIENT": {
+    "description": "",
+    "message": "Client"
+  },
+  "CLOSE": {
+    "description": "",
+    "message": "Fermer"
+  },
+  "COLLAPSE": {
+    "description": "Close / collapse an open folder or group",
+    "message": "Replier"
+  },
+  "COLOR": {
+    "description": "",
+    "message": "Couleur"
+  },
+  "COMBAT": {
+    "description": "Headline for kills and combat rating",
+    "message": "Combat"
+  },
+  "COMMANDER": {
+    "description": "",
+    "message": "Commandant"
+  },
+  "COMMODITY": {
+    "description": "Title for commodity name column in commodity market",
+    "message": "Marchandise"
+  },
+  "COMMODITY_MARKET": {
+    "description": "",
+    "message": "Bourse d'échange"
+  },
+  "COMMODITY_TRADE_ANALYSIS": {
+    "description": "",
+    "message": "Analyse du commerce de marchandises de:"
+  },
+  "COMMODITY_TRADE_ANALYSIS_SYSTEM": {
+    "description": "",
+    "message": "Analyse commerciale au niveau du système solaire de:"
+  },
+  "COMMODITY_TRADE_ANALYSIS_TOOLTIP_1": {
+    "description": "",
+    "message": "Flux de marchandise moyen pour les marchandises achetées et vendues dans le système."
+  },
+  "COMMODITY_TRADE_ANALYSIS_TOOLTIP_2": {
+    "description": "",
+    "message": "Les données peuvent ne pas refléter les prix d'une marchandise précise."
+  },
+  "COMPETENT": {
+    "description": "Combat rating",
+    "message": "Compétent"
+  },
+  "COMPLETED": {
+    "description": "",
+    "message": "Accompli"
+  },
+  "COMPRESS_TEXTURES": {
+    "description": "graphics option in game settings menu ",
+    "message": "Compresser les textures"
+  },
+  "CONFIRM_PURCHASE": {
+    "description": "",
+    "message": "Confirmer l'achat"
+  },
+  "CONFIRM_SALE": {
+    "description": "",
+    "message": "Confirmer la vente"
+  },
+  "CONSTABLE": {
+    "description": "",
+    "message": "Agent de police"
+  },
+  "CONTINUE_GAME": {
+    "description": "",
+    "message": "Continuer la partie"
+  },
+  "CONTRACT_FRAUD": {
+    "description": "Crime committed by intentionally breaking a contract",
+    "message": "Fraude contractuelle"
+  },
+  "CONTROLS": {
+    "description": "",
+    "message": "Controles"
+  },
+  "CONTROL_OPTIONS": {
+    "description": "",
+    "message": "Options de controle"
+  },
+  "COPY": {
+    "description": "As for clipboard",
+    "message": "Copier"
+  },
+  "COULD_NOT_DELETE_SAVE": {
+    "description": "",
+    "message": "Impossible d'éffacer la sauvegarde"
+  },
+  "COULD_NOT_FIND_SYSTEM_BODY_FOR_FRAME": {
+    "description": "Message when restoring savegame",
+    "message": "Impossible de trouver l'objet stellaire du système dans le cadre de référence"
+  },
+  "COULD_NOT_LOAD_GAME": {
+    "description": "Label indicating a specific file could not be loaded",
+    "message": "Impossible de charger la partie:"
+  },
+  "COULD_NOT_LOAD_SAVE_FILES": {
+    "description": "Label indicating the list of save files could not be loaded",
+    "message": "Impossible de charger les sauvegardes"
+  },
+  "COULD_NOT_READ_THE_SAVE_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "Impossible de lire la version de la sauvegarde"
+  },
+  "COULD_NOT_SAVE_GAME": {
+    "description": "Label indicating a specific file could not be saved",
+    "message": "Impossible de charger la sauvegarde:"
+  },
+  "CREDIBLE": {
+    "description": "For player reputation",
+    "message": "Crédible"
+  },
+  "CREDITS": {
+    "description": "in game currency",
+    "message": "Crédits"
+  },
+  "CREW": {
+    "description": "Tab item in the start game menu",
+    "message": "Membre d'équipage"
+  },
+  "CREW_CABINS": {
+    "description": "",
+    "message": "Cabines d'équipage"
+  },
+  "CREW_ROSTER": {
+    "description": "",
+    "message": "Liste d'équipage"
+  },
+  "CRIME": {
+    "description": "Heading introducing a single crime name or list of crime names",
+    "message": "Crime"
+  },
+  "CRIMINAL": {
+    "description": "Legal status of player",
+    "message": "Criminel"
+  },
+  "CRIMINAL_RECORD": {
+    "description": "Heading for past crimes / crime history of character, proper noun",
+    "message": "Casier judiciaire"
+  },
+  "CURRENT_FUEL": {
+    "description": "Label indicating the current fuel state",
+    "message": "Carburant actuel"
+  },
+  "CURRENT_SAVEGAME_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "Version courante de sauvegarde: %s"
+  },
+  "CURRENT_SHIP": {
+    "description": "For tooltip comparing current ship specs to one in the shipyard",
+    "message": "Vaisseau utilisé"
+  },
+  "CURRENT_SYSTEM": {
+    "description": "Label indicating the system the player currently occupies",
+    "message": "Système actuel"
+  },
+  "CUT": {
+    "description": "As for clipboard",
+    "message": "Couper"
+  },
+  "DANGEROUS": {
+    "description": "Player combat rating",
+    "message": "Dangereux"
+  },
+  "DATE": {
+    "description": "Date of an event, used in flight log",
+    "message": "Date"
+  },
+  "DEADLY": {
+    "description": "Player combat rating",
+    "message": "Mortel"
+  },
+  "DECREASE": {
+    "description": "Decrease something.",
+    "message": "Diminuer"
+  },
+  "DELETE": {
+    "description": "",
+    "message": "Éffacer"
+  },
+  "DELETE_BOOKMARK": {
+    "description": "Button to remove a singular bookmark",
+    "message": "Supprimer marque-page"
+  },
+  "DELETE_SAVE_CONFIRMATION": {
+    "description": "",
+    "message": "Êtes-vous sûr de vouloir éffacer cette sauvegarde ?"
+  },
+  "DELTA_V": {
+    "description": "",
+    "message": "V_delta"
+  },
+  "DELTA_V_EMPTY": {
+    "description": "Delta-v capacity of a ship with no cargo or upgrades",
+    "message": "Delta-v (vide)"
+  },
+  "DELTA_V_FULL": {
+    "description": "Delta-v capacity of a ship with maximum cargo",
+    "message": "Delta-v (plein)"
+  },
+  "DELTA_V_MAX": {
+    "description": "Delta-v capacity of a ship with cargo bay fully loaded with propellant",
+    "message": "Delta-v (max)"
+  },
+  "DEMAND": {
+    "description": "Column label for commodity demand at a market.",
+    "message": "Demande"
+  },
+  "DEPARTURE_DATE": {
+    "description": "Time of departure, used in flight log",
+    "message": "Date de départ"
+  },
+  "DESCRIPTION": {
+    "description": "Start game parameter, e.g. 'This is an easy start from Cydonia'",
+    "message": "Description"
+  },
+  "DESTROY_ENEMY_SHIP": {
+    "description": "",
+    "message": "Detruire le vaisseau ennemi"
+  },
+  "DETAIL_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Une valeur plus basse signifie de meilleures performances, mais une esthétique visuelle amoindrie."
+  },
+  "DISABLE_SCREENSHOT_INFO": {
+    "description": "",
+    "message": "Désactiver les informations de capture d'écran"
+  },
+  "DISABLE_SCREENSHOT_INFO_DESC": {
+    "description": "",
+    "message": "Cacher toutes les informations dans le mode capture d'écran (réglage mode HUD), y compris les coordonnées du système."
+  },
+  "DISMISS": {
+    "description": "Terminate crew member's contract",
+    "message": "Renvoyer"
+  },
+  "DISPLAY_HUD_TRAILS": {
+    "description": "",
+    "message": "Afficher les trainées HUD"
+  },
+  "DISPLAY_HUD_TRAILS_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Aide visuelle affichant la trajectoire des vaisseaux sur le HUD (affichage tête haute)"
+  },
+  "DISPLAY_NAV_TUNNELS": {
+    "description": "Settings option: hyperspace tunnel effect",
+    "message": "Afficher tunnels de nav."
+  },
+  "DISPLAY_NAV_TUNNELS_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Affiche un tunnel virtuel vers la cible selectionnée sur le HUD (affichage tête haute)"
+  },
+  "DISPLAY_SPEED_LINES": {
+    "description": "Settings option: effect when travelling in space",
+    "message": "Montrer effets de vitesse"
+  },
+  "DISPLAY_SPEED_LINES_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Assiste le sens de direction du mouvement dans l'espace"
+  },
+  "DOCKED_AT": {
+    "description": "",
+    "message": "Arrimé à"
+  },
+  "DOCKED_TO_A_BODY_THAT_IS_NOT_A_STATION": {
+    "description": "Message when restoring savegame",
+    "message": "Amarré à un objet qui n'est pas une station"
+  },
+  "DOCK_AT_CURRENT_TARGET": {
+    "description": "",
+    "message": "S'arrimer à la cible actuelle"
+  },
+  "DRIVE_ACTIVE": {
+    "description": "Ship jump status",
+    "message": "Propulsion active"
+  },
+  "DUE": {
+    "description": "mission deadline date",
+    "message": "Échéance"
+  },
+  "DUMPING": {
+    "description": "The illegal act of dumping waste",
+    "message": "Dépôt d'ordure"
+  },
+  "D_DAYS_LEFT": {
+    "description": "",
+    "message": "Temps restant:"
+  },
+  "ECONOMY_TRADE": {
+    "description": "",
+    "message": "Économie et commerce"
+  },
+  "EDIT": {
+    "description": "Tooltip, to edit a flight log entry",
+    "message": "Modifier"
+  },
+  "EDIT_BOOKMARK": {
+    "description": "Button to edit a singular bookmark",
+    "message": "Editer marque-page"
+  },
+  "EDIT_NOTE": {
+    "description": "",
+    "message": "Editer note"
+  },
+  "EFFECTS": {
+    "description": "",
+    "message": "Effets:"
+  },
+  "ELITE": {
+    "description": "Player combat rating",
+    "message": "ELITE"
+  },
+  "EMPLOYMENT": {
+    "description": "",
+    "message": "Fonction"
+  },
+  "ENABLE_ANISOTROPIC_FILTERING": {
+    "description": "Use Anisotropic Filtering",
+    "message": "Filtrage Anisotropique"
+  },
+  "ENABLE_AUTOSAVE": {
+    "description": "Allow the game to autosave when docking",
+    "message": "Activer la sauvegarde automatique"
+  },
+  "ENABLE_AUTOSAVE_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Sauvegarder lors de l'arrimage. Peut causer de la latence selon la rapidité de votre disque dur."
+  },
+  "ENABLE_COCKPIT": {
+    "description": "Game settings option: to use a cockpit 3D model",
+    "message": "Activer cockpit (EXPERIMENTAL)"
+  },
+  "ENABLE_COCKPIT_DESC": {
+    "description": "tooltip description in settings menu",
+    "message": "Affiche un modèle 3D du tableau de bord. (Le modèle est temporaire)"
+  },
+  "ENABLE_JOYSTICK": {
+    "description": "",
+    "message": "Activer le joystick"
+  },
+  "END_GAME": {
+    "description": "",
+    "message": "Arrêter le jeu"
+  },
+  "ENGINEERING": {
+    "description": "Engineering skills of crew",
+    "message": "Ingénierie"
+  },
+  "ENTER_CUSTOM_NOTE": {
+    "description": "Label indicating a note should be entered here",
+    "message": "Editer note personnalisée ..."
+  },
+  "ENTRY": {
+    "description": "A note/entry/record into the flight log",
+    "message": "Entrée"
+  },
+  "EQUIPMENT": {
+    "description": "",
+    "message": "Équipement"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Cet équipement est déjà installé ici."
+  },
+  "EQUIPMENT_CAPACITY": {
+    "description": "The equipment capacity of a ship",
+    "message": "Capacité de l'équipement"
+  },
+  "EQUIPMENT_MARKET": {
+    "description": "",
+    "message": "Marché d'équipement"
+  },
+  "EQUIPPED": {
+    "description": "",
+    "message": "Equipé"
+  },
+  "ERROR": {
+    "description": "",
+    "message": "Erreur"
+  },
+  "ERROR_APPLYING_PATCH": {
+    "description": "Message when restoring savegame",
+    "message": "Erreur lors de l'application du patch"
+  },
+  "ERROR_LANDING_GEAR_DOWN": {
+    "description": "",
+    "message": "Saut hyper-espace impossible : le train d’atterrissage n'est pas rentré !"
+  },
+  "ESCAPE_SPEED": {
+    "description": "",
+    "message": "Vitesse de libération :"
+  },
+  "EXIT_THIS_GAME": {
+    "description": "",
+    "message": "Quitter le jeu"
+  },
+  "EXPAND": {
+    "description": "Open / expand a collapsed folder or group",
+    "message": "Déplier"
+  },
+  "EXPERIENCED": {
+    "description": "For player reputation",
+    "message": "Expérimenté"
+  },
+  "EXPERIMENTAL": {
+    "description": "Indicates feature/option is experimental",
+    "message": "Expérimental"
+  },
+  "EXPERT": {
+    "description": "For player reputation",
+    "message": "Expert"
+  },
+  "FACTION": {
+    "description": "Label indicating the factional allegiance of an object",
+    "message": "Faction"
+  },
+  "FACTIONS": {
+    "description": "Button to toggle the display of factions on the sector map",
+    "message": "Factions"
+  },
+  "FAILED": {
+    "description": "When failed mission",
+    "message": "Loupé"
+  },
+  "FAILED_TO_RECOVER_SOME_EQUIPMENT": {
+    "description": "",
+    "message": "Certains équipement n'ont pu être récupérés"
+  },
+  "FEATURE_ACCESSORIES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Accessoires"
+  },
+  "FEATURE_ARMOUR": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Armure"
+  },
+  "FEATURE_CLOTHES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Vêtements"
+  },
+  "FEATURE_EYES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Yeux"
+  },
+  "FEATURE_GENDER": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Genre"
+  },
+  "FEATURE_HAIRSTYLE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Coiffure"
+  },
+  "FEATURE_HEAD": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Tête"
+  },
+  "FEATURE_MOUTH": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Bouche"
+  },
+  "FEATURE_NOSE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Nez"
+  },
+  "FEATURE_RACE": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Couleur de peau"
+  },
+  "FEATURE_SPECIES": {
+    "description": "Face feature for FaceGenerator in the PersonalInfo view",
+    "message": "Aspect"
+  },
+  "FEMALE": {
+    "description": "",
+    "message": "Femelle"
+  },
+  "FILE_SAVEGAME_VERSION": {
+    "description": "Message when restoring savegame",
+    "message": "Version du fichier de sauvegarde : %s"
+  },
+  "FINAL_TARGET": {
+    "description": "Hyperjump planner, referring to star system target",
+    "message": "Destination finale"
+  },
+  "FINANCE": {
+    "description": "Financial statement of player, e.g. cash",
+    "message": "Finance"
+  },
+  "FINE": {
+    "description": "Cost of a criminal action",
+    "message": "Amende"
+  },
+  "FLIGHTLOG_DOCKING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name",
+    "message": "Arrimage à {primary_info}"
+  },
+  "FLIGHTLOG_FLYING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the name of a space body",
+    "message": "En vol, relatif à {primary_info}"
+  },
+  "FLIGHTLOG_HYPERSPACE": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the star system targeted for hyperspace jump.",
+    "message": "En hyperespace, en route vers {primary_info}"
+  },
+  "FLIGHTLOG_JUMPING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is the star system targeted for hyperspace jump.",
+    "message": "Hyper-saut vers {primary_info}"
+  },
+  "FLIGHTLOG_LANDED": {
+    "description": "Used in Flight Log, to indicate player's position, 'primary_info' is the name of a space body, typically a planet, the other two variables are latitude and longitude as floating point number, e.g. 'Landed on Trantor, position (-43.23, 67.89)'",
+    "message": "Atterri sur {primary_info}, position ({secondary_info}, {tertiary_info})"
+  },
+  "FLIGHTLOG_STARPORT_ORBITAL": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name, 'secondary_info' is a space body (planet, moon/satelite, star) name",
+    "message": "Arrimé à {primary_info}, en orbite autour de {secondary_info}"
+  },
+  "FLIGHTLOG_STARPORT_SURFACE": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name, 'secondary_info' is a space body (planet, moon/satelite, star) name",
+    "message": "Arrimé à {primary_info}, sur {secondary_info}"
+  },
+  "FLIGHTLOG_UNDOCKING": {
+    "description": "Used in Flight Log, to indicate player's position. 'primary_info' is a station name",
+    "message": "Désarrimage de {primary_info}"
+  },
+  "FLIGHT_LOG": {
+    "description": "Title for flight log screen, in info view",
+    "message": "Journal de vol"
+  },
+  "FLIGHT_STATE": {
+    "description": "",
+    "message": "État de vol"
+  },
+  "FLYING": {
+    "description": "",
+    "message": "En vol"
+  },
+  "FORWARD_ACCEL": {
+    "description": "",
+    "message": "Accélération"
+  },
+  "FORWARD_ACCEL_EMPTY": {
+    "description": "",
+    "message": "Poussée (à vide)"
+  },
+  "FORWARD_ACCEL_FULL": {
+    "description": "",
+    "message": "Accélération (totale)"
+  },
+  "FREE": {
+    "description": "Used in Ship Information view as in Capacity: 10t (5t free)",
+    "message": "libre"
+  },
+  "FRONT_WEAPON": {
+    "description": "",
+    "message": "Arme avant"
+  },
+  "FUEL": {
+    "description": "",
+    "message": "Carburant"
+  },
+  "FUEL_TANK_FULL": {
+    "description": "",
+    "message": "Revervoirs Pleins"
+  },
+  "FUEL_WEIGHT": {
+    "description": "",
+    "message": " Poid Carb. "
+  },
+  "FUGITIVE": {
+    "description": "Legal status of player",
+    "message": "Fugitif"
+  },
+  "FULL_SCREEN": {
+    "description": "",
+    "message": "Plein écran"
+  },
+  "GAME_OPTIONS": {
+    "description": "GameOptions - tooltip for the Game Options tab in the Settings Window",
+    "message": "Options de jeu"
+  },
+  "GAME_TIME": {
+    "description": "",
+    "message": "Temps de jeu"
+  },
+  "GENERAL_CREW": {
+    "description": "",
+    "message": "Équipage général"
+  },
+  "GIVE_ORDERS_TO_CREW": {
+    "description": "",
+    "message": "Donner des ordres à l'équipage"
+  },
+  "GOOD_RIDDANCE_TO_YOU_TOO": {
+    "description": "",
+    "message": "Bon vent à toi aussi."
+  },
+  "GO_BACK": {
+    "description": "",
+    "message": "Retour"
+  },
+  "GPU_JOBS": {
+    "description": "",
+    "message": "Tâches de carte graphique"
+  },
+  "GPU_JOBS_DESC": {
+    "description": "",
+    "message": "Utiliser la carte graphique pour certaines actions, afin d'améliorer potentiellement les performances."
+  },
+  "HANG_UP": {
+    "description": "",
+    "message": "Raccrochez."
+  },
+  "HARMLESS": {
+    "description": "Player combat rating",
+    "message": "Inoffensif"
+  },
+  "HEAVY_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "Navette cargo lourde"
+  },
+  "HEAVY_COURIER": {
+    "description": "",
+    "message": "Courrier lourd"
+  },
+  "HEAVY_FIGHTER": {
+    "description": "",
+    "message": "Chasseur lourd"
+  },
+  "HEAVY_FREIGHTER": {
+    "description": "",
+    "message": "Transporteur lourd"
+  },
+  "HEAVY_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "Navette de passager lourd"
+  },
+  "HEAVY_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "Transport de passagers lourd"
+  },
+  "HIGH": {
+    "description": "Game settings option: for graphics resolution",
+    "message": "Haut"
+  },
+  "HUD_2D_RADAR": {
+    "description": "Popup text: the name of the azimuthal equidistant projection radar",
+    "message": "Projection de Postel (2D)"
+  },
+  "HUD_3D_RADAR": {
+    "description": "Popup text: the name of the planar projection radar (traditional frontier-style)",
+    "message": "Projection planaire 3D"
+  },
+  "HUD_ARRIVAL_DATE": {
+    "description": "Label for Hyperspace Cloud arrival date",
+    "message": "Date d'arrivée"
+  },
+  "HUD_ATMOSPHERIC_PRESSURE": {
+    "description": "Tooltip: Atmospheric Pressure.",
+    "message": "Pression atmosphérique"
+  },
+  "HUD_BACKWARD_GUN_TEMPERATURE": {
+    "description": "Tooltip: Backward Gun Temperature.",
+    "message": "Température de l'armement arrière"
+  },
+  "HUD_BRAKE_DISTANCE_MAIN_THRUSTERS": {
+    "description": "Tooltip: The braking distance using the main thrusters.",
+    "message": "La distance de freinage avec les réacteurs principaux"
+  },
+  "HUD_BUTTON_AUTOPILOT_DOCKING": {
+    "description": "Tooltip: Autopilot docking",
+    "message": "Autopilote en cours d'arrimage"
+  },
+  "HUD_BUTTON_AUTOPILOT_ENTERING_ORBIT": {
+    "description": "Tooltip: Autopilot entering orbit",
+    "message": "Autopilote en train d'entrer en orbite"
+  },
+  "HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET": {
+    "description": "Tooltip: Autopilot flying to target",
+    "message": "Autopilote en train de voler vers la cible"
+  },
+  "HUD_BUTTON_BLASTOFF": {
+    "description": "Tooltip: Blastoff",
+    "message": "Décollage"
+  },
+  "HUD_BUTTON_CRUISE_FORWARD": {
+    "description": "Tooltip for button",
+    "message": "Mode croisière : avancer"
+  },
+  "HUD_BUTTON_CRUISE_UP": {
+    "description": "Tooltip for button",
+    "message": "Mode croisière : vers le haut"
+  },
+  "HUD_BUTTON_DISABLE_AUTOPILOT": {
+    "description": "Tooltip for button",
+    "message": "Désactiver autopilote"
+  },
+  "HUD_BUTTON_DISABLE_CRUISE": {
+    "description": "Tooltip for button",
+    "message": "Désactiver mode croisière"
+  },
+  "HUD_BUTTON_DISABLE_FIXHEADING": {
+    "description": "Tooltip for button",
+    "message": "Désactiver mode direction fixe"
+  },
+  "HUD_BUTTON_DISABLE_FOLLOW_MODE": {
+    "description": "Tooltip for button",
+    "message": "Désactiver mode poursuite"
+  },
+  "HUD_BUTTON_EQUIPMENT": {
+    "description": "Tooltip: Equipment",
+    "message": "Équipement"
+  },
+  "HUD_BUTTON_EXTERNAL_VIEW": {
+    "description": "Tooltip: External camera view",
+    "message": "Vue extérieure"
+  },
+  "HUD_BUTTON_FIX_ANTINORMAL": {
+    "description": "Tooltip: fix heading antinormal",
+    "message": "Voir direction anti-normale (vers le \"bas\" par rapport au sens de déplacement)"
+  },
+  "HUD_BUTTON_FIX_NORMAL": {
+    "description": "Tooltip: fix heading normal",
+    "message": "Voir direction normale (vers le \"haut\" par rapport au sens de déplacement)"
+  },
+  "HUD_BUTTON_FIX_PROGRADE": {
+    "description": "Tooltip: fix heading prograde",
+    "message": "Voir direction prograde (sens de déplacement)"
+  },
+  "HUD_BUTTON_FIX_RADIAL_IN": {
+    "description": "Tooltip: fix heading radially inward",
+    "message": "Voir direction radiale intérieure (vers le \"centre\" de l'orbite)"
+  },
+  "HUD_BUTTON_FIX_RADIAL_OUT": {
+    "description": "Tooltip: fix heading radially outward",
+    "message": "Voir direction radiale extérieure (vers l'extérieur de l'orbite)"
+  },
+  "HUD_BUTTON_FIX_RETROGRADE": {
+    "description": "Tooltip: fix heading retrograde",
+    "message": "Voir direction rétrograde (vers l'arrière par rapport au sens de déplacement)"
+  },
+  "HUD_BUTTON_FLYBY_VIEW": {
+    "description": "Tooltip: Flyby camera view",
+    "message": "Vue survol"
+  },
+  "HUD_BUTTON_HYPERDRIVE_DISABLED": {
+    "description": "Tooltip: Hyperdrive disabled (docked or landed)",
+    "message": "Hyperpropulsion desactivée"
+  },
+  "HUD_BUTTON_INITIATE_HYPERJUMP": {
+    "description": "Tooltip: Initiate legal hyperjump",
+    "message": "Enclencher un saut hyper-espace"
+  },
+  "HUD_BUTTON_INITIATE_ILLEGAL_HYPERJUMP": {
+    "description": "Tooltip: Initiate illegal hyperjump",
+    "message": "Enclenche saut hyper-espace illégal"
+  },
+  "HUD_BUTTON_INTERNAL_VIEW": {
+    "description": "Tooltip: Internal camera view",
+    "message": "Vue cockpit"
+  },
+  "HUD_BUTTON_KILL_ROTATION": {
+    "description": "Tooltip: kill rotation",
+    "message": "Stop la rotation"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_DOWN": {
+    "description": "Tooltip: Landing gear is down",
+    "message": "Le train d'atterrissage est baissé"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_MOVING": {
+    "description": "Tooltip: Landing gear is moving",
+    "message": "Le train d'atterrissage est en mouvement"
+  },
+  "HUD_BUTTON_LANDING_GEAR_IS_UP": {
+    "description": "Tooltip: Landing gear is up",
+    "message": "Train d'atterrissage rentré"
+  },
+  "HUD_BUTTON_MANUAL_CONTROL": {
+    "description": "Tooltip: Manual control",
+    "message": "Contrôle manuel"
+  },
+  "HUD_BUTTON_ROTATION_DAMPING_IS_OFF": {
+    "description": "Tooltip: Rotation damping is off",
+    "message": "Amortissement de la rotation desenclenchée"
+  },
+  "HUD_BUTTON_ROTATION_DAMPING_IS_ON": {
+    "description": "Tooltip: Rotation damping is on",
+    "message": "Amortissement de la rotation enclenchée"
+  },
+  "HUD_BUTTON_SET_SPEED": {
+    "description": "Tooltip: set speed",
+    "message": "Ajuste la vitesse"
+  },
+  "HUD_BUTTON_SHOW_COMMS": {
+    "description": "Tooltip: Show comms",
+    "message": "Affiche les communications"
+  },
+  "HUD_BUTTON_SHOW_PERSONAL_INFO": {
+    "description": "Tooltip: Show personal info",
+    "message": "Affiche les informations personnelles"
+  },
+  "HUD_BUTTON_SIDEREAL_VIEW": {
+    "description": "Tooltip: Sidereal camera view",
+    "message": "Vue sidérale"
+  },
+  "HUD_BUTTON_SWITCH_TO_CURRENT_SYSTEM": {
+    "description": "Tooltip: Switch to current system",
+    "message": "Basculer vers système courant"
+  },
+  "HUD_BUTTON_SWITCH_TO_GALAXY_MAP": {
+    "description": "Tooltip: Switch to galaxy map",
+    "message": "Bascule vers carte galactique"
+  },
+  "HUD_BUTTON_SWITCH_TO_SECTOR_MAP": {
+    "description": "Tooltip: Switch to sector map",
+    "message": "Bascule vers carte du secteur"
+  },
+  "HUD_BUTTON_SWITCH_TO_SELECTED_SYSTEM": {
+    "description": "Tooltip: Switch to selected system",
+    "message": "Basculer vers système sélectionné"
+  },
+  "HUD_BUTTON_SWITCH_TO_SYSTEM_MAP": {
+    "description": "Tooltip: Switch to system map",
+    "message": "Bascule vers carte du système"
+  },
+  "HUD_BUTTON_SWITCH_TO_SYSTEM_OVERVIEW": {
+    "description": "Tooltip: Switch to system overview",
+    "message": "Bascule vers vue globale du système"
+  },
+  "HUD_BUTTON_SWITCH_TO_WORLD_VIEW": {
+    "description": "Tooltip: Switch to world view",
+    "message": "Bascule vers la vue du monde"
+  },
+  "HUD_BUTTON_UNDOCK": {
+    "description": "Tooltip: Undock",
+    "message": "Désarrimer"
+  },
+  "HUD_CARGO_MASS": {
+    "description": "Cargo Mass",
+    "message": "Poids de la cargaison"
+  },
+  "HUD_CRUISE_SPEED": {
+    "description": "Tooltip for cruise speed indicator",
+    "message": "Vitesse de croisière"
+  },
+  "HUD_CURRENT_COMBAT_TARGET": {
+    "description": "Tooltip: The current combat target.",
+    "message": "La cible de combat courante"
+  },
+  "HUD_CURRENT_FRAME": {
+    "description": "Tooltip: The current frame of reference.",
+    "message": "Le cadre de référence courant"
+  },
+  "HUD_CURRENT_HEADING": {
+    "description": "Tooltip: the current heading.",
+    "message": "Direction courante"
+  },
+  "HUD_CURRENT_NAV_TARGET": {
+    "description": "Tooltip: The current navigational target.",
+    "message": "La cible de navigation courante"
+  },
+  "HUD_CURRENT_PITCH": {
+    "description": "Tooltip: the current pitch.",
+    "message": "Le tangage courant"
+  },
+  "HUD_CURRENT_ROLL": {
+    "description": "Tooltip: the current roll.",
+    "message": "Le roulis courant"
+  },
+  "HUD_DELTA_V": {
+    "description": "Tooltip: The remaining Δv.",
+    "message": "Δv disponible"
+  },
+  "HUD_DELTA_V_OF_MANEUVER_BURN": {
+    "description": "Tooltip: The Δv for the maneuver burn.",
+    "message": "Le Δv de la manoeuver de mise à feu"
+  },
+  "HUD_DELTA_V_PERCENT": {
+    "description": "Tooltip: The remaining Δv in percent.",
+    "message": "% du Δv max"
+  },
+  "HUD_DISTANCE_TO_SURFACE_OF_FRAME": {
+    "description": "Tooltip: Distance to the surface of the frame of reference.",
+    "message": "Distance jusqu'à la surface du cadre de référence"
+  },
+  "HUD_DISTANCE_TO_SURFACE_OF_TARGET": {
+    "description": "Tooltip: Distance to the surface of the target.",
+    "message": "Distance jusqu'à la surface de la cible"
+  },
+  "HUD_DURATION_OF_MANEUVER_BURN": {
+    "description": "Tooltip: The approximate duration of the maneuver burn with main thrusters.",
+    "message": "La durée approximative de mise à feu des réacteurs principaux"
+  },
+  "HUD_DURATION_UNTIL_MANEUVER_BURN": {
+    "description": "Tooltip: The duration until the middle of the maneuver burn.",
+    "message": "La durée jusqu'à la moitié de la manoeuvre de mise à feu"
+  },
+  "HUD_FOLLOW_ORIENTATION": {
+    "description": "Tooltip for follow mode 'orientation' button",
+    "message": "{targetname}: suivre l'orientation"
+  },
+  "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE": {
+    "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object.",
+    "message": "{targetname}: 'suivre l'orientation' indisponible"
+  },
+  "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE_TOO_FAR": {
+    "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object, because it's too far.",
+    "message": "{targetname}: cible trop loin pour 'suivre l'orientation'"
+  },
+  "HUD_FOLLOW_POSITION": {
+    "description": "Tooltip for follow mode 'position' button",
+    "message": "{targetname}: suivre la position"
+  },
+  "HUD_FOLLOW_POSITION_NOT_AVAILABLE": {
+    "description": "Tooltip for follow mode 'position' button, when it's not available for the current object.",
+    "message": "{targetname}: 'suivre la position' indisponible"
+  },
+  "HUD_FOLLOW_POSITION_NOT_AVAILABLE_TOO_FAR": {
+    "description": "Tooltip for follow mode 'position' button, when it's not available for the current object, because it's too far.",
+    "message": "{targetname}: cible trop loin pour 'suivre la position'"
+  },
+  "HUD_FOLLOW_TARGET": {
+    "description": "Tooltip for followed target's name in reticule",
+    "message": "Suivre la cible"
+  },
+  "HUD_FORWARD_GUN_TEMPERATURE": {
+    "description": "Tooltip: Forward Gun Temperature.",
+    "message": "Température de l'armement avant"
+  },
+  "HUD_HULL_STRENGTH": {
+    "description": "Tooltip: Hull Strength.",
+    "message": "Solidité du fuselage"
+  },
+  "HUD_HULL_TEMPERATURE": {
+    "description": "Tooltip: Hull Temperature.",
+    "message": "Température du fuselage"
+  },
+  "HUD_HYPERSPACE_DESTINATION": {
+    "description": "HUD Label indicating the hyperspace destination system. Should just be Destination.",
+    "message": "Destination"
+  },
+  "HUD_HYPERSPACE_ORIGIN": {
+    "description": "HUD Label indicating the hyperspace origin system. Should just be Origin.",
+    "message": "Origine"
+  },
+  "HUD_HYPERSPACING_TO_N_IN_N_SECONDS": {
+    "description": "",
+    "message": "Départ en hyper-espace vers {destination} dans {countdown} secondes"
+  },
+  "HUD_INDICATOR_AWAY_FROM_FRAME": {
+    "description": "Indicator: Away from the current frame.",
+    "message": "Distance au cadre de référence"
+  },
+  "HUD_INDICATOR_COMBAT_TARGET_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current combat target.",
+    "message": "direction prograde relative à la cible de combat courante"
+  },
+  "HUD_INDICATOR_COMBAT_TARGET_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current combat target.",
+    "message": "direction prograde relative à la cible de combat courante"
+  },
+  "HUD_INDICATOR_FRAME_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current frame.",
+    "message": "Direction prograde relative au cadre de référence courant"
+  },
+  "HUD_INDICATOR_FRAME_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current frame.",
+    "message": "Direction rétrograde relative au cadre de référence courant"
+  },
+  "HUD_INDICATOR_MANEUVER_PROGRADE": {
+    "description": "Indicator: The prograde direction for the maneuver burn.",
+    "message": "Direction prograde pour la manœuvre de mise à feu"
+  },
+  "HUD_INDICATOR_NAV_TARGET_PROGRADE": {
+    "description": "Indicator: Prograde direction relative to the current navigational target.",
+    "message": "Direction prograde relative à la cible de navigation courante"
+  },
+  "HUD_INDICATOR_NAV_TARGET_RETROGRADE": {
+    "description": "Indicator: Retrograde direction relative to the current navigational target.",
+    "message": "Direction rétrograde relative à la cible de navigation courante"
+  },
+  "HUD_IN_TRANSIT_TO_N_X_X_X": {
+    "description": "",
+    "message": "En transit vers le système {system} [{x},{y},{z}]"
+  },
+  "HUD_JUMP_COMPLETE": {
+    "description": "",
+    "message": "Saut complété à: {percent}%"
+  },
+  "HUD_MASS": {
+    "description": "Mass",
+    "message": "Masse"
+  },
+  "HUD_RADAR_DISTANCE": {
+    "description": "Tooltip: Current distance of the radar.",
+    "message": "Distance radar"
+  },
+  "HUD_RADAR_TOGGLE_MODE": {
+    "description": "Tooltip: Toggle radar mode.",
+    "message": "Mettre le radar en mode 2D ou 3D"
+  },
+  "HUD_RADAR_ZOOM_MODE_AUTOMATIC": {
+    "description": "Tooltip: Current radar zoom mode.",
+    "message": "Zoom automatique"
+  },
+  "HUD_RADAR_ZOOM_MODE_MANUAL": {
+    "description": "Tooltip: Current radar zoom mode.",
+    "message": "Zoom manuel"
+  },
+  "HUD_REQUEST_TIME_ACCEL": {
+    "description": "Tooltip: Request time acceleration {time}",
+    "message": "Demande d'accélération du temps: {time}"
+  },
+  "HUD_SHIELD_STRENGTH": {
+    "description": "Tooltip: Shield Strength.",
+    "message": "Solidité du bouclier"
+  },
+  "HUD_SHOW_COMBAT_TARGET": {
+    "description": "Tooltip: Show the current combat target.",
+    "message": "Affiche la cible de combat courante"
+  },
+  "HUD_SHOW_FRAME": {
+    "description": "Tooltip: Show the current frame of reference.",
+    "message": "Affiche le cadre de référence courant"
+  },
+  "HUD_SHOW_NAV_TARGET": {
+    "description": "Tooltip: Show current navigational target.",
+    "message": "Affiche la cible de navigation courante"
+  },
+  "HUD_SPEED_LIMITER_ACTIVE": {
+    "description": "Tooltip for the icon in the reticule that appears if the speed limiter is active",
+    "message": "Limiteur de vitesse activé"
+  },
+  "HUD_SPEED_OF_APPROACH_TO_FRAME": {
+    "description": "Tooltip: The speed of approach towards the frame of reference.",
+    "message": "La vitesse d'approche vers le cadre de référence"
+  },
+  "HUD_SPEED_OF_APPROACH_TO_TARGET": {
+    "description": "Tooltip: The speed of approach relative to target.",
+    "message": "La vitesse d'approche relative à la cible"
+  },
+  "HUD_SPEED_RELATIVE_TO_TARGET": {
+    "description": "Tooltip: The speed relative to the target.",
+    "message": "Vitesse relative par rapport à la cible"
+  },
+  "HUD_THRUST_INDICATOR": {
+    "description": "Tooltip: describe what the thrust/velocity indicator shows",
+    "message": "Affiche la vitesse courante pour chaque direction (lignes fines) et poussée moteur (arrière-plan épais)"
+  },
+  "HUD_WARNING_DESCENT_RATE": {
+    "description": "Shown on HUD as a warning flasher",
+    "message": "Rythme de descente"
+  },
+  "HUD_WARNING_IMPACT": {
+    "description": "Alert tooltip",
+    "message": "Alerte Impact"
+  },
+  "HUD_WARNING_IMPACT_IMMINENT": {
+    "description": "Alert tooltip",
+    "message": "Impact imminent"
+  },
+  "HULL_DOES_NOT_REQUIRE_REPAIR": {
+    "description": "",
+    "message": "La coque est intacte"
+  },
+  "HULL_INTEGRITY": {
+    "description": "",
+    "message": "Intégrité coque"
+  },
+  "HULL_REPAIRED_BY_NAME_NOW_AT_N_PERCENT": {
+    "description": "",
+    "message": "Coque Réparée par {name}, actuellement à {repairPercent}%"
+  },
+  "HULL_REPAIR_ATTEMPT_FAILED_HULL_SUFFERED_MINOR_DAMAGE": {
+    "description": "",
+    "message": "Réparation échouée. La coque a reçu des dégâts mineurs."
+  },
+  "HYPERDRIVE": {
+    "description": "",
+    "message": "Hyperpropulsion"
+  },
+  "HYPERDRIVE_FITTED": {
+    "description": "",
+    "message": "Hyperpropulsion installée :"
+  },
+  "HYPERJUMP_ROUTE": {
+    "description": "",
+    "message": "Itinéraire d'hyper-sauts"
+  },
+  "HYPERJUMP_ROUTING": {
+    "description": "Label indicating a category division",
+    "message": "Itinéraire HyperSaut"
+  },
+  "HYPERSPACE_RANGE": {
+    "description": "",
+    "message": "Portée Hyperspaciale"
+  },
+  "ILLEGAL_COMMODITIES": {
+    "description": "Commodities illegal in the current system or polity",
+    "message": "Marchandises illégales"
+  },
+  "ILLEGAL_IN_SYSTEM": {
+    "description": "An illegal action or commodity",
+    "message": "Illégal dans le système"
+  },
+  "ILLEGAL_JUMP": {
+    "description": "A finable crime",
+    "message": "Saut hyper-espace imprudent enregistré"
+  },
+  "IM_TIRED_OF_WORKING_FOR_NOTHING_DONT_YOU_KNOW_WHAT_A_CONTRACT_IS": {
+    "description": "",
+    "message": "Je suis fatigué de bosser pour rien. Vous savez ce que c'est qu'un contrat de travail ? "
+  },
+  "INACTIVE": {
+    "description": "",
+    "message": "Inactif"
+  },
+  "INCOMPETENT": {
+    "description": "For player reputation",
+    "message": "Incompétent"
+  },
+  "INCREASE": {
+    "description": "Increase something.",
+    "message": "Augmenter"
+  },
+  "INEXPERIENCED": {
+    "description": "For player reputation",
+    "message": "Inexpérimenté"
+  },
+  "INITIATED": {
+    "description": "Ship jump status",
+    "message": "Amorcée"
+  },
+  "INSTALL": {
+    "description": "Install something",
+    "message": "Installer"
+  },
+  "INSTALLED": {
+    "description": "Label indicating something is installed",
+    "message": "Installé"
+  },
+  "INSUFFICIENT_FUEL": {
+    "description": "Ship jump status",
+    "message": "Carburant insuffisant"
+  },
+  "INSUFFICIENT_FUNDS": {
+    "description": "",
+    "message": "Fonds insuffisants"
+  },
+  "INTELLIGENCE": {
+    "description": "Character parameter",
+    "message": "Intelligence"
+  },
+  "INTERSTELLAR_TRADE_AVG": {
+    "description": "Label displaying commodity flow at a per-system level",
+    "message": "Commerce Interstellaire:"
+  },
+  "INVERT_MOUSE_Y": {
+    "description": "",
+    "message": "Inverser souris Y"
+  },
+  "IN_CARGO_HOLD": {
+    "description": "",
+    "message": "En soute"
+  },
+  "IN_HOLD": {
+    "description": "Column title of the Commodity Market screen",
+    "message": "En soute"
+  },
+  "IN_STOCK": {
+    "description": "Column title of Commodity and Ship Equipment markets showing current station stock level.",
+    "message": "Stock"
+  },
+  "IN_SYSTEM": {
+    "description": "Used in flight log, show which star system we are/were in",
+    "message": "Dans le système"
+  },
+  "ITEM_IS_OUT_OF_STOCK": {
+    "description": "",
+    "message": "Nous n'avons pas cet objet en stock."
+  },
+  "ITS_BEEN_GREAT_WORKING_FOR_YOU_IF_YOU_NEED_ME_AGAIN_ILL_BE_HERE_A_WHILE": {
+    "description": "",
+    "message": "J'ai apprécié de travailler pour vous. Si un jour vous avez besoin de moi, je serais à votre service."
+  },
+  "JETTISON": {
+    "description": "",
+    "message": "Ejecter"
+  },
+  "JETTISON_MODE": {
+    "description": "",
+    "message": "Mode Largage"
+  },
+  "JUMPING": {
+    "description": "Flight State",
+    "message": "En saut"
+  },
+  "KILLS": {
+    "description": "",
+    "message": "Tués:"
+  },
+  "KNOWN_AS": {
+    "description": "Indicates alternate names/aliases for an object",
+    "message": "Nom alternatif"
+  },
+  "LANGUAGE": {
+    "description": "",
+    "message": "Langue"
+  },
+  "LANGUAGE_RESTART_GAME_TO_APPLY": {
+    "description": "",
+    "message": "Langue (redémarrer pour appliquer)"
+  },
+  "LAUNCH_PERMISSION_DENIED_BUSY": {
+    "description": "",
+    "message": "Permission de décollage refusée: Occupé."
+  },
+  "LAUNCH_PERMISSION_DENIED_CREW": {
+    "description": "",
+    "message": "Décollage non autorisé : votre équipage n'est pas au complet."
+  },
+  "LAUNCH_PERMISSION_DENIED_FINED": {
+    "description": "",
+    "message": "Décollage non autorisé : vous avez des amendes impayées."
+  },
+  "LAUNCH_PERMISSION_GRANTED": {
+    "description": "",
+    "message": "Permission de lancement accordée."
+  },
+  "LAUNCH_PERMISSION_GRANTED_DEPART_QUICK": {
+    "description": "",
+    "message": "Permission accordée. Décollez rapidement afin de ne pas encombrer la zone d'atterrissage, s'il vous plait."
+  },
+  "LAUNCH_PERMISSION_GRANTED_WATCH_TRAFFIC": {
+    "description": "",
+    "message": "Permission accordée. Faites attention au traffic lors de votre départ."
+  },
+  "LAWFULNESS": {
+    "description": "Character parameter",
+    "message": "Légalité"
+  },
+  "LEGAL_RULES": {
+    "description": "Refers to laws, rules and regulations",
+    "message": "Lois applicables dans l'espace contrôlé par la station. Le respect des lois est automatiquement vérifié jusqu'à une distance de: {distance}."
+  },
+  "LEGAL_RULES_AND_REGULATIONS": {
+    "description": "Heading on a tab, keep it short",
+    "message": "Réglementation"
+  },
+  "LEGAL_STATUS": {
+    "description": "",
+    "message": "Casier judiciaire"
+  },
+  "LIGHT_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "Navette cargo légère"
+  },
+  "LIGHT_COURIER": {
+    "description": "",
+    "message": "Courrier léger"
+  },
+  "LIGHT_FIGHTER": {
+    "description": "",
+    "message": "Chasseur léger"
+  },
+  "LIGHT_FREIGHTER": {
+    "description": "",
+    "message": "Transporteur léger"
+  },
+  "LIGHT_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "Navette de passagers légère"
+  },
+  "LIGHT_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "Transport de passager léger"
+  },
+  "LOAD": {
+    "description": "",
+    "message": "Charger"
+  },
+  "LOAD_GAME": {
+    "description": "",
+    "message": "Charger Partie"
+  },
+  "LOBBY": {
+    "description": "",
+    "message": "Hall"
+  },
+  "LOCAL_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras de la voie lactée local"
+  },
+  "LOCATED_N_KM_FROM_THE_CENTRE_OF_NAME": {
+    "description": "",
+    "message": "Localisation {distance}km du centre de {name}:"
+  },
+  "LOCATION": {
+    "description": "",
+    "message": "Localisation"
+  },
+  "LOG_CUSTOM": {
+    "description": "Label tab for showing custom logged events",
+    "message": "Journal personnalisé"
+  },
+  "LOG_EARLIEST_FIRST": {
+    "description": "Show the log entries in chronological order, earliest first",
+    "message": "Ordre: le plus tôt en premier"
+  },
+  "LOG_EXPORT": {
+    "description": "Export the log",
+    "message": "Exporter"
+  },
+  "LOG_HTML": {
+    "description": "Export the log as HTML or not",
+    "message": "HTML"
+  },
+  "LOG_NEW": {
+    "description": "Indicate to make an entry into flight log system",
+    "message": "Nouvelle entrée"
+  },
+  "LOG_STATION": {
+    "description": "Label tab for showing logged station events",
+    "message": "Journal de station"
+  },
+  "LOG_SYSTEM": {
+    "description": "Label tab for showing logged system events",
+    "message": "Journal de système"
+  },
+  "LOW": {
+    "description": "",
+    "message": "Bas"
+  },
+  "LUCK": {
+    "description": "Character parameter",
+    "message": "Chance"
+  },
+  "LY": {
+    "description": "Light year",
+    "message": "al"
+  },
+  "MAJOR_EXPORT": {
+    "description": "For displaying commodity information",
+    "message": "Exportation majeure"
+  },
+  "MAJOR_IMPORT": {
+    "description": "For displaying commodity information",
+    "message": "Importation majeure"
+  },
+  "MAKE_NEW_FACE": {
+    "description": "",
+    "message": "Choisir un autre visage"
+  },
+  "MALE": {
+    "description": "",
+    "message": "Mâle"
+  },
+  "MARKET_BUYLINE": {
+    "description": "",
+    "message": "Acheter {amount} unités pour {price}"
+  },
+  "MARKET_SELLINE": {
+    "description": "",
+    "message": "Vendre {amount} unités pour {price}"
+  },
+  "MASS": {
+    "description": "",
+    "message": "Masse"
+  },
+  "MASTER": {
+    "description": "For player reputation",
+    "message": "Maitre:"
+  },
+  "MASTER_VOL": {
+    "description": "Master sound in settings option",
+    "message": "Maitre:"
+  },
+  "MAX": {
+    "description": "",
+    "message": "Max"
+  },
+  "MAXIMUM_CREW": {
+    "description": "",
+    "message": "Équipage maximum"
+  },
+  "MEDIUM": {
+    "description": "Game settings option: graphics resolution",
+    "message": "Moyen"
+  },
+  "MEDIUM_CARGO_SHUTTLE": {
+    "description": "",
+    "message": "Navette cargo intermédiaire"
+  },
+  "MEDIUM_COURIER": {
+    "description": "",
+    "message": "Courrier intermédiaire"
+  },
+  "MEDIUM_FIGHTER": {
+    "description": "",
+    "message": "Chasseur intermédiaire"
+  },
+  "MEDIUM_FREIGHTER": {
+    "description": "",
+    "message": "Transporteur intermédiaire"
+  },
+  "MEDIUM_PASSENGER_SHUTTLE": {
+    "description": "",
+    "message": "Navette de passager intermédiaire"
+  },
+  "MEDIUM_PASSENGER_TRANSPORT": {
+    "description": "",
+    "message": "Transport de passager intermédiaire"
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "Alliages métalliques"
+  },
+  "MILITARY": {
+    "description": "",
+    "message": "Militaire"
+  },
+  "MINIMAL_TRADE": {
+    "description": "Indicates a system does not have a significant amount of trade in a commodity.",
+    "message": "Commerce minimal"
+  },
+  "MINIMUM_CREW": {
+    "description": "",
+    "message": "Équipage minimum"
+  },
+  "MINOR_EXPORT": {
+    "description": "For displaying commodity information",
+    "message": "Exportation mineure"
+  },
+  "MINOR_IMPORT": {
+    "description": "For displaying commodity information",
+    "message": "Importation mineure"
+  },
+  "MISSILE_MOUNTS": {
+    "description": "",
+    "message": "Lance-missiles"
+  },
+  "MISSIONS": {
+    "description": "",
+    "message": "Missions"
+  },
+  "MISSION_DETAILS": {
+    "description": "",
+    "message": "Détails de mission"
+  },
+  "MODEL": {
+    "description": "3d model of the ship",
+    "message": "Modèle"
+  },
+  "MONEY": {
+    "description": "",
+    "message": "Monnaie"
+  },
+  "MORE_INFO": {
+    "description": "",
+    "message": "Plus d'infos…"
+  },
+  "MORE_THAN_ONE_PLAYERS_SHIP_FOUND_IN_SPACE": {
+    "description": "Message when restoring savegame",
+    "message": "Plus d'un vaisseau joueur trouvé dans l'espace"
+  },
+  "MOSTLY_HARMLESS": {
+    "description": "",
+    "message": "Quasi inoffensif"
+  },
+  "MOVE_DOWN": {
+    "description": "move selection down in list",
+    "message": "Descendre"
+  },
+  "MOVE_UP": {
+    "description": "move selection up in list",
+    "message": "Monter"
+  },
+  "MULTISAMPLING": {
+    "description": "",
+    "message": "Multi-sampling"
+  },
+  "MULTISAMPLING_DESC": {
+    "description": "",
+    "message": "Une option graphique permettant d'ajuster l'effet d'escalier des contours pixélisés. Peut réduire sensiblement les performances."
+  },
+  "MURDER": {
+    "description": "",
+    "message": "Meurtre"
+  },
+  "MUSIC": {
+    "description": "",
+    "message": "Musique:"
+  },
+  "MUTE": {
+    "description": "",
+    "message": "Bloquer"
+  },
+  "NAME_OBJECT": {
+    "description": "For an item or object",
+    "message": "Nom"
+  },
+  "NAME_PERSON": {
+    "description": "For a person",
+    "message": "Nom"
+  },
+  "NAVIGATION": {
+    "description": "Crew skill",
+    "message": "Navigation"
+  },
+  "NAVIGATOR": {
+    "description": "",
+    "message": "Navigateur"
+  },
+  "NEGOTIATE": {
+    "description": "",
+    "message": "Négocier"
+  },
+  "NEW_GAME": {
+    "description": "Main menu item",
+    "message": "Nouvelle partie"
+  },
+  "NEW_PAINTJOB_APPLIED": {
+    "description": "Paintshop popup",
+    "message": "La nouvelle peinture de votre vaisseau a été posée."
+  },
+  "NEXT_FACE_FEATURE": {
+    "description": "Face feature switch button for FaceGenerator in the PersonalInfo view",
+    "message": "Suivant"
+  },
+  "NEXT_PAID": {
+    "description": "",
+    "message": "Prochaine paye"
+  },
+  "NO": {
+    "description": "Negative answer to a question",
+    "message": "Non"
+  },
+  "NOBODY": {
+    "description": "For player reputation",
+    "message": "Personne"
+  },
+  "NONE": {
+    "description": "",
+    "message": "Aucun"
+  },
+  "NONE_FOR_SALE_IN_THIS_STATION": {
+    "description": "",
+    "message": "Aucun à vendre dans cette station"
+  },
+  "NORMA_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras de la Règle"
+  },
+  "NOTES": {
+    "description": "",
+    "message": "Notes:"
+  },
+  "NOTORIETY": {
+    "description": "Character parameter",
+    "message": "Notoriété"
+  },
+  "NOT_ENOUGH_ALLOY_TO_ATTEMPT_A_REPAIR": {
+    "description": "",
+    "message": "Pas assez de {alloy} pour réparer"
+  },
+  "NOT_SUPPORTED_ON_THIS_SHIP": {
+    "description": "",
+    "message": "{equipment} n'est pas compatible avec ce type de vaisseau"
+  },
+  "NO_AVAILABLE_DATA": {
+    "description": "Message displaying no stored data available",
+    "message": "Pas de données disponibles"
+  },
+  "NO_BOOKMARKS_FOUND": {
+    "description": "Label indicating a lack of bookmarks to display",
+    "message": "Aucun marque-page trouvé"
+  },
+  "NO_CARGO": {
+    "description": "Message displayed when the player has no cargo in their hold.",
+    "message": "Pas de Cargaison"
+  },
+  "NO_DRIVE": {
+    "description": "Ship jump status",
+    "message": "Pas de propulsion"
+  },
+  "NO_FILTER_MATCHES": {
+    "description": "No matches to this filter.",
+    "message": "Rien ne correspond à ce filtre"
+  },
+  "NO_MISSIONS": {
+    "description": "",
+    "message": "Pas de missions."
+  },
+  "NO_VALID_ROUTE": {
+    "description": "Message in the sector map, issued by the autoroute function.",
+    "message": "Pas de route valide vers le système sélectionné."
+  },
+  "N_LIGHT_YEARS_N_MAX": {
+    "description": "",
+    "message": "{range} années lum. ({maxRange} max)"
+  },
+  "N_OCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "{quantity} cabines pass. occupées"
+  },
+  "N_SHIELD_GENERATORS": {
+    "description": "",
+    "message": "{quantity} Generateurs de Bouclier"
+  },
+  "N_UNOCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "{quantity} cabines passager vides"
+  },
+  "OCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "Cabines passagers occupées"
+  },
+  "OFF": {
+    "description": "",
+    "message": "Off"
+  },
+  "OFFENDER": {
+    "description": "Legal status of player",
+    "message": "Délinquant"
+  },
+  "OK": {
+    "description": "",
+    "message": "Ok"
+  },
+  "OPEN_USER_FOLDER": {
+    "description": "",
+    "message": "Répertoire utilisateur"
+  },
+  "OPTIONS": {
+    "description": "",
+    "message": "Options"
+  },
+  "ORBIT": {
+    "description": "",
+    "message": "Orbite"
+  },
+  "ORBIT_APOAPSIS": {
+    "description": "Label for the point of an orbit furthest from the orbited body",
+    "message": "Apoapse"
+  },
+  "ORBIT_PERIAPSIS": {
+    "description": "Label for the point of an orbit nearest to the orbited body",
+    "message": "Periapse"
+  },
+  "OUTER_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras externe"
+  },
+  "OUTLAW": {
+    "description": "Legal status of player",
+    "message": "Hors-la-loi"
+  },
+  "OUTSTANDING_FINES": {
+    "description": "Unpaid fines for crimes committed",
+    "message": "Amendes impayées"
+  },
+  "OUT_OF_RANGE": {
+    "description": "Ship jump status",
+    "message": "Hors de portée"
+  },
+  "OUT_OF_STOCK": {
+    "description": "Equipment availability",
+    "message": "Rupture de stock"
+  },
+  "OVERVIEW_NAME_FILTER": {
+    "description": "Filter overview window entries by name",
+    "message": "Filtrer les entrées de la fenêtre d'aperçu par nom"
+  },
+  "OWED": {
+    "description": "Player owing money to crew members",
+    "message": "Dû"
+  },
+  "PAINTSHOP": {
+    "description": "Station tab title",
+    "message": "Atelier de peinture"
+  },
+  "PAINTSHOP_NOT_AVAILABLE": {
+    "description": "",
+    "message": "Atelier de peinture non disponible dans cette station."
+  },
+  "PAINTSHOP_WELCOME_0": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Bienvenue! Votre vaisseau va devenir une oeuvre d'art!"
+  },
+  "PAINTSHOP_WELCOME_1": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Bonjour! Vous souhaitez changer l'apparence de votre vaisseau?"
+  },
+  "PAINTSHOP_WELCOME_2": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Avec nous votre vaisseau ne sera peut-être pas plus rapide, mais il aura la classe!"
+  },
+  "PAINTSHOP_WELCOME_3": {
+    "description": "Welcome message to the paintshop.",
+    "message": "Bienvenue voyageur. Prenez votre temps et laissez parler votre créativité."
+  },
+  "PAINTSHOP_WELCOME_4": {
+    "description": "Welcome message to the paintshop.",
+    "message": "La beauté n'aura jamais été aussi facile dans la galaxie!"
+  },
+  "PASSENGER_CABIN_CAPACITY": {
+    "description": "Entry for ship info",
+    "message": "Capacité cabine passager"
+  },
+  "PASTE": {
+    "description": "As for clipboard",
+    "message": "Coller"
+  },
+  "PATH_FOUND_BUT_VERIFICATION_FAILED": {
+    "description": "Message when restoring savegame",
+    "message": "Chemin trouvé mais vérification échouée: %s"
+  },
+  "PATTERN": {
+    "description": "Ship painting pattern.",
+    "message": "Motif"
+  },
+  "PAY": {
+    "description": "Pay for a transaction of services, e.g. for paying fines, (or repairs)",
+    "message": "Payer"
+  },
+  "PAY_FINE_OF_N": {
+    "description": "",
+    "message": "Payer l'amende de {amount}"
+  },
+  "PENDING_RETURN": {
+    "description": "Status if the mission has not yet been fully completed",
+    "message": "En attente du retour"
+  },
+  "PERSEUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras de Persée"
+  },
+  "PERSONAL_INFORMATION": {
+    "description": "",
+    "message": "Informations personnelles"
+  },
+  "PILOT": {
+    "description": "",
+    "message": "Pilote"
+  },
+  "PILOTING": {
+    "description": "Crew skill",
+    "message": "Pilotage"
+  },
+  "PILOT_SEAT_IS_NOW_OCCUPIED_BY_NAME": {
+    "description": "",
+    "message": " {name} a pris les commandes du vaisseau."
+  },
+  "PIRACY": {
+    "description": "",
+    "message": "Piraterie"
+  },
+  "PLANET_DETAIL_DISTANCE": {
+    "description": "",
+    "message": "Distance d'affichage  planetes"
+  },
+  "PLANET_TEXTURES": {
+    "description": "",
+    "message": "Textures de planète"
+  },
+  "PLEASE_DESIGN_NEW_PAINTJOB": {
+    "description": "",
+    "message": "Créez votre nouvelle peinture:"
+  },
+  "PLEASE_REPORT_THIS_ERROR": {
+    "description": "Informational text mentioning the error and asking the player to report it.",
+    "message": "Oups, quelque chose est allé de travers! Vous pouvez enregistrer un nouveau bug (issue) dans notre Github en donnant les étapes permettant de reproduire le problème, votre fichier de messages et votre sauvegarde.\nVous trouverez votre fichier de messages ici: {path}/output.txt"
+  },
+  "POLICE": {
+    "description": "",
+    "message": "Police"
+  },
+  "POOR": {
+    "description": "Player combat rating",
+    "message": "Débutant"
+  },
+  "POSESSION_OF_COMMODITIES_ILLEGAL": {
+    "description": "",
+    "message": "La possession de certaines marchandises est interdite dans ce système."
+  },
+  "POSITION": {
+    "description": "The job title/position of crew memeber",
+    "message": "Position"
+  },
+  "PRESS_A_KEY_OR_CONTROLLER_BUTTON": {
+    "description": "",
+    "message": "Appuyez sur une touche ou un bouton du contrôleur ou échap pour effacer"
+  },
+  "PREVIOUS_FACE_FEATURE": {
+    "description": "Face feature switch button for FaceGenerator in the PersonalInfo view",
+    "message": "Précédent"
+  },
+  "PRICE": {
+    "description": "",
+    "message": "Prix"
+  },
+  "PROFESSIONAL": {
+    "description": "For player reputation",
+    "message": "Professionel"
+  },
+  "PROFITABLE_TRADE": {
+    "description": "Indicates a profitable trade route.",
+    "message": "Commerce profitable"
+  },
+  "PUMP_DOWN": {
+    "description": "Drain the fuel tank",
+    "message": "Vidange"
+  },
+  "PUMP_DOWN_FROM_CARGO_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pompe %i t depuis la soute"
+  },
+  "PUMP_DOWN_FROM_HYPERDRIVE_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pompe %i t depuis l'hyperpropulsion vers les réservoirs de carburant"
+  },
+  "PUMP_DOWN_TO_CARGO_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pompe %i t vers la soute"
+  },
+  "PUMP_DOWN_TO_HYPERDRIVE_TOOLTIP": {
+    "description": "Tooltip for Info screen",
+    "message": "Pompe %i t depuis les réservoirs de carburant vers l'hyperpropulsion"
+  },
+  "PURCHASE_PAINTJOB": {
+    "description": "Paintshop button",
+    "message": "Acheter peinture"
+  },
+  "QUALIFICATION_SCORES": {
+    "description": "",
+    "message": "Qualification"
+  },
+  "QUIT": {
+    "description": "",
+    "message": "Quitter"
+  },
+  "QUIT_CONFIRMATION": {
+    "description": "For the checkbox in settings window",
+    "message": "Confirmation de quitter"
+  },
+  "RANDOM_COLORS": {
+    "description": "Paint shop. Randomize colors",
+    "message": "Couleurs aléatoires"
+  },
+  "RANDOM_FACE": {
+    "description": "Generate random face",
+    "message": "Aléatoire"
+  },
+  "RANK": {
+    "description": "",
+    "message": "Rang:"
+  },
+  "RATING": {
+    "description": "",
+    "message": "Rang:"
+  },
+  "RAYLEIGH_ACCURATE": {
+    "description": "",
+    "message": "Rayleigh/Mie (précis, par pixel)"
+  },
+  "RAYLEIGH_FAST": {
+    "description": "",
+    "message": "Rayleigh/Mie (rapide, par vertex)"
+  },
+  "REALISTIC_SCATTERING": {
+    "description": "",
+    "message": "Dispersion"
+  },
+  "REALISTIC_SCATTERING_DESC": {
+    "description": "",
+    "message": "Choisir dispersion lors du rendu de l'atmosphère (Rayleigh/Mie pas recommandé pour des PC peu puissants)"
+  },
+  "REAR_WEAPON": {
+    "description": "",
+    "message": "Arme arrière"
+  },
+  "RECOVER": {
+    "description": "Saveload menu button",
+    "message": "Récupérer"
+  },
+  "RECOVERED_BUT_NOT_VALID": {
+    "description": "Message when restoring savegame",
+    "message": "Récupérée mais non valide"
+  },
+  "RECOVER_SAVEGAME": {
+    "description": "",
+    "message": "Récupérer la sauvegarde"
+  },
+  "REFUEL": {
+    "description": "",
+    "message": "Faire le plein"
+  },
+  "REFUEL_FULL": {
+    "description": "",
+    "message": "Faire le plein"
+  },
+  "REGISTRATION_NUMBER": {
+    "description": "",
+    "message": "Numéro d'immatriculation"
+  },
+  "RELIABLE": {
+    "description": "For player reputation",
+    "message": "Fiable"
+  },
+  "REMOVE": {
+    "description": "Remove, e.g. deleting a log entry",
+    "message": "Enlever"
+  },
+  "REMOVE_JUMP": {
+    "description": "UI-button: remove hyper jump from list of planned jumps",
+    "message": "Effacer ce saut"
+  },
+  "REMOVE_WHEN_COMPLETED": {
+    "description": "For UI hyperjump planner, referring to jump target system",
+    "message": "Effacer le saut après exécution"
+  },
+  "REPAIR_X_HULL_DAMAGE_FOR_X": {
+    "description": "",
+    "message": "Réparer {damage}% de dégâts de la coque pour {price}"
+  },
+  "REPLACE_EQUIPMENT": {
+    "description": "Market header when replacing equipped items",
+    "message": "Remplacer Équipement"
+  },
+  "REPUTATION": {
+    "description": "",
+    "message": "Réputation"
+  },
+  "REQUEST_LAUNCH": {
+    "description": "",
+    "message": "Requête de lancement"
+  },
+  "REQUIRED_FUEL": {
+    "description": "Fuel usage for traveling to star system",
+    "message": "Carburant requis"
+  },
+  "RESET": {
+    "description": "",
+    "message": "Reset"
+  },
+  "RESET_ORIENTATION_AND_ZOOM": {
+    "description": "",
+    "message": "Réinitialise l'orientation et le zoom"
+  },
+  "RESET_PREVIEW": {
+    "description": "Paintshop button",
+    "message": "Réinitialiser l'aperçu"
+  },
+  "RESET_VIEW_ON_HYPERSPACE_EXIT": {
+    "description": "Reset View on Hyperspace Exit option",
+    "message": "Réinitialiser la vue lors de la sortie d'hyper-espace"
+  },
+  "RESET_VIEW_ON_HYPERSPACE_EXIT_DESC": {
+    "description": "The tooltip of Reset View on Hyperspace Exit in the settings menu",
+    "message": "Réinitialiser vers la vue de jeu principale lors de la sortie d'hyper-espace"
+  },
+  "RETURN_TO_GAME": {
+    "description": "",
+    "message": "Reprendre la partie"
+  },
+  "RETURN_TO_MENU": {
+    "description": "",
+    "message": "Retour au menu"
+  },
+  "REVERSE_ACCEL_EMPTY": {
+    "description": "",
+    "message": "Décélération (à vide)"
+  },
+  "REVERSE_ACCEL_FULL": {
+    "description": "",
+    "message": "Décélération (complète)"
+  },
+  "REWARD": {
+    "description": "",
+    "message": "Récompense"
+  },
+  "ROTATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to rotate camera view with mouse",
+    "message": "Laissez appuyé pour tourner la vue"
+  },
+  "ROUTE_INFO": {
+    "description": "For hyperjump planner",
+    "message": "Info itinéraire"
+  },
+  "ROUTE_JUMPS": {
+    "description": "For hyperjump planner",
+    "message": "Sauts de l'itinéraire"
+  },
+  "SAFETY_LOCKOUT": {
+    "description": "Ship jump status",
+    "message": "Vérouillage de sécurité"
+  },
+  "SAGITTARIUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras du Sagittaire"
+  },
+  "SAVE": {
+    "description": "",
+    "message": "Sauvegarder"
+  },
+  "SAVED_GAMES": {
+    "description": "Header for save/load window",
+    "message": "Sauvegardes"
+  },
+  "SAVE_AS": {
+    "description": "",
+    "message": "Sauver sous"
+  },
+  "SAVE_DELETED_SUCCESSFULLY": {
+    "description": "",
+    "message": "Sauvegarde supprimée avec succès"
+  },
+  "SCATTERING_OLD": {
+    "description": "",
+    "message": "Ancien mode de fonctionnement"
+  },
+  "SCOOP_MOUNTS": {
+    "description": "How many slots or mounts exist on the ship for fitting SCOOPS (e.g. cargo scoop, fuel scoop, multi-scoop) ",
+    "message": "Scoop mounts"
+  },
+  "SCUTUM_CENTAURUS_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras Écu-Croix"
+  },
+  "SELECT": {
+    "description": "",
+    "message": "Sélectionner"
+  },
+  "SELECTED": {
+    "description": "Label indicating the following item is selected",
+    "message": "Sélectionné"
+  },
+  "SELECTED_SAVE_DOESNT_EXISTS": {
+    "description": "",
+    "message": " Sauvegarde sélectionée inexistante"
+  },
+  "SELECTED_SAVE_IS_NOT_A_VALID_SAVE": {
+    "description": "",
+    "message": "Sauvegarde sélectionnée invalide"
+  },
+  "SELECT_A_FILE_TO_SAVE_TO_OR_ENTER_A_NEW_FILENAME": {
+    "description": "",
+    "message": "Sélectionnez un fichier à sauvegarder ou entrez un nouveau nom de fichier"
+  },
+  "SELECT_FILE": {
+    "description": "",
+    "message": "Sélectionnez un fichier…"
+  },
+  "SELECT_GAME_TO_LOAD": {
+    "description": "",
+    "message": "Sélectionnez la partie a charger…"
+  },
+  "SELECT_START_PROFILE": {
+    "description": "Combo box for selecting the starting position",
+    "message": "Profil de départ:"
+  },
+  "SELL": {
+    "description": "Commodities and equipment prices",
+    "message": "Vente"
+  },
+  "SELL_EQUIP": {
+    "description": "Button text to sell installed equipment. May be used in a singular or plural context.",
+    "message": "Vendre {name}"
+  },
+  "SELL_EQUIPPED": {
+    "description": "Button text to sell selected ship equipment",
+    "message": "Vendre ce qui est équipé"
+  },
+  "SELL_PRICE": {
+    "description": "Title for sell-price column in commodity market",
+    "message": "Vente"
+  },
+  "SENSORS": {
+    "description": "Crew skill",
+    "message": "Capteurs"
+  },
+  "SENSORS_AND_DEFENCE": {
+    "description": "",
+    "message": "Senseurs et défense"
+  },
+  "SETTINGS": {
+    "description": "UI option",
+    "message": "Paramètres"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Régler la destination comme cible de navigation."
+  },
+  "SET_JUMP_TARGET": {
+    "description": "Button tooltip which sets the jump route to the selected body",
+    "message": "Définir destination du saut"
+  },
+  "SET_RETURN_ROUTE": {
+    "description": "",
+    "message": "Définir le trajet de retour"
+  },
+  "SET_TO_45PERCENT_OF_DELTAV": {
+    "description": "For the speed limiter button",
+    "message": "Ajuster à 45% du delta-v restant"
+  },
+  "SET_TO_CURRENT_VELOCITY": {
+    "description": "For the speed limiter button",
+    "message": "Ajuster à la vitesse courante"
+  },
+  "SET_TO_ZERO": {
+    "description": "For the speed limiter button",
+    "message": "Mettre à zéro"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Vaisseau"
+  },
+  "SHIPS_ENGINEER": {
+    "description": "",
+    "message": "Ingénieur de vaisseau"
+  },
+  "SHIP_INFORMATION": {
+    "description": "",
+    "message": "Informations sur le vaisseau"
+  },
+  "SHIP_IS_ALREADY_FULLY_REPAIRED": {
+    "description": "",
+    "message": "Votre vaisseau est en parfait état."
+  },
+  "SHIP_IS_FULLY_EQUIPPED": {
+    "description": "",
+    "message": "Votre vaisseau est totalement équipé"
+  },
+  "SHIP_IS_FULLY_LADEN": {
+    "description": "",
+    "message": "Votre vaisseau est rempli."
+  },
+  "SHIP_MARKET": {
+    "description": "",
+    "message": "Marché de vaisseaux"
+  },
+  "SHIP_NAME": {
+    "description": "",
+    "message": "Nom du vaisseau"
+  },
+  "SHIP_PARAMETERS": {
+    "description": "",
+    "message": "Paramètres du vaisseau"
+  },
+  "SHIP_REPAIRS": {
+    "description": "Station tab name",
+    "message": "Réparation de vaisseau et peinture"
+  },
+  "SHIP_TYPE": {
+    "description": "",
+    "message": "Type de vaisseau"
+  },
+  "SHOW_AUTOSAVES": {
+    "description": "Button tooltip indicating whether to show autosave files",
+    "message": "Afficher les sauvegardes automatiques"
+  },
+  "SIMULATING_UNIVERSE_EVOLUTION_N_BYEARS": {
+    "description": "",
+    "message": "Simulation de l'évolution de l'univers : {age} milliards d'années ;-)"
+  },
+  "SOME_PARAMETERS_ARE_NOT_OK": {
+    "description": "Diagnostics at game start",
+    "message": "Des paramètres ne sont pas bons:"
+  },
+  "SORT_COMMODITY": {
+    "description": "Indicates the list of objects should be sorted by commodity",
+    "message": "Marchandise"
+  },
+  "SORT_DISTANCE": {
+    "description": "Indicates the list of objects should be sorted by distance",
+    "message": "Distance"
+  },
+  "SORT_MODE": {
+    "description": "Label indicating the current sorting mode of a list of objects",
+    "message": "Mode de tri"
+  },
+  "SORT_NAME": {
+    "description": "Indicates the list of objects should be sorted by name",
+    "message": "Nom"
+  },
+  "SOUND": {
+    "description": "",
+    "message": "Son"
+  },
+  "STANDARD_GAME_START_TIME": {
+    "description": "Standard game start time, current moment + 1200 years",
+    "message": "Date du début de partie"
+  },
+  "START_AT_BARNARDS_STAR": {
+    "description": "",
+    "message": "Commencer sur Barnard's Star"
+  },
+  "START_AT_BARNARDS_STAR_DESC": {
+    "description": "",
+    "message": "Départ difficile depuis le pénitencier spatial System Administration Resting."
+  },
+  "START_AT_MARS": {
+    "description": "",
+    "message": "Commencer sur Mars"
+  },
+  "START_AT_MARS_DESC": {
+    "description": "",
+    "message": "Départ facile depuis Cydonia sur Mars dans le système Sol."
+  },
+  "START_AT_NEW_HOPE": {
+    "description": "New Hope is an in game location",
+    "message": "Commencer sur New Hope"
+  },
+  "START_AT_NEW_HOPE_DESC": {
+    "description": "",
+    "message": "Départ modérément facile depuis Itzalean sur New Hope dans le système Epsilon Eridani."
+  },
+  "START_GAME": {
+    "description": "Button",
+    "message": "Démarrer la partie"
+  },
+  "START_LOG_ENTRY_1": {
+    "description": "First custom log message when starting a new game, giving backstory to the character. Importantly we here hint at what actions the player is best to take: buy fuel, get reputation, ask for take off clearance.",
+    "message": "Malheureusement, mon oncle ne m'a jamais montré comment utiliser cette vieille barque quand il était vivant, et j'espère créer correctement cette entrée dans le journal de bord. C'est étrange, je peux toujours sentir sa présence, comme s'il était dans les murs de ce vaisseau. Peut-être que cette présence comblera le rôle de co-pilote et, ensemble, nous tracerons la voie de notre destinée dans ce grand vide. Mais d'abord, je dois juste acheter de l'hydrogène pour le moteur de saut, tracer un chemin vers des opportunités lucratives, et prier les cieux que les contrôleurs de trafic vont autoriser un pilote inexpérimenté comme moi à prendre vol. Alors nous verrons ce que ce bébé à dans le ventre. Il est temps de me faire une réputation !"
+  },
+  "START_LOG_ENTRY_2": {
+    "description": "First custom log message when starting a new game, giving backstory to the character, here going for a Blade Runner feeling",
+    "message": "Mes bottes sont encore mouillées de la forte pluie de la nuit dernière. La chaussée a été si trempée, qu'elle - en apparence, dans un acte de revanche - inondait le ciel nocturne de la lueur réfléchie provenant des néons surplombant la rue. Mais je suis tout de même arrivé, malgré la pluie torrentielle, à mon vol de correspondance vers le port stellaire où mon nouveau vaisseau m'attendait. L'officier de sécurité m'a lancé un regard étrange quand je lui ai dit que j'étais ici pour récupérer un vaisseau. Je pense que je n'avais pas le look d'un citoyen des étoiles typique lorsque je me présentait devant lui, les bottes trempées, pour ne rien dire du reste, étant donné que j'ai dû vendre tout ce que je possédait afin d'investir dans cette vieille carcasse rouillée. Mais je pense vraiment qu'à partir de maintenant mon futur sera écrit dans les étoiles. Mais pour cela, je dois d'abord trouver la clé de démarrage."
+  },
+  "START_LOG_ENTRY_3": {
+    "description": "First custom log message when starting a new game, giving backstory to the character. Here explaining why there's no hyperdrive in the ship, and what to do about it.",
+    "message": "Après une longue procédure administrative, j'ai finalement récupéré mon vaisseau de la fourrière. Cependant ils l'ont dépecé jusqu'aux os, afin de payer une dette que je n'ai jamais considéré leur devoir. Non seulement ont-ils pris ma cafetière favorite, mais ces bâtards on également arraché l'hyper-propulsion. Je suis donc bloqué dans ce système, à moins de vendre ce qu'il reste de la cargaison et, espérons-le, ainsi financer une nouvelle propulsion. Mais comme le dit le dicton: on ne fait pas d'omelette sans casser des œufs. Même si je suis de retour à la case de départ, je préfère voir ce contre-temps comme une opportunité, une seconde chance. Sans café. En laissant partir ce qui me définissait, je peux me redéfinir en un être nouveau. Le monde va se tourner pour me laisser passer, comme il le fait pour ceux qui savent où ils vont. Et je m'en vais vers les étoiles."
+  },
+  "STAR_FIELD_DENSITY": {
+    "description": "",
+    "message": "Densité du champ d'étoile."
+  },
+  "STAR_FIELD_STAR_SIZE_FACTOR": {
+    "description": "",
+    "message": "Taille des étoiles dans le champ d'étoiles."
+  },
+  "STATION": {
+    "description": "Flight log info, will refer to a station by name",
+    "message": "Station"
+  },
+  "STATION_DOCKS": {
+    "description": "Information shown in the station lobby, for total number of docking pads",
+    "message": "Notre capacité totale est de {total_docking_pads} stations d'arrimages."
+  },
+  "STATION_LOCAL_GRAVITY": {
+    "description": "",
+    "message": "La gravité locale est de %.2f g."
+  },
+  "STATION_LOCAL_GRAVITY_PRESSURE": {
+    "description": "",
+    "message": "La gravité locale est de %.2f g, et la pression atmosphérique est de %.2f atm."
+  },
+  "STATION_MANAGER": {
+    "description": "",
+    "message": "Gestionnaire de station"
+  },
+  "STATION_ORBIT": {
+    "description": "Information shown in the station loby",
+    "message": "Nous sommes dans une orbite dont la période est de {orbit_period} jours autour de {parent_body}."
+  },
+  "STATION_TECH_TOO_LOW": {
+    "description": "",
+    "message": "Niveau technologique de la station trop bas pour vendre cet objet"
+  },
+  "STATUS": {
+    "description": "",
+    "message": "Statut"
+  },
+  "SUMMARY": {
+    "description": "Tab item in the start game menu",
+    "message": "Résumé"
+  },
+  "SYSTEM_BODY_INDEX_IS_OUT_OF_RANGE": {
+    "description": "Message when restoring savegame",
+    "message": "L'index de l'objet système est hors limite"
+  },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Juridiction de la faction au pouvoir"
+  },
+  "SYSTEM_INFORMATION": {
+    "description": "Tooltip / label indicating information about a selected star system",
+    "message": "Informations sur le système"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Nombre d'étoiles dans le système"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Sans danger"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Quasi inoffensif"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Dangereux"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Très dangereux"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Mortel"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Niveau de sécurité du système"
+  },
+  "TECH_CERTIFIED": {
+    "description": "Lobby screen shows the tech level (an integer number) of the station",
+    "message": "Cette station possède un certificat technologique de niveau {tech_level}"
+  },
+  "TECH_CERTIFIED_MILITARY": {
+    "description": "Lobby screen shows the tech level of the station",
+    "message": "Cette installation possède un accès aux technologies militaires."
+  },
+  "TECH_LEVEL": {
+    "description": "System view label for technology level",
+    "message": "Niveau technologique"
+  },
+  "TEXTURE_COMPRESSION": {
+    "description": "",
+    "message": "La compression de texture libère de la mémoire de la carte graphique car les textures prennent moins de place, ce qui est probablement ce que vous voulez, en échange de leur compression (et donc d'un peu de temps) pendant le démarrage du jeu."
+  },
+  "THANKS_AND_REMEMBER_TO_BUY_FUEL": {
+    "description": "",
+    "message": "Merci pour votre achat. Souvenez vous d'installer l'équipement et de faire le plein."
+  },
+  "THERE_IS_NOBODY_ELSE_ON_BOARD_ABLE_TO_FLY_THIS_SHIP": {
+    "description": "",
+    "message": "Il n'y a personne d'autre à bord pour piloter"
+  },
+  "THERE_WERE_ERRORS_IN_RECOVERY": {
+    "description": "Message when restoring savegame",
+    "message": "Erreurs lors de la récupération:"
+  },
+  "THESE_ITEMS_ARE_PUNISHABLE_BY_FINE": {
+    "description": "",
+    "message": "L' acheter, la revente et le transport de ces objets est punissable d'une amende et d'une confiscation possible"
+  },
+  "THE_SHIP_IS_UNDER_STATION_CONTROL_COMMANDER": {
+    "description": "",
+    "message": "Le vaisseau est sous le contrôle de la station, Commandant."
+  },
+  "THIS_IS_FACTION_POLICE": {
+    "description": "Greeting message in police station. 'faction' is one of (English, non-translatable) strings: 'Solar Federation', 'Commonwealth of Independent Worlds', or 'Haber Corporation', and 'faction_police' is one of: 'SolFed Police Force', 'Confederal Police' or, 'Haber Enforcement Division'",
+    "message": "C'est la police nommée {faction_police} appartenant à la faction {faction}"
+  },
+  "THREE_KPC_ARM": {
+    "description": "Arm of the Milky Way galaxy",
+    "message": "Bras de la voie lactée 3kpc"
+  },
+  "TOGGLE_CARGO_WINDOW": {
+    "description": "Label for a button toggling the cargo display window.",
+    "message": "Ouverture/Fermeture Fenêtre Cargaison"
+  },
+  "TOGGLE_FULL_COMMS_WINDOW": {
+    "description": "on world view / main screen",
+    "message": "Fenêtre communications"
+  },
+  "TOGGLE_MALE_FEMALE": {
+    "description": "player gender",
+    "message": "basculer mâle/femelle"
+  },
+  "TOGGLE_OVERVIEW_SHOW_MOONS": {
+    "description": "toggle whether the overview window shows moons or not",
+    "message": "Afficher/cacher les lunes dans l'aperçu"
+  },
+  "TOGGLE_OVERVIEW_SHOW_STATIONS": {
+    "description": "toggle whether the overview window shows stations or not",
+    "message": "Afficher/cacher les stations dans l'aperçu"
+  },
+  "TOGGLE_OVERVIEW_SORT_BY_PLAYER_DISTANCE": {
+    "description": "toggle whether the overview window sorts by distance from the player or from the system center",
+    "message": "Changer tri: par distance au joueur / par distance au centre du système"
+  },
+  "TOGGLE_OVERVIEW_WINDOW": {
+    "description": "show/hide the overview window / navigation window",
+    "message": "Changer la vue: aperçu / navigation"
+  },
+  "TOO_SMALL_FOR_CURRENT_CREW": {
+    "description": "",
+    "message": "Ce vaisseau est trop petit pour votre équipage."
+  },
+  "TOO_SMALL_TO_TRANSSHIP": {
+    "description": "Ship market error message",
+    "message": "Le nouveau vaisseau n'est pas capable de transporter la cargaison courante et l'hyperpropulsion"
+  },
+  "TOTAL": {
+    "description": "",
+    "message": "Total:"
+  },
+  "TOTAL_DISTANCE": {
+    "description": "Total distance of a (possibly series) of hyper jump(s)",
+    "message": "Distance totale"
+  },
+  "TOTAL_DURATION": {
+    "description": "Total duration of a (possibly series) of hyper jump(s)",
+    "message": "Durée totale"
+  },
+  "TOTAL_MASS": {
+    "description": "",
+    "message": "Masse totale"
+  },
+  "TO_PICK_UP": {
+    "description": "Mission status",
+    "message": "À récupérer"
+  },
+  "TRADING_AT": {
+    "description": "Indicates the current system for inspecting commodities.",
+    "message": "À {system}:"
+  },
+  "TRADING_FROM": {
+    "description": "Indicates the source system of a commodity trade.",
+    "message": "Depuis {system}:"
+  },
+  "TRADING_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Contrebande de produits illégaux"
+  },
+  "TRADING_TO": {
+    "description": "Indicates the destination system of a commodity trade.",
+    "message": "Vers {system}:"
+  },
+  "TRANSFER_FUEL": {
+    "description": "Label indicating the ability to transfer fuel between equipment tanks",
+    "message": "Transfert de carburant"
+  },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Laisser appuyé pour déplacer la vue"
+  },
+  "TRUSTWORTHY": {
+    "description": "For player reputation",
+    "message": "De confiance"
+  },
+  "TURN_OFF": {
+    "description": "",
+    "message": "Éteindre"
+  },
+  "TYPE": {
+    "description": "",
+    "message": "Type"
+  },
+  "UNKNOWN_CUSTOM_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "Format d'entrée dans le journal personnalisé inconnu"
+  },
+  "UNKNOWN_FACTION": {
+    "description": "For entry in the flight log",
+    "message": "Faction inconnue"
+  },
+  "UNKNOWN_LOCATION_IN_SECTOR_X": {
+    "description": "For entry in the flight log",
+    "message": "Position inconnue dans le secteur {sector}"
+  },
+  "UNKNOWN_STATION_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "Format d'entrée dans le journal de station inconnu"
+  },
+  "UNKNOWN_SYSTEM_LOG_ENTRY_FORMAT": {
+    "description": "Message when restoring savegame",
+    "message": "Format d'entrée dans le journal système inconnu"
+  },
+  "UNLAWFUL_ECM_DISCHARGE": {
+    "description": "",
+    "message": "Utilisation illégale de contre-mesures électroniques (ECM)"
+  },
+  "UNLAWFUL_WEAPONS_DISCHARGE": {
+    "description": "",
+    "message": "Utilisation illégale d'armes"
+  },
+  "UNOCCUPIED_PASSENGER_CABINS": {
+    "description": "",
+    "message": "Cabines passagers inoccupées"
+  },
+  "UNPROFITABLE_TRADE": {
+    "description": "Indicates an unprofitable trade route.",
+    "message": "Commerce non-profitable"
+  },
+  "UNRELIABLE": {
+    "description": "",
+    "message": "Douteux"
+  },
+  "UNSUCCESSFULLY_RECOVERED_PARAMETERS_ARE_NOW_UNLOCKED_PLEASE_SET_THEM_MANUALLY": {
+    "description": "Message when restoring savegame",
+    "message": "Les paramètres qui n'ont pu être récupérés avec succès sont maintenant débloqués, ajustez les manuellement s'il vous plaît."
+  },
+  "UP_ACCEL": {
+    "description": "",
+    "message": "Accélération verticale"
+  },
+  "USED": {
+    "description": "",
+    "message": "Utilisé"
+  },
+  "VERY_HIGH": {
+    "description": "Game settings option: graphic resolution",
+    "message": "Très haut"
+  },
+  "VERY_LOW": {
+    "description": "Game settings option: graphic resolution",
+    "message": "Très bas"
+  },
+  "VICINITY_OF": {
+    "description": "",
+    "message": "À proximité de"
+  },
+  "VIDEO": {
+    "description": "",
+    "message": "Vidéo"
+  },
+  "VIDEO_CONFIGURATION_RESTART_GAME_TO_APPLY": {
+    "description": "",
+    "message": "Configuration vidéo (redémarrer pour appliquer)"
+  },
+  "VIDEO_RESOLUTION": {
+    "description": "",
+    "message": "Résolution vidéo"
+  },
+  "VIDEO_RESOLUTION_DESC": {
+    "description": "Tooltip for video mode/resultion setting",
+    "message": "Les résolutions plus élevées affichent plus d'informations (plus de pixels) pour un même espace d'écran, mais dans certains cas peuvent réduire les performances."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Voir destination"
+  },
+  "VISIT_PAINTSHOP": {
+    "description": "Ship Repair tab button.",
+    "message": "Visiter l'atelier de peinture"
+  },
+  "VISIT_REPAIR_SERVICES": {
+    "description": "Ship Repair tab button.",
+    "message": "Visiter le garagiste"
+  },
+  "VOLUME": {
+    "description": "The volume property of some object",
+    "message": "Volume"
+  },
+  "VSYNC": {
+    "description": "For the checkbox in settings window",
+    "message": "VSync"
+  },
+  "VSYNC_DESC": {
+    "description": "",
+    "message": "La synchronisation verticale sert à éliminer les effets de 'déchirement' (dit 'tearing') ou autre artefacts visuels ainsi que la latence sur les entrées."
+  },
+  "WAGE": {
+    "description": "Salary of crew shown in crew roster",
+    "message": "Salaire"
+  },
+  "WEIGHT_EMPTY": {
+    "description": "",
+    "message": "Poids à vide"
+  },
+  "WEIGHT_FULLY_LOADED": {
+    "description": "",
+    "message": "Poids à pleine charge"
+  },
+  "WE_ARE_IN_HYPERSPACE_COMMANDER": {
+    "description": "",
+    "message": "Nous sommes dans l'hyperespace, commandant."
+  },
+  "WE_HAVE_NO_BUSINESS_WITH_YOU": {
+    "description": "Said by the police to law abiding player",
+    "message": "Nous n'avons rien à vous reprocher pour le moment."
+  },
+  "X_CANNOT_BE_TOLERATED_HERE": {
+    "description": "Message to be sent over comms by police when crime is committed by player",
+    "message": "{crime} ne peut être toléré ici !"
+  },
+  "YES": {
+    "description": "Positive answer to a question",
+    "message": "Oui"
+  },
+  "YOURE_GOING_TO_REGRET_SACKING_ME": {
+    "description": "",
+    "message": "Vous allez regretter de m'avoir viré !"
+  },
+  "YOUR_HULL_IS_AT_X_INTEGRITY": {
+    "description": "",
+    "message": "Vote coque est à {value}% d'intégrité"
+  },
+  "YOU_DONT_HAVE_ENOUGH_MONEY_FOR_THAT_OPTION": {
+    "description": "",
+    "message": "Vous n'avez pas assez d'argent pour cette option"
+  },
+  "YOU_HAVE_X_UNITS_IN_YOUR_CARGOHOLD": {
+    "description": "",
+    "message": "Vous avez {units} unités dans votre soute"
+  },
+  "YOU_MUST_FIRST_SELECT_A_COMBAT_TARGET_COMMANDER": {
+    "description": "",
+    "message": "Vous devez d'abord sélectionner une cible pour le combat, Commandant."
+  },
+  "YOU_MUST_FIRST_SELECT_A_SUITABLE_NAVIGATION_TARGET_COMMANDER": {
+    "description": "",
+    "message": "Vous devez d'abord choisir une cible valide, Commandant."
+  },
+  "YOU_MUST_LAUNCH_FIRST_COMMANDER": {
+    "description": "",
+    "message": "Vous devez d'abord décoller, Commandant."
+  },
+  "YOU_MUST_REQUEST_LAUNCH_CLEARANCE_FIRST_COMMANDER": {
+    "description": "",
+    "message": "Vous devez d'abord demander une autorisation de décollage, Commandant."
+  },
+  "YOU_NOT_ENOUGH_MONEY": {
+    "description": "",
+    "message": "Vous n'avez pas assez d'argent"
+  },
+  "ZOOM": {
+    "description": "Label for a zoom (magnification) control bar.",
+    "message": "Zoom"
+  }
+}

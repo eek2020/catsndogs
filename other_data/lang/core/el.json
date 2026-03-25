@@ -1,0 +1,2034 @@
+{
+  "AIR_PROCESSORS": {
+    "description": "",
+    "message": "Επεξεργαστές αέρα"
+  },
+  "ALERT_CANCELLED": {
+    "description": "",
+    "message": "Παύση συναγερμού"
+  },
+  "ALLEGIANCE": {
+    "description": "",
+    "message": "Συμμαχία:"
+  },
+  "ALT": {
+    "description": "Alt key on keyboard",
+    "message": "Alt"
+  },
+  "AND_HIGHLY_COMPLEX_ECOSYSTEM": {
+    "description": "",
+    "message": "και οικοσύστημα μεγάλης πολυπλοκότητας."
+  },
+  "AND_INDIGENOUS_MICROBIAL_LIFE": {
+    "description": "",
+    "message": "και ιθαγενείς μικροβιακές μορφές ζωής."
+  },
+  "AND_INDIGENOUS_PLANT_LIFE": {
+    "description": "",
+    "message": "και ιθαγενή χλωρίδα."
+  },
+  "ANIMAL_MEAT": {
+    "description": "",
+    "message": "Κρέας ζώων"
+  },
+  "AN_AR_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από αργό."
+  },
+  "AN_O2_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα κυρίως από οξυγόνο."
+  },
+  "APOAPSIS_DISTANCE": {
+    "description": "",
+    "message": "Απόαψη"
+  },
+  "AR_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από αργό."
+  },
+  "ASTEROID": {
+    "description": "",
+    "message": "Αστεροειδής"
+  },
+  "AUTOMATIC_SYSTEM_SELECTION": {
+    "description": "for star map, select star system when mouse close to it",
+    "message": "Αυτόματη επιλογή συστήματος"
+  },
+  "AUTOPILOT_CONTROL": {
+    "description": "Indicating that ship is flying under autopilot control",
+    "message": "Έλεγχος αυτόματου πιλότου"
+  },
+  "AUTOPILOT_DOCK_WITH_STATION": {
+    "description": "",
+    "message": "Αυτόματος πιλότος: Προδέτησε στον στόχο {target}"
+  },
+  "AUTOPILOT_ENTER_HIGH_ORBIT_AROUND": {
+    "description": "",
+    "message": "Αυτόματος πιλότος: Μπες σε υψηλή τροχιά γύρω από το {target}"
+  },
+  "AUTOPILOT_ENTER_LOW_ORBIT_AROUND": {
+    "description": "",
+    "message": "Αυτόματος πιλότος: Μπες σε χαμηλή τροχιά γύρω από το {target}"
+  },
+  "AUTOPILOT_ENTER_MEDIUM_ORBIT_AROUND": {
+    "description": "",
+    "message": "Αυτόματος πιλότος: Μπες σε μεσαία τροχιά γύρω από το {target}"
+  },
+  "AUTOPILOT_FLY_TO_VICINITY_OF": {
+    "description": "",
+    "message": "Αυτόματος πιλότος: Πέταξε στην γειτονιά του {target}"
+  },
+  "AUTOPILOT_ON": {
+    "description": "",
+    "message": "Αυτόματος πιλότος ενεργοποιημένος"
+  },
+  "AXIAL_TILT": {
+    "description": "",
+    "message": "Axial tilt"
+  },
+  "A_CH4_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από μεθάνιο."
+  },
+  "A_CO2_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από διοξείδιο του άνθρακα."
+  },
+  "A_CO_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από μονοξείδιο του άνθρακα."
+  },
+  "A_FEW_THOUSAND": {
+    "description": "regarding population",
+    "message": "Μόνο μερικές χιλιάδες"
+  },
+  "A_HE_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από ήλιο."
+  },
+  "A_H_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από υδρογόνο."
+  },
+  "A_N_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από άζωτο."
+  },
+  "A_S_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αποτελούμενη κυρίως από θείο."
+  },
+  "BATTLE_WEAPONS": {
+    "description": "",
+    "message": "Όπλα μάχης"
+  },
+  "BINARY_SYSTEM": {
+    "description": "",
+    "message": "Δυαδικό σύστημα"
+  },
+  "BODIES": {
+    "description": "space bodies",
+    "message": "σώματα"
+  },
+  "BODY": {
+    "description": "",
+    "message": "σώμα"
+  },
+  "BROWN_DWARF": {
+    "description": "",
+    "message": "Brown dwarf sub-stellar object"
+  },
+  "CAMERA_BOTTOM_VIEW": {
+    "description": "",
+    "message": "Κάτω κάμερα"
+  },
+  "CAMERA_FRONT_VIEW": {
+    "description": "",
+    "message": "Εμπρός κάμερα"
+  },
+  "CAMERA_LEFT_VIEW": {
+    "description": "",
+    "message": "Αριστερή κάμερα"
+  },
+  "CAMERA_REAR_VIEW": {
+    "description": "",
+    "message": "Πίσω κάμερα"
+  },
+  "CAMERA_RIGHT_VIEW": {
+    "description": "",
+    "message": "Δεξιά κάμερα"
+  },
+  "CAMERA_TOP_VIEW": {
+    "description": "",
+    "message": "Άνω κάμερα"
+  },
+  "CANT_SAVE_DEAD_PLAYER": {
+    "description": "",
+    "message": "Δεν είναι δυνατή η αποθήκευση του παιχνιδιού μετά το θάνατο του παίκτη"
+  },
+  "CANT_SAVE_IN_HYPERSPACE": {
+    "description": "",
+    "message": "Δεν είναι δυνατή η αποθήκευση του παιχνιδιού ενώ βρίσκεστε σε υπερδιάστημα"
+  },
+  "CAPITALIST": {
+    "description": "",
+    "message": "Καπιταλισμός"
+  },
+  "CARBON_ORE": {
+    "description": "",
+    "message": "Ανθρακικό μετάλλευμα"
+  },
+  "CARGO": {
+    "description": "",
+    "message": "Φορτίο"
+  },
+  "CARGO_BAY_LIFE_SUPPORT_LOST": {
+    "description": "",
+    "message": "Οι αισθητήρες αναφέρουν ότι, στον χώρο αποσκευών, οι συνθήκες υποστήριξης ζωής είναι κρίσιμες."
+  },
+  "CARGO_N": {
+    "description": "",
+    "message": "Φορτίο: %{mass}t"
+  },
+  "CARGO_SCOOP_ACTIVE_1_TONNE_X_COLLECTED": {
+    "description": "",
+    "message": "Ο συλλέκτης φορτίου είναι ενεργός. Συλλέχθηκε 1 τόνος %item."
+  },
+  "CARGO_SCOOP_ATTEMPTED": {
+    "description": "",
+    "message": "Απόπειρα συλλογής φορτίου. Δεν υπάρχει αρκετός χώρος στο σκάφος."
+  },
+  "CENTER": {
+    "description": "",
+    "message": "Κέντρο"
+  },
+  "CH4_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα μεθανίου"
+  },
+  "CO2_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα διοξειδίου του άνθρακα."
+  },
+  "COMMA_HIGHLY_VOLCANIC": {
+    "description": "",
+    "message": "με έντονη ηφαιστειακή δραστηριότητα."
+  },
+  "COMMODITY_NONE": {
+    "description": "When no commodities exist",
+    "message": "Κανένα"
+  },
+  "COMMODITY_TRADE_ANALYSIS_COMPARE": {
+    "description": "",
+    "message": "Ανάλυση συναλλαγής εμπορευμάτων #ff0%selected_system#fff  (επιλεχθέν) έναντι #ff0%current_system#fff (τρέχον):"
+  },
+  "COMMODITY_TRADE_ANALYSIS_SELF": {
+    "description": "",
+    "message": "Ανάλυση συναλλαγών εμπορευμάτων του συστήματος #fff%system#fff"
+  },
+  "COMMS": {
+    "description": "Title of communications log window, on world view",
+    "message": "Επικοινωνίες"
+  },
+  "COMMUNIST": {
+    "description": "",
+    "message": "Κομμουνιστικό"
+  },
+  "COMPASS_E": {
+    "description": "Abbreviation for compass direction: East",
+    "message": "Α"
+  },
+  "COMPASS_N": {
+    "description": "Abbreviation for compass direction: North",
+    "message": "Β"
+  },
+  "COMPASS_NE": {
+    "description": "Abbreviation for compass direction: North East",
+    "message": "ΒΑ"
+  },
+  "COMPASS_NW": {
+    "description": "Abbreviation for compass direction: North West",
+    "message": "ΒΔ"
+  },
+  "COMPASS_S": {
+    "description": "Abbreviation for compass direction: South",
+    "message": "N"
+  },
+  "COMPASS_SE": {
+    "description": "Abbreviation for compass direction: South East",
+    "message": "NA"
+  },
+  "COMPASS_SW": {
+    "description": "Abbreviation for compass direction: South West",
+    "message": "ΝΔ"
+  },
+  "COMPASS_W": {
+    "description": "Abbreviation for compass direction: West",
+    "message": "Δ"
+  },
+  "COMPUTERS": {
+    "description": "",
+    "message": "Υπολογιστές"
+  },
+  "COMPUTER_HEADING_CONTROL": {
+    "description": "",
+    "message": "Υπολογιστής: έλεγχος κατεύθυνσης"
+  },
+  "COMPUTER_SPEED_CONTROL": {
+    "description": "",
+    "message": "Υπολογιστής: Έλεγχος ταχύτητας"
+  },
+  "CONSUMER_GOODS": {
+    "description": "",
+    "message": "Καταναλωτικά αγαθά"
+  },
+  "CONTROLS": {
+    "description": "",
+    "message": "Έλεγχοι"
+  },
+  "CORPORATE_SYSTEM": {
+    "description": "",
+    "message": "Εταιρικό σύστημα"
+  },
+  "COULD_NOT_OPEN_FILENAME": {
+    "description": "",
+    "message": "Δεν ήταν δυνατό το άνοιγμα του %path"
+  },
+  "COUNT_ON_SURFACE": {
+    "description": "",
+    "message": "\" (%surfacecount on surface)\""
+  },
+  "COUNT_STARPORTS": {
+    "description": "",
+    "message": "κοσμοδρόμια"
+  },
+  "CO_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα μονοξειδίου του άνθρακα"
+  },
+  "CTRL": {
+    "description": "Ctrl key on keyboard",
+    "message": "Ctrl"
+  },
+  "CURRENT_SYSTEM": {
+    "description": "selected current star system",
+    "message": "Τρέχον σύστημα"
+  },
+  "DATE_DUE_N": {
+    "description": "",
+    "message": "Ημερομηνία λήξης: %date"
+  },
+  "DAY_LENGTH": {
+    "description": "",
+    "message": "διάρκεια ημέρας"
+  },
+  "DECREASE_RADAR_RANGE": {
+    "description": "",
+    "message": "Μείωση εμβέλειας ραντάρ"
+  },
+  "DECREASE_SET_SPEED": {
+    "description": "",
+    "message": "Μείωση τεθείσας ταχύτητας"
+  },
+  "DECREASE_TIME_ACCELERATION": {
+    "description": "",
+    "message": "Μείωση επιτάχυνσης χρόνου"
+  },
+  "DEMOGRAPHICS": {
+    "description": "",
+    "message": "Δημογραφικά"
+  },
+  "DESTINATION": {
+    "description": "",
+    "message": "Προορισμός"
+  },
+  "DISTANCE_LY": {
+    "description": "",
+    "message": "Απόσταση: %distance{f.2} ly"
+  },
+  "DOCKED": {
+    "description": "",
+    "message": "Προδετημένο"
+  },
+  "DOCKING": {
+    "description": "",
+    "message": "Προδέτηση"
+  },
+  "DOWNGRADING_ALERT_STATUS": {
+    "description": "",
+    "message": "Δεν εντοπίστηκαν πυρά για 60 δευτερόλεπτα, υποβάθμιση επιπέδου συναγερμού."
+  },
+  "DRAW_OUT_RANGE_LABELS": {
+    "description": "",
+    "message": "Επισήμανση συστημάτων εκτός εμβέλειας"
+  },
+  "DRAW_UNINHABITED_LABELS": {
+    "description": "",
+    "message": "Επισήμανση ακατοίκητων συστημάτων"
+  },
+  "DRAW_VERTICAL_LINES": {
+    "description": "",
+    "message": "Σχεδίαση κάθετων γραμμών"
+  },
+  "DWARF_PLANET_CONTAINING_LIQUID_WATER": {
+    "description": "",
+    "message": "πλανήτης νάνος που περιέχει νερό σε υγρή μορφή"
+  },
+  "DWARF_PLANET_CONTAINING_SOME_LIQUIDS": {
+    "description": "",
+    "message": "πλανήτης νάνος που περιέχει ουσίες σε υγρή μορφή"
+  },
+  "DWARF_PLANET_MOSTLY_COVERED_IN_ICE": {
+    "description": "",
+    "message": "πλανήτης νάνος που καλύπτεται κυρίως από πάγο"
+  },
+  "DWARF_PLANET_TERRESTRIAL": {
+    "description": "",
+    "message": "πλανήτης νάνος"
+  },
+  "EARTH_FEDERATION_COLONIAL_RULE": {
+    "description": "",
+    "message": "Αποικιακή διακυβέρνηση Ομοσπονδίας Γης"
+  },
+  "EARTH_FEDERATION_DEMOCRACY": {
+    "description": "",
+    "message": "Δημοκρατία Ομοσπονδίας Γης"
+  },
+  "ECCENTRICITY": {
+    "description": "",
+    "message": "Eccentricity"
+  },
+  "ECONOMIC_INFO": {
+    "description": "",
+    "message": "Οικονομικές πληροφορίες"
+  },
+  "ECONOMY_TYPE": {
+    "description": "",
+    "message": "Είδος οικονομίας"
+  },
+  "EQUATORIAL_RADIUS_TO_POLAR_RADIUS_RATIO": {
+    "description": "",
+    "message": "Equatorial to polar radius ratio"
+  },
+  "ESCAPE_VELOCITY": {
+    "description": "",
+    "message": "ταχύτητα διαφυγής"
+  },
+  "EXACT_MATCH_X": {
+    "description": "",
+    "message": "Ακριβής αντιστοίχιση: %system"
+  },
+  "EXTENSIVE_MINING": {
+    "description": "",
+    "message": "Εκτενείς εξορυκτικές δραστηριότητες."
+  },
+  "EXTERNAL_ATMOSPHERIC_PRESSURE": {
+    "description": "",
+    "message": "Εξωτερική ατμοσφαιρική πίεση"
+  },
+  "EXTERNAL_VIEW": {
+    "description": "",
+    "message": "Εξωτερική άποψη"
+  },
+  "FARM_MACHINERY": {
+    "description": "",
+    "message": "Αγροτικά Μηχανήματα "
+  },
+  "FERTILIZER": {
+    "description": "",
+    "message": "Λίπασμα"
+  },
+  "FIRE_LASER": {
+    "description": "",
+    "message": "πυροβόλο όπλο"
+  },
+  "FIRE_MISSILE": {
+    "description": "",
+    "message": "Εμπρηστικός πύραυλος"
+  },
+  "FLYBY_VIEW": {
+    "description": "camera view setting",
+    "message": "Προβολή πτήσης"
+  },
+  "FOLLOWING_SELECTION": {
+    "description": "",
+    "message": "επόμενη επιλογή"
+  },
+  "FRUIT_AND_VEG": {
+    "description": "",
+    "message": "Φρούτα και λαχανικά"
+  },
+  "FUEL": {
+    "description": "",
+    "message": "Καύσιμα"
+  },
+  "FUEL_SCOOP_ACTIVE_N_TONNES_H_COLLECTED": {
+    "description": "",
+    "message": "Ενεργός συλλέκτης καυσίμου. Τώρα έχετε %quantity τόνους υδρογόνου."
+  },
+  "GALACTIC_VIEW": {
+    "description": "view galactic map",
+    "message": "Άποψη Γαλαξία"
+  },
+  "GALAXY_SECTOR_VIEW": {
+    "description": "",
+    "message": "Προβολή τομέα γαλαξία"
+  },
+  "GAME_LOAD_CANNOT_OPEN": {
+    "description": "",
+    "message": "Δεν ήταν δυνατή η εύρεση του αρχείου '%filename' (ή το παιχνίδι δεν έχει πρόσβαση ώστε να το ανοίξει)."
+  },
+  "GAME_LOAD_CORRUPT": {
+    "description": "",
+    "message": "Δεν είναι δυνατή η φόρτωση αυτού του αποθηκευμένου παιχνιδιού, επειδή περιέχει σφάλματα."
+  },
+  "GAME_LOAD_WRONG_VERSION": {
+    "description": "",
+    "message": "Δεν είναι δυνατή η φόρτωση αυτού του αποθηκευμένου παιχνιδιού επειδή δημιουργήθηκε από διαφορετική έκδοση του Pioneer."
+  },
+  "GAME_SAVED_TO": {
+    "description": "",
+    "message": "\"Το παιχνίδι αποθηκεύτηκε στο \""
+  },
+  "GAME_SAVE_CANNOT_WRITE": {
+    "description": "",
+    "message": "Δεν ήταν δυνατή η εγγραφή αυτού του αποθηκευμένου αρχείου παιχνιδιού λόγω σφάλματος συστήματος."
+  },
+  "GAME_SAVE_INVALID_NAME": {
+    "description": "",
+    "message": "Αδυναμία αποθήκευσης λόγω ακατάλληλου ονόματος αρχείου."
+  },
+  "GENERAL_VIEW_CONTROLS": {
+    "description": "",
+    "message": "Χειρισμοί Γενικής Άποψης"
+  },
+  "GOVERNMENT_TYPE": {
+    "description": "",
+    "message": "Είδος διακυβέρνησης"
+  },
+  "GRAIN": {
+    "description": "like wheat or barley",
+    "message": "Σιτηρά"
+  },
+  "GRID_DISPLAY_MODE": {
+    "description": "Label for grid display modes",
+    "message": "Προβολή πλέγματος"
+  },
+  "GRID_DISPLAY_MODE_GRID_AND_LEGS": {
+    "description": "Combobox option for Grid with Legs",
+    "message": "Πλέγμα με προεκτάσεις"
+  },
+  "GRID_DISPLAY_MODE_GRID_ONLY": {
+    "description": "Combobox option for Grid Only",
+    "message": "Πλέγμα μόνο"
+  },
+  "GRID_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for Grid display off.",
+    "message": "Χωρίς πλέγμα"
+  },
+  "GRID_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for toggle grid display button.",
+    "message": "Εναλλαγή ορατότητας στο πλέγμα"
+  },
+  "HAND_WEAPONS": {
+    "description": "",
+    "message": "Ελαφρά όπλα"
+  },
+  "HARD_CAPITALIST": {
+    "description": "",
+    "message": "Πλήρης καπιταλισμός - κανένα κυβερνητικό ενδιαφέρον πρόνοιας"
+  },
+  "HEADING_LOCK_ANTINORMAL": {
+    "description": "Autopilot direction (perpendicular, down), relative to plane of orbit",
+    "message": "Κράτα το {target} αντι-κάθετα"
+  },
+  "HEADING_LOCK_BACKWARD": {
+    "description": "Autopilot points/holds/faces you retrograde (backwards rel. orbital direction)",
+    "message": "Κρατήστε την οπισθοδρόμηση του στόχου {target}"
+  },
+  "HEADING_LOCK_FORWARD": {
+    "description": "Autopilot points/holds/faces you prograde (tangent to the orbit, i.e. forward), http://wiki.kerbalspaceprogram.com/wiki/Maneuver_node",
+    "message": "Κράτα το {target} ορθόδρομα"
+  },
+  "HEADING_LOCK_KILLROT": {
+    "description": "",
+    "message": "Παύση περιστροφής"
+  },
+  "HEADING_LOCK_NORMAL": {
+    "description": "Autopilot direction (perpendicular, up), relative to plane of orbit. ",
+    "message": "Κράτα το {target} κάθετα"
+  },
+  "HEADING_LOCK_RADIALLY_INWARD": {
+    "description": "Autopilot direction, relative to orbit (face towards planet)",
+    "message": "Κράτα το {target} έσω ακτινικά"
+  },
+  "HEADING_LOCK_RADIALLY_OUTWARD": {
+    "description": "Autopilot direction, relative to orbit (face away from palent)",
+    "message": "Κράτα το {target} έξω ακτινικά"
+  },
+  "HEAVY_INDUSTRY": {
+    "description": "",
+    "message": "Βαριά βιομηχανία."
+  },
+  "HE_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα ηλίου"
+  },
+  "HIGHLY_VOLCANIC": {
+    "description": "",
+    "message": "με έντονη ηφαιστειακή δραστηριότητα"
+  },
+  "HIGH_POPULATION_OUTDOOR_WORLD": {
+    "description": "",
+    "message": "Εξώκοσμος με υψηλό πληθυσμό."
+  },
+  "HULL_INTEGRITY": {
+    "description": "",
+    "message": "Ακεραιότητα κύτους"
+  },
+  "HULL_TEMP": {
+    "description": "",
+    "message": "Θερμοκρασία κύτους"
+  },
+  "HYDROGEN": {
+    "description": "",
+    "message": "Υδρογόνο"
+  },
+  "HYPERSPACE": {
+    "description": "",
+    "message": "Υπερδιάστημα"
+  },
+  "HYPERSPACE_ARRIVAL_CLOUD": {
+    "description": "",
+    "message": "Νέφος άφιξης υπερδιαστήματος"
+  },
+  "HYPERSPACE_ARRIVAL_CLOUD_REMNANT": {
+    "description": "",
+    "message": "Υπόλειμμα νέφους άφιξης υπερδιαστήματος"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE": {
+    "description": "Label for hyperspace cloud display modes.",
+    "message": "Εμφάνιση νεφών υπερδιαστήματος"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ALL": {
+    "description": "Combobox option for all hyperspace clouds.",
+    "message": "Όλα τα νέφη υπερδιαστήματος"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ARRIVAL_ONLY": {
+    "description": "Combobox option for arrival hyperspace clouds.",
+    "message": "Νέφη υπερδιαστήματος άφιξης"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_DEPARTURE_ONLY": {
+    "description": "Combobox option for departure hyperspace clouds.",
+    "message": "Νέφη υπερδιαστήματος αναχώρησης"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the button which toggles the display mode of hyperspace clouds.",
+    "message": "Εναλλαγή ορατότητας νεφών υπερδιαστήματος"
+  },
+  "HYPERSPACE_DEPARTURE_CLOUD": {
+    "description": "",
+    "message": "Νέφος αναχώρησης υπερδιαστήματος"
+  },
+  "HYPERSPACE_JUMP_ABORT": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Απεμπλοκή Υπερκινητήρα"
+  },
+  "HYPERSPACE_JUMP_ABORTED": {
+    "description": "",
+    "message": "Ματαιώθηκε το άλμα υπερδιαστήματος."
+  },
+  "HYPERSPACE_JUMP_DISABLED": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Ο υπερκινητήρας απενεργοποιήθηκε"
+  },
+  "HYPERSPACE_JUMP_ENGAGE": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Ενεργοποίηση Υπερκινητήρα"
+  },
+  "HYPERSPACE_JUMP_FORBIDDEN": {
+    "description": "Mouse over text for hyperdrive button on ship control panel",
+    "message": "Απαγορευμένη ζώνη υπερκινητήρα"
+  },
+  "HYPERSPACE_TARGET": {
+    "description": "",
+    "message": "Στόχος υπερδιαστήματος"
+  },
+  "H_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα υδρογόνου"
+  },
+  "ICE_DWARF_PLANET": {
+    "description": "",
+    "message": "πλανήτης νάνος καλυμμένος με πάγο"
+  },
+  "ICE_MOON": {
+    "description": "",
+    "message": "\" ice moon\""
+  },
+  "ICE_WORLD": {
+    "description": "",
+    "message": "παγωμένος κόσμος"
+  },
+  "ILLEGAL_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of commodity (singular) status in the system the player is currently in",
+    "message": "Παράνομο (τρέχον σύστημα):"
+  },
+  "ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Παράνομα αγαθά:"
+  },
+  "IMPERIAL_RULE": {
+    "description": "",
+    "message": "Αυτοκρατορική διακυβέρνηση"
+  },
+  "INCREASE_RADAR_RANGE": {
+    "description": "",
+    "message": "Αύξηση εμβέλειας ραντάρ"
+  },
+  "INCREASE_SET_SPEED": {
+    "description": "",
+    "message": "Αύξηση τεθείσας ταχύτητας"
+  },
+  "INCREASE_TIME_ACCELERATION": {
+    "description": "",
+    "message": "Αύξηση επιτάχυνσης χρόνου"
+  },
+  "INDUSTRIAL_COLONY": {
+    "description": "",
+    "message": "Βιομηχανική αποικία."
+  },
+  "INDUSTRIAL_HUB_SYSTEM": {
+    "description": "",
+    "message": "Βιομηχανικό κεντρικό σύστημα"
+  },
+  "INDUSTRIAL_MACHINERY": {
+    "description": "",
+    "message": "Βιομηχανικά μηχανήματα"
+  },
+  "INTERNAL_VIEW": {
+    "description": "",
+    "message": "Εσωτερική άποψη"
+  },
+  "JOY": {
+    "description": "Short for Joystick",
+    "message": "Joy"
+  },
+  "JOYSTICK_INPUT": {
+    "description": "",
+    "message": "Εισαγωγή Joystick"
+  },
+  "L4L5_DISPLAY_MODE": {
+    "description": "Label for the lagrange point display modes.",
+    "message": "Λειτουργία εμφάνισης σημείων Lagrange"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_AND_TEXT": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Εικονίδια και υπότιτλοι"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_ONLY": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Εικονίδια μόνο"
+  },
+  "L4L5_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for lagrange point display off.",
+    "message": "Απενεργοποίηση"
+  },
+  "L4L5_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the L4/L5 Lagrange points toggle button.",
+    "message": "Εναλλαγή ορατότητας σημείων Lagrange L4/L5"
+  },
+  "LANDED": {
+    "description": "",
+    "message": "Προσεδαφισμένο"
+  },
+  "LANG_NAME": {
+    "description": "The name that native speakers use for this language. This will be used in the language selection screen.",
+    "message": "Ελληνικά"
+  },
+  "LARGE": {
+    "description": "regarding terrestrial planet size (mass actually)",
+    "message": "Μεγάλος"
+  },
+  "LARGE_GAS_GIANT": {
+    "description": "",
+    "message": "Μεγάλος αεριώδης γίγαντας"
+  },
+  "LASER_FIRE_DETECTED": {
+    "description": "",
+    "message": "Εντοπίστηκε πυρ όπλων."
+  },
+  "LATITUDE": {
+    "description": "Short for latitude",
+    "message": "Πλ:"
+  },
+  "LATITUDE_NORTH_ABBREV": {
+    "description": "Abbreviation letter for latitude 'north'",
+    "message": "Β"
+  },
+  "LATITUDE_SOUTH_ABBREV": {
+    "description": "Abbreviation letter for latitude 'south'",
+    "message": "N"
+  },
+  "LEGAL_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of commodity (singular) status in the system the player is currently in",
+    "message": "Νόμιμο (τρέχον σύστημα):"
+  },
+  "LIBERAL_DEMOCRACY": {
+    "description": "",
+    "message": "Φιλελεύθερη δημοκρατία"
+  },
+  "LIQUID_OXYGEN": {
+    "description": "",
+    "message": "Υγρό οξυγόνο"
+  },
+  "LIQUOR": {
+    "description": "",
+    "message": "Αλκοόλ"
+  },
+  "LIVE_ANIMALS": {
+    "description": "",
+    "message": "Ζώντα Ζώα"
+  },
+  "LOCKED": {
+    "description": "to lock a hyperspace target",
+    "message": "κλειδωμένος"
+  },
+  "LONGITUDE": {
+    "description": "Short for longitude",
+    "message": "Μήκ:"
+  },
+  "LONGITUDE_EAST_ABBREV": {
+    "description": "Abbreviation letter for longitude 'east'",
+    "message": "Α"
+  },
+  "LONGITUDE_WEST_ABBREV": {
+    "description": "Abbreviation letter for latitude 'west'",
+    "message": "Δ"
+  },
+  "MAJOR_EXPORTS": {
+    "description": "",
+    "message": "Κύριες Εξαγωγές:"
+  },
+  "MAJOR_EXPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Κύρια εξαγωγή (τρέχον σύστημα)"
+  },
+  "MAJOR_IMPORTS": {
+    "description": "",
+    "message": "Κύριες εισαγωγές:"
+  },
+  "MAJOR_IMPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Κύρια εισαγωγή (τρέχον σύστημα)"
+  },
+  "MANUAL_CONTROL": {
+    "description": "",
+    "message": "Χειροκίνητος έλεγχος"
+  },
+  "MANUAL_CONTROL_MODE": {
+    "description": "",
+    "message": "Λειτουργία χειροκίνητου ελέγχου"
+  },
+  "MASS": {
+    "description": "",
+    "message": "Μάζα"
+  },
+  "MASSIVE": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Ογκώδης"
+  },
+  "MASS_N_TONNES": {
+    "description": "",
+    "message": "Μάζα: %{mass}t"
+  },
+  "MEAN_DENSITY": {
+    "description": "",
+    "message": "Μέση πυκνότητα"
+  },
+  "MEDICINES": {
+    "description": "",
+    "message": "Φάρμακα"
+  },
+  "MEDIUM": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Μέση"
+  },
+  "MEDIUM_GAS_GIANT": {
+    "description": "",
+    "message": "Αεριώδης γίγαντας μέτριου μεγέθους"
+  },
+  "MESSAGE_FROM_X": {
+    "description": "",
+    "message": "Μήνυμα από %sender:"
+  },
+  "META": {
+    "description": "'Meta' key on keyboard",
+    "message": "Meta"
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "Κράματα Μετάλλου"
+  },
+  "METAL_ORE": {
+    "description": "",
+    "message": "Μεταλλεύματα"
+  },
+  "MILITARY_DICTATORSHIP": {
+    "description": "",
+    "message": "Στρατιωτική δικτατορία"
+  },
+  "MILITARY_FUEL": {
+    "description": "",
+    "message": "Στρατιωτικά καύσιμα"
+  },
+  "MINING_COLONY": {
+    "description": "",
+    "message": "Μεταλλευτική αποικία."
+  },
+  "MINING_MACHINERY": {
+    "description": "",
+    "message": "Μηχανήματα εξόρυξης"
+  },
+  "MINOR_EXPORTS": {
+    "description": "",
+    "message": "Δευτερεύουσες εξαγωγές"
+  },
+  "MINOR_EXPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Δευτερεύουσα εξαγωγή (τρέχον σύστημα)"
+  },
+  "MINOR_IMPORTS": {
+    "description": "",
+    "message": "Δευτερεύουσες εισαγωγές"
+  },
+  "MINOR_IMPORT_CURRENT_SYSTEM": {
+    "description": "Short (tooltip) description of how much one commodity trades in the system the player is currently in",
+    "message": "Δευτερεύουσα εισαγωγή (τρέχον σύστημα)"
+  },
+  "MISCELLANEOUS": {
+    "description": "",
+    "message": "Διάφορα"
+  },
+  "MISSILE": {
+    "description": "",
+    "message": "πύραυλος"
+  },
+  "MISSILE_DETECTED": {
+    "description": "",
+    "message": "Εντοπίστηκε εκτόξευση πυραύλου."
+  },
+  "MIXED_ECONOMY": {
+    "description": "",
+    "message": "Μικτή οικονομία"
+  },
+  "MONTH_APR": {
+    "description": "",
+    "message": "Απρ"
+  },
+  "MONTH_AUG": {
+    "description": "",
+    "message": "Αυγ"
+  },
+  "MONTH_DEC": {
+    "description": "",
+    "message": "Δεκ"
+  },
+  "MONTH_FEB": {
+    "description": "",
+    "message": "Φεβ"
+  },
+  "MONTH_JAN": {
+    "description": "",
+    "message": "Ιαν"
+  },
+  "MONTH_JUL": {
+    "description": "",
+    "message": "Ιούλ"
+  },
+  "MONTH_JUN": {
+    "description": "",
+    "message": "Ιουν"
+  },
+  "MONTH_MAR": {
+    "description": "",
+    "message": "Μαρ"
+  },
+  "MONTH_MAY": {
+    "description": "",
+    "message": "Μαϊ"
+  },
+  "MONTH_NOV": {
+    "description": "",
+    "message": "Νοε"
+  },
+  "MONTH_OCT": {
+    "description": "",
+    "message": "Οκτ"
+  },
+  "MONTH_SEP": {
+    "description": "",
+    "message": "Σεπ"
+  },
+  "MOON_CONTAINING_LIQUID_WATER": {
+    "description": "",
+    "message": "δορυφόρος που περιέχει νερό σε υγρή μορφή"
+  },
+  "MOON_WITH_SOME_ICE": {
+    "description": "",
+    "message": "δορυφόρος με κάποια ποσότητα πάγου"
+  },
+  "NAME_OBJECT": {
+    "description": "For an item or object",
+    "message": "Είδος"
+  },
+  "NAME_PERSON": {
+    "description": "For a person",
+    "message": "Ονοματεπώνυμο"
+  },
+  "NARCOTICS": {
+    "description": "",
+    "message": "Ναρκωτικά"
+  },
+  "NAVIGATION_STAR_MAPS": {
+    "description": "",
+    "message": "Χάρτες πλοήγησης και αστεριών"
+  },
+  "NAVIGATION_TARGETS_IN_THIS_SYSTEM": {
+    "description": "",
+    "message": "Στόχοι πλοήγησης σε αυτό το σύστημα"
+  },
+  "NERVE_GAS": {
+    "description": "",
+    "message": "Αέριο νεύρων."
+  },
+  "NONE": {
+    "description": "To indicate the absence of something",
+    "message": "<None>"
+  },
+  "NOT_FOUND": {
+    "description": "searching star system in sector view",
+    "message": "Δεν βρέθηκε"
+  },
+  "NOT_FOUND_BEST_MATCH_X": {
+    "description": "",
+    "message": "Δεν βρέθηκε, καλύτερη αντιστοίχιση: %system"
+  },
+  "NOW": {
+    "description": "In System Orbit View",
+    "message": "Τώρα"
+  },
+  "NO_ALERT": {
+    "description": "",
+    "message": "Παύση συναγερμού"
+  },
+  "NO_AUTOPILOT_INSTALLED": {
+    "description": "",
+    "message": "Δεν είναι εγκατεστημένος στο σκάφος αυτόματος πιλότος, δεν μπορώ να ενεργοποιήσω αυτόματο πιλότο"
+  },
+  "NO_CENTRAL_GOVERNANCE": {
+    "description": "",
+    "message": "Χωρίς κεντρική διακυβέρνηση"
+  },
+  "NO_ESTABLISHED_ORDER": {
+    "description": "",
+    "message": "Δεν έχει εδραιωθεί νομική τάξη"
+  },
+  "NO_HYPERDRIVE": {
+    "description": "",
+    "message": "χωρίς υπερκινητήρα"
+  },
+  "NO_REGISTERED_INHABITANTS": {
+    "description": "",
+    "message": "Χωρίς καταχωρημένο πληθυσμό"
+  },
+  "NO_TARGET_SELECTED": {
+    "description": "",
+    "message": "Υπολογιστής σκάφους: Δεν έχει επιλεγεί στόχος"
+  },
+  "NUMBER_DAYS": {
+    "description": "",
+    "message": "%days{f.0} days"
+  },
+  "NUMBER_DECIMAL_POINT": {
+    "description": "Decimal delimiter used in numbers.",
+    "message": ","
+  },
+  "NUMBER_G": {
+    "description": "",
+    "message": "%acceleration{f.1} G"
+  },
+  "NUMBER_GROUP_MIN": {
+    "description": "Smallest number to start grouping of digits for. (E.g. if \"10000\" start grouping thousands with 10,000, and not 1,000).",
+    "message": "1000"
+  },
+  "NUMBER_GROUP_NUM": {
+    "description": "For large number, group digits by this many. European languages use 3 (group thousands). 0 means no grouping.",
+    "message": "3"
+  },
+  "NUMBER_GROUP_SEP": {
+    "description": "For large number, separator used when grouping digits. E.g. 1,000 or 1 000 or 1'000.",
+    "message": "."
+  },
+  "NUMBER_HOURS": {
+    "description": "",
+    "message": "%hours{f.1} hrs"
+  },
+  "NUMBER_LY": {
+    "description": "",
+    "message": "%distance{f.2} ly"
+  },
+  "NUMBER_TONNES": {
+    "description": "",
+    "message": "%(mass) τόννοι"
+  },
+  "N_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα αζώτου"
+  },
+  "N_CELSIUS": {
+    "description": "",
+    "message": "%temperature C"
+  },
+  "N_DAYS": {
+    "description": "",
+    "message": "%days{f.1} days"
+  },
+  "N_DEGREES": {
+    "description": "",
+    "message": "%angle{f.1} degrees"
+  },
+  "N_EARTH_DAYS": {
+    "description": "",
+    "message": "%days{f.1} Earth days"
+  },
+  "N_EARTH_MASSES": {
+    "description": "",
+    "message": "%mass{f.3} Earth masses"
+  },
+  "N_EARTH_RADII": {
+    "description": "Used in system info view. E.g.: \"0.17 Earth radii (118235 km)\"",
+    "message": "%radius{f.3} Earth radii (%radkm{f.0} km)"
+  },
+  "N_SOLAR_MASSES": {
+    "description": "",
+    "message": "%mass{f.3} Solar masses"
+  },
+  "N_SOLAR_RADII": {
+    "description": "Used in system info view. E.g. for Barnard's star: \"0.17 Solar radii (118235 km)\"",
+    "message": "%radius{f.3} Solar radii (%radkm{f.0} km)"
+  },
+  "N_YEARS": {
+    "description": "",
+    "message": "%years{f.1} years"
+  },
+  "O2_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα οξυγόνου"
+  },
+  "OBJECT_INFO": {
+    "description": "Originally for use as a window title and a button tooltip in the system map",
+    "message": "Στοιχεία αντικειμένου"
+  },
+  "OCEANICMOON": {
+    "description": "",
+    "message": "\" oceanic moon\""
+  },
+  "OCEANICWORLD": {
+    "description": "",
+    "message": "\" oceanic world\""
+  },
+  "ORBITAL_PERIOD": {
+    "description": "",
+    "message": "τροχιακή περίοδος"
+  },
+  "ORBITAL_STARPORT": {
+    "description": "",
+    "message": "Orbital starport"
+  },
+  "ORBIT_PLANNER": {
+    "description": "",
+    "message": "Σχεδιασμός τροχιάς"
+  },
+  "OUTDOOR_AGRICULTURAL_WORLD": {
+    "description": "",
+    "message": "Αγροτικός εξώκοσμος."
+  },
+  "OVER_N_BILLION": {
+    "description": "",
+    "message": "Πάνω από %population δισεκατομμύρια"
+  },
+  "OVER_N_MILLION": {
+    "description": "",
+    "message": "Πάνω από %population εκατομμύρια"
+  },
+  "PASSENGER_CABIN": {
+    "description": "",
+    "message": "Κατειλημμένες καμπίνες επιβατών"
+  },
+  "PAUSED": {
+    "description": "",
+    "message": "ΣΕ ΠΑΥΣΗ"
+  },
+  "PAY_FINE_REMOTELY": {
+    "description": "",
+    "message": "Πληρώστε πρόστιμο με τηλεμεταφορά (%amount)"
+  },
+  "PERIAPSIS_DISTANCE": {
+    "description": "",
+    "message": "Periapsis distance"
+  },
+  "PIONEER": {
+    "description": "",
+    "message": "PIONEER"
+  },
+  "PITCH": {
+    "description": "",
+    "message": "Πρόνευση"
+  },
+  "PITCH_DOWN": {
+    "description": "",
+    "message": "Πρόνευση κάτω"
+  },
+  "PITCH_UP": {
+    "description": "",
+    "message": "Πρόνευση πάνω"
+  },
+  "PLANETARY_INFO": {
+    "description": "",
+    "message": "Πληροφορίες πλανήτη"
+  },
+  "PLANET_CONTAINING_LIQUID_WATER": {
+    "description": "",
+    "message": "πλανήτης που περιέχει νερό σε υγρή μορφή"
+  },
+  "PLANET_WITH_SOME_ICE": {
+    "description": "",
+    "message": "πλανήτης με παρουσία πάγου"
+  },
+  "PLANNED_ECONOMY": {
+    "description": "",
+    "message": "Κεντρικά σχεδιασμένη οικονομία"
+  },
+  "PLANNER_RESET_FACTOR": {
+    "description": "For system orbit view",
+    "message": "Ποσοστό αύξησης των τιμών Δν. Κάντε κλικ για επαναφορά στην προεπιλογή."
+  },
+  "PLANNER_RESET_NORMAL": {
+    "description": "For system orbit view",
+    "message": "Κάθετη Δν. Κάντε κλικ για επαναφορά στο μηδέν."
+  },
+  "PLANNER_RESET_PROGRADE": {
+    "description": "For system orbit view",
+    "message": "Ορθόδρομη Δν. Κάντε κλικ για επαναφορά στο μηδέν."
+  },
+  "PLANNER_RESET_RADIAL": {
+    "description": "For system orbit view",
+    "message": "Ακτινική Δν. Κάντε κλικ για επαναφορά στο μηδέν."
+  },
+  "PLANNER_RESET_START": {
+    "description": "For system orbit view",
+    "message": "Έναρξη ελιγμών. Κάντε κλικ για επαναφορά στην προεπιλογή."
+  },
+  "PLASTICS": {
+    "description": "",
+    "message": "Πλαστικά είδη"
+  },
+  "PLUTOCRATIC_DICTATORSHIP": {
+    "description": "",
+    "message": "Πλουτοκρατική δικτατορία"
+  },
+  "POPULATION": {
+    "description": "",
+    "message": "Πληθυσμός"
+  },
+  "PRECIOUS_METALS": {
+    "description": "",
+    "message": "Πολύτιμα μέταλλα"
+  },
+  "PRESSURE_N_ATMOSPHERES": {
+    "description": "",
+    "message": "P: %pressure{f.2} atm"
+  },
+  "QUADRUPLE_SYSTEM": {
+    "description": "",
+    "message": "Τετραπλό σύστημα"
+  },
+  "RADAR_CONTROL": {
+    "description": "",
+    "message": "Έλεγχος ραντάρ"
+  },
+  "RADIOACTIVES": {
+    "description": "",
+    "message": "Ραδιενεργά απόβλητα"
+  },
+  "RADIUS": {
+    "description": "",
+    "message": "Ακτίνα"
+  },
+  "RECENTLY_EXPLORED_SYSTEM": {
+    "description": "",
+    "message": "Αυτό το σύστημα διερευνήθηκε κατά την %date."
+  },
+  "REQUEST_DOCKING_CLEARANCE": {
+    "description": "",
+    "message": "Αίτημα άδειας για προδέτηση από το {target}"
+  },
+  "RESET": {
+    "description": "",
+    "message": "Επαναφορά"
+  },
+  "ROBOTS": {
+    "description": "",
+    "message": "Ρομπότ"
+  },
+  "ROCKY_MOON": {
+    "description": "",
+    "message": "\" rocky moon\""
+  },
+  "ROCKY_MOON_CONTAINING_SOME_LIQUIDS": {
+    "description": "",
+    "message": "\" rocky moon containing some liquids,\""
+  },
+  "ROCKY_PLANET": {
+    "description": "",
+    "message": "\" rocky planet\""
+  },
+  "ROCKY_PLANET_CONTAINING_COME_LIQUIDS": {
+    "description": "",
+    "message": "\" rocky planet containing some liquids,\""
+  },
+  "ROLL": {
+    "description": "",
+    "message": "Διατοιχισμός"
+  },
+  "ROLL_LEFT": {
+    "description": "",
+    "message": "Διατοιχισμός αριστερά"
+  },
+  "ROLL_RIGHT": {
+    "description": "",
+    "message": "Διατοιχισμός δεξιά"
+  },
+  "ROTATE_DOWN": {
+    "description": "",
+    "message": "Στροφή κάτω"
+  },
+  "ROTATE_LEFT": {
+    "description": "",
+    "message": "Περιστροφή αριστερά"
+  },
+  "ROTATE_RIGHT": {
+    "description": "",
+    "message": "Στροφή δεξιά"
+  },
+  "ROTATE_UP": {
+    "description": "",
+    "message": "Περιστροφή προς τα πάνω"
+  },
+  "ROTATIONAL_PERIOD": {
+    "description": "",
+    "message": "\" (rotational period)\""
+  },
+  "ROTATION_DAMPING_OFF": {
+    "description": "",
+    "message": "Απενεργοποίηση απόσβεσης περιστροφής"
+  },
+  "ROTATION_DAMPING_ON": {
+    "description": "",
+    "message": "Ενεργοποίηση απόσβεσης περιστροφής"
+  },
+  "RUBBISH": {
+    "description": "",
+    "message": "Σκουπίδια"
+  },
+  "SCOOP": {
+    "description": "Is followed by a number, representing scoop mounts/slots available to fit cargo scoop and/or fuel scoop",
+    "message": "Συλλέκτης"
+  },
+  "SCREENSHOT_FILENAME_TEMPLATE": {
+    "description": "",
+    "message": "screenshot%index{d08}.png"
+  },
+  "SEARCH": {
+    "description": "",
+    "message": "Αναζήτηση"
+  },
+  "SEARCH_MAP": {
+    "description": "",
+    "message": "Χάρτης αναζήτησης"
+  },
+  "SECTOR_COORDINATES": {
+    "description": "",
+    "message": "Συντεταγμένες τομέα:"
+  },
+  "SECTOR_MAP_VIEW": {
+    "description": "",
+    "message": "Χάρτης τομέα"
+  },
+  "SECTOR_X_Y_Z": {
+    "description": "",
+    "message": "Τομέας: {sectorX}, {sectorY}, {sectorZ}"
+  },
+  "SELECTED_SYSTEM": {
+    "description": "",
+    "message": "Επιλεγμένο Σύστημα"
+  },
+  "SELECT_A_TARGET": {
+    "description": "",
+    "message": "Διάλεξε στόχο"
+  },
+  "SELECT_LOW_THRUST_POWER_LEVEL": {
+    "description": "",
+    "message": "Επιλέξτε το επίπεδο για ώθηση μικρής ισχύος"
+  },
+  "SEMI_MAJOR_AXIS": {
+    "description": "",
+    "message": "Ημι-μείζων άξονας"
+  },
+  "SET_AS_COMBAT_TARGET": {
+    "description": "",
+    "message": "Όρισε ως στόχος μάχης"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Όρισε ως στόχο πλοήγησης."
+  },
+  "SET_HYPERSPACE_DESTINATION_TO": {
+    "description": "",
+    "message": "Όρισε ως προορισμό υπερδιαστήματος το %system"
+  },
+  "SET_HYPERSPACE_TARGET_TO_FOLLOW_THIS_DEPARTURE": {
+    "description": "",
+    "message": "Αναλυτής νέφους υπερδιαστήματος: Ορίστε τον στόχο υπερδιαστήματος ώστε να ακολουθήσει αυτήν την αναχώρηση"
+  },
+  "SET_LOW_THRUST_POWER_LEVEL_TO_X_PERCENT": {
+    "description": "",
+    "message": "Όρισε το επίπεδο για ώθηση μικρής ισχύος σε %power%%"
+  },
+  "SET_MAXIMUM_SPEED_LIMIT": {
+    "description": "Speed limiter tooltip.",
+    "message": "Ορίσατε ανώτατο όριο ταχύτητας"
+  },
+  "SET_NAVTARGET_TO": {
+    "description": "",
+    "message": "Όρισε στόχο πλοήγηση το:"
+  },
+  "SET_SPEED_KM_S": {
+    "description": "",
+    "message": "Όρισε ταχύτητα: %speed{f.2} km/s"
+  },
+  "SET_SPEED_M_S": {
+    "description": "",
+    "message": "Όρισε ταχύτητα: %speed{f.0} m/s"
+  },
+  "SHIELD_INTEGRITY": {
+    "description": "",
+    "message": "Ακεραιότητα ασπίδας"
+  },
+  "SHIELD_STRENGTH_N": {
+    "description": "",
+    "message": "Αντοχή ασπίδας: %shields{f.2}"
+  },
+  "SHIFT": {
+    "description": "Shift key on keyboard",
+    "message": "Shift"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Σκάφος"
+  },
+  "SHIPS_DISPLAY_MODE": {
+    "description": "Label for ship display modes.",
+    "message": "Λειτουργία Εμφάνιση σκαφών"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ONLY": {
+    "description": "Combobox option for ships only.",
+    "message": "Σκάφη μόνο"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ORBITS": {
+    "description": "Combobox option for ships with orbits.",
+    "message": "Σκάφη με επισήμανση τροχιάς"
+  },
+  "SHIPS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for ship display toggle button.",
+    "message": "Εναλλαγή ορατότητας σκαφών"
+  },
+  "SHIP_DETECTED_NEARBY": {
+    "description": "",
+    "message": "Εντοπίστηκε  Σκάφος σε μικρή απόσταση. "
+  },
+  "SHIP_INFORMATION": {
+    "description": "",
+    "message": "Στοιχεία σκάφους"
+  },
+  "SHIP_MASS_N_TONNES": {
+    "description": "",
+    "message": "Μάζα σκάφους: %{mass}t"
+  },
+  "SHIP_NEARBY": {
+    "description": "",
+    "message": "Σκάφος σε μικρή απόσταση"
+  },
+  "SHIP_ORIENTATION": {
+    "description": "",
+    "message": "Προσανατολισμός σκάφους"
+  },
+  "SHIP_VELOCITY_BY_REFERENCE_OBJECT": {
+    "description": "",
+    "message": "Ταχύτητα σκάφους ως προς το αντικείμενο αναφοράς"
+  },
+  "SIDEREAL_VIEW": {
+    "description": "camera view setting",
+    "message": "Πλευρική άποψη"
+  },
+  "SLAVES": {
+    "description": "",
+    "message": "Σκλάβοι"
+  },
+  "SMALL": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Small"
+  },
+  "SMALL_GAS_GIANT": {
+    "description": "",
+    "message": "Αεριώδης γίγαντας μικρού μεγέθους"
+  },
+  "SMALL_INDUSTRIAL_OUTPOST": {
+    "description": "",
+    "message": "Μικρό βιομηχανικό φυλάκιο."
+  },
+  "SMALL_SCALE_PROSPECTING_NO_SETTLEMENTS": {
+    "description": "",
+    "message": "Αναζήτηση μικρής κλίμακας. Χωρίς καταχωρημένους οικισμούς."
+  },
+  "SOCIAL_DEMOCRACY": {
+    "description": "",
+    "message": "Σοσιαλιστική δημοκρατία"
+  },
+  "SOME_ESTABLISHED_MINING": {
+    "description": "",
+    "message": "Ορισμένα καθιερωμένα ορυχεία."
+  },
+  "SOURCE": {
+    "description": "tell source system of hyperjump entry cloud",
+    "message": "Προέλευση"
+  },
+  "SPEED_CONTROL_MODE": {
+    "description": "",
+    "message": "Λειτουργία ελέγχου ταχύτητας"
+  },
+  "STABLE_SYSTEM_WITH_N_MAJOR_BODIES_STARPORTS": {
+    "description": "",
+    "message": "Σταθερό σύστημα με %bodycount κύρια % [body(s)] και %portcount %[starport(s)]"
+  },
+  "STARPORT": {
+    "description": "",
+    "message": "Κοσμοδρόμιο"
+  },
+  "STARPORTS": {
+    "description": "",
+    "message": "Κοσμοδρόμια"
+  },
+  "STAR_A": {
+    "description": "",
+    "message": "Type 'A' hot white star"
+  },
+  "STAR_AF_GIANT": {
+    "description": "",
+    "message": "White giant star"
+  },
+  "STAR_AF_HYPER_GIANT": {
+    "description": "",
+    "message": "White hyper giant star"
+  },
+  "STAR_AF_SUPER_GIANT": {
+    "description": "",
+    "message": "White super giant star"
+  },
+  "STAR_B": {
+    "description": "",
+    "message": "Bright type 'B' blue star"
+  },
+  "STAR_B_GIANT": {
+    "description": "",
+    "message": "Blue giant star"
+  },
+  "STAR_B_HYPER_GIANT": {
+    "description": "",
+    "message": "Blue hyper giant star"
+  },
+  "STAR_B_SUPER_GIANT": {
+    "description": "",
+    "message": "Blue super giant star"
+  },
+  "STAR_B_WF": {
+    "description": "",
+    "message": "Wolf-Rayet star - Risk of collapse"
+  },
+  "STAR_F": {
+    "description": "",
+    "message": "Type 'F' white star"
+  },
+  "STAR_G": {
+    "description": "",
+    "message": "Type 'G' yellow star"
+  },
+  "STAR_G_GIANT": {
+    "description": "",
+    "message": "Yellow giant star - Unstable"
+  },
+  "STAR_G_HYPER_GIANT": {
+    "description": "",
+    "message": "Yellow hyper giant star - Unstable"
+  },
+  "STAR_G_SUPER_GIANT": {
+    "description": "",
+    "message": "Yellow super giant star"
+  },
+  "STAR_IM_BH": {
+    "description": "",
+    "message": "Μια μέσης μάζας μαύρη τρύπα"
+  },
+  "STAR_K": {
+    "description": "",
+    "message": "Type 'K' orange star"
+  },
+  "STAR_K_GIANT": {
+    "description": "",
+    "message": "Orange giant star - Unstable"
+  },
+  "STAR_K_HYPER_GIANT": {
+    "description": "",
+    "message": "Orange hyper giant star - Unstable"
+  },
+  "STAR_K_SUPER_GIANT": {
+    "description": "",
+    "message": "Orange super giant star"
+  },
+  "STAR_M": {
+    "description": "",
+    "message": "Type 'M' red star"
+  },
+  "STAR_M_GIANT": {
+    "description": "",
+    "message": "Red giant star"
+  },
+  "STAR_M_HYPER_GIANT": {
+    "description": "",
+    "message": "Red hyper giant star"
+  },
+  "STAR_M_SUPER_GIANT": {
+    "description": "",
+    "message": "Red super giant star"
+  },
+  "STAR_M_WF": {
+    "description": "",
+    "message": "Wolf-Rayet star - Unstable"
+  },
+  "STAR_O": {
+    "description": "",
+    "message": "Hot, massive type 'O' star"
+  },
+  "STAR_O_GIANT": {
+    "description": "",
+    "message": "Hot Blue giant star"
+  },
+  "STAR_O_HYPER_GIANT": {
+    "description": "",
+    "message": "Hot Blue hyper giant star"
+  },
+  "STAR_O_SUPER_GIANT": {
+    "description": "",
+    "message": "Hot Blue super giant star"
+  },
+  "STAR_O_WF": {
+    "description": "",
+    "message": "Wolf-Rayet star - Imminent collapse"
+  },
+  "STAR_SM_BH": {
+    "description": "",
+    "message": "Η γαλαξιακή μας άγκυρα"
+  },
+  "STAR_SYSTEM_INFORMATION": {
+    "description": "",
+    "message": "Πληροφορίες αστρικού συστήματος"
+  },
+  "STAR_S_BH": {
+    "description": "",
+    "message": "Μια αστρική μαύρη τρύπα"
+  },
+  "SUGGESTED_RESPONSES": {
+    "description": "",
+    "message": "Προτεινόμενες απαντήσεις:"
+  },
+  "SURFACE_GRAVITY": {
+    "description": "",
+    "message": "Επιτάχυνση βαρύτητας στην επιφάνεια"
+  },
+  "SURFACE_PRESSURE": {
+    "description": "",
+    "message": "Επιφανειακή ατμοσφαιρική πίεση"
+  },
+  "SURFACE_TEMPERATURE": {
+    "description": "",
+    "message": "Θερμοκρασία στην επιφάνεια"
+  },
+  "SWAP_SELECTED_HYPERSPACE_TARGET": {
+    "description": "",
+    "message": "Εναλλάξτε τον επιλεγμένο και τον υπεράλματος στόχους"
+  },
+  "SWITCHED_TO_PARENT": {
+    "description": "Show ship's heading, coordinates are on the celestial sphere (defined by the ecliptic).",
+    "message": "Εναλλάχτηκε  η εμφάνιση κατεύθυνσης σε συντεταγμένες συστήματος."
+  },
+  "SWITCHED_TO_ROTATIONAL": {
+    "description": "Show ship's heading in planetary coordinates. heading 0 = north, 90 = east, 180 = south, 270 = west.",
+    "message": "Εναλλάχτηκε η εμφάνιση κατεύθυνσης σε πλανητικές συντεταγμένες"
+  },
+  "SYSTEM": {
+    "description": "star system",
+    "message": "Σύστημα"
+  },
+  "SYSTEM_NUMBER": {
+    "description": "",
+    "message": "Αριθμός συστήματος:"
+  },
+  "SYSTEM_ORBIT_VIEW": {
+    "description": "",
+    "message": "Προβολή τροχιάς συστήματος"
+  },
+  "SYSTEM_TYPE": {
+    "description": "",
+    "message": "Τύπος συστήματος:"
+  },
+  "S_ATMOSPHERE": {
+    "description": "",
+    "message": "ατμόσφαιρα θείου"
+  },
+  "TAKEOFF": {
+    "description": "",
+    "message": "Απογείωση"
+  },
+  "TARGET_OBJECT_IN_SIGHTS": {
+    "description": "",
+    "message": "Στόχος εν όψη"
+  },
+  "TENUOUS": {
+    "description": "atmosphere thickness",
+    "message": "\"a tenuous \""
+  },
+  "TEXTILES": {
+    "description": "",
+    "message": "Υφάσματα"
+  },
+  "THICK": {
+    "description": "",
+    "message": "\"a thick \""
+  },
+  "THIN": {
+    "description": "",
+    "message": "\"a thin \""
+  },
+  "THRIVING_OUTDOOR_WORLD": {
+    "description": "",
+    "message": "Ανθηρός εξώκοσμος."
+  },
+  "THRUSTER_DORSAL": {
+    "description": "",
+    "message": "Ώθηση κάτω"
+  },
+  "THRUSTER_MAIN": {
+    "description": "",
+    "message": "Ώθηση εμπρός"
+  },
+  "THRUSTER_PORT": {
+    "description": "",
+    "message": "Ώθηση αριστερά"
+  },
+  "THRUSTER_RETRO": {
+    "description": "",
+    "message": "Ώθηση πίσω"
+  },
+  "THRUSTER_STARBOARD": {
+    "description": "",
+    "message": "Ώθηση δεξιά"
+  },
+  "THRUSTER_VENTRAL": {
+    "description": "",
+    "message": "'Ώθηση προς τα επάνω"
+  },
+  "TIME_POINT": {
+    "description": "",
+    "message": "Χρονικό σημείο:"
+  },
+  "TINY": {
+    "description": "Adjective used to describe the size of an object.",
+    "message": "Μικροσκοπικός"
+  },
+  "TOGGLE_EQUIPMENT_VIEW": {
+    "description": "Tooltip for the Equipment View button",
+    "message": "Προβολή εξοπλισμού"
+  },
+  "TOGGLE_HUD_MODE": {
+    "description": "",
+    "message": "Εναλλαγή λειτουργίας HUD"
+  },
+  "TOGGLE_RADAR_MODE": {
+    "description": "",
+    "message": "Εναλλαγή λειτουργίας ραντάρ"
+  },
+  "TOGGLE_RADAR_VIEW": {
+    "description": "Tooltip for the Radar View button",
+    "message": "Προβολή ραντάρ"
+  },
+  "TOGGLE_ROTATION_DAMPING": {
+    "description": "",
+    "message": "Εναλλαγή απόσβεσης περιστροφής"
+  },
+  "TOMBSTONE_EPITAPH": {
+    "description": "shown on tombstone when player dies",
+    "message": "RIP OLD BEAN"
+  },
+  "TRADING_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Εμπόριο παράνομων αγαθών"
+  },
+  "TRIPLE_SYSTEM": {
+    "description": "",
+    "message": "τριπλό σύστημα"
+  },
+  "UNDOCKING": {
+    "description": "Flight state of ship when leaving station",
+    "message": "Απόπλους"
+  },
+  "UNEXPLORED_SYSTEM_NO_DATA": {
+    "description": "",
+    "message": "Μη εξερευνημένο σύστημα. Δεν υπάρχουν άλλα διαθέσιμα δεδομένα."
+  },
+  "UNEXPLORED_SYSTEM_NO_SYSTEM_VIEW": {
+    "description": "",
+    "message": "Μη εξερευνημένο σύστημα. Η προβολή συστήματος δεν είναι διαθέσιμη."
+  },
+  "UNEXPLORED_SYSTEM_STAR_INFO_ONLY": {
+    "description": "",
+    "message": "Ανεξερεύνητο σύστημα. Οι πληροφορίες για τα αστέρια έχουν συγκεντρωθεί με τηλεσκόπιο, αλλά δεν υπάρχουν πληροφορίες για τους πλανήτες."
+  },
+  "UNIT_AU": {
+    "description": "Distance unit: an astronomical unit, radius of Earth's orbit",
+    "message": "AU"
+  },
+  "UNIT_CREDITS": {
+    "description": "Unit of money, used when $ isn't specific enough",
+    "message": "μονάδες"
+  },
+  "UNIT_CUBIC_METERS": {
+    "description": "Volume unit: cubic meter",
+    "message": "m³"
+  },
+  "UNIT_DAYS": {
+    "description": "Duration unit: one 24-hour day",
+    "message": "μ"
+  },
+  "UNIT_DENSITY": {
+    "description": "Density unit: kilos per cubic meter",
+    "message": "kg/m³"
+  },
+  "UNIT_EARTH_GRAVITY": {
+    "description": "Acceleration unit: one earth gravity (g)",
+    "message": "g"
+  },
+  "UNIT_GIGATONNES": {
+    "description": "Mass unit: one gigatonne",
+    "message": "Gt"
+  },
+  "UNIT_HECTARES": {
+    "description": "Area unit: one hectare (ha) -10,000 m²",
+    "message": "εκτ"
+  },
+  "UNIT_HOURS": {
+    "description": "Duration unit: one 60-minute hour",
+    "message": "ω"
+  },
+  "UNIT_KILOGRAMS": {
+    "description": "Mass unit: one kilogram",
+    "message": "kg"
+  },
+  "UNIT_KILOMETERS": {
+    "description": "Distance unit: one kilometer",
+    "message": "km"
+  },
+  "UNIT_KILOMETERS_PER_SECOND": {
+    "description": "Speed unit: one kilometer per second",
+    "message": "χλμ/ω"
+  },
+  "UNIT_KILOTONNES": {
+    "description": "Mass unit: one kilotonne",
+    "message": "kt"
+  },
+  "UNIT_LY": {
+    "description": "Distance unit: a light year",
+    "message": "ly"
+  },
+  "UNIT_MEGATONNES": {
+    "description": "Mass unit: one megatonne",
+    "message": "Mt"
+  },
+  "UNIT_METERS": {
+    "description": "Distance unit: one meter",
+    "message": "λ"
+  },
+  "UNIT_METERS_PER_SECOND": {
+    "description": "Speed unit: one meter per second",
+    "message": "μ/δ"
+  },
+  "UNIT_MILLION_METERS": {
+    "description": "Distance unit: one million meters",
+    "message": "Mm"
+  },
+  "UNIT_MILLION_METERS_PER_SECOND": {
+    "description": "Speed unit: one million meters per second",
+    "message": "Mm/s"
+  },
+  "UNIT_MINUTES": {
+    "description": "Duration unit: one 60-second minute",
+    "message": "λ"
+  },
+  "UNIT_PETATONNES": {
+    "description": "Mass unit: one petatonne",
+    "message": "Pt"
+  },
+  "UNIT_PRESSURE_ATMOSPHERES": {
+    "description": "Pressure unit: one earth atmosphere (atm)",
+    "message": "atm"
+  },
+  "UNIT_SECONDS": {
+    "description": "Duration unit: one second",
+    "message": "s"
+  },
+  "UNIT_SQUARE_KILOMETERS": {
+    "description": "Area unit: square kilometer (km²) - 1,000,000 m²",
+    "message": "χλμ2"
+  },
+  "UNIT_SQUARE_MEGAMETERS": {
+    "description": "Area unit: square megameter (Mm²) - 10^12 m²",
+    "message": "Μμ2"
+  },
+  "UNIT_SQUARE_METERS": {
+    "description": "Area unit: square meter (m²)",
+    "message": "μ2"
+  },
+  "UNIT_TEMPERATURE_CELSIUS": {
+    "description": "Temperature unit: degrees Celsius (°C)",
+    "message": "°C"
+  },
+  "UNIT_TEMPERATURE_FAHRENHEIT": {
+    "description": "Temperature unit: Fahrenheit (°F)",
+    "message": "°F"
+  },
+  "UNIT_TEMPERATURE_KELVIN": {
+    "description": "Temperature unit: degrees Kelvin (K)",
+    "message": "Κ"
+  },
+  "UNIT_TERATONNES": {
+    "description": "Mass unit: one teratonne",
+    "message": "Tt"
+  },
+  "UNIT_TONNES": {
+    "description": "Mass unit: one tonne (t)",
+    "message": "t"
+  },
+  "UNIT_WEEKS": {
+    "description": "Duration unit: one 7-day week",
+    "message": "εβδ"
+  },
+  "UNKNOWN": {
+    "description": "",
+    "message": "<unknown>"
+  },
+  "UNSET_NAVTARGET": {
+    "description": "",
+    "message": "Θέσε ακαθόριστο στόχο πλοήγησης"
+  },
+  "USE_LOW_THRUST": {
+    "description": "",
+    "message": "Χρησιμοποίησε χαμηλή ώθηση"
+  },
+  "VAST_STRIP_MINE": {
+    "description": "",
+    "message": "Απέραντη αποικία εντατικής εξόρυξης"
+  },
+  "VERY_DENSE": {
+    "description": "",
+    "message": "πολύ μεγάλης πυκνότητας"
+  },
+  "VERY_LARGE_GAS_GIANT": {
+    "description": "",
+    "message": "Αεριώδης γίγαντας πολύ μεγάλου μεγέθους"
+  },
+  "VIEW": {
+    "description": "",
+    "message": "Προβολή"
+  },
+  "VIOLENT_ANARCHY": {
+    "description": "",
+    "message": "Ταραχές - Καθολική διακυβέρνηση που αμφισβητείται από ένοπλες φατρίες"
+  },
+  "WATER": {
+    "description": "",
+    "message": "Νερό"
+  },
+  "WEAPONS": {
+    "description": "",
+    "message": "Όπλα"
+  },
+  "WEAPON_TEMP": {
+    "description": "",
+    "message": "Θερμοκρασία όπλου"
+  },
+  "WHEELS_ARE_DOWN": {
+    "description": "",
+    "message": "Οι Τροχοί είναι κατεβασμένοι"
+  },
+  "WHEELS_ARE_UP": {
+    "description": "",
+    "message": "Οι τροχοί αναδιπλώθηκαν"
+  },
+  "WHITE_DWARF": {
+    "description": "",
+    "message": "White dwarf stellar remnant"
+  },
+  "WITH": {
+    "description": "",
+    "message": "με"
+  },
+  "WITH_NO_SIGNIFICANT_ATMOSPHERE": {
+    "description": "",
+    "message": "ουσιαστικά χωρίς ατμόσφαιρα"
+  },
+  "YAW": {
+    "description": "",
+    "message": "Εκτροπή"
+  },
+  "YAW_LEFT": {
+    "description": "",
+    "message": "Εκτροπή αριστερά"
+  },
+  "YAW_RIGHT": {
+    "description": "",
+    "message": "Εκτροπή δεξιά"
+  },
+  "YOUNG_FARMING_COLONY": {
+    "description": "",
+    "message": "Νέα γεωργική αποικία."
+  },
+  "ZOOM_IN": {
+    "description": "",
+    "message": "Μεγέθυνση"
+  },
+  "ZOOM_OUT": {
+    "description": "",
+    "message": "Σμίκρυνση"
+  }
+}

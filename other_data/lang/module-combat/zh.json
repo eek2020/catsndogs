@@ -1,0 +1,398 @@
+{
+  "ACCEPTED_1": {
+    "description": "",
+    "message": "很好。祝你好运！"
+  },
+  "ACCEPTED_2": {
+    "description": "",
+    "message": "太棒了！"
+  },
+  "ACCEPTED_3": {
+    "description": "",
+    "message": "好。我们全靠你了!"
+  },
+  "ADTEXT_1": {
+    "description": "",
+    "message": "需要合格飞行员执行秘密任务：报酬{cash}。"
+  },
+  "ADTEXT_2": {
+    "description": "",
+    "message": "寻找飞船和船员执行{system}系统中的战斗任务。"
+  },
+  "ADTEXT_3": {
+    "description": "",
+    "message": "需要一名装备精良的合格雇佣兵。任务详情可按需提供。"
+  },
+  "ADTEXT_4": {
+    "description": "",
+    "message": "{org} 寻求无畏的雇佣兵前往 {system} 星系执行任务。报酬 {cash}。"
+  },
+  "ADTEXT_5": {
+    "description": "",
+    "message": "任务{mission} ：报酬 {cash}。"
+  },
+  "ADTITLE_1": {
+    "description": "",
+    "message": "需要可靠的飞行员"
+  },
+  "ADTITLE_2": {
+    "description": "",
+    "message": "挑战解决方案"
+  },
+  "ADTITLE_3": {
+    "description": "",
+    "message": "战斗飞行"
+  },
+  "ADTITLE_4": {
+    "description": "",
+    "message": "需要无所畏惧的雇佣军"
+  },
+  "ADTITLE_5": {
+    "description": "",
+    "message": "授权作战任务"
+  },
+  "AGENT": {
+    "description": "Secret Service Agent",
+    "message": "代理人"
+  },
+  "AREA": {
+    "description": "An allotted area for the mission",
+    "message": "面积："
+  },
+  "BONUS_1": {
+    "description": "",
+    "message": "我的主管对你的表现印象深刻，并为此任务分配了{cash}奖金。"
+  },
+  "BONUS_2": {
+    "description": "",
+    "message": "你为我们服务得很好！付给你现金 {cash}。"
+  },
+  "BONUS_3": {
+    "description": "",
+    "message": "非常令人印象深刻！我有权付给你现金的 {cash}。"
+  },
+  "BONUS_4": {
+    "description": "",
+    "message": "我很高兴你的表演！我已经转给你额外的{cash}信贷。"
+  },
+  "COMBAT": {
+    "description": "Name of mission type",
+    "message": "战斗"
+  },
+  "CORPORATION_1": {
+    "description": "Name of a corporation",
+    "message": "珍贵的基础商品"
+  },
+  "CORPORATION_2": {
+    "description": "Name of a corporation",
+    "message": "欧米茄矿业公司"
+  },
+  "CORPORATION_3": {
+    "description": "Name of a corporation",
+    "message": "联合矿物集团"
+  },
+  "CORPORATION_4": {
+    "description": "Name of a corporation",
+    "message": "银河探索者公司"
+  },
+  "CORPORATION_5": {
+    "description": "Name of a corporation",
+    "message": "哈伯公司"
+  },
+  "CORPORATION_6": {
+    "description": "Name of a corporation",
+    "message": "贵金属勘探有限责任公司"
+  },
+  "CORPORATION_7": {
+    "description": "Name of a corporation",
+    "message": "{name}探矿机有限公司"
+  },
+  "CORPORATION_8": {
+    "description": "Name of a corporation",
+    "message": "{name} 有限责任公司"
+  },
+  "DANGER": {
+    "description": "The risk level",
+    "message": "危险:"
+  },
+  "DENY_1": {
+    "description": "",
+    "message": "抱歉，我需要一个有更多战斗经验的飞行员。"
+  },
+  "DENY_2": {
+    "description": "",
+    "message": "对不起先生。我需要一个真正的专业人士。"
+  },
+  "DETECTIVE": {
+    "description": "Police Detective",
+    "message": "侦探"
+  },
+  "DISTANCE": {
+    "description": "Distance in space, between two locations",
+    "message": "距离:"
+  },
+  "DO_I_NEED_SPECIAL_EQUIPMENT": {
+    "description": "",
+    "message": "我需要什么特殊设备吗?"
+  },
+  "FAILUREMSG_1": {
+    "description": "",
+    "message": "你真差劲。离开我的视线。"
+  },
+  "FAILUREMSG_2": {
+    "description": "",
+    "message": "你来晚了！你造成了巨大的损失。你将不会获得报酬！"
+  },
+  "FAILUREMSG_3": {
+    "description": "",
+    "message": "你是所有飞行员的耻辱。我不能给你钱！"
+  },
+  "FAILUREMSG_4": {
+    "description": "",
+    "message": "你失败了！我不会付钱给你的！"
+  },
+  "GREETING_1": {
+    "description": "",
+    "message": "你好，我是{name}"
+  },
+  "GREETING_2": {
+    "description": "",
+    "message": "你好，我的名字叫{name}"
+  },
+  "GREETING_3": {
+    "description": "",
+    "message": "你好，我是{name}"
+  },
+  "GREETING_4": {
+    "description": "",
+    "message": "您好，请叫我{name}"
+  },
+  "GREETING_5": {
+    "description": "",
+    "message": "您好。我叫{name}"
+  },
+  "HARVESTING_1": {
+    "description": "{area} is an asteroid or planet",
+    "message": "{org}组织将支付{cash}现金，以完成{system}系统（{sectorx}, {sectory}, {sectorz}）中的{mission}任务。我们有理由相信，一个无情的竞争对手应对我们在{area}区域的货轮失踪负责。目标区域距离为{dist}光年。"
+  },
+  "HARVESTING_2": {
+    "description": "{area} is an asteroid or planet",
+    "message": "我们的市场竞争对手公然声称他拥有{area}星系{system}，{sectorx}，{sectory}）的{sectorz}所有权。 {org}完全不同意并愿意在{cash}支付{area}进行战斗任务。 {area}距离{dist}。"
+  },
+  "HARVESTING_3": {
+    "description": "{area} is an asteroid or planet",
+    "message": "请帮忙！ 我们收到了{system}星系（{sectorx}，{sectory}，{sectorz}）中我们的一个货轮{area}的遇险呼叫。 联络已经中断，所以我们担心最坏的情况。 到{system}的距离是{dist} ly。 工资是{cash}。"
+  },
+  "HARVESTING_IT_MUST_BE_COMPLETED_BY": {
+    "description": "",
+    "message": "任务必须在{date}前完成。 请对这次行动保持沉默。"
+  },
+  "HARVESTING_LAND_THERE": {
+    "description": "",
+    "message": "我们在每个附近的星系都有销售人员。在截止日期前降落在空间站，我们的员工会联系你讨论付款事宜。"
+  },
+  "HOW_WILL_I_BE_PAID": {
+    "description": "",
+    "message": "你会给我多少钱?"
+  },
+  "IS_THERE_A_TIME_LIMIT": {
+    "description": "",
+    "message": "有时间限制吗？"
+  },
+  "MANAGER": {
+    "description": "",
+    "message": "经理"
+  },
+  "MEET_ME_THERE": {
+    "description": "",
+    "message": "在截止日期前在{rendezvous}星系与我见面！"
+  },
+  "MILITARY_1": {
+    "description": "{area} is an asteroid or planet",
+    "message": "军事情报部门认为，一个敌对派系在 {system} 星系 ({sectorx}, {sectory}, {sectorz}) 的 {area} 建立了一个秘密监听前哨。政府无法容忍这一行为，并已批准一系列行动来摧毁这个设施。敌人试图通过只使用民用飞船类型来掩盖其来源。我们也是这么做的！因此，我们愿意雇佣一名雇佣兵，报酬为 {cash}。{area} 距此地 {dist} 光年。"
+  },
+  "MILITARY_2": {
+    "description": "{area} is an asteroid or planet",
+    "message": "针对{system}星系（{sectorx}，{sectory}，{sectorz}）中的盗版案例，{dist}，地方当局在{area}支付{cash}作战任务。"
+  },
+  "MILITARY_3": {
+    "description": "",
+    "message": "反情报部队需要一名不问问题的民用飞行员来执行{system}系统（{sectorx}, {sectory}, {sectorz}）中的{mission}任务，距离为{dist}光年。报酬为{cash}现金。"
+  },
+  "MILITARY_IT_MUST_BE_COMPLETED_BY": {
+    "description": "",
+    "message": "将组建一个特别小组，重新控制{area}。任务必须在{date}前成功完成。"
+  },
+  "MILITARY_LAND_THERE": {
+    "description": "",
+    "message": "访问{org}保护领土内的空间站！操作要求任务目标按时完成。"
+  },
+  "MINING_1": {
+    "description": "{area} is an asteroid or planet",
+    "message": "{org}与竞争对手公司就{system}系统{sectorx}，{sectory}，{sectorz}中的{area}发生争执。 为了推动我们的主张，我们需要一个可靠且经验丰富的雇佣兵。 我们提供{cash}的费用。 到{system}的距离是{dist} 光年。"
+  },
+  "MINING_2": {
+    "description": "{area} is an asteroid or planet",
+    "message": "我是 {org} 的经理。我们在与竞争对手关于 {system} 星系 ({sectorx}, {sectory}, {sectorz}) 的矿产开采权的长期法律争议中需要额外的帮助，{dist} 光年远。我们已经失去耐心，想要在法庭外加速解决此事。你的任务是跳跃到 {area} 执行任务，报酬 {cash}。"
+  },
+  "MINING_3": {
+    "description": "{area} is an asteroid or planet",
+    "message": "我为{org}组织工作。我们的一些货轮即将抵达{system}系统（{sectorx}, {sectory}, {sectorz}）中的{area}区域。为了增加我们员工的安全并保护设备，我们愿意支付{cash}现金来完成{mission}任务。距离{area}区域{dist}光年。"
+  },
+  "MINING_IT_MUST_BE_COMPLETED_BY": {
+    "description": "",
+    "message": "护航队正在前往{area}。任务必须在{date}前完成。"
+  },
+  "MINING_LAND_THERE": {
+    "description": "",
+    "message": "我们在每个附近的星系都有员工。只需在截止日期前访问最近的站点，并与当地办事处联系。"
+  },
+  "MISSION": {
+    "description": "",
+    "message": "任务："
+  },
+  "MISSION_COMPLETE": {
+    "description": "Message from the ship computer",
+    "message": "完成主要任务目标"
+  },
+  "MISSION_INFO": {
+    "description": "Message from the ship computer",
+    "message": "到达目标区域。开始数据记录。预计最大任务时间{duration}."
+  },
+  "MISSION_TYPE_1": {
+    "description": "Name of mission type",
+    "message": "侦察"
+  },
+  "MISSION_TYPE_2": {
+    "description": "Name of mission type",
+    "message": "武装侦察"
+  },
+  "MISSION_TYPE_3": {
+    "description": "Name of mission type. Derived from Fighter Sweep. An aggressive mission to hunt down and destroy every enemy fighter in the allotted area.",
+    "message": "扫描区域"
+  },
+  "MISSION_TYPE_CONVO_1": {
+    "description": "Name of mission type, used in conversation",
+    "message": "一次侦察"
+  },
+  "MISSION_TYPE_CONVO_2": {
+    "description": "Name of mission type, used in conversation",
+    "message": "一次武装侦察"
+  },
+  "MISSION_TYPE_CONVO_3": {
+    "description": "Name of mission type, used in conversation. Derived from Fighter Sweep. An aggressive mission to hunt down and destroy every enemy fighter in the allotted area.",
+    "message": "一次区域扫描"
+  },
+  "MISSION_WARNING": {
+    "description": "Message from the ship computer",
+    "message": "目标区域太远。无法完成数据收集。"
+  },
+  "OBJECTIVE_1": {
+    "description": "",
+    "message": "不必攻击敌人。我们只需要有关防御能力和响应时间的数据。"
+  },
+  "OBJECTIVE_2": {
+    "description": "",
+    "message": "尽可能削弱敌人的力量，然后跳到安全的地方。"
+  },
+  "OBJECTIVE_3": {
+    "description": "{area} is an asteroid or planet",
+    "message": "清除区域周围的区域。消灭任何敌人。"
+  },
+  "OK_AGREED": {
+    "description": "",
+    "message": "好的，同意。"
+  },
+  "PAYMENT_LOCATION": {
+    "description": "",
+    "message": "付款地点："
+  },
+  "PLEASE_REPEAT_THE_MISSION_DETAILS": {
+    "description": "",
+    "message": "请重复任务详情！"
+  },
+  "POLICE_1": {
+    "description": "{area} is an asteroid or planet",
+    "message": "警方侦探发现，一群海盗试图在{system}星系（{sectorx}，{sectory}，{sectorz}）{dist} 光年的{area}建立一个据点。 这绝不允许。 地方当局支付{cash}用于摧毁{area}。"
+  },
+  "POLICE_2": {
+    "description": "{area} is an asteroid or planet",
+    "message": "{org}将为{system}星系（{sectorx}，{sectory}，{sectorz}）中的战斗任务支付{cash}。 我们缺少飞行员和船只。 因此，这将是忠诚的公民赚钱的机会。 目标是{area}上的小型海盗基地。 您需要使用超驱动推进剂以及返回路线的额外燃料。"
+  },
+  "POLICE_3": {
+    "description": "{area} is an asteroid or planet",
+    "message": "我们的市场被违禁品淹没。 该来源已被追溯到{system}星系{area}，{sectorx}，{sectory}，{sectorz}）的隐藏基地。 只有{dist} 光年的距离。 由于警察预算减少，地方当局希望将这项任务外包，并为此行动分配了{cash}信用点。"
+  },
+  "POLICE_IT_MUST_BE_COMPLETED_BY": {
+    "description": "",
+    "message": "任务必须在{date}前完成，因为更多的敌舰正在途中。"
+  },
+  "POLICE_LAND_THERE": {
+    "description": "",
+    "message": "只要在截止日期前降落在有{org}办公室的空间站。这必须完成，以免危及整个任务！"
+  },
+  "RADAR_NOT_INSTALLED": {
+    "description": "",
+    "message": "抱歉，没有雷达你是做不到的。"
+  },
+  "RISK_1": {
+    "description": "",
+    "message": "竞争对手的资源有限。没有什么是你搞不定的。"
+  },
+  "RISK_2": {
+    "description": "",
+    "message": "对手只有少量资源。但必要时他会捍卫自己的立场。"
+  },
+  "RISK_3": {
+    "description": "",
+    "message": "竞争对手装备精良。请睁大眼睛！"
+  },
+  "RISK_4": {
+    "description": "",
+    "message": "敌人装备精良，掌握了最新的技术。小心！"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "设置为导航目标"
+  },
+  "SUCCESSMSG_1": {
+    "description": "",
+    "message": "我知道你是完成这项任务的合适人选。这是您的报酬。"
+  },
+  "SUCCESSMSG_2": {
+    "description": "",
+    "message": "谢谢你这么做。我已经转帐了。"
+  },
+  "SUCCESSMSG_3": {
+    "description": "",
+    "message": "希望你没有什么大麻烦。我刚付钱给你。"
+  },
+  "SUCCESSMSG_4": {
+    "description": "",
+    "message": "做得很好。我已经付账了。"
+  },
+  "SYSTEM": {
+    "description": "",
+    "message": "星系:"
+  },
+  "TARGET_AREA_REACHED": {
+    "description": "",
+    "message": "已到达目标区域. 开始记录数据日志."
+  },
+  "TIME_LIMIT": {
+    "description": "",
+    "message": "时限："
+  },
+  "WHAT_ARE_THE_MISSION_OBJECTIVES": {
+    "description": "",
+    "message": "任务目标是什么？"
+  },
+  "WILL_I_BE_IN_TROUBLE": {
+    "description": "",
+    "message": "我会有麻烦吗？"
+  },
+  "YOU_NEED_A_RADAR": {
+    "description": "",
+    "message": "是的, 你需要一台雷达! 若你同意, 我将给你的飞船电脑编写程序, 让它记录咱们需要的雷达数据. 这些数据将在你归来后传输给我."
+  }
+}

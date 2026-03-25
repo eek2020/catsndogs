@@ -1,0 +1,258 @@
+{
+  "AIR_PROCESSORS": {
+    "description": "",
+    "message": "air processors"
+  },
+  "AIR_PROCESSORS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "清洁空气只有在极为充裕时才会被视作理所当然。据传，空气净化技术来源于在火星发现的外星遗物。如今，许多公司生产各种类型的空气处理器，能够将最恶劣的环境转化为可用的生存条件。同时，各国政府对空气生产领域的垄断行为绝不容忍。"
+  },
+  "ANIMAL_MEAT": {
+    "description": "",
+    "message": "animal meat"
+  },
+  "ANIMAL_MEAT_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "肉类是动物的身体组织，一直以来都是争议的焦点。如今，合成蛋白质已经十分普及，大多数人认为不应再为获取肉类而屠杀动物。虽然在大多数核心区域肉类已被禁止，但在更传统的世界里，活体动物和肉类仍然是人们生活中不可或缺的一部分。"
+  },
+  "BATTLE_WEAPONS": {
+    "description": "",
+    "message": "battle weapons"
+  },
+  "BATTLE_WEAPONS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "重型军用武器，例如装甲悬浮坦克和地对空导弹，通常由政府垄断交易。然而，在黑市上，这些武器往往能卖出高价。"
+  },
+  "CARBON_ORE": {
+    "description": "",
+    "message": "carbon ore"
+  },
+  "CARBON_ORE_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "碳是我们所知最多样化的元素之一。从塑料到合金，有时甚至在能源生产中，碳都扮演着重要角色，它是一种廉价但重要的商品。因此，几乎所有的工业定居点都进口碳矿石。"
+  },
+  "CHEMICALS": {
+    "description": "",
+    "message": "chemicals"
+  },
+  "CHEMICALS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Industrial precursors, caustic cleaning agents, and biochemical feedstock, chemicals are used in both consumer and industrial settings. Chemicals are shipped in industrial-strength containers to prevent corrosion of a ship's cargo hold."
+  },
+  "COMPUTERS": {
+    "description": "",
+    "message": "computers"
+  },
+  "COMPUTERS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "从一千多年前的算盘、PDP-11和摩托罗拉68k芯片，到我们现代的HAL 9001和Multivac系列，计算机标志着信息时代的黎明。无论是进入超空间还是通过UniNet分享可爱的quibbles视频，它们都同样不可或缺。"
+  },
+  "CONSUMER_GOODS": {
+    "description": "",
+    "message": "consumer goods"
+  },
+  "CONSUMER_GOODS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "消费品是指那些已经准备好供最终消费者使用，无需进一步加工的产品。这些产品覆盖了从牙刷、厨房用具到悬浮汽车等一切物品。"
+  },
+  "FARM_MACHINERY": {
+    "description": "",
+    "message": "farm machinery"
+  },
+  "FARM_MACHINERY_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "尽管较为罕见，但偶尔仍能见到使用牛拉犁的农民。但在几乎所有有农业的地方，机器都被用于土地耕作，无论是地下栖息地的水培系统还是花园世界的广阔田野。"
+  },
+  "FERTILIZER": {
+    "description": "",
+    "message": "fertilizer"
+  },
+  "FERTILIZER_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "肥料对于在工业规模上种植作物至关重要，它允许单一作物种植，并能比使用普通土壤获得更高的产量。这通常伴随着不易立即察觉的生态成本。"
+  },
+  "FRUIT_AND_VEG": {
+    "description": "",
+    "message": "fruit & vegetables"
+  },
+  "FRUIT_AND_VEG_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "尽管有许多合成替代品，真正的水果和蔬菜仍然是我们饮食和营养中的重要组成部分。它们在农业世界种植，或作为栖息地生命支持系统的一部分，并出口到种植植物不可行的系统中。"
+  },
+  "GRAIN": {
+    "description": "",
+    "message": "grain"
+  },
+  "GRAIN_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "谷物是许多人饮食的支柱。它被用于农业中饲养动物，作为合成食品的补充，并且用于许多其他食品中，比如燕麦片和烘焙食品。大多数星际旅行的文化都会种植并消费至少一些谷物，这些谷物已经适应了他们栖息地的气候。"
+  },
+  "HAND_WEAPONS": {
+    "description": "",
+    "message": "small arms"
+  },
+  "HAND_WEAPONS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "在法律触及不到的遥远星系中，手持类武器对于太空商人来说是超越法律保护的重要保障。然而，许多政府将它们视为对自己对民众控制的威胁，并严格管控它们的交易和持有。"
+  },
+  "HYDROGEN": {
+    "description": "",
+    "message": "hydrogen"
+  },
+  "HYDROGEN_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "氢被用作超光速驱动器的燃料和星际飞船的推进剂，是一种极其重要的元素。幸运的是，它也是宇宙中最常见的元素，尽管储存它并不简单。它通常是贸易市场上最便宜的商品之一。在任何时候，星际港口都能得到充分的供应。"
+  },
+  "INDUSTRIAL_MACHINERY": {
+    "description": "",
+    "message": "industrial machinery"
+  },
+  "INDUSTRIAL_MACHINERY_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "生产线、炼油厂、冶炼厂以及生产其他商品所需机械的关键设备。生产这些高级机械需要高度的技术能力。"
+  },
+  "LIQUID_OXYGEN": {
+    "description": "",
+    "message": "liquid oxygen"
+  },
+  "LIQUID_OXYGEN_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "液氧有许多用途，最常见于医疗和工业应用，有时也用于废物处理。由于氧气很容易从水中提取，所以液氧非常便宜。"
+  },
+  "LIQUOR": {
+    "description": "",
+    "message": "liquor"
+  },
+  "LIQUOR_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "大多数前哨站都有自己的当地酿造酒，外来者往往难以接受。在某些系统中，酒精可能被禁止，因为它被认为是会模糊心智的。不管法律如何，黑市上几乎总是可以以一定的价格获得一杯苏格兰威士忌。"
+  },
+  "LIVE_ANIMALS": {
+    "description": "",
+    "message": "live animals"
+  },
+  "LIVE_ANIMALS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "部分由于人文、经济和生态原因，动物饲养和贸易在许多核心系统中受到严格监管，甚至被定为非法。向外扩展，牲畜成为人们生计中更重要的一部分，既是营养来源也是负重的动物。异国情调的动物园和野生动物保护区促进了银河系内动物贸易的发展，通常在严格的国家监管下进行，以打击非法狩猎行为。"
+  },
+  "MEDICINES": {
+    "description": "",
+    "message": "medicines"
+  },
+  "MEDICINES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "无论是从天然来源提取还是人工合成，药物都是人类无论走到哪里都需要的东西。从治疗普通感冒到对抗长期太空旅行的不利影响，药物对于星际人类的繁荣至关重要。海关代理密切监视药物，因为将毒品伪装成医疗药物并不罕见。"
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "metal alloys"
+  },
+  "METAL_ALLOYS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "金属矿石经提取、精炼后，经加工制成各种合金。合金是金属的混合，而不是单一的纯元素，按精确的比例结合，以获得特定的理想特性。因此，大多数消费金属都是合金。"
+  },
+  "METAL_ORE": {
+    "description": "",
+    "message": "metal ore"
+  },
+  "METAL_ORE_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "许多殖民地开采金属矿石出口，提炼后用于工业制造。从小型玩具到宇宙飞船，各种形式的金属在现代文明中都是必不可少的。"
+  },
+  "MILITARY_FUEL": {
+    "description": "",
+    "message": "military fuel"
+  },
+  "MILITARY_FUEL_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "在更先进的军事行动中使用的燃料。军用驱动器在运行期间会产生放射性废物，必须加以处理。由于其合成性质，军用燃料比普通氢燃料更贵，也更稀有，而且无法从自然环境中找到。"
+  },
+  "MINING_MACHINERY": {
+    "description": "",
+    "message": "mining machinery"
+  },
+  "MINING_MACHINERY_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "传统意义上的采矿工作可以通过使用机器来减轻，这些机器可以帮助矿工定位和回收各种矿石，并将它们运输到最近的加工设施。"
+  },
+  "NARCOTICS": {
+    "description": "",
+    "message": "narcotics"
+  },
+  "NARCOTICS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "改变身心状态的天然或合成物质。虽然出于娱乐和医疗目的使用麻醉品与人类本身一样古老，但通常被禁止运输和贸易。"
+  },
+  "NERVE_GAS": {
+    "description": "",
+    "message": "nerve gas"
+  },
+  "NERVE_GAS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "它被普遍认为是一种大规模杀伤性武器，在大多数系统中甚至被军方所忌讳，因此在大多数系统中是非法的。"
+  },
+  "PLASTICS": {
+    "description": "",
+    "message": "plastics"
+  },
+  "PLASTICS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "从日常用品到太空船建造，各种材料都使用合成和半合成材料。它们相对容易用于制造，用途广泛，制造成本低廉，是人类文明的重要组成部分。"
+  },
+  "PRECIOUS_METALS": {
+    "description": "",
+    "message": "precious metals"
+  },
+  "PRECIOUS_METALS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "贵金属通常反应性较低，开采难度较大，且较稀有，因此具有相当大的经济价值。这通常包括金、银、铂和稀土。某些元素，如金和硅，或稀土，对计算机和其他电子设备的建造至关重要。"
+  },
+  "RADIOACTIVES": {
+    "description": "",
+    "message": "radioactive waste"
+  },
+  "RADIOACTIVES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "由核反应堆和军用超空间飞行器产生的放射性废物是最难运输和处理的最危险的商品。由于这个原因，大多数的星际港都会花钱清除多余的库存。倾倒放射性废物是严重的违法行为。"
+  },
+  "ROBOTS": {
+    "description": "",
+    "message": "robots"
+  },
+  "ROBOTS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "机器人通常被导入工业和采矿系统，因为它们能够很容易地执行对人类工人来说过于困难、乏味或不安全的任务。他们也可以作为政治家和律师。"
+  },
+  "RUBBISH": {
+    "description": "",
+    "message": "rubbish"
+  },
+  "RUBBISH_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "文明的副产品，由工业废物、生活垃圾和破旧的设备组成。大多数废物都经过再处理、回收或送往星际港运往世界各地。在有人居住的系统中倾倒垃圾几乎总是违法的。星港通常会收取废物处理费，但也会支付你带走它的费用。"
+  },
+  "SLAVES": {
+    "description": "",
+    "message": "slaves"
+  },
+  "SLAVES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "由于机器已经取代奴隶作为驱动文明的引擎，奴隶制现在几乎被普遍认为是不道德的，违反禁令将受到最严厉的惩罚。然而，尽管人道主义者尽了最大努力，奴隶制仍然盛行，即使在发达国家也是如此。"
+  },
+  "TEXTILES": {
+    "description": "",
+    "message": "textiles"
+  },
+  "TEXTILES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "纺织品是简单的织物，由合成纱、植物纤维或动物毛发织成。通常由大型工厂的机器人生产，偶尔也有可能找到自己生产纺织品的织布工。"
+  },
+  "WATER": {
+    "description": "",
+    "message": "water"
+  },
+  "WATER_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "正如我们所知，生命是必不可少的，它是一种经常被忽视的商品，人类在任何地方漫游都需要水。因此，绝大多数的世界外殖民地从彗星或地球等行星进口水。水大量用于制氢和制氧。"
+  }
+}

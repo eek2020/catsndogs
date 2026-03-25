@@ -1,0 +1,44 @@
+{
+	"biomes": {
+		"settlement": {
+			"biome_id": "settlement",
+			"display_name": "Settlement",
+			"tile_palette": "settlement_tiles",
+			"music_track": "theme_trade",
+			"ambient_color": "#887766",
+			"enemy_types": [],
+			"merchant_chance": 0.8,
+			"treasure_chance": 0.3
+		},
+		"industrial": {
+			"biome_id": "industrial",
+			"display_name": "Industrial Zone",
+			"tile_palette": "industrial_tiles",
+			"music_track": "theme_combat",
+			"ambient_color": "#556677",
+			"enemy_types": ["scrap_golem", "rogue_drone"],
+			"merchant_chance": 0.6,
+			"treasure_chance": 0.5
+		},
+		"enchanted": {
+			"biome_id": "enchanted",
+			"display_name": "Enchanted Forest",
+			"tile_palette": "enchanted_tiles",
+			"music_track": "theme_trade",
+			"ambient_color": "#448866",
+			"enemy_types": ["wild_sprite"],
+			"merchant_chance": 0.4,
+			"treasure_chance": 0.6
+		},
+		"wilderness": {
+			"biome_id": "wilderness",
+			"display_name": "Uncharted Wilderness",
+			"tile_palette": "wilderness_tiles",
+			"music_track": "theme_combat",
+			"ambient_color": "#665544",
+			"enemy_types": ["goblin_raider", "alien_fauna", "bandit"],
+			"merchant_chance": 0.1,
+			"treasure_chance": 0.7
+		}
+	}
+}

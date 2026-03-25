@@ -1,0 +1,154 @@
+{
+  "FINES_ADMONISHING_1": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_$(this)",
+    "message": "Пожалуйста, посетите ближайшее отделение {policeforce} для уплаты штрафов."
+  },
+  "FINES_ADMONISHING_2": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_$(this)",
+    "message": "Посетите ближайшее отделение {policeforce} и урегулируйте этот вопрос."
+  },
+  "FINES_ADMONISHING_3": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_$(this)",
+    "message": "Вам нужно разобраться с этим, иначе ситуация будет только ухудшаться."
+  },
+  "FINES_ADMONISHING_4": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_$(this)",
+    "message": "На каждой крупной станции есть отделение {policeforce}. Оплатите штрафы!"
+  },
+  "FINES_ADMONISHING_HARSH_1": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_HARSH_$(this)",
+    "message": "Это нужно уладить, иначе будут последствия!"
+  },
+  "FINES_ADMONISHING_HARSH_2": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_HARSH_$(this)",
+    "message": "Неуплаченные штрафы будут преследоваться по всей строгости закона."
+  },
+  "FINES_ADMONISHING_HARSH_3": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_HARSH_$(this)",
+    "message": "Это серьёзно, и вам нужно это уладить. Чем скорее, тем лучше."
+  },
+  "FINES_ADMONISHING_HARSH_4": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$ + FINES_ADMONISHING_HARSH_$(this)",
+    "message": "Если вы не заплатите штрафы, то станете вне закона. Оплатите штрафы сегодня же!"
+  },
+  "FINES_INTRO_1": {
+    "description": "FINES_INTRO_$(this) + FINES_MESSAGE_$ + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "Подождите, это ещё не всё."
+  },
+  "FINES_INTRO_2": {
+    "description": "FINES_INTRO_$(this) + FINES_MESSAGE_$ + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "Ещё кое-что, {ship_label}."
+  },
+  "FINES_INTRO_3": {
+    "description": "FINES_INTRO_$(this) + FINES_MESSAGE_$ + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "Подождите!"
+  },
+  "FINES_INTRO_4": {
+    "description": "FINES_INTRO_$(this) + FINES_MESSAGE_$ + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "{ship_label}."
+  },
+  "FINES_MESSAGE_1": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$(this) + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "За вами числятся неоплаченные штрафы."
+  },
+  "FINES_MESSAGE_2": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$(this) + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "За вами числятся неоплаченные штрафы."
+  },
+  "FINES_MESSAGE_3": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$(this) + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "Мы видим, что у вас есть штрафы к оплате."
+  },
+  "FINES_MESSAGE_4": {
+    "description": "FINES_INTRO_$ + FINES_MESSAGE_$(this) + FINES_ADMONISHING_$/FINES_ADMONISHING_HARSH_$",
+    "message": "Общая сумма ваших неоплаченных штрафов составляет ${fine}."
+  },
+  "ILLEGAL_GOODS_DETECTED": {
+    "description": "",
+    "message": "Обнаружены нелегальные товары."
+  },
+  "INITIATE_CARGO_SCAN_1": {
+    "description": "",
+    "message": "Начинаю сканирование груза."
+  },
+  "INITIATE_CARGO_SCAN_2": {
+    "description": "",
+    "message": "Поддерживайте скорость и курс для сканирования груза."
+  },
+  "INITIATE_CARGO_SCAN_3": {
+    "description": "",
+    "message": "Начинаю поиск контрабанды."
+  },
+  "NOTHING_DETECTED": {
+    "description": "",
+    "message": "Нелегальный груз не обнаружен. Можете следовать дальше."
+  },
+  "OUTLAW_DETECTED_1": {
+    "description": "",
+    "message": "{ship_label}  вылетает с известным преступником. Атаковать и уничтожить!"
+  },
+  "OUTLAW_DETECTED_2": {
+    "description": "",
+    "message": "Бандит, твои дни сочтены!"
+  },
+  "OUTLAW_DETECTED_3": {
+    "description": "",
+    "message": "Ага, попался! Ты не покинешь эту систему живым!"
+  },
+  "POLICE_TAUNT_1": {
+    "description": "",
+    "message": "Это была плохая идея, парнишка!"
+  },
+  "POLICE_TAUNT_2": {
+    "description": "",
+    "message": "Контрабандист, ты дорого заплатишь за это!"
+  },
+  "POLICE_TAUNT_3": {
+    "description": "",
+    "message": "Преступник! Тебя предупреждали."
+  },
+  "RESPECT_THE_LAW_1": {
+    "description": "",
+    "message": "Уважайте закон! Совершение преступлений в системе {system} не принесет вам ничего хорошего!"
+  },
+  "RESPECT_THE_LAW_2": {
+    "description": "",
+    "message": "Вы вошли в систему {system}. Уважайте закон!"
+  },
+  "RESTRICTIONS_ESTABLISHED_1": {
+    "description": "",
+    "message": "Угроза нейтрализована. {ship_label}, вступают в силу ограничения на ведение огня."
+  },
+  "RESTRICTIONS_ESTABLISHED_2": {
+    "description": "",
+    "message": "{ship_label}, прекратите огонь, прекратите огонь!"
+  },
+  "RESTRICTIONS_WITHDRAWN_1": {
+    "description": "",
+    "message": "{ship_label}, вам разрешено открыть огонь."
+  },
+  "RESTRICTIONS_WITHDRAWN_2": {
+    "description": "",
+    "message": "{ship_label}, огонь на поражение!"
+  },
+  "TAKE_A_HIKE": {
+    "description": "",
+    "message": "Хорошо, даю тебе еще один шанс. Ну-ка выходи!"
+  },
+  "TARGET_DESTROYED_1": {
+    "description": "",
+    "message": "Цель уничтожена!"
+  },
+  "TARGET_DESTROYED_2": {
+    "description": "",
+    "message": "Да!"
+  },
+  "TARGET_DESTROYED_3": {
+    "description": "",
+    "message": "Покойся с миром! Ха-ха."
+  },
+  "TARGET_DESTROYED_4": {
+    "description": "",
+    "message": "Еще один повержен в прах!"
+  }
+}

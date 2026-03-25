@@ -1,0 +1,10 @@
+version 2
+
+material "Missile" {
+	shader "multi"
+	texture diffuse  "diffuse.dds"
+}
+
+lod 100 {
+	mesh "missile.dae"
+}

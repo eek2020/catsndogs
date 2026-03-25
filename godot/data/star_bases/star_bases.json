@@ -1,0 +1,83 @@
+{
+	"star_bases": [
+		{
+			"base_id": "fringe_outpost",
+			"base_name": "Fringe Outpost",
+			"base_type": "open",
+			"region_id": "starting_realm",
+			"controlling_faction": "felid_corsairs",
+			"position_x": 400.0,
+			"position_y": 300.0,
+			"description": "A rough-hewn waystation on the edge of known space. Fuel is cheap but the clientele is rougher.",
+			"services": ["refuel", "repair", "trade"],
+			"artifacts": [],
+			"required_reputation": 0
+		},
+		{
+			"base_id": "corsair_haven",
+			"base_name": "Corsair Haven",
+			"base_type": "open",
+			"region_id": "feline_courts",
+			"controlling_faction": "felid_corsairs",
+			"position_x": 600.0,
+			"position_y": 450.0,
+			"description": "The Felid Corsairs' premier trading post. Whisper Crystals flow freely — for the right price.",
+			"services": ["refuel", "repair", "trade", "salvage_dropoff", "artifact_market"],
+			"artifacts": ["aeolian_tuning_fork", "bottled_solar_flare"],
+			"required_reputation": 0
+		},
+		{
+			"base_id": "iron_dock",
+			"base_name": "Iron Dock",
+			"base_type": "open",
+			"region_id": "canine_order",
+			"controlling_faction": "canis_league",
+			"position_x": 500.0,
+			"position_y": 350.0,
+			"description": "A military-grade supply depot. Canis League patrols keep order, and prices reflect the overhead.",
+			"services": ["refuel", "repair", "trade", "salvage_dropoff"],
+			"artifacts": [],
+			"required_reputation": 0
+		},
+		{
+			"base_id": "twilight_exchange",
+			"base_name": "Twilight Exchange",
+			"base_type": "open",
+			"region_id": "fairy_realms",
+			"controlling_faction": "fairies",
+			"position_x": 350.0,
+			"position_y": 500.0,
+			"description": "A shimmering bazaar suspended in the Fairy Realms. Enchanted wares and whispered secrets abound.",
+			"services": ["refuel", "repair", "trade", "artifact_market"],
+			"artifacts": ["fairy_dust_scrubber", "chrono_compass"],
+			"required_reputation": 0
+		},
+		{
+			"base_id": "scrapheap_station",
+			"base_name": "Scrapheap Station",
+			"base_type": "hidden",
+			"region_id": "goblin_warrens",
+			"controlling_faction": "goblins",
+			"position_x": 700.0,
+			"position_y": 200.0,
+			"description": "A hidden goblin workshop built inside a hollowed asteroid. The modifications here are... unconventional.",
+			"services": ["repair", "trade", "artifact_market"],
+			"artifacts": ["midas_grapnel"],
+			"required_reputation": 0,
+			"discovery_flag": "goblin_scrapheap_discovered"
+		},
+		{
+			"base_id": "wolf_citadel",
+			"base_name": "Wolf Citadel",
+			"base_type": "stronghold",
+			"region_id": "iron_expanse",
+			"controlling_faction": "wolves",
+			"position_x": 450.0,
+			"position_y": 400.0,
+			"description": "The Wolves' primary forward operating base. Only those who have proven themselves may dock.",
+			"services": ["refuel", "repair", "trade", "salvage_dropoff"],
+			"artifacts": [],
+			"required_reputation": 26
+		}
+	]
+}

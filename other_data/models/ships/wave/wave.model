@@ -1,0 +1,41 @@
+version 2
+
+# Wave
+
+material "wave" {
+	shader "multi"
+	diffuse 0.9 0.9 0.9
+	specular 0.05 0.05 0.05
+	shininess 100
+	texture diffuse  "wave.dds"
+	texture specular "wave_spec.dds"
+	use_patterns
+}
+
+material "glow" {
+	shader "multi"
+	diffuse 0.9 0.9 0.9
+	specular 0.7 0.7 0.7
+	emissive 0.85 0.85 0.85
+	texture diffuse  "glow.dds"
+	texture glow     "glow.dds"
+}
+
+# note: landing gear should be put into the UV map and use wave
+material "landing-gear" {
+	shader "multi"
+	diffuse 0.3 0.3 0.3
+	specular 0 0 0
+}
+
+lod 50 {
+	mesh "wave-mq.dae"
+}
+
+lod 1000 {
+	mesh "wave.dae"
+}
+
+anim "gear_down" 0 85
+
+collision "wave_coll.dae"

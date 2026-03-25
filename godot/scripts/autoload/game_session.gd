@@ -15,6 +15,11 @@ var realm_control: RealmControlSystem
 var side_mission_system: SideMissionSystem
 var crew_trait_system: CrewTraitSystem
 var star_map_system: StarMapSystem
+var astral_hazard_system: AstralHazardSystem
+var karma_system: KarmaSystem
+var stat_evaluator: StatEvaluator
+var star_base_system: StarBaseSystem
+var planet_system: PlanetSystem
 var save_manager: SaveManager
 
 # Runtime state
@@ -35,6 +40,11 @@ func _ready() -> void:
 	side_mission_system = SideMissionSystem.new(data_loader)
 	crew_trait_system = CrewTraitSystem.new(data_loader)
 	star_map_system = StarMapSystem.new()
+	astral_hazard_system = AstralHazardSystem.new()
+	karma_system = KarmaSystem.new()
+	stat_evaluator = StatEvaluator.new()
+	star_base_system = StarBaseSystem.new()
+	planet_system = PlanetSystem.new()
 	save_manager = SaveManager.new()
 
 	# Wire EventBus signals
@@ -63,6 +73,10 @@ func start_new_game(protagonist_id: String = "aristotle") -> void:
 	var region_data: Array = data_loader.load_regions()
 	exploration.load_regions(region_data)
 	_init_star_maps()
+	_init_astral_hazards()
+	_init_karma()
+	_init_star_bases()
+	_init_planets()
 	if game_state:
 		game_state.owned_maps = [game_state.current_region]
 		star_map_system.owned_maps = game_state.owned_maps.duplicate()
@@ -145,6 +159,9 @@ func save_game(slot: int = 0) -> bool:
 	# Persist star map state before saving
 	game_state.owned_maps = star_map_system.owned_maps.duplicate()
 	game_state.star_map_data = star_map_system.to_dict()
+	# Persist astral hazard state
+	game_state.astral_hazard_data = astral_hazard_system.to_dict()
+	game_state.active_status_effects = astral_hazard_system.status_effects.duplicate(true)
 	return save_manager.save_game(game_state, slot)
 
 
@@ -163,11 +180,20 @@ func load_game(slot: int = 0) -> bool:
 	_load_cartographer_encounters()
 	realm_control.initialize_realms(game_state)
 	_init_star_maps()
+	_init_astral_hazards()
+	_init_karma()
+	_init_star_bases()
+	_init_planets()
 	# Restore star map state from save
 	star_map_system.owned_maps = game_state.owned_maps.duplicate()
 	star_map_system.cartographer_rescued = game_state.story_flags.get("fairy_cartographer_rescued", false)
 	if not game_state.star_map_data.is_empty():
 		star_map_system.load_from_dict(game_state.star_map_data)
+	# Restore astral hazard state from save
+	if not game_state.astral_hazard_data.is_empty():
+		astral_hazard_system.load_from_dict(game_state.astral_hazard_data)
+	if not game_state.active_status_effects.is_empty():
+		astral_hazard_system.status_effects = game_state.active_status_effects.duplicate(true)
 	MusicManager.on_arc_change(game_state.current_arc)
 	MusicManager.on_state_change("navigation")
 	return true
@@ -262,6 +288,13 @@ func _init_star_maps() -> void:
 	star_map_system.load_galaxy_layout(galaxy_data)
 
 
+func _init_astral_hazards() -> void:
+	var hazard_data: Dictionary = data_loader.load_astral_hazards()
+	astral_hazard_system.load_definitions(hazard_data)
+	var static_data: Dictionary = data_loader.load_static_hazards()
+	astral_hazard_system.load_static_hazards(static_data)
+
+
 func _load_cartographer_encounters() -> void:
 	var encounters: Array = data_loader.load_cartographer_encounters()
 	for enc in encounters:
@@ -285,6 +318,57 @@ func purchase_map(region_id: String, cost_crystals: int, reveal_pct: float) -> b
 	star_map_system.purchase_map(region_id, reveal_pct)
 	game_state.owned_maps = star_map_system.owned_maps.duplicate()
 	return true
+
+
+func apply_resonance_shard(shard_id: String) -> bool:
+	if game_state == null:
+		return false
+	if shard_id in game_state.resonance_shards_found:
+		return false
+	var shards: Array = data_loader.load_resonance_shards()
+	var shard_data: Dictionary = {}
+	for s in shards:
+		if s.get("shard_id", "") == shard_id:
+			shard_data = s
+			break
+	if shard_data.is_empty():
+		return false
+	var bonus: int = shard_data.get("bonus_points", 1)
+	game_state.bonus_skill_points += bonus
+	game_state.resonance_shards_found.append(shard_id)
+	EventBus.resonance_shard_found.emit(shard_id)
+	return true
+
+
+func _init_planets() -> void:
+	var planet_data: Array = data_loader.load_planet_registry()
+	planet_system.load_planet_data(planet_data)
+	var biome_data: Dictionary = data_loader.load_biomes()
+	planet_system.load_biomes(biome_data)
+
+
+func land_on_planet(planet_id: String) -> bool:
+	if game_state == null:
+		return false
+	return planet_system.land(game_state, planet_id)
+
+
+func depart_planet() -> void:
+	if game_state == null:
+		return
+	planet_system.depart(game_state)
+
+
+func _init_star_bases() -> void:
+	var bases_data: Array = data_loader.load_star_bases()
+	star_base_system.load_bases(bases_data)
+	var artifacts_data: Array = data_loader.load_artifacts()
+	star_base_system.load_artifacts(artifacts_data)
+
+
+func _init_karma() -> void:
+	var karma_config: Dictionary = data_loader.load_karma_config()
+	karma_system.load_config(karma_config)
 
 
 func travel_to_region(target_region: String) -> bool:

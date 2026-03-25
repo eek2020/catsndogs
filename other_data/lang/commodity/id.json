@@ -1,0 +1,258 @@
+{
+  "AIR_PROCESSORS": {
+    "description": "",
+    "message": "air processors"
+  },
+  "AIR_PROCESSORS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Udara bersih hanya diterima begitu saja bila sudah melimpah. Teknik di balik pemurnian udara dikabarkan berasal dari artefak alien yang ditemukan di Mars. Banyak perusahaan memproduksi berbagai jenis prosesor udara, yang mampu mengubah bahkan atmosfer yang paling tidak bersahabat menjadi lingkungan yang dapat diterapkan, dan pemerintah tidak mentolerir monopoli produksi udara."
+  },
+  "ANIMAL_MEAT": {
+    "description": "",
+    "message": "animal meat"
+  },
+  "ANIMAL_MEAT_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Sebuah poin utama kontroversi, daging adalah daging hewan. Dengan protein sintetis yang tersedia, kebanyakan orang percaya bahwa hewan tidak boleh dibunuh. Sementara daging ilegal di sebagian besar sistem inti, hewan hidup dan dagingnya merupakan bagian penting dari kehidupan orang-orang di dunia yang lebih tradisional."
+  },
+  "BATTLE_WEAPONS": {
+    "description": "",
+    "message": "battle weapons"
+  },
+  "BATTLE_WEAPONS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Senjata kelas militer berat, seperti tank pelampung lapis baja, dan rudal permukaan ke luar angkasa. Perdagangan di dalamnya biasanya merupakan monopoli pemerintah. Namun, di pasar gelap, ini sering kali menghasilkan sejumlah uang yang lumayan."
+  },
+  "CARBON_ORE": {
+    "description": "",
+    "message": "carbon ore"
+  },
+  "CARBON_ORE_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Karbon adalah salah satu elemen paling beragam yang kita ketahui. Digunakan di hampir semua hal mulai dari plastik hingga paduan dan kadang-kadang bahkan produksi listrik, karbon adalah komoditas yang murah, tetapi penting. Karenanya, hampir semua permukiman industri mengimpor bijih karbon."
+  },
+  "CHEMICALS": {
+    "description": "",
+    "message": "chemicals"
+  },
+  "CHEMICALS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Industrial precursors, caustic cleaning agents, and biochemical feedstock, chemicals are used in both consumer and industrial settings. Chemicals are shipped in industrial-strength containers to prevent corrosion of a ship's cargo hold."
+  },
+  "COMPUTERS": {
+    "description": "",
+    "message": "computers"
+  },
+  "COMPUTERS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Sejak lebih dari seribu tahun yang lalu, dengan chip Abacus, PDP-11, dan Motorola 68k, hingga ke lini HAL 9001 dan Multivac modern kami, komputer menandai awal era informasi. Sama pentingnya untuk memasuki hyperspace seperti untuk berbagi video quibble lucu melalui UniNet."
+  },
+  "CONSUMER_GOODS": {
+    "description": "",
+    "message": "consumer goods"
+  },
+  "CONSUMER_GOODS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Produk akhir siap untuk masyarakat konsumen umum, tanpa perlu diproses lebih lanjut. Semuanya mulai dari sikat gigi, peralatan dapur hingga mobil melayang."
+  },
+  "FARM_MACHINERY": {
+    "description": "",
+    "message": "farm machinery"
+  },
+  "FARM_MACHINERY_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Meskipun jarang, masih mungkin untuk menangkap petani sesekali dengan bajak yang digerakkan oleh sapi. Tapi di hampir semua tempat di mana ada pertanian, mesin digunakan untuk mengolah tanah, baik itu hidroponik di habitat bawah tanah atau ladang tak berujung di dunia taman."
+  },
+  "FERTILIZER": {
+    "description": "",
+    "message": "fertilizer"
+  },
+  "FERTILIZER_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Pupuk sangat penting untuk menanam tanaman pada skala industri, memungkinkan monokultur, dan menghasilkan dividen yang lebih tinggi daripada yang mungkin dilakukan dengan menggunakan tanah biasa. Hal ini sering kali menimbulkan biaya ekologis, tidak terbukti sejak awal."
+  },
+  "FRUIT_AND_VEG": {
+    "description": "",
+    "message": "fruit & vegetables"
+  },
+  "FRUIT_AND_VEG_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Meskipun ada banyak alternatif sintetis, buah dan sayuran asli masih menjadi bagian penting dari masakan dan nutrisi kita. Ditanam di dunia pertanian atau sebagai bagian dari penyangga kehidupan habitat, dan diekspor ke sistem di mana tanaman tidak memungkinkan."
+  },
+  "GRAIN": {
+    "description": "",
+    "message": "grain"
+  },
+  "GRAIN_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Tulang punggung pola makan banyak orang. Ini digunakan dalam pertanian, untuk memberi makan hewan, dan sebagai suplemen untuk makanan sintetis. Biji-bijian juga digunakan dalam banyak makanan lain, seperti oatmeal dan makanan yang dipanggang. Kebanyakan budaya bintang membudidayakan dan mengkonsumsi setidaknya beberapa biji-bijian, yang telah diadopsi untuk iklim habitat mereka."
+  },
+  "HAND_WEAPONS": {
+    "description": "",
+    "message": "small arms"
+  },
+  "HAND_WEAPONS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Memberikan asuransi di luar jangkauan hukum, senjata tangan sangat penting bagi pedagang ruang angkasa di sistem yang jauh. Namun, banyak pemerintah melihat mereka sebagai ancaman terhadap kontrol mereka sendiri atas penduduk mereka dan secara ketat mengontrol perdagangan dan kepemilikan mereka."
+  },
+  "HYDROGEN": {
+    "description": "",
+    "message": "hydrogen"
+  },
+  "HYDROGEN_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Digunakan sebagai bahan bakar untuk hyperdrive dan propelan untuk kapal luar angkasa, hidrogen merupakan elemen yang sangat penting. Untungnya itu juga merupakan elemen paling umum di alam semesta, meski menyimpannya tidaklah sepele. Biasanya di antara komoditas termurah di pasar saham. Starports tersedia dengan baik pada waktu tertentu."
+  },
+  "INDUSTRIAL_MACHINERY": {
+    "description": "",
+    "message": "industrial machinery"
+  },
+  "INDUSTRIAL_MACHINERY_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Dibutuhkan untuk jalur perakitan, kilang, peleburan, dan produksi mesin yang pada gilirannya akan menghasilkan barang lain. Kompetensi tinggi dibutuhkan untuk menghasilkan mesin-mesin canggih tersebut."
+  },
+  "LIQUID_OXYGEN": {
+    "description": "",
+    "message": "liquid oxygen"
+  },
+  "LIQUID_OXYGEN_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Oksigen cair memiliki banyak kegunaan, paling sering dalam aplikasi medis dan industri dan terkadang juga digunakan dalam pengolahan limbah. Ini sangat terjangkau, karena oksigen mudah didapat dari air."
+  },
+  "LIQUOR": {
+    "description": "",
+    "message": "liquor"
+  },
+  "LIQUOR_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Sebagian besar pos terdepan memiliki minuman lokal yang sulit dicerna oleh orang luar. Alkohol dapat dilarang di beberapa sistem karena dianggap mengaburkan pikiran. Terlepas dari hukum, scotch hampir selalu tersedia di pasar gelap, dengan harga tertentu."
+  },
+  "LIVE_ANIMALS": {
+    "description": "",
+    "message": "live animals"
+  },
+  "LIVE_ANIMALS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Sebagian karena alasan humanistik, ekonomi dan ekologi, pemeliharaan dan perdagangan hewan diatur secara ketat, atau bahkan ilegal di banyak sistem inti. Di luar, ternak menjadi bagian yang lebih penting dari mata pencaharian masyarakat, baik sebagai sumber gizi maupun sebagai hewan beban. Kebun binatang eksotis dan suaka margasatwa berkontribusi pada perdagangan hewan di sekitar galaksi, biasanya di bawah peraturan negara yang ketat, untuk memerangi tempat perburuan ilegal."
+  },
+  "MEDICINES": {
+    "description": "",
+    "message": "medicines"
+  },
+  "MEDICINES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Berasal dari sumber alam, atau disintesis secara artifisial, obat-obatan dibutuhkan kemana pun manusia pergi. Dari menyembuhkan flu biasa hingga memerangi efek buruk dari perjalanan luar angkasa yang berkepanjangan, obat-obatan sangat penting untuk kemakmuran umat manusia antarbintang. Diawasi ketat oleh petugas bea cukai, karena tidak jarang narkotika menyamar sebagai obat medis."
+  },
+  "METAL_ALLOYS": {
+    "description": "",
+    "message": "metal alloys"
+  },
+  "METAL_ALLOYS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Setelah bijih logam diekstraksi dan dimurnikan, diproses dan dijadikan berbagai paduan. Paduan adalah penggabungan logam, bukan satu unsur murni, digabungkan dalam proporsi yang tepat untuk mendapatkan sifat khusus yang diinginkan. Oleh karena itu, sebagian besar logam konsumen adalah paduan."
+  },
+  "METAL_ORE": {
+    "description": "",
+    "message": "metal ore"
+  },
+  "METAL_ORE_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Banyak koloni menambang bijih logam untuk diekspor, dimurnikan, dan digunakan dalam industri manufaktur. Digunakan dalam segala hal mulai dari mainan kecil hingga pesawat ruang angkasa, logam dalam segala bentuknya sangat penting untuk peradaban modern."
+  },
+  "MILITARY_FUEL": {
+    "description": "",
+    "message": "military fuel"
+  },
+  "MILITARY_FUEL_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Digunakan sebagai bahan bakar dalam penggerak militer yang lebih maju. Drive ini menghasilkan limbah radioaktif selama pengoperasian, yang harus dibuang. Karena sifat sintetisnya, bahan bakar militer lebih mahal dan kurang umum dibandingkan hidrogen, dan tidak dapat ditemukan terjadi secara alami."
+  },
+  "MINING_MACHINERY": {
+    "description": "",
+    "message": "mining machinery"
+  },
+  "MINING_MACHINERY_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Pekerjaan penambangan yang melanggar batas secara tradisional diatasi dengan penggunaan mesin yang membantu penambang dalam menemukan dan mengambil berbagai bijih, dan mengangkutnya ke fasilitas pemrosesan terdekat."
+  },
+  "NARCOTICS": {
+    "description": "",
+    "message": "narcotics"
+  },
+  "NARCOTICS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Zat alami atau sintetis yang mengubah keadaan pikiran dan tubuh. Meskipun penggunaan narkotika, baik untuk tujuan rekreasi dan medis, adalah setua manusia itu sendiri, pengiriman dan perdagangan umum dilarang."
+  },
+  "NERVE_GAS": {
+    "description": "",
+    "message": "nerve gas"
+  },
+  "NERVE_GAS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Secara umum diterima sebagai senjata pemusnah massal, dijauhi bahkan oleh militer di sebagian besar sistem, dan dengan demikian ilegal di sebagian besar sistem."
+  },
+  "PLASTICS": {
+    "description": "",
+    "message": "plastics"
+  },
+  "PLASTICS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Bahan sintetis dan semi-sintetik yang digunakan dalam segala hal mulai dari barang sehari-hari hingga konstruksi pesawat luar angkasa. Mereka relatif mudah digunakan dalam pembuatan, serbaguna dan murah untuk dibuat, dengan demikian merupakan bagian penting dari peradaban manusia."
+  },
+  "PRECIOUS_METALS": {
+    "description": "",
+    "message": "precious metals"
+  },
+  "PRECIOUS_METALS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Logam mulia umumnya kurang reaktif, lebih sulit untuk ditambang, dan lebih langka, sehingga menghasilkan nilai ekonomi yang cukup besar. Ini sering kali termasuk emas, perak, platinum, dan tanah jarang. Unsur-unsur tertentu seperti emas dan silikon, atau tanah jarang, sangat penting untuk konstruksi komputer dan elektronik lainnya."
+  },
+  "RADIOACTIVES": {
+    "description": "",
+    "message": "radioactive waste"
+  },
+  "RADIOACTIVES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Dibuat oleh reaktor nuklir, dan hyperdrive militer, limbah radioaktif adalah komoditas yang paling sulit dan paling berbahaya untuk diangkut dan dibuang. Karena alasan ini, sebagian besar starports akan membayar untuk menghilangkan persediaan berlebih. Membuang limbah radioaktif adalah pelanggaran berat."
+  },
+  "ROBOTS": {
+    "description": "",
+    "message": "robots"
+  },
+  "ROBOTS_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Robot sering kali diimpor ke sistem industri dan pertambangan, karena kemampuannya mempermudah melakukan tugas yang terlalu sulit, membosankan, atau tidak aman bagi pekerja manusia. Mereka juga bisa menjadi politisi dan pengacara."
+  },
+  "RUBBISH": {
+    "description": "",
+    "message": "rubbish"
+  },
+  "RUBBISH_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Hasil samping peradaban, terdiri dari limbah industri, sampah rumah tangga, dan peralatan yang sudah usang. Kebanyakan limbah diolah kembali, didaur ulang atau dikirim ke starports untuk diangkut ke luar dunia. Membuang sampah di sistem berpenghuni hampir selalu ilegal. Starports biasanya mengenakan biaya untuk pembuangan limbah, tetapi juga akan membayar Anda untuk membuangnya."
+  },
+  "SLAVES": {
+    "description": "",
+    "message": "slaves"
+  },
+  "SLAVES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Karena mesin telah menggantikan budak sebagai mesin yang menggerakkan peradaban, perbudakan sekarang hampir secara universal dilihat sebagai tidak bermoral, dan pelanggaran terhadap larangan akan mendapatkan hukuman yang paling ketat. Namun, terlepas dari upaya kemanusiaan terbaik, perbudakan masih lazim, bahkan di negara maju."
+  },
+  "TEXTILES": {
+    "description": "",
+    "message": "textiles"
+  },
+  "TEXTILES_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Tekstil adalah kain sederhana, ditenun dari benang sintetis, tumbuhan atau hewan. Biasanya diproduksi oleh robot di pabrik-pabrik besar, masih mungkin untuk menemukan penenun sesekali yang membuat tekstil sendiri."
+  },
+  "WATER": {
+    "description": "",
+    "message": "water"
+  },
+  "WATER_DESCRIPTION": {
+    "description": "This is an artistic description of the commodity. Translate as you deem appropriate or come up with your own description, long or short, its up to you.",
+    "message": "Penting bagi kehidupan seperti yang kita ketahui, komoditas yang sering diabaikan, air dibutuhkan di mana pun manusia berada. Dengan demikian, sebagian besar koloni di luar dunia mengimpor air dari komet atau planet seperti Bumi. Air digunakan dalam skala besar untuk produksi hidrogen dan oksigen."
+  }
+}

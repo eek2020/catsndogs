@@ -1,0 +1,214 @@
+{
+  "ACCEPTED_ARMS_DEALER": {
+    "description": "",
+    "message": "Υπέροχα! Σας ευχαριστώ."
+  },
+  "ACCEPTED_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Ευχαριστώ. Δεν θα το μετανιώσετε!"
+  },
+  "ACCEPTED_LEGAL_GOODS": {
+    "description": "",
+    "message": "Σας ευχαριστώ. Καταλαβαίνεις μια καλή συμφωνία όταν τη βλέπεις!"
+  },
+  "ACCEPTED_RESCUE": {
+    "description": "",
+    "message": "Σας ευχαριστώ πάρα πολύ. Το πλήρωμα θα το εκτιμήσει αυτό."
+  },
+  "ADTEXT_ARMS_DEALER": {
+    "description": "",
+    "message": "Pick-up mission: prompt recovery of drifting container required."
+  },
+  "ADTEXT_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Have a cargo scoop and looking for your next score? Valuable information for sale."
+  },
+  "ADTEXT_LEGAL_GOODS": {
+    "description": "",
+    "message": "Derelict Brokerage Services: information regarding a debris field with valuable cargo."
+  },
+  "ADTEXT_RESCUE": {
+    "description": "",
+    "message": "ΑΝΆΓΚΗ ΒΟΗΘΕΙΑΣ: Επείγουσα επιχείρηση διάσωσης κάψουλας διαφυγής."
+  },
+  "ADTITLE_ARMS_DEALER": {
+    "description": "",
+    "message": "CARGO RECOVERY"
+  },
+  "ADTITLE_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "EASY MONEY"
+  },
+  "ADTITLE_LEGAL_GOODS": {
+    "description": "",
+    "message": "INFORMATION FOR SALE"
+  },
+  "ADTITLE_RESCUE": {
+    "description": "",
+    "message": "HELP NEEDED"
+  },
+  "CLIENT": {
+    "description": "",
+    "message": "Πελάτης:"
+  },
+  "DANGER": {
+    "description": "The risk level",
+    "message": "Ανασφάλεια:"
+  },
+  "DEADLINE": {
+    "description": "Must be delivered by",
+    "message": "Προθεσμία:"
+  },
+  "DENY_1": {
+    "description": "",
+    "message": "Με συγχωρείτε, κύριε; Δεν νομίζω ότι επαρκούν τα τρέχοντα προσόντα σας."
+  },
+  "DENY_2": {
+    "description": "",
+    "message": "Λυπάμαι, αλλά νομίζω ότι αυτή η εργασία υπερβαίνει τις ικανότητές σας ως πιλότου."
+  },
+  "DETONATORS": {
+    "description": "",
+    "message": "Πυροκροτητές"
+  },
+  "DOCKING_INSTRUCTION": {
+    "description": "",
+    "message": "Χαίρομαι που συναντηθήκαμε. Παρακαλώ πλησιάστε σε απόσταση 100 μέτρων για να ολοκληρώσετε τη μεταφορά του φορτίου!"
+  },
+  "FAILURE_MSG_ARMS_DEALER": {
+    "description": "",
+    "message": "Ανόητε. Δεν θα αρέσει αυτό στον πελάτη!"
+  },
+  "FAILURE_MSG_RESCUE": {
+    "description": "",
+    "message": "Η αναξιοπιστία σου έχει προκαλέσει μεγάλη ζημιά. Φύγε από μπροστά μου!"
+  },
+  "HOW_MUCH_TIME": {
+    "description": "",
+    "message": "Πόσο χρόνο έχω;"
+  },
+  "HOW_MUCH_TIME_ARMS_DEALER": {
+    "description": "",
+    "message": "Ο συνεργάτης μου βρίσκεται σε τροχιά γύρω από το {star} για να αποφύγει τον εντοπισμό του. Θα ήταν υπέροχο αν μπορούσατε να επικοινωνήσετε μαζί του πριν από την {date}."
+  },
+  "HOW_MUCH_TIME_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Μην χάνετε χρόνο. Μόνο το πρώιμο πουλί πιάνει το σκουλήκι!"
+  },
+  "HOW_MUCH_TIME_LEGAL_GOODS": {
+    "description": "",
+    "message": "Δεν ξέρω. Αλλά αν ήμουν στη θέση σου, θα έκανα γρήγορα!"
+  },
+  "HOW_MUCH_TIME_RESCUE": {
+    "description": "",
+    "message": "Θα ήταν καλό αν μπορούσατε να φτάσετε στην τοποθεσία πριν από την {date}."
+  },
+  "INTROTEXT_ARMS_DEALER": {
+    "description": "",
+    "message": "Γεια και χαρά σας, Κυβερνήτη. Με λένε {client}. Θα ήταν υπέροχο αν μπορούσατε να με βοηθήσετε. Ένας αναξιόπιστος καπετάνιος φορτηγίδας άφησε το φορτίο μου κοντά στο {planet} και έκτοτε εξαφανίστηκε. Η αποστολή σας θα ήταν να παραλάβετε ένα εμπορευματοκιβώτιο και να το παραδώσετε στο σκάφος {shipid} σε τροχιά γύρω από το {star}. Θα σας πληρώσω {cash}."
+  },
+  "INTROTEXT_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Γεια σου φιλαράκι, ξέρω για μια περιοχή με συντρίμμια και παράνομα εμπορεύματα. Η αστυνομία συνέλαβε ένα λαθρέμπορο κοντά στο {planet}. Δεν είχαν χρόνο να καθαρίσουν την περιοχή ακόμα. Αν είσαι γρήγορος, μπορείς να βγάλεις εύκολο χρήμα! Μπορώ να σου δώσω τις συντεταγμένες. Θα σου κοστίσει μόνο {cash}. Μην αφήσεις την ευκαιρία να πάει χαμένη!"
+  },
+  "INTROTEXT_LEGAL_GOODS": {
+    "description": "",
+    "message": "Γεια και χαρά σου φίλε. Με φωνάζουν {client}. Άκουσα για ένα φορτηγό που έμπλεξε κοντά στον {planet} λόγω κακής συντήρησης του σκάφους. Εκπληκτικό ποιος μπορεί να πετάξει ένα διαστημόπλοιο στις μέρες μας, έτσι δεν είναι; Τέλος πάντων, αναγκάστηκαν να πετάξουν μεγάλο μέρος του φορτίου. Αν είσαι γρήγορος, μπορείς να αρπάξεις το φορτίο πολύ εύκολα! Αυτές οι πληροφορίες είναι σαν καινούργιες! Θα σου πουλήσω τις συντεταγμένες για το ψωροποσό των {cash}. Τι λες;"
+  },
+  "INTROTEXT_RESCUE": {
+    "description": "",
+    "message": "Γεια σας, ονομάζομαι {client}. Το πλήρωμα ενός φορτηγού πλοίου αναγκάστηκε να εγκαταλείψει το σκάφος του μετά από ένα περιστατικό. Ο ιδιοκτήτης του πλοίου είναι πρόθυμος να πληρώσει {cash} για μια διακριτική αποστολή διάσωσης. Το σημείο του ατυχήματος είναι κοντά στο {planet}.  Παρακαλείσθε να παραλάβετε το πλήρωμα και να το μεταφέρετε σε κοσμοδρόμιο!"
+  },
+  "NUCLEAR_MISSILE": {
+    "description": "A cargo item",
+    "message": "Πυρηνικός πύραυλος"
+  },
+  "OK_AGREED": {
+    "description": "",
+    "message": "Εντάξει, σύμφωνοι."
+  },
+  "REPEAT_THE_REQUEST": {
+    "description": "",
+    "message": "Μπορείτε, παρακαλώ, να επαναλάβετε το αίτημα;"
+  },
+  "RESCUE_CAPSULE": {
+    "description": "",
+    "message": "Κάψουλα διάσωσης"
+  },
+  "ROCKET_LAUNCHERS": {
+    "description": "",
+    "message": "Εκτοξευτές ρουκετών"
+  },
+  "SCOOP": {
+    "description": "Name of mission type",
+    "message": "Συλλέκτης"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Θέσε ως στόχο πλοήγησης."
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Σκάφος:"
+  },
+  "SHIP_DESTROYED": {
+    "description": "",
+    "message": "Ωχ, όχι. Το {shipid} καταστράφηκε. Παραδώστε το φορτίο στο {station} τώρα!"
+  },
+  "SPACEPORT": {
+    "description": "",
+    "message": "Κοσμοδρόμιο:"
+  },
+  "SPOILED_FOOD": {
+    "description": "cargo item",
+    "message": "Χαλασμένα τρόφιμα"
+  },
+  "SUCCESS_MSG_ARMS_DEALER": {
+    "description": "",
+    "message": "Είσαι κι ο πρώτος, ωραία πτήση! Τα χρήματα έχουν μεταφερθεί."
+  },
+  "SUCCESS_MSG_RESCUE": {
+    "description": "",
+    "message": "Σε ευχαριστώ πάρα πολύ! Το πλήρωμα θα ήθελε επίσης να εκφράσει τις ευχαριστίες του."
+  },
+  "TOXIC_WASTE": {
+    "description": "cargo item",
+    "message": "Τοξικά απόβλητα"
+  },
+  "UNKNOWN": {
+    "description": "",
+    "message": "Αγνώστου περιεχομένου"
+  },
+  "WARNING": {
+    "description": "",
+    "message": "Έι! Τι προσπαθείς να κάνεις; Το συμβόλαιό μας κινδυνεύει! Σε παρακαλώ περισυνέλλεξέ το ξανά!"
+  },
+  "WHY_NOT_YOURSELF": {
+    "description": "",
+    "message": "Γιατί δεν το κάνεις του λόγου σου;"
+  },
+  "WHY_NOT_YOURSELF_ARMS_DEALER": {
+    "description": "",
+    "message": "Οι τοπικές αρχές με παρακολουθούν! Πρέπει να κρατήσω χαμηλό προφίλ για μερικές εβδομάδες."
+  },
+  "WHY_NOT_YOURSELF_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Είμαι απλά ένας υπάλληλος γραφείου. Δεν έχω σκάφος."
+  },
+  "WHY_NOT_YOURSELF_LEGAL_GOODS": {
+    "description": "",
+    "message": "Εγώ δεν έχω σκάφος."
+  },
+  "WHY_NOT_YOURSELF_RESCUE": {
+    "description": "",
+    "message": "Δεν έχω διαθέσιμο σκάφος αυτή τη στιγμή."
+  },
+  "YOU_DO_NOT_HAVE_A_SCOOP": {
+    "description": "",
+    "message": "Λυπάμαι, δεν έχετε συλλέκτη φορτίου."
+  },
+  "YOU_DO_NOT_HAVE_ENOUGH_MONEY": {
+    "description": "",
+    "message": "Δεν διαθέτετε αρκετά χρήματα."
+  }
+}

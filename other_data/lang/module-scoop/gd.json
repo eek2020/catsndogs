@@ -1,0 +1,214 @@
+{
+  "ACCEPTED_ARMS_DEALER": {
+    "description": "",
+    "message": "Sgoinneil! Mòran taing."
+  },
+  "ACCEPTED_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Mòran taing. Chan aithreach leibh e!"
+  },
+  "ACCEPTED_LEGAL_GOODS": {
+    "description": "",
+    "message": "Mòran taing. ’S e deagh bhargan a tha seo!"
+  },
+  "ACCEPTED_RESCUE": {
+    "description": "",
+    "message": "Tha sinn fada ’nur comainn. Bidh an sgioba taingeil."
+  },
+  "ADTEXT_ARMS_DEALER": {
+    "description": "",
+    "message": "Pick-up mission: prompt recovery of drifting container required."
+  },
+  "ADTEXT_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Have a cargo scoop and looking for your next score? Valuable information for sale."
+  },
+  "ADTEXT_LEGAL_GOODS": {
+    "description": "",
+    "message": "Derelict Brokerage Services: information regarding a debris field with valuable cargo."
+  },
+  "ADTEXT_RESCUE": {
+    "description": "",
+    "message": "COBHAIR A DHÌTH: Teasairginn capsail èiginneach."
+  },
+  "ADTITLE_ARMS_DEALER": {
+    "description": "",
+    "message": "CARGO RECOVERY"
+  },
+  "ADTITLE_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "EASY MONEY"
+  },
+  "ADTITLE_LEGAL_GOODS": {
+    "description": "",
+    "message": "INFORMATION FOR SALE"
+  },
+  "ADTITLE_RESCUE": {
+    "description": "",
+    "message": "HELP NEEDED"
+  },
+  "CLIENT": {
+    "description": "",
+    "message": "Ceannaiche:"
+  },
+  "DANGER": {
+    "description": "The risk level",
+    "message": "Cunnart:"
+  },
+  "DEADLINE": {
+    "description": "Must be delivered by",
+    "message": "Ceann-là:"
+  },
+  "DENY_1": {
+    "description": "",
+    "message": "B’ àill leibh? Cha chreid mi gum foghainn na teisteanasan làithreach agaibh."
+  },
+  "DENY_2": {
+    "description": "",
+    "message": "Tha mi duilich ach saoilidh mi gu bheil an t-saothair seo ro dhoirbh ro phaidhleat dhur leithid."
+  },
+  "DETONATORS": {
+    "description": "",
+    "message": "Innealan-spreadhaidh"
+  },
+  "DOCKING_INSTRUCTION": {
+    "description": "",
+    "message": "’S math coinneachadh ribh. Dlùthaibh gu 100m airson an carago a thar-chur!"
+  },
+  "FAILURE_MSG_ARMS_DEALER": {
+    "description": "",
+    "message": "A bhumalair! Cha bhi an cliant toilichte le sin."
+  },
+  "FAILURE_MSG_RESCUE": {
+    "description": "",
+    "message": "Dh’adhbharaich do neo-earbsachd dochann mòr. Thalla!"
+  },
+  "HOW_MUCH_TIME": {
+    "description": "",
+    "message": "Co mheud ùine a bhios agam?"
+  },
+  "HOW_MUCH_TIME_ARMS_DEALER": {
+    "description": "",
+    "message": "Tha com-pàirtiche gnothachais agam air reul-chuairt timcheall air {star} airson cumail am falach. Bhiodh e math nan ruigeadh sibh e ro {date}."
+  },
+  "HOW_MUCH_TIME_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Chan fhiach. Cha ghlac sionnach cadalach cearcan!"
+  },
+  "HOW_MUCH_TIME_LEGAL_GOODS": {
+    "description": "",
+    "message": "Chan eil fhios a’m. Ach thoirinn mo chasan leam-sa!"
+  },
+  "HOW_MUCH_TIME_RESCUE": {
+    "description": "",
+    "message": "Bhiodh e math nan ruigeadh sibh ro {date} e."
+  },
+  "INTROTEXT_ARMS_DEALER": {
+    "description": "",
+    "message": "Sin sibh, a Chomandair. Is mise {client}. Nach doir sibh cuideachadh dhomh? Leig sgiobair faraidh neo-earbsach às a’ charago agam faisg air {planet} mus deach e a-mach à sgeul. ’S e an t-saothair a bhiodh romhaibh gun tog sibh bogsa ’s gun lìbhrigeadh sibh gu long {shipid} e a tha air reul-chuairt timcheall air {star}. Phàighinn {cash}."
+  },
+  "INTROTEXT_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "A charaid, tha mi eòlach air raon spruillich le bathar mì-laghail ann. Ghlac am poileas spùinneadair faisg air {planet}. Cha robh ùine aca fhathast gus an sgìre a ghlanadh. Ma bhios sibh luath, coisinnidh sibh airgead leis gun trioblaid! Bheir mi na co-chomharran dhuibh. Cha chosg iad ach {cash}. Na caillibh an cothrom!"
+  },
+  "INTROTEXT_LEGAL_GOODS": {
+    "description": "",
+    "message": "Sin sibh, a charaid. Is mise {client}. Chuala mi mu thruga carago a bha ann an staing faisg air {planet} ri linn droch obair-chàraidh air an long. Tha chreideadh tu cò dh’fhaodas falbh air soitheach-fànais san latha an-diugh! Co-dhiù no co-dheth, bha aca ri tòrr dhen charago a leigeil mu sgaoil. Ma ghreasas sibh oirbh, gheibh sibh grèim air a’ charago gun duilgheadas sam bith! Tha am fiosrachadh seo cho ùr ’s a ghabhas! Chan iarr mi oirbh ach {cash} air na co-chomharran. Dè ur beachd?"
+  },
+  "INTROTEXT_RESCUE": {
+    "description": "",
+    "message": "Haoigh, is mise {client}. Bha aig sgioba faraidh an long aca fhàgail às dèidh tachartais. Phàigheadh seilbheadair an t-soithich {cash} air misean teasairginn os ìosal. Thachair an tubaist faisg air {planet}. Togaibh an sgioba is thoiribh gu stèisean iad!"
+  },
+  "NUCLEAR_MISSILE": {
+    "description": "A cargo item",
+    "message": "Astas niùclasach"
+  },
+  "OK_AGREED": {
+    "description": "",
+    "message": "Ceart ma-thà, gabhaidh mi ris."
+  },
+  "REPEAT_THE_REQUEST": {
+    "description": "",
+    "message": "Dè an t-iarrtas a bh’ agaibh a-rithist?"
+  },
+  "RESCUE_CAPSULE": {
+    "description": "",
+    "message": "Capsail teasairginn"
+  },
+  "ROCKET_LAUNCHERS": {
+    "description": "",
+    "message": "Lòinsearan rocaide"
+  },
+  "SCOOP": {
+    "description": "Name of mission type",
+    "message": "Sgiob"
+  },
+  "SET_AS_TARGET": {
+    "description": "",
+    "message": "Cuir ceann-uidhe na seòladaireachd air"
+  },
+  "SHIP": {
+    "description": "",
+    "message": "Soitheach:"
+  },
+  "SHIP_DESTROYED": {
+    "description": "",
+    "message": "Obh obh. Chaidh {shipid} a mhilleadh. Thoir an carago gu {station} a-nis!"
+  },
+  "SPACEPORT": {
+    "description": "",
+    "message": "Port-fhànais:"
+  },
+  "SPOILED_FOOD": {
+    "description": "cargo item",
+    "message": "Biadh millte"
+  },
+  "SUCCESS_MSG_ARMS_DEALER": {
+    "description": "",
+    "message": "Abair itealach, a sheòid! Chaidh an t-airgead a thar-chur."
+  },
+  "SUCCESS_MSG_RESCUE": {
+    "description": "",
+    "message": "Tha mi fada ’nur comainn! Tha an sgioba glè thaingeil cuideachd."
+  },
+  "TOXIC_WASTE": {
+    "description": "cargo item",
+    "message": "Sgudal puinnseanta"
+  },
+  "UNKNOWN": {
+    "description": "",
+    "message": "Chan eil fhios"
+  },
+  "WARNING": {
+    "description": "",
+    "message": "Hoigh! Dè tha sibhse ris? Tha sibh a’ cur as cumhnant fo chunnart! Togaibh seo a-rithist làrach nam bonn!"
+  },
+  "WHY_NOT_YOURSELF": {
+    "description": "",
+    "message": "Carson nach dèan sibh fhèin e?"
+  },
+  "WHY_NOT_YOURSELF_ARMS_DEALER": {
+    "description": "",
+    "message": "Tha an t-ùghdarras ionadail a’ cumail sùil orm! Feumaidh mi bhith modhail corra seachdain."
+  },
+  "WHY_NOT_YOURSELF_ILLEGAL_GOODS": {
+    "description": "",
+    "message": "Chan e ach clàrc oifise a th’ annam. Chan eil long agam."
+  },
+  "WHY_NOT_YOURSELF_LEGAL_GOODS": {
+    "description": "",
+    "message": "Chan eil long agam."
+  },
+  "WHY_NOT_YOURSELF_RESCUE": {
+    "description": "",
+    "message": "Chan eil long shaor agam air an àm seo."
+  },
+  "YOU_DO_NOT_HAVE_A_SCOOP": {
+    "description": "",
+    "message": "Tha mi duilich ach chan eil sgiob agaibh."
+  },
+  "YOU_DO_NOT_HAVE_ENOUGH_MONEY": {
+    "description": "",
+    "message": "Chan eil airgead gu leòr agad."
+  }
+}

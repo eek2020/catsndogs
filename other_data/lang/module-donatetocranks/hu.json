@@ -1,0 +1,138 @@
+{
+  "FLAVOUR_0_ADTITLE": {
+    "description": "",
+    "message": "ADAKOZZON!"
+  },
+  "FLAVOUR_0_DESC": {
+    "description": "",
+    "message": "A Repülő Mennyei Spagettiszörny Egyházának szüksége van a támogatásodra urunk szavának terjesztésére!"
+  },
+  "FLAVOUR_0_MESSAGE": {
+    "description": "",
+    "message": "Kérlek válaszd ki a felajánlásra szánt összeget a Szent Repülő Spagettiszörny egyházának."
+  },
+  "FLAVOUR_1_ADTITLE": {
+    "description": "",
+    "message": "ADAKOZZ!"
+  },
+  "FLAVOUR_1_DESC": {
+    "description": "",
+    "message": "Mi, a Szabad Szellem Őrzői alázatosan kérjük, hogy támogasd kolostoraink működését."
+  },
+  "FLAVOUR_1_MESSAGE": {
+    "description": "",
+    "message": "A béke legyen veled, testvér. Kérlek válaszd ki a felajánlásra szánt összeget a Szabad Szellem Őrzői számára."
+  },
+  "FLAVOUR_2_ADTITLE": {
+    "description": "",
+    "message": "NAGYLELKŰNEK ÉRZI MAGÁT?"
+  },
+  "FLAVOUR_2_DESC": {
+    "description": "",
+    "message": "A Háborús Árvák Támogató Szolgálatának szüksége van a segítségére nélkülözhetetlen munkájuk fenntartásához."
+  },
+  "FLAVOUR_2_MESSAGE": {
+    "description": "",
+    "message": "Kérlek, válaszd ki a háborús árvák számára a felajánlásra szánt összeget, hogy véget vethessünk a szenvedésüknek."
+  },
+  "FLAVOUR_3_ADTITLE": {
+    "description": "",
+    "message": "JÁRULJON HOZZÁ!"
+  },
+  "FLAVOUR_3_DESC": {
+    "description": "",
+    "message": "A Galaxis Barátai 'Tiltsák be a katonai hiperhajtóműveket!' kampányának szüksége van a pénzére."
+  },
+  "FLAVOUR_3_MESSAGE": {
+    "description": "",
+    "message": "Kérlek válaszd ki a Zöld Figyelőknek juttatandó összeget, hogy véget vessünk a galaxisunk szennyezésének."
+  },
+  "FLAVOUR_4_ADTITLE": {
+    "description": "",
+    "message": "ADAKOZZON!"
+  },
+  "FLAVOUR_4_DESC": {
+    "description": "",
+    "message": "Mentsük meg a fajokat! Állítsuk meg a mészárlást az újonnan betelepített világokon!"
+  },
+  "FLAVOUR_4_MESSAGE": {
+    "description": "",
+    "message": "Kérlek válaszd ki az adományozásra szánt összeget."
+  },
+  "FLAVOUR_5_ADTITLE": {
+    "description": "",
+    "message": "TÁMOGASD A SZABADSÁGOT!"
+  },
+  "FLAVOUR_5_DESC": {
+    "description": "",
+    "message": "Állítsuk meg a hajóinkat vezérlő szabadalmaztatott szoftverek igazságtalanságát!"
+  },
+  "FLAVOUR_5_MESSAGE": {
+    "description": "",
+    "message": "Szabadságot az űrhajóknak! Mennyit szeretnél felajánlani? Jó bütykölést!"
+  },
+  "FLAVOUR_6_ADTITLE": {
+    "description": "",
+    "message": "VETERÁNOK NAPJA"
+  },
+  "FLAVOUR_6_DESC": {
+    "description": "",
+    "message": "Támogassa {MILITARY} veteránjait."
+  },
+  "FLAVOUR_6_MESSAGE": {
+    "description": "",
+    "message": "{MILITARY}. Mindig számthat rájuk. De vajon ők számíthatnak önre?"
+  },
+  "FLAVOUR_7_ADTITLE": {
+    "description": "",
+    "message": "TÁMOGATJA ŐKET?"
+  },
+  "FLAVOUR_7_DESC": {
+    "description": "",
+    "message": "Támogassa {POLICE} veteránjait."
+  },
+  "FLAVOUR_7_MESSAGE": {
+    "description": "",
+    "message": "A {POLICE} bátor férfiainak és nőinek, akik az életüket tették {SYSTEM} védelmezésére, szükségük van a támogatására."
+  },
+  "FLAVOUR_8_ADTITLE": {
+    "description": "",
+    "message": "TÁMOGASSUK VETERÁNJAINKAT!"
+  },
+  "FLAVOUR_8_DESC": {
+    "description": "",
+    "message": "Támogassuk a fegyveres erőink veteránjait."
+  },
+  "FLAVOUR_8_MESSAGE": {
+    "description": "",
+    "message": "{MILITARY} bátor katonái önért is veszélyeztetik életüket!"
+  },
+  "FLAVOUR_9_ADTITLE": {
+    "description": "",
+    "message": "VESSÜNK VÉGET A NYOMORNAK!"
+  },
+  "FLAVOUR_9_DESC": {
+    "description": "",
+    "message": "Támogassa {FACTION}-szerte elharapódzó nyomor elleni harcunkat!"
+  },
+  "FLAVOUR_9_MESSAGE": {
+    "description": "",
+    "message": "{FACTION} családjainak támogatjuk, hogy mindannyiunk számára jobb legyen a jövő."
+  },
+  "SALES_PITCH": {
+    "description": "",
+    "message": "Segítene a megítéléseden {cash}-nyi adomány, de természetesen bármilyen összeg nagy segítség."
+  },
+  "THANK_YOU_ALL_DONATIONS_ARE_WELCOME": {
+    "description": "",
+    "message": "Köszönjük. Minden felajánlást szívesen fogadunk."
+  },
+  "WOW_THAT_WAS_VERY_GENEROUS": {
+    "description": "",
+    "message": "Azta! Ez aztán nagylelkű."
+  },
+  "YOU_DO_NOT_HAVE_ENOUGH_MONEY": {
+    "description": "",
+    "message": "Nincsen elég pénzed."
+  }
+}
