@@ -7,6 +7,7 @@ const SRC := 1           # Serene Village atlas (Source 1)
 const SRC_LEGACY := 0    # Old world atlas (Source 0, backward compat)
 const SRC_WATER := 2     # Animated water waves (Source 2, 14-frame strip)
 const SRC_CAMPFIRE := 3
+const SRC_ICONS := 4     # Transparent icons atlas (Source 4)
 const TILE_SIZE := 32
 const MAP_W := 44
 const MAP_H := 25
@@ -63,9 +64,9 @@ const CAMPFIRE_ANIM := Vector2i(0, 0)
 
 # Legacy props (old atlas, Source 1)
 const L_WALL := [Vector2i(0, 11), Vector2i(1, 11), Vector2i(2, 11), Vector2i(3, 11), Vector2i(4, 11)]
-const L_CHEST := Vector2i(8, 23)
 const L_CRATE := Vector2i(12, 23)
 const L_SIGN := Vector2i(14, 12)
+const HIDDEN_ICON := Vector2i(11, 11)
 
 
 # ── Node References ───────────────────────────────────────────────────
@@ -325,17 +326,17 @@ func _place_fences_and_hedges() -> void:
 
 
 func _place_props() -> void:
-	# Hidden chests (moved former water-area chests to landing island)
-	_set_legacy(decor_layer, 1, 12, L_CHEST)
-	_set_legacy(decor_layer, 2, 15, L_CHEST)
-	_set_legacy(decor_layer, 26, 6, L_CHEST)
-	_set_legacy(decor_layer, 35, 4, L_CHEST)
-	_set_legacy(decor_layer, 31, 7, L_CHEST)
+	# Hidden markers
+	_set_icon(decor_layer, 1, 12, HIDDEN_ICON)
+	_set_icon(decor_layer, 2, 15, HIDDEN_ICON)
+	_set_icon(decor_layer, 26, 6, HIDDEN_ICON)
+	_set_icon(decor_layer, 35, 4, HIDDEN_ICON)
+	_set_icon(decor_layer, 31, 7, HIDDEN_ICON)
 
 	# Signs at key locations
-	_set_legacy(decor_layer, 18, 11, L_SIGN)
-	_set_legacy(decor_layer, 28, 10, L_SIGN)
-	_set_legacy(decor_layer, 35, 10, L_SIGN)
+	_set_legacy(decor_layer, 19, 12, L_SIGN)
+	_set_legacy(decor_layer, 29, 12, L_SIGN)
+	_set_legacy(decor_layer, 36, 12, L_SIGN)
 
 	# Crates
 	_set_legacy(decor_layer, 25, 16, L_CRATE)
@@ -601,6 +602,12 @@ func _set_legacy(layer: TileMapLayer, x: int, y: int, atlas: Vector2i) -> void:
 	if not _in_bounds(x, y):
 		return
 	layer.set_cell(Vector2i(x, y), SRC_LEGACY, atlas)
+
+
+func _set_icon(layer: TileMapLayer, x: int, y: int, atlas: Vector2i) -> void:
+	if not _in_bounds(x, y):
+		return
+	layer.set_cell(Vector2i(x, y), SRC_ICONS, atlas)
 
 
 func _in_bounds(x: int, y: int) -> bool:
