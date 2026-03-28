@@ -10,11 +10,11 @@ const MAP_WIDTH: int = 20
 const MAP_HEIGHT: int = 15
 const INTERACT_RADIUS: float = 40.0
 
-## Spritesheet layout — frame dimensions derived from sheet size (1172×4192)
-const SPRITE_COLS: int = 4        # max frames per row
-const SPRITE_ROWS: int = 29       # total animation rows
-const FRAME_W: int = 293          # 1172 / 4
-const FRAME_H: int = 144          # 4192 / 29 ≈ 144 (16px padding at sheet bottom)
+## Spritesheet layout — clean uniform grid: 8 cols × N rows of 128×128 frames
+const SPRITE_COLS: int = 8
+const SPRITE_ROWS: int = 29
+const FRAME_W: int = 128
+const FRAME_H: int = 128
 const SPRITE_DRAW_SIZE := Vector2(64.0, 64.0)  # on-screen display size
 const ANIM_FPS: float = 8.0       # walk cycle speed
 
@@ -30,7 +30,7 @@ enum AnimRow {
 }
 
 ## Frame counts per row (most rows have 4; override exceptions here)
-const FRAME_COUNTS: Dictionary = {}  # row_index -> count; default is 4
+const FRAME_COUNTS: Dictionary = {}  # row_index -> count; default is SPRITE_COLS
 
 ## Direction → walk row lookup (keyed by rounded angle octant 0-7)
 const DIR_TO_WALK_ROW: Array = [
@@ -156,7 +156,7 @@ func _handle_movement(dt: float) -> void:
 	var spf: float = 1.0 / ANIM_FPS
 	if _anim_timer >= spf:
 		_anim_timer -= spf
-		var max_frames: int = FRAME_COUNTS.get(_anim_row, 4)
+		var max_frames: int = FRAME_COUNTS.get(_anim_row, SPRITE_COLS)
 		if _is_moving:
 			_anim_frame = (_anim_frame + 1) % max_frames
 		else:
@@ -322,6 +322,49 @@ func _draw_player() -> void:
 		SPRITE_DRAW_SIZE,
 	)
 	draw_texture_rect_region(_sprite_texture, dst, src)
+
+
+static func _remove_background_by_corners(tex: Texture2D, tolerance: float = 0.13, feather: float = 0.05) -> Texture2D:
+	if tex == null:
+		return tex
+	var image: Image = tex.get_image()
+	if image == null:
+		return tex
+	image.convert(Image.FORMAT_RGBA8)
+	var w: int = image.get_width()
+	var h: int = image.get_height()
+	if w == 0 or h == 0:
+		return tex
+	var corners: Array[Color] = [
+		image.get_pixel(0, 0),
+		image.get_pixel(w - 1, 0),
+		image.get_pixel(0, h - 1),
+		image.get_pixel(w - 1, h - 1),
+	]
+	for c in corners:
+		if c.a < 0.95:
+			return tex
+	var best_idx: int = 0
+	var best_score: float = INF
+	for i in 4:
+		var score: float = 0.0
+		for j in 4:
+			if i != j:
+				score += absf(corners[i].r - corners[j].r) + absf(corners[i].g - corners[j].g) + absf(corners[i].b - corners[j].b)
+		if score < best_score:
+			best_score = score
+			best_idx = i
+	var bg: Color = corners[best_idx]
+	for y in h:
+		for x in w:
+			var px: Color = image.get_pixel(x, y)
+			var delta: float = maxf(absf(px.r - bg.r), maxf(absf(px.g - bg.g), absf(px.b - bg.b)))
+			if delta <= tolerance:
+				image.set_pixel(x, y, Color(px.r, px.g, px.b, 0.0))
+			elif delta <= tolerance + feather:
+				var alpha_scale: float = (delta - tolerance) / feather
+				image.set_pixel(x, y, Color(px.r, px.g, px.b, px.a * alpha_scale))
+	return ImageTexture.create_from_image(image)
 
 
 func _draw_proximity_prompts(gs: GameStateData) -> void:

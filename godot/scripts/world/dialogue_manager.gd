@@ -100,13 +100,11 @@ func _trigger_dialogue_encounter(dialogue_data: Dictionary, npc_id: String, npc_
 			choice.choice_id = choice_data.get("choice_id", "")
 			enc.choices.append(choice)
 
-	# Show via the existing dialogue overlay
-	var dialogue_scene: PackedScene = load("res://scenes/ui/dialogue_ui.tscn")
-	if dialogue_scene == null:
+	# Show via the existing dialogue overlay (push_overlay expects a scene key string)
+	var overlay: Control = main.push_overlay("dialogue")
+	if overlay == null:
 		return
-	var dialogue_instance: Control = dialogue_scene.instantiate()
-	dialogue_instance.setup(enc)
-	main.push_overlay(dialogue_instance)
+	overlay.setup(enc)
 
 
 func _show_bark(npc_name: String, text: String) -> void:
@@ -126,7 +124,7 @@ func _get_generic_bark(faction_id: String) -> String:
 	var rep: int = 0
 	var faction_reg: Dictionary = GameSession.game_state.faction_registry
 	if faction_reg.has(faction_id):
-		rep = faction_reg[faction_id].get("reputation", 0)
+		rep = faction_reg[faction_id].reputation_with_player
 
 	if rep > 50:
 		return "Welcome, friend! Good to see you."

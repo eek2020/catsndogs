@@ -207,7 +207,7 @@ func _on_confirm() -> void:
 	# Continue to cutscene
 	var main: Control = get_tree().current_scene
 	if main.has_method("switch_scene"):
-		main.switch_scene("cutscene")
+		main.switch_scene("intro_crawl")
 
 
 func _on_back() -> void:

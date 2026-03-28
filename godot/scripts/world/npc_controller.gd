@@ -16,6 +16,9 @@ enum State { IDLE, PATROL, TALK }
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var interact_zone: Area2D = $InteractZone
 
+const DIRECT_INTERACT_DISTANCE: float = 36.0
+const DIAGONAL_CUTOFF: float = 0.45
+
 var _state: State = State.IDLE
 var _idle_timer: float = 0.0
 var _patrol_index: int = 0
@@ -24,6 +27,8 @@ var _facing: String = "down"
 
 
 func _ready() -> void:
+	_load_sprite_frames()
+	call_deferred("_ignore_player_body_collision")
 	if interact_zone:
 		interact_zone.body_entered.connect(_on_body_entered)
 		interact_zone.body_exited.connect(_on_body_exited)
@@ -34,6 +39,27 @@ func _ready() -> void:
 		_state = State.IDLE
 	else:
 		_set_next_patrol_target()
+
+
+func _ignore_player_body_collision() -> void:
+	var player: Node2D = _find_player()
+	if player == null:
+		return
+	if player is PhysicsBody2D:
+		add_collision_exception_with(player)
+		(player as PhysicsBody2D).add_collision_exception_with(self)
+
+
+## Loads SpriteFrames resource by convention: res://resources/{npc_id}_spriteframes.tres
+func _load_sprite_frames() -> void:
+	if not sprite or npc_id.is_empty():
+		return
+	if sprite.sprite_frames:
+		return
+	var path: String = "res://resources/%s_spriteframes.tres" % npc_id
+	if ResourceLoader.exists(path):
+		sprite.sprite_frames = load(path)
+		sprite.play("idle_down")
 
 
 func _physics_process(delta: float) -> void:
@@ -49,7 +75,6 @@ func _physics_process(delta: float) -> void:
 
 func _process_idle(delta: float) -> void:
 	velocity = Vector2.ZERO
-	move_and_slide()
 	_idle_timer -= delta
 	if _idle_timer <= 0.0 and not patrol_points.is_empty():
 		_state = State.PATROL
@@ -73,7 +98,6 @@ func _process_patrol(_delta: float) -> void:
 
 func _process_talk(_delta: float) -> void:
 	velocity = Vector2.ZERO
-	move_and_slide()
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
@@ -95,9 +119,24 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _player_in_zone and event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact") and _can_interact_player():
 		get_viewport().set_input_as_handled()
 		_start_dialogue()
+
+
+func _can_interact_player() -> bool:
+	if not _player_in_zone:
+		return false
+	var player: Node2D = _find_player()
+	if player == null:
+		return false
+	var offset: Vector2 = player.global_position - global_position
+	if offset.length() > DIRECT_INTERACT_DISTANCE:
+		return false
+	var norm: Vector2 = offset.normalized()
+	if absf(norm.x) > DIAGONAL_CUTOFF and absf(norm.y) > DIAGONAL_CUTOFF:
+		return false
+	return true
 
 
 func _start_dialogue() -> void:

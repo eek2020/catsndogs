@@ -97,52 +97,12 @@ func apply_choice_outcome(
 	encounter: Encounter,
 	choice_index: int,
 ) -> String:
+	if choice_index < 0 or choice_index >= encounter.choices.size():
+		return ""
 	var choice: Encounter.EncounterChoice = encounter.choices[choice_index]
 	var outcome: Encounter.EncounterOutcome = choice.outcome
 
-	# Set story flags
-	for flag in outcome.story_flags_set:
-		game_state.story_flags[flag] = true
-		if flag == "fairy_cartographer_rescued":
-			GameSession.star_map_system.on_cartographer_rescued()
-
-	# Clear story flags
-	for flag in outcome.story_flags_cleared:
-		game_state.story_flags.erase(flag)
-
-	# Apply resource changes
-	for resource_key in outcome.resource_changes:
-		var delta: int = outcome.resource_changes[resource_key]
-		if resource_key == "crystal_inventory":
-			game_state.crystal_inventory = maxi(0, game_state.crystal_inventory + delta)
-		elif resource_key == "crystal_quality":
-			game_state.crystal_quality = clampi(game_state.crystal_quality + delta, 1, 5)
-		elif resource_key == "salvage":
-			game_state.salvage = maxi(0, game_state.salvage + delta)
-
-	# Apply faction reputation changes
-	for faction_id in outcome.faction_changes:
-		var delta: int = outcome.faction_changes[faction_id]
-		if game_state.faction_registry.has(faction_id):
-			var faction: Faction = game_state.faction_registry[faction_id]
-			faction.reputation_with_player = clampi(faction.reputation_with_player + delta, -100, 100)
-			faction.update_diplomatic_state()
-			EventBus.faction_score_changed.emit(faction_id, delta)
-
-	# Apply karma change
-	if outcome.karma_delta != 0 and GameSession.karma_system != null:
-		var karma_reason: String = "%s:%s" % [encounter.encounter_id, choice.choice_id]
-		GameSession.karma_system.change_karma(game_state, outcome.karma_delta, karma_reason)
-
-	# Record decision
-	var pd := GameStateData.PlayerDecision.new()
-	pd.decision_id = "%s_%s" % [encounter.encounter_id, choice.choice_id]
-	pd.encounter_id = encounter.encounter_id
-	pd.choice_id = choice.choice_id
-	pd.arc_id = encounter.arc_id
-	pd.timestamp = game_state.playtime_seconds
-	pd.outcome_weight = choice.outcome_weight
-	game_state.player_decisions.append(pd)
+	_apply_outcome(game_state, encounter, outcome, choice.choice_id, choice.outcome_weight)
 
 	# Mark encounter as completed
 	if encounter.encounter_id not in game_state.completed_encounters:
@@ -168,6 +128,17 @@ func apply_dialogue_step_outcome(
 	if outcome == null:
 		return
 
+	_apply_outcome(game_state, encounter, outcome, choice.choice_id, 0.0)
+
+
+## Shared helper that applies outcome effects: story flags, resources, factions, karma, and records the decision.
+func _apply_outcome(
+	game_state: GameStateData,
+	encounter: Encounter,
+	outcome: Encounter.EncounterOutcome,
+	choice_id: String,
+	record_weight: float = 0.0,
+) -> void:
 	# Set story flags
 	for flag in outcome.story_flags_set:
 		game_state.story_flags[flag] = true
@@ -199,17 +170,17 @@ func apply_dialogue_step_outcome(
 
 	# Apply karma change
 	if outcome.karma_delta != 0 and GameSession.karma_system != null:
-		var karma_reason: String = "%s:%s" % [encounter.encounter_id, choice.choice_id]
+		var karma_reason: String = "%s:%s" % [encounter.encounter_id, choice_id]
 		GameSession.karma_system.change_karma(game_state, outcome.karma_delta, karma_reason)
 
 	# Record decision
 	var pd := GameStateData.PlayerDecision.new()
-	pd.decision_id = "%s_%s" % [encounter.encounter_id, choice.choice_id]
+	pd.decision_id = "%s_%s" % [encounter.encounter_id, choice_id]
 	pd.encounter_id = encounter.encounter_id
-	pd.choice_id = choice.choice_id
+	pd.choice_id = choice_id
 	pd.arc_id = encounter.arc_id
 	pd.timestamp = game_state.playtime_seconds
-	pd.outcome_weight = 0.0
+	pd.outcome_weight = record_weight
 	game_state.player_decisions.append(pd)
 
 

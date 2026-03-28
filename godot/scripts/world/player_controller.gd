@@ -39,11 +39,29 @@ func _update_animation() -> void:
 		return
 
 	if _direction.length() > 0.1:
-		# Determine facing from movement
-		if absf(_direction.x) > absf(_direction.y):
-			_facing = "right" if _direction.x > 0 else "left"
-		else:
-			_facing = "down" if _direction.y > 0 else "up"
+		var angle = _direction.angle()
+		var new_facing = _facing
+		
+		# 8-way angle mapping
+		if angle > -PI/8 and angle <= PI/8: new_facing = "right"
+		elif angle > PI/8 and angle <= 3*PI/8: new_facing = "dr"
+		elif angle > 3*PI/8 and angle <= 5*PI/8: new_facing = "down"
+		elif angle > 5*PI/8 and angle <= 7*PI/8: new_facing = "dl"
+		elif angle > 7*PI/8 or angle <= -7*PI/8: new_facing = "left"
+		elif angle > -7*PI/8 and angle <= -5*PI/8: new_facing = "ul"
+		elif angle > -5*PI/8 and angle <= -3*PI/8: new_facing = "up"
+		elif angle > -3*PI/8 and angle <= -PI/8: new_facing = "ur"
+		
+		var is_diag = new_facing in ["dr", "dl", "ur", "ul"]
+		
+		# Fallback to 4-way if diagonal animation doesn't exist
+		if is_diag and sprite.sprite_frames and not sprite.sprite_frames.has_animation("walk_" + new_facing):
+			if absf(_direction.x) >= absf(_direction.y):
+				new_facing = "right" if _direction.x > 0 else "left"
+			else:
+				new_facing = "down" if _direction.y > 0 else "up"
+					
+		_facing = new_facing
 		_play_anim("walk_" + _facing)
 	else:
 		_play_anim("idle_" + _facing)

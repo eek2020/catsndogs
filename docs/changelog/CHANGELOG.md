@@ -6,6 +6,209 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-03-27 — Code Review Fixes (P0 + P1)
+
+**Bug Fix / Refactor:** Applied fixes from full codebase code review, addressing critical bugs, performance issues, and code quality.
+
+### P0 — Critical Fixes
+
+- **Fixed** `dialogue_manager.gd` passing a Control instance to `push_overlay()` instead of a scene key string — was a runtime crash
+- **Fixed** R key input collision — `repair` action rebound from R (keycode 82) to T (keycode 84) to avoid conflict with `menu_select`
+- **Added** null guards for `player_ship` in all `CrewMoraleSystem` methods — prevents crashes during early init or corrupted saves
+- **Fixed** `dialogue_manager.gd` using `.get("reputation")` on Faction object — now correctly reads `.reputation_with_player`
+
+### P1 — Pre-Alpha Fixes
+
+- **Refactored** `EncounterEngine` — extracted shared `_apply_outcome()` helper to eliminate duplicated outcome logic between `apply_choice_outcome()` and `apply_dialogue_step_outcome()`
+- **Added** bounds check on `choice_index` in `apply_choice_outcome()` to prevent out-of-range crash
+- **Added** save data version migration framework in `SaveManager._migrate_save_data()`
+- **Fixed** scene transition tween lifetime — fade-in after scene change now uses `tree.create_tween()` instead of `create_tween()` to avoid operating on a freed node
+- **Added** playtime tracking — `GameSession._process()` now increments `game_state.playtime_seconds`
+- **Fixed** atomic save race condition — removed explicit delete-before-rename; previous save now backed up as `.bak`
+- **Replaced** `print()` calls with `print_debug()` in `save_manager.gd` and `crew_morale_system.gd`
+
+### Additional Improvements
+
+- **Fixed** `star_map_screen.gd` calling `queue_redraw()` every frame — now throttled to every 0.5s
+- **Removed** unnecessary `move_and_slide()` calls with zero velocity in NPC idle/talk states
+- **Added** `has_active_overlay()` public method to `main.gd` — `navigation.gd` now uses it instead of accessing private `_overlay_stack`
+- **Removed** unnecessary `randomize()` call in `navigation.gd` (Godot 4 auto-randomizes)
+
+---
+
+## 2026-03-26 — Map Layout, Building, Tree, and Bridge Overhaul
+
+**Enhancement:** Fixed building layering, tree consistency, and bridge construction. Added landing island as player spawn point.
+
+### Changes
+
+- **Fixed** building `roof_rows` — Bryn's Oddities and Blacksmith now use `roof_rows=2` so full roof renders on top layer instead of being split with walls
+- **Fixed** Blacksmith atlas position from unconfirmed `(5,30)` to confirmed `(0,30)` (GREEN Large)
+- **Removed** Tower annex building that used unconfirmed atlas position `(10,30)` causing garbage tiles
+- **Fixed** trees — removed teal/green mixing that caused visual clash; all trees now use consistent green `TREE_CANOPY` variants
+- **Redesigned** water layout — upper bay, narrow channel, lower bay with a grass landing island (rows 11-16, cols 0-3)
+- **Rebuilt** bridge — proper plank bridge with fence railings spanning the channel from landing island to mainland
+- **Moved** player spawn to landing island `(2, 13)` — player arrives at outpost via bridge
+- **Updated** water colliders to match new layout with bridge walkway excluded
+- **Moved** hidden chests from former water area to landing island
+
+---
+
+## 2026-03-26 — Fix Water Tile Artifacts with Animated Water
+
+**Bug Fix:** Replaced broken water tiles (which were referencing random prop/decoration tiles from the Serene Village atlas) with the proper `water_waves_32x32.png` animation strip as a dedicated tileset source.
+
+### Changes
+
+- **Added** `water_waves_32x32.png` as Source 2 in `world_tileset.tres` with 14-frame animation at 6 FPS (random start mode for natural variation)
+- **Rewrote** `_paint_water()` in `fringe_haven_outpost.gd` — uses animated water tile for all water cells with edge detection for grass-water transition tiles from world_atlas row 18
+- **Removed** incorrect `WATER` / `WATER_DEEP` constants that pointed to prop tiles (e.g. `Vector2i(12, 1)`, `Vector2i(3, 4)`) causing orange/brown artifacts
+- **Added** shore edge tile constants (`SHORE_*`, `EDGE_*`) from world_atlas rows 9 and 18 for proper water-land transitions
+
+---
+
+## 2026-03-26 — Fringe Haven Tileset Upgrade (Serene Village)
+
+**Enhancement:** Integrated Serene Village 32x32 asset pack as the primary tileset for Fringe Haven Outpost, replacing the flat placeholder tiles with rich pixel art buildings, terrain, and vegetation.
+
+### Changes
+
+- **Added** `godot/assets/tiles/fringe_haven/` — consolidated assets folder with Serene Village 32x32 atlas, Overworld tileset reference, and animated elements (campfire, water, door)
+- **Archived** original asset packs to `design/archive/`
+- **Updated** `world_tileset.tres` — dual-source tileset: Source 0 = legacy world_atlas (backward compat), Source 1 = Serene Village atlas (855 tiles)
+- **Rewrote** `fringe_haven_outpost.gd` — complete procedural map generation using Serene Village building sprites (red/green/blue roofed buildings), 2-tile tall trees with canopy/trunk pairs, mixed water depths, dirt/plank roads, and proper roof/decor layer separation
+- **Preserved** tavern.gd and planet_surface.gd compatibility via Source 0 legacy atlas
+
+---
+
+## 2026-03-26 — Rename Oakhaven to Fringe Haven
+
+**Refactor:** Renamed the "Oakhaven Outpost" world scene to "Fringe Haven Outpost" to match the planet name from the planet registry. All file names, node names, scene paths, labels, and cross-references updated.
+
+### Changes
+
+- **Renamed** `oakhaven_outpost.tscn` → `fringe_haven_outpost.tscn`, root node `OakhavenOutpost` → `FringeHavenOutpost`
+- **Renamed** `oakhaven_outpost.gd` → `fringe_haven_outpost.gd`, updated in-game label to "FRINGE HAVEN OUTPOST"
+- **Renamed** `build_oakhaven.gd` → `build_fringe_haven.gd`, updated success message
+- **Renamed** `oakhaven-exact-match-asset-checklist.md` → `fringe-haven-exact-match-asset-checklist.md`
+- **Updated** `navigation.gd` — `FRINGE_HAVEN_SCENE_PATH` now points to renamed scene
+- **Updated** `star_map_screen.gd` — `WORLD_SCENE_MAP` starting_realm path updated
+- **Updated** `tavern.tscn` — exit door `target_scene_path` updated
+- **Updated** `tileset_generator_v2.py` — comment headers updated
+
+---
+
+## 2026-03-26 — Fix: Sprite disappearing during diagonal movement
+
+**Bug Fix:** Player sprite would intermittently disappear while moving diagonally. The diagonal-to-cardinal animation fallback failed when `_facing` was already a diagonal direction, leaving the animation name unresolved and falling back to idle.
+
+### Changes
+
+- **Fixed** `player_controller.gd` — simplified diagonal fallback to always pick the dominant axis (X or Y) for cardinal direction, removing the dependency on the previous `_facing` state that caused the bug
+
+---
+
+## 2026-03-25 — Fix: Sprite Sheets and Animation System
+
+**Bug Fix:** Complete overhaul of character sprite rendering. Sprite sheets had dark opaque backgrounds, irregular grids with labels/gaps, and wrong frame coordinates causing broken animations (scattered body parts, black rectangles).
+
+### Changes
+
+- **Processed** all 14 sprite sheets — removed dark backgrounds (transparent), extracted clean uniform 8×N grids of 128×128 frames (no labels, no gaps)
+- **Regenerated** all 15 `godot/resources/*_spriteframes.tres` files — correct atlas regions for clean grid, proper row assignments (walk=rows 0-3, idle=rows 16-19), all 4 directional idles
+- **Created** `whiskers_spriteframes.tres` and `whiskers_spritesheet.png` — placeholder using merchant sprite for Whiskers the Trader
+- **Fixed** `planet_surface.gd` — updated SPRITE_COLS (4→8), frame size (293×144→128×128), dynamic vframes from texture height, removed runtime background removal
+- **Fixed** `planet_screen.gd` — same sprite constant corrections
+
+---
+
+## 2026-03-26 — Feature: Tile-Based Planet Surface Overhaul
+
+**Feature:** Replaced the draw-based planet_screen with a proper TileMap-based planet surface. Generates procedural town layouts with buildings, paths, trees, water features, fences, and scattered decor. New detailed pixel-art 32×32 tile atlas with 256 tiles across 16 terrain/object categories.
+
+### New Files
+
+- **Created** `tools/godot-dev/tiles/tileset_generator_v2.py` — Detailed pixel-art tile atlas generator producing 512×512 atlas (16×16 grid) with textured grass, dirt paths, cobblestone, water with shores, tree canopies/trunks, building walls/roofs, doors, windows, signs, chests, barrels, crates, fences, bridges, stairs, and marker tiles
+- **Created** `godot/scripts/ui/planet_surface.gd` — New planet surface controller extending Control with SubViewport-based tilemap rendering, procedural town layout generation, 8-direction player movement with collision, merchant/treasure entity placement, interaction system, and camera following
+- **Created** `godot/scenes/ui/planet_surface.tscn` — Planet surface scene with Control root, SubViewportContainer+SubViewport hosting 4-layer TileMapLayers (Ground, Path, Decor, Roof), Entities node, and HUD overlay (title, loot, flash, depart button, controls hint)
+
+### Modified Files
+
+- **Modified** `godot/assets/tiles/world_atlas.png` — Regenerated with detailed pixel-art tiles (was colored squares with labels)
+- **Modified** `godot/resources/world_tileset.tres` — Updated terrain sets for new atlas layout (Grass, Dirt, Stone, Water, Wall, Roof, Wood, Fence)
+- **Modified** `godot/scripts/ui/main.gd` — Planet scene key now points to `planet_surface.tscn`
+
+### How It Works
+
+- **Map Generation:** Each planet gets a deterministic tilemap layout seeded from `hash(planet_id)`. Layout includes grass ground, dirt crossroads with stone plaza, 4-8 randomly placed buildings with walls/roofs/doors/windows, edge and scattered trees, a water pond, fences, and decorative objects (barrels, crates, lamps, signs).
+- **Player:** 8-direction movement with spritesheet animation, background-removed sprite, collision against walls/trees/water/hedges.
+- **Entities:** Merchants shown as blue circle indicators with labels, treasures as chest tiles with golden indicators. Proximity-based interact prompts.
+- **Camera:** Smooth-follow camera at 2× zoom centered on player.
+
+---
+
+## 2026-03-26 — Feature: Procedural Map Generator Integration
+
+**Feature:** Integrated the ProceduralWorldMap plugin (FastNoiseLite-based) across navigation space view and Celestial Codex star map (planet surface uses tile-based approach instead). Each region gets a unique seed-based procedural backdrop with custom color palettes.
+
+### New Files
+
+- **Created** `godot/scripts/autoload/procedural_map_manager.gd` — ProceduralMapManager autoload singleton providing cached procedural textures for navigation (space nebulae), star map (galaxy/region backdrops), and planet surfaces (terrain maps). Includes region seed mapping, three distinct color palettes (space, galaxy, planet), region-specific tint colors, biome-aware planet terrain colors, and datasource lifecycle management.
+
+### Modified Files
+
+- **Modified** `godot/project.godot` — Enabled ProceduralWorldMap editor plugin; registered ProceduralMapManager as autoload singleton
+- **Modified** `godot/scripts/ui/navigation.gd` — Added procedural nebula backdrop behind starfield; nebula pans with ship movement (quantized to 80-unit steps); regenerates on region transition; region-specific tint coloring
+- **Modified** `godot/scripts/ui/star_map_screen.gd` — Added procedural galaxy backdrop to Galaxy layer with purple-tinted nebula clouds; added region-specific procedural backdrop to Region layer circular map view
+- **Modified** `godot/scripts/ui/planet_screen.gd` — Replaced flat-color ground with procedural terrain texture; biome-aware color palette (settlement/industrial/enchanted/wilderness); subtle ambient tint overlay; semi-transparent grid lines over terrain
+
+### How It Works
+
+- **Navigation:** Quarter-resolution nebula texture rendered behind starfield, tinted per-region (e.g. purple-blue for The Fringe, warm amber for Feline Courts). Updates as ship moves across the map.
+- **Celestial Codex:** Galaxy layer gets a fixed-seed galactic nebula backdrop; Region layer gets a per-region procedural texture behind the circular sector map.
+- **Planet Surface:** Each planet gets a unique procedural terrain based on `hash(planet_id)` with biome-specific color shifting (e.g. enchanted planets get purple/teal tones).
+- **Performance:** All textures generated at reduced resolution and cached. Navigation backdrop updates only every 80 world-units of movement.
+
+---
+
+## 2026-03-25 — Feature: Wire New Character Spritesheets
+
+**Feature:** Added SpriteFrames resources for 12 new character spritesheets and updated the NPC controller to auto-load sprites by `npc_id` convention.
+
+### New Files
+- **Created** `godot/resources/blood_paw_spriteframes.tres` — Crew member Blood Paw
+- **Created** `godot/resources/death_spriteframes.tres` — Rival captain Death
+- **Created** `godot/resources/fairy_cartographer_spriteframes.tres` — Fairy Cartographer NPC
+- **Created** `godot/resources/landlord_spriteframes.tres` — Landlord NPC
+- **Created** `godot/resources/merchant_spriteframes.tres` — Merchant NPC
+- **Created** `godot/resources/nine_lives_spriteframes.tres` — Crew member Nine Lives
+- **Created** `godot/resources/no_tail_spriteframes.tres` — Crew member No Tail
+- **Created** `godot/resources/npc_bard_spriteframes.tres` — Bard NPC
+- **Created** `godot/resources/npc_guard_spriteframes.tres` — Guard NPC
+- **Created** `godot/resources/npc_sailor_spriteframes.tres` — Sailor NPC
+- **Created** `godot/resources/npc_urchin_spriteframes.tres` — Urchin NPC
+- **Created** `godot/resources/silky_spriteframes.tres` — Crew member Silky
+
+### Modified Files
+- **Modified** `godot/scripts/world/npc_controller.gd` — Added `_load_sprite_frames()` to auto-load `res://resources/{npc_id}_spriteframes.tres` at ready time
+
+---
+
+## 2026-03-25 — Feature: Star Wars-Style Intro Crawl
+
+**Feature:** Replaced the old typewriter cutscene intro with a Star Wars-style bottom-to-top scrolling text crawl. The text scrolls upward over a twinkling starfield, preceded by a fade-in title card. Enriched intro story text draws from full game lore — factions, crew members, rival threats, and the Whisper Crystals premise. Both Aristotle and Dave paths have unique, protagonist-specific crawl text (~15 paragraphs each).
+
+### New Files
+- **Created** `godot/scripts/ui/intro_crawl.gd` — Star Wars-style crawl controller with phases (title fade-in/hold/fade-out → crawl scroll), twinkling procedural starfield, fast-forward (SPACE/DOWN) and skip (ESC) controls
+- **Created** `godot/scenes/ui/intro_crawl.tscn` — Scene with starfield background, title container, SubViewportContainer for crawl text rendering, fade overlays, skip hint label
+
+### Modified Files
+- **Modified** `godot/data/characters/protagonists.json` — Added `intro_crawl` arrays with 15-16 enriched story paragraphs per protagonist, covering factions, crew, threats, and setting
+- **Modified** `godot/scripts/ui/main.gd` — Registered `intro_crawl` scene in SCENES dictionary
+- **Modified** `godot/scripts/ui/skill_allocation.gd` — Changed post-confirm flow from `cutscene` → `intro_crawl`
+
+---
+
 ## 2026-03-25 — Feature: 2D World Gameplay Layer
 
 **Feature:** Added a full 2D world layer on top of the existing UI-screen-based game systems. Includes tilemap-based world scenes, a playable CharacterBody2D player, NPC state machines with pathfinding and dialogue triggers, scene transitions with fade effects, and an example interior (tavern). The Celestial Codex star map now supports travel-to-world-scene flow.

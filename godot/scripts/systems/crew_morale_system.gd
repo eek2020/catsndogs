@@ -23,6 +23,8 @@ static func morale_label(value: int) -> String:
 
 
 func get_average_morale(game_state: GameStateData) -> int:
+	if game_state.player_ship == null:
+		return 100
 	var crew: Array = game_state.player_ship.crew
 	if crew.is_empty():
 		return 100
@@ -37,6 +39,8 @@ func get_morale_status(game_state: GameStateData) -> String:
 
 
 func get_crew_by_morale(game_state: GameStateData) -> Array:
+	if game_state.player_ship == null:
+		return []
 	var result: Array = []
 	for c in game_state.player_ship.crew:
 		result.append([c.crew_name, c.morale, morale_label(c.morale)])
@@ -49,6 +53,8 @@ func change_crew_morale(
 	delta: int,
 	crew_id: String = "",
 ) -> void:
+	if game_state.player_ship == null:
+		return
 	var crew: Array = game_state.player_ship.crew
 	var morale_bonus: float = 0.0
 	if GameSession.crew_trait_system != null:
@@ -62,7 +68,7 @@ func change_crew_morale(
 			effective_delta = int(effective_delta * (1.0 + morale_bonus))
 		member.morale = clampi(member.morale + effective_delta, 0, 100)
 		if old_morale > MUTINY_THRESHOLD and member.morale <= MUTINY_THRESHOLD:
-			print("Crew mutiny risk: %s (morale %d)" % [member.crew_name, member.morale])
+			print_debug("Crew mutiny risk: %s (morale %d)" % [member.crew_name, member.morale])
 
 
 func get_combat_modifier(game_state: GameStateData) -> float:
@@ -113,6 +119,8 @@ func on_idle_tick(game_state: GameStateData) -> void:
 
 
 func check_faction_loyalty(game_state: GameStateData) -> Array[String]:
+	if game_state.player_ship == null:
+		return []
 	var conflicts: Array[String] = []
 	for member in game_state.player_ship.crew:
 		var faction: Faction = game_state.faction_registry.get(member.faction_origin)
@@ -122,6 +130,8 @@ func check_faction_loyalty(game_state: GameStateData) -> Array[String]:
 
 
 func apply_faction_loyalty_effects(game_state: GameStateData) -> void:
+	if game_state.player_ship == null:
+		return
 	for member in game_state.player_ship.crew:
 		var faction: Faction = game_state.faction_registry.get(member.faction_origin)
 		if faction and faction.reputation_with_player <= -50:

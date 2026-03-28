@@ -52,12 +52,19 @@ func _ready() -> void:
 	planet_system = PlanetSystem.new()
 	save_manager = SaveManager.new()
 
+	set_process(true)
+
 	# Wire EventBus signals
 	EventBus.arc_advanced.connect(_on_arc_advanced)
 	EventBus.game_ending_reached.connect(_on_game_ending_reached)
 	EventBus.crew_member_recruited.connect(_on_crew_member_recruited)
 	EventBus.combat_victory.connect(_on_combat_victory)
 	EventBus.cartographer_rescued.connect(_on_cartographer_rescued)
+
+
+func _process(delta: float) -> void:
+	if game_state != null:
+		game_state.playtime_seconds += delta
 
 
 # ------------------------------------------------------------------

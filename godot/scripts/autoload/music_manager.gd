@@ -10,6 +10,7 @@ const STATE_THEMES: Dictionary = {
 	"trade": "theme_trade",
 	"dialogue": "theme_dialogue",
 	"cutscene": "theme_cutscene",
+	"intro_crawl": "story_theme",
 	"ending": "theme_ending",
 	"pause": "",
 	"settings": "",

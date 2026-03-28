@@ -24,12 +24,17 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 EventBus="*res://scripts/autoload/event_bus.gd"
 GameSession="*res://scripts/autoload/game_session.gd"
 MusicManager="*res://scripts/autoload/music_manager.gd"
+ProceduralMapManager="*res://scripts/autoload/procedural_map_manager.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/procedural_world_map/plugin.cfg")
 
 [input]
 
@@ -94,7 +99,7 @@ mission_log={
 }
 repair={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":82,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":84,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 star_map={

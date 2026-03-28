@@ -40,6 +40,16 @@
                 "The Canis League wants them. The Lions demand tribute. Something ancient watches from the shadows.",
                 "And so the journey begins."
             ],
+            "intro_crawl": [
+                "In a multiverse of interconnected realms, starships sail between worlds powered by rare, humming stones called Whisper Crystals. Without them, no ship flies. No fleet moves. No empire functions.",
+                "Eight factions vie for dominance \u2014 Lions, Wolves, the Canis League, Fairies, Goblins, Knights, and stranger things still. And caught between them all: the Felid Corsairs. Pirates. Outcasts. Free.",
+                "Among their number: a street cat named Aristotle. No title. No lineage. Just sharp wits and a stubborn refusal to bow.",
+                "At the edge of known space, he stumbles upon a vein of raw Whisper Crystals and teaches himself to refine them \u2014 a secret no other faction possesses. Aboard the corsair raider The Whisper, he forges an empire before the Lions even notice.",
+                "But power of this magnitude does not go unnoticed for long. Commander Dave of the Canis League sets course to break the monopoly. The Lions demand tribute. And in the shadows, a rival captain known only as Death watches, his decaying ship transmitting nothing but a low, rumbling purr.",
+                "War is coming. Not a war between cats and dogs \u2014 but a war for the soul of every realm and every creature that depends on the crystals to survive.",
+                "One street cat. One impossible resource. A multiverse on the edge of collapse.",
+                "And so the journey begins."
+            ],
             "description": "A street cat turned Corsair captain. Cunning, fast, and fiercely independent. Controls the multiverse's only supply of Whisper Crystals.",
             "story_flags": {
                 "arc1_crystal_discovered": false,
@@ -86,6 +96,16 @@
                 "Commander Dave \u2014 loyal officer of the Canis League \u2014 receives orders that will change everything.",
                 "A cat corsair has seized the only known crystal source. The League's ships will starve without fuel.",
                 "Duty demands action. But the deeper Dave digs, the more he questions who the real enemy is.",
+                "And so the hunt begins."
+            ],
+            "intro_crawl": [
+                "Civilisation was built on the power of Whisper Crystals \u2014 rare, resonant stones that fuel every starship, every fleet, every empire. Without them, the jump gates fall silent. Worlds go dark.",
+                "For generations, the Canis League has kept order through military discipline, pack loyalty, and an iron chain of command. Their fleets are the mightiest in known space.",
+                "But even the greatest navy cannot sail without fuel. A Felid Corsair \u2014 a common pirate named Aristotle \u2014 has seized the only known crystal source and learned to refine them. He answers to no one.",
+                "Into this maelstrom steps Commander Dave. Loyal. Methodical. Quietly relentless. Given command of The Iron Paw and a simple order: secure the crystals. By any means necessary.",
+                "But rumours reach him of something else. A derelict ship drifting at the edge of known space, transmitting nothing but a low, rumbling purr. They call its captain Death.",
+                "The deeper Dave digs, the more questions surface. Why do the Lions want the crystals so badly? What are the Wolves truly planning? And what is this ancient power that pulses at the heart of every crystal he touches?",
+                "One commander. One impossible mission. A multiverse of enemies who may not be what they seem.",
                 "And so the hunt begins."
             ],
             "description": "A disciplined Canis League Commander. Loyal, tactical, and burdened by duty. Sent to secure the crystals by any means necessary.",

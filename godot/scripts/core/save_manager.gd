@@ -48,11 +48,13 @@ func save_game(game_state: GameStateData, slot: int) -> bool:
 		return false
 	file.store_string(json_string)
 	file.close()
-	# Atomic rename
+	# Keep one backup of the previous save
+	var bak_path := path + ".bak"
 	if FileAccess.file_exists(path):
-		DirAccess.remove_absolute(path)
+		DirAccess.rename_absolute(path, bak_path)
+	# Atomic rename (overwrites target on most OS)
 	DirAccess.rename_absolute(tmp_path, path)
-	print("Game saved to slot %d: %s" % [slot, path])
+	print_debug("Game saved to slot %d: %s" % [slot, path])
 	return true
 
 
@@ -62,7 +64,7 @@ func load_game(slot: int) -> GameStateData:
 		return null
 	var path := _slot_path(slot)
 	if not FileAccess.file_exists(path):
-		print("No save file for slot %d" % slot)
+		print_debug("No save file for slot %d" % slot)
 		return null
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -77,6 +79,7 @@ func load_game(slot: int) -> GameStateData:
 		return null
 	var data: Dictionary = json.data
 	data.erase("_meta")
+	data = _migrate_save_data(data)
 	return GameStateData.from_dict(data)
 
 
@@ -110,6 +113,18 @@ func get_save_info() -> Array:
 	return result
 
 
+## Migrate save data from older versions to the current schema.
+## Add migration steps here as the data format evolves.
+func _migrate_save_data(data: Dictionary) -> Dictionary:
+	var _version: String = data.get("version", "0.1.0")
+	# Add migration steps here as the data format evolves, e.g.:
+	# if _version == "0.1.0":
+	#     data["new_field"] = default_value
+	#     data["version"] = "0.2.0"
+	#     _version = "0.2.0"
+	return data
+
+
 func delete_save(slot: int) -> bool:
 	if slot < 0 or slot >= MAX_SAVE_SLOTS:
 		return false
@@ -119,5 +134,5 @@ func delete_save(slot: int) -> bool:
 		if err != OK:
 			push_error("Failed to delete save slot %d" % slot)
 			return false
-		print("Deleted save slot %d" % slot)
+		print_debug("Deleted save slot %d" % slot)
 	return true

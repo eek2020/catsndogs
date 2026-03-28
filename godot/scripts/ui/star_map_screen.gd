@@ -13,6 +13,11 @@ var _bounds: Vector2 = Vector2.ZERO
 var _elapsed: float = 0.0
 var _selected_region: String = ""
 
+# Procedural backdrop textures
+var _galaxy_backdrop: ImageTexture = null
+var _region_backdrop: ImageTexture = null
+var _region_backdrop_id: String = ""
+
 const MAP_PADDING: float = 20.0
 const POI_BLIP_SIZE: float = 6.0
 const LEGEND_WIDTH: float = 140.0
@@ -39,9 +44,15 @@ func _ready() -> void:
 	_load_map_data()
 
 
+var _redraw_timer: float = 0.0
+const REDRAW_INTERVAL: float = 0.5
+
 func _process(dt: float) -> void:
 	_elapsed += dt
-	map_canvas.queue_redraw()
+	_redraw_timer -= dt
+	if _redraw_timer <= 0.0:
+		_redraw_timer = REDRAW_INTERVAL
+		map_canvas.queue_redraw()
 
 
 func _load_map_data() -> void:
@@ -99,8 +110,13 @@ func _draw_galaxy_layer() -> void:
 
 	var default_font: Font = ThemeDB.fallback_font
 
-	# Background
-	map_canvas.draw_rect(Rect2(Vector2.ZERO, canvas_size), Color(0.02, 0.03, 0.07, 0.6))
+	# Procedural galaxy backdrop
+	if _galaxy_backdrop == null:
+		_galaxy_backdrop = ProceduralMapManager.generate_codex_texture(7777, Vector2i(int(canvas_size.x) / 3, int(canvas_size.y) / 3), 3.0, Vector2.ZERO)
+	if _galaxy_backdrop != null:
+		map_canvas.draw_texture_rect(_galaxy_backdrop, Rect2(Vector2.ZERO, canvas_size), false, Color(0.6, 0.5, 0.8, 0.3))
+	# Background overlay
+	map_canvas.draw_rect(Rect2(Vector2.ZERO, canvas_size), Color(0.02, 0.03, 0.07, 0.4))
 
 	# Vignette
 	var center := canvas_size * 0.5
@@ -394,8 +410,17 @@ func _draw_region_layer() -> void:
 	var map_scale: float = minf(scale_x, scale_y)
 	var offset := map_center - (bounds * map_scale * 0.5)
 
-	# --- Circular background ---
-	map_canvas.draw_circle(map_center, map_radius, Color(0.02, 0.03, 0.07, 0.45))
+	# --- Circular background with procedural backdrop ---
+	# Generate a region-specific procedural texture
+	var region_seed: int = ProceduralMapManager.REGION_SEEDS.get(view_region, hash(view_region))
+	if _region_backdrop == null or _region_backdrop_id != view_region:
+		_region_backdrop = ProceduralMapManager.generate_codex_texture(region_seed, Vector2i(int(map_radius * 0.5), int(map_radius * 0.5)), 6.0, Vector2.ZERO)
+		_region_backdrop_id = view_region
+	if _region_backdrop != null:
+		# Clip to circle by drawing backdrop then covering outside with bg color
+		var region_tint: Color = ProceduralMapManager.get_region_tint(view_region)
+		map_canvas.draw_texture_rect(_region_backdrop, Rect2(map_center - Vector2(map_radius, map_radius), Vector2(map_radius * 2, map_radius * 2)), false, Color(region_tint.r, region_tint.g, region_tint.b, 0.25))
+	map_canvas.draw_circle(map_center, map_radius, Color(0.02, 0.03, 0.07, 0.35))
 
 	# Vignette
 	var ring_count: int = 20
@@ -984,7 +1009,7 @@ var _travel_confirm_visible: bool = false
 var _travel_target_region: String = ""
 
 const WORLD_SCENE_MAP := {
-	"starting_realm": "res://scenes/world/world.tscn",
+	"starting_realm": "res://scenes/world/fringe_haven_outpost.tscn",
 	"tavern": "res://scenes/world/tavern.tscn",
 }
 

@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="TileSet" path="res://resources/world_tileset.tres" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/world/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="3"]
+[ext_resource type="Script" path="res://scripts/world/scene_transition.gd" id="4"]
+
+[sub_resource type="RectangleShape2D" id="tavern_door_shape"]
+size = Vector2(32, 16)
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -21,3 +27,35 @@ z_index = 2
 
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="Player" parent="Entities" instance=ExtResource("2")]
+position = Vector2(320, 320)
+
+[node name="Aristotle" parent="Entities" instance=ExtResource("3")]
+position = Vector2(192, 192)
+npc_id = "aristotle"
+npc_name = "Aristotle"
+dialogue_id = "aristotle_hub"
+faction_id = "felid_corsairs"
+patrol_points = PackedVector2Array(192, 192, 288, 192, 288, 288, 192, 288)
+
+[node name="Dave" parent="Entities" instance=ExtResource("3")]
+position = Vector2(448, 256)
+npc_id = "dave"
+npc_name = "Dave"
+dialogue_id = "dave_hub"
+faction_id = "felid_corsairs"
+patrol_points = PackedVector2Array(448, 256, 544, 256, 544, 320, 448, 320)
+
+[node name="TavernEntrance" type="Area2D" parent="."]
+position = Vector2(320, 160)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("4")
+target_scene_path = "res://scenes/world/tavern.tscn"
+spawn_position = Vector2(160, 224)
+spawn_facing = "down"
+transition_label = "Enter Tavern"
+
+[node name="DoorShape" type="CollisionShape2D" parent="TavernEntrance"]
+shape = SubResource("tavern_door_shape")

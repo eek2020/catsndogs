@@ -80,6 +80,8 @@ var _nearby_base_id: String = ""
 
 # Planet landing
 var _nearby_planet_id: String = ""
+const FRINGE_HAVEN_PLANET_ID: String = "fringe_haven"
+const FRINGE_HAVEN_SCENE_PATH: String = "res://scenes/world/fringe_haven_outpost.tscn"
 
 const FLIP_SPEED: float = 6.0
 const BANK_MAX_ANGLE: float = 0.30       # ~17 degrees max banking tilt
@@ -89,6 +91,10 @@ const VERTICAL_BLEND_SPEED: float = 5.0
 # Engine trail particles: Array of {x, y, life, max_life}
 var _trail: Array = []
 
+# Procedural nebula backdrop
+var _nebula_texture: ImageTexture = null
+var _nebula_tint: Color = Color(0.6, 0.6, 0.8)
+
 # Distress signals handled by SideMissionSystem.update_distress()
 
 # First-run welcome
@@ -96,11 +102,11 @@ var _showed_welcome: bool = false
 
 
 func _ready() -> void:
-	randomize()
 	_ship_texture = _remove_background_by_corners(_ship_texture)
 	_ship_up_texture = _remove_background_by_corners(_ship_up_texture)
 	_ship_rotate_texture = _remove_background_by_corners(_ship_rotate_texture)
 	_build_starfield()
+	_refresh_nebula()
 	flash_label.text = ""
 	_poi_refresh_timer = 0.0
 	_refresh_pois()
@@ -162,13 +168,21 @@ func _build_starfield() -> void:
 		})
 
 
+func _refresh_nebula() -> void:
+	if GameSession.game_state == null:
+		return
+	var region_id: String = GameSession.game_state.current_region
+	var cam_size := Vector2i(int(size.x), int(size.y))
+	if cam_size.x <= 0 or cam_size.y <= 0:
+		cam_size = Vector2i(1280, 720)
+	_nebula_texture = ProceduralMapManager.get_nav_texture(region_id, cam_size)
+	_nebula_tint = ProceduralMapManager.get_region_tint(region_id)
+
+
 func _has_overlay() -> bool:
 	var main: Control = get_tree().current_scene
-	if main and "_overlay_stack" in main:
-		var stack: Array = main._overlay_stack
-		for overlay in stack:
-			if is_instance_valid(overlay):
-				return true
+	if main and main.has_method("has_active_overlay"):
+		return main.has_active_overlay()
 	return false
 
 
@@ -445,6 +459,9 @@ func _land_on_planet() -> void:
 	if _nearby_planet_id.is_empty():
 		return
 	if GameSession.land_on_planet(_nearby_planet_id):
+		if _nearby_planet_id == FRINGE_HAVEN_PLANET_ID:
+			get_tree().call_deferred("change_scene_to_file", FRINGE_HAVEN_SCENE_PATH)
+			return
 		var main: Control = get_tree().current_scene
 		if main.has_method("switch_scene"):
 			main.switch_scene("planet")
@@ -669,6 +686,8 @@ func _perform_region_transition() -> void:
 		_hidden_pois.clear()
 		_spawn_pois.clear()
 		_build_starfield()
+		_nebula_texture = null  # Force nebula regeneration for new region
+		_refresh_nebula()
 		_refresh_pois()
 		flash("Entered %s" % target.replace("_", " ").capitalize(), 3.0)
 	else:
@@ -806,6 +825,7 @@ func _draw() -> void:
 		return
 
 	var center := size * 0.5
+	_draw_nebula(gs)
 	_draw_starfield(center, gs)
 	_draw_fog_of_war(center, gs)
 	_draw_hazards(center, gs)
@@ -819,6 +839,15 @@ func _draw() -> void:
 	_draw_minimap(gs)
 	_draw_status_effects()
 	_draw_controls_bar()
+
+
+func _draw_nebula(gs: GameStateData) -> void:
+	_refresh_nebula()
+	if _nebula_texture == null:
+		return
+	# Draw the nebula texture stretched across the full screen with region tint
+	var tint_color := Color(_nebula_tint.r, _nebula_tint.g, _nebula_tint.b, 0.45)
+	draw_texture_rect(_nebula_texture, Rect2(Vector2.ZERO, size), false, tint_color)
 
 
 func _draw_starfield(center: Vector2, gs: GameStateData) -> void:

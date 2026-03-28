@@ -31,7 +31,8 @@ const SCENES := {
 	"star_map": "res://scenes/ui/star_map_screen.tscn",
 	"skill_allocation": "res://scenes/ui/skill_allocation.tscn",
 	"station": "res://scenes/ui/station_screen.tscn",
-	"planet": "res://scenes/ui/planet_screen.tscn",
+	"planet": "res://scenes/ui/planet_surface.tscn",
+	"intro_crawl": "res://scenes/ui/intro_crawl.tscn",
 }
 
 var _overlay_stack: Array[Control] = []
@@ -110,6 +111,13 @@ func replace_overlay(current_overlay: Control, scene_key: String) -> Control:
 	var tween := create_tween()
 	tween.tween_property(overlay, "modulate:a", 1.0, 0.15)
 	return overlay
+
+
+func has_active_overlay() -> bool:
+	for overlay in _overlay_stack:
+		if is_instance_valid(overlay):
+			return true
+	return false
 
 
 func pop_overlay() -> void:
