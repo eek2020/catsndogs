@@ -110,7 +110,8 @@ The game is **fully playable** with complete implementation of all core systems 
 
 - **Dual Protagonist System:** Choose Aristotle (cat) or Dave (dog) with unique narrative paths
 - **Complete Story Arcs:** All 4 arcs with encounter data, dialogue, and arc transition logic
-- **Crew Recruitment:** 8 recruitable crew members (4 per protagonist) with trait bonuses
+- **Deep Lore System:** Comprehensive world-building with faction histories, character backstories, and crystal network mythology
+- **Crew Recruitment:** 8 recruitable crew members (4 per protagonist) with trait bonuses and deep personal stories
 - **Branching Dialogue:** Two-sided conversations with portrait support and multiple outcomes
 - **Combat System:** Tactical combat with ship upgrades, damage calculations, and victory/defeat states
 - **Economy & Trade:** Crystal extraction, supply routes, shipyard (repairs, upgrades, ship purchases)
@@ -133,6 +134,7 @@ See `docs/plans/MASTER_PLAN.md` for detailed technical specifications and develo
 ## Documentation
 
 - [`docs/plans/MASTER_PLAN.md`](docs/plans/MASTER_PLAN.md) — Active plan: current state, tasks, roadmap
+- [`docs/story/LORE_EXPANSION.md`](docs/story/LORE_EXPANSION.md) — Deep world-building: faction histories, character backstories, crystal network mythology
 - [`docs/architecture/TRD-001`](docs/architecture/TRD-001_Technical_Architecture_Stack.md) — Technical Architecture & Stack
 - [`docs/architecture/TRD-002`](docs/architecture/TRD-002_Game_Engine_Prototype_Specification.md) — Game Engine & Prototype Specification
 - [`docs/architecture/TRD-003`](docs/architecture/TRD-003_Data_Model_State_Management.md) — Data Model & State Management
