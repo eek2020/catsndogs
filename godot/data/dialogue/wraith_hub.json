@@ -1,0 +1,255 @@
+{
+    "dialogue_tree_id": "wraith_hub",
+    "character_id": "wraith",
+    "nodes": {
+        "root": {
+            "text": "The channel hisses before Petrel Vane speaks. When he does, the theatrical menace is gone. 'Captain. I didn't call to threaten you today. I called because I think you're the only person in this multiverse who might understand what I'm going to say.'",
+            "choices": [
+                {
+                    "text": "Ask what he wants you to understand",
+                    "next_node_id": "wants_understanding",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell him you know his name — Petrel Vane",
+                    "next_node_id": "name_known",
+                    "conditions": {
+                        "petrel_identity_revealed": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about his father — Corr Vane",
+                    "next_node_id": "corr_vane_ask",
+                    "conditions": {
+                        "corr_vane_history_known": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] End the transmission",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "wants_understanding": {
+            "text": "'He wasn't always what he is. His name was Cornelius Vane. He was a Corsair captain — genuinely legendary. He hated Lions. He protected strays. He was, in his own twisted way, a hero of everything your faction was built on.' A pause. 'Then he found the crystals. And they found him.'",
+            "choices": [
+                {
+                    "text": "Ask what the crystals did to him",
+                    "next_node_id": "crystal_transformation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["corr_vane_history_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask how long he's been watching this happen",
+                    "next_node_id": "thirty_years",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["corr_vane_history_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "crystal_transformation": {
+            "text": "'They were alive — one of the network's last untouched gardens, on a derelict moon in what's now called the Bone Yard. They recognised him as a predator. They didn't kill him.' His voice drops. 'They held on. The shards rewrote his nervous system. His consciousness fragmented. The thing inside him that's still Corr — it's drowning in something sick.' He pauses. 'The theatrical menace, the decaying ship — that was Corr's original personality, amplified and broken. I've been watching my father become something else for fifteen years.'",
+            "choices": [
+                {
+                    "text": "Ask if there's anything left of Corr inside him",
+                    "next_node_id": "corr_inside",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what Petrel wants from you",
+                    "next_node_id": "petrel_request",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "corr_inside": {
+            "text": "'Sometimes.' His voice is the quietest it's been. 'There are moments — seconds — where he surfaces. Where he looks at me and there's recognition. Then it closes over again.' He takes a breath. 'I stayed because I thought I could reach him. Thirty years of waiting for a moment of clarity.' Another pause. 'You've been to the network. I know what you can do in there. If there are any fragments of him left...'",
+            "choices": [
+                {
+                    "text": "Tell him you'll try to reach Corr's fragments in the crystal network",
+                    "next_node_id": "promise_to_try",
+                    "conditions": {
+                        "solenne_contacted": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["petrel_joined_crew"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell him you can't promise anything about the network",
+                    "next_node_id": "honest_answer",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "promise_to_try": {
+            "text": "The silence that follows is longer than any silence you've heard from him. 'You mean that.' It's not a question. 'You actually mean that.' Something changes in his voice — it's not hope exactly, because hope can be lost again and he knows that, but it is close. 'Then I'll stand with you until you have the chance. After that — whatever happens, I can face it.' He transmits the Black Harrow's coordinates. 'Come find me when you're ready.'",
+            "choices": [
+                {
+                    "text": "[Return] End transmission",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "honest_answer": {
+            "text": "'No,' he says. 'Of course you can't. I know that.' A long exhale. 'But the fact that you said it honestly instead of telling me what I wanted to hear — that's something.' He closes down the more vulnerable frequencies in his voice; the formal Wraith posture comes back, but reduced. 'I'll be watching, Captain. I'd rather you win this than him.'",
+            "choices": [
+                {
+                    "text": "[Return] End transmission",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "thirty_years": {
+            "text": "'Fifteen, actively. Thirty if you count the years before it went wrong.' He doesn't perform the numbers — he just says them. 'He was my father before he was a monster. He hated Lions. He protected strays. He was everything the Corsairs are supposed to be, before the crystals.' His voice goes flat. 'I stayed because I thought there would be a moment of clarity. One moment where he looked at me and knew who I was. There might still be. But I don't think I can hold on much longer.'",
+            "choices": [
+                {
+                    "text": "Ask what you can do",
+                    "next_node_id": "petrel_request",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "petrel_request": {
+            "text": "'In Arc 10 — when you face him — if you can reach the network first, look for the fragments that are still Corr. Not the sick ones. The older ones.' He pauses. 'I'm not asking you to save him. I don't think he can be saved. I'm asking you to give him one moment of clarity at the end. Enough to recognise me and say goodbye.' A beat. 'That's all. That's the whole thing I've been waiting thirty years for.'",
+            "choices": [
+                {
+                    "text": "Agree to look for Corr's fragments",
+                    "next_node_id": "promise_to_try",
+                    "conditions": {
+                        "solenne_contacted": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["petrel_joined_crew"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell him you'll face what you face when you face it",
+                    "next_node_id": "honest_answer",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "name_known": {
+            "text": "A silence that has weight. 'Where did you find it?' 'The Bone Yard,' you say. He makes a sound that might be a laugh or might be something worse. 'Of course. That's where everything starts.' Another silence. 'Then you already know most of it. You know what he was before. You know what the crystals did.' His voice is stripped down, no theatre left in it. 'My name is Petrel. He was my father. I've been watching this for fifteen years.'",
+            "choices": [
+                {
+                    "text": "Ask what he wants from you now",
+                    "next_node_id": "petrel_request",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["petrel_identity_revealed"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "corr_vane_ask": {
+            "text": "'You know his name.' A pause. 'Good. Then at least someone else in this multiverse knows what was lost.' His voice is very quiet. 'He was Cornelius Vane. The Black Harrow. One of the Corsairs' best — before the cave. Before the crystals decided he was a predator.' He stops. Starts again. 'I'm his son. My name is Petrel. I've stayed because I thought there would be a moment where he surfaced. One moment of clarity. I'm running out of time to wait for it.'",
+            "choices": [
+                {
+                    "text": "Ask what you can do about it",
+                    "next_node_id": "petrel_request",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["petrel_identity_revealed"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_conversation": {
+            "text": "The channel closes.",
+            "choices": []
+        }
+    }
+}

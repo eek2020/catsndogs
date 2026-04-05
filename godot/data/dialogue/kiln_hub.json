@@ -1,0 +1,592 @@
+{
+    "dialogue_tree_id": "kiln_hub",
+    "character_id": "kiln",
+    "nodes": {
+        "root": {
+            "text": "She looks like slow-moving glass — light bends through her in ways that take a moment to adjust to. But her voice is completely ordinary: measured, slightly dry, with the patient enunciation of someone who has spent centuries learning languages they didn't grow up with. 'Captain Aristotle. I have been embedded in your multiverse for six hundred years. Today I am going to be honest with you. This is not my usual mode of operation.' A slight pause. 'I thought you should know that, for context.'",
+            "choices": [
+                {
+                    "text": "Ask what her usual mode of operation is",
+                    "next_node_id": "usual_mode",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what she's being honest about specifically",
+                    "next_node_id": "what_honesty",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask how old she actually is",
+                    "next_node_id": "how_old",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about the crystal network — the state it's actually in",
+                    "next_node_id": "network_state",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about the other potential stewards",
+                    "next_node_id": "other_stewards",
+                    "conditions": {
+                        "kiln_stewards_known": false
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask if she's tired",
+                    "next_node_id": "is_she_tired",
+                    "conditions": {
+                        "kiln_mission_known": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you'll talk more later",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "usual_mode": {
+            "text": "'Scholar,' she says. 'Merchant. Monk. Diplomat. I have played all of them in this multiverse over six centuries, and several others in the four centuries before I arrived here.' She looks at her hands — glass hands, slow light moving through them. 'The coalition believed that disguise was necessary because the truth would cause panic. They may not have been wrong. But after six hundred years of not being honest, I have grown somewhat tired of the alternative.'",
+            "choices": [
+                {
+                    "text": "Ask what the truth is",
+                    "next_node_id": "the_truth",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask if you're supposed to feel bad for her",
+                    "next_node_id": "not_sympathy",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "the_truth": {
+            "text": "'The crystal network is dying,' she says, with the matter-of-fact delivery of someone who has been carrying this for a very long time. 'The jump gates will begin to fail within decades if nothing changes. The coalition has been trying to prevent this for millions of years. We have been failing for most of that time.' She looks at you without drama. 'You are the most promising development in the last thousand cycles. I was sent to evaluate you. I have decided that evaluating without engaging was a waste of both our time.'",
+            "choices": [
+                {
+                    "text": "Ask what engaging looks like",
+                    "next_node_id": "what_engaging",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_alliance_open"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask why you're the most promising development",
+                    "next_node_id": "why_promising",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "why_promising": {
+            "text": "She tilts her head — the glass equivalent. 'You are a street cat who taught himself to refine crystals, who apologised before using his first one, who has somehow managed to treat the people around him as people rather than resources, and who — this is the most surprising part — regularly asks whether the things he is working with are hurt by what he is doing.' She looks at you steadily. 'None of your predecessors asked that. Not one. In seven cycles of trying.'",
+            "choices": [
+                {
+                    "text": "Ask about the predecessors",
+                    "next_node_id": "other_stewards",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what you need to do",
+                    "next_node_id": "what_to_do",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_engaging": {
+            "text": "'Telling you what we know. Answering your questions without the diplomatic hedging that has made previous conversations useless.' She actually smiles — the glass around her eyes shifts in a way that reads as warmth. 'Sharing resources. Data. Context that will help you get to the Cradle and understand what you find there.' She pauses. 'In exchange: we would like you to not destroy it. Whatever else you choose. That is our only non-negotiable.'",
+            "choices": [
+                {
+                    "text": "Ask what the Cradle is",
+                    "next_node_id": "what_cradle",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell her you can agree to that much",
+                    "next_node_id": "agree_to_deal",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 15},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_alliance_open"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_cradle": {
+            "text": "'The origin point of the crystal network,' she says. 'The place where the Builders first seeded the resonant silicate. Where Solenne's last coherent consciousness still waits — not quite dead, not quite alive, but enough.' She looks at her hands again. 'The coalition has been trying to reach it for sixty thousand years. We lack a listener. You may not lack one.' A pause. 'That is why you matter to us. That is why I am not using the word 'merchant' today.'",
+            "choices": [
+                {
+                    "text": "Tell her you'll try to reach the Cradle",
+                    "next_node_id": "agree_to_deal",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 12},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_alliance_open"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "agree_to_deal": {
+            "text": "She nods — slow, glass movement. 'Good. Then we can be useful to each other.' She transmits a set of coordinates and navigation data — places the coalition has observed, anomalies that may be Cradle clues. 'I will check in. I am not going anywhere — I have not gone anywhere in six centuries. This is my multiverse as much as anyone's now.' Something quietly wry enters her voice. 'Perhaps more.'",
+            "choices": [
+                {
+                    "text": "Ask if she considers this her home",
+                    "next_node_id": "is_home",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Thank her and end the meeting",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "is_home": {
+            "text": "'I have been here longer than most of the current civilisations have existed,' she says. 'My original planet no longer exists. My species' home region was sterilised in a resonance storm four million years ago.' She is very quiet for a moment. 'Yes. This is my home. These are my people.' She looks at you. 'That is one of the reasons I am no longer willing to watch you fail from a safe observational distance.'",
+            "choices": [
+                {
+                    "text": "[Leave] Tell her you understand",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_honesty": {
+            "text": "'The state of the network,' she says. 'The actual timeline. The number of potential stewards who came before you and what happened to them. The reason the coalition sent me here six centuries ago and the reason I am still here.' She meets your eyes — glass eyes, with something patient and tired behind them. 'Six centuries of performing roles I was not. I find I would like, at least once, to simply say: I am Kiln. I am five thousand years old. I am worried. And I think you might be the one we have been looking for.'",
+            "choices": [
+                {
+                    "text": "Ask what's worrying her",
+                    "next_node_id": "network_state",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what makes her think you're the one",
+                    "next_node_id": "why_promising",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "how_old": {
+            "text": "'Approximately five thousand years,' she says. 'Physical. My consciousness is older — we do not quite have a word for the distinction in your languages. The coalition has been operational for much longer than that.' She looks at the light moving through her hands. 'Six hundred years in this multiverse. I have made friends here. Real friends, in several factions. When a friend dies, I continue. This is the difficult part of a very long life.' A pause. 'I mention it because you seem like someone who understands what it costs to keep going anyway.'",
+            "choices": [
+                {
+                    "text": "Ask about her mission",
+                    "next_node_id": "the_truth",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask whether she's tired",
+                    "next_node_id": "is_she_tired",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "network_state": {
+            "text": "'Worse than we have told anyone,' she says, and her voice is very steady. 'The network is running on what it has been conserving for half a billion years. At current burn rates — the crystals your multiverse uses every day, for every jump gate, every ship, every fleet — the reserves will fail within decades.' She looks at you. 'Not centuries. Decades. The jump gates will go dark one by one. Worlds will be cut off. We have modelled what follows. It is not something I want to describe in detail.'",
+            "choices": [
+                {
+                    "text": "Ask what can stop it",
+                    "next_node_id": "what_to_do",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask why no one else knows this",
+                    "next_node_id": "why_secret",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_mission_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "why_secret": {
+            "text": "'Panic,' she says. 'Or worse, exploitation. The last time we shared the information with a faction's leadership, they immediately began attempting to extract the remaining reserves as quickly as possible before the collapse — on the theory that they might as well benefit from it.' She makes a sound that is not quite a sigh. 'The coalition decided that the information was more dangerous than the silence. I am no longer certain that decision was correct. But I was outvoted.'",
+            "choices": [
+                {
+                    "text": "Ask what can actually be done",
+                    "next_node_id": "what_to_do",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_to_do": {
+            "text": "'A steward,' she says. 'Someone who can communicate with the network directly — who the network recognises and will respond to. The Cradle is the origin point. If a steward reaches it and the network accepts them, the network can begin healing itself.' She looks at you steadily. 'It does not require destroying the crystals or hoarding them or sharing them. It requires someone the network trusts enough to let in.' She pauses. 'You apologised to your first crystal. It remembered.'",
+            "choices": [
+                {
+                    "text": "Ask how to reach the Cradle",
+                    "next_node_id": "reach_cradle",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what the coalition wants from you",
+                    "next_node_id": "what_they_want",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "reach_cradle": {
+            "text": "'The Fairy Realms have some of the Cradle clues. The Bone Yard has others. The Warp Marches are the threshold — the last region before the Cradle's approach becomes navigable.' She transmits navigation data. 'You will need a listener's key to pass the last gate. Crystal Communion is the closest thing to that key that currently exists.' She pauses. 'There is also a fairy — Moth — who holds something that will help. I believe you have been pointed toward her already.'",
+            "choices": [
+                {
+                    "text": "Tell her you've been pointed toward Moth",
+                    "next_node_id": "confirm_moth",
+                    "conditions": {
+                        "moth_referenced": true
+                    },
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her this is useful",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "confirm_moth": {
+            "text": "'Good.' She nods — slow, deliberate. 'Ember chose well. She usually does.' A brief silence. 'Moth is the most frightened creature I have met in five thousand years. She is also keeping something that has been waiting four billion years to be spoken. Please be patient with her.' She meets your eyes. 'Patience costs you nothing. It will mean everything to her.'",
+            "choices": [
+                {
+                    "text": "[Leave] Tell her you'll remember that",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_they_want": {
+            "text": "'Honestly?' She considers for a moment. 'We want the network to survive. That is the whole of it. How it survives — who stewards it, what choices you make at the Cradle — we have learned not to prescribe.' She is quiet for a moment. 'We prescribed it once, to the third steward. We told her exactly what the right choice was. She agreed. She went to the Cradle and made a different choice, because circumstances had changed in ways we hadn't foreseen.' A pause. 'She was right. We were wrong. We have been more careful about certainty ever since.'",
+            "choices": [
+                {
+                    "text": "Ask what happened to the third steward",
+                    "next_node_id": "third_steward",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you'll make your own choices",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "third_steward": {
+            "text": "'She came closest of all of them,' Kiln says. 'She reached the Cradle. She had the communion. And then she chose to protect her people instead of the network — because the situation had changed and her people needed her more.' A long pause. 'We understood. We wept. And then we waited another few thousand years for someone else.' She looks at you with something that is not quite hope but is adjacent to it. 'We have been more careful with our hope since then. But we have not stopped.'",
+            "choices": [
+                {
+                    "text": "Ask if she's tired of hoping",
+                    "next_node_id": "is_she_tired",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_stewards_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you appreciate her telling you",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_stewards_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "other_stewards": {
+            "text": "'Seven,' she says. 'Before you.' She counts them on her glass fingers, names none of them. 'The first took too much power and burned. The second refused all of it and faded. The third came closest — she almost reached the Cradle. She chose her people instead of the network. We understood. We wept.' She keeps counting. 'Four, five, six — various ways of failing the same task. The seventh...' She stops. 'The seventh was very close. He lost his nerve at the threshold. We have not fully recovered from that one.' She looks at you. 'You are the first who ever asked whether we were tired too.'",
+            "choices": [
+                {
+                    "text": "Ask if she is tired",
+                    "next_node_id": "is_she_tired",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 15},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_stewards_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask why that question matters",
+                    "next_node_id": "why_tired_matters",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_stewards_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "is_she_tired": {
+            "text": "A long pause. 'Yes,' she says. 'Profoundly.' The word lands with the weight of five thousand years behind it. 'I have watched seven people fail at this. I have made friends and watched them die. I have been a scholar, a merchant, a monk, a diplomat, and a dozen other things I am not, for six centuries, in a multiverse that is not my home and is now the only home I have.' She is quiet. 'Yes. I am tired.' She looks at you steadily. 'And I am still here. So are you. So we continue.'",
+            "choices": [
+                {
+                    "text": "Tell her that's the most honest thing anyone's said to you in a while",
+                    "next_node_id": "honest_response",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 12},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her to get some rest if she can",
+                    "next_node_id": "end_rest",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 10},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "why_tired_matters": {
+            "text": "She tilts her head, light bending through her. 'Because the previous seven never asked. They were focused on the task — save the network, steward the crystals, find the Cradle. Important things. But they never looked at us and wondered whether the people asking them to do it were also struggling.' She looks at you. 'You did. In the middle of your own crisis, you looked at us and wondered whether we were all right.' A pause. 'That is why we chose you. That is why I am being honest today. That is why I believe, genuinely, that this time might be different.'",
+            "choices": [
+                {
+                    "text": "Ask if she's alright",
+                    "next_node_id": "is_she_tired",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 15},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "honest_response": {
+            "text": "'I know,' she says, and something in her voice is very slightly warmer. 'I have spoken to many people over five thousand years. Most of them want answers. You also occasionally want to know how the person giving the answers is doing.' She nods — slow, glass movement. 'It is a small thing. It costs you nothing. It means more than you know.' She transmits the coalition's current data package. 'Here. Everything we have. Consider it an honest exchange.'",
+            "choices": [
+                {
+                    "text": "[Leave] Thank her",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 5},
+                        "resource_changes": {},
+                        "story_flags_set": ["kiln_alliance_open"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "not_sympathy": {
+            "text": "'No,' she says, and the wry quality in her voice is very faint. 'I am not asking for sympathy. I am providing context.' She looks at you steadily. 'I have been dishonest with everyone in this multiverse for six centuries because my mandate required it. The mandate has not changed. My willingness to comply with it has.' A pause. 'I am not sure the coalition will be pleased. I find I no longer care as much as I did.'",
+            "choices": [
+                {
+                    "text": "Ask what she wants instead",
+                    "next_node_id": "what_honesty",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"aliens": 8},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_rest": {
+            "text": "She looks at you for a long moment. 'That is the first time in six hundred years anyone has said that to me.' Something shifts in the light moving through her — not quite a smile, but close. 'I will try. Thank you, Captain.' She nods once, slowly. 'Come find me when you need the coalition's help. I will be here. I am always here.'",
+            "choices": []
+        },
+        "end_conversation": {
+            "text": "Kiln nods — slowly, as all her movements are slow. 'We will speak again,' she says. 'I expect things to get more complicated before they get less so.' There is something that might be wry understatement in her voice. 'I have found that it is always like this. And then, occasionally, it resolves.'",
+            "choices": []
+        }
+    }
+}

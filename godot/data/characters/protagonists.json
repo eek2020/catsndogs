@@ -51,6 +51,13 @@
                 "And so the journey begins."
             ],
             "description": "A street cat turned Corsair captain. Cunning, fast, and fiercely independent. Controls the multiverse's only supply of Whisper Crystals.",
+            "family": {
+                "mira": "Mother — a crippled stevedore, three-legged, sharp-tongued, fiercely loving. Ninth-generation descendant of Tessera the Uncounted (she does not know this). Has not seen Aristotle in eleven years. Still writes short letters: 'Did you eat today?' Last seen in Arc 6 offscreen; in-person reunion possible in Arc 7.",
+                "boots": "Older sister — dockworker, married to a spacer named Farrow, has two kittens. Does not know her brother is famous. Would not be impressed. Appears Arc 7.",
+                "quill": "Dead brother — died at age 4 of a preventable respiratory infection because the family could not afford the medicine. Aristotle was 6. This is the foundational wound of his life: why he hoards resources, why in some endings he cannot let go. His first crystal was smuggled into Quill's grave as an offering. His voice echoes in the crystal network during Crystal Communion (Arc 7).",
+                "mink": "Missing sister — ran away at age 2 to join a smuggling crew. Presumed dead but alive, working as a mid-ranking operative in a fairy-linked information broker network. Has known exactly where Aristotle was for the entire game. Has not contacted him out of shame. First contact via a sealed letter in Arc 8 at the Last Table summit."
+            },
+            "lineage_secret": "Aristotle is descended through his mother's line from Tessera the Uncounted, the three-legged matriarch who led the Long Run 300 years ago and founded the Felid Corsairs. He does not know this. The crystal network remembers Tessera.",
             "story_flags": {
                 "arc1_crystal_discovered": false,
                 "arc1_dave_met": false,
@@ -109,6 +116,12 @@
                 "And so the hunt begins."
             ],
             "description": "A disciplined Canis League Commander. Loyal, tactical, and burdened by duty. Sent to secure the crystals by any means necessary.",
+            "family": {
+                "reba": "Wife — Reba Brindle, civilian contractor who refits medical ships for the League. Married 9 years. Writes to him every day, always signs 'Come home when you can. I\'m still here.' Dave carries a photo of her as the only non-regulation item on his person. First appears Arc 1 as a voice on an outgoing message; in person possible from Arc 5.",
+                "hana": "Older sister — botanist working on crop resilience. Married to a dog named Toby, three pups. Makes Dave laugh until he forgets what his job is. Does not understand his work and pretends she doesn't want to.",
+                "meg": "Younger sister — 12 years younger, enlisted straight out of school, currently serving on the League supply ship Dauntless. Idolises Dave. In Arc 5, the Wolf offensive strikes the Dauntless. Dave must choose between pursuing Aristotle and diverting to save her — the hardest fork of the Good Dog's Dilemma.",
+                "father": "Deceased — a veterinary surgeon on the agricultural world of Fernholm. Died in a farm accident two years before the game's events. Dave was not able to get leave in time for the funeral. He has not forgiven the League for that. He has not let himself know this."
+            },
             "story_flags": {
                 "arc1_intel_received": false,
                 "arc1_aristotle_met": false,

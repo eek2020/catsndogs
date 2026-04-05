@@ -1,0 +1,439 @@
+{
+    "dialogue_tree_id": "ember_hub",
+    "character_id": "ember_who_remembers",
+    "nodes": {
+        "root": {
+            "text": "She arrives without warning. The lights dim slightly — not dangerously, just to the warmth of late afternoon — and she is there in twelve places simultaneously, shimmering gently at the edges of the bridge. Her voices arrive slightly out of sync, which you will eventually understand is deliberate. 'Hello, little listener. We have been hoping you would be ready for a longer conversation.'",
+            "choices": [
+                {
+                    "text": "Ask who — or how many — she is",
+                    "next_node_id": "who_she_is",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what she means by 'little listener'",
+                    "next_node_id": "little_listener",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what she knows about the crystals — the actual truth",
+                    "next_node_id": "crystal_truth",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell her you're tired of being spoken to in riddles",
+                    "next_node_id": "tired_of_riddles",
+                    "conditions": {
+                        "arc4_fairy_warning": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about Moth",
+                    "next_node_id": "ask_moth",
+                    "conditions": {
+                        "ember_named": true,
+                        "moth_referenced": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you'll come back when you have more time",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "who_she_is": {
+            "text": "'Twelve,' she says, all twelve at once. 'One,' she says, each in sequence. She seems to find the effect pleasantly confusing. 'We are Ember-Who-Remembers. We are the oldest fairy alive — which is to say, we are many fairies, distributed across time, because we bud and our children carry our memories and their children carry theirs. The distinction between one and many has become imprecise.' Her amusement is warm and very, very old. 'Call us Ember. It is shorter.'",
+            "choices": [
+                {
+                    "text": "Ask how old she actually is",
+                    "next_node_id": "how_old",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask what she remembers",
+                    "next_node_id": "what_she_remembers",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "how_old": {
+            "text": "Eleven of her tilt their heads slightly to the right. The twelfth smiles. 'Old enough to have spoken with Solenne.' She watches you for the reaction. 'Yes. The last Builder. The one who stayed. We were the first civilisation she taught — how to hear the crystals without burning them. We have been carrying her voice in our Heart Garden for four billion years.' The smile fades into something gentler. 'We miss her. We are very glad you might be able to reach her.'",
+            "choices": [
+                {
+                    "text": "Ask how to reach Solenne",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["solenne_name_known"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about the Builders",
+                    "next_node_id": "builders_history",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": ["solenne_name_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "builders_history": {
+            "text": "'Twelve beings,' she says. 'They seeded the crystals across thirteen regions — taught them to hold memory, to echo, to sing. The network grew like coral for millions of years until every realm could hear every other realm.' All twelve of her go quiet for a moment. 'Then eleven of them merged their consciousness with the lattice. Solenne stayed behind to tend the garden. Then the burning started.' The quiet deepens. 'She tried to stop it. She failed. Her consciousness is scattered through the network now — fragments, most of them silent. But some still speak. To the right listener.'",
+            "choices": [
+                {
+                    "text": "Ask how to reach those fragments",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 8},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "reach_solenne": {
+            "text": "'Crystal Communion,' she says. 'You have felt the edges of it. You need to go deeper — past the living network, past the Long Cold's grief, past the echoes of the Builder Wars. There is a young fairy who holds the key.' She pauses. 'Her name is Moth. She is my youngest bud. She is frightened of almost everything. She also holds the oldest crystal fragment — the one that still contains a recording of Solenne's voice.' Another pause. 'She will need courage she doesn't think she has. You will need patience you may not think you have. It will be worth it.'",
+            "choices": [
+                {
+                    "text": "Ask where to find Moth",
+                    "next_node_id": "where_moth",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["moth_referenced"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "where_moth": {
+            "text": "'The Heart Garden,' she says. 'She rarely leaves it. She finds the wider multiverse overwhelming.' All twelve of Ember's expressions go briefly gentle. 'She is brave in ways that do not look like bravery. Going somewhere terrifying anyway is braver than finding it easy. Remember that when you meet her.' She pauses. 'Tell her Ember sent you. Tell her this is the moment she was keeping the fragment for.'",
+            "choices": [
+                {
+                    "text": "Ask if Moth will come willingly",
+                    "next_node_id": "moth_willingness",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you'll find Moth",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "moth_willingness": {
+            "text": "'If you ask her honestly rather than telling her she must.' The twelve versions of Ember look at you steadily. 'She has been the keeper of that fragment for two hundred years. She has never been able to use it because she has never met a listener. She will be frightened. She will also want to do it more than she has ever wanted anything.' The old eyes are gentle. 'Let her make the choice.'",
+            "choices": [
+                {
+                    "text": "[Leave] Go find Moth",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "little_listener": {
+            "text": "Six of her tilt their heads to the left. Six to the right. 'It is what Solenne would have called you,' they say, not quite in unison. 'She called the species she taught the same thing — the ones who could hear the crystals without reaching for them immediately.' A pause. 'We have watched you for some time, Captain. Since Arc 1 — since you found your first crystal and did something none of your predecessors thought to do.' She waits.",
+            "choices": [
+                {
+                    "text": "Ask what you did",
+                    "next_node_id": "the_apology",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "the_apology": {
+            "text": "The twelve versions of her go perfectly still and perfectly in sync for one moment. 'You apologised to it,' she says. 'Before you used it. A small gesture. Unvoiced. But genuine.' Her warmth is the warmth of someone who has waited a very long time for something and is now watching it happen. 'Seven potential stewards before you. Not one of them apologised.' She smiles — all twelve of her, at once. 'That is why Silky was already waiting for you. That is why we chose you. That is why, little listener, we believe you are the one who might actually save this.'",
+            "choices": [
+                {
+                    "text": "Ask what saving it would require",
+                    "next_node_id": "what_saving_requires",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_candidates_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_saving_requires": {
+            "text": "'Reaching the Cradle,' she says. 'Reaching Solenne, or what remains of her. And then — a choice.' Her voices go quiet. 'We have watched every path. We do not know which choice you will make. We have learned not to try to know in advance. The last time we thought we knew, we were wrong, and the network almost went silent.' She looks at you steadily. 'We trust you. We simply trust you. That is all we have left.'",
+            "choices": [
+                {
+                    "text": "Ask about Moth and the crystal fragment",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you understand",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "crystal_truth": {
+            "text": "'Everything,' she says. 'But knowing everything is not the same as being able to say everything.' She folds twelve pairs of hands. 'The network is dying. It has been dying for half a billion years. It dimmed itself deliberately to conserve energy — to keep the jump gates open on fumes. Civilisations rose and fell without ever noticing the light was going out.' She looks at you. 'You noticed. That is the first step.'",
+            "choices": [
+                {
+                    "text": "Ask what the next step is",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 8},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask why she's telling you this now",
+                    "next_node_id": "why_now",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "why_now": {
+            "text": "'Because you are ready to hear it,' she says simply. 'And because we are running out of time. The network's reserves are lower than any of us have told anyone. The jump gates will begin to fail within decades if nothing changes.' All twelve of her meet your eyes. 'We have been patient for four billion years, Captain. We are not infinitely patient.'",
+            "choices": [
+                {
+                    "text": "Ask what you can do about it",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "tired_of_riddles": {
+            "text": "Eleven of her go still. The twelfth looks at you with something that might be respect. 'You are correct to push,' she says, alone. 'We have been cryptic for so long that we have forgotten how to be otherwise. It has become a habit of grief — there were so many who could not bear the whole truth.' She breathes. All twelve of them. 'Let us try to be direct. Ask your question. We will answer it straight.'",
+            "choices": [
+                {
+                    "text": "Ask directly: is the crystal network dying?",
+                    "next_node_id": "direct_dying",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask directly: was Solenne real?",
+                    "next_node_id": "direct_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 10},
+                        "resource_changes": {},
+                        "story_flags_set": ["ember_named", "solenne_name_known"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "direct_dying": {
+            "text": "'Yes,' she says. All twelve of her say it, in complete sync, and the word has more weight for the honesty. 'Yes. It has been dying for half a billion years. Without intervention, the jump gates will fail within your lifetime — within the next few decades.' A beat. 'You are not the first we have told this to. You are the first who did not immediately ask how to profit from it.' She looks at you. 'That is why we are having this conversation.'",
+            "choices": [
+                {
+                    "text": "Ask what intervention looks like",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "direct_solenne": {
+            "text": "'Yes,' she says. 'The last Builder who stayed behind. We spoke with her. We learned from her. We have been carrying fragments of her voice in the Heart Garden for four billion years.' Her twelve faces are still. 'She is not dead, precisely. Her consciousness is scattered through the network — fragments, some silent, some faint, one that is waiting.' She pauses. 'Waiting for the right listener to come far enough in.'",
+            "choices": [
+                {
+                    "text": "Ask how to reach her",
+                    "next_node_id": "reach_solenne",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_she_remembers": {
+            "text": "'Everything,' she says, and something about the way she says it suggests the word is not an exaggeration. 'Solenne's voice in the Heart Garden. The first burning. The Builder Wars. The Long Cold. Every civilisation that has risen and fallen. We have been the record-keepers of a multiverse that forgot it needed records.' She looks at you gently. 'We remember you, Captain. We have remembered you since Arc 1. Since you apologised.'",
+            "choices": [
+                {
+                    "text": "Ask what you apologised for",
+                    "next_node_id": "the_apology",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "ask_moth": {
+            "text": "'She is well,' Ember says, and something in her twelve faces softens. 'She is frightened, as she always is, and braver than she knows, as she always is. She has been the keeper of the oldest fragment for two centuries. She has never met a listener before.' She looks at you steadily. 'She is ready. She has been ready for a long time. She just needed to know someone worthy was coming.'",
+            "choices": [
+                {
+                    "text": "Ask where to find Moth",
+                    "next_node_id": "where_moth",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 5},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask if Moth's fragment really contains Solenne's voice",
+                    "next_node_id": "fragment_contains",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "fragment_contains": {
+            "text": "'Yes.' All twelve versions of her are very still. 'Solenne's last words to us before the First Silence. She said: Listen. Please. Just listen.' Ember's voices are in complete sync, which means she means this with all of herself. 'The fragment has been waiting four billion years to be spoken aloud in the presence of someone who can hear. Moth has been afraid of that moment her entire life and has also been tending that fragment with everything she has.' A pause. 'Both things are true. Both things are Moth.'",
+            "choices": [
+                {
+                    "text": "Tell Ember you'll find Moth and treat her well",
+                    "next_node_id": "end_promise_moth",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {"fairies": 10},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_promise_moth": {
+            "text": "'We know,' she says. The twelve of her begin to fade gently — lights dimming back to their normal levels. 'You already treat crystals better than anyone has in a thousand generations.' Her voices overlap pleasantly as she disperses. 'Go find Moth, little listener. Tell her: the time for keeping is over. It is time to speak.'",
+            "choices": []
+        },
+        "end_conversation": {
+            "text": "The twelve instances of Ember fade gently, the bridge lights returning to normal. Somewhere in the back of your mind, you have the distinct sense of being watched with great patience and great care.",
+            "choices": []
+        }
+    }
+}
