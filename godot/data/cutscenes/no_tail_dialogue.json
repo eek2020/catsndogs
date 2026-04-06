@@ -1,0 +1,236 @@
+{
+  "cutscene_id": "no_tail_recruitment",
+  "title": "First Meeting — No Tail at the Outpost",
+  "sequences": [
+    {
+      "id": "intro_flyover",
+      "type": "camera_sequence",
+      "description": "Establishing flyover from high shot down through the wreckage field.",
+      "camera_keys": [
+        "CAM_01_Establishing",
+        "CAM_02_ApproachOverScouts",
+        "CAM_03_NearGunship"
+      ],
+      "lines": [
+        { "speaker": "Aristotle", "text": "Sensors are picking up League wreckage scattered around that outpost. Somebody put up one hell of a fight down there." },
+        { "speaker": "Aristotle", "text": "I'm counting... twelve scout hulls. Two gunship chassis. All cold. Whatever happened here, it's over." },
+        { "speaker": "Aristotle", "text": "Single heat signature inside the main structure. Still alive. Still armed, from the look of the energy readings." }
+      ],
+      "next_sequence": "approach_dialogue"
+    },
+    {
+      "id": "approach_dialogue",
+      "type": "dialogue",
+      "camera_key": "CAM_04_AristotleShoulder",
+      "description": "Aristotle walks toward the outpost, commenting on the destruction.",
+      "lines": [
+        { "speaker": "Aristotle", "text": "These blast patterns... concentrated fire, single origin point. One shooter did all of this." },
+        { "speaker": "Aristotle", "text": "Whoever's in there, they knew exactly what they were doing. Every shot placed to disable, not just damage." },
+        { "speaker": "Aristotle", "text": "The League sent a full raiding party to this rock and got sent home in pieces. By one cat." }
+      ],
+      "next_sequence": "choice_approach"
+    },
+    {
+      "id": "choice_approach",
+      "type": "choice",
+      "prompt": "How do you proceed?",
+      "options": [
+        {
+          "label": "Land and approach the outpost on foot",
+          "next_sequence": "door_approach",
+          "karma": 0
+        },
+        {
+          "label": "Hail the outpost from orbit first",
+          "next_sequence": "hail_first",
+          "karma": 2
+        }
+      ]
+    },
+    {
+      "id": "hail_first",
+      "type": "dialogue",
+      "camera_key": "CAM_04_AristotleShoulder",
+      "description": "Aristotle tries hailing before approaching.",
+      "lines": [
+        { "speaker": "Aristotle", "text": "Outpost, this is Captain Aristotle of the Felid Corsairs. Friendly approach. Do you copy?" },
+        { "speaker": "Aristotle", "text": "..." },
+        { "speaker": "Aristotle", "text": "No response. Either they can't hear me or they don't want to talk. Only one way to find out." }
+      ],
+      "next_sequence": "door_approach"
+    },
+    {
+      "id": "door_approach",
+      "type": "dialogue",
+      "camera_key": "CAM_05_DoorFocus",
+      "description": "Tight on the sealed door. A beat of silence before the reveal.",
+      "lines": [
+        { "speaker": "Aristotle", "text": "Warning light's active on the blast door. Someone sealed it from the inside." },
+        { "speaker": "Aristotle", "text": "Scorch marks around the frame — they tried to breach this door and couldn't. Whoever's in there built this place to last." }
+      ],
+      "next_sequence": "door_opens"
+    },
+    {
+      "id": "door_opens",
+      "type": "dialogue",
+      "camera_key": "CAM_05_DoorFocus",
+      "door_state": "opening",
+      "description": "The door grinds open. No Tail is revealed standing in the doorway, rifle raised.",
+      "lines": [
+        { "speaker": "",          "text": "A grinding of metal. The blast door shudders, then rises." },
+        { "speaker": "NoTail",    "text": "Stop right there.", "camera": "CAM_06_NoTailReveal" },
+        { "speaker": "NoTail",    "text": "Hands where I can see them, Captain. Or the next thing you see is the inside of a body bag." },
+        { "speaker": "Aristotle", "text": "Easy. I'm not League. Felid Corsair — Captain Aristotle. We picked up the fighting on sensors." },
+        { "speaker": "NoTail",    "text": "Corsair. Great. Last Corsair who came through here promised reinforcements. That was three weeks ago." },
+        { "speaker": "NoTail",    "text": "I'm still waiting." },
+        { "speaker": "Aristotle", "text": "Looks like you managed on your own. That's a lot of League wreckage for one cat." },
+        { "speaker": "NoTail",    "text": "Twelve scouts. Two gunships. They thought one outpost with one defender wasn't worth a proper assault force." },
+        { "speaker": "NoTail",    "text": "They were wrong." },
+        { "speaker": "Aristotle", "text": "I can see that. You're No Tail, aren't you? I've heard stories." },
+        { "speaker": "NoTail",    "text": "Stories don't hold positions. Ammunition does. Speaking of which — mine's getting low." },
+        { "speaker": "NoTail",    "text": "So either say something useful or move along." }
+      ],
+      "next_sequence": "combat_challenge"
+    },
+    {
+      "id": "combat_challenge",
+      "type": "dialogue",
+      "camera_key": "CAM_06_NoTailReveal",
+      "lines": [
+        { "speaker": "NoTail",    "text": "Sensors are lighting up. More League scouts, coming in from the dust belt. They're regrouping for another push." },
+        { "speaker": "Aristotle", "text": "How many?" },
+        { "speaker": "NoTail",    "text": "Enough. Words are cheap, Captain. I've watched a hundred talkers run at the first sign of League cruisers." },
+        { "speaker": "NoTail",    "text": "So here's the deal. Help me finish this. Fight beside me, right here, right now. Then we'll talk." },
+        { "speaker": "Aristotle", "text": "And if I say I'd rather handle this from the ship?" }
+      ],
+      "next_sequence": "choice_fight"
+    },
+    {
+      "id": "choice_fight",
+      "type": "choice",
+      "prompt": "Your move, Captain.",
+      "options": [
+        {
+          "label": "Fight alongside No Tail",
+          "next_sequence": "fight_accept",
+          "karma": 5
+        },
+        {
+          "label": "Provide fire support from the ship",
+          "next_sequence": "fight_ship",
+          "karma": 0,
+          "note": "Placeholder — currently collapses to recruitment."
+        },
+        {
+          "label": "Walk away",
+          "next_sequence": "walk_away",
+          "karma": -5,
+          "note": "Placeholder — ends the cutscene."
+        }
+      ]
+    },
+    {
+      "id": "fight_accept",
+      "type": "dialogue",
+      "camera_key": "CAM_04_AristotleShoulder",
+      "lines": [
+        { "speaker": "NoTail",    "text": "Good answer. Take the left flank. Don't get in my line of fire. And Captain?" },
+        { "speaker": "Aristotle", "text": "Yeah?" },
+        { "speaker": "NoTail",    "text": "Try to keep up." }
+      ],
+      "next_sequence": "combat_placeholder"
+    },
+    {
+      "id": "combat_placeholder",
+      "type": "event",
+      "event_name": "combat_encounter",
+      "description": "Trigger the combat encounter. In this demo, we fade to black, wait 2 seconds, fade back in with post-combat state.",
+      "next_sequence": "recruitment"
+    },
+    {
+      "id": "recruitment",
+      "type": "dialogue",
+      "camera_key": "CAM_06_NoTailReveal",
+      "lines": [
+        { "speaker": "NoTail",    "text": "You didn't run." },
+        { "speaker": "Aristotle", "text": "Was that a compliment?" },
+        { "speaker": "NoTail",    "text": "It's an observation. Most Corsairs I've met talk big and fly fast in the wrong direction. You stayed." },
+        { "speaker": "Aristotle", "text": "You needed a hand. It wasn't complicated." },
+        { "speaker": "NoTail",    "text": "No. It wasn't. That's what I liked about it." },
+        { "speaker": "NoTail",    "text": "My outpost is gone. My crew — what was left of them — evacuated weeks ago. I stayed because someone had to hold the line. But the line's moved now." },
+        { "speaker": "Aristotle", "text": "What will you do?" },
+        { "speaker": "NoTail",    "text": "My guns still work. My aim hasn't slipped. And I've got nowhere else to be." },
+        { "speaker": "NoTail",    "text": "So. Need a gunner, Captain?" }
+      ],
+      "next_sequence": "choice_hire"
+    },
+    {
+      "id": "choice_hire",
+      "type": "choice",
+      "prompt": "Your call, Captain.",
+      "options": [
+        {
+          "label": "Hire her",
+          "next_sequence": "recruit_accept",
+          "karma": 3,
+          "recruit": "no_tail"
+        },
+        {
+          "label": "Thank her but decline",
+          "next_sequence": "recruit_decline",
+          "karma": 0,
+          "note": "Placeholder — ends the cutscene."
+        }
+      ]
+    },
+    {
+      "id": "recruit_accept",
+      "type": "dialogue",
+      "camera_key": "CAM_04_AristotleShoulder",
+      "lines": [
+        { "speaker": "Aristotle", "text": "The guns are yours. Welcome aboard, No Tail." },
+        { "speaker": "NoTail",    "text": "Right then. Show me the weapons systems." },
+        { "speaker": "Aristotle", "text": "Deck two, forward battery. Four pulse cannons, two torpedo tubes. They could use someone who knows how to—" },
+        { "speaker": "NoTail",    "text": "I'll figure it out. I always do." },
+        { "speaker": "NoTail",    "text": "One rule, Captain. When I say 'fire,' you don't second-guess me. In combat, hesitation kills." },
+        { "speaker": "Aristotle", "text": "Fair enough. One rule from me — we don't shoot first unless we have to." },
+        { "speaker": "NoTail",    "text": "Fine. But when we do shoot, we shoot to end it. Point me at the enemy. I'll handle the rest." }
+      ],
+      "next_sequence": "end"
+    },
+    {
+      "id": "recruit_decline",
+      "type": "dialogue",
+      "camera_key": "CAM_05_DoorFocus",
+      "lines": [
+        { "speaker": "Aristotle", "text": "I appreciate the offer. But I think your fight and mine are different roads." },
+        { "speaker": "NoTail",    "text": "...Fair. Safe skies, Captain." }
+      ],
+      "next_sequence": "end"
+    },
+    {
+      "id": "fight_ship",
+      "type": "dialogue",
+      "camera_key": "CAM_05_DoorFocus",
+      "lines": [
+        { "speaker": "NoTail",    "text": "Figures. Fine — if you're gonna help, help. Hit the dust belt hard. I'll hold here." }
+      ],
+      "next_sequence": "combat_placeholder"
+    },
+    {
+      "id": "walk_away",
+      "type": "dialogue",
+      "camera_key": "CAM_05_DoorFocus",
+      "lines": [
+        { "speaker": "NoTail",    "text": "That's what I thought. Move along, Corsair." }
+      ],
+      "next_sequence": "end"
+    },
+    {
+      "id": "end",
+      "type": "event",
+      "event_name": "cutscene_complete",
+      "description": "End of cutscene. Fires cutscene_finished signal."
+    }
+  ]
+}

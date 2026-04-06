@@ -1,0 +1,166 @@
+{
+  "scene_file": "no_tail_outpost.glb",
+  "description": "Camera path and lighting for the No Tail Outpost cutscene.",
+  "cameras": [
+    {
+      "name": "CAM_01_Establishing",
+      "position": [
+        -2,
+        14,
+        55
+      ],
+      "look_at": [
+        0,
+        3,
+        -10
+      ],
+      "fov": 55,
+      "hold_seconds": 3.0,
+      "transition_seconds": 0.0,
+      "description": "High wide establishing shot. Outpost in distance, wreckage in middle ground."
+    },
+    {
+      "name": "CAM_02_ApproachOverScouts",
+      "position": [
+        8,
+        6,
+        30
+      ],
+      "look_at": [
+        0,
+        2,
+        -12
+      ],
+      "fov": 60,
+      "hold_seconds": 2.5,
+      "transition_seconds": 4.0,
+      "description": "Camera descends and flies forward over scout wreckage."
+    },
+    {
+      "name": "CAM_03_NearGunship",
+      "position": [
+        -8,
+        3,
+        18
+      ],
+      "look_at": [
+        0,
+        2,
+        -16
+      ],
+      "fov": 65,
+      "hold_seconds": 2.5,
+      "transition_seconds": 3.0,
+      "description": "Low, close to the ground, passing the first gunship wreck."
+    },
+    {
+      "name": "CAM_04_AristotleShoulder",
+      "position": [
+        1.8,
+        2.2,
+        -5
+      ],
+      "look_at": [
+        0,
+        2,
+        -17
+      ],
+      "fov": 55,
+      "hold_seconds": 4.0,
+      "transition_seconds": 3.5,
+      "description": "Over-shoulder on Aristotle as he approaches the outpost door."
+    },
+    {
+      "name": "CAM_05_DoorFocus",
+      "position": [
+        0,
+        1.9,
+        -10
+      ],
+      "look_at": [
+        0,
+        1.8,
+        -17
+      ],
+      "fov": 45,
+      "hold_seconds": 3.0,
+      "transition_seconds": 2.5,
+      "description": "Tight on the closed door. Warning light visible. Beat of silence."
+    },
+    {
+      "name": "CAM_06_NoTailReveal",
+      "position": [
+        2.2,
+        1.9,
+        -12.5
+      ],
+      "look_at": [
+        0,
+        1.7,
+        -16.5
+      ],
+      "fov": 50,
+      "hold_seconds": 5.0,
+      "transition_seconds": 1.5,
+      "description": "Angled reveal as door opens. No Tail framed in doorway with rifle."
+    }
+  ],
+  "lights": [
+    {
+      "name": "Sun",
+      "type": "directional",
+      "position": [
+        15,
+        25,
+        30
+      ],
+      "direction": [
+        -0.3,
+        -0.85,
+        -0.45
+      ],
+      "color": [
+        1.0,
+        0.92,
+        0.75
+      ],
+      "intensity": 5.0
+    },
+    {
+      "name": "Fill",
+      "type": "directional",
+      "position": [
+        -20,
+        15,
+        -40
+      ],
+      "direction": [
+        0.4,
+        -0.5,
+        0.8
+      ],
+      "color": [
+        0.72,
+        0.78,
+        0.95
+      ],
+      "intensity": 1.5
+    },
+    {
+      "name": "DoorRim",
+      "type": "point",
+      "position": [
+        0,
+        4,
+        -16.5
+      ],
+      "color": [
+        1.0,
+        0.8,
+        0.55
+      ],
+      "intensity": 3.0,
+      "range": 8.0
+    }
+  ]
+}
