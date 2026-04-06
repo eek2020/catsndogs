@@ -1,0 +1,580 @@
+{
+    "dialogue_tree_id": "mira_hub",
+    "character_id": "mira_vega",
+    "nodes": {
+        "root": {
+            "text": "Your mother is smaller than you remember, and sharper. She has been three-legged since before you can remember and she moves like she never noticed. She is looking at your ship with the expression of someone who is not going to say she is impressed. 'You're thinner,' she says.",
+            "choices": [
+                {
+                    "text": "Tell her you're fine",
+                    "next_node_id": "fine",
+                    "conditions": {
+                        "current_arc": "arc_7"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask how she's been",
+                    "next_node_id": "how_she_is",
+                    "conditions": {
+                        "current_arc": "arc_7"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Apologise for the eleven years",
+                    "next_node_id": "apology",
+                    "conditions": {
+                        "current_arc": "arc_7"
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Read a letter from Nine Lives] Open the message your first mate sent",
+                    "next_node_id": "nine_lives_letter",
+                    "conditions": {
+                        "current_arc": "arc_6",
+                        "mira_letter_received": false,
+                        "nine_lives_mira_contact": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_letter_received"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "nine_lives_letter": {
+            "text": "Nine Lives slides the datapad across the console without comment. The sender code is a mining world address you haven't thought about in years. Your mother writes the way she talks — short sentences, no fuss. 'The roof leaks. Boots says hello. Did you eat today?'",
+            "choices": [
+                {
+                    "text": "Ask Nine Lives how long she's been in contact with your mother",
+                    "next_node_id": "nine_lives_confession",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Write a reply — first time in eleven years",
+                    "next_node_id": "write_reply",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reply_sent"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Pocket the datapad — you'll reply when things calm down",
+                    "next_node_id": "pocket_letter",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "nine_lives_confession": {
+            "text": "Nine Lives examines something on the ceiling. 'A few years.' You stare at her. 'A few years?' 'She wanted to know you were alive. I wanted to make sure someone would pull you out of a spiral if the crew couldn't. It seemed efficient.' She still hasn't looked at you. 'She worries about you. Specifically about whether you eat.'",
+            "choices": [
+                {
+                    "text": "Ask what Nine Lives told her about your work",
+                    "next_node_id": "what_she_told",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Go think about this alone for a while",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "what_she_told": {
+            "text": "'That you were alive. That you were doing something that mattered. That you were harder to kill than most people assumed.' She pauses. 'She asked once if you were happy. I said I thought you were working on it.' Nine Lives finally looks at you. 'Was I wrong?'",
+            "choices": [
+                {
+                    "text": "Tell her she wasn't wrong",
+                    "next_node_id": "write_reply",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Not answer the question",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "write_reply": {
+            "text": "You sit with the datapad for an hour. You write six different versions. The one you send is four sentences. You don't explain what you do for a living. You tell her the roof can be fixed — you'll send money. You tell her to tell Boots you'll try to visit. You don't say when. She'll know what that means.",
+            "choices": [
+                {
+                    "text": "[Leave] Set the datapad down",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reply_sent"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "pocket_letter": {
+            "text": "You put the datapad in your jacket pocket. It's still there three days later when you reach in for something else and feel its edges. You tell yourself you'll reply when things calm down. Nine Lives says nothing. She's learned not to push.",
+            "choices": [
+                {
+                    "text": "[Leave] Return to the helm",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "fine": {
+            "text": "'No you're not,' she says, without particular heat. It's not an accusation — it's the same tone she used when you were small and lying about how cold you were. 'You don't have to be fine for my benefit. I've been around long enough to know what "fine" looks like and what it's hiding.' She sits on a cargo crate and looks at you steadily. 'Tell me something true.'",
+            "choices": [
+                {
+                    "text": "Tell her you're tired",
+                    "next_node_id": "tell_truth_tired",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell her you miss Quill",
+                    "next_node_id": "quill_moment",
+                    "conditions": {
+                        "quill_voice_heard": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell her something is happening with the crystals that you can't explain yet",
+                    "next_node_id": "crystal_truth",
+                    "conditions": {
+                        "solenne_contacted": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "tell_truth_tired": {
+            "text": "She nods once. 'I know.' She doesn't ask what you're tired of — she can probably guess. She was a stevedore for thirty years on a bad leg. She knows what carrying a heavy thing looks like. 'Sit down, then,' she says, like you're still small. Somehow you do.",
+            "choices": [
+                {
+                    "text": "Ask about Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you should get back to work",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "quill_moment": {
+            "text": "She goes very still. It's the stillness she had when you were six and you asked where he'd gone. Then she exhales — long and slow. 'I miss him too. Every day.' She looks at her hands. 'Did something — happen? With the crystals?' She can't know what you mean. But she's asking exactly the right question.",
+            "choices": [
+                {
+                    "text": "Tell her you heard something that sounded like him",
+                    "next_node_id": "quill_voice_told",
+                    "conditions": {
+                        "quill_voice_heard": true
+                    },
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell her it's nothing — just the work getting to you",
+                    "next_node_id": "deflect_quill",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "quill_voice_told": {
+            "text": "You tell her about the Communion — carefully, without the parts you're still not sure of. About the voices in the network. About one that had a shape you recognised. She listens without interrupting, which is something she only does when something matters. When you finish, she's quiet for a long time. 'He was a good boy,' she finally says. 'He would have been so proud of you.' She doesn't cry. Her voice just gets very small.",
+            "choices": [
+                {
+                    "text": "Hold her hand",
+                    "next_node_id": "hold_hand",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "hold_hand": {
+            "text": "You do. She lets you. For a while neither of you says anything. The Whisper hums around you both. Outside the viewport, the crystals in the dock give off their faint blue light. 'Your ship has good bones,' she finally says. 'What did you name her?' 'The Whisper.' She makes a sound that is not quite a laugh and not quite something else. 'Of course you did.'",
+            "choices": [
+                {
+                    "text": "Ask about Boots — is she close by?",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you should rest",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "deflect_quill": {
+            "text": "She doesn't push. She just looks at you with the expression that means she knows you're not telling the whole truth and has decided to let you keep it. 'Alright,' she says. 'Your business is your business.' A beat. 'Boots wants to see you. She won't say so, but she does.'",
+            "choices": [
+                {
+                    "text": "Ask where Boots is",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "crystal_truth": {
+            "text": "She listens the way she always listened — completely still, with all of herself. When you finish, she says: 'I always knew you heard them differently. Even when you were small. You used to hold the little ones up to the light and wait, like you were expecting them to say something.' She looks at you carefully. 'Did they?'",
+            "choices": [
+                {
+                    "text": "Tell her yes",
+                    "next_node_id": "yes_they_did",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "yes_they_did": {
+            "text": "'Good,' she says. Just that. Like it's the answer she expected. 'I raised you to pay attention.' She pats the side of your ship. 'She's a good one, isn't she? The Whisper.' You tell her how the ship got her name. For a few minutes, you just talk about the ship. It is the most normal thing you have done in a very long time.",
+            "choices": [
+                {
+                    "text": "Ask about Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you should get back to work",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "how_she_is": {
+            "text": "'Fine,' she says, which means the same thing when she says it as when you say it. 'The roof leaks. I sent you that letter. Boots has two kittens now.' She looks at you sideways. 'She named the smaller one Quill.' A pause. 'I didn't ask her to. She just did.'",
+            "choices": [
+                {
+                    "text": "Tell her that's a good name",
+                    "next_node_id": "good_name",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about the roof — you'll fix it",
+                    "next_node_id": "fix_roof",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "good_name": {
+            "text": "'Yes,' she says. 'It is.' She looks at the crystals in the dock for a moment. 'He would have liked seeing what you did with them. He liked shiny things.' Something small and private crosses her face and then goes away. 'Come. Boots is waiting. She wants to pretend she's not, but she is.'",
+            "choices": [
+                {
+                    "text": "Go meet Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "fix_roof": {
+            "text": "'You always were better at the practical problems,' she says, which is the closest she gets to a compliment. 'Send money and it'll be fixed by next season. I know people.' She looks at you steadily. 'You look like someone who is carrying things he doesn't need to carry alone.' She does not push. She is just noting it.",
+            "choices": [
+                {
+                    "text": "Ask about Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell her you should get back to work",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "apology": {
+            "text": "'Don't.' She stops you with one word, the way she always could. 'You don't have to explain your life to me. I raised you. I know what the Fringe does to people who want more than it offers.' She sits on a cargo crate, looks around the bay. 'Tell me about the ship instead. She's a good one, isn't she?'",
+            "choices": [
+                {
+                    "text": "Tell her about the Whisper",
+                    "next_node_id": "ship_talk",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Tell her you're sorry anyway",
+                    "next_node_id": "still_sorry",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "ship_talk": {
+            "text": "You talk about the ship. She asks good questions — practical ones about drive efficiency and hull plating and crew quarters. At some point you realise the conversation about the ship has become a conversation about everything you've built, and she's been listening to it the whole time. 'Good,' she says, when you finish. 'You built something that lasts. That's the important thing.'",
+            "choices": [
+                {
+                    "text": "Ask about Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "still_sorry": {
+            "text": "She looks at you for a long time. 'I know you are,' she finally says. 'I was sorry too, some of those years. Sorry you had to choose.' She reaches out and pats your arm — three times, the way she always did. 'I always knew you were going to do something enormous. I just wished you'd written.' Her voice doesn't break. It just gets very small.",
+            "choices": [
+                {
+                    "text": "Tell her you'll write more",
+                    "next_node_id": "promise_to_write",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_warm"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "Ask about Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "promise_to_write": {
+            "text": "'Don't promise,' she says. 'Just do it when you can. Short ones are fine. One line is fine. I just want to know you're alive.' She stands, pats the side of the ship again. 'Boots is waiting. She made something she'll call dinner.'",
+            "choices": [
+                {
+                    "text": "Go meet Boots",
+                    "next_node_id": "boots_mention",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": [],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "boots_mention": {
+            "text": "'She's three docking bays over,' your mother says. 'Farrow and the kittens are with her. The smaller one is named Quill.' She says it like she's not watching for your reaction. She absolutely is. 'She knows you're here. She's pretending she's too busy to come over. She's not too busy.'",
+            "choices": [
+                {
+                    "text": "Go to her",
+                    "next_node_id": "end_boots_prompt",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_complete"],
+                        "story_flags_cleared": []
+                    }
+                },
+                {
+                    "text": "[Leave] Tell your mother you need to get back to the ship",
+                    "next_node_id": "end_conversation",
+                    "conditions": {},
+                    "outcome": {
+                        "faction_changes": {},
+                        "resource_changes": {},
+                        "story_flags_set": ["mira_reunion_complete"],
+                        "story_flags_cleared": []
+                    }
+                }
+            ]
+        },
+        "end_boots_prompt": {
+            "text": "Your mother watches you go. She doesn't call after you. But when you look back once, she's still watching. She gives you a small nod. You turn back and keep walking.",
+            "choices": []
+        },
+        "end_conversation": {
+            "text": "She lets you go. She always has.",
+            "choices": []
+        }
+    }
+}

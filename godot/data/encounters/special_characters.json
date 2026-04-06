@@ -1233,6 +1233,747 @@
           "outcome_weight": 0.2
         }
       ]
+    },
+    {
+      "encounter_id": "enc_special_wraith_confession",
+      "encounter_type": "diplomatic",
+      "title": "The Son Beneath the Mask",
+      "description": "The Wraith hails you alone, on a frequency you've never heard before. His voice is stripped of its usual menace — what's left is exhaustion and something older. 'You're going to face him soon. Before you do, you deserve to know what he is. What he was.' He pauses. 'His name was Cornelius Vane. He was my father.'",
+      "arc_id": "arc_6",
+      "location": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "arc6_bone_yard_explored": true,
+        "special_char_wraith_confession_met": false
+      },
+      "npc_ids": ["wraith", "petrel_vane"],
+      "priority": 8,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "listen_fully",
+          "text": "Listen to everything Petrel Vane has to say about his father",
+          "conditions": {},
+          "outcome": {
+            "description": "He tells it slowly, thirty years of grief compressed into quiet sentences. Corr Vane. The Black Harrow. The cave of bright crystals. The long transformation. 'I stayed because I thought there would be a moment of clarity. One moment where he looked at me and knew who I was.' He goes quiet. 'There might still be. But I don't think I can hold on much longer.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_wraith_confession_met", "petrel_identity_revealed", "corr_vane_history_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "offer_alliance",
+          "text": "Tell him you might be able to reach what's left of his father in the crystal network",
+          "conditions": {"arc7_crystal_communion": true},
+          "outcome": {
+            "description": "'You can reach him?' Something shifts in the voice — hope, which is worse than grief because it can be lost again. 'If there's anything of him left in there — anything that remembers being Corr — I need you to find it. Please.' He transmits a set of coordinates. The Black Harrow's last known position before the transformation.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_wraith_confession_met", "petrel_identity_revealed", "corr_vane_history_known", "petrel_joined_crew"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "stay_detached",
+          "text": "Acknowledge the information and end the transmission",
+          "conditions": {},
+          "outcome": {
+            "description": "'I understand,' you say. The word sits between you like a stone. Petrel Vane doesn't reply for a long moment. 'No. You don't. But maybe you will.' The channel closes. You have the information. You're not sure what to do with it.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_wraith_confession_met", "petrel_identity_revealed"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_mira_letter",
+      "encounter_type": "exploration",
+      "title": "A Letter From Home",
+      "description": "Nine Lives finds you at the helm and slides a datapad across the console without comment. It's a letter. The sender code is a mining world address you recognise — you just never expected to see it in your mission queue. Your mother writes the way she talks: short sentences, no fuss. 'The roof leaks. Boots says hello. Did you eat today?'",
+      "arc_id": "arc_6",
+      "location": "bone_yard",
+      "trigger_conditions": {
+        "current_arc": "arc_6",
+        "nine_lives_mira_contact": true,
+        "special_char_mira_letter_met": false
+      },
+      "npc_ids": ["nine_lives", "mira_vega"],
+      "priority": 6,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_nine_lives",
+          "text": "Ask Nine Lives how long she's been in contact with your mother",
+          "conditions": {},
+          "outcome": {
+            "description": "Nine Lives examines something on the ceiling. 'A few years.' 'A few years?' 'She wanted to know you were alive. I wanted to make sure someone would pull you out of a spiral if the crew couldn't. It seemed efficient.' She still hasn't looked at you. 'She worries about you. Specifically about whether you eat.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_mira_letter_met", "mira_letter_received"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "write_back",
+          "text": "Write a reply — the first in eleven years",
+          "conditions": {},
+          "outcome": {
+            "description": "You sit with the datapad for an hour. You write six different versions. The one you send is four sentences. You don't explain what you do for a living. You tell her the roof can be fixed — you'll send money. You tell her to tell Boots you'll try to visit. You don't say when. She'll know what that means.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_mira_letter_met", "mira_letter_received", "mira_reply_sent"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "pocket_it",
+          "text": "Pocket the datapad without responding",
+          "conditions": {},
+          "outcome": {
+            "description": "You put the datapad in your jacket pocket. It's still there three days later when you reach into your pocket for something else and feel its edges. You tell yourself you'll reply when things calm down. Nine Lives says nothing. She's learned not to push.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_mira_letter_met", "mira_letter_received"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.25
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_mira_reunion",
+      "encounter_type": "diplomatic",
+      "title": "The Weight of Coming Home",
+      "description": "Nine Lives arranged it without telling you. Mira is standing in the docking bay of the Whisper — three-legged, sharp-eyed, smaller than you remember, looking at your flagship with the expression of someone who is not going to say they're impressed. 'You're thinner,' she says by way of greeting.",
+      "arc_id": "arc_7",
+      "location": "feline_courts",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "mira_letter_received": true,
+        "special_char_mira_reunion_met": false,
+        "karma_tier": "virtuous"
+      },
+      "npc_ids": ["mira_vega"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "embrace_her",
+          "text": "Cross the docking bay and hug your mother",
+          "conditions": {},
+          "outcome": {
+            "description": "She doesn't hug back immediately — she pats your back three times with her good hand, the way she used to when you were small and had done something that frightened her. Then she holds on. 'I always knew you were going to do something enormous,' she says, very quietly. 'I just wished you'd written.' Her voice doesn't break. It was never going to break. But it gets very small.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_mira_reunion_met", "mira_reunion_complete", "mira_reunion_warm"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "apologise",
+          "text": "Apologise for not writing — for all eleven years of silence",
+          "conditions": {},
+          "outcome": {
+            "description": "'Don't.' She stops you with one word, the way she always could. 'You don't have to explain your life to me. I raised you. I know what the Fringe does to people who want more than it offers.' She sits on a cargo crate, looks around the bay. 'Tell me about the ship instead. She's a good one, isn't she?'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_mira_reunion_met", "mira_reunion_complete", "mira_reunion_warm"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "stand_apart",
+          "text": "Keep your distance — you don't know how to do this",
+          "conditions": {},
+          "outcome": {
+            "description": "You stand ten feet apart in the docking bay, the Whisper's engines humming between you. She looks at you for a long time. 'You're still you,' she finally says. 'Under all of it. I can still see it.' She doesn't make you come closer. She never did. 'Boots wants to see you. She won't say so, but she does.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_mira_reunion_met", "mira_reunion_complete"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_boots_vega",
+      "encounter_type": "exploration",
+      "title": "The Life You Didn't Live",
+      "description": "Boots is exactly how you remember her and nothing like it. Bigger, more settled, with a spacer's calluses on hands that look like yours. She looks you over the way she used to when you came home from the docks — checking for damage. 'Famous pirate,' she says. 'You could've just been a dockworker.' She means it as a compliment. You think.",
+      "arc_id": "arc_7",
+      "location": "feline_courts",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "mira_reunion_complete": true,
+        "special_char_boots_vega_met": false
+      },
+      "npc_ids": ["boots_vega"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "stay_for_dinner",
+          "text": "Accept the invitation to dinner with Boots and her family",
+          "conditions": {},
+          "outcome": {
+            "description": "Farrow cooks badly and apologises for it cheerfully. The kittens want to know if you've fought pirates. Boots kicks you under the table every time you're about to say something true. By the end of the night you have promised to come back next month. You both know you probably won't. The promise matters anyway.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_boots_vega_met", "boots_dinner_accepted"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "short_visit",
+          "text": "Stay briefly and leave before things get complicated",
+          "conditions": {},
+          "outcome": {
+            "description": "She walks you back to the Whisper. At the hatch, she stops. 'Come back when you're done saving the multiverse,' she says. 'I'll make sure Mum fixes the roof by then.' She hugs you once, hard, and lets go. You don't look back. She watches until the hatch closes.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_boots_vega_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_ember_manifestation",
+      "encounter_type": "diplomatic",
+      "title": "Twelve Voices, One Name",
+      "description": "You receive no warning. The lights in the Whisper's bridge dim to a pale glow, and then she is there — twelve of her, shimmering at the edges of the room and in the corners of your vision. The Fairy elders. Or: one elder, in twelve places. 'We have been waiting some time to speak with you properly, little listener.' Her voices arrive slightly out of sync, which is deliberate. 'You apologised to a crystal, once. Before you used it. Do you remember?'",
+      "arc_id": "arc_5",
+      "location": "fairy_realms",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "arc4_fairy_warning": true,
+        "special_char_ember_manifestation_met": false
+      },
+      "npc_ids": ["ember_who_remembers"],
+      "priority": 8,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_what_she_is",
+          "text": "Ask how many of her there are and how that works",
+          "conditions": {},
+          "outcome": {
+            "description": "'Twelve,' she says, all twelve at once. 'One,' she says, each in sequence. 'The distinction matters less than you think. We are old enough that the question of how many of us there are has become imprecise.' Her amusement is warm and very, very old. 'You are asking the right questions. The previous candidates rarely did.'",
+            "faction_changes": {"fairies": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ember_manifestation_met", "ember_named", "ember_candidates_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "ask_about_crystals",
+          "text": "Ask what she knows about the crystals — the real truth",
+          "conditions": {},
+          "outcome": {
+            "description": "'Everything,' she says. 'But knowing everything is not the same as being able to say everything.' She folds twelve pairs of hands. 'The network is dying. It has been dying for half a billion years. You are not the first who might save it. You may be the last.' She pauses. 'There is a young fairy who holds something you will need. Her name is Moth. She is frightened. Be patient with her.'",
+            "faction_changes": {"fairies": 12},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ember_manifestation_met", "ember_named", "moth_referenced"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "demand_direct_answers",
+          "text": "Tell her you're tired of cryptic guidance — you need facts, not riddles",
+          "conditions": {},
+          "outcome": {
+            "description": "Eleven of her go still. The twelfth looks at you with something that might be respect. 'You are correct to push,' she says, alone. 'We have been cryptic for so long that we have forgotten how to be otherwise. Let us try.' She takes a breath — all twelve of them — and begins to tell you about Solenne.",
+            "faction_changes": {"fairies": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ember_manifestation_met", "ember_named", "solenne_name_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_moth_sings",
+      "encounter_type": "ritual",
+      "title": "The Smallest Brave Thing",
+      "description": "Moth is the smallest fairy you have ever seen — barely up to your knee, with wings that fold around her like a coat she hasn't grown into. She is holding a crystal fragment that hums with a frequency you've never heard before. 'I don't want to do this,' she says. It is not a refusal. It is an announcement. She is going to do it anyway.",
+      "arc_id": "arc_7",
+      "location": "warp_marches",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "ember_named": true,
+        "arc7_warp_explored": true,
+        "special_char_moth_sings_met": false
+      },
+      "npc_ids": ["moth", "silky"],
+      "priority": 9,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "encourage_gently",
+          "text": "Tell her she doesn't have to be unafraid — just willing",
+          "conditions": {},
+          "outcome": {
+            "description": "She looks up at you. Something in your tone — or maybe in the crystals around you — settles her. 'Willing,' she repeats, as if trying on the word. Then she opens her mouth and sings. The sound is not music exactly. It is older than music. The crystal in her hands flares silver, and for a moment the air around you fills with voices — and one of them, distantly, speaks a name you have not heard in years.",
+            "faction_changes": {"fairies": 15},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_moth_sings_met", "moth_sings_solenne", "arc7_crystal_communion", "quill_voice_heard"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "wait_in_silence",
+          "text": "Say nothing — just stand beside her so she isn't alone",
+          "conditions": {},
+          "outcome": {
+            "description": "You don't speak. You just move to stand beside her, close enough that your shadow falls over hers. She exhales once, slowly. Then she sings. The crystals answer. The network reaches back. In the singing you hear things you were not expecting — a thousand years of patience, and underneath it, grief that has the shape of something that used to have a name.",
+            "faction_changes": {"fairies": 12},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_moth_sings_met", "moth_sings_solenne", "arc7_crystal_communion"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_kiln_first_contact",
+      "encounter_type": "diplomatic",
+      "title": "The Alien Who Stayed",
+      "description": "She looks like slow-moving glass — light passes through her in ways that don't quite make sense. But she speaks normally, with the careful precision of someone who has spent six hundred years learning how. 'Captain. I have been embedded in your multiverse for six centuries. I have posed as a scholar, a merchant, a monk. Today I am going to be honest with you, which is something I have not been in a very long time.'",
+      "arc_id": "arc_3",
+      "location": "deep_space",
+      "trigger_conditions": {
+        "current_arc": "arc_3",
+        "arc3_alien_contact": true,
+        "special_char_kiln_met": false
+      },
+      "npc_ids": ["kiln"],
+      "priority": 7,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_her_mission",
+          "text": "Ask what her actual mission is — and whether she's succeeded",
+          "conditions": {},
+          "outcome": {
+            "description": "'Preservation,' she says. 'Of the crystal network. Of the jump gates. Of the civilisations that depend on both.' She looks at her hands — glass hands, slow and quiet. 'Have I succeeded? No. We have not succeeded. We have been failing, slowly and thoroughly, for millions of years.' A pause. 'You are the first potential steward in a thousand cycles who has ever asked whether we were tired too.'",
+            "faction_changes": {"aliens": 12},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_kiln_met", "kiln_mission_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "ask_about_other_stewards",
+          "text": "Ask about the other potential stewards — what happened to them",
+          "conditions": {},
+          "outcome": {
+            "description": "'Seven,' she says. 'We have watched seven who might have been you.' She counts them on her fingers, names none of them. 'The first took too much power and burned. The second refused all of it and faded. The third came closest — she almost reached the Cradle. She chose to protect her people instead of the network. We understood. We wept.' She looks at you steadily. 'We have been more careful with our hope since then.'",
+            "faction_changes": {"aliens": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_kiln_met", "kiln_stewards_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "be_direct",
+          "text": "Tell her what you want from the alien coalition — and what you can offer",
+          "conditions": {},
+          "outcome": {
+            "description": "She tilts her head, light bending through her in a way you're still not used to. Then she almost smiles — or the glass equivalent. 'Direct. Good. We have spent too long on indirect approaches.' She leans forward. 'Tell me what you need. We will tell you what we can give. For once, let us simply talk to each other.'",
+            "faction_changes": {"aliens": 15},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_kiln_met", "kiln_alliance_open"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_jessamine_howl",
+      "encounter_type": "diplomatic",
+      "title": "The Howl Line",
+      "description": "The message comes through a frequency the League doesn't officially know exists. A Brigadier with watchful eyes and a uniform that fits like it was made to last. 'Commander Dave. I'm Jessamine Howl. Yes — that Howl. I've been watching your mission closely. I think we both know you've been given orders you can't fully carry out in good conscience.' She pauses. 'I'm offering a third option.'",
+      "arc_id": "arc_5",
+      "location": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "arc5_dave_crisis": true,
+        "protagonist_id": "dave",
+        "special_char_jessamine_howl_met": false
+      },
+      "npc_ids": ["jessamine_howl"],
+      "priority": 8,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_about_third_option",
+          "text": "Ask what the third option is",
+          "conditions": {},
+          "outcome": {
+            "description": "'Not defection. Not blind obedience. Reform from within.' She unfolds a map — not of star systems but of the League itself: command structures, supply chains, the loyalties behind them. 'General Howl built something worth saving. The Venators didn't build the League — they captured it. It can be taken back.' She meets your eyes. 'I need someone inside High Command who still has a conscience. That appears to be you.'",
+            "faction_changes": {"canis_league": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_jessamine_howl_met", "jessamine_howl_met", "dave_reform_path_chosen"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "remain_loyal",
+          "text": "Tell her your loyalty is to the League, not to any political faction within it",
+          "conditions": {},
+          "outcome": {
+            "description": "'That,' she says quietly, 'is exactly what General Howl said.' She doesn't push further. She closes the map. 'The offer stands. When you're ready to understand the difference between the League and what it's become, find me.' She ends the transmission. You sit with the echo of it for a long time.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_jessamine_howl_met", "jessamine_howl_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.3
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_toma_howl",
+      "encounter_type": "diplomatic",
+      "title": "A Decent Dog",
+      "description": "You boarded the supply ship expecting resistance. What you find instead is a dog who has already put down his weapon and is standing with his hands visible, watching you with calm, resigned eyes. 'Captain Aristotle. I've been expecting this raid for three weeks.' He nods at the crystal manifest. 'Take what you need. There's a civilian medical shipment in bay three — I'd ask you to leave that.'",
+      "arc_id": "arc_5",
+      "location": "supply_routes",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "protagonist_id": "aristotle",
+        "special_char_toma_howl_met": false
+      },
+      "npc_ids": ["toma_howl"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "grant_mercy",
+          "text": "Leave the medical shipment and take only what you need",
+          "conditions": {},
+          "outcome": {
+            "description": "He watches you go through the manifest and take the military supplies, leaving bay three untouched. When you're done, he hands you a sealed data chip. 'Patrol schedules for this sector. I've been quietly adjusting them for two years to minimise civilian casualties. I figure a pirate captain who leaves medical shipments alone might use this better than anyone I report to.' His name, he says, is Toma Howl.",
+            "faction_changes": {"canis_league": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_toma_howl_met", "toma_howl_ally"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "take_everything",
+          "text": "Take everything, including the medical supplies",
+          "conditions": {},
+          "outcome": {
+            "description": "He doesn't fight you. He just watches with an expression you'll remember longer than you'd like. As you leave, he says quietly: 'Sick children on Fernholm needed those medicines.' He doesn't say it to make you feel guilty. He says it because it's true and he thought you should know.",
+            "faction_changes": {"canis_league": -8},
+            "resource_changes": {"crystal_inventory": 5},
+            "story_flags_set": ["special_char_toma_howl_met"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.15
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_yarrow_repair",
+      "encounter_type": "exploration",
+      "title": "The One Who Keeps His Word",
+      "description": "The repair shop at the edge of the Twilight Bazaar has no sign. Inside, a goblin who is smaller and quieter than goblins usually are is working on a drive coil with the focused attention of someone who finds this genuinely interesting. He looks up without surprise. 'Captain Aristotle. I've been expecting you to come through here eventually. Word gets around.' He goes back to the coil. 'You treat your people well. That's unusual.'",
+      "arc_id": "arc_4",
+      "location": "goblin_warrens",
+      "trigger_conditions": {
+        "current_arc": "arc_4",
+        "special_char_yarrow_met": false
+      },
+      "npc_ids": ["yarrow"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_why_hes_different",
+          "text": "Ask him why he doesn't operate like other goblins",
+          "conditions": {},
+          "outcome": {
+            "description": "'I gave my word once,' he says, still working on the coil. 'To not sell a location. I had the Canis League offering me more money than I'll make in a decade. I didn't take it.' He sets down his tool. 'Every goblin in the Warrens thinks I'm broken. Maybe I am. But when I tell someone something is true, it's true. That's worth more than the League's money.' He finishes the coil. 'Your drive needs recalibrating, by the way. I'll do it. No charge.'",
+            "faction_changes": {"goblins": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_yarrow_met", "yarrow_ally"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "hire_him",
+          "text": "Ask if he wants steady work — reliable repairs, reliable pay",
+          "conditions": {},
+          "outcome": {
+            "description": "He looks at you for a long moment. 'Steady.' He tries the word. 'I haven't had steady in about twelve years.' He looks around the shop — the empty stools, the avoiding eyes of every goblin who walks past. 'What's the catch?' 'No catch,' you say. He goes back to the coil. 'I'll think about it,' he says, which is goblin for yes.",
+            "faction_changes": {"goblins": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_yarrow_met", "yarrow_ally", "yarrow_hired"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_ashen_questions",
+      "encounter_type": "diplomatic",
+      "title": "The Questions the Order Won't Answer",
+      "description": "The young Knight finds you between encounters — approaches without armour, which among Knights is a significant gesture. 'Captain. I know this is unusual. I'm Brother Ashen. I have some questions that Ser Galvain won't let me ask in the Order, and I'm told you're someone who gives honest answers.' He looks uncertain and determined in equal measure. 'Is the Last Dawn Oath still enough? Can order be the only answer when the multiverse keeps producing new questions?'",
+      "arc_id": "arc_5",
+      "location": "knight_kingdoms",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "arc5_knight_declaration": true,
+        "special_char_ashen_met": false
+      },
+      "npc_ids": ["brother_ashen"],
+      "priority": 5,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "engage_honestly",
+          "text": "Tell him what you actually think about order, chaos, and the multiverse",
+          "conditions": {},
+          "outcome": {
+            "description": "You talk for an hour. You don't give him answers — you give him more questions, better ones. He leaves with the expression of someone who has found what they were looking for, which was not a solution but a companion in uncertainty. 'I think,' he says at the end, 'that the Order needs people who are willing to ask these things from inside it. Thank you, Captain.' He will remember this conversation.",
+            "faction_changes": {"knights": 8},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ashen_met", "ashen_ally", "ashen_questions_answered"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "redirect_to_galvain",
+          "text": "Tell him these are questions he needs to bring back to Ser Galvain himself",
+          "conditions": {},
+          "outcome": {
+            "description": "He's quiet for a moment. 'You think the Grand Marshal would listen?' 'I think,' you say carefully, 'that people are sometimes more able to hear difficult questions from the people they love most.' He nods slowly. 'That's either wise or very cruel.' 'Often the same thing,' you say.",
+            "faction_changes": {"knights": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_ashen_met", "ashen_redirect_galvain"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_kestrel_defection",
+      "encounter_type": "diplomatic",
+      "title": "Iron Fang's Daughter",
+      "description": "Luna finds you with an urgent look you've never seen on her face. 'Kestrel just broke atmosphere. She's in a stolen shuttle with League patrol on one side and Wolf interceptors on the other.' She holds up the comm. 'She's asking for asylum. My recommendation is yes. But this is your call, Captain.'",
+      "arc_id": "arc_7",
+      "location": "drennhal_approach",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "luna_kestrel_contact": true,
+        "special_char_kestrel_met": false
+      },
+      "npc_ids": ["kestrel", "luna", "iron_fang"],
+      "priority": 9,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "grant_asylum",
+          "text": "Grant asylum — extract Kestrel and get out of Drennhal space",
+          "conditions": {},
+          "outcome": {
+            "description": "The extraction is tight — Wolf interceptors get three shots off before you jump. In the hold, Kestrel sits with her knees to her chest, breathing hard. She's sixteen and furious and frightened and trying not to show any of it. Luna sits beside her. They don't speak. They don't need to. When Kestrel finally looks up at you: 'My father is going to come for me.' 'I know,' you say. 'Let him.'",
+            "faction_changes": {"wolves": -15, "felid_corsairs": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_kestrel_met", "kestrel_defected", "iron_fang_crisis"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "negotiate_terms",
+          "text": "Open a channel to Iron Fang — see if there's a deal to be made",
+          "conditions": {"wolves": 10},
+          "outcome": {
+            "description": "Iron Fang's face on screen is not what you expected: not rage but a kind of exhausted fear. 'Where is she?' You tell him she's safe. 'Is she —' He stops. The great Wolf commander cannot finish the sentence. 'She is,' you say. The silence stretches. 'I want to speak to her,' he says finally. You don't know yet whether this is the beginning of something or the end of something.",
+            "faction_changes": {"wolves": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_kestrel_met", "kestrel_defected", "iron_fang_negotiations_open"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_venator_briefing",
+      "encounter_type": "diplomatic",
+      "title": "The Architect",
+      "description": "The First Council meeting is conducted by hologram. Six shadows. One voice. Admiral Vara Venator is the voice. She is sixty years old and immaculate and speaks with the measured precision of someone who has been right about difficult things for a very long time. 'Commander Dave. Your mission profile is being upgraded. The Aristotle problem has moved from logistics to strategic priority. I trust you understand what that means.' A beat. 'Tell me you understand.'",
+      "arc_id": "arc_5",
+      "location": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_5",
+        "protagonist_id": "dave",
+        "special_char_venator_met": false
+      },
+      "npc_ids": ["admiral_venator"],
+      "priority": 8,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "confirm_orders",
+          "text": "Confirm that you understand and you will carry out your mission",
+          "conditions": {},
+          "outcome": {
+            "description": "'Good.' She doesn't praise. She notes compliance and moves on. The briefing is thorough and alarming — the League is escalating faster than you realised. She ends with: 'One more thing, Commander. I have read your psychological profile. You have a conscience. I am not asking you to dispose of it. I am asking you to ensure it serves the mission rather than the reverse.' The channel closes.",
+            "faction_changes": {"canis_league": 5},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_venator_met", "venator_identity_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        },
+        {
+          "choice_id": "ask_about_howl_charter",
+          "text": "Ask about General Howl's original charter — whether it still governs anything",
+          "conditions": {"jessamine_howl_met": true},
+          "outcome": {
+            "description": "The temperature drops two degrees. 'An interesting question,' she says, and her voice does not change, which tells you everything. 'The charter is a historical document. Its principles inform our mission. Its operational specifics do not govern current policy.' She looks at you steadily. 'Where did you encounter that framing, Commander?' You have made her curious, which is not the same as making her suspicious, but it is adjacent.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_venator_met", "venator_identity_known", "venator_aware_of_reform_question"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.4
+        },
+        {
+          "choice_id": "push_back_quietly",
+          "text": "Express concern about the escalation — ask whether there are diplomatic options being overlooked",
+          "conditions": {},
+          "outcome": {
+            "description": "'Diplomatic options,' she repeats. 'I have read Aristotle's dossier. I have noted his willingness to negotiate. I have also noted his willingness to destroy. A pirate who can do both is not a diplomatic partner — he is a variable.' She looks at you for a long moment. 'Your concern is noted, Commander. It will not change the orders. But it tells me something useful about you.'",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_venator_met", "venator_identity_known", "dave_pushback_noted"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.35
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_reba_voice",
+      "encounter_type": "exploration",
+      "title": "Come Home When You Can",
+      "description": "Your comms queue has a backlog. Forty-seven messages, most of them mission-relevant. One is personal — a short video from Reba, logged two days ago. She's in the workshop, in the middle of something that involves grease and a medical ship conduit she's clearly winning against. She sees the camera and just smiles, the way she does when she's been waiting to see you. 'Hey. I'm still here. Come home when you can.'",
+      "arc_id": "arc_1",
+      "location": "canine_order",
+      "trigger_conditions": {
+        "current_arc": "arc_1",
+        "protagonist_id": "dave",
+        "special_char_reba_voice_met": false
+      },
+      "npc_ids": ["reba_brindle"],
+      "priority": 4,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "watch_again",
+          "text": "Watch it twice before closing the queue",
+          "conditions": {},
+          "outcome": {
+            "description": "You watch it twice. You close the queue. In your uniform pocket, next to the photograph, you have a small carved stone from Fernholm that she gave you at the wedding. You are not a sentimental man. You are carrying three sentimental objects. This is information about you that you have not processed.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_reba_voice_met", "reba_introduced"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.5
+        },
+        {
+          "choice_id": "reply_briefly",
+          "text": "Send a brief reply — ten seconds, mission-log voice",
+          "conditions": {},
+          "outcome": {
+            "description": "You compose a reply in the standard mission-log format, which immediately feels wrong. You delete it and start again. The second version is fourteen seconds long and includes the words 'I miss you' in the middle, which is not a phrase that appears in any League communications manual. You send it before you can reconsider. The read receipt comes back almost immediately.",
+            "faction_changes": {},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_reba_voice_met", "reba_introduced", "reba_reply_sent"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        }
+      ]
+    },
+    {
+      "encounter_id": "enc_special_solenne_fragment",
+      "encounter_type": "ritual",
+      "title": "Listen. Please. Just Listen.",
+      "description": "During Crystal Communion, you reach deeper than you've reached before — past the living network, past the grief of the Long Cold, past the echoes of the Builder Wars. And then you find something that is not an echo. It is aware. It is waiting. A voice that sounds like water over stone, very old and very quiet: 'Little listener. I thought you might come here eventually. I have been saving this particular silence for you.'",
+      "arc_id": "arc_7",
+      "location": "warp_marches",
+      "trigger_conditions": {
+        "current_arc": "arc_7",
+        "arc7_crystal_communion": true,
+        "moth_sings_solenne": true,
+        "special_char_solenne_fragment_met": false
+      },
+      "npc_ids": ["solenne"],
+      "priority": 10,
+      "repeatable": false,
+      "choices": [
+        {
+          "choice_id": "ask_who_she_is",
+          "text": "Ask who she is",
+          "conditions": {},
+          "outcome": {
+            "description": "'A gardener,' she says. 'A long time ago.' She pauses. 'My name was Solenne. I was the last of the Builders to stay — to tend the garden we had made. I did not tend it well enough.' Her voice is very quiet. 'But you are here. That is something none of us expected.'",
+            "faction_changes": {"fairies": 10, "aliens": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_solenne_fragment_met", "solenne_contacted", "solenne_name_known"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.45
+        },
+        {
+          "choice_id": "ask_what_she_hears",
+          "text": "Tell her what you hear — when the crystals sing",
+          "conditions": {},
+          "outcome": {
+            "description": "You tell her. The voice, the feeling, the word that keeps arriving that you don't have a name for. When you finish, the silence is different — fuller. 'Yes,' she says. 'That is exactly it. That is what a steward sounds like.' A long pause. 'Come to the Cradle when you are ready. All of me that remains is there. I will tell you everything.'",
+            "faction_changes": {"fairies": 15, "aliens": 10},
+            "resource_changes": {},
+            "story_flags_set": ["special_char_solenne_fragment_met", "solenne_contacted", "cradle_invitation_received"],
+            "story_flags_cleared": []
+          },
+          "outcome_weight": 0.55
+        }
+      ]
     }
   ]
 }

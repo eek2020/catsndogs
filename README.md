@@ -110,7 +110,8 @@ The game is **fully playable** with complete implementation of all core systems 
 
 - **Dual Protagonist System:** Choose Aristotle (cat) or Dave (dog) with unique narrative paths
 - **Complete Story Arcs:** All 4 arcs with encounter data, dialogue, and arc transition logic
-- **Crew Recruitment:** 8 recruitable crew members (4 per protagonist) with trait bonuses
+- **Deep Lore System:** Comprehensive world-building with faction histories, character backstories, and crystal network mythology
+- **Crew Recruitment:** 8 recruitable crew members (4 per protagonist) with trait bonuses and deep personal stories
 - **Branching Dialogue:** Two-sided conversations with portrait support and multiple outcomes
 - **Combat System:** Tactical combat with ship upgrades, damage calculations, and victory/defeat states
 - **Economy & Trade:** Crystal extraction, supply routes, shipyard (repairs, upgrades, ship purchases)
@@ -135,8 +136,9 @@ See `docs/MASTER_PLAN.md` for the authoritative project plan and development sta
 
 - [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md) — Authoritative project plan: current state, tasks, roadmap
 - [`docs/GAME_SUMMARY.md`](docs/GAME_SUMMARY.md) — Complete game design summary (implemented + planned content)
-- [`docs/CODE_REVIEW_2026-04-05.md`](docs/CODE_REVIEW_2026-04-05.md) — Latest code review with open issues
+- [`docs/reviews/CODE_REVIEW_2026-04-05.md`](docs/reviews/CODE_REVIEW_2026-04-05.md) — Latest code review with open issues
 - [`STRUCTURE.md`](STRUCTURE.md) — Architecture reference: scenes, signals, systems
+- [`docs/story/LORE_EXPANSION.md`](docs/story/LORE_EXPANSION.md) — Deep world-building: faction histories, character backstories, crystal network mythology
 - [`docs/changelog/CHANGELOG.md`](docs/changelog/CHANGELOG.md) — Detailed change log and development history
 - [`docs/archive/`](docs/archive/) — Archived TRDs (Python-era), PRDs, old plans, superseded feature specs
 

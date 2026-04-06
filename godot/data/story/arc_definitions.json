@@ -133,13 +133,42 @@
                 "enc_arc5_wolf_hunt",
                 "enc_arc5_dave_loyalty_crisis",
                 "enc_arc5_knight_declaration",
-                "enc_arc5_fairy_deep_secret"
+                "enc_arc5_fairy_deep_secret",
+                "enc_special_ember_manifestation",
+                "enc_special_jessamine_howl",
+                "enc_special_venator_briefing",
+                "enc_special_ashen_questions",
+                "enc_special_toma_howl"
+            ],
+            "new_story_flags": [
+                "jessamine_howl_met",
+                "dave_reform_path_chosen",
+                "meg_dauntless_crisis",
+                "meg_dauntless_saved",
+                "venator_identity_known",
+                "venator_aware_of_reform_question",
+                "dave_pushback_noted",
+                "ember_named",
+                "ember_candidates_known",
+                "moth_referenced",
+                "solenne_name_known",
+                "toma_howl_ally",
+                "ashen_ally",
+                "ashen_questions_answered",
+                "ashen_redirect_galvain",
+                "nine_lives_mira_contact"
             ],
             "decision_points": [
                 {
                     "decision_id": "arc5_war_response",
                     "flag_name": "arc5_war_response",
                     "options": ["meet_force_with_force", "divide_and_conquer", "seek_the_source"]
+                },
+                {
+                    "decision_id": "dave_dauntless_dilemma",
+                    "flag_name": "meg_dauntless_crisis",
+                    "options": ["pursue_aristotle", "save_meg_dauntless"],
+                    "note": "Dave only — Wolf offensive strikes the Dauntless (Meg's ship) in Arc 5. Saving Meg costs tactical advantage but keeps Meg alive."
                 }
             ]
         },
@@ -164,7 +193,20 @@
                 "enc_arc6_ancient_signal",
                 "enc_arc6_lion_civil_war",
                 "enc_arc6_goblin_heist",
-                "enc_arc6_death_escalation"
+                "enc_arc6_death_escalation",
+                "enc_special_wraith_confession",
+                "enc_special_mira_letter"
+            ],
+            "new_story_flags": [
+                "petrel_identity_revealed",
+                "petrel_joined_crew",
+                "petrel_chose_father",
+                "corr_vane_history_known",
+                "mira_letter_received",
+                "mira_reply_sent",
+                "blood_paw_amber_revealed",
+                "thorold_poisoner_known",
+                "calla_message_received"
             ],
             "decision_points": [
                 {
@@ -194,7 +236,25 @@
                 "enc_arc7_warp_entry",
                 "enc_arc7_crystal_communion",
                 "enc_arc7_alien_agenda",
-                "enc_arc7_dave_pivot"
+                "enc_arc7_dave_pivot",
+                "enc_special_mira_reunion",
+                "enc_special_boots_vega",
+                "enc_special_moth_sings",
+                "enc_special_solenne_fragment",
+                "enc_special_kestrel_defection"
+            ],
+            "new_story_flags": [
+                "mira_reunion_complete",
+                "mira_reunion_warm",
+                "boots_dinner_accepted",
+                "kestrel_defected",
+                "iron_fang_crisis",
+                "iron_fang_negotiations_open",
+                "quill_voice_heard",
+                "solenne_contacted",
+                "cradle_invitation_received",
+                "moth_sings_solenne",
+                "luna_kestrel_contact"
             ],
             "decision_points": [
                 {
@@ -223,7 +283,16 @@
                 "enc_arc8_alliance_summit",
                 "enc_arc8_death_transformation",
                 "enc_arc8_cradle_portal",
-                "enc_arc8_final_preparations"
+                "enc_arc8_final_preparations",
+                "enc_special_mink_message",
+                "enc_special_calla_message"
+            ],
+            "new_story_flags": [
+                "mink_known_alive",
+                "mink_message_received",
+                "calla_rescue_mission",
+                "thistle_galvain_reconciliation_possible",
+                "petrel_arc10_fate"
             ],
             "decision_points": [
                 {
@@ -261,7 +330,12 @@
                 "enc_arc9_singing_core",
                 "enc_arc9_crystal_consciousness",
                 "enc_arc9_ancient_guardians",
-                "enc_arc9_cradle_choice"
+                "enc_arc9_cradle_choice",
+                "enc_special_solenne_reconstituted"
+            ],
+            "new_story_flags": [
+                "solenne_reconstituted",
+                "builders_history_known"
             ],
             "decision_points": [
                 {
@@ -305,9 +379,10 @@
             "min_weight": -0.3,
             "max_weight": 0.3,
             "requires": {
-                "arc9_cradle_choice": "reunite_consciousness"
+                "arc9_cradle_choice": "reunite_consciousness",
+                "solenne_reconstituted": true
             },
-            "note": "Hidden 4th ending — only available if the Cradle was found and the player chose to reunite the crystal consciousness"
+            "note": "Hidden 4th ending — only available if the Cradle was found, Solenne was reconstituted in Arc 9, and the player chose to reunite the crystal consciousness"
         }
     }
 }

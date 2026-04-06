@@ -20,7 +20,14 @@
         "post_combat_recovery": 0.05,
         "hazard_piloting": 0.12
       },
-      "join_type": "willing"
+      "join_type": "willing",
+      "real_name": "Vespera Kale",
+      "family": {
+        "halix": "Wife — died in the crystal drive explosion that gave Nine Lives her crystal-sense. Never replaced.",
+        "minnow": "Adopted daughter, age 17, raised by Halix's sister on a quiet agricultural moon. Thinks Nine Lives is a distant aunt who sends presents."
+      },
+      "backstory_secret": "Caught in a crystal drive explosion at age 26, Nine Lives survived with an ability she hides: she can hear the crystals as living things, the way fairies do. She recognised Aristotle as a listener the moment she met him — not consciously, but in the same way she recognises crystal-song. She has been protecting him without telling him why.",
+      "lore_flags_revealed_by": ["nine_lives_secret_revealed", "minnow_found_nine_lives"]
     },
     {
       "crew_id": "no_tail",
@@ -41,7 +48,14 @@
         "critical_hit_chance": 0.05,
         "hazard_shielding": 0.08
       },
-      "join_type": "persuade"
+      "join_type": "persuade",
+      "real_name": "Quinn Vega",
+      "family": {
+        "rook": "Brother — taken prisoner during a Canis League raid on a Corsair refuelling station when Quinn was 19. Has been in a League labour camp for 11 years. Quinn does not know he is alive. If Aristotle allies with Dave in Arc 3, Dave can access records and find Rook.",
+        "family_lost": "Most of her family died in the same League raid that took her tail, left ear, and brother."
+      },
+      "backstory_secret": "The name of the League officer who ordered the strafing run is written inside her jacket. The officer is still alive, serving as a quartermaster at a League supply depot. Her grudge is personal, specific, and unrelenting — not ideological.",
+      "lore_flags_revealed_by": ["no_tail_rook_discovered", "no_tail_backstory_shared"]
     },
     {
       "crew_id": "silky",
@@ -62,7 +76,15 @@
         "fuel_efficiency": 0.08,
         "hazard_magic": 0.10
       },
-      "join_type": "willing"
+      "join_type": "willing",
+      "real_name": "Silky Thornquill-Vesper",
+      "family": {
+        "thornquill": "Father — a fairy named Thornquill, exiled by the Fairy Realms for his forbidden relationship with Silky's cat mother. Has wings the colour of river stones and a quiet voice. Never recovered from losing Vesper but is unfailingly kind to Silky.",
+        "vesper": "Mother — a Court Cat named Vesper who died of a fairy-realm illness cat biology could not withstand. Disowned by the Feline Courts for her relationship with Thornquill.",
+        "moth": "Half-sister on the fairy side — a young fairy bud who has never left the Heart Garden and is frightened of the wider multiverse. Keeper of the oldest crystal fragment."
+      },
+      "backstory_secret": "Silky's 'knowing your name' ability is not mystical — she is a bud-inheritor through her father, carrying fragments of fairy memory. She had heard of Aristotle from the Heart Garden archives years before they met. She was, literally, waiting for him.",
+      "lore_flags_revealed_by": ["silky_hybrid_revealed", "moth_introduced"]
     },
     {
       "crew_id": "blood_paw",
@@ -84,7 +106,14 @@
         "post_combat_recovery": 0.10,
         "hazard_veteran": 0.08
       },
-      "join_type": "persuade"
+      "join_type": "persuade",
+      "real_name": "Dr. Sable Auric-Mane",
+      "family": {
+        "calla": "Ex-wife — Dr. Calla Auric-Mane, still practising medicine at the Lion court. Chose stability over exile when Blood Paw defected. They correspond through encrypted letters. In Arc 8, Calla sends a desperate message: 'Come home. I have everything we need. I am afraid.'",
+        "lord_mane": "Cousin — Rhodion of House Amber, known as Lord Mane. Blood Paw was court physician to his murdered brother, Crown Prince Thorold."
+      },
+      "backstory_secret": "Blood Paw identified the poison that killed Crown Prince Thorold, and identified the Pride responsible. When she reported it, she was told to keep quiet for 'the stability of the realm.' She refused and fled. She knows who killed Thorold. In Arc 4, her presence unlocks dialogue with Lord Mane that no other path allows.",
+      "lore_flags_revealed_by": ["blood_paw_amber_revealed", "calla_message_received", "thorold_poisoner_known"]
     },
     {
       "crew_id": "charlie",
@@ -105,7 +134,15 @@
         "crew_casualty_reduction": 0.08,
         "hazard_veteran": 0.10
       },
-      "join_type": "willing"
+      "join_type": "willing",
+      "real_name": "Charles Rook Brindle",
+      "family": {
+        "reba": "Dave's wife — Charlie was Dave's best man at his wedding. He was secretly in love with Reba at the time. He never told anyone. He never will. His loyalty to Dave has a quiet intensity Dave mistakes for simple friendship.",
+        "parents": "Still alive. One older brother who is a League civilian engineer.",
+        "financial": "Sends half his salary home every month."
+      },
+      "backstory_secret": "Charlie has never acted on his feelings for Reba and never will. This makes him the most principled character on Dave's ship and one of the most quietly heartbreaking figures in the story. He never mentions Reba, and that is how you know.",
+      "lore_flags_revealed_by": ["charlie_backstory_revealed"]
     },
     {
       "crew_id": "bombardier",
@@ -126,7 +163,14 @@
         "critical_hit_chance": 0.06,
         "hazard_shielding": 0.10
       },
-      "join_type": "persuade"
+      "join_type": "persuade",
+      "real_name": "Lieutenant Kaska Veld",
+      "family": {
+        "colonel_veld": "Father — still serving as a corrupt officer in the Canis League. The arms deal Bombardier destroyed was being run by her own commanding officer — her father. She chose justice over family. They have not spoken in six years.",
+        "backstory_note": "If Dave's path brings her face to face with her father, she does not know what she will do."
+      },
+      "backstory_secret": "The court-martial story she tells is technically true but only half the story. She has never revealed that the corrupt arms deal was her father's. She chose justice over family, and she would do it again, and she is not sure she can live with that.",
+      "lore_flags_revealed_by": ["bombardier_father_revealed", "colonel_veld_encountered"]
     },
     {
       "crew_id": "luna",
@@ -148,7 +192,15 @@
         "fuel_efficiency": 0.10,
         "hazard_piloting": 0.12
       },
-      "join_type": "willing"
+      "join_type": "willing",
+      "real_name": "Lunara of Drennhal",
+      "family": {
+        "iron_fang": "Uncle — the Wolf commander Iron Fang. She left the Wolves because she could not accept The Hunt Eternal as a worldview.",
+        "kestrel": "Cousin — Iron Fang's daughter, age 16. They have been secretly corresponding for two years. In Arc 7, Kestrel flees Drennhal and seeks asylum with Aristotle or Dave. Luna is the one who arranged it.",
+        "mother": "A League civilian schoolteacher — dog half. One of the reasons Luna trusted Dave instantly when she joined."
+      },
+      "backstory_secret": "Luna's navigation brilliance comes from Wolf strategic training, but her compassion comes from her dog half. If Iron Fang captures her, it becomes a major family crisis that can reshape the Wolves' arc in Arc 5.",
+      "lore_flags_revealed_by": ["luna_wolf_family_revealed", "kestrel_defected", "luna_kestrel_contact"]
     },
     {
       "crew_id": "thistle",
@@ -170,7 +222,14 @@
         "post_combat_recovery": 0.12,
         "hazard_magic": 0.08
       },
-      "join_type": "persuade"
+      "join_type": "persuade",
+      "real_name": "Briar Galvain",
+      "family": {
+        "ser_galvain": "Uncle — the Grand Marshal of the Last Dawn, Ser Galvain. She took the name 'Thistle' when she left the Order. He still sends her birthday messages she does not read.",
+        "deceased_mother": "Ser Galvain's sister — Thistle's mother, now deceased. The rift between Thistle and her uncle is one of the quiet tragedies of the Knight storyline."
+      },
+      "backstory_secret": "She left the Knights because she believed the Last Dawn Oath had become an excuse for inaction in the face of suffering. The Oath was a trauma response — every Knight knows the story of Cordance, where her family's order was born in massacre. In Arc 8, at the Last Table, the player can engineer a reconciliation between her and Ser Galvain — one of the most emotionally rewarding optional arcs in the game.",
+      "lore_flags_revealed_by": ["thistle_galvain_reconciliation_possible", "thistle_backstory_revealed"]
     }
   ]
 }
