@@ -113,9 +113,14 @@ def poll_task(task_id: str, timeout: int = 300, interval: int = 5) -> dict:
 def download_model(task_result: dict, output_path: Path) -> Path:
     """Download GLB model from task result."""
     # API returns pbr_model (with textures) or base_model
-    model_url = task_result["output"].get("pbr_model") or task_result["output"].get("base_model")
+    model_url = (
+        task_result["output"].get("pbr_model")
+        or task_result["output"].get("base_model")
+    )
     if not model_url:
-        raise ValueError(f"No model URL in task output: {task_result['output'].keys()}")
+        raise ValueError(
+            f"No model URL in task output: {task_result['output'].keys()}"
+        )
     resp = requests.get(model_url)
     resp.raise_for_status()
     output_path.write_bytes(resp.content)
@@ -155,9 +160,12 @@ def image_to_glb(
         texture_quality=texture_quality,
         geometry_quality=geometry_quality,
     )
-    print(f"  Tripo3D task: {task_id} (model={model_version}, geo={geometry_quality})")
+    print(
+        f"  Tripo3D task: {task_id} "
+        f"(model={model_version}, geo={geometry_quality})"
+    )
 
     result = poll_task(task_id, timeout=timeout)
-    print(f"  Tripo3D completed")
+    print("  Tripo3D completed")
 
     return download_model(result, output_path)

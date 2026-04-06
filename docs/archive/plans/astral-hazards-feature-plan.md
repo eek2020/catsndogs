@@ -1,8 +1,15 @@
-# Astral Hazards & Celestial Phenomena — Implementation Plan
+# Astral Hazards & Celestial Phenomena — Implementation Plan — COMPLETE (2026-04-05)
+
+**Status:** COMPLETE
+**Completed:** 2026-04-05
+
+**What was delivered:** `AstralHazardSystem` (`scripts/systems/astral_hazard_system.gd`), static and dynamic hazard types, crew trait mitigation, hull damage, status effects (crystal_drain, hull_weakness), 5 EventBus signals, full serialization. Data files: `data/hazards/astral_hazards.json`, `data/hazards/static_hazards.json`. Navigation UI integration with hazard collision detection and visual indicators.
+
+**Known issues (from CODE_REVIEW_2026-04-05):** `apply_damage()` does not emit game-over when hull reaches 0 (must-fix).
 
 ## Source
 
-`docs/features/FEATURE_astral_hazards.md`
+`docs/archive/features/FEATURE_astral_hazards.md`
 
 ## Overview
 

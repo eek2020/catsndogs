@@ -1,4 +1,7 @@
-Sheet specs: 1172×4192px · 32×32px sprites at 4× export scale (128×128px per frame) · dark background with labelled rows
+
+# Sheet specs
+
+1172×4192px · 32×32px sprites at 4× export scale (128×128px per frame) · dark background with labelled rows
 29 animation rows across 5 categories:
 
 Movement (8 directions) — Walk cycles for all 8 compass directions (down, up, left, right, + all four diagonals DL/DR/UL/UR), plus run cycles and idles. The diagonals use a 3/4 perspective that blends the front and side views with appropriate hat, coat, and face orientation.

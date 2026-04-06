@@ -1,6 +1,8 @@
 # Whisper Crystals — Agent Briefing Document
 
 > **Purpose:** This document is a complete briefing for an AI agent tasked with building *Whisper Crystals*. It contains everything needed: story, lore, characters, factions, ships, gameplay mechanics, side missions, art direction, asset descriptions, and technical architecture. Read this in full before beginning any development work.
+>
+> **Status Note (2026-04-05):** This briefing describes the implemented 4-arc game with 3 endings. A 10-arc expansion (Arcs 5-10, 4th ending, 6 new regions) is planned in `docs/GAME_SUMMARY.md` — encounter data exists in JSON but is not integration-tested. The **Dual Protagonist System** is fully implemented: players choose Aristotle (cat) or Dave (dog) at game start, with fully separate narrative paths, encounters, dialogue, and side missions for each.
 
 ---
 
@@ -14,7 +16,7 @@
 **Platform:** Desktop (Mac M3/M4 primary, Windows compatible)
 **Inspiration:** Spelljammer (D&D setting) — serious stakes with a fun, accessible cast of anthropomorphic animals
 
-**Elevator Pitch:** You are Aristotle, a self-made street cat who discovered the multiverse's only source of starship fuel — Whisper Crystals. Every faction in every realm wants what you have. Navigate four story arcs of escalating conflict, diplomacy, betrayal, and choice. Your decisions accumulate toward one of three endings that determine the fate of the multiverse.
+**Elevator Pitch:** You are Aristotle (or Dave), a captain who controls — or seeks to control — the multiverse's only source of starship fuel — Whisper Crystals. Every faction in every realm wants what you have. Navigate four story arcs of escalating conflict, diplomacy, betrayal, and choice. Your decisions accumulate toward one of three endings that determine the fate of the multiverse.
 
 ---
 
@@ -25,7 +27,7 @@ The game is set across a Spelljammer-style multiverse of interconnected realms, 
 ### Regions
 
 | Region | Atmosphere | Colour Temperature | Description |
-|--------|-----------|-------------------|-------------|
+| -------- | ----------- | ------------------- | ------------- |
 | Starting Realm (Forgotten Realm) | Warm, discovery | Amber/gold | Where Aristotle found the first crystal deposits. Ancient, mostly unmapped. |
 | Trade Hubs | Busy, cosmopolitan | Bright multi-colour | Cross-faction commerce zones. Neutral ground. |
 | Canis Territory | Cold, military | Cool blue/grey | Heavily patrolled. League blockades. |
@@ -54,12 +56,14 @@ The central MacGuffin and economic engine of the entire game.
 **Summary:** Aristotle discovers Whisper Crystals in a forgotten realm, teaches himself to refine them through sheer ingenuity, builds a crew, then a fleet. By the time the Lions notice, he is already entrenched.
 
 **Key Story Beats:**
+
 1. Crystal discovery in the Forgotten Realm — first raw deposit found
 2. Self-taught refining — Aristotle figures out the process alone
 3. First encounter with Dave — tense trade negotiation; Dave is sizing him up
 4. First glimpse of Death — watching from the shadows; identity unknown
 
 **Player Decision Point:** Choose initial strategic stance:
+
 - **Aggressive Expansion** — raid and take; build power through force
 - **Cautious Trade** — sell cautiously; grow slowly, stay under the radar
 - **Isolationist Defence** — hoard the crystals; fortify and hold
@@ -75,12 +79,14 @@ The central MacGuffin and economic engine of the entire game.
 **Summary:** Dave escalates with blockades and raids. Death begins destabilising the Corsairs from within. The Lions demand tribute. Aristotle fights on three simultaneous fronts.
 
 **Key Story Beats:**
+
 1. Major supply route seized — player must negotiate, fight, or reroute
 2. Death's betrayal within the corsair fleet — sabotage and misdirection
 3. Lion tribute demand — pay up, refuse outright, or counter-offer
 4. A wider multiverse faction offers alliance — with strings attached
 
 **Player Decision Point:** Choose primary front to address:
+
 - **External** — Focus on Dave and the Canis League military threat
 - **Internal** — Root out Death and the corsair traitors
 - **Political** — Manage the Lions through diplomacy
@@ -96,6 +102,7 @@ The central MacGuffin and economic engine of the entire game.
 **Summary:** To survive on all fronts, Aristotle must make deals with factions he would normally raid — fairies, aliens, even dog factions opposing Dave. The multiverse is more complex than cats versus dogs.
 
 **Key Story Beats:**
+
 1. Alien summit — Aristotle meets a faction leader from a completely alien universe
 2. Aristotle and Dave share a scene together — tense, almost respectful; structural conflict acknowledged
 3. Death's true allegiance finally revealed — Lions, Wolves, or pure independent ambition
@@ -113,6 +120,7 @@ The central MacGuffin and economic engine of the entire game.
 **Summary:** All fronts converge simultaneously. Dave launches full military assault on crystal production. Death makes a final power grab. Lions and Wolves declare ultimate intent. Aristotle must make a final choice that determines the fate of the multiverse.
 
 **Key Story Beats:**
+
 1. Dave's full-scale military assault on crystal production sites
 2. Death's final bid to seize production
 3. Lions and Wolves declare ultimate intent — conquest or co-existence
@@ -120,7 +128,7 @@ The central MacGuffin and economic engine of the entire game.
 **The Three Endings (determined by cumulative choice history across all four arcs):**
 
 | Ending | Name | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | A | Hold | Aristotle keeps the monopoly. Wins, but rules alone. Power without peace. |
 | B | Share | Aristotle distributes crystal knowledge. Power spreads. Peace through redistribution. |
 | C | Destroy | Aristotle destroys production sites. No one wins. The multiverse must find another way. |
@@ -143,8 +151,9 @@ The central MacGuffin and economic engine of the entire game.
 - **Dialogue Tone:** Pragmatic, witty, strategic. Never formal. Never subservient. Think pirate captain who reads philosophy.
 
 **Starting Stats:**
+
 | Stat | Value | Notes |
-|------|-------|-------|
+| ------ | ------- | ------- |
 | Cunning | 8 | Primary — affects bluff and intel options |
 | Leadership | 7 | Crew morale and fleet command |
 | Negotiation | 6 | Trade pricing and diplomatic success |
@@ -166,6 +175,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Dialogue Tone:** Quiet, direct, almost polite. His scariest lines are his simplest. Contrast with Aristotle's wit.
 
 **Behaviour State Progression:**
+
 - Arc 1: `OBSERVING` — Trade negotiation, sizing Aristotle up
 - Arc 2: `HOSTILE` — Blockades, raids, diplomatic pressure
 - Arc 3: `TRADING` — Brief parley, almost respectful
@@ -188,6 +198,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Dialogue Tone:** Dark, theatrical, grandiose. Speaks like someone who has been waiting centuries for this moment.
 
 **Behaviour State Progression:**
+
 - Arc 1: `HIDDEN` — First glimpse only, watching from shadows
 - Arc 2: `COVERT_ACTION` — Betrayal, sabotage within corsair fleet
 - Arc 3: `REVEALED` — True allegiance exposed
@@ -200,6 +211,7 @@ The central MacGuffin and economic engine of the entire game.
 ### Core Factions
 
 #### Felid Corsairs (Player Faction)
+
 - **ID:** `felid_corsairs`
 - **Species:** Cat (anthropomorphic, pirate culture)
 - **Ideology:** Freedom through power
@@ -216,6 +228,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Base Ship Stats:** Speed 8 | Armour 3 | Firepower 5 | Crystal Capacity 6 | Crew 4
 
 #### Canis League (Dogs)
+
 - **ID:** `canis_league`
 - **Species:** Dog (military culture)
 - **Ideology:** Order through loyalty
@@ -232,6 +245,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Base Ship Stats:** Speed 4 | Armour 8 | Firepower 7 | Crystal Capacity 5 | Crew 8
 
 #### The Lions (Noble Cat Hierarchy)
+
 - **ID:** `lions`
 - **Species:** Cat (Noble — lions, aristocratic lineage)
 - **Ideology:** Rule by divine birthright
@@ -247,6 +261,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Base Ship Stats:** Speed 5 | Armour 6 | Firepower 5 | Crystal Capacity 7 | Crew 6
 
 #### The Wolves (Military Elite)
+
 - **ID:** `wolves`
 - **Species:** Wolf (military stratocracy — evolved beyond dogs)
 - **Ideology:** Dominance through superior tactics and evolutionary right
@@ -266,6 +281,7 @@ The central MacGuffin and economic engine of the entire game.
 ### Wider Multiverse Factions
 
 #### Fairies
+
 - **ID:** `fairies`
 - **Species:** Fairy — small, winged, ancient magical beings
 - **Ideology:** Knowledge is currency
@@ -276,6 +292,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Abilities:** Magical espionage, enchanted goods, intelligence networks
 
 #### Knights
+
 - **ID:** `knights`
 - **Species:** Human (chivalric orders from medieval realms)
 - **Ideology:** Order through law
@@ -286,6 +303,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Abilities:** Heavy armour, disciplined formations, siege engineering
 
 #### Goblins
+
 - **ID:** `goblins`
 - **Species:** Goblin — small, resourceful, amoral engineers
 - **Ideology:** Profit above all
@@ -296,6 +314,7 @@ The central MacGuffin and economic engine of the entire game.
 - **Abilities:** Rapid ship modification, black-market crystal trade, sabotage services
 
 #### Aliens & Space Races
+
 - **ID:** `aliens`
 - **Species:** Various — advanced civilisations from deep space
 - **Ideology:** Varies wildly by race
@@ -309,7 +328,7 @@ The central MacGuffin and economic engine of the entire game.
 ### Faction Relationship Matrix (Starting Values)
 
 | Faction | Corsairs | Canis | Lions | Wolves | Fairies | Knights | Goblins | Aliens |
-|---------|----------|-------|-------|--------|---------|---------|---------|--------|
+| --------- | ---------- | ------- | ------- | -------- | --------- | --------- | --------- | -------- |
 | **Corsairs** | — | -20 | -10 | -30 | +15 | 0 | +10 | +5 |
 | **Canis** | -20 | — | -15 | +40 | 0 | +20 | -10 | 0 |
 | **Lions** | -10 | -15 | — | -20 | +10 | +15 | -5 | +5 |
@@ -330,7 +349,7 @@ The central MacGuffin and economic engine of the entire game.
 ### Ship Stat System (1–10 scale)
 
 | Stat | Description | Gameplay Effect |
-|------|-------------|-----------------|
+| --------- | ------------- | ----------------- |
 | Speed | Velocity and acceleration | Movement in navigation; dodge chance in combat |
 | Armour | Hull durability | Damage reduction per hit |
 | Firepower | Weapon strength | Damage dealt per hit |
@@ -338,7 +357,9 @@ The central MacGuffin and economic engine of the entire game.
 | Crew Capacity | Max crew slots | Crew role bonuses; boarding actions |
 
 ### Damage Formula
+
 `damage = attacker_firepower - defender_armour` (minimum 1)
+
 - 50% hull: visual damage effects (smoke, sparks)
 - 25% hull: critical warning, -1 penalty to all stats
 - 0% hull: ship destroyed
@@ -349,17 +370,20 @@ The central MacGuffin and economic engine of the entire game.
 
 **Visual Design Language:** Asymmetric silhouettes — no two look identical. Jury-rigged appearance with mismatched panels and improvised additions. Sleek and fast — long, narrow profiles. Visible crystal fuel chambers glowing in the hull. Pirate flags and pennants trailing behind. Colour: deep purple and crimson with gold accents.
 
-**Corsair Raider — Player Starting Ship ("The Whisper")**
+**Corsair Raider — Player Starting Ship ("The Whisper"):**
+
 - Speed 8 | Armour 3 | Firepower 5 | Crystal Capacity 6 | Crew 4
 - Visual: Sleek, asymmetric, jury-rigged panels, visible crystal fuel chamber glowing blue-white in the hull
 - Strengths: Fastest ship in the game, excellent dodge rating
 - Weaknesses: Low armour — a few hits can be devastating
 
 **Corsair Smuggler** (upgrade path — trade focus)
+
 - Speed 7 | Armour 3 | Firepower 4 | Crystal Capacity 9 | Crew 3
 - Visual: Wider hull with hidden cargo bays, extra crystal storage pods bolted on externally
 
 **Corsair Interceptor** (upgrade path — combat focus)
+
 - Speed 9 | Armour 2 | Firepower 7 | Crystal Capacity 4 | Crew 3
 - Visual: Narrow, blade-like, twin oversized engines, minimal crew quarters
 
@@ -369,13 +393,15 @@ The central MacGuffin and economic engine of the entire game.
 
 **Visual Design Language:** Symmetrical, imposing silhouettes. Heavy plating with visible gun turrets and military markings. Broader, more armoured hulls designed for fleet formation. Military insignia and rank markings. Colour: navy blue and steel grey with white/brass accents.
 
-**League Cruiser — Dave's Fleet Standard**
+**League Cruiser — Dave's Fleet Standard:**
+
 - Speed 4 | Armour 8 | Firepower 7 | Crystal Capacity 5 | Crew 8
 - Visual: Broad, symmetrical hull, heavy plating, multiple gun turrets, military rank markings
 - Strengths: High survivability, strong firepower, large crew for boarding
 - Weaknesses: Slow, fuel-hungry
 
 **League Destroyer** (elite combat / boss-level threat)
+
 - Speed 3 | Armour 9 | Firepower 9 | Crystal Capacity 4 | Crew 10
 - Visual: Massive, bristling with forward-mounted weapon arrays
 
@@ -385,7 +411,8 @@ The central MacGuffin and economic engine of the entire game.
 
 **Visual Design Language:** Ornate and decorative — gold filigree, carved prow, cathedral-ship aesthetic. Stained glass viewports. Balanced but slightly ostentatious. Colour: gold and royal purple with white marble and ivory.
 
-**Royal Galleon**
+**Royal Galleon:**
+
 - Speed 5 | Armour 6 | Firepower 5 | Crystal Capacity 7 | Crew 6
 - Visual: Ornate gold filigree, stained glass viewports, carved lion-head prow
 
@@ -395,7 +422,8 @@ The central MacGuffin and economic engine of the entire game.
 
 **Visual Design Language:** Streamlined predator shapes. Tactical and minimal decoration. Dark paint, low-visibility profiles. Built for strike missions. Colour: charcoal and dark green with silver/ice blue accents.
 
-**Wolf Strike Craft**
+**Wolf Strike Craft:**
+
 - Speed 6 | Armour 7 | Firepower 8 | Crystal Capacity 4 | Crew 7
 - Visual: Dark, streamlined predator silhouette, minimal decoration, angular attack profile
 
@@ -406,7 +434,7 @@ The central MacGuffin and economic engine of the entire game.
 Each ship has **3 upgrade slots**. Upgrades purchased from friendly ports or looted from encounters.
 
 | Upgrade | Effect | Crystal Cost | Salvage Cost |
-|---------|--------|-------------|-------------|
+| --------- | -------- | ------------- | ------------- |
 | Reinforced Hull | Armour +1 | 20 | 10 |
 | Turbocharger | Speed +1 | 25 | 15 |
 | Heavy Guns | Firepower +1 | 30 | 20 |
@@ -420,14 +448,14 @@ Each ship has **3 upgrade slots**. Upgrades purchased from friendly ports or loo
 ### Crew Roles and Faction Bonuses
 
 | Role | Stat Affected | Bonus |
-|------|---------------|-------|
+| --------- | --------------- | ------- |
 | Pilot | Speed | +2% per skill level |
 | Gunner | Firepower | +2% per skill level |
 | Engineer | Armour (repair rate) | +2% per skill level |
 | Diplomat | Trade pricing | +2% per skill level |
 
 | Crew Origin | Faction Bonus |
-|------------|---------------|
+| --------- | --------------- |
 | Felid Corsairs | +5% Speed (manoeuvrability) |
 | Canis League | +5% Armour (discipline) |
 | Goblins | +10% Salvage from encounters |
@@ -440,7 +468,7 @@ Each ship has **3 upgrade slots**. Upgrades purchased from friendly ports or loo
 
 ### Core Game Loop
 
-```
+```text
 Navigation (side-scrolling space) 
   → Encounter Trigger (proximity to POI)
     → Combat | Trade | Dialogue | Exploration
@@ -454,6 +482,7 @@ Navigation (side-scrolling space)
 The player controls their ship scrolling through 2D space. Points of interest (POIs) appear on a minimap. Traveling into a POI triggers an encounter. The camera follows the player ship with smooth lerp.
 
 **POI Types:**
+
 - Combat encounter (faction ship in red)
 - Trade port (faction colours)
 - Dialogue trigger (story beat)
@@ -469,11 +498,13 @@ Turn-based combat with ship-vs-ship resolution.
 **Resolution formula:** `damage = attacker_firepower - defender_armour` (min 1)
 
 **Combat Options:**
+
 - **Attack** — deal damage based on firepower vs armour
 - **Flee** — chance based on speed differential; success = escape, failure = take a hit
 - **Special** — faction-specific abilities (Crystal Surge, Formation Shield, etc.)
 
 **Outcomes:**
+
 - Victory → loot (salvage, crystals, intel tokens) + faction rep change
 - Defeat → rescue/reload prompt
 - Flee → escape with possible retaliation hit
@@ -487,6 +518,7 @@ Turn-based combat with ship-vs-ship resolution.
 Split-screen inventory trade interface with faction-aware pricing.
 
 **Pricing modifiers by diplomatic state:**
+
 - Allied: -20% (discount)
 - Friendly: -10%
 - Neutral: base price
@@ -504,6 +536,7 @@ Split-screen inventory trade interface with faction-aware pricing.
 Character portrait + typewriter text + numbered response options.
 
 **Mechanics:**
+
 - Typewriter effect: 30 characters/second default (player can CONFIRM to instant-fill)
 - Conditional branches: dialogue options unlock/lock based on story flags and faction scores
 - Outcomes: faction reputation changes, story flag sets, can chain to combat or trade
@@ -527,6 +560,7 @@ Character portrait + typewriter text + numbered response options.
 All 8 factions tracked with a score (-100 to +100). Actions in encounters change scores. Cascade rules apply — harming a faction may improve their rivals' scores.
 
 **Diplomatic States:**
+
 - Hostile (< -40): No trade, will attack on sight
 - Wary (-40 to -10): Trade at premium
 - Neutral (-10 to +10): Normal trade
@@ -546,6 +580,7 @@ All 8 factions tracked with a score (-100 to +100). Actions in encounters change
 ### Crew Morale System
 
 Crew morale tracked as a score with thresholds affecting performance:
+
 - High morale: bonus to all stats
 - Low morale: penalties; risk of desertion
 - Morale affected by: victories, defeats, pay (crystals), faction composition conflicts, story events
@@ -555,6 +590,7 @@ Crew morale tracked as a score with thresholds affecting performance:
 ### Faction Conquest AI (Background Simulation)
 
 Factions actively compete for realm control in the background, independent of player actions. This creates:
+
 - Dynamic "live world news" — faction territory shifts
 - Changing encounter tables as factions move
 - Power rankings that affect diplomatic options
@@ -574,7 +610,7 @@ Side missions provide optional gameplay texture between arc beats. Triggered by 
 ### Mission Types
 
 | Type | Description |
-|------|-------------|
+| ------ | ------------- |
 | Bounty | Hunt and defeat a target enemy |
 | Retrieval | Locate and return a specific cargo or person |
 | Escort | Protect a ship through hostile territory |
@@ -583,6 +619,7 @@ Side missions provide optional gameplay texture between arc beats. Triggered by 
 ### Arc 1 Side Missions
 
 **"Clean Up Aisle Seven"** (Bounty)
+
 - Region: Asteroid Belt
 - Trigger: Arc 1 active + crystal discovered
 - Summary: Goblin Scrapper raiders are ambushing merchant convoys. The Felid Corsairs want them permanently removed.
@@ -591,6 +628,7 @@ Side missions provide optional gameplay texture between arc beats. Triggered by 
 - Faction impact: Corsairs +8, Goblins -5
 
 **"Lost in Transit"** (Retrieval)
+
 - Region: Forgotten Realm
 - Trigger: Arc 1 active + Dave met
 - Summary: A shipment of rare alloys vanished between realms. The cargo manifest tells a different story than the Canis League suspects.
@@ -599,6 +637,7 @@ Side missions provide optional gameplay texture between arc beats. Triggered by 
 - Faction impact: Canis League +5
 
 **"Wings of Diplomacy"** (Escort)
+
 - Region: Starting Realm
 - Trigger: Arc 1 active + crystal discovered
 - Summary: A Fairy Collective envoy needs safe passage through contested space — straight through Lion patrol routes.
@@ -607,6 +646,7 @@ Side missions provide optional gameplay texture between arc beats. Triggered by 
 - Faction impact: Fairies +10, Lions -3
 
 **"Ghost Ship"** (Salvage/Retrieval)
+
 - Region: Forgotten Realm
 - Trigger: Arc 1 active (any time)
 - Summary: Sensors detect a derelict drifting in the outer reaches. No life signs. No distress beacon. Just a hull full of salvage — and probably a reason nobody claimed it.
@@ -621,6 +661,7 @@ Random encounters spawned as POIs during navigation. Five encounter templates, e
 ### Mission Log UI
 
 Accessible via M key during navigation. Two-panel layout:
+
 - Left: Active mission list with status indicators
 - Right: Selected mission detail with objectives, rewards, faction impacts
 - HUD indicator: active mission count shown at all times
@@ -642,7 +683,7 @@ Accessible via M key during navigation. Two-panel layout:
 ### Faction Colour Palettes (authoritative)
 
 | Faction | Primary | Accent | Feel |
-|---------|---------|--------|------|
+| --------- | --------- | -------- | ------ |
 | Felid Corsairs | Deep purple, crimson red | Gold, amber | Pirate flags, royal rebellion, independence |
 | Canis League | Navy blue, steel grey | White, brass | Military uniforms, battleship hulls, discipline |
 | The Lions | Gold, royal purple | White marble, ivory | Nobility, cathedrals, divine right |
@@ -670,6 +711,7 @@ Accessible via M key during navigation. Two-panel layout:
 ### Ship Visual Design (detailed)
 
 **Cat Ships (Felid Corsairs):**
+
 - Asymmetric — no two identical; mismatched panels suggest assembly from salvage
 - Sleek and fast — elongated narrow profiles, rear-heavy engine mounts
 - Glowing crystal fuel chambers visible through translucent hull sections (blue-white pulsing glow)
@@ -677,6 +719,7 @@ Accessible via M key during navigation. Two-panel layout:
 - Colours: deep purple hulls with crimson and gold trim
 
 **Dog Ships (Canis League):**
+
 - Symmetrical, imposing — clearly military
 - Heavy external armour plating with visible bolt lines and stress marks
 - Multiple gun turrets in fixed positions; forward-facing main cannons
@@ -685,6 +728,7 @@ Accessible via M key during navigation. Two-panel layout:
 - Colours: navy blue/steel grey with white numbers and brass fittings
 
 **Lion Ships:**
+
 - Cathedral-ship aesthetic — ornate and decorative
 - Gold filigree engraved on hull panels
 - Stained glass viewports that glow from interior lighting
@@ -692,6 +736,7 @@ Accessible via M key during navigation. Two-panel layout:
 - Colours: gold and royal purple, white marble texture sections
 
 **Wolf Ships:**
+
 - Predator-shaped — low profile, swept angles suggesting attack direction
 - Dark paint, almost invisible against deep space
 - Minimal external decoration — pure function
@@ -699,18 +744,21 @@ Accessible via M key during navigation. Two-panel layout:
 - Colours: charcoal dark green with silver trim only on weapon mounts
 
 **Fairy Vessels:**
+
 - Organic, flowing shapes — look grown rather than built
 - Iridescent hull material that catches light differently at different angles
 - Trailing particle wisps as propulsion exhaust
 - Crystalline observation domes
 
 **Goblin Scrapships:**
+
 - Visibly assembled from salvaged parts of other ships
 - Multiple mismatched engine exhausts
 - External cargo containers bolted at odd angles
 - Rust patches and repair welds visible as texture detail
 
 **Knight Warships:**
+
 - Medieval castle aesthetic translated to space
 - Battlements and turrets from castle architecture
 - Heraldic banners attached to external poles
@@ -733,6 +781,7 @@ Accessible via M key during navigation. Two-panel layout:
 ### Space Background System
 
 Layered parallax system (back to front):
+
 1. **Deep background:** Static starfield (tiny white dots, various brightness)
 2. **Nebula layer:** Soft colour wash — colour temperature varies by region
 3. **Mid layer:** Dust clouds, larger stars with subtle glow halos
@@ -740,6 +789,7 @@ Layered parallax system (back to front):
 5. **POI layer:** Stations, derelicts, encounter markers
 
 **Region colour temperatures:**
+
 - Starting Realm / Forgotten Realm: Warm amber/gold — discovery feel
 - Trade Hubs: Bright, multi-coloured — commerce and activity
 - Canis Territory: Cool blue/grey — military cold efficiency
@@ -764,7 +814,7 @@ Layered parallax system (back to front):
 ### Existing Art Assets (Ready for Integration)
 
 | Asset | File | Purpose |
-|-------|------|---------|
+| ------- | ------ | --------- |
 | Aristotle portrait | `design/charcters/aristotle_head.png` | Dialogue portraits |
 | Dave portrait | `design/charcters/dave_head.png` | Dialogue portraits |
 | Death portrait | `design/charcters/death_head.png` | Dialogue portraits |
@@ -782,6 +832,7 @@ Layered parallax system (back to front):
 | Title graphic | `design/artwork/whisper_crystals_title.png` | Main menu |
 
 **Assets still needed (to generate or commission):**
+
 - Alien vessel sprite (neon cyan/bioluminescent)
 - Crystal deposit sprite with glow animation
 - Faction-specific UI frame textures
@@ -792,7 +843,7 @@ Layered parallax system (back to front):
 
 ### Screen Flow
 
-```
+```text
 Title Screen → Main Menu
   ├── New Game → Intro Cutscene → Navigation
   ├── Continue → Load Slot Select → Navigation
@@ -816,7 +867,7 @@ Final Decision → Ending Cutscene → Ending Summary → Credits → Main Menu
 
 ### HUD Layout (Navigation)
 
-```
+```text
 ┌─────────────────────────────────────────────────────┐
 │ [Ship Health Bar]              [Crystal Count: 150]  │
 │ [Shield Bar]                   [Salvage: 45]         │
@@ -831,7 +882,7 @@ Final Decision → Ending Cutscene → Ending Summary → Credits → Main Menu
 ### Key Controls
 
 | Key | Action |
-|-----|--------|
+| ----- | -------- |
 | WASD / Arrow Keys | Ship movement |
 | E | Interact |
 | SPACE | Fire |
@@ -864,7 +915,7 @@ Final Decision → Ending Cutscene → Ending Summary → Credits → Main Menu
 
 ### Project Structure
 
-```
+```text
 godot/
 ├── project.godot
 ├── scenes/
@@ -895,6 +946,7 @@ godot/
 States: `MENU | NAVIGATION | COMBAT | TRADE | DIALOGUE | CUTSCENE | PAUSE | SHIP_SCREEN | FACTION_SCREEN | MISSION_LOG | ENDING`
 
 Stack operations:
+
 - `switch` — replace top state (menu → navigation)
 - `push` — overlay on top (navigation → pause)
 - `pop` — return to previous (pause → navigation)
@@ -902,7 +954,7 @@ Stack operations:
 ### Key Systems to Implement
 
 | System | File | Responsibility |
-|--------|------|---------------|
+| -------- | ------ | --------------- |
 | EventBus | `autoload/event_bus.gd` | Pub/sub global signal bus |
 | GameSession | `autoload/game_session.gd` | All game state; save/load |
 | MusicManager | `autoload/music_manager.gd` | BGM tracks, SFX triggers |
@@ -918,6 +970,7 @@ Stack operations:
 ### Data Files (JSON)
 
 Each encounter record includes:
+
 - `encounter_id`, `encounter_type`, `arc`, `conditions`, `priority`
 - `dialogue` tree with `speaker`, `text`, `choices[]`, `outcomes[]`
 - `faction_changes`, `story_flags`, `rewards`
@@ -929,6 +982,7 @@ Each encounter record includes:
 ### Music System
 
 Per-state background music tracks with smooth transitions:
+
 - **Main Menu:** Atmospheric, slow — space ambience with light melodic theme
 - **Navigation:** Adventurous, medium tempo — pirate/space hybrid. Shifts by region.
 - **Combat:** Intense, percussion-driven — tempo increases with danger
@@ -940,6 +994,7 @@ Per-state background music tracks with smooth transitions:
 ### Sound Effects
 
 Triggered via EventBus events:
+
 - Ship engine hum (continuous, navigation)
 - Weapons fire (per combat hit)
 - Crystal activation/glow (crystal pickup, chamber pulse)
@@ -974,7 +1029,8 @@ As of the latest review, the game is fully implemented as a **Python/Pygame prot
 
 ### What Needs Building / Completing
 
-Per `docs/plans/MASTER_PLAN.md` Section 6 — outstanding tasks:
+Per `docs/MASTER_PLAN.md` Section 6 — outstanding tasks:
+
 1. Character portraits in all dialogue encounters (task 3.3)
 2. Faction-themed UI panels (task 3.5)
 3. Region-specific space backgrounds (task 3.6)
@@ -1006,4 +1062,3 @@ When building this project, follow these rules:
 9. **Existing art assets are at `design/`** — check the asset table in Section 9 before generating new art. Sprites already exist for all major ships and main characters.
 
 10. **Three endings are determined by accumulated choices** — the ending system must read cumulative story flags, not just the final decision.
-

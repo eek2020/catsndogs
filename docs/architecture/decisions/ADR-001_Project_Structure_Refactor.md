@@ -1,6 +1,6 @@
 # ADR-001: Project Structure Refactor Before Feature Work
 
-**Status:** Accepted
+**Status:** Accepted (Historical — Python prototype phase; project subsequently migrated to Godot 4.6)
 **Date:** 2026-03-01
 **Linked Task:** Phase 0 (Tasks 0.1 through 0.5)
 

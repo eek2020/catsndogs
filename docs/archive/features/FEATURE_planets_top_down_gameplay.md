@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — SUPERSEDED. Core concept implemented as the 2D World Gameplay Layer (2026-03-25). See `docs/plans/2d_world_gameplay_layer.md` (COMPLETE). Implemented scenes: `fringe_haven_outpost.tscn`, `planet_surface.tscn`, `tavern.tscn`. Scripts: `player_controller.gd`, `npc_controller.gd`, `dialogue_manager.gd`, `scene_transition.gd`. Some proposed elements (siege/conquest, treasure hunting tools) remain unimplemented.
+
 # Celestial Exploration & Planetary Interaction
 
 ## 1. Feature Overview

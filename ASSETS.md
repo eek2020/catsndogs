@@ -5,7 +5,7 @@ Track all game assets with their intended in-game dimensions to prevent scaling 
 ## Format
 
 | Asset | Type | File Path | In-Game Size | Status |
-|-------|------|-----------|-------------|--------|
+| ------- | ------ | ----------- | ------------- | -------- |
 | Example Ship | Sprite Sheet | `assets/sprites/ships/player_ship.png` | 64x48 per frame | done |
 
 ## Asset Types
@@ -20,6 +20,7 @@ Track all game assets with their intended in-game dimensions to prevent scaling 
 ## Sizing Discipline
 
 Every asset entry MUST include its intended in-game size:
+
 - Sprite sheets: per-frame display size (e.g., "64x48 per frame")
 - Backgrounds: pixel dimensions (e.g., "1280x720")
 - UI elements: display dimensions (e.g., "200x32")

@@ -17,7 +17,9 @@ from pathlib import Path
 from PIL import Image
 
 GRID = 4
-LINE_W = 4  # pixels to crop from each cell edge (line is ~2px, extra margin for artifacts)
+LINE_W = (
+    4  # pixels to crop from each cell edge (line is ~2px, extra margin for artifacts)
+)
 TOOLS_DIR = Path(__file__).parent
 REMBG_SCRIPT = TOOLS_DIR / "rembg_matting.py"
 
@@ -129,21 +131,35 @@ def parse_names(names_str: str) -> list[str]:
     """Parse comma-separated names into a list of 16 filenames."""
     names = [n.strip() for n in names_str.split(",")]
     if len(names) != 16:
-        print(f"Error: --names must have exactly 16 entries, got {len(names)}", file=sys.stderr)
+        print(
+            f"Error: --names must have exactly 16 entries, got {len(names)}",
+            file=sys.stderr,
+        )
         sys.exit(1)
     return names
 
 
 def main():
     p = argparse.ArgumentParser(
-        description="Process 4x4 sprite sheet: crop grid lines, optionally remove backgrounds or split into individual images")
-    p.add_argument("mode", choices=["keep-bg", "clean-bg", "split-bg", "split-clean"],
-                   help="keep-bg/clean-bg: output single sheet. split-bg/split-clean: output 16 individual PNGs.")
+        description="Process 4x4 sprite sheet: crop grid lines, optionally remove backgrounds or split into individual images"
+    )
+    p.add_argument(
+        "mode",
+        choices=["keep-bg", "clean-bg", "split-bg", "split-clean"],
+        help="keep-bg/clean-bg: output single sheet. split-bg/split-clean: output 16 individual PNGs.",
+    )
     p.add_argument("input", help="Input sprite sheet image")
-    p.add_argument("-o", "--output", required=True,
-                   help="Output PNG path (keep-bg/clean-bg) or output directory (split-bg/split-clean)")
-    p.add_argument("--names", default=None,
-                   help="Comma-separated 16 filenames (without .png) for split modes. Default: 01..16")
+    p.add_argument(
+        "-o",
+        "--output",
+        required=True,
+        help="Output PNG path (keep-bg/clean-bg) or output directory (split-bg/split-clean)",
+    )
+    p.add_argument(
+        "--names",
+        default=None,
+        help="Comma-separated 16 filenames (without .png) for split modes. Default: 01..16",
+    )
     args = p.parse_args()
 
     names = parse_names(args.names) if args.names else None

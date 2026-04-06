@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — Describes the Python dataclass entity model. Entities were ported to GDScript `Resource` subclasses in `scripts/entities/`. The logical model was preserved; the Python syntax is obsolete.
+
 # TRD-003: Data Model & State Management
 
 **Project:** Whisper Crystals — A Space Pirates Game  

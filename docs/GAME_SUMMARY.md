@@ -2,6 +2,8 @@
 
 A comprehensive guide to the world, story, mechanics, and systems of Whisper Crystals.
 
+> **Implementation Note (2026-04-05):** This document describes both implemented and planned content. Arcs 1-4 are fully implemented and playable. Arcs 5-10, the 6 expansion regions, and 4th ending (Reunite) are **design targets** — encounter data exists in JSON but these arcs have not been integration-tested or polished to the same level as Arcs 1-4. The 7 original regions, 3 endings, and all core systems are production-ready. See `docs/MASTER_PLAN.md` for current development status.
+
 ---
 
 ## What Is Whisper Crystals?
@@ -27,7 +29,7 @@ The player discovers (or is sent to secure) these crystals and must navigate a *
 At the start of the game, the player chooses one of two protagonists. This choice fundamentally changes the narrative perspective, available crew, encounter dialogue, and side missions.
 
 | | **Aristotle** | **Dave** |
-|---|---|---|
+| --- | --- | --- |
 | **Species** | Cat | Dog |
 | **Faction** | Felid Corsairs | Canis League |
 | **Title** | Captain | Commander |
@@ -82,12 +84,14 @@ The narrative spans **10 sequential arcs**, each escalating in scope, complexity
 **Decision Point:** The player chooses their initial stance — **aggressive expansion**, **cautious trade**, or **isolationist defence**. This shapes faction relationships and encounter availability going forward.
 
 **Side missions available (Aristotle):**
+
 - *Clean Up Aisle Seven* — Bounty: defeat goblin raiders harassing merchant convoys
 - *Lost in Transit* — Retrieval: track down a missing cargo shipment
 - *Wings of Diplomacy* — Escort: guide a Fairy envoy through Lion territory
 - *Ghost Ship* — Retrieval: board and salvage a derelict vessel
 
 **Side missions available (Dave):**
+
 - *Patrol Duty* — Escort: protect a League supply convoy
 - *Intelligence Sweep* — Retrieval: recover encrypted data drives from a destroyed scout ship
 - *Border Enforcement* — Bounty: neutralise a Corsair raider hitting League trade lanes
@@ -96,6 +100,7 @@ The narrative spans **10 sequential arcs**, each escalating in scope, complexity
 **Special characters introduced:** Patch (Aristotle's old mentor), Rustclaw (goblin scrap dealer), Jinx (calico cat thief at the Twilight Bazaar)
 
 **Crew recruitment begins:**
+
 - **Aristotle:** Nine Lives (First Mate) and No Tail (Gunner) become available
 - **Dave:** Charlie (First Mate) and Bombardier (Gunner) become available
 
@@ -121,6 +126,7 @@ The narrative spans **10 sequential arcs**, each escalating in scope, complexity
 **Special characters introduced:** Cogsworth (goblin engineer), Ser Galvain (Knight champion), Tidewalker (veteran dog captain), Sister Meridian (fairy healer), Wraith (Death's lieutenant)
 
 **Crew recruitment continues:**
+
 - **Aristotle:** Silky (Navigator) and Blood Paw (Surgeon) become available
 - **Dave:** Luna (Navigator) and Thistle (Surgeon) become available
 
@@ -334,7 +340,7 @@ Every choice in the game carries an **outcome_weight** value. Aggressive, self-s
 ### Per-Path Breakdown
 
 | Category | Aristotle Path | Dave Path |
-|----------|---------------|-----------|
+| ---------- | --------------- | ----------- |
 | **Main story encounters per arc** | 4-6 per arc | 4-6 per arc (unique) |
 | **Total main story encounters** | ~50 across 10 arcs | ~50 across 10 arcs (unique) |
 | **Side missions per arc** | 2-4 per arc | 2-4 per arc (unique) |
@@ -453,7 +459,7 @@ The multiverse has **8 factions**, each with unique abilities, ship designs, and
 Factions start with predefined relationships that shift based on player actions. The scale runs from -100 (hostile) to +100 (allied).
 
 | | Corsairs | Canis | Lions | Wolves | Fairies | Knights | Goblins | Aliens |
-|---|---|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Corsairs** | — | -20 | -10 | -30 | +15 | 0 | +10 | +5 |
 | **Canis** | -20 | — | -15 | +40 | 0 | +20 | -10 | 0 |
 | **Lions** | -10 | -15 | — | -20 | +10 | +15 | -5 | +5 |
@@ -464,6 +470,7 @@ Factions start with predefined relationships that shift based on player actions.
 | **Aliens** | +5 | 0 | +5 | -5 | +15 | 0 | +10 | — |
 
 **Diplomatic thresholds:**
+
 - **Hostile:** -100 to -51
 - **Wary:** -50 to -1
 - **Neutral:** 0 to 25
@@ -651,7 +658,7 @@ Throughout the expanded story, the player meets **22 named special characters** 
 Every ship has 5 core stats:
 
 | Stat | Description |
-|------|-------------|
+| ------ | ------------- |
 | **Speed** | Movement speed and evasion chance |
 | **Armour** | Damage reduction |
 | **Firepower** | Weapon damage output |
@@ -661,7 +668,7 @@ Every ship has 5 core stats:
 ### Available Ships
 
 | Ship | Faction | Speed | Armour | Firepower | Crystal Cap | Crew | Hull | Notes |
-|------|---------|-------|--------|-----------|-------------|------|------|-------|
+| ------ | --------- | ------- | -------- | ----------- | ------------- | ------ | ------ | ------- |
 | Corsair Raider | Corsairs | 8 | 3 | 5 | 6 | 4 | 100 | Standard, fast, agile |
 | Corsair Smuggler | Corsairs | 7 | 3 | 4 | 9 | 3 | 90 | Trade-optimised, expanded cargo |
 | Corsair Interceptor | Corsairs | 9 | 1 | 8 | 4 | 3 | 80 | Glass cannon — fastest, hardest-hitting, fragile |
@@ -676,7 +683,7 @@ Every ship has 5 core stats:
 Upgrades are purchased at shipyards using crystals and salvage. Some have trade-offs.
 
 | Upgrade | Stat | Bonus | Cost (Crystals/Salvage) | Trade-off |
-|---------|------|-------|------------------------|-----------|
+| --------- | ------ | ------- | ------------------------ | ----------- |
 | Reinforced Hull | Armour | +1 | 20/10 | None |
 | Turbocharger | Speed | +1 | 25/15 | None |
 | Heavy Guns | Firepower | +1 | 30/20 | None |
@@ -708,7 +715,7 @@ The game has two primary currencies:
 Six crystal deposits exist across the multiverse, varying in quantity, quality, and accessibility:
 
 | Deposit | Region | Quantity | Quality | Extraction Rate | Status |
-|---------|--------|----------|---------|-----------------|--------|
+| --------- | -------- | ---------- | --------- | ----------------- | -------- |
 | Feline Courts Primary | Feline Courts | 500 | Grade 3 | 8/turn | Active |
 | Goblin Warrens Scrap | Goblin Warrens | 150 | Grade 1 | 10/turn | Active |
 | Canine Order Vein | Canine Order | 200 | Grade 2 | 4/turn | Discovered, inactive |
@@ -721,7 +728,7 @@ Six crystal deposits exist across the multiverse, varying in quantity, quality, 
 Crystal trade flows along defined supply routes with varying capacity and risk:
 
 | Route | Origin → Destination | Capacity | Risk | Threats |
-|-------|---------------------|----------|------|---------|
+| ------- | --------------------- | ---------- | ------ | --------- |
 | Corsair → Goblins | Feline Courts → Goblin Warrens | 15 | Low | Canis League |
 | Corsair → Fairies | Feline Courts → Fairy Realms | 10 | Minimal | None |
 | Goblins → Knights | Goblin Warrens → Knight Kingdoms | 8 | Medium | Wolves |
@@ -733,7 +740,7 @@ Crystal trade flows along defined supply routes with varying capacity and risk:
 Base crystal price is **100 credits**. Each faction has a demand multiplier:
 
 | Faction | Demand Multiplier | Effective Price |
-|---------|------------------|-----------------|
+| --------- | ------------------ | ----------------- |
 | Canis League | 1.5x | 150 (highest — most desperate) |
 | Wolves | 1.4x | 140 |
 | Lions | 1.3x | 130 |
@@ -746,7 +753,7 @@ Base crystal price is **100 credits**. Each faction has a demand multiplier:
 ### Trade Goods
 
 | Good | Base Value | Weight |
-|------|-----------|--------|
+| ------ | ----------- | -------- |
 | Raw Whisper Crystals | 100 | 1 |
 | Refined Whisper Crystals | 250 | 1 |
 | Salvage Parts | 30 | 2 |
@@ -762,7 +769,7 @@ Base crystal price is **100 credits**. Each faction has a demand multiplier:
 The galaxy ("The Celestial Codex") contains **13 regions**, each controlled by a faction with varying danger levels and facilities. Six new regions were added to support the expanded 10-arc narrative:
 
 | Region | Name | Controller | Danger | Size | Unlocked |
-|--------|------|-----------|--------|------|----------|
+| ------ | ------ | ----------- | -------- | ------ | ---------- |
 | starting_realm | The Fringe | Corsairs | 1 | 6000×6000 | Start |
 | feline_courts | The Feline Courts | Corsairs | 1 | 6000×6000 | Start |
 | canine_order | The Canine Order | Canis League | 3 | 7000×7000 | Start |
@@ -786,7 +793,7 @@ Each region has a fog of war grid (64px cells) that the player reveals through e
 **11 purchasable star charts:**
 
 | Chart | Region | Cost (Crystals) | Reveals |
-|-------|--------|-----------------|---------|
+| ------ | ------ | ----------------- | --------- |
 | Feline Courts Star Chart | Feline Courts | 15 | 60% |
 | Goblin Warrens Star Chart | Goblin Warrens | 15 | 60% |
 | Fairy Realms Star Chart | Fairy Realms | 20 | 60% |
@@ -821,6 +828,7 @@ Combat is tactical, with outcomes determined by ship stats, crew bonuses, and fa
 - **Faction abilities** — Wolves get first-strike bonuses, League gets formation armour, Corsairs get ambush evasion
 
 Combat can be triggered by:
+
 - Story encounters escalating to violence
 - Hostile faction patrols in dangerous regions
 - Ambushes on supply routes
@@ -931,5 +939,6 @@ This means there is no "safe" choice — every alliance has consequences.
 - **Language:** GDScript with static typing
 - **Resolution:** 1280×720, canvas_items stretch mode
 - **Target:** Desktop (Mac M3/M4 primary, Windows compatible)
-- **Architecture:** Data-driven (all content in JSON), event bus pattern, autoload singletons (EventBus, GameSession, MusicManager)
-- **State:** Fully playable with complete implementation of all core systems and 10-arc story content across 13 regions
+- **Architecture:** Data-driven (all content in JSON), event bus pattern, autoload singletons (EventBus, GameSession, MusicManager, ProceduralMapManager)
+- **State:** Core game (Arcs 1-4, 7 regions, 3 endings) fully playable. Expansion content (Arcs 5-10, 6 additional regions, 4th ending) has data files but is not integration-tested. See `docs/MASTER_PLAN.md` for detailed status.
+- **Known Issues:** See `docs/CODE_REVIEW_2026-04-05.md` for 18 issues including 2 critical bugs

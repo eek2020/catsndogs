@@ -22,12 +22,14 @@ BG_THRESH = 0.10
 
 def sample_bg_color(img: np.ndarray, block: int = 2) -> np.ndarray:
     """Average color from 2x2 blocks at all 4 corners (16 pixels)."""
-    corners = np.concatenate([
-        img[:block, :block].reshape(-1, 3),
-        img[:block, -block:].reshape(-1, 3),
-        img[-block:, :block].reshape(-1, 3),
-        img[-block:, -block:].reshape(-1, 3),
-    ])
+    corners = np.concatenate(
+        [
+            img[:block, :block].reshape(-1, 3),
+            img[:block, -block:].reshape(-1, 3),
+            img[-block:, :block].reshape(-1, 3),
+            img[-block:, -block:].reshape(-1, 3),
+        ]
+    )
     return corners.mean(axis=0)
 
 
@@ -41,16 +43,19 @@ def compute_alpha_color(img: np.ndarray, bg_color: np.ndarray) -> np.ndarray:
     alpha = np.zeros(img.shape[:2], dtype=np.float64)
     for c in range(3):
         if 1.0 - bg_color[c] > 0.05:
-            alpha = np.maximum(alpha,
-                np.maximum(diff[:, :, c], 0) / (1.0 - bg_color[c]))
+            alpha = np.maximum(
+                alpha, np.maximum(diff[:, :, c], 0) / (1.0 - bg_color[c])
+            )
         if bg_color[c] > 0.05:
-            alpha = np.maximum(alpha,
-                np.maximum(-diff[:, :, c], 0) / bg_color[c])
+            alpha = np.maximum(
+                alpha, np.maximum(-diff[:, :, c], 0) / bg_color[c]
+            )
     return np.clip(alpha, 0.0, 1.0)
 
 
-def build_trimap(mask: np.ndarray, alpha_color: np.ndarray,
-                 band_px: int) -> tuple[np.ndarray, np.ndarray]:
+def build_trimap(
+    mask: np.ndarray, alpha_color: np.ndarray, band_px: int
+) -> tuple[np.ndarray, np.ndarray]:
     """Build trimap from mask with color-guided unknown band.
 
     Returns (trimap, definite_fg).
@@ -67,8 +72,9 @@ def build_trimap(mask: np.ndarray, alpha_color: np.ndarray,
     return trimap, definite_fg
 
 
-def recover_foreground(img: np.ndarray, alpha: np.ndarray,
-                       bg_color: np.ndarray) -> np.ndarray:
+def recover_foreground(
+    img: np.ndarray, alpha: np.ndarray, bg_color: np.ndarray
+) -> np.ndarray:
     """Undo background compositing: fg = (pixel - (1-a)*bg) / a."""
     a = alpha[:, :, np.newaxis]
     bg = bg_color[np.newaxis, np.newaxis, :]
@@ -84,7 +90,10 @@ def remove_background(img: np.ndarray, mask: np.ndarray) -> np.ndarray:
     dim = min(h, w)
 
     bg_color = sample_bg_color(img)
-    print(f"BG color: RGB({bg_color[0]*255:.0f}, {bg_color[1]*255:.0f}, {bg_color[2]*255:.0f})")
+    print(
+        f"BG color: RGB({bg_color[0]*255:.0f}, "
+        f"{bg_color[1]*255:.0f}, {bg_color[2]*255:.0f})"
+    )
 
     # --- Three alpha signals ---
 
@@ -94,12 +103,22 @@ def remove_background(img: np.ndarray, mask: np.ndarray) -> np.ndarray:
     # 2. Pymatting on mask edge band (color-guided for smooth transitions)
     band_px = max(3, round(dim * 0.02))
     trimap, definite_fg = build_trimap(mask, alpha_color, band_px)
-    print(f"Trimap: band={band_px}px, unknown={((trimap > 0) & (trimap < 1)).sum()}")
+    print(
+        f"Trimap: band={band_px}px, "
+        f"unknown={((trimap > 0) & (trimap < 1)).sum()}"
+    )
     if definite_fg.any():
-        print("Running pymatting (closed-form)...")
-        alpha_matted = np.clip(pymatting.estimate_alpha_cf(img, trimap), 0.0, 1.0)
+        print(
+            "Running pymatting (closed-form)..."
+        )
+        alpha_matted = np.clip(
+            pymatting.estimate_alpha_cf(img, trimap), 0.0, 1.0
+        )
     else:
-        print("No foreground in mask — skipping pymatting, using color-only alpha")
+        print(
+            "No foreground in mask — skipping pymatting, "
+            "using color-only alpha"
+        )
         alpha_matted = alpha_color
 
     # 3. Heavily blurred mask floor (preserves small elements, smooth edges)
@@ -121,18 +140,24 @@ def remove_background(img: np.ndarray, mask: np.ndarray) -> np.ndarray:
         # Mask failed — use color distance (not compositing math) for alpha
         dist = np.sqrt(np.sum((img - bg_color[None, None, :]) ** 2, axis=2))
 
-        # Noise floor from corner regions (known background)
+        # Noise floor from corner regions
+        # (known background)
         corner = max(4, dim // 16)
-        corner_dist = np.concatenate([
-            dist[:corner, :corner].ravel(),
-            dist[:corner, -corner:].ravel(),
-            dist[-corner:, :corner].ravel(),
-            dist[-corner:, -corner:].ravel(),
-        ])
+        corner_dist = np.concatenate(
+            [
+                dist[:corner, :corner].ravel(),
+                dist[:corner, -corner:].ravel(),
+                dist[-corner:, :corner].ravel(),
+                dist[-corner:, -corner:].ravel(),
+            ]
+        )
         noise = max(float(np.percentile(corner_dist, 99)), 0.03)
-        low = noise * 1.5   # below → fully transparent
+        low = noise * 1.5  # below → fully transparent
         high = noise * 4.0  # above → fully opaque
-        print(f"Color distance: noise={noise:.3f}, low={low:.3f}, high={high:.3f}")
+        print(
+            f"Color distance: noise={noise:.3f}, "
+            f"low={low:.3f}, high={high:.3f}"
+        )
         alpha = np.clip((dist - low) / (high - low), 0.0, 1.0)
 
     # --- Foreground recovery & output ---
@@ -151,9 +176,12 @@ def remove_background(img: np.ndarray, mask: np.ndarray) -> np.ndarray:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Remove solid-color background using rembg + alpha matting")
+        description="Remove solid-color background using rembg + alpha matting"
+    )
     parser.add_argument("input", help="Input image path")
-    parser.add_argument("-o", "--output", help="Output PNG path (default: <input>_nobg.png)")
+    parser.add_argument(
+        "-o", "--output", help="Output PNG path (default: <input>_nobg.png)"
+    )
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -166,12 +194,18 @@ def main():
     img_pil = Image.open(input_path).convert("RGBA")
     img = np.array(img_pil.convert("RGB"), dtype=np.float64) / 255.0
     h, w = img.shape[:2]
-    print(f"Image: {w}x{h} ({input_path})")
+    print(
+        f"Image: {w}x{h} ({input_path})"
+    )
 
     # Mask from rembg
     session = new_session("isnet-anime")
-    mask_pil = remove(img_pil, session=session, only_mask=True, post_process_mask=True)
-    mask = np.array(mask_pil, dtype=np.float64) / 255.0 > 0.5
+    mask_pil = remove(
+        img_pil, session=session, only_mask=True, post_process_mask=True
+    )
+    mask = np.array(
+        mask_pil, dtype=np.float64
+    ) / 255.0 > 0.5
     print(f"Mask: fg={mask.sum()}, bg={(~mask).sum()}")
 
     # Process
@@ -180,10 +214,12 @@ def main():
     # Save
     Image.fromarray(out).save(output_path)
     print(f"\nSaved: {output_path}")
-    print(f"  Opaque: {(out[:,:,3] == 255).sum()}")
-    print(f"  Transparent: {(out[:,:,3] == 0).sum()}")
-    print(f"  Semi-transparent: {((out[:,:,3] > 0) & (out[:,:,3] < 255)).sum()}")
-
+    print(f"  Opaque: {(out[:, :, 3] == 255).sum()}")
+    print(f"  Transparent: {(out[:, :, 3] == 0).sum()}")
+    print(
+        f"  Semi-transparent: "
+        f"{((out[:, :, 3] > 0) & (out[:, :, 3] < 255)).sum()}"
+    )
 
 
 if __name__ == "__main__":

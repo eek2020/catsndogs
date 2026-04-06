@@ -4,7 +4,7 @@ This file contains project conventions and rules for any AI agent working on thi
 
 ## Project Overview
 
-Whisper Crystals is a narrative-driven 2D side-scrolling space pirate game built in Godot 4.6 with GDScript. The player commands Aristotle, a cat pirate captain who controls the multiverse's only source of starship fuel.
+Whisper Crystals is a narrative-driven 2D side-scrolling space pirate game built in Godot 4.6 with GDScript. The player commands Aristotle (cat) or Dave (dog), captains caught in a multiverse-wide struggle over the only source of starship fuel.
 
 ## Tech Stack
 
@@ -17,11 +17,12 @@ Whisper Crystals is a narrative-driven 2D side-scrolling space pirate game built
 
 ### Autoload Singletons
 
-Three global singletons are registered in `project.godot`:
+Four global singletons are registered in `project.godot`:
 
 - `EventBus` — `scripts/autoload/event_bus.gd` — Pub/sub signal hub for decoupled communication
 - `GameSession` — `scripts/autoload/game_session.gd` — Persistent game state across scenes
 - `MusicManager` — `scripts/autoload/music_manager.gd` — Background music control
+- `ProceduralMapManager` — `scripts/autoload/procedural_map_manager.gd` — Procedural navigation/star map backdrops
 
 ### Data-Driven Content
 
@@ -59,7 +60,7 @@ godot/
     side_missions/     # Side mission data
   assets/              # Game assets (sprites, audio)
   shaders/             # Custom shaders
-docs/                  # TRDs, plans, issues, changelog
+docs/                  # MASTER_PLAN, code reviews, issues, changelog, archive
 design/                # Art direction, characters, artwork
 story/                 # Narrative reference (arcs, characters, factions)
 ```

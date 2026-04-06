@@ -6,6 +6,40 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-05 — Documentation Audit, Reconciliation & Restructuring
+
+Comprehensive documentation review against the live codebase with full restructuring.
+
+**Archived (moved to `docs/archive/`):**
+
+- Python-era TRDs (TRD-001, TRD-002, TRD-003) moved to `docs/archive/architecture/` with archival headers
+- Superseded feature proposals (planets, reputation, skill allocation, star bases) moved to `docs/archive/features/` with implementation status annotations
+- Old MASTER_PLAN (2026-03-20) moved to `docs/archive/plans/`
+- Completed feature plans (2D world layer, astral hazards, crew missions, Fringe Haven checklist) moved to `docs/archive/plans/`
+
+**Created:**
+
+- `docs/MASTER_PLAN.md` — new authoritative project plan consolidating all active requirements, open issues (from April code review), technical debt, and roadmap
+
+**Updated:**
+
+- `STRUCTURE.md` — full rewrite reflecting all 4 autoloads, 22 systems, 23 UI screens, 8 entities, world scenes, 120+ EventBus signals, shaders, addon
+- `CLAUDE.md` — updated to 4 autoloads, dual protagonist description, corrected docs/ description
+- `README.md` — corrected status claims, added April code review reference, updated documentation links
+- `AGENT_BRIEFING.md` — added status note about dual protagonist and 10-arc expansion scope
+- `docs/GAME_SUMMARY.md` — added implementation status note distinguishing Arcs 1-4 (complete) from Arcs 5-10 (data exists, untested), updated technical summary
+- `docs/GODOT_DEV_GUIDE.md` — updated workflow document references to point to new MASTER_PLAN location
+- `story/characters/character_profiles.md` — fixed Aristotle and Dave stats to match `data/characters/protagonists.json` (source of truth), noted Dave as dual protagonist
+- `docs/architecture/decisions/ADR-001` — annotated as historical (Python prototype phase)
+- `docs/plans/astral-hazards-feature-plan.md` — marked COMPLETE with delivery summary
+
+**Discrepancy resolution:**
+
+- Aristotle's stats in character_profiles.md (old: Leadership 7, Negotiation 6, Combat 6, Intimidation 4, Stealth 3) corrected to match protagonists.json (Leadership 6, Negotiation 4, Combat 5, Intimidation 6, Stealth 7)
+- Dave's stats similarly corrected (old: Cunning 5, Negotiation 5, Intimidation 7; new: Cunning 4, Negotiation 6, Intimidation 5)
+
+---
+
 ## 2026-03-27 — Code Review Fixes (P0 + P1)
 
 **Bug Fix / Refactor:** Applied fixes from full codebase code review, addressing critical bugs, performance issues, and code quality.
@@ -58,7 +92,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug Fix:** Replaced broken water tiles (which were referencing random prop/decoration tiles from the Serene Village atlas) with the proper `water_waves_32x32.png` animation strip as a dedicated tileset source.
 
-### Changes
+### 2026-03-26 Changes
 
 - **Added** `water_waves_32x32.png` as Source 2 in `world_tileset.tres` with 14-frame animation at 6 FPS (random start mode for natural variation)
 - **Rewrote** `_paint_water()` in `fringe_haven_outpost.gd` — uses animated water tile for all water cells with edge detection for grass-water transition tiles from world_atlas row 18
@@ -71,7 +105,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Enhancement:** Integrated Serene Village 32x32 asset pack as the primary tileset for Fringe Haven Outpost, replacing the flat placeholder tiles with rich pixel art buildings, terrain, and vegetation.
 
-### Changes
+### Fringe Haven Tileset Upgrade Changes
 
 - **Added** `godot/assets/tiles/fringe_haven/` — consolidated assets folder with Serene Village 32x32 atlas, Overworld tileset reference, and animated elements (campfire, water, door)
 - **Archived** original asset packs to `design/archive/`
@@ -85,7 +119,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Refactor:** Renamed the "Oakhaven Outpost" world scene to "Fringe Haven Outpost" to match the planet name from the planet registry. All file names, node names, scene paths, labels, and cross-references updated.
 
-### Changes
+### Rename Oakhaven to Fringe Haven Changes
 
 - **Renamed** `oakhaven_outpost.tscn` → `fringe_haven_outpost.tscn`, root node `OakhavenOutpost` → `FringeHavenOutpost`
 - **Renamed** `oakhaven_outpost.gd` → `fringe_haven_outpost.gd`, updated in-game label to "FRINGE HAVEN OUTPOST"
@@ -102,7 +136,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug Fix:** Player sprite would intermittently disappear while moving diagonally. The diagonal-to-cardinal animation fallback failed when `_facing` was already a diagonal direction, leaving the animation name unresolved and falling back to idle.
 
-### Changes
+### Fix: Sprite disappearing during diagonal movement Changes
 
 - **Fixed** `player_controller.gd` — simplified diagonal fallback to always pick the dominant axis (X or Y) for cardinal direction, removing the dependency on the previous `_facing` state that caused the bug
 
@@ -112,7 +146,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug Fix:** Complete overhaul of character sprite rendering. Sprite sheets had dark opaque backgrounds, irregular grids with labels/gaps, and wrong frame coordinates causing broken animations (scattered body parts, black rectangles).
 
-### Changes
+### Fix: Sprite Sheets and Animation System Changes
 
 - **Processed** all 14 sprite sheets — removed dark backgrounds (transparent), extracted clean uniform 8×N grids of 128×128 frames (no labels, no gaps)
 - **Regenerated** all 15 `godot/resources/*_spriteframes.tres` files — correct atlas regions for clean grid, proper row assignments (walk=rows 0-3, idle=rows 16-19), all 4 directional idles
@@ -126,13 +160,13 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Replaced the draw-based planet_screen with a proper TileMap-based planet surface. Generates procedural town layouts with buildings, paths, trees, water features, fences, and scattered decor. New detailed pixel-art 32×32 tile atlas with 256 tiles across 16 terrain/object categories.
 
-### New Files
+### Tile-Based Planet Surface Overhaul Changes
 
 - **Created** `tools/godot-dev/tiles/tileset_generator_v2.py` — Detailed pixel-art tile atlas generator producing 512×512 atlas (16×16 grid) with textured grass, dirt paths, cobblestone, water with shores, tree canopies/trunks, building walls/roofs, doors, windows, signs, chests, barrels, crates, fences, bridges, stairs, and marker tiles
 - **Created** `godot/scripts/ui/planet_surface.gd` — New planet surface controller extending Control with SubViewport-based tilemap rendering, procedural town layout generation, 8-direction player movement with collision, merchant/treasure entity placement, interaction system, and camera following
 - **Created** `godot/scenes/ui/planet_surface.tscn` — Planet surface scene with Control root, SubViewportContainer+SubViewport hosting 4-layer TileMapLayers (Ground, Path, Decor, Roof), Entities node, and HUD overlay (title, loot, flash, depart button, controls hint)
 
-### Modified Files
+### Tile-Based Planet Surface Overhaul Modified Files
 
 - **Modified** `godot/assets/tiles/world_atlas.png` — Regenerated with detailed pixel-art tiles (was colored squares with labels)
 - **Modified** `godot/resources/world_tileset.tres` — Updated terrain sets for new atlas layout (Grass, Dirt, Stone, Water, Wall, Roof, Wood, Fence)
@@ -151,18 +185,18 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Integrated the ProceduralWorldMap plugin (FastNoiseLite-based) across navigation space view and Celestial Codex star map (planet surface uses tile-based approach instead). Each region gets a unique seed-based procedural backdrop with custom color palettes.
 
-### New Files
+### Procedural Map Generator Integration Changes
 
 - **Created** `godot/scripts/autoload/procedural_map_manager.gd` — ProceduralMapManager autoload singleton providing cached procedural textures for navigation (space nebulae), star map (galaxy/region backdrops), and planet surfaces (terrain maps). Includes region seed mapping, three distinct color palettes (space, galaxy, planet), region-specific tint colors, biome-aware planet terrain colors, and datasource lifecycle management.
 
-### Modified Files
+### Procedural Map Generator Integration Modified Files
 
 - **Modified** `godot/project.godot` — Enabled ProceduralWorldMap editor plugin; registered ProceduralMapManager as autoload singleton
 - **Modified** `godot/scripts/ui/navigation.gd` — Added procedural nebula backdrop behind starfield; nebula pans with ship movement (quantized to 80-unit steps); regenerates on region transition; region-specific tint coloring
 - **Modified** `godot/scripts/ui/star_map_screen.gd` — Added procedural galaxy backdrop to Galaxy layer with purple-tinted nebula clouds; added region-specific procedural backdrop to Region layer circular map view
 - **Modified** `godot/scripts/ui/planet_screen.gd` — Replaced flat-color ground with procedural terrain texture; biome-aware color palette (settlement/industrial/enchanted/wilderness); subtle ambient tint overlay; semi-transparent grid lines over terrain
 
-### How It Works
+### Procedural Map Generator Integration How It Works
 
 - **Navigation:** Quarter-resolution nebula texture rendered behind starfield, tinted per-region (e.g. purple-blue for The Fringe, warm amber for Feline Courts). Updates as ship moves across the map.
 - **Celestial Codex:** Galaxy layer gets a fixed-seed galactic nebula backdrop; Region layer gets a per-region procedural texture behind the circular sector map.
@@ -175,7 +209,8 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Added SpriteFrames resources for 12 new character spritesheets and updated the NPC controller to auto-load sprites by `npc_id` convention.
 
-### New Files
+### Wire New Character Spritesheets Changes
+
 - **Created** `godot/resources/blood_paw_spriteframes.tres` — Crew member Blood Paw
 - **Created** `godot/resources/death_spriteframes.tres` — Rival captain Death
 - **Created** `godot/resources/fairy_cartographer_spriteframes.tres` — Fairy Cartographer NPC
@@ -189,7 +224,8 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - **Created** `godot/resources/npc_urchin_spriteframes.tres` — Urchin NPC
 - **Created** `godot/resources/silky_spriteframes.tres` — Crew member Silky
 
-### Modified Files
+### Wire New Character Spritesheets Modified Files
+
 - **Modified** `godot/scripts/world/npc_controller.gd` — Added `_load_sprite_frames()` to auto-load `res://resources/{npc_id}_spriteframes.tres` at ready time
 
 ---
@@ -198,11 +234,13 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Replaced the old typewriter cutscene intro with a Star Wars-style bottom-to-top scrolling text crawl. The text scrolls upward over a twinkling starfield, preceded by a fade-in title card. Enriched intro story text draws from full game lore — factions, crew members, rival threats, and the Whisper Crystals premise. Both Aristotle and Dave paths have unique, protagonist-specific crawl text (~15 paragraphs each).
 
-### New Files
+### Star Wars-Style Intro Crawl Changes
+
 - **Created** `godot/scripts/ui/intro_crawl.gd` — Star Wars-style crawl controller with phases (title fade-in/hold/fade-out → crawl scroll), twinkling procedural starfield, fast-forward (SPACE/DOWN) and skip (ESC) controls
 - **Created** `godot/scenes/ui/intro_crawl.tscn` — Scene with starfield background, title container, SubViewportContainer for crawl text rendering, fade overlays, skip hint label
 
-### Modified Files
+### Star Wars-Style Intro Crawl Modified Files
+
 - **Modified** `godot/data/characters/protagonists.json` — Added `intro_crawl` arrays with 15-16 enriched story paragraphs per protagonist, covering factions, crew, threats, and setting
 - **Modified** `godot/scripts/ui/main.gd` — Registered `intro_crawl` scene in SCENES dictionary
 - **Modified** `godot/scripts/ui/skill_allocation.gd` — Changed post-confirm flow from `cutscene` → `intro_crawl`
@@ -255,7 +293,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Enhancement:** Replaced placeholder circle with animated spritesheets for both Aristotle and Dave in the top-down planet exploration mode. The sprite renders 8-direction walk cycles and falls back to idle frames when stationary. The correct spritesheet loads automatically based on the selected protagonist.
 
-### Changes
+### Art: Aristotle spritesheet on planet screen Changes
 
 - Copied `aristotle_spritesheet.png` and `dave_spritesheet.png` to `assets/sprites/`
 - `planet_screen.gd` — loads spritesheet based on `protagonist_id`, tracks facing octant, cycles walk/idle animation rows, draws correct frame via `draw_texture_rect_region()`
@@ -266,7 +304,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Top-down exploration mode for planetary surfaces with merchants, treasures, and NPC interaction.
 
-### New System
+### Planetary Exploration (Top-Down Mode) Changes
 
 - `Planet` entity (`scripts/entities/planet.gd`) — planet data model with biome, merchants, treasures, hostiles
 - `PlanetSystem` (`scripts/systems/planet_system.gd`) — manages planet loading, landing/departure, treasure collection, state persistence
@@ -274,7 +312,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - 3 charted planets: Fringe Haven (settlement), Goblin Market World (industrial), Moonpetal Glade (enchanted)
 - 4 biome types defined in `data/planets/biomes.json`
 
-### Integration
+### Planetary Explration Integration
 
 - Navigation screen renders planet markers with biome-coloured circles and `[L] LAND` proximity prompt
 - `[L]` key or `[Enter]` lands on nearby planets, transitioning to the planet screen
@@ -289,7 +327,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Dockable space stations on the star map with services, artifacts, and three base variants.
 
-### New System
+### Star Bases (Dockable Space Stations) Changes
 
 - `StarBase` entity (`scripts/entities/star_base.gd`) — base data model with type, faction, services, artifacts
 - `StarBaseSystem` (`scripts/systems/star_base_system.gd`) — manages base loading, visibility, docking, artifact purchases, proximity detection
@@ -297,7 +335,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - 6 star bases across regions: Fringe Outpost, Corsair Haven, Iron Dock, Twilight Exchange, Scrapheap Station (hidden), Wolf Citadel (stronghold)
 - 5 exclusive artifacts: Aeolian Tuning Fork, Bottled Solar Flare, Chrono-Compass, Midas's Grapnel, Fairy Dust Scrubber
 
-### Integration
+### Star Bases Integration
 
 - Navigation screen renders diamond-shaped base markers with proximity dock prompt
 - `[E]` key docks at nearby bases (overrides faction screen when in range)
@@ -312,14 +350,14 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** New game start skill redistribution screen and stat evaluation system.
 
-### New System
+### Skill Point Allocation ("Harmonic Attunement") Changes
 
 - `StatEvaluator` (`scripts/systems/stat_evaluator.gd`) — utility for checking skill thresholds, finding highest stat, percentage calculations
 - Skill allocation screen (`scripts/ui/skill_allocation.gd`) — redistribute starting points across 6 stats with +/- controls
 - Presets: Default, Warrior, Diplomat, Shadow
 - Resonance Shards (`data/items/resonance_shards.json`) — in-game items that expand the skill point pool
 
-### Integration
+### Skill Point Allocation Integration
 
 - Character select now routes through skill allocation before cutscene
 - `EncounterEngine` supports `min_<stat>`, `highest_stat`, and `karma_tier` trigger conditions
@@ -333,7 +371,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Feature:** Added a global karma system that tracks moral alignment on a -100 to +100 scale, separate from per-faction reputation.
 
-### New System
+### Karma System (Global Reputation Meter) Changes
 
 - `KarmaSystem` (`scripts/systems/karma_system.gd`) — core logic for karma tracking, tier calculation, price/NPC modifiers
 - Five karma tiers: Tyrant, Ruthless, Neutral, Virtuous, Paragon
@@ -341,7 +379,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - NPC disposition offsets per tier
 - JSON-driven configuration (`data/karma/karma_config.json`, `data/karma/karma_triggers.json`)
 
-### Integration
+### Karma System Integration
 
 - `EncounterOutcome` now supports `karma_delta` field for encounter choices
 - `EncounterEngine` applies karma changes when processing choice and dialogue outcomes
@@ -382,7 +420,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - 10 independent: The Oracle, The Keeper, Jinx, The Debt Collector, Patch, Flux, Sister Meridian, Wraith, Grizzle, Echo
 - Mix of significant (determines faction outcomes) and flavor (world-building richness)
 
-### Files Changed
+### Expanded Galaxy Map Changes
 
 - `data/story/arc_definitions.json` — Expanded from 4 to 10 arcs, added ending_d_reunite threshold
 - `data/maps/galaxy_layout.json` — Added 6 new region nodes
@@ -390,7 +428,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `data/maps/purchasable_maps.json` — Added 5 new purchasable star charts
 - `scripts/core/data_loader.gd` — Added `load_cradle_encounters()` and `load_special_character_encounters()`
 
-### Files Added
+### Expanded Galaxy Map Files Added
 
 - `data/encounters/arc4_encounters.json` through `arc9_encounters.json` — Aristotle path encounters
 - `data/encounters/arc4_encounters_dave.json` through `arc9_encounters_dave.json` — Dave path encounters
@@ -413,7 +451,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - **Directional boundary transitions** — flying off a region edge now picks the neighbor whose galaxy position matches the exit direction (no longer always picks the first connected region).
 - **Directional entry positions** — entering a region places the player on the edge closest to where they came from.
 
-### Files Changed
+### Celestial Codex: 3-Layer Map System Changes
 
 - `data/maps/galaxy_layout.json` — New: galaxy node positions and colors for all 7 regions
 - `scripts/core/data_loader.gd` — Added `load_galaxy_layout()` method
@@ -430,7 +468,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug Fix:** Completing the "Eyes in the Dark" encounter immediately triggered the arc 1 exit, skipping "The Captain's Doctrine" stance choice. Added `arc1_stance` to arc 1 exit conditions so the player must make their doctrine decision before advancing to arc 2.
 
-### Files Changed
+### Arc 1 Ending Fix Changes
 
 - `data/story/arc_definitions.json` — Added `arc1_stance: true` to arc 1 exit conditions and arc 2 entry conditions
 
@@ -440,7 +478,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug Fix:** When encounters displayed more than 2 choice options, the title label shifted outside the parchment background. The panel and dialogue background had a fixed 280px height that couldn't accommodate the extra buttons. The panel now dynamically resizes upward to fit its content when choices are added, and resets when choices are cleared between dialogue steps.
 
-### Files Changed
+### Dialogue Title Shifting Fix Changes
 
 - `scripts/ui/dialogue_ui.gd` — Added `_resize_panel_to_fit()` to grow panel/background height based on content; called after building choices in both legacy and dialogue-step paths; reset height on choice clear
 
@@ -452,7 +490,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Enhancement:** Fog of war edges in both the navigation view and star map screen are now rendered with soft, cloud-like edges instead of sharp rectangles. Boundary cells use overlapping circles with alpha gradients based on proximity to revealed areas, creating a natural nebula/cloud aesthetic.
 
-### Files Changed
+### Dialogue Background and Fog Enhancement Changes
 
 - `scripts/ui/dialogue_ui.gd` — Always show dialogue background and parchment styling for all encounter types
 - `scripts/ui/navigation.gd` — Soft circle-based fog rendering at revealed/hidden boundaries
@@ -470,7 +508,8 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug Fix:** Removed the fairy cartographer reference from the repeatable `distress_escape_pod` encounter. The rescue outcome now features a retired merchant navigator instead, eliminating the conflict with the dedicated one-time cartographer encounter.
 
-### Files Changed
+### Star Map Fog, Cartographer Balance, and Distress Signal Fix Changes
+
 - `scripts/ui/star_map_screen.gd` — Fog of war rendering: nebula colours, edge-cell blending, translucent density
 - `scripts/systems/star_map_system.gd` — `on_cartographer_rescued()` reveals fog around hidden locations only
 - `data/encounters/fairy_cartographer.json` — Added `arc1_crystal_discovered` trigger condition
@@ -485,7 +524,8 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Enhancement:** Added a fuzzy gradient edge effect at region boundaries. As the player approaches the edge of the map, a smooth quadratic dark gradient fades in, with a solid dark overlay beyond the boundary. This clearly communicates inaccessible areas. The existing pulsing blue glow for region transitions is preserved on top.
 
-### Files Changed
+### POI Spawning and Boundary Edge Effect Changes
+
 - `scripts/ui/navigation.gd` — Added `_clamp_to_bounds()` helper, clamped POI positions in `_spawn_poi()` and `_update_distress()`, replaced thin boundary line with multi-strip gradient fade effect
 - `scripts/systems/star_map_system.gd` — Clamped random spawn zone POI positions to region bounds
 
@@ -509,7 +549,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 4. **Flow:** Arc exit conditions met → `arc_advanced` signal → navigation pushes `arc_summary` overlay → player reads stats → presses "JUMP TO NEXT SECTOR" → stats fade out → hyperspace shader plays → `arc_transition_complete` signal → POIs refresh for new arc.
 
-### New Files
+### Arc Transition Enhancement Files
 
 - `scripts/ui/arc_summary.gd` — Stats screen + hyperspace jump controller
 - `scenes/ui/arc_summary.tscn` — Scene layout with panel, stats container, continue button, hyperspace ColorRect
@@ -541,7 +581,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 6. **Portrait support** — Added 8 crew member portraits to CHARACTER_PORTRAITS registry including Nine Lives portrait.
 
-### Changes
+### Crew Recruitment Dialogue Conversion Changes
 
 - `scripts/ui/dialogue_ui.gd` — Added crew member portrait paths
 - `data/encounters/crew_nine_lives.json` — Converted to dialogue_steps
@@ -575,7 +615,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 5. **Proof-of-concept** — `enc_arc1_dave_trade` converted to a branching two-sided conversation with three paths: friendly trade, negotiation, and hostile escalation to combat.
 
-### Changes
+### Two-sided Branching Dialogue System Changes
 
 - `scripts/entities/encounter.gd` — added `DialogueStep`, `DialogueStepChoice` inner classes, `dialogue_steps` field
 - `scripts/systems/encounter_engine.gd` — added `apply_dialogue_step_outcome()`, `complete_encounter()`
@@ -598,7 +638,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 4. **Shipyard UI** — Left panel now shows current ship sprite preview and ship name/class. Right panel split into "Ships For Sale" (with thumbnails, stat summary, cost, buy button) and "Ship Upgrades". Buying a ship swaps your vessel and refreshes the entire UI.
 
-### Changes
+### Ship Purchase Feature Changes
 
 - `data/ships/ship_templates.json` — added Pirate Destroyer template with purchase cost fields
 - `scripts/core/data_loader.gd` — added `load_purchasable_ships()`
@@ -620,7 +660,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 3. **Scene layout** — Expanded `purchase_screen.tscn` panel to fit ship stats line, repair button, upgrades header, scrollable upgrade list, and close button.
 
-### Changes
+### Ship Upgrade Shop Implementation Changes
 
 - `scripts/systems/economy_system.gd` — added `purchase_upgrade()` and `_apply_stat_modifier()` functions
 - `scripts/ui/purchase_screen.gd` — full rewrite with upgrade list UI, dynamic repair cost, ship stats display
@@ -640,7 +680,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 3. **Added arc progress feedback** — The HUD arc label now shows progress as "ARC TITLE (2/3)" indicating how many exit conditions have been met. When an arc advances, a 6-second flash notification announces the new arc.
 
-### Changes
+### Story Arc Progression, Repair Access, and Arc Progress HUD Changes
 
 - `scripts/systems/encounter_engine.gd` — added `check_arc_exit()` + `advance_arc()` call after `apply_choice_outcome()`
 - `scripts/ui/navigation.gd` — connected `arc_advanced` signal, added `_on_arc_advanced()` flash + POI refresh, added R key handler for purchase overlay, updated HUD to show arc progress count, updated controls bar hint
@@ -653,13 +693,15 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 **Problem:** The player ship used a single side-view sprite rotated 360 degrees, which looked unnatural at vertical angles.
 
 **Solution:** Replaced free rotation with a banking + smooth flip + directional sprite blending system:
+
 - 3-sprite flip transition: cross-fades through a 3/4 angle turning sprite (`ship_rotate.png`) during horizontal direction changes, blending from rotate sprite to side sprite with overlapping alpha curves
 - Ease-out-quad curve on flip progress so the rotate midpoint transitions quickly
 - Slight banking tilt (up to ~17 degrees) when moving vertically for momentum feel
 - Cross-fades between side-view sprite (`ship_r_side.png`) and top-down sprite (`ship_up_side.png`) based on vertical movement dominance
 - Engine glow and trail particles adapt to the new orientation system
 
-### Changes
+### Improved Ship Orientation During Navigation Changes
+
 - `scripts/ui/navigation.gd` — replaced `_ship_angle` rotation system with `_facing_right` flip, `_bank_angle` tilt, `_vertical_blend` dual-sprite blending, and `_heading_angle` for trail/minimap; added `_draw_ship_perspective()` helper that renders the ship as a UV-mapped trapezoid for pseudo-3D turning; loaded and processed `ship_up_side.png` as second directional sprite; updated engine glow to blend between side-rear and heading-based offsets
 
 ---
@@ -672,7 +714,8 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug 3:** Combat music never played. Combat starts via `replace_overlay()` which was missing the `MusicManager.on_state_change()` call that `push_overlay()` and `switch_scene()` both have.
 
-### Changes
+### ESC-to-Skip Cutscene, Navigation & Combat Music Fix Changes
+
 - `project.godot` — fixed `skip` input action keycode from `4194306` (Tab) to `4194305` (Escape)
 - `scripts/autoload/music_manager.gd` — added `_theme_file_exists()` helper; `on_state_change()` and `on_arc_change()` now fall back to default themes when arc-specific files don't exist; `_play_theme()` now resolves the new stream before stopping the current track — if no file exists, current music keeps playing instead of going silent; lowered default music volume from -10 dB to -20 dB
 - `scripts/ui/main.gd` — `replace_overlay()` now calls `MusicManager.on_state_change(scene_key)` and sets overlay meta key
@@ -682,11 +725,13 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 ## 2026-03-19 — Music volume control & playback continuity
 
 **Features:**
+
 - Volume control: settings slider now controls music volume (0–100% linear scale, mapped to dB)
 - Music continuity: when switching themes (e.g., navigation → combat → navigation), tracks resume where they left off instead of restarting from the beginning
 - Navigation music support: place `theme_navigation.ogg/.mp3` in `assets/audio/music/` and it plays during flight
 
-### Changes
+### Music Volume Control & Playback Continuity Changes
+
 - `scripts/autoload/music_manager.gd` — added `set_music_volume()`, `set_sfx_volume()`, playback position save/restore in `_play_theme()`, default volume at -10 dB, wired `EventBus.volume_changed`
 - `scripts/ui/settings_screen.gd` — slider initializes from current volume, toggles reflect current state, calls `MusicManager.set_music_volume()` directly
 
@@ -696,7 +741,8 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 **Bug:** `push_overlay()` in `main.gd` did not call `MusicManager.on_state_change()`, so combat music (and any other overlay-based screen music) never played.
 
-### Changes
+### Overlay Music Fix Changes
+
 - `scripts/ui/main.gd` — `push_overlay()` now triggers `MusicManager.on_state_change(scene_key)` and saves the prior scene key; `pop_overlay()` restores the previous music when all overlays are cleared.
 
 ---
@@ -721,7 +767,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `scripts/systems/crew_trait_system.gd` — CrewTraitSystem: loads crew definitions, calculates active trait bonuses per ship
 - `assets/characters/crew/.gdkeep` — Placeholder directory for crew portrait art
 
-### Modified Files
+### Crew Missions Modified Files
 
 - `scripts/entities/ship.gd` — Extended `CrewMember` with `trait_id`, `portrait`, `backstory`, `recruitment_status` fields + serialization
 - `scripts/entities/side_mission.gd` — Added `crew_member_id` field + serialization
@@ -750,7 +796,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 **Task:** Add dual-protagonist support — choose Aristotle or Dave at game start
 **Model:** Opus 4.6
 
-### Changes
+### Character Selection Feature Changes
 
 - **GameStateData:** Added `protagonist_id` field with backward-compatible save/load
 - **DataLoader:** Added `load_protagonists()`, suffix parameter on `load_encounters()` and `load_side_missions()` with fallback to shared files
@@ -834,7 +880,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `design/ships/knight_ship.png` — Knight Order warship
 - `design/ships/goblin_scrapper.png` — Goblin Syndicate scrapship
 
-### Modified Files
+### Ship Sprite Integration Modified Files
 
 - `engine/sprite_manager.py` — Registered 4 new ship sprites (wolf, fairy, knight, goblin) in
   SHIP_SPRITES registry. Only `alien_craft` remains as a placeholder.
@@ -863,7 +909,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 **Tasks:** Music System, SFX System, Ending Summary Screen, Sprite Asset Manager
 **Model:** Opus 4.6
 
-### New Files
+### Music and Sprite System Integration New Files
 
 - `core/music_manager.py` — MusicManager with per-state theme mapping, arc-specific navigation
   themes, SFX event registry, enable/disable controls. Engine-agnostic (uses AudioInterface ABC).
@@ -879,7 +925,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `assets/audio/music/.gitkeep` — Directory for BGM track files
 - `assets/audio/sfx/.gitkeep` — Directory for SFX files
 
-### Modified Files
+### Music and Sprite System Integration Modified Files
 
 - `core/session.py` — Replaced raw audio event subscriptions with MusicManager. Added
   `music.on_state_change()` at all key transitions (menu, cutscene, navigation, dialogue,
@@ -891,12 +937,12 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
   history grouped by arc with positive/negative indicators. Arrow key scrolling. Fixed
   `.reputation` → `.reputation_with_player` bug.
 
-### Bug Fixes
+### Music and Sprite System Integration Bug Fixes
 
 - Fixed `EndingState._calculate_ending()` using non-existent `.reputation` attribute on
   Faction entities (should be `.reputation_with_player`). Same fix in `_build_summary()`.
 
-### Test Results
+### Music and Sprite System Integration Test Results
 
 - All 280 tests pass (210 previous + 70 new)
 - All tests run headless without pygame display context
@@ -909,7 +955,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 **Task:** Entertainment Enhancements — Side Missions + Distress Signals (13 tasks)
 **Model:** Opus 4.6
 
-### New Files
+### Side Missions and Distress Signals Integration New Files
 
 - `systems/side_mission.py` — SideMissionSystem with mission lifecycle, objective tracking, reward
   application, and distress signal spawning (timer-based, weighted random)
@@ -920,7 +966,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `tests/test_side_missions.py` — 24 tests covering entity serialization, data loading, system lifecycle,
   rewards, events, and GameStateData round-trip
 
-### Modified Files
+### Side Missions and Distress Signals Integration Modified Files
 
 - `core/interfaces.py` — Added `MISSION_LOG` to `Action` enum
 - `core/state_machine.py` — Added `MISSION_LOG` to `GameStateType` enum
@@ -933,12 +979,12 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `ui/navigation.py` — Distress POI spawning, mission objective checking, distress_signal colour
 - `ui/hud.py` — Active mission count indicator (amber text in top bar)
 
-### Updated Documentation
+### Side Missions and Distress Signals Integration Updated Documentation
 
 - `docs/MASTER_PLAN.md` — Marked PLAN-002 complete, added PLAN-003 (Sprite Character & Visual Identity),
   updated metrics (210 tests, 10 systems, 14 UI states, 20 data files)
 
-### Test Results
+### Side Missions and Distress Signals Integration Test Results
 
 - All 210 tests pass (186 previous + 24 new)
 - All tests run headless without pygame display context
@@ -975,7 +1021,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `docs/plans/` — superseded by `docs/MASTER_PLAN.md`
 - `docs/suggestions.md` — moved to `docs/archive/briefs/`
 
-### Updated
+### Documentation Audit & Restructure Updated
 
 - `README.md` — updated project structure, docs links point to new locations, added game status
 - `docs/process/CONTRIBUTING.md` — updated all plan references to `MASTER_PLAN.md` and new path structure
@@ -1048,7 +1094,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - Full serialization via `get_state_dict()` / `load_state_dict()`
 - Created tests in `test_faction_conquest.py` — 9 tests covering initialization, influence, control changes, territories
 
-### Test Results
+### Realm Control Test Results
 
 - All 151 tests pass (99 previous + 52 new)
 - All tests run headless without pygame display context
@@ -1088,7 +1134,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `load_settings()` / `save_settings()` helpers with defaults merging
 - Created `tests/test_settings.py` — 5 tests covering round-trip, defaults, corruption, directory creation
 
-### Test Results
+### Save/Load, Pause Menu, and Settings Screen Test Results
 
 - All 61 tests pass (44 previous + 17 new)
 - All tests run headless without pygame display context
@@ -1136,7 +1182,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - Fixed `Faction.from_dict()` to accept both `reputation_with_player` and `starting_reputation` keys
 - Created `tests/test_game_state_serialization.py` — 5 tests covering fresh/modified round-trip, JSON serialization, faction and NPC registry persistence
 
-### Test Results
+### Save/Load, Pause Menu, and Settings Screen Test
 
 - All 44 tests pass (27 original + 17 new/modified)
 - All tests run headless without pygame display context
@@ -1148,7 +1194,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 **Task:** Step 1 (PLAN-001)
 **Model:** Opus 4.6 (planning), Haiku (execution)
 
-### Added
+### Project Management Structure Added
 
 - `CLAUDE.md` — Project-level AI agent instructions with architecture rules and conventions
 - `docs/CONTRIBUTING.md` — Task workflow guide for AI agents and developers
@@ -1162,7 +1208,7 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 - `docs/decisions/ADR-001_Project_Structure_Refactor.md` — First ADR documenting the refactor rationale
 - `docs/changelog/CHANGELOG.md` — This file
 
-### Directory Structure
+### Project Management Structure Directory Structure
 
 - Created archive directories for: plans, reviews, issues, decisions, PRDs, TRDs, design, story
 - Created issue tracking directories: open, in-progress, closed

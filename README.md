@@ -97,7 +97,7 @@ whisper_crystals/
 
 ## Architecture Principles
 
-- **Autoload singletons** — `EventBus`, `GameSession`, and `MusicManager` provide global services
+- **Autoload singletons** — `EventBus`, `GameSession`, `MusicManager`, and `ProceduralMapManager` provide global services
 - **Data-driven content** — Story, dialogue, encounters, factions loaded from JSON at runtime
 - **Event bus** — Pub/sub system for decoupled communication between game systems
 - **Scene-based UI** — UI screens are individual scenes managed via the scene tree
@@ -123,20 +123,22 @@ The game is **fully playable** with complete implementation of all core systems 
 
 ### Current Status
 
-- **Engine:** Godot 4.6 (GL Compatibility) - Complete migration from Python prototype
-- **Test Coverage:** Comprehensive testing with all systems verified
-- **Documentation:** Complete technical documentation and development guides
+- **Engine:** Godot 4.6 (GL Compatibility) — Complete migration from Python prototype
+- **Core Game:** Arcs 1-4 fully playable with 3 endings, 7 regions, dual protagonist paths
+- **Expansion Content:** Arcs 5-10 have encounter data but are not integration-tested
+- **Known Issues:** 18 issues identified in April 2026 code review, including 2 critical bugs — see `docs/CODE_REVIEW_2026-04-05.md`
 - **Art Assets:** Core sprites and portraits integrated (crew portraits as placeholders)
 
-See `docs/plans/MASTER_PLAN.md` for detailed technical specifications and development status.
+See `docs/MASTER_PLAN.md` for the authoritative project plan and development status.
 
 ## Documentation
 
-- [`docs/plans/MASTER_PLAN.md`](docs/plans/MASTER_PLAN.md) — Active plan: current state, tasks, roadmap
-- [`docs/architecture/TRD-001`](docs/architecture/TRD-001_Technical_Architecture_Stack.md) — Technical Architecture & Stack
-- [`docs/architecture/TRD-002`](docs/architecture/TRD-002_Game_Engine_Prototype_Specification.md) — Game Engine & Prototype Specification
-- [`docs/architecture/TRD-003`](docs/architecture/TRD-003_Data_Model_State_Management.md) — Data Model & State Management
+- [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md) — Authoritative project plan: current state, tasks, roadmap
+- [`docs/GAME_SUMMARY.md`](docs/GAME_SUMMARY.md) — Complete game design summary (implemented + planned content)
+- [`docs/CODE_REVIEW_2026-04-05.md`](docs/CODE_REVIEW_2026-04-05.md) — Latest code review with open issues
+- [`STRUCTURE.md`](STRUCTURE.md) — Architecture reference: scenes, signals, systems
 - [`docs/changelog/CHANGELOG.md`](docs/changelog/CHANGELOG.md) — Detailed change log and development history
+- [`docs/archive/`](docs/archive/) — Archived TRDs (Python-era), PRDs, old plans, superseded feature specs
 
 ## License
 

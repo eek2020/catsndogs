@@ -1,9 +1,10 @@
-import sys
-from PIL import Image
 from collections import Counter
+from PIL import Image
 
 try:
-    img = Image.open('godot/assets/sprites/aristotle_spritesheet.png').convert("RGBA")
+    img = Image.open(
+        "godot/assets/sprites/aristotle_spritesheet.png"
+    ).convert("RGBA")
     c = Counter(img.getdata())
     print("Number of unique colors:", len(c))
     print("Top 10 colors:")

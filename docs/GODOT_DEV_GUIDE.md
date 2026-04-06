@@ -6,13 +6,13 @@ Central reference for Godot 4.6 development on Whisper Crystals. All resources b
 
 1. **Read CLAUDE.md** — project conventions and architecture rules
 2. **Read MEMORY.md** (project root) — accumulated knowledge and known quirks
-3. **Check PLAN.md** (project root) — current task status and dependencies
+3. **Check docs/MASTER_PLAN.md** — authoritative project plan, open issues, and roadmap
 4. **Reference this guide** — links to all development resources below
 
 ## GDScript Reference
 
 | Document | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | [gdscript-reference.md](godot-reference/gdscript-reference.md) | Complete syntax, types, operators, patterns |
 | [quirks-and-gotchas.md](godot-reference/quirks-and-gotchas.md) | Known engine issues, type inference errors, runtime pitfalls |
 | [best-practices.md](godot-reference/best-practices.md) | Coding standards and patterns for Godot |
@@ -22,7 +22,7 @@ Central reference for Godot 4.6 development on Whisper Crystals. All resources b
 ## Development Patterns
 
 | Document | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | [scene-generation-patterns.md](godot-reference/scene-generation-patterns.md) | Building .tscn files programmatically |
 | [script-generation-patterns.md](godot-reference/script-generation-patterns.md) | Runtime script templates and patterns |
 | [scene-script-coordination.md](godot-reference/scene-script-coordination.md) | Rules for coordinating scenes and scripts |
@@ -40,7 +40,7 @@ Central reference for Godot 4.6 development on Whisper Crystals. All resources b
 ## Development Methodology
 
 | Document | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | [task-decomposition.md](development-methodology/task-decomposition.md) | How to break features into tasks |
 | [architecture-planning.md](development-methodology/architecture-planning.md) | Scene hierarchy and script design |
 | [iteration-strategy.md](development-methodology/iteration-strategy.md) | When to iterate, stop, or escalate |
@@ -48,7 +48,7 @@ Central reference for Godot 4.6 development on Whisper Crystals. All resources b
 ## Quality Assurance
 
 | Document | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | [visual-qa-checklist.md](qa/visual-qa-checklist.md) | Manual QA checklists for screenshot review |
 
 ## Tools
@@ -56,24 +56,29 @@ Central reference for Godot 4.6 development on Whisper Crystals. All resources b
 All tools are in `tools/godot-dev/`:
 
 ### Sprite Tools (`tools/godot-dev/sprites/`)
+
 - `spritesheet_template.py` — Generate numbered grid templates for sprite sheets
 - `spritesheet_slice.py` — Slice sprite sheets into frames (4 modes: keep-bg, clean-bg, split-bg, split-clean)
 - `requirements.txt` — Dependencies: Pillow
 
 ### Asset Processing (`tools/godot-dev/assets/`)
+
 - `rembg_matting.py` — Background removal with alpha matting (handles semi-transparent materials)
 - `requirements.txt` — Dependencies: rembg, pymatting, numpy, scipy, Pillow, onnxruntime
 
 ### Documentation Tools (`tools/godot-dev/docs/`)
+
 - `godot_api_converter.py` — Convert Godot XML docs to Markdown
 - `class_list.py` — Godot class categorization utilities
 - `ensure_doc_api.sh` — Fetch latest Godot API docs
 
 ### Capture Tools (`tools/godot-dev/capture/`)
+
 - `gpu_detect.sh` — Detect available GPU for Godot rendering
 - `screenshot.sh` — Capture screenshots with GPU or software fallback
 
 ### Tool Setup
+
 ```bash
 # Sprite tools
 cd tools/godot-dev/sprites && pip install -r requirements.txt
@@ -93,9 +98,9 @@ Working examples in `examples/godot-patterns/`:
 ## Workflow Documents
 
 | Document | Location | Purpose |
-|----------|----------|---------|
-| PLAN.md | Project root | Task DAG with status tracking |
-| ASSETS.md | Project root | Asset manifest with sizing column |
+| ---------- | ---------- | --------- |
+| docs/MASTER_PLAN.md | docs/ | Authoritative project plan, open issues, roadmap |
+| STRUCTURE.md | Project root | Architecture reference: scenes, signals, systems |
 | MEMORY.md | Project root | Accumulated project knowledge |
 
 ## Whisper Crystals Architecture

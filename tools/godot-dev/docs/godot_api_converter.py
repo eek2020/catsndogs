@@ -6,17 +6,20 @@ Converts Godot API XML class documentation to compact, LLM-friendly markdown.
 
 Getting XML Documentation from Godot Source:
 --------------------------------------------
-Godot's API docs are stored as XML files in doc/classes/ directory (~400 files).
+Godot's API docs are stored as XML files in doc/classes/ directory
+(~400 files).
 Use sparse checkout to fetch only the docs without the entire codebase:
 
     mkdir -p md_source && cd md_source
-    git clone --depth 1 --filter=blob:none --sparse https://github.com/godotengine/godot.git
+    git clone --depth 1 --filter=blob:none --sparse \
+        https://github.com/godotengine/godot.git
     cd godot && git sparse-checkout set doc/classes
 
 Usage:
 ------
     # Generate unified API reference (128 classes, ~64k tokens)
-    python godot_api_converter.py -i md_source/godot/doc/classes -o md_ready/godot_api.md \\
+    python godot_api_converter.py -i md_source/godot/doc/classes \
+        -o md_ready/godot_api.md \
         --unified-classes --method-desc first
 
     # See all options
@@ -29,7 +32,12 @@ import argparse
 from pathlib import Path
 from dataclasses import dataclass
 from enum import Enum
-from class_list import CLASS_SCENE, CLASS_SCRIPT, PRIORITY_CLASSES, CLASS_UNIFIED
+from class_list import (
+    CLASS_SCENE,
+    CLASS_SCRIPT,
+    PRIORITY_CLASSES,
+    CLASS_UNIFIED,
+)
 
 
 class DescriptionMode(Enum):
@@ -45,7 +53,9 @@ class DescriptionMode(Enum):
 class ConversionConfig:
     """Configuration for markdown conversion."""
 
-    class_description: DescriptionMode = DescriptionMode.FIRST_SENTENCE
+    class_description: DescriptionMode = (
+        DescriptionMode.FIRST_SENTENCE
+    )
     method_descriptions: DescriptionMode = DescriptionMode.NONE
     property_descriptions: DescriptionMode = DescriptionMode.NONE
     signal_descriptions: DescriptionMode = DescriptionMode.NONE
@@ -53,7 +63,9 @@ class ConversionConfig:
     max_enum_values: int = 10  # Maximum enum values to show per enum
     # Compact mode options (enabled by default)
     no_virtual: bool = True  # Skip virtual/override methods
-    compact_format: bool = True  # Use inline props, short headers, no separators
+    compact_format: bool = (
+        True  # Use inline props, short headers, no separators
+    )
     simple_signals: bool = True  # Omit params for parameterless signals
 
 
@@ -70,14 +82,22 @@ def convert_bbcode(text: str) -> str:
     text = re.sub(r"\[i\](.*?)\[/i\]", r"*\1*", text)
 
     # Convert references
-    text = re.sub(r"\[(method|member|signal|param|constant|enum)\s+([^\]]+)\]", r"`\2`", text)
-    text = re.sub(r"\[([A-Z][a-zA-Z0-9_]+)\]", r"\1", text)  # [ClassName] → ClassName
+    text = re.sub(
+        r"\[(method|member|signal|param|constant|enum)\s+([^\]]+)\]",
+        r"`\2`",
+        text,
+    )
+    text = re.sub(
+        r"\[([A-Z][a-zA-Z0-9_]+)\]", r"\1", text
+    )  # [ClassName] → ClassName
 
     # Remove URLs
     text = re.sub(r"\[url[^\]]*\].*?\[/url\]", "", text)
     # Remove codeblocks
     text = re.sub(r"\[codeblock\].*?\[/codeblock\]", "", text, flags=re.DOTALL)
-    text = re.sub(r"\[codeblocks\].*?\[/codeblocks\]", "", text, flags=re.DOTALL)
+    text = re.sub(
+        r"\[codeblocks\].*?\[/codeblocks\]", "", text, flags=re.DOTALL
+    )
 
     # Clean up whitespace
     text = re.sub(r"\s+", " ", text)
@@ -266,11 +286,18 @@ def parse_class(xml_path: Path, config: ConversionConfig) -> str | None:
             # Get description
             desc_elem = m.find("description")
             desc = get_description(
-                desc_elem.text if desc_elem is not None else None, config.method_descriptions
+                desc_elem.text if desc_elem is not None else None,
+                config.method_descriptions,
             )
 
-            virtual_marker = "" if config.compact_format else ("🔷 " if is_virtual else "")
-            ret_str = f" -> {ret_type}" if ret_type and ret_type != "void" else ""
+            virtual_marker = (
+                ""
+                if config.compact_format
+                else ("🔷 " if is_virtual else "")
+            )
+            ret_str = (
+                f" -> {ret_type}" if ret_type and ret_type != "void" else ""
+            )
             desc_str = f" - {desc}" if desc else ""
 
             method_lines.append(
@@ -306,7 +333,8 @@ def parse_class(xml_path: Path, config: ConversionConfig) -> str | None:
             # Get description
             desc_elem = s.find("description")
             desc = get_description(
-                desc_elem.text if desc_elem is not None else None, config.signal_descriptions
+                desc_elem.text if desc_elem is not None else None,
+                config.signal_descriptions,
             )
 
             # Build signal line - simplified format for parameterless signals
@@ -344,7 +372,9 @@ def parse_class(xml_path: Path, config: ConversionConfig) -> str | None:
 
             for enum_name, values in enums.items():
                 # Format: **EnumName:** CONST1=0, CONST2=1, ...
-                value_strs = [f"{n}={v}" for n, v, _ in values[: config.max_enum_values]]
+                value_strs = [
+                    f"{n}={v}" for n, v, _ in values[: config.max_enum_values]
+                ]
                 if len(values) > config.max_enum_values:
                     value_strs.append("...")
 
@@ -376,7 +406,11 @@ def parse_index_entry(xml_path: Path) -> tuple[str, str, str] | None:
 
     inherits = root.get("inherits", "")
     brief_elem = root.find("brief_description")
-    brief = first_sentence(brief_elem.text) if brief_elem is not None and brief_elem.text else ""
+    brief = (
+        first_sentence(brief_elem.text)
+        if brief_elem is not None and brief_elem.text
+        else ""
+    )
 
     return (name, inherits, brief)
 
@@ -440,7 +474,9 @@ def convert_directory_split(
             other_entries.append((name, inherits, brief))
 
     # Write two separate index files
-    def write_index(path: Path, title: str, entries: list[tuple[str, str, str]]) -> None:
+    def write_index(
+        path: Path, title: str, entries: list[tuple[str, str, str]]
+    ) -> None:
         lines = [f"# {title}", ""]
         for name, inherits, brief in sorted(entries):
             parent = f" <- {inherits}" if inherits else ""
@@ -449,8 +485,14 @@ def convert_directory_split(
         lines.append("")
         path.write_text("\n".join(lines))
 
-    write_index(split_dir / "_common.md", f"Common Classes ({len(common_entries)})", common_entries)
-    write_index(split_dir / "_other.md", f"Other Classes ({len(other_entries)})", other_entries)
+    write_index(
+        split_dir / "_common.md",
+        f"Common Classes ({len(common_entries)})",
+        common_entries,
+    )
+    write_index(
+        split_dir / "_other.md", f"Other Classes ({len(other_entries)})", other_entries
+    )
 
     print(f"Converted {converted_count} classes, skipped {skipped_count}")
     print(f"Common index: {split_dir / '_common.md'} ({len(common_entries)} classes)")

@@ -8,7 +8,7 @@ Whisper Crystals is a narrative-driven 2D side-scrolling space pirate game built
 
 Tasks follow this structure:
 
-```
+```text
 ## N. {Task Name}
 - **Status:** pending | in_progress | done
 - **Depends on:** (none) | task numbers
@@ -20,11 +20,13 @@ Tasks follow this structure:
 ```
 
 ### Task Status Values
+
 - `pending` — not yet started
 - `in_progress` — currently being worked on
 - `done` — completed and verified
 
 ### Guidelines
+
 - Minimize total task count — bundle routine features, isolate only genuine algorithmic risks
 - Each task should be independently verifiable
 - Verify criteria should be concrete enough that screenshots can prove pass/fail

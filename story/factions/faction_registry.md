@@ -144,7 +144,7 @@ Every faction is actively competing to become the dominant power across all real
 ## Starting Relationship Matrix
 
 | Faction | Corsairs | Canis | Lions | Wolves | Fairies | Knights | Goblins | Aliens |
-|---------|----------|-------|-------|--------|---------|---------|---------|--------|
+| --------- | ---------- | ------- | ------- | -------- | --------- | --------- | --------- | -------- |
 | **Corsairs** | — | -20 | -10 | -30 | +15 | 0 | +10 | +5 |
 | **Canis** | -20 | — | -15 | +40 | 0 | +20 | -10 | 0 |
 | **Lions** | -10 | -15 | — | -20 | +10 | +15 | -5 | +5 |

@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — Describes the Python/Pygame prototype engine. The project migrated to Godot 4.6 in March 2026. All engine-specific code was rewritten in GDScript.
+
 # TRD-002: Game Engine & Prototype Specification
 
 **Project:** Whisper Crystals — A Space Pirates Game  

@@ -13,6 +13,7 @@ The narrative spans 4 arcs, each escalating in scope, complexity, and stakes. Ar
 **Summary:** Aristotle discovers Whisper Crystals in a forgotten realm, teaches himself to refine them, builds a crew, then a fleet. By the time the Lions notice, he's entrenched.
 
 **Key Beats:**
+
 - Crystal discovery and first refining
 - First encounter with Dave — tense trade negotiation
 - First glimpse of Death — watching from the shadows
@@ -30,6 +31,7 @@ The narrative spans 4 arcs, each escalating in scope, complexity, and stakes. Ar
 **Summary:** Dave escalates with blockades and raids. Death destabilises the Corsairs from within. The Lions demand tribute. Aristotle fights on three fronts.
 
 **Key Beats:**
+
 - Major supply route seized — negotiate, fight, or reroute
 - Death's betrayal within the corsair fleet
 - Lion tribute demand — pay, refuse, or counter-offer
@@ -48,6 +50,7 @@ The narrative spans 4 arcs, each escalating in scope, complexity, and stakes. Ar
 **Summary:** To survive, Aristotle makes deals with factions he'd normally raid — fairies, aliens, even a dog faction opposing Dave. The multiverse is more complex than cats vs dogs.
 
 **Key Beats:**
+
 - Alien summit — meeting a faction leader from a completely alien universe
 - Aristotle and Dave share a scene — tense, almost respectful
 - Death's true allegiance revealed — Lions, Wolves, or independent?
@@ -65,11 +68,13 @@ The narrative spans 4 arcs, each escalating in scope, complexity, and stakes. Ar
 **Summary:** All fronts converge. Dave launches full assault. Death makes final power grab. Lions and Wolves declare intent. Aristotle must choose.
 
 **Key Beats:**
+
 - Dave's full-scale military assault on crystal production sites
 - Death's final bid to seize production
 - Lions/Wolves declare ultimate intent
 
 **Endings (determined by cumulative choice history):**
+
 - **Ending A — Hold:** Aristotle keeps the monopoly. Wins, but rules alone.
 - **Ending B — Share:** Aristotle distributes crystal knowledge. Power spreads. Peace through redistribution.
 - **Ending C — Destroy:** Aristotle destroys production sites. No one wins. The multiverse must find another way.

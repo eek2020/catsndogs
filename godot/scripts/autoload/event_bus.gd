@@ -7,6 +7,7 @@
 extends Node
 
 # --- Combat events ---
+@warning_ignore("unused_signal")
 signal combat_hit
 signal combat_miss
 signal combat_victory

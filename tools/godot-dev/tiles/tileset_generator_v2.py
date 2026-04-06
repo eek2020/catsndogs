@@ -57,7 +57,12 @@ def _vary(base: tuple, amt: int = 12) -> tuple:
 
 
 def _darken(c: tuple, factor: float = 0.75) -> tuple:
-    return _rgba(c[0] * factor, c[1] * factor, c[2] * factor, c[3] if len(c) > 3 else 255)
+    return _rgba(
+        c[0] * factor,
+        c[1] * factor,
+        c[2] * factor,
+        c[3] if len(c) > 3 else 255,
+    )
 
 
 def _lighten(c: tuple, factor: float = 0.3) -> tuple:
@@ -153,33 +158,33 @@ FLOWER_STEM = _hex("#3a7828")
 # ── Fringe Haven Color Extensions ────────────────────────────────────────
 
 # Stone variants for tower and stone buildings
-STONE_GREY_BASE = _hex("#8a8a8a")      # Cool grey for tower/stone buildings
+STONE_GREY_BASE = _hex("#8a8a8a")  # Cool grey for tower/stone buildings
 STONE_GREY_LIGHT = _hex("#aaaaaa")
 STONE_GREY_DARK = _hex("#6a6a6a")
 STONE_GREY_MORTAR = _hex("#7a7a7a")
 
-STONE_BROWN_BASE = _hex("#9a7a5a")      # Warm brown-grey stone
+STONE_BROWN_BASE = _hex("#9a7a5a")  # Warm brown-grey stone
 STONE_BROWN_LIGHT = _hex("#ba9a7a")
 STONE_BROWN_DARK = _hex("#7a5a3a")
 STONE_BROWN_MORTAR = _hex("#8a6a4a")
 
 # Roof color variants
-ROOF_RED_BASE = _hex("#a05040")        # Terracotta red (Tipsy Tankard style)
+ROOF_RED_BASE = _hex("#a05040")  # Terracotta red (Tipsy Tankard style)
 ROOF_RED_LIGHT = _hex("#c07060")
 ROOF_RED_DARK = _hex("#803020")
 ROOF_RED_TILE = _hex("#904030")
 
-ROOF_GREY_BASE = _hex("#708090")       # Slate grey (Bryn's Oddities style)
+ROOF_GREY_BASE = _hex("#708090")  # Slate grey (Bryn's Oddities style)
 ROOF_GREY_LIGHT = _hex("#90a0b0")
 ROOF_GREY_DARK = _hex("#506070")
 ROOF_GREY_TILE = _hex("#607080")
 
-ROOF_BROWN_BASE = _hex("#6a4a3a")      # Dark thatch/timber
+ROOF_BROWN_BASE = _hex("#6a4a3a")  # Dark thatch/timber
 ROOF_BROWN_LIGHT = _hex("#8a6a5a")
 ROOF_BROWN_DARK = _hex("#4a2a1a")
 ROOF_BROWN_TILE = _hex("#5a3a2a")
 
-ROOF_GREEN_BASE = _hex("#4d7a4a")      # Fringe Haven green roof accents
+ROOF_GREEN_BASE = _hex("#4d7a4a")  # Fringe Haven green roof accents
 ROOF_GREEN_LIGHT = _hex("#6a9c64")
 ROOF_GREEN_DARK = _hex("#355834")
 ROOF_GREEN_TILE = _hex("#436a40")
@@ -201,6 +206,7 @@ CHIMNEY_LIGHT = _hex("#9a9a9a")
 
 # ── Tile Drawing Functions ──────────────────────────────────────────────
 
+
 def draw_grass_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
     """Draw a textured grass tile with random blade patterns."""
     rng = random.Random(variant * 1000 + ox * 100 + oy)
@@ -209,7 +215,11 @@ def draw_grass_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
         for x in range(TILE):
             c = GRASS_BASE
             noise = rng.randint(-8, 8)
-            c = _rgba(max(0, min(255, c[0] + noise)), max(0, min(255, c[1] + noise + 3)), max(0, min(255, c[2] + noise - 2)))
+            c = _rgba(
+                max(0, min(255, c[0] + noise)),
+                max(0, min(255, c[1] + noise + 3)),
+                max(0, min(255, c[2] + noise - 2)),
+            )
             img.putpixel((ox + x, oy + y), c)
     # Grass blades
     for _ in range(rng.randint(8, 15)):
@@ -228,9 +238,10 @@ def draw_grass_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
         img.putpixel((ox + dx, oy + dy), _vary(GRASS_DARK, 8))
 
 
-def draw_grass_edge(img: Image.Image, ox: int, oy: int, edge: str, other_base: tuple):
+def draw_grass_edge(
+    img: Image.Image, ox: int, oy: int, edge: str, other_base: tuple
+):
     """Draw grass tile with edge transition to another terrain."""
-    rng = random.Random(hash(edge) + ox * 100 + oy)
     # Fill grass first
     draw_grass_tile(img, ox, oy, variant=hash(edge))
     # Draw transition edge strip
@@ -258,21 +269,30 @@ def draw_dirt_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-10, 10)
-            c = _rgba(max(0, min(255, DIRT_BASE[0] + noise)), max(0, min(255, DIRT_BASE[1] + noise - 2)), max(0, min(255, DIRT_BASE[2] + noise - 4)))
+            c = _rgba(
+                max(0, min(255, DIRT_BASE[0] + noise)),
+                max(0, min(255, DIRT_BASE[1] + noise - 2)),
+                max(0, min(255, DIRT_BASE[2] + noise - 4)),
+            )
             img.putpixel((ox + x, oy + y), c)
     # Pebbles
     for _ in range(rng.randint(4, 10)):
         px = rng.randint(1, TILE - 3)
         py = rng.randint(1, TILE - 3)
-        pc = _vary(DIRT_PEBBLE, 15) if rng.random() > 0.5 else _vary(DIRT_DARK, 10)
+        pc = (
+            _vary(DIRT_PEBBLE, 15)
+            if rng.random() > 0.5
+            else _vary(DIRT_DARK, 10)
+        )
         img.putpixel((ox + px, oy + py), pc)
         if rng.random() > 0.5:
             img.putpixel((ox + px + 1, oy + py), _vary(pc, 5))
 
 
-def draw_dirt_edge(img: Image.Image, ox: int, oy: int, edge: str, other_base: tuple):
+def draw_dirt_edge(
+    img: Image.Image, ox: int, oy: int, edge: str, other_base: tuple
+):
     """Draw dirt tile with edge transition."""
-    rng = random.Random(hash(edge) + ox * 100 + oy)
     draw_dirt_tile(img, ox, oy, variant=hash(edge))
     edge_width = 5
     for y in range(TILE):
@@ -295,15 +315,17 @@ def draw_dirt_edge(img: Image.Image, ox: int, oy: int, edge: str, other_base: tu
 def draw_stone_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
     """Draw a cobblestone tile with mortar lines."""
     rng = random.Random(variant * 1000 + ox * 100 + oy)
-    draw = ImageDraw.Draw(img)
     # Fill base
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(STONE_BASE[0] + noise, STONE_BASE[1] + noise, STONE_BASE[2] + noise)
+            c = _rgba(
+                STONE_BASE[0] + noise,
+                STONE_BASE[1] + noise,
+                STONE_BASE[2] + noise,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Cobblestone grid — irregular brick pattern
-    mortar_color = _vary(STONE_MORTAR, 5)
     brick_h = 8
     for row in range(4):
         y_line = row * brick_h
@@ -316,7 +338,9 @@ def draw_stone_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
                 for dy in range(brick_h):
                     py = y_line + dy
                     if 0 <= py < TILE:
-                        img.putpixel((ox + col_pos, oy + py), _vary(STONE_CRACK, 8))
+                        img.putpixel(
+                            (ox + col_pos, oy + py), _vary(STONE_CRACK, 8)
+                        )
     # Highlight some stones
     for _ in range(rng.randint(3, 6)):
         sx = rng.randint(2, TILE - 4)
@@ -332,9 +356,13 @@ def draw_water_tile(img: Image.Image, ox: int, oy: int, variant: int = 0):
     """Draw an animated-style water tile with ripples."""
     rng = random.Random(variant * 1000 + ox * 100 + oy)
     import math
+
     for y in range(TILE):
         for x in range(TILE):
-            wave = math.sin((x + variant * 3) * 0.3) * 8 + math.cos((y + variant * 5) * 0.4) * 5
+            wave = (
+                math.sin((x + variant * 3) * 0.3) * 8
+                + math.cos((y + variant * 5) * 0.4) * 5
+            )
             base_val = int(wave)
             c = _rgba(
                 max(0, min(255, WATER_BASE[0] + base_val)),
@@ -369,7 +397,9 @@ def draw_water_shore(img: Image.Image, ox: int, oy: int, edge: str):
                 in_shore = True
             if in_shore:
                 current = img.getpixel((ox + x, oy + y))
-                img.putpixel((ox + x, oy + y), _blend(current, WATER_FOAM, 0.4))
+                img.putpixel(
+                    (ox + x, oy + y), _blend(current, WATER_FOAM, 0.4)
+                )
 
 
 def draw_tree_canopy(img: Image.Image, ox: int, oy: int, variant: int = 0):
@@ -384,7 +414,6 @@ def draw_tree_canopy(img: Image.Image, ox: int, oy: int, variant: int = 0):
             dist = (dx * dx + dy * dy) ** 0.5
             if dist <= radius:
                 # Inside canopy
-                noise = rng.randint(-10, 10)
                 t = dist / radius
                 if t < 0.5:
                     c = _vary(TREE_CANOPY_LIGHT, 8)
@@ -434,7 +463,11 @@ def draw_building_wall(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-5, 5)
-            c = _rgba(WALL_BASE[0] + noise, WALL_BASE[1] + noise - 2, WALL_BASE[2] + noise - 3)
+            c = _rgba(
+                WALL_BASE[0] + noise,
+                WALL_BASE[1] + noise - 2,
+                WALL_BASE[2] + noise - 3,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Horizontal beam
     beam_y = TILE // 2
@@ -454,7 +487,11 @@ def draw_building_roof(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(ROOF_BASE[0] + noise, ROOF_BASE[1] + noise - 2, ROOF_BASE[2] + noise - 2)
+            c = _rgba(
+                ROOF_BASE[0] + noise,
+                ROOF_BASE[1] + noise - 2,
+                ROOF_BASE[2] + noise - 2,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Shingle rows
     for row in range(0, TILE, 6):
@@ -464,7 +501,9 @@ def draw_building_roof(img: Image.Image, ox: int, oy: int, variant: int = 0):
         for col in range(offset, TILE, 16):
             if 0 <= col < TILE:
                 for dy in range(min(6, TILE - row)):
-                    img.putpixel((ox + col, oy + row + dy), _vary(ROOF_DARK, 8))
+                    img.putpixel(
+                        (ox + col, oy + row + dy), _vary(ROOF_DARK, 8)
+                    )
     # Highlights
     for _ in range(rng.randint(2, 5)):
         hx = rng.randint(2, TILE - 3)
@@ -483,18 +522,32 @@ def draw_door(img: Image.Image, ox: int, oy: int):
     dy_start = TILE - door_h
     draw = ImageDraw.Draw(img)
     # Door frame
-    draw.rectangle([ox + dx_start - 1, oy + dy_start - 1, ox + dx_start + door_w, oy + TILE - 1], fill=DOOR_FRAME)
+    draw.rectangle(
+        [
+            ox + dx_start - 1,
+            oy + dy_start - 1,
+            ox + dx_start + door_w,
+            oy + TILE - 1,
+        ],
+        fill=DOOR_FRAME,
+    )
     # Door panels
     for y in range(door_h):
         for x in range(door_w):
             noise_val = random.randint(-4, 4)
-            c = _rgba(DOOR_BASE[0] + noise_val, DOOR_BASE[1] + noise_val, DOOR_BASE[2] + noise_val)
+            c = _rgba(
+                DOOR_BASE[0] + noise_val,
+                DOOR_BASE[1] + noise_val,
+                DOOR_BASE[2] + noise_val,
+            )
             img.putpixel((ox + dx_start + x, oy + dy_start + y), c)
     # Wood grain lines
     for gy in range(dy_start, dy_start + door_h, 4):
         for x in range(door_w):
             if 0 <= oy + gy < HEIGHT:
-                img.putpixel((ox + dx_start + x, oy + gy), _vary(WOOD_GRAIN, 5))
+                img.putpixel(
+                    (ox + dx_start + x, oy + gy), _vary(WOOD_GRAIN, 5)
+                )
     # Handle
     hx = dx_start + door_w - 4
     hy = dy_start + door_h // 2
@@ -511,7 +564,10 @@ def draw_window(img: Image.Image, ox: int, oy: int):
     wy = TILE // 2 - win_h // 2
     draw = ImageDraw.Draw(img)
     # Frame
-    draw.rectangle([ox + wx - 1, oy + wy - 1, ox + wx + win_w, oy + wy + win_h], fill=WINDOW_FRAME)
+    draw.rectangle(
+        [ox + wx - 1, oy + wy - 1, ox + wx + win_w, oy + wy + win_h],
+        fill=WINDOW_FRAME,
+    )
     # Glass
     for y in range(win_h):
         for x in range(win_w):
@@ -539,15 +595,23 @@ def draw_sign(img: Image.Image, ox: int, oy: int):
     sx = TILE // 2 - sw // 2
     sy = 4
     draw = ImageDraw.Draw(img)
-    draw.rectangle([ox + sx, oy + sy, ox + sx + sw - 1, oy + sy + sh - 1], fill=SIGN_BASE)
-    draw.rectangle([ox + sx, oy + sy, ox + sx + sw - 1, oy + sy + sh - 1], outline=WOOD_DARK)
+    draw.rectangle(
+        [ox + sx, oy + sy, ox + sx + sw - 1, oy + sy + sh - 1],
+        fill=SIGN_BASE,
+    )
+    draw.rectangle(
+        [ox + sx, oy + sy, ox + sx + sw - 1, oy + sy + sh - 1],
+        outline=WOOD_DARK,
+    )
     # "Text" lines
     for ly in range(sy + 2, sy + sh - 2, 3):
         for lx in range(sx + 2, sx + sw - 3):
             img.putpixel((ox + lx, oy + ly), _vary(SIGN_TEXT, 10))
 
 
-def draw_chest(img: Image.Image, ox: int, oy: int, opened: bool = False):
+def draw_chest(
+    img: Image.Image, ox: int, oy: int, opened: bool = False
+):
     """Draw a treasure chest."""
     draw_grass_tile(img, ox, oy, variant=44)
     cw = 16
@@ -557,12 +621,33 @@ def draw_chest(img: Image.Image, ox: int, oy: int, opened: bool = False):
     draw = ImageDraw.Draw(img)
     # Body
     body_color = CHEST_BASE if not opened else CHEST_DARK
-    draw.rectangle([ox + cx_start, oy + cy_start, ox + cx_start + cw - 1, oy + cy_start + ch - 1], fill=body_color)
-    draw.rectangle([ox + cx_start, oy + cy_start, ox + cx_start + cw - 1, oy + cy_start + ch - 1], outline=CHEST_DARK)
+    draw.rectangle(
+        [
+            ox + cx_start,
+            oy + cy_start,
+            ox + cx_start + cw - 1,
+            oy + cy_start + ch - 1,
+        ],
+        fill=body_color,
+    )
+    draw.rectangle(
+        [
+            ox + cx_start,
+            oy + cy_start,
+            ox + cx_start + cw - 1,
+            oy + cy_start + ch - 1,
+        ],
+        outline=CHEST_DARK,
+    )
     # Lid highlight
     for x in range(cw):
-        img.putpixel((ox + cx_start + x, oy + cy_start), _vary(_lighten(body_color, 0.2), 3))
-        img.putpixel((ox + cx_start + x, oy + cy_start + 1), _vary(body_color, 3))
+        img.putpixel(
+            (ox + cx_start + x, oy + cy_start),
+            _vary(_lighten(body_color, 0.2), 3),
+        )
+        img.putpixel(
+            (ox + cx_start + x, oy + cy_start + 1), _vary(body_color, 3)
+        )
     # Band
     mid_y = cy_start + ch // 2
     for x in range(cw):
@@ -587,7 +672,11 @@ def draw_barrel(img: Image.Image, ox: int, oy: int):
             px = bx + x
             if 0 <= px < TILE:
                 noise = random.randint(-5, 5)
-                c = _rgba(BARREL_BASE[0] + noise, BARREL_BASE[1] + noise, BARREL_BASE[2] + noise)
+                c = _rgba(
+                    BARREL_BASE[0] + noise,
+                    BARREL_BASE[1] + noise,
+                    BARREL_BASE[2] + noise,
+                )
                 img.putpixel((ox + px, oy + by + y), c)
     # Metal bands
     for band_y in [by + 2, by + bh - 3, by + bh // 2]:
@@ -677,11 +766,25 @@ def draw_crate(img: Image.Image, ox: int, oy: int):
     draw = ImageDraw.Draw(img)
     crate_color = _hex("#9e7a3c")
     crate_dark = _hex("#7a5e28")
-    draw.rectangle([ox + cx, oy + cy, ox + cx + cw - 1, oy + cy + ch - 1], fill=crate_color)
-    draw.rectangle([ox + cx, oy + cy, ox + cx + cw - 1, oy + cy + ch - 1], outline=crate_dark)
+    draw.rectangle(
+        [ox + cx, oy + cy, ox + cx + cw - 1, oy + cy + ch - 1],
+        fill=crate_color,
+    )
+    draw.rectangle(
+        [ox + cx, oy + cy, ox + cx + cw - 1, oy + cy + ch - 1],
+        outline=crate_dark,
+    )
     # Cross boards
-    draw.line([ox + cx, oy + cy, ox + cx + cw - 1, oy + cy + ch - 1], fill=crate_dark, width=1)
-    draw.line([ox + cx + cw - 1, oy + cy, ox + cx, oy + cy + ch - 1], fill=crate_dark, width=1)
+    draw.line(
+        [ox + cx, oy + cy, ox + cx + cw - 1, oy + cy + ch - 1],
+        fill=crate_dark,
+        width=1,
+    )
+    draw.line(
+        [ox + cx + cw - 1, oy + cy, ox + cx, oy + cy + ch - 1],
+        fill=crate_dark,
+        width=1,
+    )
 
 
 def draw_bridge_h(img: Image.Image, ox: int, oy: int):
@@ -708,7 +811,11 @@ def draw_stairs(img: Image.Image, ox: int, oy: int, going_up: bool = True):
     for i in range(step_count):
         y = i * step_h if going_up else (step_count - 1 - i) * step_h
         shade = 0.7 + 0.06 * i
-        c = _rgba(STONE_BASE[0] * shade, STONE_BASE[1] * shade, STONE_BASE[2] * shade)
+        c = _rgba(
+            STONE_BASE[0] * shade,
+            STONE_BASE[1] * shade,
+            STONE_BASE[2] * shade,
+        )
         for dy in range(step_h):
             for x in range(TILE):
                 img.putpixel((ox + x, oy + y + dy), _vary(c, 4))
@@ -724,7 +831,9 @@ def draw_empty(img: Image.Image, ox: int, oy: int):
             img.putpixel((ox + x, oy + y), (0, 0, 0, 0))
 
 
-def draw_marker(img: Image.Image, ox: int, oy: int, color: tuple, label: str = ""):
+def draw_marker(
+    img: Image.Image, ox: int, oy: int, color: tuple, label: str = ""
+):
     """Draw a colored marker tile (for sparkle/interact indicators)."""
     draw_empty(img, ox, oy)
     cx, cy = TILE // 2, TILE // 2
@@ -735,17 +844,25 @@ def draw_marker(img: Image.Image, ox: int, oy: int, color: tuple, label: str = "
             dist = (dx * dx + dy * dy) ** 0.5
             if dist < 6:
                 a = int(255 * (1.0 - dist / 6.0))
-                img.putpixel((ox + x, oy + y), _rgba(color[0], color[1], color[2], a))
+                img.putpixel(
+                    (ox + x, oy + y), _rgba(color[0], color[1], color[2], a)
+                )
 
 
-def draw_stone_grey_wall(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_stone_grey_wall(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw a cool grey stone wall tile (tower/stone buildings)."""
     rng = random.Random(variant * 1000 + ox * 100 + oy)
     # Base fill with noise
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(STONE_GREY_BASE[0] + noise, STONE_GREY_BASE[1] + noise, STONE_GREY_BASE[2] + noise)
+            c = _rgba(
+                STONE_GREY_BASE[0] + noise,
+                STONE_GREY_BASE[1] + noise,
+                STONE_GREY_BASE[2] + noise,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Irregular stone block pattern
     block_h = 10
@@ -760,7 +877,9 @@ def draw_stone_grey_wall(img: Image.Image, ox: int, oy: int, variant: int = 0):
             for dy in range(block_h):
                 py = y_line + dy
                 if 0 <= py < TILE:
-                    img.putpixel((ox + col_pos, oy + py), _vary(STONE_GREY_MORTAR, 5))
+                    img.putpixel(
+                        (ox + col_pos, oy + py), _vary(STONE_GREY_MORTAR, 5)
+                    )
     # Highlight some stones
     for _ in range(rng.randint(4, 8)):
         sx = rng.randint(2, TILE - 6)
@@ -771,14 +890,20 @@ def draw_stone_grey_wall(img: Image.Image, ox: int, oy: int, variant: int = 0):
                 img.putpixel((ox + sx + dx, oy + sy + dy), _vary(sc, 8))
 
 
-def draw_stone_brown_wall(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_stone_brown_wall(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw a warm brown-grey stone wall tile."""
     rng = random.Random(variant * 1000 + ox * 100 + oy)
     # Base fill with noise
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(STONE_BROWN_BASE[0] + noise, STONE_BROWN_BASE[1] + noise - 2, STONE_BROWN_BASE[2] + noise - 4)
+            c = _rgba(
+                STONE_BROWN_BASE[0] + noise,
+                STONE_BROWN_BASE[1] + noise - 2,
+                STONE_BROWN_BASE[2] + noise - 4,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Irregular stone block pattern
     block_h = 10
@@ -793,7 +918,9 @@ def draw_stone_brown_wall(img: Image.Image, ox: int, oy: int, variant: int = 0):
             for dy in range(block_h):
                 py = y_line + dy
                 if 0 <= py < TILE:
-                    img.putpixel((ox + col_pos, oy + py), _vary(STONE_BROWN_MORTAR, 5))
+                    img.putpixel(
+                        (ox + col_pos, oy + py), _vary(STONE_BROWN_MORTAR, 5)
+                    )
     # Highlight some stones
     for _ in range(rng.randint(4, 8)):
         sx = rng.randint(2, TILE - 6)
@@ -811,7 +938,11 @@ def draw_roof_red(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(ROOF_RED_BASE[0] + noise, ROOF_RED_BASE[1] + noise - 2, ROOF_RED_BASE[2] + noise - 2)
+            c = _rgba(
+                ROOF_RED_BASE[0] + noise,
+                ROOF_RED_BASE[1] + noise - 2,
+                ROOF_RED_BASE[2] + noise - 2,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Shingle rows
     for row in range(0, TILE, 6):
@@ -821,7 +952,9 @@ def draw_roof_red(img: Image.Image, ox: int, oy: int, variant: int = 0):
         for col in range(offset, TILE, 16):
             if 0 <= col < TILE:
                 for dy in range(min(6, TILE - row)):
-                    img.putpixel((ox + col, oy + row + dy), _vary(ROOF_RED_DARK, 8))
+                    img.putpixel(
+                        (ox + col, oy + row + dy), _vary(ROOF_RED_DARK, 8)
+                    )
     # Highlights
     for _ in range(rng.randint(2, 5)):
         hx = rng.randint(2, TILE - 3)
@@ -836,17 +969,25 @@ def draw_roof_grey(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(ROOF_GREY_BASE[0] + noise, ROOF_GREY_BASE[1] + noise, ROOF_GREY_BASE[2] + noise)
+            c = _rgba(
+                ROOF_GREY_BASE[0] + noise,
+                ROOF_GREY_BASE[1] + noise,
+                ROOF_GREY_BASE[2] + noise,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Shingle rows
     for row in range(0, TILE, 6):
         offset = (row // 6 % 2) * 8
         for x in range(TILE):
-            img.putpixel((ox + x, oy + row), _vary(ROOF_GREY_DARK, 5))
+            img.putpixel(
+                (ox + x, oy + row), _vary(ROOF_GREY_DARK, 5)
+            )
         for col in range(offset, TILE, 16):
             if 0 <= col < TILE:
                 for dy in range(min(6, TILE - row)):
-                    img.putpixel((ox + col, oy + row + dy), _vary(ROOF_GREY_DARK, 8))
+                    img.putpixel(
+                        (ox + col, oy + row + dy), _vary(ROOF_GREY_DARK, 8)
+                    )
     # Highlights
     for _ in range(rng.randint(2, 5)):
         hx = rng.randint(2, TILE - 3)
@@ -861,7 +1002,11 @@ def draw_roof_brown(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(ROOF_BROWN_BASE[0] + noise, ROOF_BROWN_BASE[1] + noise - 2, ROOF_BROWN_BASE[2] + noise - 2)
+            c = _rgba(
+                ROOF_BROWN_BASE[0] + noise,
+                ROOF_BROWN_BASE[1] + noise - 2,
+                ROOF_BROWN_BASE[2] + noise - 2,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Thatch pattern - more organic lines
     for row in range(0, TILE, 5):
@@ -882,7 +1027,11 @@ def draw_roof_green(img: Image.Image, ox: int, oy: int, variant: int = 0):
     for y in range(TILE):
         for x in range(TILE):
             noise = rng.randint(-6, 6)
-            c = _rgba(ROOF_GREEN_BASE[0] + noise, ROOF_GREEN_BASE[1] + noise - 1, ROOF_GREEN_BASE[2] + noise - 1)
+            c = _rgba(
+                ROOF_GREEN_BASE[0] + noise,
+                ROOF_GREEN_BASE[1] + noise - 1,
+                ROOF_GREEN_BASE[2] + noise - 1,
+            )
             img.putpixel((ox + x, oy + y), c)
     for row in range(0, TILE, 6):
         offset = (row // 6 % 2) * 8
@@ -891,7 +1040,9 @@ def draw_roof_green(img: Image.Image, ox: int, oy: int, variant: int = 0):
         for col in range(offset, TILE, 16):
             if 0 <= col < TILE:
                 for dy in range(min(6, TILE - row)):
-                    img.putpixel((ox + col, oy + row + dy), _vary(ROOF_GREEN_DARK, 8))
+                    img.putpixel(
+                        (ox + col, oy + row + dy), _vary(ROOF_GREEN_DARK, 8)
+                    )
     for _ in range(rng.randint(2, 5)):
         hx = rng.randint(2, TILE - 3)
         hy = rng.randint(2, TILE - 3)
@@ -907,10 +1058,16 @@ def draw_stone_bridge(img: Image.Image, ox: int, oy: int):
     for y in range(TILE - arch_height, TILE):
         for x in range(TILE):
             # Create arch curve
-            arch_depth = int(((y - (TILE - arch_height)) / arch_height) ** 2 * 8)
+            arch_depth = int(
+                ((y - (TILE - arch_height)) / arch_height) ** 2 * 8
+            )
             if arch_depth <= x < TILE - arch_depth:
                 noise = random.randint(-5, 5)
-                c = _rgba(STONE_GREY_BASE[0] + noise, STONE_GREY_BASE[1] + noise, STONE_GREY_BASE[2] + noise)
+                c = _rgba(
+                    STONE_GREY_BASE[0] + noise,
+                    STONE_GREY_BASE[1] + noise,
+                    STONE_GREY_BASE[2] + noise,
+                )
                 img.putpixel((ox + x, oy + y), c)
     # Bridge walkway
     walk_top = 10
@@ -918,7 +1075,11 @@ def draw_stone_bridge(img: Image.Image, ox: int, oy: int):
     for y in range(walk_top, walk_bot):
         for x in range(TILE):
             noise = random.randint(-4, 4)
-            c = _rgba(STONE_BASE[0] + noise, STONE_BASE[1] + noise, STONE_BASE[2] + noise)
+            c = _rgba(
+                STONE_BASE[0] + noise,
+                STONE_BASE[1] + noise,
+                STONE_BASE[2] + noise,
+            )
             img.putpixel((ox + x, oy + y), c)
     # Stone railings
     for x in range(TILE):
@@ -975,28 +1136,36 @@ def draw_grass_water_edge(img: Image.Image, ox: int, oy: int, edge: str):
                     img.putpixel((ox + x, oy + y), _vary(WATER_FOAM, 15))
 
 
-def draw_tower_roof(img: Image.Image, ox: int, oy: int, color_variant: str = "grey"):
+def draw_tower_roof(
+    img: Image.Image, ox: int, oy: int, color_variant: str = "grey"
+):
     """Draw a conical tower roof tile."""
     rng = random.Random(ox * 100 + oy)
     # Select color palette
     if color_variant == "red":
-        base_c, dark_c, light_c = ROOF_RED_BASE, ROOF_RED_DARK, ROOF_RED_LIGHT
+        base_c, dark_c = ROOF_RED_BASE, ROOF_RED_DARK
     elif color_variant == "brown":
-        base_c, dark_c, light_c = ROOF_BROWN_BASE, ROOF_BROWN_DARK, ROOF_BROWN_LIGHT
+        base_c, dark_c = ROOF_BROWN_BASE, ROOF_BROWN_DARK
     else:  # grey default
-        base_c, dark_c, light_c = ROOF_GREY_BASE, ROOF_GREY_DARK, ROOF_GREY_LIGHT
+        base_c, dark_c = ROOF_GREY_BASE, ROOF_GREY_DARK
     # Draw conical roof shape (triangle with rounded top)
     cx = TILE // 2
     for y in range(TILE):
         for x in range(TILE):
             # Cone shape: wider at bottom, narrower at top
             progress = y / TILE  # 0 at top, 1 at bottom
-            width_at_y = int(4 + progress * (TILE - 8))  # 4px at top, nearly full at bottom
+            width_at_y = int(
+                4 + progress * (TILE - 8)
+            )  # 4px at top, nearly full at bottom
             left = cx - width_at_y // 2
             right = cx + width_at_y // 2
             if left <= x <= right:
                 noise = rng.randint(-5, 5)
-                c = _rgba(base_c[0] + noise, base_c[1] + noise - 2, base_c[2] + noise - 2)
+                c = _rgba(
+                    base_c[0] + noise,
+                    base_c[1] + noise - 2,
+                    base_c[2] + noise - 2,
+                )
                 img.putpixel((ox + x, oy + y), c)
             elif x == left - 1 or x == right + 1:
                 img.putpixel((ox + x, oy + y), dark_c)
@@ -1012,7 +1181,9 @@ def draw_tower_roof(img: Image.Image, ox: int, oy: int, color_variant: str = "gr
                 img.putpixel((ox + x, oy + row), _vary(dark_c, 5))
 
 
-def draw_tower_battlement(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_tower_battlement(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw tower battlements on grey stone."""
     draw_stone_grey_wall(img, ox, oy, variant=variant)
     crenel_w = 4
@@ -1020,10 +1191,14 @@ def draw_tower_battlement(img: Image.Image, ox: int, oy: int, variant: int = 0):
         for y in range(0, 6):
             for dx in range(crenel_w):
                 if x + dx < TILE:
-                    img.putpixel((ox + x + dx, oy + y), _vary(STONE_GREY_DARK, 4))
+                    img.putpixel(
+                        (ox + x + dx, oy + y), _vary(STONE_GREY_DARK, 4)
+                    )
 
 
-def draw_tower_window_arch(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_tower_window_arch(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw arched tower window on stone wall."""
     draw_stone_grey_wall(img, ox, oy, variant=variant)
     cx = TILE // 2
@@ -1044,11 +1219,17 @@ def draw_tower_window_arch(img: Image.Image, ox: int, oy: int, variant: int = 0)
         for x in range(-width // 2 - 1, width // 2 + 2):
             px = cx + x
             py = top + y
-            if 0 <= px < TILE and 0 <= py < TILE and abs(x) == width // 2 + 1:
+            if (
+                0 <= px < TILE
+                and 0 <= py < TILE
+                and abs(x) == width // 2 + 1
+            ):
                 img.putpixel((ox + px, oy + py), WINDOW_FRAME)
 
 
-def draw_blacksmith_forge(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_blacksmith_forge(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw blacksmith forge oven front."""
     draw_stone_grey_wall(img, ox, oy, variant=variant)
     forge_w = 16
@@ -1065,7 +1246,9 @@ def draw_blacksmith_forge(img: Image.Image, ox: int, oy: int, variant: int = 0):
     my = fy + 3
     for y in range(mouth_h):
         for x in range(mouth_w):
-            heat = _blend(_hex("#ff8a30"), _hex("#c02a10"), y / max(1, mouth_h - 1))
+            heat = _blend(
+                _hex("#ff8a30"), _hex("#c02a10"), y / max(1, mouth_h - 1)
+            )
             img.putpixel((ox + mx + x, oy + my + y), _vary(heat, 10))
 
 
@@ -1086,7 +1269,9 @@ def draw_blacksmith_anvil(img: Image.Image, ox: int, oy: int):
             img.putpixel((ox + px, oy + py), _vary(STONE_LIGHT, 4))
 
 
-def draw_storefront_awning(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_storefront_awning(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw storefront wall with striped awning."""
     draw_building_wall(img, ox, oy, variant=200 + variant)
     top = 8
@@ -1097,7 +1282,9 @@ def draw_storefront_awning(img: Image.Image, ox: int, oy: int, variant: int = 0)
             img.putpixel((ox + x, oy + y), _vary(color, 8))
 
 
-def draw_storefront_window(img: Image.Image, ox: int, oy: int, variant: int = 0):
+def draw_storefront_window(
+    img: Image.Image, ox: int, oy: int, variant: int = 0
+):
     """Draw large storefront display window."""
     draw_building_wall(img, ox, oy, variant=210 + variant)
     wx = 5
@@ -1153,15 +1340,23 @@ def draw_road_curb(img: Image.Image, ox: int, oy: int, edge: str = "center"):
                 mark = True
             elif edge == "corner_bl" and (x < width or y >= TILE - width):
                 mark = True
-            elif edge == "corner_br" and (x >= TILE - width or y >= TILE - width):
+            elif (
+                edge == "corner_br"
+                and (x >= TILE - width or y >= TILE - width)
+            ):
                 mark = True
-            elif edge == "center" and (x in (0, TILE - 1) or y in (0, TILE - 1)):
+            elif (
+                edge == "center"
+                and (x in (0, TILE - 1) or y in (0, TILE - 1))
+            ):
                 mark = True
             if mark:
                 img.putpixel((ox + x, oy + y), _vary(curb_color, 6))
 
 
-def draw_tower_balcony(img: Image.Image, ox: int, oy: int, variant: str = "center"):
+def draw_tower_balcony(
+    img: Image.Image, ox: int, oy: int, variant: str = "center"
+):
     """Draw a wooden watchtower balcony/walkway over stone base."""
     draw_stone_grey_wall(img, ox, oy, variant=400 + hash(variant) % 50)
 
@@ -1198,6 +1393,7 @@ def draw_tower_balcony(img: Image.Image, ox: int, oy: int, variant: str = "cente
 
 # ── Atlas Layout ────────────────────────────────────────────────────────
 
+
 def generate_atlas(output_path: str) -> None:
     """Generate the complete tile atlas PNG."""
     random.seed(42)  # Deterministic output
@@ -1219,7 +1415,9 @@ def generate_atlas(output_path: str) -> None:
     # Col 3-5: Pure grass variants
     for i in range(3):
         for j in range(3):
-            draw_grass_tile(img, (3 + i) * TILE, j * TILE, variant=i * 3 + j + 10)
+            draw_grass_tile(
+                img, (3 + i) * TILE, j * TILE, variant=i * 3 + j + 10
+            )
 
     # Col 6-8: Grass with flowers
     for i in range(3):
@@ -1233,14 +1431,18 @@ def generate_atlas(output_path: str) -> None:
             ox = (9 + col) * TILE
             oy = row * TILE
             if edge:
-                draw_grass_edge(img, ox, oy, edge, STONE_BASE)
+                draw_grass_edge(
+                    img, ox, oy, edge, STONE_BASE
+                )
             else:
                 draw_grass_tile(img, ox, oy, variant=20)
 
     # Col 12-15: More grass variants (plain)
     for i in range(4):
         for j in range(3):
-            draw_grass_tile(img, (12 + i) * TILE, j * TILE, variant=30 + i * 3 + j)
+            draw_grass_tile(
+                img, (12 + i) * TILE, j * TILE, variant=30 + i * 3 + j
+            )
 
     # Row 3-5: Dirt/path autotile + variants
     for row in range(3):
@@ -1255,7 +1457,9 @@ def generate_atlas(output_path: str) -> None:
 
     for i in range(3):
         for j in range(3):
-            draw_dirt_tile(img, (3 + i) * TILE, (3 + j) * TILE, variant=i * 3 + j + 10)
+            draw_dirt_tile(
+                img, (3 + i) * TILE, (3 + j) * TILE, variant=i * 3 + j + 10
+            )
 
     # Dirt with stone edges
     for row in range(3):
@@ -1271,7 +1475,9 @@ def generate_atlas(output_path: str) -> None:
     # More dirt variants
     for i in range(7):
         for j in range(3):
-            draw_dirt_tile(img, (9 + i) * TILE, (3 + j) * TILE, variant=30 + i * 3 + j)
+            draw_dirt_tile(
+                img, (9 + i) * TILE, (3 + j) * TILE, variant=30 + i * 3 + j
+            )
 
     # Row 6-8: Stone/cobble autotile + variants
     for row in range(3):
@@ -1282,7 +1488,9 @@ def generate_atlas(output_path: str) -> None:
 
     for i in range(13):
         for j in range(3):
-            draw_stone_tile(img, (3 + i) * TILE, (6 + j) * TILE, variant=10 + i * 3 + j)
+            draw_stone_tile(
+                img, (3 + i) * TILE, (6 + j) * TILE, variant=10 + i * 3 + j
+            )
 
     # Row 9: Water tiles
     draw_water_tile(img, 0, 9 * TILE, variant=0)
@@ -1380,11 +1588,15 @@ def generate_atlas(output_path: str) -> None:
         chim_x = TILE // 2 - 2
         for cy in range(6, 18):
             for dx in range(4):
-                img.putpixel((ox + chim_x + dx, oy + cy), _vary(CHIMNEY_BASE, 5))
+                img.putpixel(
+                    (ox + chim_x + dx, oy + cy), _vary(CHIMNEY_BASE, 5)
+                )
         # Chimney top
         for cy in range(4, 6):
             for dx in range(-1, 5):
-                img.putpixel((ox + chim_x + dx, oy + cy), _vary(CHIMNEY_DARK, 3))
+                img.putpixel(
+                    (ox + chim_x + dx, oy + cy), _vary(CHIMNEY_DARK, 3)
+                )
     # Doors on stone walls (2 tiles)
     for i in range(2):
         ox = (3 + i) * TILE
@@ -1398,9 +1610,19 @@ def generate_atlas(output_path: str) -> None:
     for dy in range(door_h):
         for dx in range(door_w):
             noise_val = random.randint(-4, 4)
-            c = _rgba(DOOR_BASE[0] + noise_val, DOOR_BASE[1] + noise_val, DOOR_BASE[2] + noise_val)
+            c = _rgba(
+                DOOR_BASE[0] + noise_val,
+                DOOR_BASE[1] + noise_val,
+                DOOR_BASE[2] + noise_val,
+            )
             for i in range(2):
-                img.putpixel(((3 + i) * TILE + dx_start + dx, 13 * TILE + dy_start + dy), c)
+                img.putpixel(
+                    (
+                        (3 + i) * TILE + dx_start + dx,
+                        13 * TILE + dy_start + dy,
+                    ),
+                    c,
+                )
     # Windows on stone walls (2 tiles)
     for i in range(2):
         ox = (5 + i) * TILE
@@ -1414,8 +1636,14 @@ def generate_atlas(output_path: str) -> None:
         wy = 13 * TILE + TILE // 2 - win_h // 2
         for wy_local in range(win_h):
             for wx_local in range(win_w):
-                wc = WINDOW_LIGHT if (wx_local + wy_local) % 3 == 0 else WINDOW_BASE
-                img.putpixel((wx + wx_local, wy + wy_local), _vary(wc, 5))
+                wc = (
+                    WINDOW_LIGHT
+                    if (wx_local + wy_local) % 3 == 0
+                    else WINDOW_BASE
+                )
+                img.putpixel(
+                    (wx + wx_local, wy + wy_local), _vary(wc, 5)
+                )
         # Window frame
         for fx in range(win_w):
             img.putpixel((wx + fx, wy - 1), WINDOW_FRAME)
@@ -1440,7 +1668,7 @@ def generate_atlas(output_path: str) -> None:
         draw_stone_tile(img, i * TILE, 14 * TILE, variant=50 + i)
 
     # Row 15: Special markers and indicators
-    draw_marker(img, 0, 15 * TILE, (255, 215, 0), "treasure")      # Gold sparkle
+    draw_marker(img, 0, 15 * TILE, (255, 215, 0), "treasure")  # Gold sparkle
     draw_marker(img, TILE, 15 * TILE, (100, 180, 255), "merchant")  # Blue glow
     draw_marker(img, 2 * TILE, 15 * TILE, (255, 100, 100), "danger")  # Red
     draw_marker(img, 3 * TILE, 15 * TILE, (100, 255, 150), "interact")  # Green
@@ -1522,7 +1750,9 @@ def generate_atlas(output_path: str) -> None:
         oy = 19 * TILE
         for y in range(8):
             for x in range(8, 24):
-                img.putpixel((ox + x, oy + y), (0, 0, 0, 0))  # Transparent arch
+                img.putpixel(
+                    (ox + x, oy + y), (0, 0, 0, 0)
+                )  # Transparent arch
     # Well on stone
     draw_stone_grey_wall(img, 2 * TILE, 19 * TILE, variant=302)
     # Simple well circle
@@ -1532,8 +1762,10 @@ def generate_atlas(output_path: str) -> None:
         for x in range(TILE):
             dx = x - TILE // 2
             dy = y - TILE // 2
-            if 8 < (dx*dx + dy*dy)**0.5 < 12:
-                img.putpixel((2 * TILE + x, 19 * TILE + y), _vary(STONE_GREY_DARK, 5))
+            if 8 < (dx * dx + dy * dy) ** 0.5 < 12:
+                img.putpixel(
+                    (2 * TILE + x, 19 * TILE + y), _vary(STONE_GREY_DARK, 5)
+                )
     # Fill rest
     for i in range(3, COLS):
         draw_stone_grey_wall(img, i * TILE, 19 * TILE, variant=310 + i)
@@ -1564,9 +1796,13 @@ def generate_atlas(output_path: str) -> None:
             for x in range(TILE):
                 dx = x - TILE // 2
                 dy = y - TILE // 2
-                if (dx*dx + dy*dy)**0.5 < 10:
-                    c = _vary(TREE_CANOPY, 10) if i % 2 == 0 else _vary(TREE_CANOPY_LIGHT, 10)
-                    img.putpixel((bc + x - TILE//2, by + y - TILE//2), c)
+                if (dx * dx + dy * dy) ** 0.5 < 10:
+                    c = (
+                        _vary(TREE_CANOPY, 10)
+                        if i % 2 == 0
+                        else _vary(TREE_CANOPY_LIGHT, 10)
+                    )
+                    img.putpixel((bc + x - TILE // 2, by + y - TILE // 2), c)
     # Fill rest with grass
     for i in range(4, COLS):
         draw_grass_tile(img, i * TILE, 20 * TILE, variant=170 + i)
@@ -1588,8 +1824,14 @@ def generate_atlas(output_path: str) -> None:
     for dy in range(door_h):
         for dx in range(door_w):
             noise_val = random.randint(-4, 4)
-            c = _rgba(DOOR_BASE[0] + noise_val, DOOR_BASE[1] + noise_val, DOOR_BASE[2] + noise_val)
-            img.putpixel((7 * TILE + dx_start + dx, 21 * TILE + dy_start + dy), c)
+            c = _rgba(
+                DOOR_BASE[0] + noise_val,
+                DOOR_BASE[1] + noise_val,
+                DOOR_BASE[2] + noise_val,
+            )
+            img.putpixel(
+                (7 * TILE + dx_start + dx, 21 * TILE + dy_start + dy), c
+            )
     draw_tower_balcony(img, 8 * TILE, 21 * TILE, "center")
     draw_tower_balcony(img, 9 * TILE, 21 * TILE, "left")
     draw_tower_balcony(img, 10 * TILE, 21 * TILE, "right")
@@ -1644,16 +1886,29 @@ def generate_atlas(output_path: str) -> None:
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     img.save(output_path)
-    print(f"Saved {output_path} ({WIDTH}x{HEIGHT}, {COLS}x{ROWS} grid, {TILE}px tiles)")
+    print(
+        f"Saved {output_path} "
+        f"({WIDTH}x{HEIGHT}, {COLS}x{ROWS} grid, {TILE}px tiles)"
+    )
 
 
 if __name__ == "__main__":
-    p = argparse.ArgumentParser(description="Detailed pixel-art tile atlas generator for Godot TileMap")
+    p = argparse.ArgumentParser(
+        description="Detailed pixel-art tile atlas generator for Godot TileMap"
+    )
     default_out = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
-        "..", "..", "..", "godot", "assets", "tiles", "world_atlas.png"
+        "..",
+        "..",
+        "..",
+        "godot",
+        "assets",
+        "tiles",
+        "world_atlas.png",
     )
-    p.add_argument("-o", "--output", default=default_out, help="Output PNG path")
+    p.add_argument(
+        "-o", "--output", default=default_out, help="Output PNG path"
+    )
     args = p.parse_args()
     output = os.path.normpath(args.output)
     generate_atlas(output)

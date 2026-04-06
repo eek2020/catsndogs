@@ -1,7 +1,7 @@
 # Whisper Crystals — Master Plan
 
 **Date:** 2026-03-02 (last updated 2026-03-20)
-**Status:** Authoritative — supersedes PLAN-001 and PLAN-002
+**Status:** ARCHIVED — Superseded by `docs/MASTER_PLAN.md` (2026-04-05). This version predates the April 2026 code review, astral hazards completion, and docs restructuring.
 **Review source:** See `docs/reviews/REVIEW-002_code_review_2026-03-02.md`
 
 This document is the single source of truth for project planning going forward.

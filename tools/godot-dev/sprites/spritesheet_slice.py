@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Process a 4x4 sprite sheet for Godot: crop grid lines, optionally remove backgrounds.
+"""Process a 4x4 sprite sheet for Godot:
+    crop grid lines, optionally remove backgrounds.
 
 Modes:
   keep-bg:    crop grid lines, output clean sheet (animation)
-  clean-bg:   crop grid lines, rembg each frame, reassemble sheet (animation)
-  split-bg:   crop grid lines, save 16 individual PNGs with background (items/objects)
-  split-clean: crop grid lines, rembg each frame, save 16 individual PNGs (items/objects)
+  clean-bg:   crop grid lines, rembg each frame,
+              reassemble sheet (animation)
+  split-bg:   crop grid lines, save 16 individual PNGs
+              with background (items/objects)
+  split-clean: crop grid lines, rembg each frame,
+                save 16 individual PNGs (items/objects)
 """
 
 import argparse
@@ -17,9 +21,14 @@ from pathlib import Path
 from PIL import Image
 
 GRID = 4
-LINE_W = 4  # pixels to crop from each cell edge (line is ~2px, extra margin for artifacts)
+LINE_W = (
+    4  # pixels to crop from each cell edge (line is ~2px,
+    # extra margin for artifacts)
+)
 TOOLS_DIR = Path(__file__).parent
-REMBG_SCRIPT = TOOLS_DIR.parent / "assets" / "rembg_matting.py"
+REMBG_SCRIPT = (
+        TOOLS_DIR.parent / "assets" / "rembg_matting.py"
+    )
 
 
 def crop_grid_lines(sheet: Image.Image, margin: int = LINE_W) -> Image.Image:
@@ -64,12 +73,21 @@ def reassemble(frames: list[Image.Image]) -> Image.Image:
 def rembg_frame(input_path: Path, output_path: Path):
     """Run rembg_matting.py on a single frame."""
     subprocess.run(
-        [sys.executable, str(REMBG_SCRIPT), str(input_path), "-o", str(output_path)],
+        [
+            sys.executable,
+            str(REMBG_SCRIPT),
+            str(input_path),
+            "-o",
+            str(output_path),
+        ],
         check=True,
     )
 
 
-def save_split(frames: list[Image.Image], output_dir: Path, names: list[str] | None):
+def save_split(
+    frames: list[Image.Image], output_dir: Path,
+    names: list[str] | None
+):
     """Save 16 frames as individual PNGs into output_dir."""
     output_dir.mkdir(parents=True, exist_ok=True)
     for i, frame in enumerate(frames):
@@ -129,25 +147,45 @@ def parse_names(names_str: str) -> list[str]:
     """Parse comma-separated names into a list of 16 filenames."""
     names = [n.strip() for n in names_str.split(",")]
     if len(names) != 16:
-        print(f"Error: --names must have exactly 16 entries, got {len(names)}", file=sys.stderr)
+        print(
+            f"Error: --names must have exactly 16 entries, got {len(names)}",
+            file=sys.stderr,
+        )
         sys.exit(1)
     return names
 
 
 def main():
     p = argparse.ArgumentParser(
-        description="Process 4x4 sprite sheet: crop grid lines, optionally remove backgrounds or split into individual images")
-    p.add_argument("mode", choices=["keep-bg", "clean-bg", "split-bg", "split-clean"],
-                   help="keep-bg/clean-bg: output single sheet. split-bg/split-clean: output 16 individual PNGs.")
+        description="Process 4x4 sprite sheet: crop grid lines, "
+        "optionally remove backgrounds or split into individual images"
+    )
+    p.add_argument(
+        "mode",
+        choices=["keep-bg", "clean-bg", "split-bg", "split-clean"],
+        help="keep-bg/clean-bg: output single sheet. "
+        "split-bg/split-clean: output 16 individual PNGs.",
+    )
     p.add_argument("input", help="Input sprite sheet image")
-    p.add_argument("-o", "--output", required=True,
-                   help="Output PNG path (keep-bg/clean-bg) or output directory (split-bg/split-clean)")
-    p.add_argument("--names", default=None,
-                   help="Comma-separated 16 filenames (without .png) for split modes. Default: 01..16")
+    p.add_argument(
+        "-o",
+        "--output",
+        required=True,
+        help="Output PNG path (keep-bg/clean-bg) or "
+        "output directory (split-bg/split-clean)",
+    )
+    p.add_argument(
+        "--names",
+        default=None,
+        help="Comma-separated 16 filenames (without .png) "
+        "for split modes. Default: 01..16",
+    )
     args = p.parse_args()
 
     names = parse_names(args.names) if args.names else None
-    process_sheet(Path(args.input), Path(args.output), mode=args.mode, names=names)
+    process_sheet(
+        Path(args.input), Path(args.output), mode=args.mode, names=names
+    )
 
 
 if __name__ == "__main__":

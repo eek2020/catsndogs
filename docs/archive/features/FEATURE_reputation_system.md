@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — Design reference document, not a project spec. The project's reputation system is implemented via `FactionSystem` (faction reputation -100 to +100), `KarmaSystem` (karma -100 to +100 with tier-based pricing and NPC disposition), and `EconomySystem` (karma-aware market pricing). See `scripts/systems/faction_system.gd`, `scripts/systems/karma_system.gd`.
+
 # Reputation Systems in 2D Gaming
 
 A **Reputation System** is a gameplay mechanic that tracks a player's choices and actions to determine how the game world—and its inhabitants—react to them. It serves as an invisible "social scoreboard" that bridges the gap between mechanical gameplay and narrative consequence.

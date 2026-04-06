@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — PARTIALLY IMPLEMENTED. Core docking system implemented: `StarBaseSystem` (`scripts/systems/star_base_system.gd`), `station_screen.gd` UI, 3 base variants (open/hidden/stronghold), proximity docking, reputation gating, artifact purchasing. Data in `data/star_bases/star_bases.json` and `data/star_bases/artifacts.json`. Some proposed features (branching hub layouts, parallax station art, crew recruitment at bases) remain unimplemented.
+
 # Feature: Star Base Interactivity & Hub System
 
 ## Overview

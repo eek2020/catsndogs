@@ -42,7 +42,10 @@ def check_budget(cost_cents: int):
     spent = _spent_total(budget)
     remaining = budget.get("budget_cents", 0) - spent
     if cost_cents > remaining:
-        result_json(False, error=f"Budget exceeded: need {cost_cents}¢ but only {remaining}¢ remaining ({spent}¢ of {budget['budget_cents']}¢ spent)")
+        result_json(
+            False,
+            error=f"Budget exceeded: need {cost_cents}¢ but only {remaining}¢ remaining ({spent}¢ of {budget['budget_cents']}¢ spent)",
+        )
         sys.exit(1)
 
 
@@ -53,6 +56,7 @@ def record_spend(cost_cents: int, service: str):
         return
     budget.setdefault("log", []).append({service: cost_cents})
     BUDGET_FILE.write_text(json.dumps(budget, indent=2) + "\n")
+
 
 SPRITESHEET_SYSTEM_TPL = """\
 Using the attached template image as an exact layout guide: generate a sprite sheet.
@@ -98,7 +102,9 @@ QUALITY_PRESETS = {
 }
 
 
-def result_json(ok: bool, path: str | None = None, cost_cents: int = 0, error: str | None = None):
+def result_json(
+    ok: bool, path: str | None = None, cost_cents: int = 0, error: str | None = None
+):
     d = {"ok": ok, "cost_cents": cost_cents}
     if path:
         d["path"] = path
@@ -110,7 +116,22 @@ def result_json(ok: bool, path: str | None = None, cost_cents: int = 0, error: s
 IMAGE_MODEL = "gemini-3.1-flash-image-preview"
 IMAGE_SIZES = ["512", "1K", "2K", "4K"]
 IMAGE_COSTS = {"512": 5, "1K": 7, "2K": 10, "4K": 15}
-IMAGE_ASPECT_RATIOS = ["1:1", "1:4", "1:8", "2:3", "3:2", "3:4", "4:1", "4:3", "4:5", "5:4", "8:1", "9:16", "16:9", "21:9"]
+IMAGE_ASPECT_RATIOS = [
+    "1:1",
+    "1:4",
+    "1:8",
+    "2:3",
+    "3:2",
+    "3:4",
+    "4:1",
+    "4:3",
+    "4:5",
+    "5:4",
+    "8:1",
+    "9:16",
+    "16:9",
+    "21:9",
+]
 
 
 def cmd_image(args):
@@ -161,11 +182,13 @@ def generate_template(bg_color: str) -> bytes:
     """Generate a template PNG on the fly with the given BG color. Returns PNG bytes."""
     import subprocess
     import tempfile
+
     with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
         tmp = f.name
     subprocess.run(
         [sys.executable, str(TEMPLATE_SCRIPT), "-o", tmp, "--bg", bg_color],
-        check=True, capture_output=True,
+        check=True,
+        capture_output=True,
     )
     data = Path(tmp).read_bytes()
     Path(tmp).unlink()
@@ -260,35 +283,71 @@ def cmd_set_budget(args):
         budget["log"] = old.get("log", [])
     BUDGET_FILE.write_text(json.dumps(budget, indent=2) + "\n")
     spent = _spent_total(budget)
-    print(json.dumps({"ok": True, "budget_cents": args.cents, "spent_cents": spent, "remaining_cents": args.cents - spent}))
+    print(
+        json.dumps(
+            {
+                "ok": True,
+                "budget_cents": args.cents,
+                "spent_cents": spent,
+                "remaining_cents": args.cents - spent,
+            }
+        )
+    )
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Asset Generator — images (Gemini) and GLBs (Tripo3D)")
+    parser = argparse.ArgumentParser(
+        description="Asset Generator — images (Gemini) and GLBs (Tripo3D)"
+    )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p_img = sub.add_parser("image", help="Generate a PNG image (5-15¢ depending on size)")
+    p_img = sub.add_parser(
+        "image", help="Generate a PNG image (5-15¢ depending on size)"
+    )
     p_img.add_argument("--prompt", required=True, help="Full image generation prompt")
-    p_img.add_argument("--size", choices=IMAGE_SIZES, default="1K",
-                       help="Resolution: 512 (5¢), 1K (7¢), 2K (10¢), 4K (15¢). Default: 1K.")
-    p_img.add_argument("--aspect-ratio", choices=IMAGE_ASPECT_RATIOS, default="1:1",
-                       help="Aspect ratio. Default: 1:1")
+    p_img.add_argument(
+        "--size",
+        choices=IMAGE_SIZES,
+        default="1K",
+        help="Resolution: 512 (5¢), 1K (7¢), 2K (10¢), 4K (15¢). Default: 1K.",
+    )
+    p_img.add_argument(
+        "--aspect-ratio",
+        choices=IMAGE_ASPECT_RATIOS,
+        default="1:1",
+        help="Aspect ratio. Default: 1:1",
+    )
     p_img.add_argument("-o", "--output", required=True, help="Output PNG path")
     p_img.set_defaults(func=cmd_image)
 
     p_ss = sub.add_parser("spritesheet", help="Generate 4x4 sprite sheet (7 cents)")
-    p_ss.add_argument("--prompt", required=True, help="What to generate (animation description or item list)")
-    p_ss.add_argument("--bg", default="#00FF00", help="Background color hex (default: #00FF00 green). Choose a color absent from the subject.")
+    p_ss.add_argument(
+        "--prompt",
+        required=True,
+        help="What to generate (animation description or item list)",
+    )
+    p_ss.add_argument(
+        "--bg",
+        default="#00FF00",
+        help="Background color hex (default: #00FF00 green). Choose a color absent from the subject.",
+    )
     p_ss.add_argument("-o", "--output", required=True, help="Output PNG path")
     p_ss.set_defaults(func=cmd_spritesheet)
 
     p_glb = sub.add_parser("glb", help="Convert PNG to GLB 3D model (30-40 cents)")
     p_glb.add_argument("--image", required=True, help="Input PNG path")
-    p_glb.add_argument("--quality", default="medium", choices=list(QUALITY_PRESETS.keys()), help="Quality preset")
+    p_glb.add_argument(
+        "--quality",
+        default="medium",
+        choices=list(QUALITY_PRESETS.keys()),
+        help="Quality preset",
+    )
     p_glb.add_argument("-o", "--output", required=True, help="Output GLB path")
     p_glb.set_defaults(func=cmd_glb)
 
-    p_budget = sub.add_parser("set_budget", help="Set the asset generation budget in cents")
+    p_budget = sub.add_parser(
+        "set_budget", help="Set the asset generation budget in cents"
+    )
     p_budget.add_argument("cents", type=int, help="Budget in cents")
     p_budget.set_defaults(func=cmd_set_budget)
 

@@ -160,7 +160,7 @@ static func _remove_background_by_corners(tex: Texture2D, tolerance: float = 0.1
 
 func _build_starfield() -> void:
 	_stars.clear()
-	for _i in STAR_COUNT:
+	for i in STAR_COUNT:
 		_stars.append({
 			"x": randf_range(-STARFIELD_AREA * 0.5, STARFIELD_AREA * 0.5),
 			"y": randf_range(-STARFIELD_AREA * 0.5, STARFIELD_AREA * 0.5),

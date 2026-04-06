@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — Describes the Python/Pygame prototype (Phase 1). The project migrated to Godot 4.6 in March 2026. Current architecture is documented in `STRUCTURE.md` and `CLAUDE.md`.
+
 # TRD-001: Technical Architecture & Stack
 
 **Project:** Whisper Crystals — A Space Pirates Game  

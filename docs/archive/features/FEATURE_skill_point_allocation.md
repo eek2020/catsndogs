@@ -1,3 +1,5 @@
+> **Status:** ARCHIVED — IMPLEMENTED with modifications. The skill allocation screen (`scripts/ui/skill_allocation.gd` + `scenes/ui/skill_allocation.tscn`) allows redistribution of starting stat points with preset archetypes. `StatEvaluator` (`scripts/systems/stat_evaluator.gd`) handles skill checks. Resonance Shards implemented as collectibles in `data/items/resonance_shards.json`. The "Harmonic Attunement" branding was not used; the system is functional without the thematic wrapper.
+
 # Feature Request: Initial Skill Allocation
 
 ## Overview
