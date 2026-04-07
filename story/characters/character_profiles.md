@@ -14,6 +14,7 @@
 - **Core Tension:** Balancing being a pirate (free, chaotic, self-serving) with being the most powerful supplier in the multiverse (responsibility, enemies everywhere).
 - **Name Meaning:** The philosopher who believed in understanding the world through observation and reason — a cat who built his empire on knowing things others didn't.
 - **Dialogue Tone:** Aristotle's player character context must inform default dialogue tone throughout the game — pragmatic, witty, strategic. Never formal. Never subservient.
+- **Appearance:** Lean tabby cat, sandy-brown with darker stripes that show most on his face and forearms. Blue naval captain's coat with gold epaulettes, worn enough to have real stories in it. Black tricorn hat with a skull-and-crossbones clasp. Carries a cutlass because it suits him — elegant, decisive, economical. The whole look says *I built this* rather than *I was born to it*.
 
 ### Family
 - **Mira (Mother):** Crippled stevedore, three-legged, sharp-tongued, fiercely loving. Ninth-generation descendant of Tessera (she doesn't know). Has not seen Aristotle in 11 years. Still writes short letters: "Did you eat today?" Nine Lives has been secretly corresponding with her for years. Reunion possible in Arc 7 (tone depends on karma path).
@@ -52,6 +53,7 @@
 - **Relationship with Aristotle:** Respect mixed with deep frustration. Does not hate Aristotle — just needs what he has. Their conflict is structural, not personal.
 - **Dialogue Tone:** Quiet, direct, almost polite. Contrast with Aristotle's wit and Death's theatricality. Dave's scariest lines should be the simplest.
 - **Hidden depth:** Has read General Howl's original charter. Has not forgiven the League for keeping him from his father's funeral. Carries a photograph of Reba as the only non-regulation item on his person. If Aristotle finds the photograph, it changes his view of his enemy forever.
+- **Appearance:** Beagle — tricolour tan, white, and brown, medium build, nothing wasted. Tactical vest stripped of League insignia but cut to regulation. Dark bandana worn loose at his neck. Blaster in hand like it belongs there, which it does. He smiles easily and means it. The gap between how approachable he looks and how relentless he is has ended several careers.
 
 ### Family
 - **Reba (Wife):** Civilian contractor who refits medical ships. Married 9 years. Writes every day, signs every message "Come home when you can. I'm still here." First appears Arc 1 as a voice on an outgoing message; in-person possible from Arc 5 (Fernholm). The voice in Dave's ear when he considers defecting.
@@ -89,6 +91,7 @@
 - **Story Role:** Creates a two-front war — Dave externally, Death internally. Forces alliance choices.
 - **Dialogue Tone:** Dark, theatrical, grandiose. Contrast with Aristotle's pragmatism and Dave's banality. Death speaks like someone who has been waiting centuries for this moment.
 - **Implementation Note:** Death's true allegiance must be implemented as a hidden story flag (`true_allegiance`) that is `null` until the Arc 3 revelation event sets it.
+- **Appearance:** Enormous long-furred orange cat — a mane that fills a doorway, gold-amber eyes that have been calculating longer than most people have been alive. Wide-brimmed dark hat with a gold lion crest and three amethyst crystal clusters that catch light wrong. Purple feather, gold-edged gorget at the throat. Every element of his appearance is a performance, chosen with care, designed to be the last thing you see.
 
 ### Death — Secondary Antagonist Stats
 
@@ -128,7 +131,8 @@ Determined by player's investigation choices in Arc 2:
 
 ### Nine Lives (First Mate)
 - **Real Name:** Vespera "Nine" Kale
-- **Species:** Cat | **Role:** First mate
+- **Species:** Cat (calico) | **Role:** First mate
+- **Appearance:** Patches of burnt orange and white across a lean, expressive face. One long burn scar runs from her left cheekbone into her whiskers — the only permanent mark from the crystal drive explosion. Amber eyes, always a half-second from amusement. Wears a battered teal captain's hat with a tarnished "9" on the crown: the same hat she had when Aristotle first knew her, repaired so many times the original fabric is mostly memory.
 - **Backstory:** At 26, caught in a crystal drive explosion that should have killed her. Survived, but something changed: she can now hear the crystals as living things, the way fairies do. Recognised Aristotle as a listener the moment she met him. Has been protecting him without telling him why.
 - **Family:** Wife Halix died in the same explosion. Adopted daughter Minnow, now 17, raised by Halix's sister on an agricultural moon. Minnow thinks Nine Lives is a distant aunt who sends presents. (Arc 6/7 thread: Minnow figures out who she really is.)
 - **Secret:** Has been secretly corresponding with Aristotle's mother Mira for years. Sets up the Arc 6 letter and Arc 7 reunion.
@@ -136,18 +140,21 @@ Determined by player's investigation choices in Arc 2:
 ### No Tail (Gunner)
 - **Real Name:** Quinn Vega
 - **Species:** Cat | **Role:** Gunner
+- **Appearance:** Dark chocolate-brown shorthair, lean and economical. Missing tail and left ear — both lost in the same raid, worn like a record rather than hidden. Teal hat with a monogram "N" and anchor-chain trim. Worn leather duster with too many pockets and a blade she reaches for without thinking. Amber-gold eyes that assess every room once and then stop moving.
 - **Backstory:** Lost her tail, left ear, and most of her family in a Canis League raid when she was 19. Her brother Rook was taken prisoner — has been in a League labour camp for 11 years. Quinn doesn't know he's alive. The name of the officer who ordered the strafing run is written inside her jacket.
 - **Optional arc (Arc 3+):** If Aristotle allies with Dave, Dave can access League records and find Rook. Delivering this information to Quinn is one of the most emotionally charged moments in the game.
 
 ### Silky (Navigator)
 - **Real Name:** Silky Thornquill-Vesper
 - **Species:** Half-cat, half-fairy | **Role:** Navigator
+- **Appearance:** Long-haired silver-blue cat, fur so pale and soft it catches light like water. Wide dark red hat with a compass rose symbol. A chain of small charms at her throat — ship, compass, a single blue crystal. Eyes an unusually pale blue, the fairy inheritance showing through. Always stands slightly apart from wherever the group has gathered, like she's listening to a frequency no one else can hear.
 - **Backstory:** Her cat mother Vesper was disowned by the Feline Courts for a forbidden relationship with fairy Thornquill. Raised in a hidden pocket of the Fairy Realms until Vesper died of a fairy-realm illness. Carries fragments of fairy memory through her father — she had heard of Aristotle in the Heart Garden archives years before they met. She was, literally, waiting for him.
 - **Family:** Father Thornquill still lives in the Fairy Realms (wings the colour of river stones). Half-sister Moth — a young fairy bud, frightened of the wider multiverse, keeper of the oldest crystal fragment.
 
 ### Blood Paw (Surgeon)
 - **Real Name:** Dr. Sable Auric-Mane
 - **Species:** Cat | **Role:** Surgeon
+- **Appearance:** Dark russet-red long-haired cat, heavy mane framing a face that is permanently somewhere between concentration and irritation. Wide dark hat with an anchor crest and gear-work details, a deep red gem at her throat. Shows her teeth when she's thinking, not to intimidate — a surgeon's habit of forgetting to compose her face. Her paws are always clean.
 - **Backstory:** A legitimate member of House Amber — Lord Mane's cousin. Was court physician to Crown Prince Thorold. Identified the poison that killed him and identified the Pride responsible. When she reported it, she was told to keep quiet. She refused and fled.
 - **Family:** Ex-wife Dr. Calla Auric-Mane, still at the Lion court. They separated when Blood Paw defected. Correspond through encrypted letters. In Arc 8, Calla sends: "Come home. I have everything we need. I am afraid."
 - **Key arc unlock:** In Arc 4, her presence unlocks dialogue with Lord Mane that no other path allows. She can reveal the poisoner's identity — triggering a revenge/justice plotline that reshapes the Lion civil war.
@@ -159,24 +166,28 @@ Determined by player's investigation choices in Arc 2:
 ### Charlie (First Mate)
 - **Real Name:** Charles Rook Brindle
 - **Species:** Dog | **Role:** First mate
+- **Appearance:** Medium-build brown-and-white dog, the kind of face people trust on sight without knowing why. League uniform worn comfortable-loose after years of service, no decorations beyond rank insignia. The unremarkability is real, not constructed. He is exactly as steady as he looks, which is a rarer quality than it sounds.
 - **Backstory:** Dave's childhood friend and best man at his wedding. Was secretly in love with Reba at the time. Has never acted on it. Never will. His loyalty to Dave is the loyalty of a man who chose not to betray a friend — which makes him the most principled character on the ship and one of the most quietly heartbreaking.
 - **Note:** Charlie never mentions Reba. That is how you know.
 
 ### Bombardier (Gunner)
 - **Real Name:** Lieutenant Kaska Veld
 - **Species:** Dog | **Role:** Gunner
+- **Appearance:** Compact tan-and-brown dog, short-furred, built for tight spaces. Former League gear stripped of all insignia and rebuilt from the inside — jury-rigged in ways that should fail and somehow don't. Always has something wired to something else. Grinning with the comfortable enthusiasm of someone who has made peace with the probability of explosions. Burn marks on her forearms she doesn't explain.
 - **Backstory:** Court-martialled for blowing up a corrupt arms deal — which is true but only half the story. The arms deal was her father's, Colonel Veld, still serving and still corrupt. She chose justice over family. They have not spoken in 6 years.
 - **Optional crisis:** If Dave's path brings her face to face with her father, she does not know what she will do.
 
 ### Luna (Navigator)
 - **Real Name:** Lunara of Drennhal
 - **Species:** Wolf-dog hybrid | **Role:** Navigator
+- **Appearance:** Lean grey-silver wolf-dog, lighter than a full wolf and quicker. Calm, watchful eyes that are warm where a wolf's would be cold — the dog half, showing. Clean practical clothing, nothing ornamental. She looks like she's running a calculation behind every conversation, and she usually is.
 - **Backstory:** Iron Fang's niece. Left the Wolves because she could not accept the Hunt Eternal. Has been secretly corresponding with her cousin Kestrel (Iron Fang's daughter) for 2 years. Her mother was a League civilian schoolteacher — one of the reasons she trusted Dave immediately.
 - **Arc 7 thread:** Kestrel flees Drennhal and seeks asylum with Aristotle or Dave. Luna arranged it.
 
 ### Thistle (Surgeon)
 - **Real Name:** Briar Galvain
 - **Species:** Dog | **Role:** Field medic
+- **Appearance:** Sturdy brown-and-white dog, field medic's build — compact, hands that have stitched wounds in the dark. Knight Order sigil carefully removed from her shoulder, the patch left clean rather than replaced. Practical boots, layered clothing. Tired eyes, not beaten — the specific tiredness of someone who keeps choosing to care anyway.
 - **Backstory:** Ser Galvain's estranged niece. Took the name "Thistle" when she left the Order. Believed the Last Dawn Oath had become an excuse for inaction. Her uncle still sends birthday messages she does not read.
 - **Arc 8 thread:** At the Last Table, the player can engineer a reconciliation between Thistle and Ser Galvain — one of the most emotionally rewarding optional arcs in the game.
 
@@ -187,64 +198,64 @@ Determined by player's investigation choices in Arc 2:
 ### Mira Vega
 - **Species:** Cat | **Role:** Aristotle's mother, emotional anchor
 - **First Appearance:** Arc 6 (offscreen via letter), Arc 7 (in person, karma-gated)
-- **Description:** Crippled stevedore, three-legged, sharp-tongued, fiercely loving in a way she does not know how to express directly. Ninth-generation descendant of Tessera (she doesn't know). Has not seen Aristotle in 11 years.
+- **Description:** Three-legged old cat, grey-streaked brown fur, one rear leg missing. Dockworker's hands — strong, scarred, accustomed to weight. Sharp eyes that have not softened with age. The kind of mother who shows love through logistics, because the fringe never taught her the other kind. Ninth-generation descendant of Tessera (she doesn't know). Has not seen Aristotle in 11 years.
 
 ### Boots Vega
 - **Species:** Cat | **Role:** The life Aristotle didn't live
 - **First Appearance:** Arc 7 (same visit as Mira)
-- **Description:** Dockworker, married, two kittens. Does not know her brother is famous. Would not be impressed — would be worried. Named her smaller kitten Quill.
+- **Description:** Younger cat than Aristotle, same brown-tabby colouring but softer-faced and less guarded. Dockworker's clothes worn from actual work. Does not know her brother is famous. Would not be impressed — would be worried. Named her smaller kitten Quill.
 
 ### Petrel Vane (The Wraith)
 - **Species:** Cat | **Role:** Son of Death
 - **First Appearance:** Arc 2 (as the Wraith, unnamed), Arc 6 (confession and naming), Arc 10 (resolution)
-- **Description:** Death's lieutenant. Has been watching his father become a monster for 15 years, waiting for one moment of clarity. His final choice in Arc 10 — join Aristotle, die with his father, or inherit the Black Harrow — is one of the most affecting choices in the game.
+- **Description:** Lean dark-grey cat, slight build, younger than people expect when they finally see him without the hood. Nothing like his father except the eyes — the same burnt amber, carrying the same weight. No insignia, no markings. The Black Harrow's shadow is in everything about him and he cannot put it down. Has been watching his father become a monster for 15 years, waiting for one moment of clarity. His final choice in Arc 10 — join Aristotle, die with his father, or inherit the Black Harrow — is one of the most affecting choices in the game.
 
 ### Reba Brindle
 - **Species:** Dog | **Role:** The reason Dave can still be reached
 - **First Appearance:** Arc 1 (voice on outgoing message), Arc 5+ (in person on Fernholm, if Dave's loyalty arc progresses)
-- **Description:** Civilian contractor, medical ship refitter. Writes Dave every day. Signs every message "Come home when you can. I'm still here." Does not tell him what to do. Tells him she'll be there either way.
+- **Description:** Clean-faced, warm-eyed dog — civilian clothes, practical contractor's hands. A face that hasn't learned to hide what it feels and sees no reason to start. Writes Dave every day. Signs every message "Come home when you can. I'm still here." Does not tell him what to do. Tells him she'll be there either way.
 
 ### Jessamine Howl
 - **Species:** Dog | **Role:** The third option for Dave
 - **First Appearance:** Arc 5
-- **Description:** Great-great-granddaughter of General Howl, the League's original founder. Quietly organising a network of League veterans and civilians who remember the charter. Offers Dave a third path: reform from within, not defection.
+- **Description:** Dog in her late forties, silver-streaked brown fur, the posture of someone raised around soldiers who chose not to become one. Simple clothes that cost more than they look. Carries herself like a promise she hasn't broken yet. Great-great-granddaughter of General Howl, the League's original founder. Quietly organising a network of League veterans and civilians who remember the charter. Offers Dave a third path: reform from within, not defection.
 
 ### Kestrel
 - **Species:** Wolf | **Role:** The crack in the Wolf monolith
 - **First Appearance:** Arc 7
-- **Description:** Iron Fang's daughter, 16, exceptional pilot, hates the Hunt Eternal. Has been secretly corresponding with Luna for 2 years. Flees Drennhal in Arc 7 and seeks asylum. Her defection transforms the Wolf storyline from a war of conquest into a family crisis.
+- **Description:** Wolf, sixteen, lean and fast — lighter-built than Iron Fang, more angular. Flight suit worn from real use. The eyes are her father's exactly, which is the part she hates most. Still learning to hold still. Iron Fang's daughter, exceptional pilot, hates the Hunt Eternal. Has been secretly corresponding with Luna for 2 years. Flees Drennhal in Arc 7 and seeks asylum. Her defection transforms the Wolf storyline from a war of conquest into a family crisis.
 
 ### Ember-Who-Remembers
 - **Species:** Fairy (distributed consciousness) | **Role:** The named fairy elder
 - **First Appearance:** Arc 2 (cryptic messages), Arc 5 (full manifestation)
-- **Description:** One being in twelve bodies. Ancient, gentle, slightly amused, deeply sad. Carries the oldest fairy memories of Solenne. Chose Aristotle as potential steward because of his unvoiced apology in Arc 1. Has been guiding him without interfering.
+- **Description:** One being in twelve bodies — twelve small forms, each alike, each ancient-faced and faintly luminous, moving independently but always attending to the same thing at the same time. When all twelve turn to look at you, the attention is extraordinary. Not threatening. Just completely total. Carries the oldest fairy memories of Solenne. Chose Aristotle as potential steward because of his unvoiced apology in Arc 1. Has been guiding him without interfering.
 
 ### Moth
 - **Species:** Fairy | **Role:** The voice of fear
 - **First Appearance:** Arc 5 (referenced), Arc 7 (in person)
-- **Description:** Silky's half-sister. A young fairy bud who has never left the Heart Garden. Terrified of almost everything. Keeper of the oldest crystal fragment — the one containing a recording of Solenne's voice. Her bravery during Crystal Communion is one of the game's emotional peaks.
+- **Description:** A young fairy, small even for her kind. Pale wings kept folded close to her body, as if making herself less visible to the multiverse. Large eyes, careful hands. Silky's half-sister. Has never left the Heart Garden. Keeper of the oldest crystal fragment — the one containing a recording of Solenne's voice — and she holds it like she knows exactly what it would mean to drop it. Her bravery during Crystal Communion is one of the game's emotional peaks.
 
 ### Kiln
 - **Species:** Deep Space alien (resembles slow-moving glass) | **Role:** The alien you can have dinner with
 - **First Appearance:** Arc 3
-- **Description:** Approximately 5,000 years old, embedded in the multiverse for 600 years. Has posed as a scholar, merchant, monk, diplomat. Speaks normally, with humour and weariness. Her Arc 9 line: "We have watched seven potential stewards fail. You are the first one who ever asked us if we were tired too."
+- **Description:** Slow-moving and translucent, faintly luminous — glass is the nearest word for what she looks like, though glass doesn't breathe. No face as such; what reads as expression is internal light shifting behind her surface. Moves at the pace of something that has never been late for anything because it does not experience time the way other beings do. Approximately 5,000 years old, embedded in the multiverse for 600 years. Has posed as a scholar, merchant, monk, diplomat. Speaks normally, with humour and weariness. Her Arc 9 line: "We have watched seven potential stewards fail. You are the first one who ever asked us if we were tired too."
 
 ### Solenne
 - **Species:** Builder (pre-physical) | **Role:** The origin
 - **First Appearance:** Arc 7 (voice in Crystal Communion), Arc 9 (full manifestation in the Cradle)
-- **Description:** The last Builder who stayed to tend the crystal garden. Not angry — sad, tired, grateful. Asks Aristotle one question in Arc 9 whose answer determines whether Ending D is available: "What do you hear when the crystals sing?"
+- **Description:** Barely visible most of the time — light through crystal, warmth without source. When she manifests fully in the Cradle she is something between a woman and a mapped constellation, edges uncertain, centre unmistakable. She looks tired. Not defeated — the tiredness of something very old that has been waiting a very long time for the right question. The last Builder who stayed to tend the crystal garden. Not angry — sad, tired, grateful. Asks Aristotle one question in Arc 9 whose answer determines whether Ending D is available: "What do you hear when the crystals sing?"
 
 ### Admiral Vara Venator
 - **Species:** Wolf-Dog | **Role:** The face of League High Command
 - **First Appearance:** Arc 5 (Dave only)
-- **Description:** Great-great-granddaughter of the Venator who captured the League from General Howl. Ruthlessly intelligent, genuinely believes in order, considers cruelty a cost of civilisation. Her Arc 10 line if Dave defects: "I understand. I am still going to hunt you." She means it.
+- **Description:** Silver-grey wolf-dog, military bearing worn like a second skeleton. League dress uniform with full rank insignia, everything in its correct place. Features arranged in permanent calm — not coldness exactly, but the composed face of someone who has decided that cruelty is a tool and keeps it in the appropriate drawer. Great-great-granddaughter of the Venator who captured the League from General Howl. Ruthlessly intelligent, genuinely believes in order, considers cruelty a cost of civilisation. Her Arc 10 line if Dave defects: "I understand. I am still going to hunt you." She means it.
 
 ### Obsidia Vale (Lady Penumbra)
 - **Species:** Black Cat | **Role:** The shadow queen, named
 - **First Appearance:** Arc 4 (as Lady Penumbra), Arc 6 (real name revealed if player investigates)
-- **Description:** Her family, the Vale line, were court advisors to Lion kings who fell in love with a Lion prince and were hanged for it. Her grandmother died in exile. Her mother taught her to wait. Obsidia waited 40 years. She is using the civil war to settle the vendetta. She is not waiting anymore.
+- **Description:** Black cat, sleek and unhurried. Every element of her appearance is deliberate — nothing too much, nothing that reads as trying. The patience of someone who has been preparing for forty years shows as absolute stillness. Her eyes are the oldest thing about her. Her family, the Vale line, were court advisors to Lion kings who fell in love with a Lion prince and were hanged for it. Her grandmother died in exile. Her mother taught her to wait. Obsidia waited 40 years. She is using the civil war to settle the vendetta. She is not waiting anymore.
 
 ### Rhodion of House Amber (Lord Mane)
 - **Species:** Lion | **Role:** The brother left behind
 - **First Appearance:** Arc 4
-- **Description:** His given name is Rhodion; he took the title "Mane" after his older brother Thorold was poisoned. Not a natural leader — a younger brother who was supposed to read poetry and marry well. Fighting the civil war mostly to finish what Thorold started. Slowly becoming someone his brother would have been proud of.
+- **Description:** Lion, younger than the title sounds. Scholar's hands on a frame that has had to become a soldier's over the last few years, and shows it. His brother's coronet sits slightly wrong on his head because he has never let anyone adjust it. His given name is Rhodion; he took the title "Mane" after his older brother Thorold was poisoned. Not a natural leader — a younger brother who was supposed to read poetry and marry well. Fighting the civil war mostly to finish what Thorold started. Slowly becoming someone his brother would have been proud of.
