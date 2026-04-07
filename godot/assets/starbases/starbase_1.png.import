@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6586qr0pd458"
-path="res://.godot/imported/ship_destroyer_r_side.png-b7d03befcf906a0bf3cb5ee3b4969794.ctex"
+uid="uid://n3j41ul864m2"
+path="res://.godot/imported/starbase_1.png-2a29cef42ced165b6847eab7eef76077.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ships/ship_destroyer_r_side.png"
-dest_files=["res://.godot/imported/ship_destroyer_r_side.png-b7d03befcf906a0bf3cb5ee3b4969794.ctex"]
+source_file="res://assets/starbases/starbase_1.png"
+dest_files=["res://.godot/imported/starbase_1.png-2a29cef42ced165b6847eab7eef76077.ctex"]
 
 [params]
 

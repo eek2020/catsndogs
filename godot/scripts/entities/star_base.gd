@@ -10,6 +10,7 @@ extends Resource
 @export var position_x: float = 0.0
 @export var position_y: float = 0.0
 @export var description: String = ""
+@export var image: String = ""  # filename without extension in assets/starbases/
 @export var services: Array[String] = []
 @export var artifacts: Array[String] = []
 @export var required_reputation: int = 0
@@ -26,6 +27,7 @@ static func from_dict(data: Dictionary) -> StarBase:
 	b.position_x = data.get("position_x", 0.0)
 	b.position_y = data.get("position_y", 0.0)
 	b.description = data.get("description", "")
+	b.image = data.get("image", "")
 	b.services = Array(data.get("services", []), TYPE_STRING, "", null)
 	b.artifacts = Array(data.get("artifacts", []), TYPE_STRING, "", null)
 	b.required_reputation = data.get("required_reputation", 0)
@@ -43,6 +45,7 @@ func to_dict() -> Dictionary:
 		"position_x": position_x,
 		"position_y": position_y,
 		"description": description,
+		"image": image,
 		"services": Array(services),
 		"artifacts": Array(artifacts),
 		"required_reputation": required_reputation,

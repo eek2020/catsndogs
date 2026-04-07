@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6586qr0pd458"
-path="res://.godot/imported/ship_destroyer_r_side.png-b7d03befcf906a0bf3cb5ee3b4969794.ctex"
+uid="uid://bi0bvas6l8shj"
+path="res://.godot/imported/planet_2.png-d3b2a3eeb55693db66e73bd0d3310f05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ships/ship_destroyer_r_side.png"
-dest_files=["res://.godot/imported/ship_destroyer_r_side.png-b7d03befcf906a0bf3cb5ee3b4969794.ctex"]
+source_file="res://assets/planets/planet_2.png"
+dest_files=["res://.godot/imported/planet_2.png-d3b2a3eeb55693db66e73bd0d3310f05.ctex"]
 
 [params]
 

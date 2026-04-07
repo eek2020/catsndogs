@@ -13,6 +13,8 @@ extends Control
 var _flash_timer: float = 0.0
 var _poi_refresh_timer: float = 0.0
 var _elapsed: float = 0.0
+var _planet_textures: Dictionary = {}  # Cache: image name -> Texture2D
+var _starbase_textures: Dictionary = {}  # Cache: image name -> Texture2D
 
 const POI_REFRESH_INTERVAL: float = 1.5
 const SHIP_SPEED: float = 300.0
@@ -94,6 +96,7 @@ var _trail: Array = []
 # Procedural nebula backdrop
 var _nebula_texture: ImageTexture = null
 var _nebula_tint: Color = Color(0.6, 0.6, 0.8)
+
 
 # Distress signals handled by SideMissionSystem.update_distress()
 
@@ -1294,18 +1297,31 @@ func _draw_pois(center: Vector2, gs: GameStateData) -> void:
 			)
 
 
+func _get_planet_texture(image_name: String) -> Texture2D:
+	"""Load and cache a planet texture from assets/planets/."""
+	if image_name.is_empty():
+		return null
+	if _planet_textures.has(image_name):
+		return _planet_textures[image_name]
+	var path := "res://assets/planets/%s.png" % image_name
+	var tex: Texture2D = load(path) as Texture2D
+	_planet_textures[image_name] = tex
+	return tex
+
+
 func _draw_planets(center: Vector2, gs: GameStateData) -> void:
 	if GameSession.planet_system == null:
 		return
 	var planets: Array = GameSession.planet_system.get_planets_in_region(gs.current_region)
 	var default_font: Font = ThemeDB.fallback_font
+	var planet_draw_radius: float = 28.0
 	for planet in planets:
 		var sx: float = center.x + (planet.position_x - gs.position_x)
 		var sy: float = center.y + (planet.position_y - gs.position_y)
 		var screen_pos := Vector2(sx, sy)
 		if screen_pos.x < -60 or screen_pos.y < -60 or screen_pos.x > size.x + 60 or screen_pos.y > size.y + 60:
 			continue
-		# Planet colour based on biome
+		# Biome tint colour (used for glow, ring, and label)
 		var planet_color := Color(0.4, 0.7, 0.3)
 		match planet.biome:
 			"settlement":
@@ -1316,19 +1332,26 @@ func _draw_planets(center: Vector2, gs: GameStateData) -> void:
 				planet_color = Color(0.3, 0.7, 0.5)
 			"wilderness":
 				planet_color = Color(0.5, 0.6, 0.3)
-		# Outer glow
 		var pulse: float = 1.0 + 0.08 * sin(_elapsed * 1.5 + planet.position_x * 0.01)
-		draw_circle(screen_pos, 22.0 * pulse, planet_color * Color(1, 1, 1, 0.12))
-		# Planet body
-		draw_circle(screen_pos, 14.0, planet_color * Color(1, 1, 1, 0.6))
-		draw_circle(screen_pos, 10.0, planet_color)
+		# Outer glow
+		draw_circle(screen_pos, (planet_draw_radius + 8.0) * pulse, planet_color * Color(1, 1, 1, 0.12))
+		# Planet image or fallback circle
+		var tex: Texture2D = _get_planet_texture(planet.image)
+		if tex != null:
+			var draw_size := Vector2(planet_draw_radius * 2.0, planet_draw_radius * 2.0)
+			var rect := Rect2(screen_pos - draw_size * 0.5, draw_size)
+			draw_texture_rect(tex, rect, false)
+		else:
+			# Fallback: coloured circle when no image assigned
+			draw_circle(screen_pos, planet_draw_radius * 0.5, planet_color * Color(1, 1, 1, 0.6))
+			draw_circle(screen_pos, planet_draw_radius * 0.35, planet_color)
 		# Ring
-		draw_arc(screen_pos, 16.0, 0.0, TAU, 32, planet_color.lightened(0.3), 1.5)
+		draw_arc(screen_pos, planet_draw_radius + 2.0, 0.0, TAU, 32, planet_color.lightened(0.3), 1.5)
 		# Label
 		if default_font != null:
 			draw_string(
 				default_font,
-				screen_pos + Vector2(-30, -20),
+				screen_pos + Vector2(-30, -planet_draw_radius - 10),
 				planet.planet_name,
 				HORIZONTAL_ALIGNMENT_LEFT,
 				200,
@@ -1339,7 +1362,7 @@ func _draw_planets(center: Vector2, gs: GameStateData) -> void:
 			if planet.planet_id == _nearby_planet_id:
 				draw_string(
 					default_font,
-					screen_pos + Vector2(-20, 24),
+					screen_pos + Vector2(-20, planet_draw_radius + 14),
 					"[L] LAND",
 					HORIZONTAL_ALIGNMENT_LEFT,
 					100,
@@ -1348,41 +1371,77 @@ func _draw_planets(center: Vector2, gs: GameStateData) -> void:
 				)
 
 
+func _get_starbase_texture(image_name: String) -> Texture2D:
+	"""Load and cache a starbase texture from assets/starbases/."""
+	if image_name.is_empty():
+		return null
+	if _starbase_textures.has(image_name):
+		return _starbase_textures[image_name]
+	var path := "res://assets/starbases/%s.png" % image_name
+	var tex: Texture2D = load(path) as Texture2D
+	_starbase_textures[image_name] = tex
+	return tex
+
+
 func _draw_star_bases(center: Vector2, gs: GameStateData) -> void:
 	if GameSession.star_base_system == null:
 		return
-	var bases: Array = GameSession.star_base_system.get_visible_bases(gs, gs.current_region)
+	var bases: Array = GameSession.star_base_system.get_visible_bases(
+		gs, gs.current_region
+	)
 	var default_font: Font = ThemeDB.fallback_font
+	var base_draw_size: float = 48.0
 	for base in bases:
 		var sx: float = center.x + (base.position_x - gs.position_x)
 		var sy: float = center.y + (base.position_y - gs.position_y)
 		var screen_pos := Vector2(sx, sy)
-		if screen_pos.x < -60 or screen_pos.y < -60 or screen_pos.x > size.x + 60 or screen_pos.y > size.y + 60:
+		if screen_pos.x < -60 or screen_pos.y < -60:
+			continue
+		if screen_pos.x > size.x + 60 or screen_pos.y > size.y + 60:
 			continue
 		var base_color := Color(0.9, 0.75, 0.3)
 		if base.base_type == "stronghold":
 			base_color = Color(0.8, 0.3, 0.3)
 		elif base.base_type == "hidden":
 			base_color = Color(0.5, 0.7, 0.9)
-		# Outer diamond shape
-		var r: float = 18.0
 		var pulse: float = 1.0 + 0.1 * sin(_elapsed * 2.0)
-		var pr: float = r * pulse
-		var diamond := PackedVector2Array([
-			screen_pos + Vector2(0, -pr),
-			screen_pos + Vector2(pr, 0),
-			screen_pos + Vector2(0, pr),
-			screen_pos + Vector2(-pr, 0),
-		])
-		draw_polygon(diamond, [base_color * Color(1, 1, 1, 0.25)])
-		draw_polyline(diamond + PackedVector2Array([diamond[0]]), base_color, 2.0)
-		# Inner dot
-		draw_circle(screen_pos, 4.0, base_color)
+		# Outer glow
+		draw_circle(
+			screen_pos,
+			(base_draw_size * 0.5 + 6.0) * pulse,
+			base_color * Color(1, 1, 1, 0.1)
+		)
+		# Starbase image or fallback diamond
+		var tex: Texture2D = _get_starbase_texture(base.image)
+		if tex != null:
+			var draw_sz := Vector2(base_draw_size, base_draw_size)
+			var rect := Rect2(
+				screen_pos - draw_sz * 0.5, draw_sz
+			)
+			draw_texture_rect(tex, rect, false)
+		else:
+			var r: float = 18.0
+			var pr: float = r * pulse
+			var diamond := PackedVector2Array([
+				screen_pos + Vector2(0, -pr),
+				screen_pos + Vector2(pr, 0),
+				screen_pos + Vector2(0, pr),
+				screen_pos + Vector2(-pr, 0),
+			])
+			draw_polygon(
+				diamond, [base_color * Color(1, 1, 1, 0.25)]
+			)
+			draw_polyline(
+				diamond + PackedVector2Array([diamond[0]]),
+				base_color, 2.0
+			)
+			draw_circle(screen_pos, 4.0, base_color)
 		# Label
+		var half := base_draw_size * 0.5
 		if default_font != null:
 			draw_string(
 				default_font,
-				screen_pos + Vector2(-30, -pr - 8),
+				screen_pos + Vector2(-30, -half - 8),
 				base.base_name,
 				HORIZONTAL_ALIGNMENT_LEFT,
 				200,
@@ -1393,7 +1452,7 @@ func _draw_star_bases(center: Vector2, gs: GameStateData) -> void:
 			if base.base_id == _nearby_base_id:
 				draw_string(
 					default_font,
-					screen_pos + Vector2(-20, pr + 16),
+					screen_pos + Vector2(-20, half + 16),
 					"[E] DOCK",
 					HORIZONTAL_ALIGNMENT_LEFT,
 					100,

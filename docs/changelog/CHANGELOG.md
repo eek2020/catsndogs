@@ -6,6 +6,38 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-07 — Star Base Texture Rendering
+
+Added star base texture support mirroring the planet texture work.
+
+**Changed:**
+
+- `scripts/entities/star_base.gd` — added `image` field to StarBase entity
+- `scripts/ui/navigation.gd` — replaced procedural diamond rendering with `draw_texture_rect()` using cached starbase textures; added `_get_starbase_texture()` helper; kept diamond fallback for bases without images
+- `data/star_bases/star_bases.json` — added `image` field to all 6 existing bases; added Knight's Bastion (knight_kingdoms) as 7th star base
+
+**Assets:**
+
+- 7 starbase texture PNGs in `assets/starbases/` (starbase_1.png–starbase_7.png)
+
+---
+
+## 2026-04-07 — Planet Texture Rendering
+
+Replaced procedural circle-drawn planets on the star map with actual PNG texture assets.
+
+**Changed:**
+
+- `scripts/entities/planet.gd` — added `image` field to Planet entity for texture references
+- `scripts/ui/navigation.gd` — replaced `draw_circle()` planet rendering with `draw_texture_rect()` using cached planet textures; added `_get_planet_texture()` helper with lazy-loading cache
+- `data/planets/planet_registry.json` — added `image` field to all 3 existing planets; added 10 new planet entries for all remaining galaxy regions (feline_courts, canine_order, knight_kingdoms, twilight_bazaar, iron_expanse, warp_marches, bone_yard, shattered_prides, deep_space, cradle_of_whispers)
+
+**Assets:**
+
+- 13 planet texture PNGs now in `assets/planets/` (planet_1.png–planet_13.png), one per galaxy region
+
+---
+
 ## 2026-04-05 — Documentation Audit, Reconciliation & Restructuring
 
 Comprehensive documentation review against the live codebase with full restructuring.
