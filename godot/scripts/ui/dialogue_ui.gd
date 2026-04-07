@@ -500,10 +500,10 @@ func _restore_description() -> void:
 	choices_container.remove_theme_constant_override("separation")
 
 
+## Make bright neutral background pixels transparent, with soft feathering.
 static func _remove_near_white_bg(
 	tex: Texture2D, hard_threshold: float = 0.91, soft_threshold: float = 0.77
 ) -> Texture2D:
-	"""Make bright neutral background pixels transparent, with soft feathering."""
 	if tex == null:
 		return tex
 	var image: Image = tex.get_image()

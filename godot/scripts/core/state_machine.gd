@@ -3,6 +3,10 @@
 ##
 ## States are Node instances added/removed from the scene tree.
 ## The active state is the top of the stack and receives _process/_input.
+##
+## @deprecated  NOT CURRENTLY USED — main.gd implements its own scene-switching
+## and overlay stack without this class. Either refactor main.gd to use
+## GameStateMachine or remove this file. (Code Review Issue #7)
 class_name GameStateMachine
 extends Node
 

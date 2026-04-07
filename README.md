@@ -86,6 +86,11 @@ whisper_crystals/
 │   ├── characters/               # Character concept art
 │   └── art_direction/            # Visual style guides
 └── tools/                        # Development tools and utilities
+    ├── utils/                    # General utility scripts
+    ├── godot-dev/                # Godot-specific tools
+    ├── pipeline/                 # Asset pipeline tools
+    ├── import_assets.sh          # Asset management
+    └── rollback_import.sh        # Asset rollback
 ```
 
 ## Tech Stack
@@ -138,6 +143,8 @@ See `docs/MASTER_PLAN.md` for the authoritative project plan and development sta
 - [`docs/GAME_SUMMARY.md`](docs/GAME_SUMMARY.md) — Complete game design summary (implemented + planned content)
 - [`docs/reviews/CODE_REVIEW_2026-04-05.md`](docs/reviews/CODE_REVIEW_2026-04-05.md) — Latest code review with open issues
 - [`STRUCTURE.md`](STRUCTURE.md) — Architecture reference: scenes, signals, systems
+- [`.claude/PROJECT_INDEX.md`](.claude/PROJECT_INDEX.md) — AI agent project index and file location guide
+- [`.claude/MEMORY.md`](.claude/MEMORY.md) — Global AI agent memory and technical patterns
 - [`docs/story/LORE_EXPANSION.md`](docs/story/LORE_EXPANSION.md) — Deep world-building: faction histories, character backstories, crystal network mythology
 - [`docs/changelog/CHANGELOG.md`](docs/changelog/CHANGELOG.md) — Detailed change log and development history
 - [`docs/archive/`](docs/archive/) — Archived TRDs (Python-era), PRDs, old plans, superseded feature specs

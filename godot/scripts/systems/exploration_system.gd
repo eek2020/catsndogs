@@ -184,21 +184,17 @@ func roll_exploration_event(game_state: GameStateData) -> Dictionary:
 	var trigger_chance := 0.2 + (danger * 0.05)
 	if randf() > trigger_chance:
 		return {}
-	var total_weight: int = 0
-	for e in EXPLORATION_EVENTS:
-		total_weight += int(e["weight"])
-	var roll := randi_range(1, total_weight)
-	var cumulative: int = 0
-	for event in EXPLORATION_EVENTS:
-		cumulative += int(event["weight"])
-		if roll <= cumulative:
-			return {
-				"type": event["type"],
-				"description": event["description"],
-				"region": game_state.current_region,
-				"danger_level": danger,
-			}
-	return {}
+	var event: Variant = MathUtils.weighted_pick(
+		EXPLORATION_EVENTS, func(e): return float(e["weight"])
+	)
+	if event == null:
+		return {}
+	return {
+		"type": event["type"],
+		"description": event["description"],
+		"region": game_state.current_region,
+		"danger_level": danger,
+	}
 
 
 func scan_region(game_state: GameStateData) -> Array[String]:

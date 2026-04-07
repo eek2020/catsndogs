@@ -61,14 +61,16 @@ var _sfx_volume_db: float = 0.0
 var _saved_positions: Dictionary = {}  # theme_id -> playback_position_sec
 var _saved_streams: Dictionary = {}    # theme_id -> AudioStream resource
 
-@onready var _music_player: AudioStreamPlayer = AudioStreamPlayer.new()
-@onready var _sfx_player: AudioStreamPlayer = AudioStreamPlayer.new()
+var _music_player: AudioStreamPlayer
+var _sfx_player: AudioStreamPlayer
 
 
 func _ready() -> void:
-	_music_player.bus = "Master"
+	_music_player = AudioStreamPlayer.new()
+	_sfx_player = AudioStreamPlayer.new()
+	_music_player.bus = "Music"   # Issue #15: separate bus for independent volume
 	_music_player.volume_db = _music_volume_db
-	_sfx_player.bus = "Master"
+	_sfx_player.bus = "SFX"       # Issue #15: separate bus for independent volume
 	_sfx_player.volume_db = _sfx_volume_db
 	add_child(_music_player)
 	add_child(_sfx_player)

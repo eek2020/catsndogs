@@ -46,13 +46,14 @@ func _ready() -> void:
 	crew_trait_system = CrewTraitSystem.new(data_loader)
 	star_map_system = StarMapSystem.new()
 	astral_hazard_system = AstralHazardSystem.new()
+	astral_hazard_system.star_map_system = star_map_system  # Issue #5: inject dependency
 	karma_system = KarmaSystem.new()
 	stat_evaluator = StatEvaluator.new()
 	star_base_system = StarBaseSystem.new()
 	planet_system = PlanetSystem.new()
 	save_manager = SaveManager.new()
 
-	set_process(true)
+	set_process(false)  # Enable only when game_state exists (Issue #21)
 
 	# Wire EventBus signals
 	EventBus.arc_advanced.connect(_on_arc_advanced)
@@ -73,22 +74,8 @@ func _process(delta: float) -> void:
 
 func start_new_game(protagonist_id: String = "aristotle") -> void:
 	game_state = create_new_game_state(protagonist_id)
-	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
-	narrative.load_arcs()
-	encounter_engine.load_encounters("arc1", suffix)
-	side_mission_system.load_missions("arc1", suffix)
-	side_mission_system.load_distress_signals()
-	side_mission_system.load_crew_missions(protagonist_id, data_loader)
-	_load_crew_encounters(protagonist_id)
-	_load_cartographer_encounters()
-	realm_control.initialize_realms(game_state)
-	var region_data: Array = data_loader.load_regions()
-	exploration.load_regions(region_data)
-	_init_star_maps()
-	_init_astral_hazards()
-	_init_karma()
-	_init_star_bases()
-	_init_planets()
+	_init_systems(protagonist_id, "arc1")
+	set_process(true)
 	if game_state:
 		game_state.owned_maps = [game_state.current_region]
 		star_map_system.owned_maps = game_state.owned_maps.duplicate()
@@ -171,6 +158,8 @@ func save_game(slot: int = 0) -> bool:
 	# Persist star map state before saving
 	game_state.owned_maps = star_map_system.owned_maps.duplicate()
 	game_state.star_map_data = star_map_system.to_dict()
+	# Persist exploration state (discovered regions, visited POIs)
+	game_state.exploration_data = exploration.get_state_dict()
 	# Persist astral hazard state
 	game_state.astral_hazard_data = astral_hazard_system.to_dict()
 	game_state.active_status_effects = astral_hazard_system.status_effects.duplicate(true)
@@ -182,20 +171,11 @@ func load_game(slot: int = 0) -> bool:
 	if loaded == null:
 		return false
 	game_state = loaded
-	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
-	narrative.load_arcs()
-	encounter_engine.load_encounters(game_state.current_arc, suffix)
-	side_mission_system.load_missions(game_state.current_arc, suffix)
-	side_mission_system.load_distress_signals()
-	side_mission_system.load_crew_missions(game_state.protagonist_id, data_loader)
-	_load_crew_encounters(game_state.protagonist_id)
-	_load_cartographer_encounters()
-	realm_control.initialize_realms(game_state)
-	_init_star_maps()
-	_init_astral_hazards()
-	_init_karma()
-	_init_star_bases()
-	_init_planets()
+	_init_systems(game_state.protagonist_id, game_state.current_arc)
+	set_process(true)
+	# Restore exploration state from save (discovered regions, visited POIs)
+	if not game_state.exploration_data.is_empty():
+		exploration.load_state_dict(game_state.exploration_data)
 	# Restore star map state from save
 	star_map_system.owned_maps = game_state.owned_maps.duplicate()
 	star_map_system.cartographer_rescued = game_state.story_flags.get("fairy_cartographer_rescued", false)
@@ -246,6 +226,7 @@ func open_trade_screen(_faction_id: String) -> void:
 
 func quit_to_menu() -> void:
 	game_state = null
+	set_process(false)
 	_return_scene_path = ""
 	_return_position = Vector2.ZERO
 	_return_facing = "down"
@@ -322,6 +303,31 @@ func recruit_crew_member(crew_id: String) -> void:
 		return
 	var protagonist_id: String = game_state.protagonist_id
 	EventBus.crew_member_recruited.emit(crew_id, protagonist_id)
+
+
+# ------------------------------------------------------------------
+# Shared system initialisation (Issue #6 — single init path)
+# ------------------------------------------------------------------
+
+## Load all game-content systems for the given protagonist and arc.
+## Called by both start_new_game() and load_game() to avoid duplication.
+func _init_systems(protagonist_id: String, arc_id: String) -> void:
+	var suffix: String = get_protagonist_config().get("encounter_suffix", "")
+	narrative.load_arcs()
+	encounter_engine.load_encounters(arc_id, suffix)
+	side_mission_system.load_missions(arc_id, suffix)
+	side_mission_system.load_distress_signals()
+	side_mission_system.load_crew_missions(protagonist_id, data_loader)
+	_load_crew_encounters(protagonist_id)
+	_load_cartographer_encounters()
+	realm_control.initialize_realms(game_state)
+	var region_data: Array = data_loader.load_regions()
+	exploration.load_regions(region_data)
+	_init_star_maps()
+	_init_astral_hazards()
+	_init_karma()
+	_init_star_bases()
+	_init_planets()
 
 
 # ------------------------------------------------------------------

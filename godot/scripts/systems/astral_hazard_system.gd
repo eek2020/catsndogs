@@ -11,6 +11,10 @@ var status_effects: Array = []            # [{effect_id, remaining, hazard_id}]
 var entropy_timer: float = 0.0            # seconds until next dynamic spawn
 var collision_cooldown: float = 0.0       # seconds before another hazard can trigger
 
+## Injected reference to StarMapSystem for bounds/fog queries (Issue #5).
+## Set by GameSession after construction instead of reaching into the singleton.
+var star_map_system: StarMapSystem = null
+
 const ENTROPY_MIN: float = 900.0          # 15 minutes
 const ENTROPY_MAX: float = 1200.0         # 20 minutes
 const COLLISION_COOLDOWN: float = 120.0   # 2 minutes between hazard hits
@@ -87,15 +91,13 @@ func spawn_dynamic_hazard(region_id: String) -> void:
 	if dynamic_defs.is_empty() or total_weight <= 0.0:
 		return
 
-	# Weighted random selection
-	var roll: float = randf() * total_weight
-	var chosen_id: String = dynamic_defs[0]["hazard_id"]
-	var accumulated: float = 0.0
-	for entry in dynamic_defs:
-		accumulated += entry["weight"]
-		if roll <= accumulated:
-			chosen_id = entry["hazard_id"]
-			break
+	# Weighted random selection (Issue #10 — uses shared utility)
+	var chosen_entry: Variant = MathUtils.weighted_pick(
+		dynamic_defs, func(e): return e["weight"]
+	)
+	if chosen_entry == null:
+		return
+	var chosen_id: String = chosen_entry["hazard_id"]
 
 	var defn: Dictionary = hazard_definitions.get(chosen_id, {})
 	if defn.is_empty():
@@ -123,8 +125,8 @@ func spawn_dynamic_hazard(region_id: String) -> void:
 
 
 func _get_region_bounds(region_id: String) -> Vector2:
-	if GameSession.star_map_system != null:
-		return GameSession.star_map_system.get_bounds(region_id)
+	if star_map_system != null:
+		return star_map_system.get_bounds(region_id)
 	return Vector2(6000, 6000)
 
 
@@ -134,7 +136,7 @@ func _get_region_bounds(region_id: String) -> Vector2:
 
 func get_visible_hazards(region_id: String) -> Array:
 	var result: Array = []
-	var sms: StarMapSystem = GameSession.star_map_system
+	var sms: StarMapSystem = star_map_system
 
 	# Static hazards
 	for hazard in static_hazards.get(region_id, []):

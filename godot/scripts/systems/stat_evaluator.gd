@@ -60,36 +60,15 @@ static func meets_skill_check(character: Character, requirements: Dictionary) ->
 	return true
 
 
-## Read a named stat from a Character resource.
+## Read a named stat from a Character resource using property access.
+## Adding new stats only requires updating STAT_NAMES and the Character class.
 static func _get_stat(character: Character, stat_name: String) -> int:
-	match stat_name:
-		"cunning":
-			return character.cunning
-		"leadership":
-			return character.leadership
-		"negotiation":
-			return character.negotiation
-		"combat_skill":
-			return character.combat_skill
-		"intimidation":
-			return character.intimidation
-		"stealth":
-			return character.stealth
+	if stat_name in STAT_NAMES:
+		return character.get(stat_name) as int
 	return 0
 
 
-## Write a named stat on a Character resource.
+## Write a named stat on a Character resource using property access.
 static func set_stat(character: Character, stat_name: String, value: int) -> void:
-	match stat_name:
-		"cunning":
-			character.cunning = value
-		"leadership":
-			character.leadership = value
-		"negotiation":
-			character.negotiation = value
-		"combat_skill":
-			character.combat_skill = value
-		"intimidation":
-			character.intimidation = value
-		"stealth":
-			character.stealth = value
+	if stat_name in STAT_NAMES:
+		character.set(stat_name, value)

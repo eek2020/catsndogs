@@ -3,10 +3,11 @@
 extends Control
 
 # ---------------------------------------------------------------------------
-# Design-resolution anchors (from combat_background.png at 1024×576)
+# Design-resolution anchors — use project viewport size for consistency
+# (Issue #8: was 1024×576, should match project viewport 1280×720)
 # ---------------------------------------------------------------------------
-const DESIGN_W := 1024.0
-const DESIGN_H := 576.0
+const DESIGN_W: float = float(Config.SCREEN_WIDTH)
+const DESIGN_H: float = float(Config.SCREEN_HEIGHT)
 
 # Porthole glass centres
 const PORTHOLE_LEFT := Vector2(253, 176)

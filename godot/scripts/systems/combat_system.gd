@@ -54,30 +54,35 @@ class CombatLog extends RefCounted:
 
 
 ## Damage = attacker_firepower - defender_armour, min 1, with +/-20% variance.
-## If the attacker is the player, crew trait bonuses and character combat_skill are applied.
-static func calculate_damage(attacker_fp: int, defender_armour: int, is_player: bool = false) -> int:
-	var effective_fp: float = float(attacker_fp)
-	if is_player and GameSession.game_state != null:
-		effective_fp *= (1.0 + GameSession.crew_trait_system.get_bonus(GameSession.game_state.player_ship, "firepower_bonus"))
-		# Character combat_skill adds up to +20% firepower at skill 10
-		if GameSession.game_state.player_character != null:
-			var combat_bonus: float = GameSession.game_state.player_character.combat_skill * 0.02
-			effective_fp *= (1.0 + combat_bonus)
+##
+## Bonuses are passed explicitly so this function has no hidden dependencies
+## on autoloads (Issue #5). Callers (e.g. combat_ui.gd) extract the values
+## from GameSession before calling.
+##
+## [param crew_bonus]   — crew trait firepower bonus (0.0–1.0).
+## [param combat_skill] — player character combat_skill stat (0–10).
+## [param crit_chance]  — crew trait critical-hit chance (0.0–1.0).
+static func calculate_damage(
+	attacker_fp: int,
+	defender_armour: int,
+	crew_bonus: float = 0.0,
+	combat_skill: int = 0,
+	crit_chance: float = 0.0,
+) -> int:
+	var effective_fp: float = float(attacker_fp) * (1.0 + crew_bonus)
+	effective_fp *= (1.0 + combat_skill * 0.02)
 	var base := maxi(1, int(effective_fp) - defender_armour)
-	var variance := randf_range(0.8, 1.2)
+	var variance := randf_range(Config.DAMAGE_VARIANCE_MIN, Config.DAMAGE_VARIANCE_MAX)
 	var damage := maxi(1, int(base * variance))
-	if is_player and GameSession.game_state != null:
-		var crit_bonus: float = GameSession.crew_trait_system.get_bonus(GameSession.game_state.player_ship, "critical_hit_chance")
-		if crit_bonus > 0.0 and randf() < crit_bonus:
-			damage = int(damage * 1.5)
+	if crit_chance > 0.0 and randf() < crit_chance:
+		damage = int(damage * Config.CRIT_MULTIPLIER)
 	return damage
 
 
-## Dodge probability based on speed: speed 10 -> 40%, speed 1 -> 4%.
-## Player's stealth stat adds up to +10% dodge at stealth 10.
-static func dodge_chance(defender_speed: int, is_player: bool = false) -> float:
-	var base_dodge: float = minf(0.45, defender_speed * 0.04)
-	if is_player and GameSession.game_state != null and GameSession.game_state.player_character != null:
-		var stealth_bonus: float = GameSession.game_state.player_character.stealth * 0.01
-		base_dodge = minf(0.55, base_dodge + stealth_bonus)
+## Dodge probability based on speed: speed 10 → 40 %, speed 1 → 4 %.
+##
+## [param stealth_bonus] — character stealth contribution (0.0–0.1 typical).
+static func dodge_chance(defender_speed: int, stealth_bonus: float = 0.0) -> float:
+	var base_dodge: float = minf(Config.MAX_DODGE_CHANCE - 0.1, defender_speed * Config.DODGE_PER_SPEED)
+	base_dodge = minf(Config.MAX_DODGE_CHANCE, base_dodge + stealth_bonus)
 	return base_dodge

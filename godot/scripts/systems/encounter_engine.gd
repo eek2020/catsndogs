@@ -58,38 +58,9 @@ func _get_eligible_encounters(game_state: GameStateData) -> Array:
 	return result
 
 
+## Delegate condition evaluation to the centralised ConditionEvaluator (Issue #2).
 func _evaluate_conditions(conditions: Dictionary, game_state: GameStateData) -> bool:
-	for key in conditions:
-		var expected = conditions[key]
-		if key == "current_arc":
-			if game_state.current_arc != expected:
-				return false
-		elif key == "highest_stat":
-			if game_state.player_character == null:
-				return false
-			if StatEvaluator.get_highest_stat(game_state.player_character) != expected:
-				return false
-		elif key.begins_with("min_"):
-			if game_state.player_character == null:
-				return false
-			var stat_name: String = key.substr(4)
-			if not StatEvaluator.check_threshold(game_state.player_character, stat_name, int(expected)):
-				return false
-		elif key == "karma_tier":
-			if GameSession.karma_system != null:
-				if GameSession.karma_system.get_tier(game_state) != expected:
-					return false
-		else:
-			var actual = game_state.story_flags.get(key)
-			if expected is String and expected == "!null":
-				if actual == null:
-					return false
-			else:
-				if actual == null and expected is bool:
-					actual = false
-				if actual != expected:
-					return false
-	return true
+	return ConditionEvaluator.evaluate(conditions, game_state)
 
 
 func apply_choice_outcome(
@@ -159,14 +130,11 @@ func _apply_outcome(
 		elif resource_key == "salvage":
 			game_state.salvage = maxi(0, game_state.salvage + delta)
 
-	# Apply faction reputation changes
+	# Apply faction reputation changes via FactionSystem to trigger cascade rules
 	for faction_id in outcome.faction_changes:
 		var delta: int = outcome.faction_changes[faction_id]
 		if game_state.faction_registry.has(faction_id):
-			var faction: Faction = game_state.faction_registry[faction_id]
-			faction.reputation_with_player = clampi(faction.reputation_with_player + delta, -100, 100)
-			faction.update_diplomatic_state()
-			EventBus.faction_score_changed.emit(faction_id, delta)
+			GameSession.faction_system.change_reputation(game_state, faction_id, delta)
 
 	# Apply karma change
 	if outcome.karma_delta != 0 and GameSession.karma_system != null:

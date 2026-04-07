@@ -138,22 +138,11 @@ func update_distress(dt: float, game_state: GameStateData) -> Encounter:
 	)
 	if candidates.is_empty():
 		return null
-	var weights: Array = []
-	var total: float = 0.0
-	for e in candidates:
-		var w: float = e.spawn_weight
-		weights.append(w)
-		total += w
-	if total <= 0:
+	var chosen: Encounter = MathUtils.weighted_pick(
+		candidates, func(e): return e.spawn_weight
+	)
+	if chosen == null:
 		return null
-	var pick := randf() * total
-	var cumulative: float = 0.0
-	var chosen: Encounter = candidates[0]
-	for i in range(candidates.size()):
-		cumulative += weights[i]
-		if pick <= cumulative:
-			chosen = candidates[i]
-			break
 	_active_distress_ids.append(chosen.encounter_id)
 	return chosen
 
@@ -186,20 +175,7 @@ func get_mission_count(game_state: GameStateData) -> int:
 	return count
 
 
+## Delegate condition evaluation to the centralised ConditionEvaluator (Issue #2).
+## Side missions now support all condition types: stats, karma_tier, etc.
 static func _evaluate_conditions(conditions: Dictionary, game_state: GameStateData) -> bool:
-	for key in conditions:
-		var expected = conditions[key]
-		if key == "current_arc":
-			if game_state.current_arc != expected:
-				return false
-		else:
-			var actual = game_state.story_flags.get(key)
-			if expected is String and expected == "!null":
-				if actual == null:
-					return false
-			else:
-				if actual == null and expected is bool:
-					actual = false
-				if actual != expected:
-					return false
-	return true
+	return ConditionEvaluator.evaluate(conditions, game_state)

@@ -83,8 +83,8 @@ func load_upgrades() -> Array:
 	return data.get("upgrades", [])
 
 
+## Return ship templates that have purchasable == true.
 func load_purchasable_ships() -> Array:
-	"""Return ship templates that have purchasable == true."""
 	var data: Variant = _load_json("ships/ship_templates.json")
 	if data == null:
 		return []
@@ -257,8 +257,8 @@ func load_cartographer_encounters() -> Array:
 	return encounters
 
 
+## Load Arc 9 (Cradle of Whispers) encounters — hidden optional arc.
 func load_cradle_encounters(suffix: String = "") -> Array:
-	"""Load Arc 9 (Cradle of Whispers) encounters — hidden optional arc."""
 	var filename := "encounters/arc9_encounters%s.json" % suffix
 	var data: Variant = _load_json(filename)
 	if data == null and not suffix.is_empty():
@@ -271,8 +271,8 @@ func load_cradle_encounters(suffix: String = "") -> Array:
 	return encounters
 
 
+## Load encounters for special characters across all arcs.
 func load_special_character_encounters() -> Array:
-	"""Load encounters for special characters across all arcs."""
 	var data: Variant = _load_json("encounters/special_characters.json")
 	if data == null:
 		return []

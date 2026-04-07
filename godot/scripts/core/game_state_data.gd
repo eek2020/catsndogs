@@ -53,6 +53,9 @@ extends Resource
 @export var owned_maps: Array[String] = []
 @export var star_map_data: Dictionary = {}
 
+# Exploration
+@export var exploration_data: Dictionary = {}
+
 # Astral hazards
 @export var active_status_effects: Array = []
 @export var astral_hazard_data: Dictionary = {}
@@ -128,6 +131,7 @@ func to_dict() -> Dictionary:
 		"side_missions": mission_dict,
 		"owned_maps": Array(owned_maps),
 		"star_map_data": star_map_data.duplicate(),
+		"exploration_data": exploration_data.duplicate(true),
 		"active_status_effects": active_status_effects.duplicate(true),
 		"astral_hazard_data": astral_hazard_data.duplicate(true),
 		"combat_victories": combat_victories,
@@ -185,6 +189,7 @@ static func from_dict(data: Dictionary) -> GameStateData:
 		state.side_missions[mid] = SideMission.from_dict(data["side_missions"][mid])
 	state.owned_maps = Array(data.get("owned_maps", []), TYPE_STRING, "", null)
 	state.star_map_data = data.get("star_map_data", {})
+	state.exploration_data = data.get("exploration_data", {})
 	state.active_status_effects = data.get("active_status_effects", [])
 	state.astral_hazard_data = data.get("astral_hazard_data", {})
 	state.combat_victories = data.get("combat_victories", 0)

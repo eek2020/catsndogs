@@ -39,6 +39,11 @@ func save_game(game_state: GameStateData, slot: int) -> bool:
 		"arc": game_state.current_arc,
 		"playtime": game_state.playtime_seconds,
 	}
+	# Compute integrity checksum over game data (Issue #16)
+	var payload_for_checksum: Dictionary = data.duplicate()
+	payload_for_checksum.erase("_meta")
+	var checksum_source := JSON.stringify(payload_for_checksum, "\t")
+	data["_meta"]["_checksum"] = checksum_source.sha256_text()
 	var json_string := JSON.stringify(data, "\t")
 	var path := _slot_path(slot)
 	var tmp_path := path + ".tmp"
@@ -78,7 +83,15 @@ func load_game(slot: int) -> GameStateData:
 		push_error("Failed to parse save slot %d: %s" % [slot, json.get_error_message()])
 		return null
 	var data: Dictionary = json.data
+	# Verify integrity checksum (Issue #16)
+	var meta: Dictionary = data.get("_meta", {})
+	var stored_checksum: String = meta.get("_checksum", "")
 	data.erase("_meta")
+	if not stored_checksum.is_empty():
+		var verify_source := JSON.stringify(data, "\t")
+		var computed_checksum := verify_source.sha256_text()
+		if computed_checksum != stored_checksum:
+			push_warning("Save slot %d: checksum mismatch — file may be corrupted." % slot)
 	data = _migrate_save_data(data)
 	return GameStateData.from_dict(data)
 

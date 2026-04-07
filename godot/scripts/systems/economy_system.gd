@@ -91,7 +91,9 @@ func get_active_routes(game_state: GameStateData) -> Array:
 # Market & trade
 # ------------------------------------------------------------------
 
-func get_buy_price(game_state: GameStateData, faction_id: String, quantity: int = 1) -> int:
+## [param karma_modifier] — price multiplier from karma system (1.0 = neutral).
+##   Callers pass GameSession.karma_system.get_price_modifier(game_state) or 1.0.
+func get_buy_price(game_state: GameStateData, faction_id: String, quantity: int = 1, karma_modifier: float = 1.0) -> int:
 	var faction: Faction = game_state.faction_registry.get(faction_id)
 	if faction == null:
 		return 0
@@ -99,16 +101,15 @@ func get_buy_price(game_state: GameStateData, faction_id: String, quantity: int 
 		faction_id, faction.reputation_with_player
 	)
 	var total: int = unit_price * quantity
-	# Apply karma-based price modifier
-	if GameSession.karma_system != null:
-		var karma_mod: float = GameSession.karma_system.get_price_modifier(game_state)
-		total = maxi(1, int(total * karma_mod))
+	# Apply karma-based price modifier (Issue #5 — passed as parameter)
+	if karma_modifier != 1.0:
+		total = maxi(1, int(total * karma_modifier))
 	return total
 
 
 func get_sell_price(game_state: GameStateData, faction_id: String, quantity: int = 1) -> int:
 	var buy_total := get_buy_price(game_state, faction_id, quantity)
-	return maxi(1, int(buy_total * 0.75))
+	return maxi(1, int(buy_total * Config.SELL_PRICE_RATIO))
 
 
 func buy_crystals(game_state: GameStateData, faction_id: String, quantity: int) -> bool:
@@ -187,15 +188,16 @@ func update_faction_economics(game_state: GameStateData) -> void:
 # Ship repair and upgrade
 # ------------------------------------------------------------------
 
-func calculate_repair_cost(ship: Ship, repair_amount: int) -> int:
+## [param repair_bonus] — crew trait hull_repair_rate bonus (0.0–1.0).
+##   Callers pass GameSession.crew_trait_system.get_bonus(ship, "hull_repair_rate") or 0.0.
+func calculate_repair_cost(ship: Ship, repair_amount: int, repair_bonus: float = 0.0) -> int:
 	if repair_amount <= 0 or ship.current_hull >= ship.max_hull:
 		return 0
 	var base_cost_per_hull: float = ship.max_hull * 0.5
 	var cost := int(base_cost_per_hull * (float(repair_amount) / ship.max_hull))
-	if GameSession.crew_trait_system != null:
-		var repair_bonus: float = GameSession.crew_trait_system.get_bonus(ship, "hull_repair_rate")
-		if repair_bonus > 0.0:
-			cost = maxi(1, int(cost * (1.0 - repair_bonus)))
+	# Apply crew trait repair bonus (Issue #5 — passed as parameter)
+	if repair_bonus > 0.0:
+		cost = maxi(1, int(cost * (1.0 - repair_bonus)))
 	return cost
 
 
@@ -217,8 +219,8 @@ func repair_ship(game_state: GameStateData, repair_amount: int) -> bool:
 	return true
 
 
+## Buy a new ship, replacing the player's current vessel. Crew transfers over.
 func purchase_ship(game_state: GameStateData, template: Dictionary) -> bool:
-	"""Buy a new ship, replacing the player's current vessel. Crew transfers over."""
 	var ship := game_state.player_ship
 	if ship == null:
 		return false
@@ -249,8 +251,8 @@ func purchase_ship(game_state: GameStateData, template: Dictionary) -> bool:
 	return true
 
 
+## Buy and apply an upgrade to the player's ship.
 func purchase_upgrade(game_state: GameStateData, upgrade_data: Dictionary) -> bool:
-	"""Buy and apply an upgrade to the player's ship."""
 	var ship := game_state.player_ship
 	if ship == null:
 		return false
@@ -281,8 +283,8 @@ func purchase_upgrade(game_state: GameStateData, upgrade_data: Dictionary) -> bo
 	return true
 
 
+## Apply a numeric modifier to a ship stat.
 func _apply_stat_modifier(ship: Ship, stat: String, modifier: int) -> void:
-	"""Apply a numeric modifier to a ship stat."""
 	match stat:
 		"speed":
 			ship.speed = maxi(1, ship.speed + modifier)

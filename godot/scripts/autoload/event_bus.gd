@@ -4,10 +4,13 @@
 ## Usage:
 ##   EventBus.combat_hit.emit()
 ##   EventBus.combat_hit.connect(_on_combat_hit)
+##
+## All signals are emitted from external files (pub/sub), so Godot considers
+## them "unused" at this declaration site. Suppress globally (Issue #12).
+@warning_ignore("unused_signal")
 extends Node
 
 # --- Combat events ---
-@warning_ignore("unused_signal")
 signal combat_hit
 signal combat_miss
 signal combat_victory

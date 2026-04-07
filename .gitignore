@@ -12,8 +12,11 @@ Desktop.ini
 *.swp
 *.swo
 
-# AI assistant config
-.claude/
+# AI assistant config (except project tracking files)
+.claude/settings.local.json
+!.claude/PROJECT_INDEX.md
+!.claude/MEMORY.md
+!.claude/.gitkeep
 
 # Project specific
 logs/

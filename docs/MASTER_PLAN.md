@@ -1,8 +1,8 @@
 # Whisper Crystals — Master Plan
 
-**Date:** 2026-04-05
+**Date:** 2026-04-07
 **Status:** Authoritative — single source of truth for project planning
-**Supersedes:** `docs/archive/plans/MASTER_PLAN_2026-03-20.md`, all previous plan documents
+**Supersedes:** `docs/archive/plans/MASTER_PLAN_2026-03-20.md`, `MASTER_PLAN_2026-04-05.md`, all previous plan documents
 
 ---
 
@@ -100,128 +100,230 @@ See `STRUCTURE.md` for the full signal map, system table, and scene inventory.
 
 ---
 
-## 4. Open Issues (from CODE_REVIEW_2026-04-05)
+## 4. Quality Policy: Test Before Review
 
-18 issues identified. Priority breakdown:
+All code review activities **must include runtime testing**, not just static code analysis. Reviews that only read source code miss runtime bugs, integration failures, and data-driven content issues.
 
-### Must-Fix (Critical)
+**Mandatory review process:**
 
-| ID | Issue | File | Description |
-| ---- | ------- | ------ | ------------- |
-| 1 | trigger_encounter_id never evaluated | encounter_engine.gd | Encounter chain field silently ignored — breaks chained encounters, potential infinite loop risk |
-| 2 | Hull death not emitted | astral_hazard_system.gd | `apply_damage()` does not emit game-over when hull reaches 0 |
+1. **Static analysis** — Read code, check patterns, identify structural issues
+2. **Runtime testing** — Run the game in Godot editor; exercise affected systems manually
+3. **Automated tests** — Run `GUT` test suite (once established); all tests must pass before review sign-off
+4. **Data validation** — For content-facing changes, verify JSON data loads correctly and encounters play through
+5. **Regression check** — Save/load round-trip, arc transitions, combat flow, dialogue branching
 
-### Should-Fix (High/Medium)
-
-| ID | Issue | Priority |
-| ---- | ------- | ---------- |
-| 3 | GameSession tight coupling in static methods | High |
-| 4 | DataLoader cache never invalidated | High |
-| 5 | Exploration state not persisted in save/load | High |
-| 6 | CrewTraitSystem iterates all crew per lookup | Medium |
-| 7 | Per-pixel portrait processing on every dialogue open | Medium |
-| 8 | Combat loot magic numbers | Medium |
-| 9 | crystal_pickup signal arity mismatch | Medium |
-| 10 | _remove_near_white_bg whiteness metric | Medium |
-| 11 | faction_system bypasses its parameter | Medium |
-| 12 | Redundant DataLoader calls | Medium |
-| 13 | No crew capacity enforcement | Medium |
-| 14 | Save manager no integrity verification | Medium |
-| 15 | _migrate_save_data is a stub | Medium |
-
-### Low Priority
-
-| ID | Issue | Priority |
-| ---- | ------- | ---------- |
-| 16 | Encounter priority re-sorted every check | Low |
-| 17 | conditions field loaded but never evaluated | Low |
-| 18 | Playtime includes menu/pause | Low |
-
-Full details: `docs/CODE_REVIEW_2026-04-05.md`
+This policy applies to all future code reviews and to the remediation work below.
 
 ---
 
-## 5. Technical Debt Inventory
+## 5. Consolidated Issue Tracker (All Code Reviews)
 
-### From Current Codebase
+Three code reviews have been conducted. This section is the **single source of truth** for all open issues.
 
-| Area | Description | Priority |
-| ------ | ------------- | ---------- |
-| God script | `navigation.gd` is 800+ lines — consider decomposition | Low |
-| Cache management | DataLoader cache is unbounded, no invalidation | Medium |
-| Save integrity | No checksum/HMAC on save files (low risk for single-player) | Low |
-| Trade ledger | `trade_ledger` in GameStateData is unbounded | Low |
-| Test coverage | No automated tests in the Godot project (example test harness exists but no CI) | Medium |
-| Exploration persistence | Exploration state (discovered regions, visited POIs) not saved | High |
+**Review documents:**
+
+- `docs/reviews/CODE_REVIEW_2026-03-27.md` — 16 categories, first Godot review
+- `docs/reviews/CODE_REVIEW_2026-04-05.md` — 18 issues, second review
+- `docs/reviews/CODE_REVIEW_2026-04-07.md` — 22 issues, third review (18 implemented)
+
+### 5.1 Resolved Issues
+
+These have been implemented and tested as part of the April 7 review remediation:
+
+| Source | ID | Issue | Resolution | Files Changed |
+| ------ | -- | ----- | ---------- | ------------- |
+| Apr-07 | #1 | Exploration state not persisted | `exploration_data` added to save/load | `game_state_data.gd`, `game_session.gd` |
+| Apr-05 | #5 | Exploration state not persisted | Same as above | Same |
+| Apr-07 | #2 | Duplicated condition evaluation | Created `ConditionEvaluator` class | `condition_evaluator.gd`, `encounter_engine.gd`, `side_mission_system.gd` |
+| Mar-27 | §1.1 | Duplicated condition evaluation | Same as above | Same |
+| Apr-07 | #3 | Inconsistent indentation (cutscene) | Converted to tabs | `cutscene_manager.gd`, `dialogue_ui.gd` (cutscene), `cutscene_scene.gd` |
+| Apr-07 | #4 | Python docstrings in GDScript | Replaced with `##` | `data_loader.gd`, `economy_system.gd`, `dialogue_ui.gd` |
+| Apr-07 | #5 | Systems coupled to GameSession | Decoupled via parameter injection | `combat_system.gd`, `economy_system.gd`, `astral_hazard_system.gd` |
+| Apr-05 | #3 | Systems coupled to GameSession | Partially same — 3 of ~6 systems done | See §5.2 for remainder |
+| Apr-07 | #6 | Duplicated init in start/load | Extracted `_init_systems()` | `game_session.gd` |
+| Apr-07 | #7 | Unused GameStateMachine | Marked `@deprecated` | `state_machine.gd` |
+| Apr-07 | #8 | Design resolution mismatch | Uses `Config.SCREEN_WIDTH/HEIGHT` | `combat_ui.gd` |
+| Apr-07 | #9 | Config class too thin | Expanded with game constants | `config.gd` |
+| Apr-05 | #8 | Combat loot magic numbers | Partially — Config now has combat constants | `config.gd`, `combat_system.gd` |
+| Mar-27 | §13 | Magic numbers in combat/economy | Partially — Config expanded | `config.gd` |
+| Apr-07 | #10 | Repeated weighted-random | Created `MathUtils.weighted_pick()` | `math_utils.gd`, `side_mission_system.gd`, `astral_hazard_system.gd`, `exploration_system.gd` |
+| Apr-07 | #11 | @onready misuse in MusicManager | Moved `.new()` to `_ready()` | `music_manager.gd` |
+| Apr-07 | #12 | Missing @warning_ignore EventBus | File-level annotation | `event_bus.gd` |
+| Apr-07 | #13 | StatEvaluator match fragility | Property access via `get()`/`set()` | `stat_evaluator.gd` |
+| Apr-07 | #14 | Two dialogue_ui files | Renamed to `CutsceneDialogueUI` | `cutscene/dialogue_ui.gd`, `cutscene_scene.gd`, `cutscene_manager.gd` |
+| Apr-07 | #15 | No audio bus separation | Created Music/SFX buses | `default_bus_layout.tres`, `music_manager.gd` |
+| Apr-07 | #16 | Save file integrity check | SHA-256 checksum | `save_manager.gd` |
+| Apr-05 | #14 | Save manager no integrity check | Same as above | Same |
+| Apr-07 | #17 | Faction reputation bypasses system | Delegated to `FactionSystem` | `encounter_engine.gd` |
+| Apr-05 | #11 | faction_system bypasses parameter | Partially same | `encounter_engine.gd` |
+| Apr-07 | #21 | _process always active | `set_process` toggling | `game_session.gd` |
+| Apr-05 | #18 | Playtime includes menu/pause | Same as above | Same |
+| Mar-27 | §8 | star_map queue_redraw every frame | Already has REDRAW_INTERVAL throttle | `star_map_screen.gd` |
+| Mar-27 | §12 | No save backup rotation | `save_manager.gd` already does `.bak` | Already implemented |
+
+### 5.2 Open Issues — Must Fix (Critical)
+
+These are **unresolved critical bugs** from previous reviews:
+
+| Source | ID | Issue | File | Action Required |
+| ------ | -- | ----- | ---- | --------------- |
+| Apr-05 | #1 | `trigger_encounter_id` never evaluated | `entities/encounter.gd:59`, `encounter_engine.gd` | Implement chain triggers with loop guard OR remove dead field |
+| Apr-05 | #2 | Hull death not emitted from hazard damage | `astral_hazard_system.gd:285-288` | Emit `combat_defeat` when hull reaches 0 |
+| Mar-27 | §2.1 | Missing null guard on `player_ship` in morale system | `crew_morale_system.gd:26` | Add null check |
+| Mar-27 | §2.2 | `dialogue_manager.gd` push_overlay passes instance instead of key | `world/dialogue_manager.gd:109` | Fix overlay push API |
+
+### 5.3 Open Issues — Should Fix (High/Medium)
+
+| Source | ID | Issue | File | Status |
+| ------ | -- | ----- | ---- | ------ |
+| Apr-05 | #3 | GameSession coupling (remaining systems) | `encounter_engine.gd`, `faction_system.gd` | 3 of ~6 done; continue incrementally |
+| Apr-05 | #4 | DataLoader cache never invalidated | `data_loader.gd` | Open |
+| Apr-05 | #6 | CrewTraitSystem iterates all crew per lookup | `crew_trait_system.gd` | Open |
+| Apr-05 | #7 | Per-pixel portrait processing every dialogue open | `dialogue_ui.gd:503-525` | Open — cache processed textures |
+| Apr-05 | #9 | crystal_pickup signal arity mismatch | `event_bus.gd`, callers | Open |
+| Apr-05 | #10 | _remove_near_white_bg whiteness metric | `dialogue_ui.gd:518` | Open |
+| Apr-05 | #12 | Redundant DataLoader calls for same file | `data_loader.gd` | Open |
+| Apr-05 | #13 | No crew capacity enforcement | `game_session.gd` recruitment | Open |
+| Apr-05 | #15 | _migrate_save_data is a stub | `save_manager.gd:118-125` | Open — implement version tracking |
+| Mar-27 | §2.4 | R key collision (menu_select vs repair) | `project.godot` | Open |
+| Mar-27 | §2.3 | scene_transition tween after scene change | `world/scene_transition.gd:70-75` | Open |
+| Mar-27 | §2.5 | _show_bark infinite recursion risk | `world/dialogue_manager.gd:112-118` | Open |
+| Mar-27 | §3 | Navigation _process does too much per frame | `navigation.gd` (~800 lines) | Open |
+
+### 5.4 Open Issues — Low Priority
+
+| Source | ID | Issue | File | Status |
+| ------ | -- | ----- | ---- | ------ |
+| Apr-05 | #16 | Encounter priority re-sorted every check | `encounter_engine.gd` | Open |
+| Apr-05 | #17 | EncounterChoice.conditions never evaluated | `encounter.gd` | Open |
+| Apr-07 | #18 | combat_ui.gd complexity (586 lines) | `combat_ui.gd` | Planned — Phase 2 |
+| Apr-07 | #19 | star_map_screen.gd (1093 lines) | `star_map_screen.gd` | Planned — Phase 3 |
+| Apr-07 | #20 | dialogue_ui.gd (632 lines) | `dialogue_ui.gd` | Planned — Phase 4 |
+| Apr-07 | #22 | No test suite | Project-wide | Planned — Phase 1 |
+| Mar-27 | §15 | Missing export presets | `project.godot` | Open |
+| Mar-27 | §15 | No error recovery / crash handling | Project-wide | Open |
+| Mar-27 | §1.2 | navigation.gd 800+ lines | `navigation.gd` | Open — consider in UI decomposition sprint |
+
+---
+
+## 6. Technical Debt Inventory
+
+| Area | Description | Priority | Tracked In |
+| ---- | ----------- | -------- | ---------- |
+| God scripts | `navigation.gd` (800+), `combat_ui.gd` (586), `star_map_screen.gd` (1093), `dialogue_ui.gd` (632) | Medium | §7 Phases 2–4 |
+| Cache management | DataLoader cache unbounded, no invalidation | Medium | §5.3 Apr-05 #4 |
+| Save migration | `_migrate_save_data()` is a stub | Medium | §5.3 Apr-05 #15 |
+| Trade ledger | `trade_ledger` in GameStateData is unbounded | Low | Untracked |
+| Test coverage | No automated tests | High | §7 Phase 1 |
+| 3D asset sizes | Character GLBs are 36 MB each; textures 20 MB | Medium | §7 Phase 5 |
+| Art direction | Style guide says "to be decided" but project has moved past prototype | Medium | §7 Phase 6 |
 
 ### Engine/Addon Dependencies
 
 | Dependency | Version | Risk |
-| ------ | --------- | ------ |
-| Godot | 4.6 | Stable — GL Compatibility renderer avoids Vulkan issues on older hardware |
-| procedural_world_map addon | 1.0 (vendored) | Low — MIT licensed, vendored in `addons/`, no external dependency |
+| ---------- | ------- | ---- |
+| Godot | 4.6 | Stable — GL Compatibility renderer |
+| procedural_world_map addon | 1.0 (vendored) | Low — MIT, vendored |
+| GUT (planned) | Latest | Low — test framework, dev-only |
 
 ---
 
-## 6. Active Initiatives
+## 7. Active Initiatives & Roadmap
 
-### 6.1 Critical Bug Fixes (Immediate)
+All initiatives organised by sprint. Each sprint must pass automated tests (once established) and manual playtesting before merging.
 
-Fix the 2 critical issues from the April 2026 code review:
+### Sprint 1: Test Framework + Critical Bugs
 
-1. Evaluate `trigger_encounter_id` in encounter chain outcomes
-2. Emit game-over signal when hull reaches 0 from astral hazard damage
+**Goal:** Establish testing infrastructure and fix all critical bugs.
 
-### 6.2 Save System Hardening
+| Task | Priority | Reference | Files |
+| ---- | -------- | --------- | ----- |
+| Install GUT test framework | High | `docs/REFACTORING_PLAN.md` Phase 1 | `addons/gut/`, `tests/` |
+| Write unit tests for `ConditionEvaluator`, `CombatSystem`, `StatEvaluator`, `MathUtils` | High | Refactoring Plan 1.3–1.4 | `tests/unit/` |
+| Fix: `trigger_encounter_id` never evaluated | Critical | Apr-05 #1, §5.2 | `encounter_engine.gd`, `encounter.gd` |
+| Fix: Hull death not emitted from hazard damage | Critical | Apr-05 #2, §5.2 | `astral_hazard_system.gd` |
+| Fix: Null guard on player_ship in morale system | Critical | Mar-27 §2.1, §5.2 | `crew_morale_system.gd` |
+| Fix: dialogue_manager push_overlay API | Critical | Mar-27 §2.2, §5.2 | `world/dialogue_manager.gd` |
+| Write regression tests for each critical fix | High | Quality Policy §4 | `tests/unit/` |
 
-- Persist exploration state (discovered regions, visited POIs) in save data
-- Implement `_migrate_save_data()` for version-aware save loading
-- Add save file integrity check (optional)
+### Sprint 2: Combat UI Decomposition + Should-Fix Bugs
 
-### 6.3 Visual Polish — Remaining Sprite Work
+**Goal:** Decompose `combat_ui.gd` and address high-priority open bugs.
 
-From the original PLAN-003 (sprite character & visual identity):
+| Task | Priority | Reference | Files |
+| ---- | -------- | --------- | ----- |
+| Decompose `combat_ui.gd` (586 lines → 5 files) | Medium | Refactoring Plan Phase 2 | `scripts/ui/combat/` |
+| Fix: `crystal_pickup` signal arity mismatch | Medium | Apr-05 #9, §5.3 | `event_bus.gd`, callers |
+| Fix: R key collision (menu_select vs repair) | Medium | Mar-27 §2.4, §5.3 | `project.godot` |
+| Fix: scene_transition tween after scene change | Medium | Mar-27 §2.3, §5.3 | `world/scene_transition.gd` |
+| Fix: _show_bark recursion risk | Medium | Mar-27 §2.5, §5.3 | `world/dialogue_manager.gd` |
+| Cache processed portrait textures | Medium | Apr-05 #7, §5.3 | `dialogue_ui.gd` |
+| Tests for new combat components | High | Quality Policy §4 | `tests/unit/` |
 
-| Status | Task |
-| -------- | ------ |
-| Done | Sprite asset manager, faction ship sprites, combat ship sprites |
-| Todo | Character portraits in all dialogues (faction-coloured frames) |
-| Todo | Faction-themed UI panels |
-| Todo | Region-specific space backgrounds (colour-temperature tinting) |
-| Todo | Crystal visual effects (HUD glow, deposit POI, engine chamber) |
+### Sprint 3: Star Map Decomposition + System Fixes
 
-### 6.4 Expansion Content Integration-Testing
+**Goal:** Decompose `star_map_screen.gd` and fix system-level issues.
 
-The 10-arc story expansion (Arcs 5-10) has JSON encounter/side mission data but has not been:
+| Task | Priority | Reference | Files |
+| ---- | -------- | --------- | ----- |
+| Decompose `star_map_screen.gd` (1093 lines → 5 files) | Medium | Refactoring Plan Phase 3 | `scripts/ui/star_map/` |
+| Fix: DataLoader cache invalidation | High | Apr-05 #4, §5.3 | `data_loader.gd` |
+| Fix: Redundant DataLoader calls | Medium | Apr-05 #12, §5.3 | `data_loader.gd` |
+| Fix: CrewTraitSystem per-lookup iteration | Medium | Apr-05 #6, §5.3 | `crew_trait_system.gd` |
+| Continue GameSession decoupling (encounter_engine, faction_system) | Medium | Apr-05 #3, §5.3 | `encounter_engine.gd`, `faction_system.gd` |
+| Implement `_migrate_save_data()` version tracking | Medium | Apr-05 #15, §5.3 | `save_manager.gd` |
 
-- Played through end-to-end
-- Tested for story flag consistency
-- Verified for arc transition correctness
-- Balanced for difficulty
+### Sprint 4: Dialogue Decomposition + Crew/Content Fixes
 
-### 6.5 Difficulty Balance Pass
+**Goal:** Decompose `dialogue_ui.gd` and fix remaining medium-priority issues.
 
-Tune combat parameters, encounter data, and ship templates for a satisfying difficulty curve.
+| Task | Priority | Reference | Files |
+| ---- | -------- | --------- | ----- |
+| Decompose `dialogue_ui.gd` (632 lines → 5 files) | Medium | Refactoring Plan Phase 4 | `scripts/ui/dialogue/` |
+| Fix: _remove_near_white_bg whiteness metric | Medium | Apr-05 #10, §5.3 | `dialogue_ui.gd` (or new `portrait_manager.gd`) |
+| Fix: No crew capacity enforcement | Medium | Apr-05 #13, §5.3 | `game_session.gd` |
+| Fix: Combat loot magic numbers (remaining) | Medium | Apr-05 #8, §5.3 | `combat_ui.gd` |
 
----
+### Sprint 5: Art Direction + 3D Asset Pipeline
 
-## 7. Future Roadmap
+**Goal:** Resolve art direction ambiguity and establish 3D asset conventions.
 
-### Tier 1 — Low Effort, High Impact
+| Task | Priority | Reference | Files |
+| ---- | -------- | --------- | ----- |
+| Art direction resolution (design decision) | High | Refactoring Plan Phase 6 | `design/art_direction/art_direction_guide.md` |
+| Separate 2D/3D asset directories | Medium | Refactoring Plan Phase 5.1 | `assets/` restructure |
+| Optimise 3D model sizes (LOD, texture compression) | Medium | Refactoring Plan Phase 5.2 | `assets/characters/3d/` |
+| Consider Git LFS for large binary assets | Medium | Risk mitigation | `.gitattributes` |
 
-1. **Live World News** — Subscribe to FactionConquestSystem events; queue "subspace radio intercepts" to HUD
-2. **CI/CD Pipeline** — Headless Godot export via GitHub Actions
+### Sprint 6: Cutscene Pipeline + Content Testing
 
-### Tier 2 — Medium Effort, High Impact
+**Goal:** Scale the cutscene system and verify expansion content.
 
-1. **Wanted / Notoriety System** — Patrol encounters based on player notoriety per faction
-2. **Automated Testing** — Port the example test harness to a proper GUT/GdUnit4 test suite
+| Task | Priority | Reference | Files |
+| ---- | -------- | --------- | ----- |
+| Create cutscene template scene | Medium | Refactoring Plan Phase 5.3 | `scenes/cutscenes/cutscene_template.tscn` |
+| Extract reusable cutscene utilities | Medium | Refactoring Plan Phase 5.3 | `scripts/systems/cutscene/` |
+| Formalise cutscene data schema | Medium | Refactoring Plan Phase 5.3 | `data/cutscenes/_schema.json` |
+| Create 3D asset manifest | Low | Refactoring Plan Phase 5.5 | `ASSETS_3D.md` |
+| Integration-test Arcs 5–10 expansion content | High | §7 original 6.4 | `data/encounters/`, `data/side_missions/` |
+| Difficulty balance pass | Medium | §7 original 6.5 | `data/` JSON files |
 
-### Tier 3 — Medium Effort, Medium Impact
+### Backlog: Visual Polish & Features
 
-1. **Tavern / Station Hub with Rumors** — Information economy, purchased rumors unlock encounters
-2. **Black Market / Smuggling** — Hidden trade nodes, contraband cargo checks
-3. **Astral Dice (Gambling Mini-Game)** — Self-contained dice game; "Death plays dice" encounter
+| Task | Priority | Reference |
+| ---- | -------- | --------- |
+| Character portraits in all dialogues (faction frames) | Medium | Original 6.3 |
+| Faction-themed UI panels | Low | Original 6.3 |
+| Region-specific space backgrounds | Low | Original 6.3 |
+| Crystal visual effects | Low | Original 6.3 |
+| Live World News (subspace radio) | Low | Original Tier 1 |
+| CI/CD pipeline (headless Godot export) | Low | Original Tier 1 |
+| Wanted / Notoriety system | Low | Original Tier 2 |
+| Tavern / Station Hub with rumors | Low | Original Tier 3 |
+| Black Market / Smuggling | Low | Original Tier 3 |
+| Astral Dice mini-game | Low | Original Tier 3 |
+| Export presets (macOS notarization, icons) | Low | Mar-27 §15 |
+| Error recovery / crash handling | Low | Mar-27 §15 |
 
 ---
 
@@ -233,8 +335,10 @@ Tune combat parameters, encounter data, and ship templates for a satisfying diff
 | Architecture reference | `STRUCTURE.md` | Scenes, signals, systems, entities, data files |
 | Game design summary | `docs/GAME_SUMMARY.md` | Complete game world, story, mechanics (implemented + planned) |
 | Agent briefing | `AGENT_BRIEFING.md` | Full onboarding document for AI agents |
-| Latest code review | `docs/CODE_REVIEW_2026-04-05.md` | 18 open issues with priorities |
-| Previous code review | `docs/CODE_REVIEW_2026-03-27.md` | Historical — most issues resolved |
+| Latest code review | `docs/reviews/CODE_REVIEW_2026-04-07.md` | 22 issues, 18 implemented |
+| Code review (Apr 5) | `docs/reviews/CODE_REVIEW_2026-04-05.md` | 18 issues, partially resolved |
+| Code review (Mar 27) | `docs/reviews/CODE_REVIEW_2026-03-27.md` | First Godot review, partially resolved |
+| Refactoring plan | `docs/REFACTORING_PLAN.md` | UI decomposition, test framework, 3D pipeline |
 | Changelog | `docs/changelog/CHANGELOG.md` | Per-session change log |
 | Dev guide | `docs/GODOT_DEV_GUIDE.md` | Godot development reference and tool index |
 | Contributing guide | `docs/process/CONTRIBUTING.md` | How to pick up tasks |
@@ -288,3 +392,17 @@ Static and dynamic hazards, crew mitigation, hull damage, status effects.
 ### Karma System, Planet System, Star Base System, Skill Allocation
 
 All implemented between March 18-April 5, 2026. See changelog for details.
+
+### Code Review Remediation (2026-04-07)
+
+18 of 22 issues from the third code review implemented in a single session. Key deliverables:
+
+- **Critical fix:** Exploration state persistence in save/load (`game_state_data.gd`, `game_session.gd`)
+- **New classes:** `ConditionEvaluator` (centralised condition logic), `MathUtils` (weighted random utility)
+- **Architecture:** Decoupled `CombatSystem`, `EconomySystem`, `AstralHazardSystem` from `GameSession`; extracted `_init_systems()` method; expanded `Config` with game constants
+- **Style:** Tab indentation for cutscene files, `##` doc comments, `@warning_ignore` on EventBus, `@onready` cleanup, `CutsceneDialogueUI` rename
+- **Audio:** Separate Music/SFX audio buses (`default_bus_layout.tres`)
+- **Save system:** SHA-256 checksum integrity check, `set_process` toggling
+- **Faction system:** Encounter outcomes now delegate to `FactionSystem.change_reputation()` with cascade rules
+
+Full details: `docs/CODE_REVIEW_2026-04-07.md` (Implementation Log section).
