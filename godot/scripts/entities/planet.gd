@@ -12,6 +12,7 @@ extends Resource
 @export var position_x: float = 0.0
 @export var position_y: float = 0.0
 @export var description: String = ""
+@export var image: String = ""  # e.g. "planet_1" — filename without extension in assets/planets/
 @export var merchants: Array = []  # Array of merchant dicts
 @export var crew_available: Array = []
 @export var treasures: Array = []  # Array of treasure dicts
@@ -30,6 +31,7 @@ static func from_dict(data: Dictionary) -> Planet:
 	p.position_x = data.get("position_x", 0.0)
 	p.position_y = data.get("position_y", 0.0)
 	p.description = data.get("description", "")
+	p.image = data.get("image", "")
 	p.merchants = data.get("merchants", [])
 	p.crew_available = data.get("crew_available", [])
 	p.treasures = data.get("treasures", [])
@@ -49,6 +51,7 @@ func to_dict() -> Dictionary:
 		"position_x": position_x,
 		"position_y": position_y,
 		"description": description,
+		"image": image,
 		"merchants": merchants.duplicate(true),
 		"crew_available": crew_available.duplicate(true),
 		"treasures": treasures.duplicate(true),
