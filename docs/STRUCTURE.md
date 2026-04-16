@@ -1,6 +1,6 @@
 # Whisper Crystals — Architecture Reference
 
-Compact reference for scene structure, signal wiring, and system responsibilities. Reflects the Godot 4.6 codebase as of 2026-04-05.
+Compact reference for scene structure, signal wiring, and system responsibilities. Reflects the Godot 4.6 codebase as of **2026-04-16 (post-Sprint 5a)**.
 
 ## Game States
 
@@ -12,7 +12,7 @@ Stack operations: `switch` (replace top), `push` (overlay), `pop` (return to pre
 
 | Singleton | File | Role |
 | ----------- | ------ | ------ |
-| EventBus | `scripts/autoload/event_bus.gd` | Pub/sub signal hub (120+ signals) |
+| EventBus | `scripts/autoload/event_bus.gd` | Pub/sub signal hub (70 signals) |
 | GameSession | `scripts/autoload/game_session.gd` | Master orchestrator — owns all systems, game state, save/load |
 | MusicManager | `scripts/autoload/music_manager.gd` | Dynamic BGM tracks, SFX triggers, arc-specific themes |
 | ProceduralMapManager | `scripts/autoload/procedural_map_manager.gd` | Wraps `procedural_world_map` addon for navigation/star map backdrops |
@@ -88,6 +88,7 @@ Stack operations: `switch` (replace top), `push` (overlay), `pop` (return to pre
 | **World Layer** | | |
 | world_scene_entered / world_scene_exited | SceneTransition | GameSession |
 | npc_interaction_started / npc_interaction_ended | NPCController | DialogueManager |
+| npc_bark | DialogueManager._show_bark | any bark-listener UI (added Sprint 3c, replaces type:"npc_bark" exploration_event) |
 | door_transition | SceneTransition | SceneTransition |
 | **UI Navigation** | | |
 | ui_select / ui_cancel / ui_navigate | Various UI | Various UI |
@@ -137,6 +138,12 @@ All `extends Resource` with `to_dict()` / `from_dict()` serialization.
 | StarBase | `entities/star_base.gd` | Type, services, artifacts, reputation gate |
 
 ## UI Screens
+
+Screen controllers sit in `scripts/ui/`. Decomposed screens additionally have companion modules under subdirectories:
+
+- `scripts/ui/view_models/` — per-screen `RefCounted` adapters that wrap `GameSession` access. Pattern established in Sprint 3a; used by `combat_ui.gd` (Sprint 3b) and `star_map_screen.gd` (Sprint 5a). Full doc: `docs/architecture/CODE_REVIEW.md` §2.1.
+- `scripts/ui/combat/` — focused components for `combat_ui.gd` (`combat_layout.gd`, `combat_logic.gd`, `combat_animations.gd`, `health_bar.gd`).
+- `scripts/ui/star_map/` — layer components for the Celestial Codex (`star_map_galaxy_layer.gd`, `star_map_region_layer.gd`, `star_map_local_layer.gd`).
 
 | Screen | Scene | Controller | Type |
 | ----------- | ------- | ----------- | ------ |

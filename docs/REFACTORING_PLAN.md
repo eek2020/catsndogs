@@ -2,11 +2,34 @@
 
 **Created:** 2026-04-07
 **Source:** Code Review Issues #18, #19, #20, #22
-**Status:** Planning
+**Status:** In progress — Phases 1, 2, 3 done (2026-04-16); Phase 4 pending (Sprint 6); Phases 5–6 pending.
+
+**Phase status summary:**
+
+| Phase | Scope | Status |
+| --- | --- | --- |
+| 1 | Test framework (GUT) | **Done 2026-04-16** — 97 tests across 12 files |
+| 2 | `combat_ui.gd` decomposition (Issue #18) | **Done 2026-04-16** (Sprint 3b) — 585→399 + `scripts/ui/combat/` + `CombatViewModel` |
+| 3 | `star_map_screen.gd` decomposition (Issue #19) | **Done 2026-04-16** (Sprint 5a) — 1,092→375 + `scripts/ui/star_map/` + `StarMapViewModel` |
+| 4 | `dialogue_ui.gd` decomposition (Issue #20) | Pending — NEXT_STEPS Sprint 6 |
+| 5 | 2.5D / 3D asset pipeline + cutscene expansion | Pending — NEXT_STEPS Sprint 7 |
+| 6 | Art direction resolution | **Partial** — guide updated + Track A/B committed (NEXT_STEPS Sprint 2); sprite pilot redraw pending artist |
 
 ---
 
-## Phase 1: Test Framework Setup (Issue #22)
+## Phase 1: Test Framework Setup (Issue #22) — DONE 2026-04-16
+
+**Landed in Sprint 1.** GUT 9.6.0 vendored at `godot/addons/gut/`. Test suite grew across subsequent sprints:
+
+- **Sprint 1** — 9 tests (MathUtils, EncounterOutcome, AstralHazard hull death + 4 critical-bug regressions).
+- **Sprint 3a** — 22 tests (`test_navigation_view_model.gd`).
+- **Sprint 3b** — 31 tests (`test_combat_view_model.gd`, `test_combat_layout.gd`, `test_combat_logic.gd`).
+- **Sprint 3c** — 15 tests (`test_input_map_collisions.gd`, `test_dialogue_manager_bark.gd`, `test_portrait_cache.gd`, `test_scene_transition_handoff.gd`).
+- **Sprint 5a** — 20 tests (`test_star_map_view_model.gd`).
+
+**Total: 97 tests across 12 files, all green.** Headless runner pinned in `docs/architecture/CODE_REVIEW.md` §8.
+
+Original phase details preserved below for reference.
 
 **Effort:** 1–2 sessions | **Priority:** Do first — enables safe refactoring
 
@@ -97,9 +120,20 @@ godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests -gexi
 
 ---
 
-## Phase 2: combat_ui.gd Decomposition (Issue #18)
+## Phase 2: combat_ui.gd Decomposition (Issue #18) — DONE 2026-04-16 (Sprint 3b)
 
-**Effort:** 1 session | **Current:** 586 lines | **Target:** ~150 lines per component
+**Actual outcome:** `combat_ui.gd` 585 → **399-line orchestrator** + 4 focused components under `scripts/ui/combat/`:
+
+- `scripts/ui/combat/combat_layout.gd` — pure `compute(viewport, design_w, design_h) -> Dictionary` (unit-testable)
+- `scripts/ui/combat/combat_logic.gd` — `resolve_player_attack` / `resolve_enemy_attack` / `resolve_flee` returning result dicts
+- `scripts/ui/combat/combat_animations.gd` — Node child owning laser Line2D + shake timers
+- `scripts/ui/combat/health_bar.gd` — reusable steampunk brass-frame renderer
+
+Plus `scripts/ui/view_models/combat_view_model.gd` (`has_state`, `sync_player_hull`, `apply_victory_loot` with null-guards). `combat_ui.gd` GameSession refs 4 → 0. Tests: `test_combat_view_model.gd` (8), `test_combat_layout.gd` (12), `test_combat_logic.gd` (11). Full details: CHANGELOG entry `2026-04-16 — Sprint 3b`.
+
+Original phase plan preserved below for reference.
+
+**Effort:** 1 session | **Original:** 586 lines | **Target:** ~150 lines per component
 
 ### Analysis of current responsibilities
 
@@ -157,9 +191,21 @@ scripts/ui/combat/
 
 ---
 
-## Phase 3: star_map_screen.gd Decomposition (Issue #19)
+## Phase 3: star_map_screen.gd Decomposition (Issue #19) — DONE 2026-04-16 (Sprint 5a)
 
-**Effort:** 2 sessions | **Current:** 1093 lines | **Target:** ~200 lines per renderer
+**Actual outcome:** `star_map_screen.gd` 1,092 → **375-line orchestrator** + 3 layer components under `scripts/ui/star_map/`:
+
+- `scripts/ui/star_map/star_map_galaxy_layer.gd` — 367 lines; galaxy graph, connections, fog arcs, danger pips, legend, info box, travel-confirm dialog.
+- `scripts/ui/star_map/star_map_region_layer.gd` — 320 lines; circular sector view with fog-of-war + POIs.
+- `scripts/ui/star_map/star_map_local_layer.gd` — 258 lines; player-centered zoomed scan.
+
+Plus `scripts/ui/view_models/star_map_view_model.gd` (184 lines, null-guarded wrappers over `game_state`/`star_map_system`/`exploration` + `travel_to_region` + `set_world_entry_region`). `star_map_screen.gd` GameSession refs 23 → 0. Layer components have 0 GameSession refs. Tests: `test_star_map_view_model.gd` (20). Full details: CHANGELOG entry `2026-04-16 — Sprint 5a`.
+
+The original phase proposed `map_utils.gd` + three renderers; we collapsed `map_utils` into per-layer `const` blocks and the VM, and renamed "renderer" → "layer" to match the in-game terminology (Galaxy / Region / Local layers of the Celestial Codex).
+
+Original phase plan preserved below for reference.
+
+**Effort:** 2 sessions (actual: 1) | **Original:** 1,093 lines | **Target:** ~200 lines per renderer
 
 ### Star map responsibilities
 
@@ -431,19 +477,18 @@ Update `design/art_direction/art_direction_guide.md` with:
 
 ## Sprint Schedule
 
-| Sprint | Phase | Deliverable | Prerequisite |
-| ------ | ----- | ----------- | ------------ |
-| 1 | 1.1–1.3 | GUT installed, test structure, first 3 test files | None |
-| 1 | 1.4 | Tests for ConditionEvaluator, CombatSystem, StatEvaluator | Phase 1.1 |
-| 2 | 2.1–2.5 | combat_ui decomposition | Phase 1 tests pass |
-| 2 | 1.5 | Tests for new combat components | Phase 2 complete |
-| 3 | 3.1–3.5 | star_map_screen decomposition | Phase 1 tests pass |
-| 4 | 4.1–4.5 | dialogue_ui decomposition | Phase 1 tests pass |
-| 4 | — | Fix remaining `"""..."""`  in dialogue_ui | During Phase 4 |
-| 5 | 6 | Art direction resolution (design decision) | None — can run in parallel |
-| 5 | 5.1–5.2 | Asset directory restructure + model optimisation | Phase 6 decision |
-| 6 | 5.3–5.4 | Cutscene pipeline templates + 2.5D strategy | Phase 5.1 complete |
-| 6 | 5.5 | 3D asset manifest documentation | Phase 5.2 complete |
+This is the original sprint map from the April 7 plan. The **actual** sprint sequence landed as **NEXT_STEPS.md §2**, which sliced the work finer (Sprint 3 → 3a/3b/3c; Sprint 5 → 5a/5b/5c) and folded in a parallel art track. Both sprint indexings are kept aligned inside MASTER_PLAN.md §7.
+
+| Sprint (this plan) | Phase | Deliverable | Status |
+| --- | --- | --- | --- |
+| 1 | 1 | GUT installed, ConditionEvaluator/CombatSystem/StatEvaluator/MathUtils tests | **Done 2026-04-16** (NEXT_STEPS Sprint 1) |
+| 2 | 2 | combat_ui decomposition + tests | **Done 2026-04-16** (NEXT_STEPS Sprint 3b) |
+| 3 | 3 | star_map_screen decomposition | **Done 2026-04-16** (NEXT_STEPS Sprint 5a) |
+| 4 | 4 | dialogue_ui decomposition + `"""..."""` fix | Pending — NEXT_STEPS Sprint 6 |
+| 5 | 6 | Art direction resolution | **Partial** (guide updated; sprite pilot pending artist) — NEXT_STEPS Sprint 2 |
+| 5 | 5.1–5.2 | Asset directory restructure + model optimisation | Pending — NEXT_STEPS Sprint 7 (3D cutscene modernisation) |
+| 6 | 5.3–5.4 | Cutscene pipeline templates + 2.5D strategy | Pending — NEXT_STEPS Sprint 7 |
+| 6 | 5.5 | 3D asset manifest documentation | Pending — NEXT_STEPS Sprint 7 |
 
 ---
 
@@ -461,13 +506,15 @@ Update `design/art_direction/art_direction_guide.md` with:
 
 ## Success Criteria
 
-- [ ] All unit tests pass (GUT green)
-- [ ] No file exceeds 250 lines after decomposition
-- [ ] Each new component has at least basic unit test coverage
-- [ ] Game runs identically before and after each phase (manual playtest)
-- [ ] No new autoload dependencies introduced
-- [ ] 3D assets separated from 2D assets with clear directory conventions
-- [ ] Art direction guide updated with resolved rendering strategy
-- [ ] Cutscene template scene created — new cutscene can be authored in < 1 hour
-- [ ] All 3D models have LOD variants under 5 MB for runtime use
-- [ ] 3D asset manifest documenting all models, textures, and dependencies
+Status snapshot as of 2026-04-16 post-Sprint 5a.
+
+- [x] All unit tests pass (GUT green) — **97/97**
+- [ ] No file exceeds 250 lines after decomposition — `combat_ui.gd` 399, `star_map_screen.gd` 375, layer components 258–367; orchestrators still over 250 but well under the originals. `navigation.gd` 1,717 and `dialogue_ui.gd` 632 still pending.
+- [x] Each new component has at least basic unit test coverage — all VMs + combat components covered; layer components exercised via VM tests.
+- [x] Game runs identically before and after each phase — all orchestrators fall back to constructing a VM from the `GameSession` autoload in `_ready`, so no scene wiring changed.
+- [x] No new autoload dependencies introduced.
+- [ ] 3D assets separated from 2D assets with clear directory conventions — pending Sprint 7.
+- [ ] Art direction guide updated with resolved rendering strategy — **partial** (Track A/B committed; 3D gameplay decision pending).
+- [ ] Cutscene template scene created — pending Sprint 7.
+- [ ] All 3D models have LOD variants under 5 MB for runtime use — pending Sprint 7.
+- [ ] 3D asset manifest documenting all models, textures, and dependencies — pending Sprint 7.

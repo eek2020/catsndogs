@@ -6,6 +6,27 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Doc alignment sweep (post-Sprint 5a)
+
+Full tidy pass across every canonical plan / reference doc to reconcile numbers, statuses, and cross-references with what actually shipped in Sprints 1, 3a, 3b, 3c, and 5a. No code changes.
+
+**Docs updated:**
+
+- `docs/MASTER_PLAN.md` — §2 metrics refreshed against measured ground truth (81 GDScript files, 70 signals, 83 JSON files, 97 tests across 12 files, 106 UI + 131 total `GameSession.` refs); §3 architecture summary now states the ViewModel pattern; §5.4 #19 (star_map_screen) and #22 (test suite) closed; autoload table signal count corrected 120+ → 70.
+- `docs/architecture/CODE_REVIEW.md` — §0 re-measurement table extended with a "Post-Sprint 5a" column and a per-sprint progress bullet list; §1 critical-concerns list marked closed where closed; §2.1 rewritten to document the shipped VM pattern + remaining-screens list; §2.4 EventBus audit reports actual signal count (70); §5.2 input-collision status refreshed (R-key fixed; pause/skip on ESC logged); §7 Quick Wins split into Done / Outstanding with original tracker numbers preserved; §8 verification baselines bumped to 131 / 106 / 97-tests.
+- `docs/REFACTORING_PLAN.md` — status header + phase-summary table at top; Phases 1, 2, 3 each annotated DONE with shipped artifact paths; Sprint Schedule mapped to NEXT_STEPS slicing; Success Criteria checkboxes ticked where they hold today.
+- `docs/NEXT_STEPS.md` — §1 Track E prose reflects progress; §5 "What to do today" replaced stale bootstrap items with the current four options (5b / 5c / 7 / artist pilot).
+- `docs/STRUCTURE.md` — date refreshed to 2026-04-16; EventBus signal count 120+ → 70; `npc_bark` signal row added; new `scripts/ui/{view_models,combat,star_map}/` subdirectories documented at the head of UI Screens.
+- `docs/GODOT_NOTES.md` — autoload count fixed three → four (ProceduralMapManager was missing); added seven engine learnings surfaced by Sprints 3c and 5a (coroutines on freed nodes, dedicated signals for recursion safety, static caches on non-RefCounted classes, InputMap introspection, VM pattern, integer-division warning, RefCounted set_meta inheritance).
+- `docs/PLAN.md` — clarified as template-only; pointed at NEXT_STEPS as the live sprint list.
+- `CLAUDE.md` — added the ViewModel rule to Architecture Rules so next agents find the convention at onboarding.
+
+**Standing instruction captured** in my persistent memory (`63c52d1b-dca4-44a1-b3b4-5911f86acaee`): every substantive code change now triggers an automatic tidy-and-align pass across these same docs before declaring work done. Scope, invariants, and output shape are listed in the memory.
+
+**Verification:** full GUT suite still **97/97 green** (docs-only changes).
+
+---
+
 ## 2026-04-16 — Sprint 5a: StarMapViewModel + star_map_screen.gd decomposition
 
 NEXT_STEPS Sprint 5a. Decomposed the third and last of the original three UI god-scripts (`star_map_screen.gd`, 1,092 lines) and introduced `StarMapViewModel` as the sole path from the screen and its layer components to `GameSession`. Follows the pattern established by `NavigationViewModel` (Sprint 3a) and `CombatViewModel` (Sprint 3b).

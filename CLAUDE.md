@@ -36,6 +36,10 @@ Use `EventBus` (autoload singleton) for decoupled communication between systems.
 
 UI screens are individual `.tscn` scenes in `godot/scenes/ui/`. Each screen has a corresponding controller script in `godot/scripts/ui/`.
 
+### UI ↔ GameSession coupling via ViewModels
+
+Any UI screen that reaches `GameSession` **must** do so through a per-screen `RefCounted` ViewModel under `scripts/ui/view_models/<screen>_view_model.gd`. The screen accepts the VM via `initialize(vm)` and falls back to building one from the `GameSession` autoload in `_ready`. The VM is the only code that touches `GameSession`; this keeps screens unit-testable under GUT with a `SessionDouble`. See `docs/architecture/CODE_REVIEW.md` §2.1 for the shipped pattern (`NavigationViewModel`, `CombatViewModel`, `StarMapViewModel`).
+
 ## File Layout
 
 ```text

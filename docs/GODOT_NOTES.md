@@ -11,10 +11,11 @@ Read before starting work. Write back discoveries after completing tasks.
 
 ## Architecture
 
-- Three autoload singletons: EventBus, GameSession, MusicManager
+- Four autoload singletons: EventBus, GameSession, MusicManager, ProceduralMapManager
 - Data-driven content: all story/dialogue/encounters/factions/ships in JSON under `godot/data/`
 - Event bus pattern for decoupled inter-system communication
 - Scene-based UI: `.tscn` in `godot/scenes/ui/`, controllers in `godot/scripts/ui/`
+- UI ↔ `GameSession` coupling is routed through per-screen `RefCounted` ViewModels under `scripts/ui/view_models/` (pattern established Sprint 3a, 2026-04-16). Screens call the VM; the VM is the only thing that touches `GameSession`. Tests inject a `SessionDouble` with the same duck-typed shape.
 
 ## Known Godot Quirks (from godogen)
 
@@ -149,3 +150,41 @@ StarMapSystem manages spawn zones with respawn timers (30–90 seconds). Each zo
 ### Story flag triggers
 
 Encounter engine checks `story_flags_set` for special flags and triggers side effects: `fairy_cartographer_rescued` calls `StarMapSystem.on_cartographer_rescued()`. Pattern allows decoupled flag → system action wiring.
+
+### Coroutines cannot resume on freed nodes (Sprint 3c)
+
+If an `async` GDScript function awaits past a `tree.change_scene_to_file()` call, the calling node gets freed during the scene swap. The coroutine's `GDScriptFunctionState` becomes invalid and the remaining code silently never runs — no crash, just lost work. Specifically `scene_transition.gd` used to do `await tree.process_frame` twice AFTER the scene change, on `self` (an Area2D on the outgoing scene). Fade-in and `_is_transitioning = false` reset were being skipped. **Fix:** move post-scene-change work into a persistent autoload (`GameSession.complete_scene_transition(spawn_pos, spawn_facing, fade_duration)`) whose coroutine survives any scene swap. Tree-owned tweens (`tree.create_tween()`) likewise survive the swap; node-owned tweens do not.
+
+### Dedicated signal > multi-type signal for recursion safety (Sprint 3c)
+
+`dialogue_manager._show_bark` used to emit `EventBus.exploration_event` with `type: "npc_bark"`. `_on_exploration_event` is connected to the same signal, so any future branch that decided to handle barks would have infinite-recursed. **Fix:** dedicated signal `EventBus.npc_bark(npc_name, text)`. Keeps re-entry structurally impossible even if the handler table grows.
+
+### Static cache dicts on GDScript classes for memoisation (Sprint 3c)
+
+`static var _cache: Dictionary = {}` works on a regular `Control`/`Node` subclass (not just `RefCounted`). Pattern used in `dialogue_ui.gd._remove_near_white_bg` to memoise the O(w·h) per-pixel scan keyed by `(resource_path, hard_threshold, soft_threshold)`. Synthetic textures without a `resource_path` (e.g. generated inside tests) should fall through to the uncached path to avoid poisoning the cache with transient inputs.
+
+### InputMap introspection for test guards (Sprint 3c)
+
+`InputMap.get_actions()` returns every action including `ui_*` built-ins; filter by prefix if you only want user-defined ones. `InputMap.action_get_events(name)` returns the `InputEventKey` list. `InputEventKey.keycode == 0` means the binding is physical-only — skip those. This enabled `test_input_map_collisions.gd` to fail CI when two user actions share a keycode (e.g. the original R-key `menu_select` vs `repair` bug). Intentional context-separated overlaps (currently `pause`/`skip` on ESC) are whitelisted with a back-reference.
+
+### ViewModel pattern for UI decoupling (Sprints 3a / 3b / 5a)
+
+Every screen that reaches `GameSession` gets a companion `class_name <Screen>ViewModel extends RefCounted` under `scripts/ui/view_models/`. The VM holds a `_session` reference (the autoload in prod, a `SessionDouble` in tests) and exposes narrow, null-guarded accessors the screen actually needs plus any action methods (e.g. `travel_to_region`). Screens accept the VM via `initialize(vm)` and fall back to `VMClass.new(GameSession)` in `_ready` so the existing scene-switch flow is unchanged. Tests inject a `SessionDouble extends RefCounted` with the same duck-typed shape. Key win: the GD lint `Cannot find member X in base Y` still fires correctly against the VM even though `_session` is `Variant`, because the VM methods are strongly typed.
+
+### Integer division warning suppression (Sprint 5a)
+
+Godot 4.6 warns on `int(x) / 3` even when the result feeds a `Vector2i` constructor. Either do the division on floats first (`int(x / 3.0)`) or add `@warning_ignore("integer_division")` above the line. Preferred: float division + explicit int cast — reads clearer and satisfies the linter everywhere.
+
+### RefCounted classes inherit set_meta / get_meta (Sprint 5a)
+
+`RefCounted extends Object`, so `set_meta(name, value)` and `get_meta(name, default)` are inherited at no cost. Tests use these directly instead of custom fields when verifying VM actions that call `GameSession.set_meta("world_entry_region", ...)`. Do NOT override `set_meta` on a `RefCounted` subclass — the editor warns about shadowing the native method, and the GDScript warning-as-error policy will fail compilation.
+
+### Godot binary headless GUT run
+
+From the repo root (not from `godot/`):
+
+```bash
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit
+```
+
+Expect `97/97 passing` as of 2026-04-16 (Sprint 5a). Splash-boot resource leak warnings at exit are pre-existing; do not treat them as test failures.

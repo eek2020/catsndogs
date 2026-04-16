@@ -62,25 +62,30 @@
 
 | Singleton | Role |
 | ------ | ------ |
-| EventBus | 120+ pub/sub signals for decoupled communication |
+| EventBus | 70 pub/sub signals for decoupled communication |
 | GameSession | Master orchestrator — owns all 22 systems and game state |
 | MusicManager | Dynamic BGM, SFX, arc-specific themes |
 | ProceduralMapManager | Procedural navigation/star map backdrops |
 
 ### Codebase Metrics
 
+_Measured 2026-04-16 after Sprint 5a. GUT suite 97/97 green._
+
 | Metric | Count |
 | ------ | ------- |
-| GDScript files | ~60 |
+| GDScript files | 81 (was ~60 pre-refactors) |
 | Scene files (.tscn) | ~30 |
 | Entity classes | 8 |
 | Game systems | 22 |
-| UI screens | 23 |
-| JSON data files | ~75 |
-| EventBus signals | 120+ |
+| UI screens | 22 (includes decomposed helpers under `scripts/ui/{star_map,combat,view_models}/`) |
+| JSON data files | 83 |
+| EventBus signals | 70 (previous "120+" count was stale; audited 2026-04-16 — see CODE_REVIEW §2.4) |
+| `GameSession.` refs (total) | 131 (was 236; UI 106 + rest 25) |
+| `GameSession.` refs (`scripts/ui/`) | 106 (was 206) |
+| Unit tests | 97 across 12 files |
 | SpriteFrames resources | 16 |
 | Shaders | 2 |
-| Addon | 1 (procedural_world_map) |
+| Addons | 2 (procedural_world_map, gut) |
 
 ---
 
@@ -92,7 +97,7 @@ See `STRUCTURE.md` for the full signal map, system table, and scene inventory.
 
 - **Systems** are `RefCounted` objects owned by `GameSession` (no scene-tree presence)
 - **Entities** are `Resource` subclasses with full `to_dict()`/`from_dict()` serialization
-- **UI scenes** are stateless views that read from `GameSession.game_state` and call system methods
+- **UI screens** reach `GameSession` only through a narrow per-screen **ViewModel** under `scripts/ui/view_models/` (`NavigationViewModel`, `CombatViewModel`, `StarMapViewModel` as of Sprint 5a). The VM is injected via `initialize(vm)` with a `_ready` fallback to the autoload. Screens yet to be converted still read `GameSession` directly; coupling budget is tracked in the metrics table above.
 - **All inter-system communication** goes through `EventBus` signals
 - **All narrative/game content** lives in JSON under `godot/data/` — never hardcoded in scripts
 
@@ -196,9 +201,9 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 | Apr-05 | #16 | Encounter priority re-sorted every check | `encounter_engine.gd` | Open |
 | Apr-05 | #17 | EncounterChoice.conditions never evaluated | `encounter.gd` | Open |
 | Apr-07 | #18 | combat_ui.gd complexity (585 lines) | `combat_ui.gd` | Resolved 2026-04-16 — decomposed to 399-line orchestrator + `scripts/ui/combat/` (layout/logic/animations/health_bar) + `CombatViewModel` (Sprint 3b) |
-| Apr-07 | #19 | star_map_screen.gd (1,092 lines) | `star_map_screen.gd` | Planned — NEXT_STEPS Sprint 5 |
+| Apr-07 | #19 | star_map_screen.gd (1,092 lines) | `star_map_screen.gd` | Resolved 2026-04-16 — decomposed to 375-line orchestrator + `scripts/ui/star_map/` (galaxy/region/local layer components) + `StarMapViewModel` (Sprint 5a); 20 regression tests in `test_star_map_view_model.gd` |
 | Apr-07 | #20 | dialogue_ui.gd (631 lines) | `dialogue_ui.gd` | Planned — NEXT_STEPS Sprint 6 |
-| Apr-07 | #22 | No test suite | Project-wide | Resolved — GUT 9.6.0 vendored 2026-04-16; 62 tests across 7 files |
+| Apr-07 | #22 | No test suite | Project-wide | Resolved — GUT 9.6.0 vendored 2026-04-16; 97 tests across 12 files as of Sprint 5a |
 | Mar-27 | §15 | Missing export presets | `project.godot` | Open |
 | Mar-27 | §15 | No error recovery / crash handling | Project-wide | Open |
 | Mar-27 | §1.2 | navigation.gd size | `navigation.gd` (1,717 lines) | Open — coupling cut via VM 2026-04-16; decomposition still pending (CODE_REVIEW §2.2) |

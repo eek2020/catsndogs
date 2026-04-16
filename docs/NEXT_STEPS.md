@@ -18,7 +18,7 @@ Most of the outstanding work falls into two independent tracks. They do not bloc
 
 ### Track E — Engineering
 
-Restore test safety, fix the critical bugs, decompose the UI god-scripts, cut UI↔GameSession coupling, and wire the dormant systems so the player can feel crew morale, hazards, realm control, and conquest.
+Test safety (**done** Sprint 1), critical bugs (**done** Sprint 1), should-fix bugs (**done** Sprint 3c), UI god-scripts decomposed one at a time (combat **done** 3b, star_map **done** 5a, dialogue pending 6, navigation decomposition pending), UI↔GameSession coupling cut screen-by-screen via ViewModels (**in progress** — 3 of ~19 screens converted, 206→106 refs), and wire the dormant systems so the player can feel crew morale, hazards, realm control, and conquest (Sprint 5b/5c, **pending**).
 
 ### Track A — Art
 
@@ -246,14 +246,21 @@ Repo size dropped from ~5.0 GB to ~3.7 GB.
 
 ## 5. What to do today (if starting now)
 
-Minimum viable "first commit" from this plan:
+The "first commit" items from the original plan are all landed. Current state as of 2026-04-16 post-Sprint 5a:
 
-1. Fix the four critical bugs (MASTER_PLAN §5.2) — hours, not days.
-2. Install GUT and commit one green test.
-3. Update `art_direction_guide.md` to remove the "to be decided" line and state the Track A floor.
-4. Open this file and MASTER_PLAN §7 side by side at the start of every subsequent work session.
+- Sprint 1 (critical bugs + GUT) **done**.
+- Sprint 2 (art guide + Track A/B commitment) **done**; sprite pilot pending artist.
+- Sprint 3a/3b/3c (NavigationViewModel, CombatViewModel + combat_ui decomposition, should-fix bugs) **done**.
+- Sprint 5a (StarMapViewModel + star_map_screen decomposition) **done**.
 
-Everything else is sequenced above.
+**Pick next from:**
+
+1. **Sprint 5b** — wire crew morale into `CombatSystem.calculate_damage` + `EconomySystem.trade`; apply astral hazards during navigation tick. Gameplay gets teeth.
+2. **Sprint 5c** — dock gating (realm_control + reputation), conquest surfacing, DataLoader cache invalidation, HUD polish (segmented hull bar + objective + morale pip).
+3. **Sprint 7 cutscene modernisation** — offline Blender work, parallelisable with 5b/5c.
+4. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
+
+Open this file and MASTER_PLAN §7 side by side at the start of every work session. Everything else is sequenced above.
 
 ---
 
