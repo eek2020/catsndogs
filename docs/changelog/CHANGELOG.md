@@ -6,6 +6,46 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 3b: CombatViewModel + combat_ui.gd decomposition
+
+NEXT_STEPS Sprint 3b. Decomposed `combat_ui.gd` (the second-largest UI script, 585 lines) into five focused components per `REFACTORING_PLAN.md` Phase 2, and introduced `CombatViewModel` as the sole path from the screen to `GameSession`.
+
+**New files:**
+
+- `godot/scripts/ui/view_models/combat_view_model.gd` — narrow `RefCounted` adapter around `GameSession`. Exposes `sync_player_hull(hull)` and `apply_victory_loot(crystals, salvage)` with null-guards so the screen's `_finish` path is callable without a live session.
+- `godot/scripts/ui/combat/combat_layout.gd` — static `compute(viewport_size, design_w, design_h) -> Dictionary` that returns every ship / label / bar position. Pure math, no node refs, fully unit-testable.
+- `godot/scripts/ui/combat/combat_logic.gd` — static `resolve_player_attack`, `resolve_enemy_attack`, `resolve_flee`. Returns result dicts (`hit`, `damage`, `target_dead`, `log_messages`, `event_signals`, `new_attempts`) — no UI / EventBus coupling. An optional duck-typed `rng` argument lets tests pin dodge / flee rolls deterministically.
+- `godot/scripts/ui/combat/combat_animations.gd` — `Node` child added by `combat_ui` at runtime. Owns the laser `Line2D` references, the laser tween, and the per-ship shake timers. Emits `hit_landed(side)`.
+- `godot/scripts/ui/combat/health_bar.gd` — static `draw(canvas, rect, current, max)` reusable steampunk brass-frame health bar renderer.
+
+**combat_ui.gd changes:**
+
+- Added `initialize(vm)` hook mirroring `navigation.gd`; `_ready` falls back to constructing a VM from the `GameSession` autoload.
+- `_layout` delegates all geometry to `CombatLayout.compute` and applies the returned frame to nodes.
+- `_on_attack`, `_on_flee`, `_enemy_attack` resolve via `CombatLogic.*` and apply log messages + EventBus signals through a single `_apply_log_and_events` helper.
+- Laser + shake dispatched through a `CombatAnimations` child node.
+- Health bar `_draw` handler delegates to `CombatHealthBar.draw`.
+- `_finish` uses the VM for hull sync and loot application.
+- Scene path unchanged (`res://scripts/ui/combat_ui.gd`); `combat_ui.tscn` needs no edit.
+
+**Metrics:**
+
+- `wc -l godot/scripts/ui/combat_ui.gd` → **399** (was 585, -32%).
+- `rg "GameSession\." godot/scripts/ui/combat_ui.gd` → **0** (was 4).
+- `rg "GameSession\." godot/scripts/ui` total → **129** (was 134; Sprint 3 exit target ≤140 comfortably held).
+
+**Tests:** Three new files, 31 new tests:
+
+- `test_combat_view_model.gd` — 8 tests for `has_state`, `sync_player_hull` (happy + two null no-op paths), `apply_victory_loot` (add + null no-op + zero-amount).
+- `test_combat_layout.gd` — 12 tests covering zero-sized guard, unit-scale native resolution, porthole symmetry, 2× scaling, ultrawide cover, bar rect parity, font floors, ship-rect consistency, log height, action centring.
+- `test_combat_logic.gd` — 11 tests covering hit / miss / fatal branches of player and enemy attacks, flee success / failure / attempt-counter increment / 0.95 cap. Uses a lightweight `StubRng: RefCounted` stub for deterministic dodge / flee rolls (GDScript cannot override the native `RandomNumberGenerator.randf`).
+
+Full suite: **62/62 passing**.
+
+Sprint 3c (should-fix bugs: R-key, scene_transition tween, `_show_bark` recursion, portrait cache) is next and independent.
+
+---
+
 ## 2026-04-16 — Sprint 3a: NavigationViewModel + navigation.gd conversion
 
 NEXT_STEPS Sprint 3a. Introduced the view-model layer prescribed by CODE_REVIEW.md §2.1 and converted `navigation.gd` (the largest UI script, 1723 lines) to consume it.

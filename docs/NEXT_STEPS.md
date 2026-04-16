@@ -74,13 +74,13 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 | Convert `navigation.gd` to consume the VM via `initialize(vm)` | 73 → 0 direct `GameSession.` refs in navigation.gd; fallback to autoload in `_ready` keeps main.gd untouched | CODE_REVIEW §2.1 | **Done** |
 | Tests for the VM | 22 tests using `SessionDouble` + per-system RefCounted doubles; full suite 31/31 green | Quality policy | **Done** |
 
-**Sprint 3b — CombatViewModel + combat_ui decomposition — pending.**
+**Sprint 3b — CombatViewModel + combat_ui decomposition — DONE 2026-04-16.**
 
-| Task | Outcome | Reference |
-| --- | --- | --- |
-| `CombatViewModel` | Same pattern as `NavigationViewModel` | — |
-| Decompose `combat_ui.gd` (586 → 5 files) | As per REFACTORING_PLAN Phase 2 | MASTER_PLAN Sprint 2 |
-| Tests for new combat components | Green | Quality policy |
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| `CombatViewModel` | `godot/scripts/ui/view_models/combat_view_model.gd`; narrow GameSession adapter (`has_state`, `sync_player_hull`, `apply_victory_loot`) with null-guards | — | **Done** |
+| Decompose `combat_ui.gd` (585 → 5 files) | 585 → 399 orchestrator + 4 focused components (`combat_layout.gd`, `combat_logic.gd`, `combat_animations.gd`, `health_bar.gd`) under `scripts/ui/combat/` | MASTER_PLAN Sprint 2, REFACTORING_PLAN Phase 2 | **Done** |
+| Tests for new combat components | 31 new tests across `test_combat_view_model.gd`, `test_combat_layout.gd`, `test_combat_logic.gd`; full suite 62/62 green | Quality policy | **Done** |
 
 **Sprint 3c — should-fix bugs — pending, independent of 3b.**
 
@@ -91,7 +91,7 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 | Fix: `_show_bark` recursion | Bounded depth or re-entry guard | MASTER_PLAN §5.3 Mar-27 §2.5 |
 | Cache processed portrait textures | No per-pixel work per dialogue open | MASTER_PLAN §5.3 Apr-05 #7 |
 
-**Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0 **(done: 73 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 **(done: 206 → 134)**; combat_ui split into `scripts/ui/combat/` (3b); four should-fix bugs closed (3c).
+**Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0 **(done: 73 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 **(done: 206 → 129)**; combat_ui split into `scripts/ui/combat/` **(done: 585 → 399 + 4 components)**; four should-fix bugs closed (3c).
 
 ### Sprint 4 — Sprite roll-out (the named cast)
 
@@ -247,3 +247,4 @@ Everything else is sequenced above.
 | --- | --- |
 | 2026-04-16 | Initial plan. Folds CODE_REVIEW.md (enhanced) and MASTER_PLAN.md §7 into a two-track sprint schedule. Adds sprite modernisation track. Adds tidy-up menu. |
 | 2026-04-16 | Sprint 1 closed. Sprint 2 partial (art guide + reference pins done; sprite pilot pending artist). Sprint 3 sliced into 3a/3b/3c; 3a closed (NavigationViewModel + navigation.gd conversion, 73 → 0 refs, UI total 206 → 134, 22 new tests). |
+| 2026-04-16 | Sprint 3b closed (CombatViewModel + `combat_ui.gd` decomposition 585 → 399 orchestrator + 4 components under `scripts/ui/combat/`, 4 → 0 refs, UI total 134 → 129, 31 new tests, full suite 62/62 green). Sprint 3c still pending. |
