@@ -6,6 +6,35 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 5a: StarMapViewModel + star_map_screen.gd decomposition
+
+NEXT_STEPS Sprint 5a. Decomposed the third and last of the original three UI god-scripts (`star_map_screen.gd`, 1,092 lines) and introduced `StarMapViewModel` as the sole path from the screen and its layer components to `GameSession`. Follows the pattern established by `NavigationViewModel` (Sprint 3a) and `CombatViewModel` (Sprint 3b).
+
+**New files:**
+
+- `godot/scripts/ui/view_models/star_map_view_model.gd` — 184-line `RefCounted` adapter. Exposes `has_state`, `current_region`, `player_position`, the `star_map`/`exploration` escape hatches, narrow wrappers (`region_bounds`, `galaxy_nodes`, `galaxy_node_pos`, `galaxy_node_color`, `region_fog_percentage`, `has_map`, `cartographer_rescued`, `region_map`, `grid_dimensions`, `is_cell_revealed`), POI accessors (`visible_story_pois`, `visible_hidden_pois`, `visible_spawns`), exploration lookups (`region_info`, `region_is_discovered`, `region_display_name`), and actions (`travel_to_region`, `set_world_entry_region`). Every accessor is null-guarded so it can be called before `_init_systems` has run.
+- `godot/scripts/ui/star_map/star_map_galaxy_layer.gd` — 367 lines. Draws the top-level galaxy graph (nodes, connections, fog arcs, danger pips, legend, info box, travel-confirm dialog).
+- `godot/scripts/ui/star_map/star_map_region_layer.gd` — 320 lines. Draws the circular sector view (procedural backdrop, vignette, grid, fog-of-war, POIs, player, spawn zones, legend, chrome).
+- `godot/scripts/ui/star_map/star_map_local_layer.gd` — 258 lines. Draws the player-centered zoomed scan (grid, fog, region boundaries, POIs including nav-controller contacts, player vision ring, chrome).
+- `godot/tests/unit/test_star_map_view_model.gd` — 20 tests using `SessionDouble` + RefCounted `StarMapDouble` / `ExplorationDouble`. Covers game state, star-map wrappers, POI delegation (including game-state pass-through to `get_visible_story_pois`), exploration lookups, travel action, and world-entry meta write.
+
+**Decomposed / rewritten:**
+
+- `godot/scripts/ui/star_map_screen.gd` — **1,092 → 375 lines**. Now an orchestrator only: per-layer backdrop caching, layer transitions (`_drill_to_region`, `_zoom_to_galaxy/local/region`), galaxy selection navigation, input routing, travel confirm flow, and per-frame context-dict assembly for each layer. Injected VM via `initialize(vm)` (mirrors `navigation.gd` / `combat_ui.gd`), with a `_ready` fallback that constructs a VM from the `GameSession` autoload so the existing `main.gd` scene-switch flow stays untouched.
+
+**Metrics:**
+
+- `wc -l godot/scripts/ui/star_map_screen.gd` → **375** (was 1,092, -66%).
+- `rg "GameSession\." godot/scripts/ui/star_map_screen.gd` → **0** (was 23).
+- `rg "GameSession\." godot/scripts/ui/star_map/` → **0** across all three layer files (they only touch the VM).
+- `rg "GameSession\." godot/scripts/ui | wc -l` → **106** (was 129; NEXT_STEPS Sprint 3 exit target ≤140 comfortably held; Sprint 5 exit target ≤110 met).
+
+**Tests:** 20 new in `test_star_map_view_model.gd`. Full suite: **97/97 passing** (was 77/77).
+
+Sprint 5b (wire dormant systems: crew morale → combat / trade; astral hazards during navigation tick) and Sprint 5c (dock gating, conquest surfacing, DataLoader cache fixes, HUD polish) are next.
+
+---
+
 ## 2026-04-16 — Sprint 3c: Should-fix bugs closed
 
 NEXT_STEPS Sprint 3c. Closed the four medium-priority bugs carried from the Mar-27 and Apr-05 reviews. Each fix ships with targeted regression coverage.

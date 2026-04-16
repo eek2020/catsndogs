@@ -174,7 +174,7 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 | Source | ID | Issue | File | Status |
 | ------ | -- | ----- | ---- | ------ |
 | Apr-05 | #3 | GameSession coupling (remaining systems) | `encounter_engine.gd`, `faction_system.gd` | 3 of ~6 done; see also UI-coupling row below |
-| CR-2026-04-16 §2.1 | — | UI→GameSession coupling (view-model layer) | `scripts/ui/` | 206 → 129 refs; `navigation.gd` 73 → 0 via `NavigationViewModel` (Sprint 3a 2026-04-16); `combat_ui.gd` 4 → 0 via `CombatViewModel` (Sprint 3b 2026-04-16). Other screens in Sprints 5–6 |
+| CR-2026-04-16 §2.1 | — | UI→GameSession coupling (view-model layer) | `scripts/ui/` | 206 → 106 refs; `navigation.gd` 73 → 0 via `NavigationViewModel` (Sprint 3a); `combat_ui.gd` 4 → 0 via `CombatViewModel` (Sprint 3b); `star_map_screen.gd` 23 → 0 via `StarMapViewModel` (Sprint 5a 2026-04-16). Remaining screens in Sprint 6 |
 | Apr-05 | #4 | DataLoader cache never invalidated | `data_loader.gd` | Open |
 | Apr-05 | #6 | CrewTraitSystem iterates all crew per lookup | `crew_trait_system.gd` | Open |
 | Apr-05 | #7 | Per-pixel portrait processing every dialogue open | `dialogue_ui.gd:503-525` | **Done 2026-04-16** — static cache keyed by `resource_path` + thresholds (Sprint 3c). 6 regression tests (`test_portrait_cache.gd`) |
@@ -209,12 +209,12 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 
 | Area | Description | Priority | Tracked In |
 | ---- | ----------- | -------- | ---------- |
-| God scripts | `navigation.gd` (1,717), `combat_ui.gd` (585 → 399), `star_map_screen.gd` (1,092), `dialogue_ui.gd` (631). `navigation.gd` decoupled via VM; `combat_ui.gd` decomposed 2026-04-16 (Sprint 3b) into `scripts/ui/combat/` + VM. `navigation.gd` line split still pending | Medium | NEXT_STEPS Sprints 5 / 6 |
-| UI coupling | `GameSession.` refs inside `scripts/ui/`: 129 (was 206). `navigation.gd` 0 (was 73); `combat_ui.gd` 0 (was 4). Pattern = `scripts/ui/view_models/<screen>_view_model.gd` | Medium | CR-2026-04-16 §2.1; §5.3 CR-2026-04-16 row |
+| God scripts | `navigation.gd` (1,717), `combat_ui.gd` (585 → 399), `star_map_screen.gd` (1,092 → 375), `dialogue_ui.gd` (631). `navigation.gd` decoupled via VM; `combat_ui.gd` decomposed (Sprint 3b); `star_map_screen.gd` decomposed (Sprint 5a) into `scripts/ui/star_map/` (galaxy/region/local layer components) + `StarMapViewModel`. `navigation.gd` line split + `dialogue_ui.gd` still pending | Medium | NEXT_STEPS Sprints 5 / 6 |
+| UI coupling | `GameSession.` refs inside `scripts/ui/`: 106 (was 206). `navigation.gd` 0 (was 73); `combat_ui.gd` 0 (was 4); `star_map_screen.gd` 0 (was 23). Pattern = `scripts/ui/view_models/<screen>_view_model.gd` | Medium | CR-2026-04-16 §2.1; §5.3 CR-2026-04-16 row |
 | Cache management | DataLoader cache unbounded, no invalidation | Medium | §5.3 Apr-05 #4 |
 | Save migration | `_migrate_save_data()` is a stub | Medium | §5.3 Apr-05 #15 |
 | Trade ledger | `trade_ledger` in GameStateData is unbounded | Low | Untracked |
-| Test coverage | GUT 9.6.0 vendored 2026-04-16; 11 test files, 77 tests (MathUtils, EncounterOutcome, AstralHazard hull death, NavigationViewModel, CombatViewModel, CombatLayout, CombatLogic, InputMapCollisions, DialogueManagerBark, PortraitCache, SceneTransitionHandoff). Remaining UI and systems still untested | Medium | §7 Sprint 1 (done) + per-sprint regression tests |
+| Test coverage | GUT 9.6.0 vendored 2026-04-16; 12 test files, 97 tests (MathUtils, EncounterOutcome, AstralHazard hull death, NavigationViewModel, CombatViewModel, CombatLayout, CombatLogic, InputMapCollisions, DialogueManagerBark, PortraitCache, SceneTransitionHandoff, StarMapViewModel). Remaining UI and systems still untested | Medium | §7 Sprint 1 (done) + per-sprint regression tests |
 | 3D asset sizes | Character GLBs are 34 MB each; textures 20 MB | Medium | NEXT_STEPS Sprint 7 |
 | Art direction | Guide committed to Track A floor + Track B aspirational (2026-04-16). Sprite pilot redraw + parity screenshot still pending | Medium | NEXT_STEPS Sprints 2 / 4 |
 
@@ -264,16 +264,22 @@ All initiatives organised by sprint. Each sprint must pass automated tests (once
 
 ### Sprint 3: Star Map Decomposition + System Fixes
 
-**Goal:** Decompose `star_map_screen.gd` and fix system-level issues.
+**Goal:** Decompose `star_map_screen.gd` and fix system-level issues. Maps onto NEXT_STEPS.md Sprint 5 (sliced into 5a/5b/5c).
 
-| Task | Priority | Reference | Files |
-| ---- | -------- | --------- | ----- |
-| Decompose `star_map_screen.gd` (1093 lines → 5 files) | Medium | Refactoring Plan Phase 3 | `scripts/ui/star_map/` |
-| Fix: DataLoader cache invalidation | High | Apr-05 #4, §5.3 | `data_loader.gd` |
-| Fix: Redundant DataLoader calls | Medium | Apr-05 #12, §5.3 | `data_loader.gd` |
-| Fix: CrewTraitSystem per-lookup iteration | Medium | Apr-05 #6, §5.3 | `crew_trait_system.gd` |
-| Continue GameSession decoupling (encounter_engine, faction_system) | Medium | Apr-05 #3, §5.3 | `encounter_engine.gd`, `faction_system.gd` |
-| Implement `_migrate_save_data()` version tracking | Medium | Apr-05 #15, §5.3 | `save_manager.gd` |
+| Task | Priority | Reference | Files | Status |
+| ---- | -------- | --------- | ----- | ------ |
+| Decompose `star_map_screen.gd` (1,092 → 375 orchestrator + 3 layer components + VM) | Medium | Refactoring Plan Phase 3, NEXT_STEPS 5a | `scripts/ui/star_map/`, `scripts/ui/view_models/star_map_view_model.gd` | **Done 2026-04-16** |
+| Tests for StarMapViewModel | High | Quality Policy §4 | `tests/unit/test_star_map_view_model.gd` | **Done 2026-04-16** (20 tests; 97/97 green) |
+| Fix: DataLoader cache invalidation | High | Apr-05 #4, §5.3 | `data_loader.gd` | Pending — NEXT_STEPS 5c |
+| Fix: Redundant DataLoader calls | Medium | Apr-05 #12, §5.3 | `data_loader.gd` | Pending — NEXT_STEPS 5c |
+| Fix: CrewTraitSystem per-lookup iteration | Medium | Apr-05 #6, §5.3 | `crew_trait_system.gd` | Pending |
+| Continue GameSession decoupling (encounter_engine, faction_system) | Medium | Apr-05 #3, §5.3 | `encounter_engine.gd`, `faction_system.gd` | Pending |
+| Implement `_migrate_save_data()` version tracking | Medium | Apr-05 #15, §5.3 | `save_manager.gd` | Pending |
+| Wire crew morale into combat + trade | Medium | CODE_REVIEW §3, NEXT_STEPS 5b | `combat_system.gd`, `economy_system.gd` | Pending — NEXT_STEPS 5b |
+| Apply astral hazards during nav tick | Medium | CODE_REVIEW §3, NEXT_STEPS 5b | `navigation.gd`, `astral_hazard_system.gd` | Pending — NEXT_STEPS 5b |
+| Gate docking via realm_control + reputation | Medium | CODE_REVIEW §3, NEXT_STEPS 5c | `station_screen.gd`, `realm_control_system.gd` | Pending — NEXT_STEPS 5c |
+| Surface conquest actions as visible world changes | Medium | CODE_REVIEW §3, NEXT_STEPS 5c | `faction_conquest_system.gd`, `navigation.gd` | Pending — NEXT_STEPS 5c |
+| HUD: segmented hull bar, objective on top bar, morale pip | Medium | CODE_REVIEW §4.6, NEXT_STEPS 5c | `navigation.gd` | Pending — NEXT_STEPS 5c |
 
 ### Sprint 4: Dialogue Decomposition + Crew/Content Fixes
 

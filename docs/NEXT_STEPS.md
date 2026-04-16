@@ -111,19 +111,33 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 
 ### Sprint 5 — Star map decomposition + system wiring (gameplay gets teeth)
 
-**Track E.** Matches MASTER_PLAN Sprint 3, plus the "wire the dormant systems" work from CODE_REVIEW §3.
+**Track E.** Matches MASTER_PLAN Sprint 3, plus the "wire the dormant systems" work from CODE_REVIEW §3. Sliced into 5a / 5b / 5c the same way Sprint 3 was sliced.
+
+**Sprint 5a — StarMapViewModel + star_map_screen decomposition — DONE 2026-04-16.**
+
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| `StarMapViewModel` | `godot/scripts/ui/view_models/star_map_view_model.gd`; 184 lines; narrow GameSession adapter (has_state, current_region, player_position, star-map wrappers, POI accessors, exploration lookups, travel_to_region, set_world_entry_region). Session + system doubles shape the VM in tests. | MASTER_PLAN Sprint 3 | **Done** |
+| Decompose `star_map_screen.gd` (1092 → 4 files) | 1092 → **375-line orchestrator** + 3 layer components (`star_map_galaxy_layer.gd` 367, `star_map_region_layer.gd` 320, `star_map_local_layer.gd` 258) under `scripts/ui/star_map/`. Each layer takes the VM at construction; orchestrator passes a per-frame context dict (elapsed, selected_region, backdrops, travel state, nav_pois). | MASTER_PLAN Sprint 3, REFACTORING_PLAN Phase 3 | **Done** |
+| Tests for the VM | 20 tests in `test_star_map_view_model.gd` using SessionDouble + RefCounted doubles for star_map_system and exploration. Covers state/POI/exploration reads, travel action, world-entry meta write. | Quality policy | **Done** |
+
+**Sprint 5b — Wire dormant systems (pending).**
 
 | Task | Outcome | Reference |
 | --- | --- | --- |
-| `StarMapViewModel` + decompose `star_map_screen.gd` (1093 → 5 files) | View model + split | MASTER_PLAN Sprint 3 |
 | Wire crew morale into `CombatSystem.calculate_damage` and `EconomySystem.trade` | Morale visibly affects gameplay | CODE_REVIEW §3 |
 | Apply astral hazards during navigation tick | Ship takes damage / status in hazard regions | CODE_REVIEW §3 |
+
+**Sprint 5c — Dock gating, conquest surfacing, data/HUD polish (pending).**
+
+| Task | Outcome | Reference |
+| --- | --- | --- |
 | Gate docking via `realm_control_system.controlling_faction` + reputation | Low-rep players locked out of hostile stations | CODE_REVIEW §3 |
 | Surface conquest actions as visible world changes | Distress spawns / blockades / price shifts | CODE_REVIEW §3 |
 | Fix: DataLoader cache invalidation + redundant calls | MASTER_PLAN §5.3 Apr-05 #4, #12 | — |
 | HUD: segmented hull bar, objective on top bar, morale pip | CODE_REVIEW §4.6 | — |
 
-**Exit criteria:** EventBus log over a 20-minute session emits `crew_morale_*`, `astral_hazard_*`, `realm_control_*`, and `faction_conquest_*` signals (they are no longer dormant). HUD shows objective without opening mission log.
+**Exit criteria:** `rg "GameSession\." godot/scripts/ui/star_map_screen.gd` returns 0 **(done: 23 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 110 **(done: 129 → 106)**; `star_map_screen.gd` ≤ 400 lines **(done: 1092 → 375)**; EventBus log over a 20-minute session emits `crew_morale_*`, `astral_hazard_*`, `realm_control_*`, and `faction_conquest_*` signals (5b + 5c); HUD shows objective without opening mission log (5c).
 
 ### Sprint 6 — Dialogue decomposition + onboarding + save slots
 
@@ -251,3 +265,4 @@ Everything else is sequenced above.
 | 2026-04-16 | Sprint 1 closed. Sprint 2 partial (art guide + reference pins done; sprite pilot pending artist). Sprint 3 sliced into 3a/3b/3c; 3a closed (NavigationViewModel + navigation.gd conversion, 73 → 0 refs, UI total 206 → 134, 22 new tests). |
 | 2026-04-16 | Sprint 3b closed (CombatViewModel + `combat_ui.gd` decomposition 585 → 399 orchestrator + 4 components under `scripts/ui/combat/`, 4 → 0 refs, UI total 134 → 129, 31 new tests, full suite 62/62 green). Sprint 3c still pending. |
 | 2026-04-16 | Sprint 3c closed. All four should-fix bugs resolved: R-key was already fixed in Sprint 1 (stale tracker); `scene_transition` post-change work delegated to `GameSession.complete_scene_transition`; `_show_bark` migrated to dedicated `EventBus.npc_bark` signal; `_remove_near_white_bg` results cached by resource_path + thresholds. +15 regression tests across 4 new files (`test_input_map_collisions.gd`, `test_dialogue_manager_bark.gd`, `test_portrait_cache.gd`, `test_scene_transition_handoff.gd`); full suite 77/77 green. New finding: `pause` and `skip` both on ESC — tolerated via whitelist, flagged for Sprint 6 input-rebind work. |
+| 2026-04-16 | Sprint 5 sliced into 5a/5b/5c (mirrors the 3a/3b/3c pattern). Sprint 5a closed: StarMapViewModel + `star_map_screen.gd` decomposition. 1092 → 375-line orchestrator + 3 layer components (`scripts/ui/star_map/{galaxy,region,local}_layer.gd`) + 184-line VM. 23 → 0 refs in `star_map_screen.gd`; UI total 129 → 106. +20 tests in `test_star_map_view_model.gd`; full suite 97/97 green. Sprint 5b (system wiring: morale, hazards) and 5c (dock gating, conquest, DataLoader, HUD) still pending. |
