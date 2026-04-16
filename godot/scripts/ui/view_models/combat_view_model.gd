@@ -37,3 +37,20 @@ func apply_victory_loot(crystals: int, salvage: int) -> void:
 		return
 	_session.game_state.crystal_inventory += crystals
 	_session.game_state.salvage += salvage
+
+
+# ---------------------------------------------------------------------------
+# Crew morale (Sprint 5b)
+# ---------------------------------------------------------------------------
+
+## Morale multiplier applied to the player's outgoing damage. 1.0 when the
+## session has no game state or no morale system (e.g. standalone UI tests).
+func combat_morale_modifier() -> float:
+	if _session.game_state == null:
+		return 1.0
+	if not "crew_morale" in _session:
+		return 1.0
+	var ms = _session.crew_morale
+	if ms == null:
+		return 1.0
+	return ms.get_combat_modifier(_session.game_state)

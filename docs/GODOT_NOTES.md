@@ -179,6 +179,14 @@ Godot 4.6 warns on `int(x) / 3` even when the result feeds a `Vector2i` construc
 
 `RefCounted extends Object`, so `set_meta(name, value)` and `get_meta(name, default)` are inherited at no cost. Tests use these directly instead of custom fields when verifying VM actions that call `GameSession.set_meta("world_entry_region", ...)`. Do NOT override `set_meta` on a `RefCounted` subclass — the editor warns about shadowing the native method, and the GDScript warning-as-error policy will fail compilation.
 
+### Typed fields in test doubles reject foreign types (Sprint 5b)
+
+`class SessionDouble: var crew_morale: MoraleDouble = MoraleDouble.new()` is strongly typed. Assigning a real `CrewMoraleSystem` via `session.crew_morale = CrewMoraleSystem.new()` (or `.set(...)`) silently fails — the field keeps its prior value and the test asserts against 1.0 instead of the expected morale modifier. **Fix:** if the double must hold either a simpler stub OR the real system (e.g. for an integration test alongside unit tests), declare the field untyped: `var crew_morale = MoraleDouble.new()`. GDScript's duck typing then accepts both. Keeps the unit tests clean while letting one integration test exercise the real morale-threshold math end-to-end.
+
+### Audit before implementing: "wire the dormant system" tickets may already be wired (Sprint 5b)
+
+Both NEXT_STEPS.md and CODE_REVIEW.md listed "apply astral hazards during navigation tick" as pending. Grep revealed `_update_astral_hazards(dt)` was already running in `navigation.gd._process` since the hazard feature shipped — the tracker was stale. Before touching code on a "wire X into Y" ticket, grep the candidate call-site for the system's entry-point methods. Saves re-wiring effort and catches stale tracker rows that should be retired instead of implemented. (Same pattern surfaced in Sprints 1 and 3c for bug tickets.)
+
 ### Godot binary headless GUT run
 
 From the repo root (not from `godot/`):
@@ -187,4 +195,4 @@ From the repo root (not from `godot/`):
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit
 ```
 
-Expect `97/97 passing` as of 2026-04-16 (Sprint 5a). Splash-boot resource leak warnings at exit are pre-existing; do not treat them as test failures.
+Expect `121/121 passing` as of 2026-04-16 (Sprint 5b). Splash-boot resource leak warnings at exit are pre-existing; do not treat them as test failures.

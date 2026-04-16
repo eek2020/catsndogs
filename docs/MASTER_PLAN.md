@@ -1,6 +1,6 @@
 # Whisper Crystals — Master Plan
 
-**Date:** 2026-04-07
+**Date:** 2026-04-16 (post-Sprint 5b)
 **Status:** Authoritative — single source of truth for project planning
 **Supersedes:** `docs/archive/plans/MASTER_PLAN_2026-03-20.md`, `MASTER_PLAN_2026-04-05.md`, all previous plan documents
 
@@ -69,7 +69,7 @@
 
 ### Codebase Metrics
 
-_Measured 2026-04-16 after Sprint 5a. GUT suite 97/97 green._
+_Measured 2026-04-16 after Sprint 5b. GUT suite 121/121 green._
 
 | Metric | Count |
 | ------ | ------- |
@@ -82,7 +82,7 @@ _Measured 2026-04-16 after Sprint 5a. GUT suite 97/97 green._
 | EventBus signals | 70 (previous "120+" count was stale; audited 2026-04-16 — see CODE_REVIEW §2.4) |
 | `GameSession.` refs (total) | 131 (was 236; UI 106 + rest 25) |
 | `GameSession.` refs (`scripts/ui/`) | 106 (was 206) |
-| Unit tests | 97 across 12 files |
+| Unit tests | 121 across 14 files |
 | SpriteFrames resources | 16 |
 | Shaders | 2 |
 | Addons | 2 (procedural_world_map, gut) |
@@ -192,6 +192,8 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 | Mar-27 | §2.3 | scene_transition tween after scene change | `world/scene_transition.gd:70-75` | **Done 2026-04-16** — post-scene-change work moved to persistent `GameSession.complete_scene_transition(...)`; `scene_transition.gd` no longer awaits on self after swap (Sprint 3c). 4 regression tests (`test_scene_transition_handoff.gd`) |
 | Mar-27 | §2.5 | _show_bark infinite recursion risk | `world/dialogue_manager.gd:112-118` | **Done 2026-04-16** — dedicated `EventBus.npc_bark` signal; no longer reuses `exploration_event` (Sprint 3c). 3 regression tests (`test_dialogue_manager_bark.gd`) |
 | CR-2026-04-16 | — | pause / skip both bound to ESC (context-separated) | `project.godot:75-113` | Open — surfaced by Sprint 3c `test_input_map_collisions.gd`. Currently tolerated via whitelist since `pause` and `skip` live in disjoint screens; revisit in Sprint 6 input-rebind work |
+| CR-2026-04-16 §3 | — | Crew morale dormant in combat + trade | `combat_system.gd`, `economy_system.gd`, `combat_view_model.gd`, `trade_screen.gd` | **Done 2026-04-16** — Sprint 5b. `calculate_damage` takes `morale_modifier`; `get_buy_price`/`get_sell_price`/`buy_crystals`/`sell_crystals` take it too; `CombatViewModel.combat_morale_modifier()` routes it from the session; `trade_screen.gd` pulls from `GameSession.crew_morale.get_trade_modifier`. 24 regression tests in `test_crew_morale_combat_wiring.gd` + `test_crew_morale_trade_wiring.gd` |
+| CR-2026-04-16 §3 | — | Astral hazards applied during nav tick | `navigation.gd`, `astral_hazard_system.gd` | **Done** — stale tracker. `navigation.gd:213` already calls `_update_astral_hazards(dt)` each frame (hazard entropy timer, collision, status HUD); discovered during Sprint 5b audit. `NEXT_STEPS.md` §5b row retired accordingly |
 | Mar-27 | §3 | Navigation _process does too much per frame | `navigation.gd` (1,717 lines) | Still open; VM conversion 2026-04-16 cut coupling but not line count. Decomposition is NEXT_STEPS.md Sprint 3b / CODE_REVIEW §2.2 |
 
 ### 5.4 Open Issues — Low Priority
@@ -219,7 +221,7 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 | Cache management | DataLoader cache unbounded, no invalidation | Medium | §5.3 Apr-05 #4 |
 | Save migration | `_migrate_save_data()` is a stub | Medium | §5.3 Apr-05 #15 |
 | Trade ledger | `trade_ledger` in GameStateData is unbounded | Low | Untracked |
-| Test coverage | GUT 9.6.0 vendored 2026-04-16; 12 test files, 97 tests (MathUtils, EncounterOutcome, AstralHazard hull death, NavigationViewModel, CombatViewModel, CombatLayout, CombatLogic, InputMapCollisions, DialogueManagerBark, PortraitCache, SceneTransitionHandoff, StarMapViewModel). Remaining UI and systems still untested | Medium | §7 Sprint 1 (done) + per-sprint regression tests |
+| Test coverage | GUT 9.6.0 vendored 2026-04-16; 14 test files, 121 tests (MathUtils, EncounterOutcome, AstralHazard hull death, NavigationViewModel, CombatViewModel, CombatLayout, CombatLogic, InputMapCollisions, DialogueManagerBark, PortraitCache, SceneTransitionHandoff, StarMapViewModel, CrewMoraleCombatWiring, CrewMoraleTradeWiring). Remaining UI and systems still untested | Medium | §7 Sprint 1 (done) + per-sprint regression tests |
 | 3D asset sizes | Character GLBs are 34 MB each; textures 20 MB | Medium | NEXT_STEPS Sprint 7 |
 | Art direction | Guide committed to Track A floor + Track B aspirational (2026-04-16). Sprite pilot redraw + parity screenshot still pending | Medium | NEXT_STEPS Sprints 2 / 4 |
 
@@ -275,13 +277,14 @@ All initiatives organised by sprint. Each sprint must pass automated tests (once
 | ---- | -------- | --------- | ----- | ------ |
 | Decompose `star_map_screen.gd` (1,092 → 375 orchestrator + 3 layer components + VM) | Medium | Refactoring Plan Phase 3, NEXT_STEPS 5a | `scripts/ui/star_map/`, `scripts/ui/view_models/star_map_view_model.gd` | **Done 2026-04-16** |
 | Tests for StarMapViewModel | High | Quality Policy §4 | `tests/unit/test_star_map_view_model.gd` | **Done 2026-04-16** (20 tests; 97/97 green) |
+| Tests for Sprint 5b morale wiring | High | Quality Policy §4 | `tests/unit/test_crew_morale_combat_wiring.gd`, `test_crew_morale_trade_wiring.gd` | **Done 2026-04-16** (24 tests; 121/121 green) |
 | Fix: DataLoader cache invalidation | High | Apr-05 #4, §5.3 | `data_loader.gd` | Pending — NEXT_STEPS 5c |
 | Fix: Redundant DataLoader calls | Medium | Apr-05 #12, §5.3 | `data_loader.gd` | Pending — NEXT_STEPS 5c |
 | Fix: CrewTraitSystem per-lookup iteration | Medium | Apr-05 #6, §5.3 | `crew_trait_system.gd` | Pending |
 | Continue GameSession decoupling (encounter_engine, faction_system) | Medium | Apr-05 #3, §5.3 | `encounter_engine.gd`, `faction_system.gd` | Pending |
 | Implement `_migrate_save_data()` version tracking | Medium | Apr-05 #15, §5.3 | `save_manager.gd` | Pending |
-| Wire crew morale into combat + trade | Medium | CODE_REVIEW §3, NEXT_STEPS 5b | `combat_system.gd`, `economy_system.gd` | Pending — NEXT_STEPS 5b |
-| Apply astral hazards during nav tick | Medium | CODE_REVIEW §3, NEXT_STEPS 5b | `navigation.gd`, `astral_hazard_system.gd` | Pending — NEXT_STEPS 5b |
+| Wire crew morale into combat + trade | Medium | CODE_REVIEW §3, NEXT_STEPS 5b | `combat_system.gd`, `economy_system.gd`, `combat_view_model.gd`, `trade_screen.gd` | **Done 2026-04-16** (Sprint 5b) |
+| Apply astral hazards during nav tick | Medium | CODE_REVIEW §3, NEXT_STEPS 5b | `navigation.gd`, `astral_hazard_system.gd` | **Done** — stale tracker (already wired at `navigation.gd:213`); retired in Sprint 5b tidy pass |
 | Gate docking via realm_control + reputation | Medium | CODE_REVIEW §3, NEXT_STEPS 5c | `station_screen.gd`, `realm_control_system.gd` | Pending — NEXT_STEPS 5c |
 | Surface conquest actions as visible world changes | Medium | CODE_REVIEW §3, NEXT_STEPS 5c | `faction_conquest_system.gd`, `navigation.gd` | Pending — NEXT_STEPS 5c |
 | HUD: segmented hull bar, objective on top bar, morale pip | Medium | CODE_REVIEW §4.6, NEXT_STEPS 5c | `navigation.gd` | Pending — NEXT_STEPS 5c |

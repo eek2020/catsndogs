@@ -6,6 +6,54 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 5b: Wire dormant systems (crew morale + astral hazards)
+
+NEXT_STEPS Sprint 5b. Wired crew morale into combat damage and trade pricing — the first two of four "dormant" systems flagged in CODE_REVIEW §3 now drive player-visible behaviour. Discovery during audit: astral hazards were already wired (stale tracker), retired from the plan rather than re-implemented.
+
+**Crew morale wiring:**
+
+- `godot/scripts/systems/combat_system.gd` — `CombatSystem.calculate_damage(attacker_fp, defender_armour, crew_bonus, combat_skill, crit_chance, morale_modifier = 1.0)`. New 6th parameter scales `effective_fp` multiplicatively after the crew-trait + combat-skill bonuses, before armour subtraction. Default 1.0 keeps the existing 62-test combat suite untouched.
+- `godot/scripts/ui/combat/combat_logic.gd` — `resolve_player_attack(..., player_morale_modifier = 1.0)` threads the modifier into `calculate_damage`. Enemy attacks unchanged — no enemy morale model.
+- `godot/scripts/ui/view_models/combat_view_model.gd` — new `combat_morale_modifier()` adapter. Null-guarded three ways: missing `game_state`, missing `crew_morale` field on the session, and null system reference. Returns 1.0 in all unsafe cases so UI-only tests (no autoload) keep passing.
+- `godot/scripts/ui/combat_ui.gd` — `_on_attack` calls `_vm.combat_morale_modifier()` and passes it through to `resolve_player_attack`.
+- `godot/scripts/systems/economy_system.gd` — `get_buy_price`, `get_sell_price`, `buy_crystals`, `sell_crystals` all take `morale_modifier: float = 1.0`. Buy side applies it directly (low morale = higher price). Sell side inverts via `sell_morale = 2.0 - m` so INSPIRED morale raises sell revenue and MUTINY lowers it — keeps the "low morale hurts the player on BOTH sides" invariant the morale system intends.
+- `godot/scripts/ui/trade_screen.gd` — `_on_buy` / `_on_sell` call a new `_get_trade_morale_modifier()` helper that fetches from `GameSession.crew_morale.get_trade_modifier(game_state)`. Falls back to 1.0 if the morale system is unavailable (early boot, tests).
+
+**Astral hazards — stale tracker retired:**
+
+Grep during the 5b audit revealed `navigation.gd:213` has called `_update_astral_hazards(dt)` every frame since the hazard feature shipped (entropy timer + dynamic spawn, collision detection, status HUD, off-course drift — all already alive). The NEXT_STEPS + MASTER_PLAN + CODE_REVIEW rows that listed "apply astral hazards during navigation tick" as pending were never accurate. Retired the rows with a back-reference to this audit. Third stale-tracker retirement this cycle (following R-key collision and the two morale null-guard rows in Sprint 1).
+
+**Dormant-systems count:**
+
+- Before Sprint 5b: 4 dormant (crew morale, astral hazards, realm control, faction conquest).
+- After Sprint 5b: 2 dormant (realm control, faction conquest) — both scheduled for Sprint 5c.
+
+**New test files:**
+
+- `godot/tests/unit/test_crew_morale_combat_wiring.gd` — 12 tests across three layers: raw `CombatSystem.calculate_damage` math (morale scales damage, extreme 2.0 vs 0.4 ranges don't overlap, default param neutral), `CombatLogic.resolve_player_attack` thread-through (averaged over 60 samples to smooth ±20% variance), `CombatViewModel.combat_morale_modifier()` null-guards + real-system integration (constructs a `SessionDouble` with a real `CrewMoraleSystem` and verifies MUTINY→0.7 / INSPIRED→1.2 thresholds).
+- `godot/tests/unit/test_crew_morale_trade_wiring.gd` — 12 tests covering `get_buy_price` (low morale raises, high morale lowers, karma×morale compose multiplicatively, default is neutral), `get_sell_price` (directionality inverted as designed), `buy_crystals` / `sell_crystals` charge-and-credit round-trips at low vs neutral morale, and sanity checks that transactions still succeed at non-neutral morale.
+
+**Metrics:**
+
+- `rg "GameSession\." godot/scripts/ui | wc -l` → **106** (unchanged — morale is threaded via VM in combat, via `GameSession.crew_morale` helper in `trade_screen.gd` which keeps the existing GameSession refs).
+- Full GUT suite: **121/121 passing** (was 97/97; +24 tests across 2 new files).
+- Dormant systems: 4 → **2**.
+
+**Command:**
+
+```bash
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit
+```
+
+**Findings / learnings surfaced:**
+
+- Typed fields in test doubles silently reject foreign types (e.g. assigning a real `CrewMoraleSystem` to a `var crew_morale: MoraleDouble` field no-ops). Untype the field when the double must hold either stub or real system. Captured in `docs/GODOT_NOTES.md`.
+- "Wire X into Y" tracker items should be grepped against the candidate call-site before implementation — stale tracker pattern has now surfaced in Sprints 1 (two of the four critical bugs), 3c (R-key), and 5b (astral hazards). Also captured in `GODOT_NOTES.md` as a standing rule.
+
+Sprint 5c (dock gating via realm_control + reputation, faction conquest surfacing as distress spawns / blockades, DataLoader cache invalidation per MASTER_PLAN §5.3 Apr-05 #4 + #12, HUD polish with segmented hull bar + objective + morale pip) is the finish line for the dormant-systems work. Sprint 7 (3D cutscene Blender-first modernisation) is parallelisable with 5c and has its engineering-prep scaffolding landing in the companion commit alongside this one.
+
+---
+
 ## 2026-04-16 — Doc alignment sweep (post-Sprint 5a)
 
 Full tidy pass across every canonical plan / reference doc to reconcile numbers, statuses, and cross-references with what actually shipped in Sprints 1, 3a, 3b, 3c, and 5a. No code changes.

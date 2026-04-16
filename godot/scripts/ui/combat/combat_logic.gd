@@ -25,10 +25,14 @@ extends RefCounted
 ## - target_dead: bool                   — enemy hull reached 0 this round
 ## - log_messages: Array[String]         — lines to append to the combat log
 ## - event_signals: Array[StringName]    — EventBus signals to emit
+## [param player_morale_modifier] — crew morale multiplier on the player's
+##   outgoing damage (0.7..1.2). Defaults to 1.0 so existing tests that
+##   don't model morale keep passing untouched.
 static func resolve_player_attack(
 	player: CombatSystem.CombatShip,
 	enemy: CombatSystem.CombatShip,
 	rng = null,
+	player_morale_modifier: float = 1.0,
 ) -> Dictionary:
 	var dodge := CombatSystem.dodge_chance(enemy.speed)
 	var roll: float = rng.randf() if rng != null else randf()
@@ -41,7 +45,10 @@ static func resolve_player_attack(
 		log_msgs.append("%s dodges!" % enemy.ship_name)
 		events.append(&"combat_miss")
 	else:
-		damage = CombatSystem.calculate_damage(player.firepower, enemy.armour)
+		damage = CombatSystem.calculate_damage(
+			player.firepower, enemy.armour,
+			0.0, 0, 0.0, player_morale_modifier
+		)
 		enemy.current_hull = maxi(0, enemy.current_hull - damage)
 		log_msgs.append("You deal %d damage to %s!" % [damage, enemy.ship_name])
 		events.append(&"combat_hit")

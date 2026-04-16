@@ -195,7 +195,8 @@ func _on_attack() -> void:
 		return
 	_set_buttons_disabled(true)
 
-	var result := CombatLogic.resolve_player_attack(player_ship, enemy_ship)
+	var morale_mod := _vm.combat_morale_modifier()
+	var result := CombatLogic.resolve_player_attack(player_ship, enemy_ship, null, morale_mod)
 	_apply_log_and_events(result)
 	_fire_laser("player", result["hit"])
 

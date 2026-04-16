@@ -59,18 +59,23 @@ class CombatLog extends RefCounted:
 ## on autoloads (Issue #5). Callers (e.g. combat_ui.gd) extract the values
 ## from GameSession before calling.
 ##
-## [param crew_bonus]   — crew trait firepower bonus (0.0–1.0).
-## [param combat_skill] — player character combat_skill stat (0–10).
-## [param crit_chance]  — crew trait critical-hit chance (0.0–1.0).
+## [param crew_bonus]      — crew trait firepower bonus (0.0–1.0).
+## [param combat_skill]    — player character combat_skill stat (0–10).
+## [param crit_chance]     — crew trait critical-hit chance (0.0–1.0).
+## [param morale_modifier] — crew morale multiplier on outgoing firepower
+##   (0.7 at MUTINY, 1.0 neutral, 1.2 at INSPIRED). Callers pass
+##   `GameSession.crew_morale.get_combat_modifier(game_state)` or 1.0.
 static func calculate_damage(
 	attacker_fp: int,
 	defender_armour: int,
 	crew_bonus: float = 0.0,
 	combat_skill: int = 0,
 	crit_chance: float = 0.0,
+	morale_modifier: float = 1.0,
 ) -> int:
 	var effective_fp: float = float(attacker_fp) * (1.0 + crew_bonus)
 	effective_fp *= (1.0 + combat_skill * 0.02)
+	effective_fp *= morale_modifier
 	var base := maxi(1, int(effective_fp) - defender_armour)
 	var variance := randf_range(Config.DAMAGE_VARIANCE_MIN, Config.DAMAGE_VARIANCE_MAX)
 	var damage := maxi(1, int(base * variance))

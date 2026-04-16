@@ -8,7 +8,7 @@
 
 | Phase | Scope | Status |
 | --- | --- | --- |
-| 1 | Test framework (GUT) | **Done 2026-04-16** — 97 tests across 12 files |
+| 1 | Test framework (GUT) | **Done 2026-04-16** — 121 tests across 14 files (Sprint 5b added crew-morale wiring coverage) |
 | 2 | `combat_ui.gd` decomposition (Issue #18) | **Done 2026-04-16** (Sprint 3b) — 585→399 + `scripts/ui/combat/` + `CombatViewModel` |
 | 3 | `star_map_screen.gd` decomposition (Issue #19) | **Done 2026-04-16** (Sprint 5a) — 1,092→375 + `scripts/ui/star_map/` + `StarMapViewModel` |
 | 4 | `dialogue_ui.gd` decomposition (Issue #20) | Pending — NEXT_STEPS Sprint 6 |
@@ -26,8 +26,9 @@
 - **Sprint 3b** — 31 tests (`test_combat_view_model.gd`, `test_combat_layout.gd`, `test_combat_logic.gd`).
 - **Sprint 3c** — 15 tests (`test_input_map_collisions.gd`, `test_dialogue_manager_bark.gd`, `test_portrait_cache.gd`, `test_scene_transition_handoff.gd`).
 - **Sprint 5a** — 20 tests (`test_star_map_view_model.gd`).
+- **Sprint 5b** — 24 tests (`test_crew_morale_combat_wiring.gd`, `test_crew_morale_trade_wiring.gd`).
 
-**Total: 97 tests across 12 files, all green.** Headless runner pinned in `docs/architecture/CODE_REVIEW.md` §8.
+**Total: 121 tests across 14 files, all green.** Headless runner pinned in `docs/architecture/CODE_REVIEW.md` §8.
 
 Original phase details preserved below for reference.
 
@@ -508,7 +509,7 @@ This is the original sprint map from the April 7 plan. The **actual** sprint seq
 
 Status snapshot as of 2026-04-16 post-Sprint 5a.
 
-- [x] All unit tests pass (GUT green) — **97/97**
+- [x] All unit tests pass (GUT green) — **121/121**
 - [ ] No file exceeds 250 lines after decomposition — `combat_ui.gd` 399, `star_map_screen.gd` 375, layer components 258–367; orchestrators still over 250 but well under the originals. `navigation.gd` 1,717 and `dialogue_ui.gd` 632 still pending.
 - [x] Each new component has at least basic unit test coverage — all VMs + combat components covered; layer components exercised via VM tests.
 - [x] Game runs identically before and after each phase — all orchestrators fall back to constructing a VM from the `GameSession` autoload in `_ready`, so no scene wiring changed.

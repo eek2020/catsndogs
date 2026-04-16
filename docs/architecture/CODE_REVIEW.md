@@ -1,6 +1,6 @@
 # Whisper Crystals — Godot Code Review
 
-**Date:** 2026-04-16 (enhanced pass, refreshed post-Sprint 5a)
+**Date:** 2026-04-16 (enhanced pass, refreshed post-Sprint 5b)
 **Scope:** Full codebase walk — autoloads, systems, entities, UI, data, scenes, **and visual assets**.
 **Supersedes:** the previous edition of this file (same path). See `docs/reviews/` for the earlier dated reviews that fed into `docs/MASTER_PLAN.md` §5.
 **Companion plan:** [docs/NEXT_STEPS.md](../NEXT_STEPS.md) — prioritised action list reconciled with [docs/MASTER_PLAN.md](../MASTER_PLAN.md).
@@ -21,10 +21,10 @@ The previous edition identified sound structural issues but was written against 
 | `dialogue_ui.gd` | 632 | 631 | 632 (pending Sprint 6) |
 | `game_session.gd` | 432 | 437 | 506 (grew in 3c to own post-scene-change transition work) |
 | `event_bus.gd` signal count | "50+" / MASTER_PLAN quoted 120+ | ≈ 50 declared | **70** (audited 2026-04-16; `npc_bark` added 3c) |
-| Unit tests | 0 | 0 | **97 across 12 files** (GUT 9.6.0 vendored) |
+| Unit tests | 0 | 0 | **121 across 14 files** (GUT 9.6.0 vendored; Sprint 5b added crew-morale wiring coverage) |
 | Four critical bugs (§5.2) | Open | Open | **All closed** 2026-04-16 (Sprint 1) |
 
-**Headline shift:** UI coupling is no longer the dominant issue. Sprints 3a/3b/5a retired 100 of the 206 UI refs by routing three screens through dedicated ViewModels. What remains: `navigation.gd` still 1,717 lines (coupling gone, decomposition pending); `dialogue_ui.gd` still a monolith (Sprint 6); four dormant systems (morale, hazards, realm_control, faction_conquest) still unwired into gameplay (Sprint 5b / 5c).
+**Headline shift:** UI coupling is no longer the dominant issue. Sprints 3a/3b/5a retired 100 of the 206 UI refs by routing three screens through dedicated ViewModels. What remains: `navigation.gd` still 1,717 lines (coupling gone, decomposition pending); `dialogue_ui.gd` still a monolith (Sprint 6); **two** dormant systems (realm_control, faction_conquest) still unwired into gameplay (Sprint 5c). Sprint 5b landed morale wiring + retired the "astral hazards not applied" tracker as stale (already wired at `navigation.gd:213`).
 
 **Post-review progress (2026-04-16):**
 
@@ -33,6 +33,7 @@ The previous edition identified sound structural issues but was written against 
 - **Sprint 3b** — `CombatViewModel` + `combat_ui.gd` decomposition (585→399 + `scripts/ui/combat/{layout,logic,animations,health_bar}.gd`; 4→0 refs; 31 tests).
 - **Sprint 3c** — Four should-fix bugs closed: R-key collision (stale tracker), `scene_transition` tween-on-freed-node (moved post-change work into `GameSession.complete_scene_transition`), `_show_bark` recursion risk (dedicated `EventBus.npc_bark` signal), portrait texture cache (static memo keyed by `resource_path`+thresholds). 15 tests.
 - **Sprint 5a** — `StarMapViewModel` + `star_map_screen.gd` decomposition (1,092→375 + `scripts/ui/star_map/{galaxy,region,local}_layer.gd`; 23→0 refs; 20 tests).
+- **Sprint 5b** — Crew morale wired into combat damage (`CombatSystem.calculate_damage(..., morale_modifier)`) and trade pricing (`EconomySystem.get_buy_price/get_sell_price/buy_crystals/sell_crystals` all take `morale_modifier`). `CombatViewModel.combat_morale_modifier()` fetches from `GameSession.crew_morale.get_combat_modifier(gs)`; `trade_screen.gd` uses `get_trade_modifier(gs)`. Astral-hazards "pending" tracker retired as stale — `navigation.gd:213` already drives the tick. 24 regression tests across `test_crew_morale_combat_wiring.gd` + `test_crew_morale_trade_wiring.gd`.
 
 Pattern — `scripts/ui/view_models/<screen>_view_model.gd` + duck-typed `SessionDouble` for tests — is established and will be reused for `dialogue_ui.gd` (Sprint 6) and the remaining smaller screens.
 
@@ -53,12 +54,12 @@ Pattern — `scripts/ui/view_models/<screen>_view_model.gd` + duck-typed `Sessio
 2. **UI coupling is being retired screen-by-screen.** Was 206 UI `GameSession.` refs; now **106** after three ViewModel landings. Remaining screens (dialogue_ui, ship_screen, mission_log, station, faction, purchase, trade, pause_menu, settings…) will each get their own VM over Sprints 6–7.
 3. **`navigation.gd` remains 1,717 lines.** Coupling was cut via `NavigationViewModel` (Sprint 3a) but function bodies were not decomposed. Still owns input, physics, minimap, POI rendering, fog-of-war, particles, and hazard overlays. Decomposition into renderer child nodes (§2.2 below) is outstanding.
 4. **Four March-review critical bugs — all closed** as of 2026-04-16 (Sprint 1). See MASTER_PLAN §5.1.
-5. **Automated tests — GUT 9.6.0 vendored**, 97 tests across 12 files green. Every subsequent sprint ships with regression tests.
-6. **Dormant systems still dormant.** Crew morale, astral hazards, realm control, and faction conquest all compute state but do not flow into the combat/trade/docking/navigation loops the player actually touches. Scheduled for Sprint 5b (morale + hazards) and 5c (dock gating + conquest surfacing). Until these land, player choice in the arc system is still largely performative.
+5. **Automated tests — GUT 9.6.0 vendored**, 121 tests across 14 files green. Every subsequent sprint ships with regression tests.
+6. **Two dormant systems remain.** Sprint 5b landed crew-morale wiring (combat damage + trade prices) and retired the astral-hazards tracker as stale (hazards have been applied during `_update_astral_hazards(dt)` since the feature shipped). Realm control and faction conquest still compute state without affecting docking or the visible world; scheduled for Sprint 5c.
 
 ### Non-critical but high-leverage
 
-- Systems-built-but-not-wired gap persists: crew morale, astral hazards, realm control, faction conquest. Player cannot feel these systems today.
+- Systems-built-but-not-wired gap narrowed: realm control and faction conquest still unwired. Crew morale (Sprint 5b) and astral hazards (already wired; retired as stale) are no longer in this list.
 - Arc branching is nominal — paths converge. Player choice is performative.
 - Combat is still a stat check (no abilities, no status effects, no archetypes).
 - Onboarding, accessibility, controller support, and multi-slot saves remain on the backlog.
@@ -142,7 +143,7 @@ Unchanged in direction from the previous review; still the highest-leverage area
 
 - **Make choice branch the arc.** Replace the AND'd exit conditions in `arc_definitions.json` with OR-of-requirement-sets; tag encounters with `requires_flag` for path-gating; persist per-faction stance.
 - **Give combat tactical decisions.** 2–3 abilities per crew role, reuse the existing status-effect shape from `astral_hazard_system.gd`, add `ai_profile` to ship templates.
-- **Wire the dormant systems.** Crew morale → combat damage + trade prices; astral hazards → applied in navigation tick; realm control → gates docking; conquest actions → visible world changes.
+- **Wire the dormant systems.** ~~Crew morale → combat damage + trade prices~~ (Sprint 5b); ~~astral hazards → applied in navigation tick~~ (stale tracker, already wired); realm control → gates docking; conquest actions → visible world changes.
 - **Reward pressure gradient.** Upgrade tiers (T1 10 / T2 40 / T3 120), consumables, crew hire cost + upkeep.
 - **Side missions with teeth.** Time-limited missions, arc-cascade missions, mission chains.
 - **Procedural map as gameplay.** Distress events that read faction state, dynamic spawn difficulty, region ownership colouring.
@@ -381,7 +382,8 @@ Progress on the original list, plus remaining small-but-high-impact items.
 **Done (original tracker numbers preserved in parentheses):**
 
 - (#1) ~~**Fix the 4 remaining critical bugs from MASTER_PLAN §5.2.**~~ Sprint 1 (2026-04-16).
-- (#2) ~~**Install GUT and add one test** (`test_condition_evaluator.gd`).~~ Sprint 1. Now 97 tests across 12 files.
+- (#2) ~~**Install GUT and add one test** (`test_condition_evaluator.gd`).~~ Sprint 1. Now 121 tests across 14 files.
+- (#5) ~~**Wire crew morale to combat damage**~~ — Sprint 5b landed combat + trade wiring with 24 regression tests.
 - (#13) ~~**Resolve R-key collision** (`menu_select` vs `repair`) in `project.godot`.~~ Stale tracker — already fixed in Sprint 1; Sprint 3c added broad collision regression test.
 - (#14) ~~**Update Art Direction Guide** to remove the "to be decided" line and commit to the floor-style (Track A).~~ NEXT_STEPS Sprint 2 (art guide + reference pins done; sprite pilot redraw still pending artist).
 
@@ -389,7 +391,6 @@ Progress on the original list, plus remaining small-but-high-impact items.
 
 - (#3) **Remove unused EventBus signals** (`ui_select`, `ui_cancel`, `ui_navigate`).
 - (#4) **Segmented hull bar** in navigation HUD in place of the hull number (NEXT_STEPS Sprint 5c).
-- (#5) **Wire crew morale to combat damage** — ~10 lines in `combat_system.gd` (NEXT_STEPS Sprint 5b).
 - (#6) **Shorten dialogue open delay** 1.5s → 0.4s and combat hold 2.0s → 0.8s.
 - (#7) **`Escape` closes dialogue** — single `_unhandled_input` handler.
 - (#8) **Camera shake** on combat hits.
@@ -406,9 +407,9 @@ Baseline numbers used by every sprint-exit check.
 
 - **Coupling baseline.** Total `GameSession.` refs was 236 at review time, now **131**. UI-only was 206, now **106**. Per-sprint target: monotonic downward as each screen gets a VM. Measure via `grep -r 'GameSession\.' godot/scripts --include='*.gd' | wc -l` (project has no `rg`).
 - **Script-size baseline.** `wc -l godot/scripts/ui/navigation.gd` → 1,717 still. `combat_ui.gd` 585 → 399 (Sprint 3b). `star_map_screen.gd` 1,092 → 375 (Sprint 5a). `dialogue_ui.gd` 632 still (Sprint 6 target). Any sprint that claims to reduce a file must actually cut function bodies into companion modules per §2.2 / Refactoring Plan.
-- **Dormant-system audit.** Enable EventBus logging and walk a 20-minute session. Today: zero `crew_morale_*`, `astral_hazard_*`, `realm_control_*`, `faction_conquest_*` emissions flow into gameplay effects. That is the dormancy baseline before Sprint 5b/5c wiring lands.
+- **Dormant-system audit.** Post Sprint 5b: `hazard_entered` / `hazard_mitigated` / `hazard_damage` / `hazard_status_applied` emit during navigation ticks (always did — tracker was stale); crew-morale now bends combat damage and trade prices (no direct EventBus signal, but `get_combat_modifier` / `get_trade_modifier` are called per attack / transaction). `realm_control_*` + `faction_conquest_*` remain silent — that is Sprint 5c's baseline.
 - **Critical-bug regression.** All four §5.2 bugs have GUT regression tests committed with their fixes (Sprint 1).
-- **Test suite.** `/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` → should print `97/97 passing`. Any merge that drops the count needs justification in the commit message.
+- **Test suite.** `/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` → should print `121/121 passing`. Any merge that drops the count needs justification in the commit message.
 - **Visual parity walk.** New-game → navigation → dialogue → combat. Capture screenshots. Place them next to `assets/characters/aristotle.png` and `assets/ships/royal_galleon.png` — they should feel like the same game. (Pending sprite pilot.)
 
 Critical files to read before acting on any recommendation:

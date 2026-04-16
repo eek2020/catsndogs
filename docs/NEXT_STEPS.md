@@ -1,6 +1,6 @@
 # Whisper Crystals — Next Steps
 
-**Date:** 2026-04-16
+**Date:** 2026-04-16 (post-Sprint 5b)
 **Status:** Active plan, reconciled with `docs/MASTER_PLAN.md` and `docs/architecture/CODE_REVIEW.md`.
 **Scope:** What to do next, in order, across engineering, gameplay, and art.
 **Relationship to other plans:**
@@ -18,7 +18,7 @@ Most of the outstanding work falls into two independent tracks. They do not bloc
 
 ### Track E — Engineering
 
-Test safety (**done** Sprint 1), critical bugs (**done** Sprint 1), should-fix bugs (**done** Sprint 3c), UI god-scripts decomposed one at a time (combat **done** 3b, star_map **done** 5a, dialogue pending 6, navigation decomposition pending), UI↔GameSession coupling cut screen-by-screen via ViewModels (**in progress** — 3 of ~19 screens converted, 206→106 refs), and wire the dormant systems so the player can feel crew morale, hazards, realm control, and conquest (Sprint 5b/5c, **pending**).
+Test safety (**done** Sprint 1), critical bugs (**done** Sprint 1), should-fix bugs (**done** Sprint 3c), UI god-scripts decomposed one at a time (combat **done** 3b, star_map **done** 5a, dialogue pending 6, navigation decomposition pending), UI↔GameSession coupling cut screen-by-screen via ViewModels (**in progress** — 3 of ~19 screens converted, 206→106 refs), and wire the dormant systems so the player can feel crew morale, hazards, realm control, and conquest (crew morale **done** 5b; astral hazards **retired** as stale tracker in 5b — already ticking at `navigation.gd:213`; realm control + faction conquest still pending 5c).
 
 ### Track A — Art
 
@@ -121,12 +121,13 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 | Decompose `star_map_screen.gd` (1092 → 4 files) | 1092 → **375-line orchestrator** + 3 layer components (`star_map_galaxy_layer.gd` 367, `star_map_region_layer.gd` 320, `star_map_local_layer.gd` 258) under `scripts/ui/star_map/`. Each layer takes the VM at construction; orchestrator passes a per-frame context dict (elapsed, selected_region, backdrops, travel state, nav_pois). | MASTER_PLAN Sprint 3, REFACTORING_PLAN Phase 3 | **Done** |
 | Tests for the VM | 20 tests in `test_star_map_view_model.gd` using SessionDouble + RefCounted doubles for star_map_system and exploration. Covers state/POI/exploration reads, travel action, world-entry meta write. | Quality policy | **Done** |
 
-**Sprint 5b — Wire dormant systems (pending).**
+**Sprint 5b — Wire dormant systems — DONE 2026-04-16.**
 
-| Task | Outcome | Reference |
-| --- | --- | --- |
-| Wire crew morale into `CombatSystem.calculate_damage` and `EconomySystem.trade` | Morale visibly affects gameplay | CODE_REVIEW §3 |
-| Apply astral hazards during navigation tick | Ship takes damage / status in hazard regions | CODE_REVIEW §3 |
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| Wire crew morale into `CombatSystem.calculate_damage` and `EconomySystem.trade` | `calculate_damage` now takes a `morale_modifier` parameter applied to effective firepower; `EconomySystem.get_buy_price`/`get_sell_price`/`buy_crystals`/`sell_crystals` all take it too. Sell side uses `2.0 - m` so low morale hurts the player on both buy and sell. `CombatViewModel.combat_morale_modifier()` routes the value from the session; `trade_screen.gd` fetches via `GameSession.crew_morale.get_trade_modifier`. | CODE_REVIEW §3 | **Done** |
+| Apply astral hazards during navigation tick | **Stale tracker** — already wired. `navigation.gd:213` has called `_update_astral_hazards(dt)` every frame since the hazard feature shipped (entropy timer, collision detection, status HUD, off-course drift all active). Retired from the active list during Sprint 5b audit. | CODE_REVIEW §3 | **Done** (stale) |
+| Regression tests | 24 tests across `test_crew_morale_combat_wiring.gd` (12) + `test_crew_morale_trade_wiring.gd` (12). Covers VM null-guards, morale-scales-damage math, MoraleDouble and live `CrewMoraleSystem` integration paths; trade covers buy/sell directionality + default-param backwards compatibility + composed karma×morale. | Quality policy | **Done** (121/121 green) |
 
 **Sprint 5c — Dock gating, conquest surfacing, data/HUD polish (pending).**
 
@@ -137,7 +138,7 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 | Fix: DataLoader cache invalidation + redundant calls | MASTER_PLAN §5.3 Apr-05 #4, #12 | — |
 | HUD: segmented hull bar, objective on top bar, morale pip | CODE_REVIEW §4.6 | — |
 
-**Exit criteria:** `rg "GameSession\." godot/scripts/ui/star_map_screen.gd` returns 0 **(done: 23 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 110 **(done: 129 → 106)**; `star_map_screen.gd` ≤ 400 lines **(done: 1092 → 375)**; EventBus log over a 20-minute session emits `crew_morale_*`, `astral_hazard_*`, `realm_control_*`, and `faction_conquest_*` signals (5b + 5c); HUD shows objective without opening mission log (5c).
+**Exit criteria:** `rg "GameSession\." godot/scripts/ui/star_map_screen.gd` returns 0 **(done: 23 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 110 **(done: 129 → 106)**; `star_map_screen.gd` ≤ 400 lines **(done: 1092 → 375)**; crew morale bends combat damage + trade prices with regression tests (**done 5b**); astral hazards drive navigation tick (**done — stale tracker, already wired**); HUD shows objective without opening mission log (5c pending); `realm_control_*` + `faction_conquest_*` emissions observable in a 20-minute session (5c pending).
 
 ### Sprint 6 — Dialogue decomposition + onboarding + save slots
 
@@ -246,19 +247,20 @@ Repo size dropped from ~5.0 GB to ~3.7 GB.
 
 ## 5. What to do today (if starting now)
 
-The "first commit" items from the original plan are all landed. Current state as of 2026-04-16 post-Sprint 5a:
+The "first commit" items from the original plan are all landed. Current state as of 2026-04-16 post-Sprint 5b:
 
 - Sprint 1 (critical bugs + GUT) **done**.
 - Sprint 2 (art guide + Track A/B commitment) **done**; sprite pilot pending artist.
 - Sprint 3a/3b/3c (NavigationViewModel, CombatViewModel + combat_ui decomposition, should-fix bugs) **done**.
 - Sprint 5a (StarMapViewModel + star_map_screen decomposition) **done**.
+- Sprint 5b (crew morale wired into combat + trade; astral hazards retired as stale tracker — already wired) **done**.
 
 **Pick next from:**
 
-1. **Sprint 5b** — wire crew morale into `CombatSystem.calculate_damage` + `EconomySystem.trade`; apply astral hazards during navigation tick. Gameplay gets teeth.
-2. **Sprint 5c** — dock gating (realm_control + reputation), conquest surfacing, DataLoader cache invalidation, HUD polish (segmented hull bar + objective + morale pip).
-3. **Sprint 7 cutscene modernisation** — offline Blender work, parallelisable with 5b/5c.
-4. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
+1. **Sprint 5c** — dock gating (realm_control + reputation), conquest surfacing, DataLoader cache invalidation, HUD polish (segmented hull bar + objective + morale pip). Two dormant systems left — this is the finish line.
+2. **Sprint 7 cutscene modernisation** — offline Blender work, parallelisable with 5c. Prep scaffolding already in place (cutscene registry + EventBus signal + indentation + fade fix, per Sprint 7-prep commit alongside 5b).
+3. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
+4. **Sprint 6** — dialogue decomposition + onboarding + multi-slot saves (includes ESC rebind for pause/skip collision surfaced in 3c).
 
 Open this file and MASTER_PLAN §7 side by side at the start of every work session. Everything else is sequenced above.
 
@@ -273,3 +275,4 @@ Open this file and MASTER_PLAN §7 side by side at the start of every work sessi
 | 2026-04-16 | Sprint 3b closed (CombatViewModel + `combat_ui.gd` decomposition 585 → 399 orchestrator + 4 components under `scripts/ui/combat/`, 4 → 0 refs, UI total 134 → 129, 31 new tests, full suite 62/62 green). Sprint 3c still pending. |
 | 2026-04-16 | Sprint 3c closed. All four should-fix bugs resolved: R-key was already fixed in Sprint 1 (stale tracker); `scene_transition` post-change work delegated to `GameSession.complete_scene_transition`; `_show_bark` migrated to dedicated `EventBus.npc_bark` signal; `_remove_near_white_bg` results cached by resource_path + thresholds. +15 regression tests across 4 new files (`test_input_map_collisions.gd`, `test_dialogue_manager_bark.gd`, `test_portrait_cache.gd`, `test_scene_transition_handoff.gd`); full suite 77/77 green. New finding: `pause` and `skip` both on ESC — tolerated via whitelist, flagged for Sprint 6 input-rebind work. |
 | 2026-04-16 | Sprint 5 sliced into 5a/5b/5c (mirrors the 3a/3b/3c pattern). Sprint 5a closed: StarMapViewModel + `star_map_screen.gd` decomposition. 1092 → 375-line orchestrator + 3 layer components (`scripts/ui/star_map/{galaxy,region,local}_layer.gd`) + 184-line VM. 23 → 0 refs in `star_map_screen.gd`; UI total 129 → 106. +20 tests in `test_star_map_view_model.gd`; full suite 97/97 green. Sprint 5b (system wiring: morale, hazards) and 5c (dock gating, conquest, DataLoader, HUD) still pending. |
+| 2026-04-16 | Sprint 5b closed. Crew morale threaded through `CombatSystem.calculate_damage` (new `morale_modifier` parameter applied to effective firepower) and `EconomySystem.get_buy_price`/`get_sell_price`/`buy_crystals`/`sell_crystals` (low morale costs more on buy AND earns less on sell, via `2.0 - m` inversion on the sell side). `CombatViewModel.combat_morale_modifier()` fetches from `GameSession.crew_morale.get_combat_modifier(gs)`; `trade_screen.gd` uses `get_trade_modifier(gs)`. **Astral hazards finding:** the "apply astral hazards during navigation tick" row was a stale tracker — hazards have been ticking at `navigation.gd:213` since the feature shipped. Retired from the plan rather than re-implemented. +24 tests across `test_crew_morale_combat_wiring.gd` and `test_crew_morale_trade_wiring.gd`; full suite 121/121 green. Dormant-systems count 4 → 2 (realm_control + faction_conquest still open in 5c). |

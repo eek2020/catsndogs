@@ -26,15 +26,25 @@ func setup(p_faction_id: String) -> void:
 func _on_buy() -> void:
 	if GameSession.game_state == null:
 		return
-	GameSession.economy_system.buy_crystals(GameSession.game_state, faction_id, 5)
+	var morale_mod := _get_trade_morale_modifier()
+	GameSession.economy_system.buy_crystals(GameSession.game_state, faction_id, 5, morale_mod)
 	_refresh()
 
 
 func _on_sell() -> void:
 	if GameSession.game_state == null:
 		return
-	GameSession.economy_system.sell_crystals(GameSession.game_state, faction_id, 5)
+	var morale_mod := _get_trade_morale_modifier()
+	GameSession.economy_system.sell_crystals(GameSession.game_state, faction_id, 5, morale_mod)
 	_refresh()
+
+
+## Fetch the crew morale trade modifier from the autoload, falling back to
+## 1.0 if the morale system is unavailable (e.g. early boot or tests).
+func _get_trade_morale_modifier() -> float:
+	if GameSession.crew_morale == null:
+		return 1.0
+	return GameSession.crew_morale.get_trade_modifier(GameSession.game_state)
 
 
 func _on_close() -> void:

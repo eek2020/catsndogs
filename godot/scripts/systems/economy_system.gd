@@ -91,9 +91,18 @@ func get_active_routes(game_state: GameStateData) -> Array:
 # Market & trade
 # ------------------------------------------------------------------
 
-## [param karma_modifier] — price multiplier from karma system (1.0 = neutral).
+## [param karma_modifier]  — price multiplier from karma system (1.0 = neutral).
 ##   Callers pass GameSession.karma_system.get_price_modifier(game_state) or 1.0.
-func get_buy_price(game_state: GameStateData, faction_id: String, quantity: int = 1, karma_modifier: float = 1.0) -> int:
+## [param morale_modifier] — price multiplier from crew morale (1.0 = neutral).
+##   Low morale raises prices (buy cost up); high morale lowers them. Callers
+##   pass GameSession.crew_morale.get_trade_modifier(game_state) or 1.0.
+func get_buy_price(
+	game_state: GameStateData,
+	faction_id: String,
+	quantity: int = 1,
+	karma_modifier: float = 1.0,
+	morale_modifier: float = 1.0,
+) -> int:
 	var faction: Faction = game_state.faction_registry.get(faction_id)
 	if faction == null:
 		return 0
@@ -104,15 +113,35 @@ func get_buy_price(game_state: GameStateData, faction_id: String, quantity: int 
 	# Apply karma-based price modifier (Issue #5 — passed as parameter)
 	if karma_modifier != 1.0:
 		total = maxi(1, int(total * karma_modifier))
+	# Apply crew morale price modifier (Sprint 5b — passed as parameter)
+	if morale_modifier != 1.0:
+		total = maxi(1, int(total * morale_modifier))
 	return total
 
 
-func get_sell_price(game_state: GameStateData, faction_id: String, quantity: int = 1) -> int:
-	var buy_total := get_buy_price(game_state, faction_id, quantity)
+func get_sell_price(
+	game_state: GameStateData,
+	faction_id: String,
+	quantity: int = 1,
+	morale_modifier: float = 1.0,
+) -> int:
+	# Sell side uses the inverse morale effect: low morale = sell for less
+	# (crew negotiates poorly), high morale = sell for more. Using 2.0-m
+	# flips the 0.9..1.1 buy range into a 0.9..1.1 sell range in the
+	# opposite direction relative to the player's benefit.
+	var sell_morale: float = 1.0
+	if morale_modifier != 1.0:
+		sell_morale = maxf(0.01, 2.0 - morale_modifier)
+	var buy_total := get_buy_price(game_state, faction_id, quantity, 1.0, sell_morale)
 	return maxi(1, int(buy_total * Config.SELL_PRICE_RATIO))
 
 
-func buy_crystals(game_state: GameStateData, faction_id: String, quantity: int) -> bool:
+func buy_crystals(
+	game_state: GameStateData,
+	faction_id: String,
+	quantity: int,
+	morale_modifier: float = 1.0,
+) -> bool:
 	if quantity <= 0:
 		return false
 	var faction: Faction = game_state.faction_registry.get(faction_id)
@@ -120,7 +149,7 @@ func buy_crystals(game_state: GameStateData, faction_id: String, quantity: int) 
 		return false
 	if faction.crystal_reserves < quantity:
 		return false
-	var cost := get_buy_price(game_state, faction_id, quantity)
+	var cost := get_buy_price(game_state, faction_id, quantity, 1.0, morale_modifier)
 	if game_state.salvage < cost:
 		return false
 	var capacity: int = game_state.player_ship.crystal_capacity * 10
@@ -136,7 +165,12 @@ func buy_crystals(game_state: GameStateData, faction_id: String, quantity: int) 
 	return true
 
 
-func sell_crystals(game_state: GameStateData, faction_id: String, quantity: int) -> bool:
+func sell_crystals(
+	game_state: GameStateData,
+	faction_id: String,
+	quantity: int,
+	morale_modifier: float = 1.0,
+) -> bool:
 	if quantity <= 0:
 		return false
 	var faction: Faction = game_state.faction_registry.get(faction_id)
@@ -144,7 +178,7 @@ func sell_crystals(game_state: GameStateData, faction_id: String, quantity: int)
 		return false
 	if game_state.crystal_inventory < quantity:
 		return false
-	var revenue := get_sell_price(game_state, faction_id, quantity)
+	var revenue := get_sell_price(game_state, faction_id, quantity, morale_modifier)
 	game_state.crystal_inventory -= quantity
 	game_state.salvage += revenue
 	faction.crystal_reserves += quantity
