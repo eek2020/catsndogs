@@ -119,6 +119,9 @@ signal npc_interaction_ended(npc_id: String)
 signal npc_bark(npc_name: String, text: String)
 signal door_transition(from_scene: String, to_scene: String)
 
+# --- Cutscene events ---
+signal cutscene_completed(cutscene_id: String, karma_delta: int, recruited: Array)
+
 # --- UI navigation ---
 signal ui_select
 signal ui_cancel

@@ -6,6 +6,34 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 7 prep: engineering scaffolding (parallel to Sprint 5b)
+
+NEXT_STEPS Sprint 7 engineering-only prep. Non-breaking scaffolding that doesn't require the `.blend` rework — closes four of the CODE_REVIEW §6A findings without touching the runtime geometry hacks (those stay TODO-marked until a Blender-first .blend arrives).
+
+**New files:**
+
+- `godot/data/cutscenes/_registry.json` — cutscene registry with schema `{id, scene_path, dialogue_path, camera_animation_name, camera_path_json, title, arc, tags, notes}`. `no_tail_outpost` is the first entry. Adding a new cutscene becomes a data-only operation once the registry-driven bootstrap lands (still pending the .blend rework).
+
+**Modified files:**
+
+- `godot/scripts/autoload/event_bus.gd` — added `signal cutscene_completed(cutscene_id: String, karma_delta: int, recruited: Array)`. Replaces the `"In a real game, transition back to the main scene here."` print stub in cutscene_scene.gd.
+- `godot/scripts/systems/cutscene/cutscene_scene.gd` — `_on_cutscene_finished` now emits `EventBus.cutscene_completed` with the CutsceneManager's accumulated karma delta + recruited ids. Added `@export var cutscene_id: String = "no_tail_outpost"` default matching the registry entry. Six TODO(S7) headers added to the runtime geometry hacks (`_hide_back_wall`, `_build_interior`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, and the `MaterialApplicator.apply()` call site), each back-referencing the CODE_REVIEW step that explains why it belongs in the .blend. Makes the eventual deletion mechanical.
+- `godot/scripts/systems/cutscene/cutscene_manager.gd` — `_fade_in_character` rewritten to use per-surface duplicated override materials (`set_surface_override_material(s, dup)` during tween, `set_surface_override_material(s, null)` on completion). Shared material resources are no longer mutated — transparency state can't leak across mesh instances that share a material, which was the CODE_REVIEW §6A.3 finding.
+- `godot/scripts/systems/cutscene/camera_controller.gd` — 4-space indentation → tabs via `python3` pass. 106 lines converted. Project convention restored (CODE_REVIEW §6A.2 closed).
+
+**CODE_REVIEW §6A findings closed:**
+
+- §6A.2 — camera_controller indentation. **Done.**
+- §6A.3 — `_fade_in_character` shared-material mutation. **Done.**
+- §6A.3 — return flow stub. **Signal emit done** (SceneManager listener still pending a real consumer).
+- §6A.6 step 10 — cutscene registry. **Done** (with extended schema).
+
+**Still blocked on human artist / Blender rework:** Everything in CODE_REVIEW §6A.1 (runtime geometry anti-pattern) and §6A.6 steps 1–4 (rebuild .blend, bake AnimationPlayer camera, rewrite cutscene_scene.gd ≤ 100 lines, delete MaterialApplicator). The TODO(S7) markers in `cutscene_scene.gd` are the inventory for mechanical deletion.
+
+**Tests:** Full GUT suite still **121/121 passing** — these are engineering-only, non-runtime-regressing changes (EventBus signal addition + cutscene `_on_cutscene_finished` wiring + per-surface override fade + indentation conversion + documentation markers).
+
+---
+
 ## 2026-04-16 — Sprint 5b: Wire dormant systems (crew morale + astral hazards)
 
 NEXT_STEPS Sprint 5b. Wired crew morale into combat damage and trade pricing — the first two of four "dormant" systems flagged in CODE_REVIEW §3 now drive player-visible behaviour. Discovery during audit: astral hazards were already wired (stale tracker), retired from the plan rather than re-implemented.

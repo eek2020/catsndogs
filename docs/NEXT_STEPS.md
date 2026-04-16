@@ -161,20 +161,41 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 
 **Context:** the existing "No Tail Outpost" cutscene plays, but the runtime code builds an interior room from BoxMeshes, hides back walls by AABB heuristic, force-finds light fixtures by proximity, and paints materials by node-name keyword match. See `CODE_REVIEW.md §6A` for the full teardown. Blender is available, so most of these runtime hacks can move into the source .blend.
 
-| Task | Outcome | Reference |
+**Engineering-only prep landed 2026-04-16** alongside Sprint 5b (companion commit). Non-breaking items that do not require the `.blend` rework:
+
+| Prep task | Status | Notes |
 | --- | --- | --- |
-| Rebuild `no_tail_outpost.blend` | Proper material slots with meaningful names, UV unwraps, **interior room modeled in-scene**, burn marks painted into textures, door as single named mesh on an Empty pivot, no placeholder character geometry in export | CODE_REVIEW §6A.6 step 1 |
-| Author camera animation in Blender | 6 keyframes matching existing `camera_path.json`, baked into an AnimationPlayer track on export | CODE_REVIEW §6A.2 |
-| Rewrite `cutscene_scene.gd` | ≤ 100 lines — wiring only, no geometry manipulation | CODE_REVIEW §6A.7 |
-| Delete `MaterialApplicator` (370 lines) | Runtime painter no longer needed | CODE_REVIEW §6A.6 step 3 |
-| Replace `CameraController` with AnimationPlayer driver | Hero shots use baked animation; JSON-keyed tweens remain as generic fallback | CODE_REVIEW §6A.6 step 4 |
-| Fix `_fade_in_character` material mutation | Shader-based fade (uniform) or AnimationPlayer modulate track — no shared-material side effects | CODE_REVIEW §6A.3 |
-| Wire cutscene return flow | `_on_cutscene_finished` emits `cutscene_completed(cutscene_id, karma_delta, recruited)` on EventBus; `SceneManager` re-enters gameplay (no stub print) | CODE_REVIEW §6A.3 |
-| Fix `camera_controller.gd` indentation | Tabs, matching project convention | CODE_REVIEW §6A.2 |
-| Unify dialogue UIs | Merge `CutsceneDialogueUI` + `scripts/ui/dialogue_ui.gd` (already flagged Apr-07 #14) | CODE_REVIEW §6A.6 step 8 |
-| Optimise character GLBs | Bake 1024×1024 textures + mesh compression; target ≤ 4 MB each (from 34 MB today) | CODE_REVIEW §6A.4, MASTER_PLAN §6 |
-| Add cutscene registry | `data/cutscenes/_registry.json` with `{id, scene_path, dialogue_path, camera_animation_name}` — adding a cutscene becomes data-only | MASTER_PLAN Sprint 6 |
-| Lighting pass | Volumetric fog on wides, ember/dust particles at door, DoorRim flicker, baked indirect GI | CODE_REVIEW §6A.5 |
+| `data/cutscenes/_registry.json` with `no_tail_outpost` entry | **Done** | Schema documents `{id, scene_path, dialogue_path, camera_animation_name, camera_path_json, title, arc, tags, notes}`. New cutscenes become data-only when the .blend rework lands. |
+| `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` signal | **Done** | `cutscene_scene.gd._on_cutscene_finished` emits it with the CutsceneManager's accumulated karma delta + recruited ids. Replaces the `"In a real game, transition back to the main scene here."` stub. |
+| `camera_controller.gd` 4-space → tabs | **Done** | Converted via python3 pass; project convention restored. |
+| `_fade_in_character` shared-material fix | **Done** | Per-surface duplicated override materials contain the transparency mutation; pristine originals restored via `set_surface_override_material(s, null)` on completion. CODE_REVIEW §6A.3 closed. |
+| `TODO(S7):` markers on runtime geometry hacks | **Done** | `_hide_back_wall`, `_build_interior`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, and the `MaterialApplicator.apply()` call site all carry back-references to the CODE_REVIEW step that explains why each belongs in the .blend. Mechanical deletion when the rework lands. |
+
+**Blender tooling — install before Sprint 7 begins:**
+
+Two tools change the Sprint 7 workflow significantly. Install both before the Blender rework starts.
+
+| Tool | What it does | Install |
+| --- | --- | --- |
+| **blender-mcp** ([ahujasid/blender-mcp](https://github.com/ahujasid/blender-mcp), 19 900+ stars) | MCP server + Blender addon that give Claude a live two-way socket connection to a running Blender instance. Claude can create/modify objects, apply materials, inspect the scene, and execute arbitrary Python — interactively, with viewport screenshots. Changes the .blend rework from "offline human task" to "Claude-driven session". | Install the Blender addon (`addon.py`) from the repo, then add the MCP server to Claude. Requires Blender 3.0+, `uv` (`brew install uv`). **Do not use blender-mcp.org — it is unofficial and unaffiliated; the README explicitly warns against it.** |
+| **blender-claude-plugin** ([ra100/blender-claude-plugin](https://github.com/ra100/blender-claude-plugin), experimental) | Claude Code plugin that loads Blender 5.x API reference skills (geometry nodes, modifiers, Python scripting, animation/rigging, rendering) into context. Prevents hallucinated `bpy` calls when writing scripts outside a live MCP session. | `claude plugin marketplace add ra100/blender-claude-plugin && claude plugin install blender-skills@blender-claude-marketplace`. Verify your Blender version is 5.x before relying on the API refs. |
+
+**Remaining — Blender rework (Claude-drivable via blender-mcp; human judgment required for artistic calls):**
+
+| Task | Who | Outcome | Reference |
+| --- | --- | --- | --- |
+| Rebuild `no_tail_outpost.blend` | Claude (blender-mcp) | Proper material slots with meaningful names, UV unwraps, **interior room modeled in-scene**, burn marks painted into textures, door as single named mesh on an Empty pivot, no placeholder character geometry in export | CODE_REVIEW §6A.6 step 1 |
+| Author camera animation in Blender | Claude (blender-mcp) | 6 keyframes matching existing `camera_path.json`, baked into an AnimationPlayer track on export | CODE_REVIEW §6A.2 |
+| Optimise character GLBs | Human artist | Bake 1024×1024 textures + mesh compression; target ≤ 4 MB each (from 34 MB today) — artistic texture decisions need a human eye | CODE_REVIEW §6A.4, MASTER_PLAN §6 |
+| Lighting pass | Human artist | Volumetric fog on wides, ember/dust particles at door, DoorRim flicker, baked indirect GI | CODE_REVIEW §6A.5 |
+| Rewrite `cutscene_scene.gd` | Claude | ≤ 100 lines — wiring only, no geometry manipulation | CODE_REVIEW §6A.7 |
+| Delete `MaterialApplicator` (370 lines) | Claude | Runtime painter no longer needed | CODE_REVIEW §6A.6 step 3 |
+| Replace `CameraController` with AnimationPlayer driver | Claude | Hero shots use baked animation; JSON-keyed tweens remain as generic fallback | CODE_REVIEW §6A.6 step 4 |
+| Fix `_fade_in_character` material mutation | Claude | Shader-based fade (uniform) or AnimationPlayer modulate track — no shared-material side effects | CODE_REVIEW §6A.3 |
+| Wire cutscene return flow | Claude | `_on_cutscene_finished` emits `cutscene_completed(cutscene_id, karma_delta, recruited)` on EventBus; `SceneManager` re-enters gameplay (no stub print) | CODE_REVIEW §6A.3 |
+| Fix `camera_controller.gd` indentation | Claude | Tabs, matching project convention | CODE_REVIEW §6A.2 |
+| Unify dialogue UIs | Claude | Merge `CutsceneDialogueUI` + `scripts/ui/dialogue_ui.gd` (already flagged Apr-07 #14) | CODE_REVIEW §6A.6 step 8 |
+| Add cutscene registry | Claude | `data/cutscenes/_registry.json` with `{id, scene_path, dialogue_path, camera_animation_name}` — adding a cutscene becomes data-only | MASTER_PLAN Sprint 6 |
 
 **Exit criteria:** `wc -l godot/scripts/systems/cutscene/cutscene_scene.gd` ≤ 100; `MaterialApplicator` removed; `aristotle_3d.glb` ≤ 4 MB; new cutscene addable by JSON + .blend only. Playthrough screenshot of the "No Tail Outpost" cutscene posted to `docs/qa/cutscenes/` for before/after comparison.
 
@@ -276,3 +297,5 @@ Open this file and MASTER_PLAN §7 side by side at the start of every work sessi
 | 2026-04-16 | Sprint 3c closed. All four should-fix bugs resolved: R-key was already fixed in Sprint 1 (stale tracker); `scene_transition` post-change work delegated to `GameSession.complete_scene_transition`; `_show_bark` migrated to dedicated `EventBus.npc_bark` signal; `_remove_near_white_bg` results cached by resource_path + thresholds. +15 regression tests across 4 new files (`test_input_map_collisions.gd`, `test_dialogue_manager_bark.gd`, `test_portrait_cache.gd`, `test_scene_transition_handoff.gd`); full suite 77/77 green. New finding: `pause` and `skip` both on ESC — tolerated via whitelist, flagged for Sprint 6 input-rebind work. |
 | 2026-04-16 | Sprint 5 sliced into 5a/5b/5c (mirrors the 3a/3b/3c pattern). Sprint 5a closed: StarMapViewModel + `star_map_screen.gd` decomposition. 1092 → 375-line orchestrator + 3 layer components (`scripts/ui/star_map/{galaxy,region,local}_layer.gd`) + 184-line VM. 23 → 0 refs in `star_map_screen.gd`; UI total 129 → 106. +20 tests in `test_star_map_view_model.gd`; full suite 97/97 green. Sprint 5b (system wiring: morale, hazards) and 5c (dock gating, conquest, DataLoader, HUD) still pending. |
 | 2026-04-16 | Sprint 5b closed. Crew morale threaded through `CombatSystem.calculate_damage` (new `morale_modifier` parameter applied to effective firepower) and `EconomySystem.get_buy_price`/`get_sell_price`/`buy_crystals`/`sell_crystals` (low morale costs more on buy AND earns less on sell, via `2.0 - m` inversion on the sell side). `CombatViewModel.combat_morale_modifier()` fetches from `GameSession.crew_morale.get_combat_modifier(gs)`; `trade_screen.gd` uses `get_trade_modifier(gs)`. **Astral hazards finding:** the "apply astral hazards during navigation tick" row was a stale tracker — hazards have been ticking at `navigation.gd:213` since the feature shipped. Retired from the plan rather than re-implemented. +24 tests across `test_crew_morale_combat_wiring.gd` and `test_crew_morale_trade_wiring.gd`; full suite 121/121 green. Dormant-systems count 4 → 2 (realm_control + faction_conquest still open in 5c). |
+| 2026-04-16 | Sprint 7 tooling: added blender-mcp (ahujasid/blender-mcp, 19 900+ stars) and blender-claude-plugin (ra100, experimental) to the Sprint 7 setup block. blender-mcp gives Claude live socket control of Blender (create/modify objects, materials, camera, arbitrary Python), changing the .blend rework from "blocked on human artist" to "Claude-drivable". Remaining table split into "Claude" vs "human artist" rows accordingly. Warning added: blender-mcp.org is unofficial — use the GitHub repo directly. |
+| 2026-04-16 | Sprint 7 prep (companion commit to 5b). Engineering-only scaffolding that doesn't require the `.blend` rework: new `data/cutscenes/_registry.json` with the `no_tail_outpost` entry; `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` signal + `cutscene_scene.gd._on_cutscene_finished` wired to emit it (no more stub print); `camera_controller.gd` 4-space → tabs; `_fade_in_character` shared-material mutation replaced with per-surface duplicated override materials (CODE_REVIEW §6A.3 closed); `TODO(S7)` headers on all runtime geometry hacks (`_hide_back_wall`, `_build_interior`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, `MaterialApplicator.apply()` call site) so deletion is mechanical when the rework lands. Remaining Sprint 7 work blocked on human artist / Blender rework. |

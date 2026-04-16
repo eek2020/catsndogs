@@ -54,6 +54,10 @@ func _ready() -> void:
 	print("CutsceneScene: GLB subtree nodes:")
 	_print_tree($World/NoTailOutpost, 0)
 
+	# TODO(S7): delete MaterialApplicator entirely once the .blend ships with
+	# proper material slots + UV unwraps (CODE_REVIEW §6A.6 step 3). Today
+	# this runtime painter is ~370 lines that exist solely to compensate for
+	# the untextured GLB.
 	# Apply runtime materials to untextured geometry.
 	var applicator := MaterialApplicator.new()
 	applicator.apply($World/NoTailOutpost)
@@ -81,6 +85,11 @@ func _ready() -> void:
 	# The CutsceneManager will autostart in its own _ready.
 
 
+## TODO(S7): remove when no_tail_outpost.blend is rebuilt with a proper
+## doorway (no wall panel behind the door). Runtime AABB heuristic below
+## is brittle and couples this script to specific mesh sizes / positions.
+## See docs/architecture/CODE_REVIEW.md §6A.1 + §6A.6 step 1.
+##
 ## Hide any mesh geometry directly behind the door that blocks the doorway view.
 ## Finds MeshInstance3D nodes whose AABB overlaps with the door's X/Y position
 ## but sits behind (further negative Z) the door — i.e. the back wall.
@@ -112,6 +121,11 @@ func _hide_back_wall_recursive(node: Node, door_pos: Vector3) -> void:
 		_hide_back_wall_recursive(child, door_pos)
 
 
+## TODO(S7): delete entire function once the interior room is modelled in
+## no_tail_outpost.blend (CODE_REVIEW §6A.6 step 1). ~155 lines of runtime
+## BoxMesh construction, lighting, and prop placement that belong in the
+## source .blend. Blocks removal of MaterialApplicator too.
+##
 ## Build a small interior room visible through the open doorway.
 ## Creates floor, back wall, side walls, ceiling, a dim interior light, and
 ## a few prop silhouettes (crates, shelves) so the space behind No Tail
@@ -273,6 +287,10 @@ func _build_interior(outpost: Node, door_pos: Vector3) -> void:
 	print("CutsceneScene: Built interior room behind door at %s (depth=%.1f)" % [str(door_pos), room_depth])
 
 
+## TODO(S7): delete once burn marks are painted into the door-frame texture
+## in Blender (CODE_REVIEW §6A.6 step 1). Runtime QuadMesh + NoiseTexture2D
+## stack here is a workaround for the untextured GLB.
+##
 ## Apply burn / scorch marks around the door frame.
 ## Creates dark emissive quads positioned around the door opening to simulate
 ## blast damage from the League attack mentioned in the dialogue.
@@ -337,6 +355,10 @@ func _apply_burn_marks(outpost: Node, door_pos: Vector3) -> void:
 	print("CutsceneScene: Added %d burn marks around door at %s" % [burn_positions.size(), str(door_pos)])
 
 
+## TODO(S7): delete once placeholder character geometry is removed from the
+## exported no_tail_outpost GLB (CODE_REVIEW §6A.1). Only needed because
+## the current .blend ships with baked-in Aristotle_ / NoTail_ stand-ins.
+##
 ## Hide placeholder character meshes baked into the outpost GLB.
 ## These are flat shapes prefixed with "Aristotle_" and "NoTail_".
 func _hide_placeholder_characters(outpost: Node) -> void:
@@ -351,6 +373,10 @@ func _hide_placeholder_characters(outpost: Node) -> void:
 		_hide_placeholder_characters(child)
 
 
+## TODO(S7): delete once the fixture mesh is named meaningfully + has its
+## red emissive material assigned in the .blend (CODE_REVIEW §6A.1 /
+## §6A.6 step 1). Proximity-based classifier below is fragile.
+##
 ## Force the light fixture mesh (small sphere near the door) to use a red
 ## emissive material.  The GLB mesh name may not contain "light" so the
 ## MaterialApplicator won't match it by keyword — we find it by proximity
@@ -411,9 +437,26 @@ func _print_tree(node: Node, depth: int) -> void:
 		_print_tree(child, depth + 1)
 
 
+## Cutscene id used when emitting the EventBus completion signal. Must match
+## the `id` in `res://data/cutscenes/_registry.json`. Sprint 7 will fold this
+## into the registry-driven bootstrap.
+@export var cutscene_id: String = "no_tail_outpost"
+
+
 func _on_cutscene_finished() -> void:
-	print("Cutscene complete. Returning to game...")
-	# In a real game, transition back to the main scene here.
+	# Hand off to the rest of the game via EventBus. SceneManager / overlay
+	# host listens for `cutscene_completed` and decides what to re-enter
+	# (overlay pop, scene change, next arc transition, etc.). Karma delta
+	# and recruited ids come from CutsceneManager's accumulated state.
+	var karma_delta := 0
+	var recruited: Array = []
+	if cutscene_manager != null:
+		karma_delta = cutscene_manager.get("_karma_delta") if "_karma_delta" in cutscene_manager else 0
+		var r: Variant = cutscene_manager.get("_recruited") if "_recruited" in cutscene_manager else []
+		if r is Array:
+			recruited = r
+	EventBus.cutscene_completed.emit(cutscene_id, karma_delta, recruited)
+	print("Cutscene %s complete. Karma delta: %d. Recruited: %s" % [cutscene_id, karma_delta, str(recruited)])
 
 
 func _on_event_triggered(event_name: String) -> void:

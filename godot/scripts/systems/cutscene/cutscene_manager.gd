@@ -244,34 +244,48 @@ func _open_door() -> void:
 
 
 ## Fade a character node in from invisible over the given duration.
-## Tweens all MeshInstance3D materials from transparent to opaque.
+##
+## Uses per-surface override materials that are duplicated copies of the
+## originals. This contains the transparency mutation to the specific
+## MeshInstance3D — imported GLBs often share materials across many mesh
+## instances, and the previous implementation mutated the shared resource
+## directly, which bled transparency state across unrelated meshes. When
+## the tween completes the surface overrides are cleared so the pristine
+## originals take over again (CODE_REVIEW §6A.3 fix).
 func _fade_in_character(character: Node3D, duration: float) -> void:
 	# Collect all MeshInstance3D children.
 	var meshes: Array[MeshInstance3D] = []
 	_collect_meshes(character, meshes)
 
-	# Store original materials and create transparent copies.
-	var originals: Array[Material] = []
+	# Per-surface duplicated overrides. Outer array parallels `meshes`; each
+	# inner array holds one Material per surface.
+	var overrides: Array = []
 	for mi in meshes:
-		for s in range(mi.mesh.get_surface_count() if mi.mesh else 0):
-			var mat: Material = mi.get_active_material(s)
-			originals.append(mat)
-			if mat is StandardMaterial3D:
-				var smat := mat as StandardMaterial3D
+		var mesh_overrides: Array = []
+		if mi.mesh == null:
+			overrides.append(mesh_overrides)
+			continue
+		for s in range(mi.mesh.get_surface_count()):
+			var source: Material = mi.get_active_material(s)
+			var dup_mat: Material = source.duplicate() if source != null else StandardMaterial3D.new()
+			if dup_mat is StandardMaterial3D:
+				var smat := dup_mat as StandardMaterial3D
 				smat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 				smat.albedo_color.a = 0.0
+			mi.set_surface_override_material(s, dup_mat)
+			mesh_overrides.append(dup_mat)
+		overrides.append(mesh_overrides)
 
 	character.visible = true
 
-	# Tween alpha from 0 to 1.
+	# Tween alpha from 0 to 1 on the per-surface overrides only.
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_method(
 		func(val: float) -> void:
-			for mi in meshes:
-				for s in range(mi.mesh.get_surface_count() if mi.mesh else 0):
-					var m: Material = mi.get_active_material(s)
+			for mesh_overrides in overrides:
+				for m in mesh_overrides:
 					if m is StandardMaterial3D:
 						(m as StandardMaterial3D).albedo_color.a = val,
 		0.0,
@@ -280,14 +294,12 @@ func _fade_in_character(character: Node3D, duration: float) -> void:
 	)
 	await tween.finished
 
-	# Restore opaque mode so the character renders normally.
+	# Clear the surface overrides — the pristine originals re-take control.
 	for mi in meshes:
-		for s in range(mi.mesh.get_surface_count() if mi.mesh else 0):
-			var m: Material = mi.get_active_material(s)
-			if m is StandardMaterial3D:
-				var smat := m as StandardMaterial3D
-				smat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
-				smat.albedo_color.a = 1.0
+		if mi.mesh == null:
+			continue
+		for s in range(mi.mesh.get_surface_count()):
+			mi.set_surface_override_material(s, null)
 
 
 func _collect_meshes(node: Node, out: Array[MeshInstance3D]) -> void:

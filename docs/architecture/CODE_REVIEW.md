@@ -288,15 +288,15 @@ Net effect: the cutscene today is brittle — it depends on a specific interior-
 - **Linear tween between keys, not paths.** No curves, no bank/roll, no acceleration control per shot. Hardcoded `TRANS_SINE + EASE_IN_OUT`.
 - **`camera.look_at()` called every frame via `tween_method`.** This works but prevents smooth orientation interpolation and breaks on edge cases (look-at target coincident with position).
 - **No lens effects.** No FOV-pump on reveals, no DoF pulls, no vignette shift on tension beats.
-- **Indentation.** `camera_controller.gd` uses **4-space indent**; project convention is tabs. April 7 remediation fixed this in three files but missed this one.
+- ~~**Indentation.**~~ **Resolved 2026-04-16** (Sprint 7 prep). `camera_controller.gd` converted to tabs via python3 pass; project convention restored.
 
 The right answer: **author the camera as a Camera3D in Blender with keyframed animation, export to the same GLB, drive via `AnimationPlayer` in Godot**. The JSON-keyed tween system can stay as a fallback for generic cutscenes, but the hero shots should be Blender-authored.
 
 ### 6A.3 Other code issues
 
-- **`_fade_in_character` mutates shared materials.** `cutscene_manager.gd:248–290` sets `transparency = TRANSPARENCY_ALPHA` and `albedo_color.a` on each surface's **active material**, tweens alpha, then sets it back. If two MeshInstances share a material (common after GLB import), the mutation leaks across instances. Use `set_surface_override_material` with a per-instance clone, or use a fade shader.
-- **Return flow is a stub.** `cutscene_scene.gd:414–416` — `_on_cutscene_finished` prints `"In a real game, transition back to the main scene here."` and returns. The cutscene does not re-enter `main.gd`'s SceneManager. This is unimplemented plumbing, not a bug per se, but blocks shipping.
-- **Hardcoded dialogue/camera paths.** `CutsceneManager` loads `res://data/cutscenes/no_tail_dialogue.json` by default and `CameraController` loads `res://data/cutscenes/camera_path.json` — both `@export_file` paths, but there is no cutscene registry, so adding a second cutscene means handcrafting a new .tscn with copy-paste node wiring.
+- ~~**`_fade_in_character` mutates shared materials.**~~ **Resolved 2026-04-16** (Sprint 7 prep). Replaced with per-surface duplicated override materials: `set_surface_override_material(s, dup)` during the tween, `set_surface_override_material(s, null)` on completion. Shared material resources are no longer touched.
+- ~~**Return flow is a stub.**~~ **Resolved 2026-04-16** (Sprint 7 prep). `cutscene_scene.gd._on_cutscene_finished` now emits `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` with the CutsceneManager's accumulated karma and recruitment state. SceneManager / overlay host listens and decides what to re-enter (overlay pop, scene change, next-arc transition). The `@export var cutscene_id: String` default on the scene script matches the `no_tail_outpost` entry in `data/cutscenes/_registry.json`.
+- **Hardcoded dialogue/camera paths — partially resolved 2026-04-16** (Sprint 7 prep). `data/cutscenes/_registry.json` now documents `{id, scene_path, dialogue_path, camera_animation_name, camera_path_json, title, arc, tags, notes}` for every cutscene; `no_tail_outpost` is the first entry. The `@export_file` paths on `CutsceneManager` + `CameraController` still exist but the registry is the source of truth for the next cutscene. Full registry-driven bootstrap (CutsceneManager reads the registry on start) is still pending the .blend rework.
 - **`CutsceneDialogueUI` duplicates `scripts/ui/dialogue_ui.gd`.** Previously flagged (Apr-07 #14 rename). The two dialogue UIs share no code — parallel implementations of typewriter, speaker labels, choice buttons.
 
 ### 6A.4 Character model weight
@@ -351,17 +351,17 @@ Ordered by leverage. Each item deletes multiple lines of `cutscene_scene.gd` run
    - For hero shots, load the baked camera animation from the GLB; the manager calls `AnimationPlayer.play("cam_sequence_01")`.
    - Optional: keep position/FOV keys in JSON but load AnimationPlayer-compatible tracks.
 
-5. **Fix the fade-in.** Swap material-mutation for either a shader with a `fade` uniform or an AnimationPlayer track on each character's mesh visibility / modulate.
+5. **Fix the fade-in.** Swap material-mutation for either a shader with a `fade` uniform or an AnimationPlayer track on each character's mesh visibility / modulate. **Done 2026-04-16** (Sprint 7 prep) via a simpler per-surface override-material fix — duplicate, mutate the override, clear on completion. Shader-uniform / AnimationPlayer upgrade remains available if the .blend rework picks it up.
 
-6. **Wire the return flow.** `_on_cutscene_finished` should emit on EventBus (e.g. `cutscene_completed(cutscene_id, karma_delta, recruited)`) and `SceneManager.pop_overlay()` or `change_scene` to the next gameplay node.
+6. **Wire the return flow.** `_on_cutscene_finished` should emit on EventBus (e.g. `cutscene_completed(cutscene_id, karma_delta, recruited)`) and `SceneManager.pop_overlay()` or `change_scene` to the next gameplay node. **Signal emit done 2026-04-16** (Sprint 7 prep); `SceneManager` listener still pending a real consumer.
 
-7. **Fix indentation.** `camera_controller.gd` to tabs.
+7. **Fix indentation.** `camera_controller.gd` to tabs. **Done 2026-04-16** (Sprint 7 prep).
 
 8. **Unify dialogue UIs.** Merge `CutsceneDialogueUI` back into `scripts/ui/dialogue_ui.gd` (or vice versa), using one typewriter + choice implementation.
 
 9. **Optimise character GLBs.** Re-export with 1024 textures + mesh compression. Target: < 4 MB per character GLB.
 
-10. **Add a cutscene registry.** `data/cutscenes/_registry.json` listing `{id, scene_path, dialogue_path, camera_animation_name}` so adding a cutscene is data-only. Matches MASTER_PLAN Sprint 6.
+10. **Add a cutscene registry.** `data/cutscenes/_registry.json` listing `{id, scene_path, dialogue_path, camera_animation_name}` so adding a cutscene is data-only. **Done 2026-04-16** (Sprint 7 prep) with the extended schema `{id, scene_path, dialogue_path, camera_animation_name, camera_path_json, title, arc, tags, notes}`.
 
 ### 6A.7 Acceptance criteria
 
