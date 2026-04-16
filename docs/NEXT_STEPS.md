@@ -32,9 +32,9 @@ The numbered sprints below fold both tracks into MASTER_PLAN's existing sprint s
 
 Each sprint is 1–2 focused sessions. Assume all sprints include: **test before merge + changelog entry + MASTER_PLAN §5 status update.**
 
-### Sprint 1 — Safety net (critical, do first)
+### Sprint 1 — Safety net (critical, do first) — **DONE 2026-04-16**
 
-**Track E only.** Matches MASTER_PLAN Sprint 1.
+**Track E only.** Matches MASTER_PLAN Sprint 1. Commits `fbb6362` (GUT vendor) + `b6d5c53` (fixes, tests, docs). Two of the four §5.2 bugs were stale-tracker entries already fixed in code (Mar-27 §2.1, §2.2); two were real (Apr-05 #1 dead field removed, Apr-05 #2 `combat_defeat` now emits on hull 0). GUT 9.6.0 vendored at `godot/addons/gut/`; 9/9 tests green via `godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit`.
 
 | Task | Outcome | Reference |
 | --- | --- | --- |

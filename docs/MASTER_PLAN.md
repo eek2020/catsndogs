@@ -229,9 +229,9 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 
 All initiatives organised by sprint. Each sprint must pass automated tests (once established) and manual playtesting before merging.
 
-### Sprint 1: Test Framework + Critical Bugs
+### Sprint 1: Test Framework + Critical Bugs — **DONE 2026-04-16**
 
-**Goal:** Establish testing infrastructure and fix all critical bugs.
+**Goal:** Establish testing infrastructure and fix all critical bugs. Landed via commits `fbb6362` (GUT vendor) + `b6d5c53` (fixes, tests, docs). See `docs/changelog/CHANGELOG.md` for the full summary.
 
 | Task | Priority | Reference | Files |
 | ---- | -------- | --------- | ----- |

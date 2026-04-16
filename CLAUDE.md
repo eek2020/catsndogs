@@ -79,7 +79,22 @@ story/                 # Narrative reference (arcs, characters, factions)
 1. Read all files you will modify before making changes
 2. Implement the changes
 3. Test in the Godot editor — run the scene and verify behavior
-4. Add an entry to `docs/changelog/CHANGELOG.md`
+4. Run the GUT test suite (see below) before declaring work done
+5. Add an entry to `docs/changelog/CHANGELOG.md`
+
+## Testing
+
+GUT 9.6.0 is vendored at `godot/addons/gut/`. Unit tests live at `godot/tests/unit/` (prefix `test_`, suffix `.gd`).
+
+Headless run (from `godot/`):
+
+```bash
+/Applications/Godot.app/Contents/MacOS/Godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit
+```
+
+Note: `godot` is not on `$PATH` on the primary Mac dev setup — invoke the binary inside the `.app` bundle directly.
+
+Every new bug fix or system should land with a regression test that would have failed before the fix.
 
 ## Key Files
 
