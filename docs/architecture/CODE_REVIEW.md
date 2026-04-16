@@ -24,6 +24,8 @@ The previous edition identified sound structural issues but was written against 
 
 **Headline:** the UI layer has become the dominant coupling surface. `navigation.gd` in particular has near-doubled and is now the single biggest script in the project. This reinforces the original recommendation to decompose it; the need is now critical rather than stylistic.
 
+**Post-review progress (2026-04-16, Sprint 3a):** The view-model recommendation in §2.1 was implemented for the navigation screen. `rg "GameSession\." godot/scripts/ui/navigation.gd` now returns **0** (was 73); UI-wide total is **134** (was 206). The pattern — `scripts/ui/view_models/<screen>_view_model.gd`, duck-typed `SessionDouble` for tests — is intended to be reused for combat_ui (Sprint 3b), star_map_screen (Sprint 5), and dialogue_ui (Sprint 6). Line counts below (1,723 / 585 / 1,092 / 631) are otherwise unchanged; decomposition is the next step.
+
 ---
 
 ## 1. Executive Summary
@@ -374,8 +376,8 @@ Small changes, high impact — each is a few hours' work and unblocked.
 
 Run these before signing off any refactor that follows from this review:
 
-- **Coupling baseline.** `rg "GameSession\." godot/scripts | wc -l` → expect ~236. `rg "GameSession\." godot/scripts/ui | wc -l` → expect ~206. Track these per-sprint.
-- **Script-size baseline.** `wc -l godot/scripts/ui/navigation.gd` → 1,723. Any sprint that touches navigation must reduce this.
+- **Coupling baseline.** `rg "GameSession\." godot/scripts | wc -l` → was 236 at review time. `rg "GameSession\." godot/scripts/ui | wc -l` → was 206 at review time, **134** after Sprint 3a. Track per-sprint; target trend is monotonic downward as each screen gets a VM.
+- **Script-size baseline.** `wc -l godot/scripts/ui/navigation.gd` → 1,717 (2026-04-16; VM conversion shifted a handful of lines but did not decompose). Any sprint that claims to reduce this must actually cut function bodies into child scenes per §2.2.
 - **Dormant-system audit.** Enable EventBus logging and walk a 20-minute session. Expect zero `crew_morale_*`, `astral_hazard_*`, `realm_control_*`, `faction_conquest_*` emissions. That is the dormancy baseline before gameplay-wiring sprints.
 - **Critical-bug regression.** Each of the four §5.2 bugs should have a GUT regression test committed with its fix.
 - **Visual parity walk.** New-game → navigation → dialogue → combat. Capture screenshots. Place them next to `assets/characters/aristotle.png` and `assets/ships/royal_galleon.png` — they should feel like the same game.

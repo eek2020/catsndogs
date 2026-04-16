@@ -173,19 +173,20 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 
 | Source | ID | Issue | File | Status |
 | ------ | -- | ----- | ---- | ------ |
-| Apr-05 | #3 | GameSession coupling (remaining systems) | `encounter_engine.gd`, `faction_system.gd` | 3 of ~6 done; continue incrementally |
+| Apr-05 | #3 | GameSession coupling (remaining systems) | `encounter_engine.gd`, `faction_system.gd` | 3 of ~6 done; see also UI-coupling row below |
+| CR-2026-04-16 §2.1 | — | UI→GameSession coupling (view-model layer) | `scripts/ui/` | 206 → 134 refs; `navigation.gd` 73 → 0 via `NavigationViewModel` (Sprint 3a 2026-04-16). `combat_ui.gd` 5 refs pending 3b; other screens in Sprints 5–6 |
 | Apr-05 | #4 | DataLoader cache never invalidated | `data_loader.gd` | Open |
 | Apr-05 | #6 | CrewTraitSystem iterates all crew per lookup | `crew_trait_system.gd` | Open |
-| Apr-05 | #7 | Per-pixel portrait processing every dialogue open | `dialogue_ui.gd:503-525` | Open — cache processed textures |
+| Apr-05 | #7 | Per-pixel portrait processing every dialogue open | `dialogue_ui.gd:503-525` | Open — cache processed textures (Sprint 3c) |
 | Apr-05 | #9 | crystal_pickup signal arity mismatch | `event_bus.gd`, callers | Open |
 | Apr-05 | #10 | _remove_near_white_bg whiteness metric | `dialogue_ui.gd:518` | Open |
 | Apr-05 | #12 | Redundant DataLoader calls for same file | `data_loader.gd` | Open |
 | Apr-05 | #13 | No crew capacity enforcement | `game_session.gd` recruitment | Open |
 | Apr-05 | #15 | _migrate_save_data is a stub | `save_manager.gd:118-125` | Open — implement version tracking |
-| Mar-27 | §2.4 | R key collision (menu_select vs repair) | `project.godot` | Open |
-| Mar-27 | §2.3 | scene_transition tween after scene change | `world/scene_transition.gd:70-75` | Open |
-| Mar-27 | §2.5 | _show_bark infinite recursion risk | `world/dialogue_manager.gd:112-118` | Open |
-| Mar-27 | §3 | Navigation _process does too much per frame | `navigation.gd` (~800 lines) | Open |
+| Mar-27 | §2.4 | R key collision (menu_select vs repair) | `project.godot` | Open — Sprint 3c |
+| Mar-27 | §2.3 | scene_transition tween after scene change | `world/scene_transition.gd:70-75` | Open — Sprint 3c |
+| Mar-27 | §2.5 | _show_bark infinite recursion risk | `world/dialogue_manager.gd:112-118` | Open — Sprint 3c |
+| Mar-27 | §3 | Navigation _process does too much per frame | `navigation.gd` (1,717 lines) | Still open; VM conversion 2026-04-16 cut coupling but not line count. Decomposition is NEXT_STEPS.md Sprint 3b / CODE_REVIEW §2.2 |
 
 ### 5.4 Open Issues — Low Priority
 
@@ -193,13 +194,13 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 | ------ | -- | ----- | ---- | ------ |
 | Apr-05 | #16 | Encounter priority re-sorted every check | `encounter_engine.gd` | Open |
 | Apr-05 | #17 | EncounterChoice.conditions never evaluated | `encounter.gd` | Open |
-| Apr-07 | #18 | combat_ui.gd complexity (586 lines) | `combat_ui.gd` | Planned — Phase 2 |
-| Apr-07 | #19 | star_map_screen.gd (1093 lines) | `star_map_screen.gd` | Planned — Phase 3 |
-| Apr-07 | #20 | dialogue_ui.gd (632 lines) | `dialogue_ui.gd` | Planned — Phase 4 |
-| Apr-07 | #22 | No test suite | Project-wide | Planned — Phase 1 |
+| Apr-07 | #18 | combat_ui.gd complexity (585 lines) | `combat_ui.gd` | Planned — NEXT_STEPS Sprint 3b (CombatViewModel + decomposition) |
+| Apr-07 | #19 | star_map_screen.gd (1,092 lines) | `star_map_screen.gd` | Planned — NEXT_STEPS Sprint 5 |
+| Apr-07 | #20 | dialogue_ui.gd (631 lines) | `dialogue_ui.gd` | Planned — NEXT_STEPS Sprint 6 |
+| Apr-07 | #22 | No test suite | Project-wide | Resolved — GUT 9.6.0 vendored 2026-04-16; 31 tests across 4 files |
 | Mar-27 | §15 | Missing export presets | `project.godot` | Open |
 | Mar-27 | §15 | No error recovery / crash handling | Project-wide | Open |
-| Mar-27 | §1.2 | navigation.gd 800+ lines | `navigation.gd` | Open — consider in UI decomposition sprint |
+| Mar-27 | §1.2 | navigation.gd size | `navigation.gd` (1,717 lines) | Open — coupling cut via VM 2026-04-16; decomposition still pending (CODE_REVIEW §2.2) |
 
 ---
 
@@ -207,13 +208,14 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 
 | Area | Description | Priority | Tracked In |
 | ---- | ----------- | -------- | ---------- |
-| God scripts | `navigation.gd` (800+), `combat_ui.gd` (586), `star_map_screen.gd` (1093), `dialogue_ui.gd` (632) | Medium | §7 Phases 2–4 |
+| God scripts | `navigation.gd` (1,717), `combat_ui.gd` (585), `star_map_screen.gd` (1,092), `dialogue_ui.gd` (631). `navigation.gd` now decoupled from GameSession via VM (2026-04-16) but not yet split | Medium | NEXT_STEPS Sprints 3b / 5 / 6 |
+| UI coupling | `GameSession.` refs inside `scripts/ui/`: 134 (was 206). `navigation.gd` 0 (was 73). Pattern = `scripts/ui/view_models/<screen>_view_model.gd` | Medium | CR-2026-04-16 §2.1; §5.3 CR-2026-04-16 row |
 | Cache management | DataLoader cache unbounded, no invalidation | Medium | §5.3 Apr-05 #4 |
 | Save migration | `_migrate_save_data()` is a stub | Medium | §5.3 Apr-05 #15 |
 | Trade ledger | `trade_ledger` in GameStateData is unbounded | Low | Untracked |
-| Test coverage | GUT installed 2026-04-16; 3 test files, 9 tests. Refactor targets still untested | Medium | §7 Phase 1 |
-| 3D asset sizes | Character GLBs are 36 MB each; textures 20 MB | Medium | §7 Phase 5 |
-| Art direction | Style guide says "to be decided" but project has moved past prototype | Medium | §7 Phase 6 |
+| Test coverage | GUT 9.6.0 vendored 2026-04-16; 4 test files, 31 tests (MathUtils, EncounterOutcome, AstralHazard hull death, NavigationViewModel). Remaining UI and systems still untested | Medium | §7 Sprint 1 (done) + per-sprint regression tests |
+| 3D asset sizes | Character GLBs are 34 MB each; textures 20 MB | Medium | NEXT_STEPS Sprint 7 |
+| Art direction | Guide committed to Track A floor + Track B aspirational (2026-04-16). Sprite pilot redraw + parity screenshot still pending | Medium | NEXT_STEPS Sprints 2 / 4 |
 
 ### Engine/Addon Dependencies
 
@@ -243,19 +245,21 @@ All initiatives organised by sprint. Each sprint must pass automated tests (once
 | Fix: dialogue_manager push_overlay API | Critical | Mar-27 §2.2, §5.2 | `world/dialogue_manager.gd` |
 | Write regression tests for each critical fix | High | Quality Policy §4 | `tests/unit/` |
 
-### Sprint 2: Combat UI Decomposition + Should-Fix Bugs
+### Sprint 2: UI View-Model Layer + Combat UI Decomposition + Should-Fix Bugs
 
-**Goal:** Decompose `combat_ui.gd` and address high-priority open bugs.
+**Goal:** Establish the view-model pattern that cuts UI→GameSession coupling, apply it to the two largest screens, and address high-priority open bugs. Tracked in NEXT_STEPS.md §2 as Sprints 3a / 3b / 3c.
 
-| Task | Priority | Reference | Files |
-| ---- | -------- | --------- | ----- |
-| Decompose `combat_ui.gd` (586 lines → 5 files) | Medium | Refactoring Plan Phase 2 | `scripts/ui/combat/` |
-| Fix: `crystal_pickup` signal arity mismatch | Medium | Apr-05 #9, §5.3 | `event_bus.gd`, callers |
-| Fix: R key collision (menu_select vs repair) | Medium | Mar-27 §2.4, §5.3 | `project.godot` |
-| Fix: scene_transition tween after scene change | Medium | Mar-27 §2.3, §5.3 | `world/scene_transition.gd` |
-| Fix: _show_bark recursion risk | Medium | Mar-27 §2.5, §5.3 | `world/dialogue_manager.gd` |
-| Cache processed portrait textures | Medium | Apr-05 #7, §5.3 | `dialogue_ui.gd` |
-| Tests for new combat components | High | Quality Policy §4 | `tests/unit/` |
+| Task | Priority | Reference | Files | Status |
+| ---- | -------- | --------- | ----- | ------ |
+| `NavigationViewModel` + convert `navigation.gd` (73 → 0 `GameSession.` refs) | High | CODE_REVIEW §2.1, NEXT_STEPS 3a | `scripts/ui/view_models/navigation_view_model.gd`, `scripts/ui/navigation.gd` | **Done 2026-04-16** |
+| Unit tests for NavigationViewModel (`SessionDouble` + per-system doubles) | High | Quality Policy §4 | `tests/unit/test_navigation_view_model.gd` | **Done 2026-04-16** (22 tests) |
+| `CombatViewModel` + decompose `combat_ui.gd` (585 lines → 5 files) | Medium | Refactoring Plan Phase 2, NEXT_STEPS 3b | `scripts/ui/view_models/combat_view_model.gd`, `scripts/ui/combat/` | Pending |
+| Fix: `crystal_pickup` signal arity mismatch | Medium | Apr-05 #9, §5.3 | `event_bus.gd`, callers | Pending |
+| Fix: R key collision (menu_select vs repair) | Medium | Mar-27 §2.4, §5.3 | `project.godot` | Pending — NEXT_STEPS 3c |
+| Fix: scene_transition tween after scene change | Medium | Mar-27 §2.3, §5.3 | `world/scene_transition.gd` | Pending — NEXT_STEPS 3c |
+| Fix: _show_bark recursion risk | Medium | Mar-27 §2.5, §5.3 | `world/dialogue_manager.gd` | Pending — NEXT_STEPS 3c |
+| Cache processed portrait textures | Medium | Apr-05 #7, §5.3 | `dialogue_ui.gd` | Pending — NEXT_STEPS 3c |
+| Tests for new combat components | High | Quality Policy §4 | `tests/unit/` | Pending with 3b |
 
 ### Sprint 3: Star Map Decomposition + System Fixes
 

@@ -10,6 +10,7 @@ extends Control
 @onready var karma_label: Label = $HUD/TopBar/KarmaLabel
 @onready var flash_label: Label = $HUD/FlashLabel
 
+var _vm: NavigationViewModel = null
 var _flash_timer: float = 0.0
 var _poi_refresh_timer: float = 0.0
 var _elapsed: float = 0.0
@@ -104,7 +105,16 @@ var _nebula_tint: Color = Color(0.6, 0.6, 0.8)
 var _showed_welcome: bool = false
 
 
+## Test seam: callers may inject a view model before the scene enters the tree.
+## Production path leaves `_vm` null and `_ready` builds one from the GameSession
+## autoload.
+func initialize(vm: NavigationViewModel) -> void:
+	_vm = vm
+
+
 func _ready() -> void:
+	if _vm == null:
+		_vm = NavigationViewModel.new(GameSession)
 	_ship_texture = _remove_background_by_corners(_ship_texture)
 	_ship_up_texture = _remove_background_by_corners(_ship_up_texture)
 	_ship_rotate_texture = _remove_background_by_corners(_ship_rotate_texture)
@@ -172,9 +182,9 @@ func _build_starfield() -> void:
 
 
 func _refresh_nebula() -> void:
-	if GameSession.game_state == null:
+	if not _vm.has_state():
 		return
-	var region_id: String = GameSession.game_state.current_region
+	var region_id: String = _vm.current_region()
 	var cam_size := Vector2i(int(size.x), int(size.y))
 	if cam_size.x <= 0 or cam_size.y <= 0:
 		cam_size = Vector2i(1280, 720)
@@ -190,7 +200,7 @@ func _has_overlay() -> bool:
 
 
 func _process(dt: float) -> void:
-	if GameSession.game_state == null:
+	if not _vm.has_state():
 		return
 	_elapsed += dt
 	# Pause gameplay when overlays (dialogue, combat, etc.) are open
@@ -229,7 +239,7 @@ func _handle_movement(dt: float) -> void:
 		direction = direction.normalized()
 
 		# Apply off-course drift from singularity status effect
-		var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+		var ahs: AstralHazardSystem = _vm.astral_hazards()
 		if ahs != null and ahs.has_active_effect("off_course"):
 			_off_course_drift = _off_course_drift.rotated(randf_range(-0.3, 0.3) * dt * 10.0)
 			if _off_course_drift.length() < 0.01:
@@ -238,27 +248,21 @@ func _handle_movement(dt: float) -> void:
 		else:
 			_off_course_drift = Vector2.ZERO
 
-		GameSession.game_state.position_x += direction.x * SHIP_SPEED * dt
-		GameSession.game_state.position_y += direction.y * SHIP_SPEED * dt
-
-		# Clamp to region bounds
-		var bounds: Vector2 = GameSession.star_map_system.get_bounds(GameSession.game_state.current_region)
-		GameSession.game_state.position_x = clampf(GameSession.game_state.position_x, 0.0, bounds.x)
-		GameSession.game_state.position_y = clampf(GameSession.game_state.position_y, 0.0, bounds.y)
+		var region_id: String = _vm.current_region()
+		var bounds: Vector2 = _vm.region_bounds(region_id)
+		var new_pos: Vector2 = _vm.position() + direction * SHIP_SPEED * dt
+		new_pos.x = clampf(new_pos.x, 0.0, bounds.x)
+		new_pos.y = clampf(new_pos.y, 0.0, bounds.y)
+		_vm.set_position(new_pos)
 
 		# Reveal fog around ship (halved when fog_blind)
 		var reveal_radius: float = 300.0
 		if ahs != null and ahs.has_active_effect("fog_blind"):
 			reveal_radius = 150.0
-		GameSession.star_map_system.reveal_around(
-			GameSession.game_state.current_region,
-			GameSession.game_state.position_x,
-			GameSession.game_state.position_y,
-			reveal_radius
-		)
+		_vm.reveal_around(region_id, new_pos.x, new_pos.y, reveal_radius)
 
 		# Check region boundary for transitions
-		_check_boundary(GameSession.game_state, bounds)
+		_check_boundary(_vm.state(), bounds)
 
 		# --- Horizontal flip detection ---
 		if direction.x > 0.01 and not _facing_right:
@@ -290,9 +294,9 @@ func _handle_movement(dt: float) -> void:
 
 		# Spawn engine trail particles
 		if randf() < 0.6:
-			var gs: GameStateData = GameSession.game_state
-			var ex: float = gs.position_x - cos(_heading_angle) * 18.0
-			var ey: float = gs.position_y - sin(_heading_angle) * 18.0
+			var trail_pos: Vector2 = _vm.position()
+			var ex: float = trail_pos.x - cos(_heading_angle) * 18.0
+			var ey: float = trail_pos.y - sin(_heading_angle) * 18.0
 			var life: float = randf_range(0.5, 1.2)
 			_trail.append({
 				"x": ex + randf_range(-3.0, 3.0),
@@ -326,12 +330,12 @@ func _update_poi_timer(dt: float) -> void:
 
 
 func _update_distress(dt: float) -> void:
-	if GameSession.game_state == null:
+	if not _vm.has_state():
 		return
-	var encounter: Encounter = GameSession.side_mission_system.update_distress(dt, GameSession.game_state)
+	var encounter: Encounter = _vm.update_distress(dt)
 	if encounter == null:
 		return
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	var angle := randf() * TAU
 	var distance := randf_range(500.0, 900.0)
 	var clamped: Vector2 = _clamp_to_bounds(
@@ -350,9 +354,9 @@ func _update_distress(dt: float) -> void:
 
 
 func _refresh_pois() -> void:
-	if GameSession.game_state == null:
+	if not _vm.has_state():
 		return
-	var available: Array = GameSession.encounter_engine.get_available_encounters(GameSession.game_state)
+	var available: Array = _vm.available_encounters()
 	var available_ids := {}
 	for encounter in available:
 		available_ids[encounter.encounter_id] = true
@@ -380,7 +384,7 @@ func _has_poi_for_encounter(encounter_id: String) -> bool:
 
 ## Clamp a world position to stay within region bounds with padding.
 func _clamp_to_bounds(pos_x: float, pos_y: float) -> Vector2:
-	var bounds: Vector2 = GameSession.star_map_system.get_bounds(GameSession.game_state.current_region)
+	var bounds: Vector2 = _vm.region_bounds(_vm.current_region())
 	return Vector2(
 		clampf(pos_x, POI_BOUNDARY_PADDING, bounds.x - POI_BOUNDARY_PADDING),
 		clampf(pos_y, POI_BOUNDARY_PADDING, bounds.y - POI_BOUNDARY_PADDING),
@@ -388,7 +392,7 @@ func _clamp_to_bounds(pos_x: float, pos_y: float) -> Vector2:
 
 
 func _spawn_poi(encounter: Encounter) -> void:
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	if gs == null:
 		return
 	# Check if this encounter has a fixed position on the star map
@@ -422,10 +426,7 @@ func _spawn_poi(encounter: Encounter) -> void:
 
 
 func _get_fixed_position(encounter_id: String, region_id: String) -> Dictionary:
-	var sms: StarMapSystem = GameSession.star_map_system
-	if sms == null:
-		return {}
-	var map_def: Dictionary = sms.region_maps.get(region_id, {})
+	var map_def: Dictionary = _vm.region_map(region_id)
 	for loc in map_def.get("story_locations", []):
 		if loc.get("encounter_id", "") == encounter_id:
 			return loc
@@ -433,7 +434,7 @@ func _get_fixed_position(encounter_id: String, region_id: String) -> Dictionary:
 
 
 func _check_poi_collisions() -> void:
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	if gs == null:
 		return
 	for poi in _active_pois.duplicate():
@@ -447,21 +448,21 @@ func _check_poi_collisions() -> void:
 
 
 func _check_base_proximity() -> void:
-	var gs: GameStateData = GameSession.game_state
-	if gs == null or GameSession.star_base_system == null:
+	if not _vm.has_state() or not _vm.has_star_base_system():
 		_nearby_base_id = ""
 		return
-	_nearby_base_id = GameSession.star_base_system.check_dock_proximity(gs, gs.position_x, gs.position_y)
+	var pos: Vector2 = _vm.position()
+	_nearby_base_id = _vm.check_dock_proximity(pos.x, pos.y)
 	if not _nearby_base_id.is_empty():
-		var base: StarBase = GameSession.star_base_system.get_base(_nearby_base_id)
-		if base != null and GameSession.star_base_system.can_dock(gs, _nearby_base_id):
+		var base: StarBase = _vm.get_base(_nearby_base_id)
+		if base != null and _vm.can_dock(_nearby_base_id):
 			flash("[E] Dock at %s" % base.base_name, 0.5)
 
 
 func _land_on_planet() -> void:
 	if _nearby_planet_id.is_empty():
 		return
-	if GameSession.land_on_planet(_nearby_planet_id):
+	if _vm.land_on_planet(_nearby_planet_id):
 		if _nearby_planet_id == FRINGE_HAVEN_PLANET_ID:
 			get_tree().call_deferred("change_scene_to_file", FRINGE_HAVEN_SCENE_PATH)
 			return
@@ -471,13 +472,13 @@ func _land_on_planet() -> void:
 
 
 func _check_planet_proximity() -> void:
-	var gs: GameStateData = GameSession.game_state
-	if gs == null or GameSession.planet_system == null:
+	if not _vm.has_state() or not _vm.has_planet_system():
 		_nearby_planet_id = ""
 		return
-	_nearby_planet_id = GameSession.planet_system.check_landing_proximity(gs, gs.position_x, gs.position_y)
+	var pos: Vector2 = _vm.position()
+	_nearby_planet_id = _vm.check_landing_proximity(pos.x, pos.y)
 	if not _nearby_planet_id.is_empty() and _nearby_base_id.is_empty():
-		var planet: Planet = GameSession.planet_system.get_planet(_nearby_planet_id)
+		var planet: Planet = _vm.get_planet(_nearby_planet_id)
 		if planet != null:
 			flash("[L] Land on %s" % planet.planet_name, 0.5)
 
@@ -491,17 +492,17 @@ func _on_encounter(encounter) -> void:
 
 
 func _update_star_map_spawns(dt: float) -> void:
-	if GameSession.game_state == null:
+	if not _vm.has_state():
 		return
-	var region_id: String = GameSession.game_state.current_region
-	GameSession.star_map_system.update_spawns(region_id, dt)
+	var region_id: String = _vm.current_region()
+	_vm.update_spawns(region_id, dt)
 	# Refresh the visible spawn list
-	_spawn_pois = GameSession.star_map_system.get_visible_spawns(region_id)
+	_spawn_pois = _vm.visible_spawns(region_id)
 	# Refresh story and hidden POIs — filter story POIs to only show
 	# encounters whose trigger conditions are currently met, so the player
 	# doesn't see interactive-looking markers they can't activate yet.
-	var all_story: Array = GameSession.star_map_system.get_visible_story_pois(region_id, GameSession.game_state)
-	var available: Array = GameSession.encounter_engine.get_available_encounters(GameSession.game_state)
+	var all_story: Array = _vm.visible_story_pois(region_id)
+	var available: Array = _vm.available_encounters()
 	var available_ids := {}
 	for enc in available:
 		available_ids[enc.encounter_id] = true
@@ -518,17 +519,17 @@ func _update_star_map_spawns(dt: float) -> void:
 		if available_ids.has(eid) and not active_enc_ids.has(eid):
 			filtered_story.append(poi)
 	_story_pois = filtered_story
-	_hidden_pois = GameSession.star_map_system.get_visible_hidden_pois(region_id)
+	_hidden_pois = _vm.visible_hidden_pois(region_id)
 	# Update boundary prompt timer
 	if _boundary_prompt_timer > 0:
 		_boundary_prompt_timer -= dt
 
 
 func _update_astral_hazards(dt: float) -> void:
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	if gs == null:
 		return
-	var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+	var ahs: AstralHazardSystem = _vm.astral_hazards()
 	if ahs == null:
 		return
 	var region_id: String = gs.current_region
@@ -555,7 +556,7 @@ func _update_astral_hazards(dt: float) -> void:
 
 
 func _check_star_map_poi_collisions() -> void:
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	if gs == null:
 		return
 	
@@ -567,7 +568,7 @@ func _check_star_map_poi_collisions() -> void:
 			var encounter_id: String = poi.get("encounter_id", "")
 			if encounter_id != "":
 				# Find and trigger the story encounter
-				var encounters: Array = GameSession.encounter_engine.get_available_encounters(gs)
+				var encounters: Array = _vm.available_encounters()
 				for enc in encounters:
 					if enc.encounter_id == encounter_id:
 						_on_encounter(enc)
@@ -590,7 +591,7 @@ func _check_star_map_poi_collisions() -> void:
 			flash("DISCOVERED: %s (+%dC +%dS)" % [poi.get("label", "Hidden Cache"), crystals, salvage_val], 4.0)
 			EventBus.hidden_location_discovered.emit(poi_id)
 			# Remove from the star map hidden locations so it won't respawn
-			var map_def: Dictionary = GameSession.star_map_system.region_maps.get(gs.current_region, {})
+			var map_def: Dictionary = _vm.region_map(gs.current_region)
 			var hidden_locs: Array = map_def.get("hidden_locations", [])
 			for i in hidden_locs.size():
 				if hidden_locs[i].get("poi_id", "") == poi_id:
@@ -605,15 +606,15 @@ func _check_star_map_poi_collisions() -> void:
 		if (dx * dx + dy * dy) <= (POI_RADIUS + SHIP_COLLISION_RADIUS) * (POI_RADIUS + SHIP_COLLISION_RADIUS):
 			var spawn_type: String = poi.get("type", "combat")
 			# Find a matching available encounter for this type
-			var encounters: Array = GameSession.encounter_engine.get_available_encounters(gs)
+			var encounters: Array = _vm.available_encounters()
 			for enc in encounters:
 				if enc.encounter_type == spawn_type or (spawn_type == "rescue" and enc.encounter_type == "distress_signal"):
-					GameSession.star_map_system.remove_spawn(gs.current_region, poi.get("poi_id", ""))
+					_vm.remove_spawn(gs.current_region, poi.get("poi_id", ""))
 					_spawn_pois.erase(poi)
 					_on_encounter(enc)
 					return
 			# If no matching encounter, just remove the spawn
-			GameSession.star_map_system.remove_spawn(gs.current_region, poi.get("poi_id", ""))
+			_vm.remove_spawn(gs.current_region, poi.get("poi_id", ""))
 			_spawn_pois.erase(poi)
 			flash("CONTACT: %s — but nothing found" % poi.get("label", "Unknown"), 2.0)
 			break
@@ -634,12 +635,7 @@ func _check_boundary(gs: GameStateData, bounds: Vector2) -> void:
 		return
 
 	# Find connected regions
-	var connected: Array = []
-	var exploration_sys: ExplorationSystem = GameSession.exploration
-	if exploration_sys != null:
-		var region: ExplorationSystem.Region = exploration_sys.regions.get(gs.current_region)
-		if region != null:
-			connected = Array(region.connected_regions)
+	var connected: Array = _vm.connected_regions(gs.current_region)
 
 	if connected.is_empty():
 		return
@@ -655,7 +651,7 @@ func _check_boundary(gs: GameStateData, bounds: Vector2) -> void:
 	elif gs.position_y >= bounds.y - BOUNDARY_MARGIN:
 		exit_dir.y += 1.0
 
-	var sms: StarMapSystem = GameSession.star_map_system
+	var sms: StarMapSystem = _vm.star_map()
 	if sms != null and not sms.galaxy_layout.is_empty() and exit_dir.length() > 0.0:
 		var current_gpos: Vector2 = sms.get_galaxy_node_pos(gs.current_region)
 		var best_dot: float = -2.0
@@ -682,7 +678,7 @@ func _perform_region_transition() -> void:
 	var target: String = _boundary_prompt_region
 	_boundary_prompt_region = ""
 	_boundary_prompt_timer = 0.0
-	var success: bool = GameSession.travel_to_region(target)
+	var success: bool = _vm.travel_to_region(target)
 	if success:
 		_active_pois.clear()
 		_story_pois.clear()
@@ -706,9 +702,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			main.push_overlay("pause")
 	elif event.is_action_pressed("interact"):
 		# Dock at nearby star base if in range
-		if not _nearby_base_id.is_empty() and GameSession.star_base_system != null:
-			if GameSession.star_base_system.can_dock(GameSession.game_state, _nearby_base_id):
-				GameSession.star_base_system.dock(GameSession.game_state, _nearby_base_id)
+		if not _nearby_base_id.is_empty() and _vm.has_star_base_system():
+			if _vm.can_dock(_nearby_base_id):
+				_vm.dock(_nearby_base_id)
 				var main2: Control = get_tree().current_scene
 				if main2.has_method("push_overlay"):
 					main2.push_overlay("station")
@@ -733,21 +729,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		if main.has_method("push_overlay"):
 			main.push_overlay("star_map")
 	elif event.is_action_pressed("ui_accept"):
-		if not _nearby_planet_id.is_empty() and GameSession.planet_system != null:
+		if not _nearby_planet_id.is_empty() and _vm.has_planet_system():
 			_land_on_planet()
 		elif not _boundary_prompt_region.is_empty() and _boundary_prompt_timer > 0:
 			_perform_region_transition()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_L:
-		if not _nearby_planet_id.is_empty() and GameSession.planet_system != null:
+		if not _nearby_planet_id.is_empty() and _vm.has_planet_system():
 			_land_on_planet()
 
 
 func _update_hud() -> void:
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	if gs == null:
 		return
-	var arc_title: String = GameSession.narrative.get_arc_title(gs.current_arc)
-	var progress: Dictionary = GameSession.narrative.get_arc_progress(gs)
+	var arc_title: String = _vm.arc_title()
+	var progress: Dictionary = _vm.arc_progress()
 	var done_count: int = 0
 	var total_count: int = progress.size()
 	for flag_name in progress:
@@ -766,9 +762,9 @@ func _update_hud() -> void:
 			gs.player_ship.crew.size(), gs.player_ship.crew_capacity,
 		]
 	# Karma HUD
-	if karma_label != null and GameSession.karma_system != null:
-		var tier_label_text: String = GameSession.karma_system.get_tier_label(gs)
-		var color_hex: String = GameSession.karma_system.get_tier_color(gs)
+	if karma_label != null and _vm.has_karma_system():
+		var tier_label_text: String = _vm.karma_tier_label()
+		var color_hex: String = _vm.karma_tier_color()
 		karma_label.text = "Karma: %s (%d)" % [tier_label_text, gs.karma]
 		karma_label.add_theme_color_override("font_color", Color(color_hex))
 
@@ -823,7 +819,7 @@ func _on_arc_transition_complete(_new_arc: String) -> void:
 # ---------------------------------------------------------------------------
 
 func _draw() -> void:
-	var gs: GameStateData = GameSession.game_state
+	var gs: GameStateData = _vm.state()
 	if gs == null:
 		return
 
@@ -877,7 +873,7 @@ func _draw_trail(center: Vector2, gs: GameStateData) -> void:
 
 
 func _draw_fog_of_war(center: Vector2, gs: GameStateData) -> void:
-	var sms: StarMapSystem = GameSession.star_map_system
+	var sms: StarMapSystem = _vm.star_map()
 	if sms == null:
 		return
 	var region_id: String = gs.current_region
@@ -980,7 +976,7 @@ func _draw_fog_of_war(center: Vector2, gs: GameStateData) -> void:
 
 
 func _draw_hazards(center: Vector2, gs: GameStateData) -> void:
-	var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+	var ahs: AstralHazardSystem = _vm.astral_hazards()
 	if ahs == null:
 		return
 	var default_font: Font = ThemeDB.fallback_font
@@ -1137,7 +1133,7 @@ func _draw_star_map_pois(center: Vector2, gs: GameStateData) -> void:
 
 
 func _draw_boundary_indicator(gs: GameStateData) -> void:
-	var bounds: Vector2 = GameSession.star_map_system.get_bounds(gs.current_region)
+	var bounds: Vector2 = _vm.region_bounds(gs.current_region)
 	var center := size * 0.5
 	# The fuzzy edge width in world units that fades to dark
 	var edge_depth: float = 250.0
@@ -1310,9 +1306,9 @@ func _get_planet_texture(image_name: String) -> Texture2D:
 
 
 func _draw_planets(center: Vector2, gs: GameStateData) -> void:
-	if GameSession.planet_system == null:
+	if not _vm.has_planet_system():
 		return
-	var planets: Array = GameSession.planet_system.get_planets_in_region(gs.current_region)
+	var planets: Array = _vm.planets_in_region(gs.current_region)
 	var default_font: Font = ThemeDB.fallback_font
 	var planet_draw_radius: float = 28.0
 	for planet in planets:
@@ -1384,11 +1380,9 @@ func _get_starbase_texture(image_name: String) -> Texture2D:
 
 
 func _draw_star_bases(center: Vector2, gs: GameStateData) -> void:
-	if GameSession.star_base_system == null:
+	if not _vm.has_star_base_system():
 		return
-	var bases: Array = GameSession.star_base_system.get_visible_bases(
-		gs, gs.current_region
-	)
+	var bases: Array = _vm.visible_star_bases(gs.current_region)
 	var default_font: Font = ThemeDB.fallback_font
 	var base_draw_size: float = 48.0
 	for base in bases:
@@ -1527,7 +1521,7 @@ func _draw_minimap(gs: GameStateData) -> void:
 	draw_rect(map_rect, Color(0.2, 0.4, 0.7, 0.8), false, 2.0)
 
 	# Fog of war on minimap
-	var sms: StarMapSystem = GameSession.star_map_system
+	var sms: StarMapSystem = _vm.star_map()
 	if sms != null:
 		var region_id: String = gs.current_region
 		var bounds: Vector2 = sms.get_bounds(region_id)
@@ -1664,7 +1658,7 @@ func _draw_minimap(gs: GameStateData) -> void:
 
 
 func _draw_status_effects() -> void:
-	var ahs: AstralHazardSystem = GameSession.astral_hazard_system
+	var ahs: AstralHazardSystem = _vm.astral_hazards()
 	if ahs == null or ahs.status_effects.is_empty():
 		return
 	var default_font: Font = ThemeDB.fallback_font

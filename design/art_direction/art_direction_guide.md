@@ -6,9 +6,21 @@
 
 ### Overall Aesthetic
 - **Tone:** Spelljammer-inspired — serious stakes with a fun, accessible cast of anthropomorphic animals
-- **Style:** 2D pixel art or clean vector sprites (to be decided in prototype phase)
+- **Style:** 2D pixel art — two tracks running together:
+  - **Track A (floor, applies to all characters):** native 64×64 sprites (exported 256×256), 12–16 colour palette per sheet, shaded with selective anti-aliasing, readable silhouettes at minimap scale.
+  - **Track B (aspirational, named cast only):** painterly portrait cards in the style of `aristotle.png` / `dave.png`. Used in dialogue, cutscenes, and shop flow. Generic NPCs do not get painterly portraits.
 - **Palette:** Deep space blacks and blues contrasted with warm ship interiors and crystal glow effects
 - **Mood:** Adventurous, slightly chaotic, with moments of grandeur and menace
+
+### Reference Pins
+
+The floor and fidelity bar for Track A is calibrated against these shipped games. When in doubt, match their readability and silhouette clarity at equivalent zoom.
+
+- **Stardew Valley** — colour discipline, 16×16 readability scaled up, warm lit interiors.
+- **Death's Door** — silhouette clarity, moody palette, restrained animation.
+- **Moonlighter** — 64×64 character sprite floor, portrait-to-sprite parity, shop/dialogue UI integration.
+- **Eastward** — painterly backgrounds with pixel-art foregrounds (useful when mixing Track A sprites with painted ship illustrations).
+- **Sea of Stars** — lighting and shader polish on top of a pixel-art floor.
 
 ### Colour Palettes by Faction
 

@@ -6,6 +6,37 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 3a: NavigationViewModel + navigation.gd conversion
+
+NEXT_STEPS Sprint 3a. Introduced the view-model layer prescribed by CODE_REVIEW.md §2.1 and converted `navigation.gd` (the largest UI script, 1723 lines) to consume it.
+
+**New file:** `godot/scripts/ui/view_models/navigation_view_model.gd` — a narrow `RefCounted` adapter that wraps GameSession. Exposes ~30 methods for state reads, system-call forwarding, and actions. Two escape hatches (`star_map()` and `astral_hazards()`) return the underlying systems for the deep draw-loop access paths where wrapping each method would triple the VM size.
+
+**navigation.gd changes:**
+
+- Added `initialize(vm)` hook so tests can inject a VM; `_ready` falls back to constructing one from the `GameSession` autoload in production.
+- Every `GameSession.` access replaced with `_vm.` call. Direct state writes to `position_x/y` consolidated into a single `_vm.set_position()` call in `_handle_movement`.
+- `_check_boundary` no longer reaches into `GameSession.exploration` — uses `_vm.connected_regions(region)` instead.
+
+**Metrics:**
+
+- `rg "GameSession\." godot/scripts/ui/navigation.gd` → **0** (was 73).
+- `rg "GameSession\." godot/scripts/ui` total → **134** (was 206; Sprint 3 exit target was ≤140, already met).
+
+**Tests:** `godot/tests/unit/test_navigation_view_model.gd` — 22 tests covering state reads, state writes, star-map delegation, encounter/mission/narrative/karma pass-through, exploration edge cases, and action forwarding. Uses a `SessionDouble` + per-system test doubles instead of the real autoload so the VM can be exercised in isolation. Full suite: 31/31 passing.
+
+Sprint 3b (CombatViewModel + `combat_ui.gd` decomposition) is next. Sprint 3c (should-fix bugs: R-key, scene_transition tween, `_show_bark` recursion, portrait cache) is independent and can interleave.
+
+---
+
+## 2026-04-16 — Sprint 2 (partial): Art direction commitment
+
+NEXT_STEPS Sprint 2, engineering-tractable portion. Removed the "to be decided" line from `design/art_direction/art_direction_guide.md` and committed to the two-track approach: **Track A** (native 64×64 / exported 256×256 sprites, 12–16 colour palette, shaded) as the floor for all characters, **Track B** (painterly portrait cards) as an aspirational layer for the named cast only. Added a "Reference Pins" section listing Stardew Valley, Death's Door, Moonlighter, Eastward, and Sea of Stars as calibration benchmarks.
+
+Sprint 2 remaining: Aristotle spritesheet pilot redraw + in-game parity screenshot (human art work).
+
+---
+
 ## 2026-04-16 — Sprint 1: GUT + Critical Bug Triage
 
 NEXT_STEPS Sprint 1. Installed the GUT test framework and closed the four critical bugs in MASTER_PLAN §5.2 — two required fixes, two were already fixed in current code and the tracker was stale.

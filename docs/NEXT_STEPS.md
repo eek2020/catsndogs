@@ -48,34 +48,50 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 
 **Exit criteria:** `godot -s addons/gut/gut_cmdln.gd` returns green locally; four critical bugs closed in MASTER_PLAN §5.2; CHANGELOG entry added.
 
-### Sprint 2 — Art direction + sprite pilot (parallel with Sprint 1)
+### Sprint 2 — Art direction + sprite pilot (parallel with Sprint 1) — **PARTIAL 2026-04-16**
 
-**Track A only.** Can start the day Sprint 1 starts.
+**Track A only.** Engineering-tractable rows done; sprite pilot still pending a human artist.
 
-| Task | Outcome | Reference |
-| --- | --- | --- |
-| Update `design/art_direction/art_direction_guide.md` | Delete the "to be decided" line; commit to **Track A floor (64×64 native, 12–16 colours, shaded)** + **Track B aspirational (painterly portraits for named cast)** | CODE_REVIEW §6.4 |
-| Add reference-pin section | 3–5 games pinned as visual benchmarks (Stardew, Death's Door, Moonlighter) | CODE_REVIEW §6.3 |
-| Pilot redraw: `aristotle_spritesheet.png` at 64×64 / 256×256 | Single sheet redrawn, runs in-game without rigging changes | CODE_REVIEW §6.4 step 2 |
-| In-game parity screenshot | `aristotle.png` portrait and the new sprite placed side by side — same character, same palette, same silhouette | CODE_REVIEW §6.5 |
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| Update `design/art_direction/art_direction_guide.md` | "To be decided" line removed; committed to **Track A floor (64×64 native, 12–16 colours, shaded)** + **Track B aspirational (painterly portraits for named cast)** | CODE_REVIEW §6.4 | **Done** |
+| Add reference-pin section | Stardew, Death's Door, Moonlighter, Eastward, Sea of Stars pinned as visual benchmarks | CODE_REVIEW §6.3 | **Done** |
+| Pilot redraw: `aristotle_spritesheet.png` at 64×64 / 256×256 | Single sheet redrawn, runs in-game without rigging changes | CODE_REVIEW §6.4 step 2 | Pending artist |
+| In-game parity screenshot | `aristotle.png` portrait and the new sprite placed side by side — same character, same palette, same silhouette | CODE_REVIEW §6.5 | Pending artist |
 
-**Exit criteria:** art direction guide has no "to be decided" left; one spritesheet redrawn; parity screenshot committed to `docs/qa/`.
+**Exit criteria:** art direction guide has no "to be decided" left **(done)**; one spritesheet redrawn; parity screenshot committed to `docs/qa/`.
 
 ### Sprint 3 — UI view-model layer (cut the coupling at the source)
 
-**Track E.** Matches MASTER_PLAN Sprint 2 scope but adds the view-model layer that CODE_REVIEW §2.1 identifies as load-bearing.
+**Track E.** Matches MASTER_PLAN Sprint 2 scope but adds the view-model layer that CODE_REVIEW §2.1 identifies as load-bearing. Sliced into three parts for safer iteration; 3a establishes the pattern, 3b applies it to a harder case, 3c is independent bugs.
+
+**Sprint 3a — NavigationViewModel — DONE 2026-04-16.**
+
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| Create `godot/scripts/ui/view_models/` | Directory created; holds per-screen adapters | CODE_REVIEW §2.1 | **Done** |
+| `NavigationViewModel` | ~30 methods covering navigation.gd's reads, actions, and system calls; two escape hatches (`star_map()`, `astral_hazards()`) for deep draw-loop access | Coupling inventory | **Done** |
+| Convert `navigation.gd` to consume the VM via `initialize(vm)` | 73 → 0 direct `GameSession.` refs in navigation.gd; fallback to autoload in `_ready` keeps main.gd untouched | CODE_REVIEW §2.1 | **Done** |
+| Tests for the VM | 22 tests using `SessionDouble` + per-system RefCounted doubles; full suite 31/31 green | Quality policy | **Done** |
+
+**Sprint 3b — CombatViewModel + combat_ui decomposition — pending.**
 
 | Task | Outcome | Reference |
 | --- | --- | --- |
-| Create `godot/scripts/ui/view_models/` | Location for per-screen adapters | CODE_REVIEW §2.1 |
-| `NavigationViewModel` | Exposes the 12–15 reads `navigation.gd` actually needs | Coupling inventory |
-| Convert `navigation.gd` to consume the VM via `initialize(vm)` | Direct `GameSession.` refs inside `navigation.gd` drop to zero | CODE_REVIEW §2.1 |
-| `CombatViewModel` | Same for `combat_ui.gd` | — |
+| `CombatViewModel` | Same pattern as `NavigationViewModel` | — |
 | Decompose `combat_ui.gd` (586 → 5 files) | As per REFACTORING_PLAN Phase 2 | MASTER_PLAN Sprint 2 |
-| Fix: R-key collision, scene_transition tween, `_show_bark` recursion, portrait cache | Should-fix bugs | MASTER_PLAN §5.3 |
 | Tests for new combat components | Green | Quality policy |
 
-**Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 (down from 206); combat_ui split into `scripts/ui/combat/`.
+**Sprint 3c — should-fix bugs — pending, independent of 3b.**
+
+| Task | Outcome | Reference |
+| --- | --- | --- |
+| Fix: R-key collision (menu_select vs repair) | Distinct bindings; no ambiguous input | MASTER_PLAN §5.3 Mar-27 §2.4 |
+| Fix: scene_transition tween after scene change | Tween guarded against freed node | MASTER_PLAN §5.3 Mar-27 §2.3 |
+| Fix: `_show_bark` recursion | Bounded depth or re-entry guard | MASTER_PLAN §5.3 Mar-27 §2.5 |
+| Cache processed portrait textures | No per-pixel work per dialogue open | MASTER_PLAN §5.3 Apr-05 #7 |
+
+**Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0 **(done: 73 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 **(done: 206 → 134)**; combat_ui split into `scripts/ui/combat/` (3b); four should-fix bugs closed (3c).
 
 ### Sprint 4 — Sprite roll-out (the named cast)
 
@@ -230,3 +246,4 @@ Everything else is sequenced above.
 | Date | Change |
 | --- | --- |
 | 2026-04-16 | Initial plan. Folds CODE_REVIEW.md (enhanced) and MASTER_PLAN.md §7 into a two-track sprint schedule. Adds sprite modernisation track. Adds tidy-up menu. |
+| 2026-04-16 | Sprint 1 closed. Sprint 2 partial (art guide + reference pins done; sprite pilot pending artist). Sprint 3 sliced into 3a/3b/3c; 3a closed (NavigationViewModel + navigation.gd conversion, 73 → 0 refs, UI total 206 → 134, 22 new tests). |
