@@ -6,6 +6,39 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Repo Tidy + Enhanced Code Review + NEXT_STEPS Plan
+
+Enhanced code review pass; added sprite modernisation plan and 3D cutscene review; reconciled planning docs; tidied repo root.
+
+**Docs added / changed:**
+
+- `docs/architecture/CODE_REVIEW.md` — full rewrite. Updated metrics (navigation.gd 1723 lines, 206 UI→GameSession refs, 236 total). Added §6 "Visual Cohesion" (painted portraits vs 32×32 sprites). Added §6A "3D Cutscene Review" (No Tail Outpost — ~500 lines of runtime model-patching that belongs in Blender). Added §9 MASTER_PLAN reconciliation.
+- `docs/NEXT_STEPS.md` — new. Two-track sprint plan (engineering + art) reconciled with MASTER_PLAN.md §7. Sprint 7 dedicated to Blender-first cutscene modernisation.
+- `docs/README.md` — new. Documentation index.
+- `docs/MASTER_PLAN.md` — doc-index paths qualified (`STRUCTURE.md` → `docs/STRUCTURE.md`, etc.); added entries for NEXT_STEPS, CODE_REVIEW, GODOT_NOTES.
+- `docs/GODOT_DEV_GUIDE.md` — workflow table updated (STRUCTURE.md + MEMORY.md location bug fixed); examples path corrected.
+- `README.md` — STRUCTURE.md link fixed; added NEXT_STEPS and CODE_REVIEW entries.
+
+**Repo tidy:**
+
+- Deleted `other_data/` (1.3 GB Pioneer-lineage source, unused).
+- Deleted `backup_assets/` (20 MB stale music).
+- Deleted `logs/runtime.log` (one-off debug).
+- Deleted `.DS_Store` files (gitignored; were never tracked).
+- Moved `examples/godot-patterns/` → `docs/godot-reference/examples/godot-patterns/`; removed empty `examples/` dir.
+- Moved `docs/sprite_sheet_notes.md` → `design/art_direction/sprite_sheet_notes.md`.
+- Renamed `docs/MEMORY.md` → `docs/GODOT_NOTES.md` (Godot engineering notes, not an auto-memory duplicate).
+- Deleted orphaned `tools/import_assets.sh` and `tools/rollback_import.sh` (referenced now-deleted `other_data/` and `backup_assets/`; the one-time import had already been completed and assets are in `godot/assets/`).
+- Updated `.claude/PROJECT_INDEX.md` to remove stale `other_data/` / `backup_assets/` / `examples/` entries and point to the new plan docs.
+- Repo size: ~5.0 GB → ~3.7 GB.
+
+**Notes:**
+
+- Auto-memory entries added: visual-style mismatch, coupling baseline + plan hierarchy, 3D cutscene state.
+- No code changes in this pass — review + plan + tidy only.
+
+---
+
 ## 2026-04-07 — Star Base Texture Rendering
 
 Added star base texture support mirroring the planet texture work.

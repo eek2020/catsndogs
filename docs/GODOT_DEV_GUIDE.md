@@ -89,7 +89,7 @@ cd tools/godot-dev/assets && pip install -r requirements.txt
 
 ## Examples
 
-Working examples in `examples/godot-patterns/`:
+Working examples in `docs/godot-reference/examples/godot-patterns/`:
 
 - **scene-builder-example/** — Scene builder that creates a 2D scene programmatically
 - **runtime-script-example/** — Player controller with proper type annotations and signal patterns
@@ -100,8 +100,10 @@ Working examples in `examples/godot-patterns/`:
 | Document | Location | Purpose |
 | ---------- | ---------- | --------- |
 | docs/MASTER_PLAN.md | docs/ | Authoritative project plan, open issues, roadmap |
-| STRUCTURE.md | Project root | Architecture reference: scenes, signals, systems |
-| MEMORY.md | Project root | Accumulated project knowledge |
+| docs/STRUCTURE.md | docs/ | Architecture reference: scenes, signals, systems |
+| docs/GODOT_NOTES.md | docs/ | Godot engineering notes and discoveries |
+| docs/NEXT_STEPS.md | docs/ | Active sprint plan |
+| docs/architecture/CODE_REVIEW.md | docs/architecture/ | Current code review |
 
 ## Whisper Crystals Architecture
 

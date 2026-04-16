@@ -57,24 +57,19 @@
     - `find_chars.py` - Character finding
     - `match.py` - Pattern matching
     - `measure.py` - Measurement tools
-  - `import_assets.sh` - Asset import script
-  - `rollback_import.sh` - Asset rollback script
-
-### Legacy & Archive
-
-- **`other_data/`** - Legacy data from previous iterations
-- **`backup_assets/`** - Archived asset files
-- **`examples/`** - Code examples and patterns
 
 ## Key Files for AI Agents
 
 ### Primary Reference Documents
 
 1. **`README.md`** - Project overview and quick start
-2. **`STRUCTURE.md`** - Detailed architecture reference
-3. **`docs/MASTER_PLAN.md`** - Current development status
-4. **`docs/GAME_SUMMARY.md`** - Complete game design
-5. **`MEMORY.md`** - Project context and decisions
+2. **`docs/README.md`** - Documentation index
+3. **`docs/MASTER_PLAN.md`** - Authoritative roadmap and issue tracker
+4. **`docs/NEXT_STEPS.md`** - Active sprint plan
+5. **`docs/architecture/CODE_REVIEW.md`** - Current code review
+6. **`docs/STRUCTURE.md`** - Detailed architecture reference
+7. **`docs/GAME_SUMMARY.md`** - Complete game design
+8. **`docs/GODOT_NOTES.md`** - Godot engineering notes (was `MEMORY.md`)
 
 ### Core Game Files
 

@@ -142,7 +142,9 @@ See `docs/MASTER_PLAN.md` for the authoritative project plan and development sta
 - [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md) — Authoritative project plan: current state, tasks, roadmap
 - [`docs/GAME_SUMMARY.md`](docs/GAME_SUMMARY.md) — Complete game design summary (implemented + planned content)
 - [`docs/reviews/CODE_REVIEW_2026-04-05.md`](docs/reviews/CODE_REVIEW_2026-04-05.md) — Latest code review with open issues
-- [`STRUCTURE.md`](STRUCTURE.md) — Architecture reference: scenes, signals, systems
+- [`docs/STRUCTURE.md`](docs/STRUCTURE.md) — Architecture reference: scenes, signals, systems
+- [`docs/NEXT_STEPS.md`](docs/NEXT_STEPS.md) — Active sprint plan (engineering + art tracks)
+- [`docs/architecture/CODE_REVIEW.md`](docs/architecture/CODE_REVIEW.md) — Current code review (2026-04-16)
 - [`.claude/PROJECT_INDEX.md`](.claude/PROJECT_INDEX.md) — AI agent project index and file location guide
 - [`.claude/MEMORY.md`](.claude/MEMORY.md) — Global AI agent memory and technical patterns
 - [`docs/story/LORE_EXPANSION.md`](docs/story/LORE_EXPANSION.md) — Deep world-building: faction histories, character backstories, crystal network mythology

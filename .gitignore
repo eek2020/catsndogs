@@ -25,3 +25,4 @@ logs/
 # Godot engine
 .godot/
 export_presets.cfg
+.claude/worktrees/

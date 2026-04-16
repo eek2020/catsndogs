@@ -332,9 +332,12 @@ All initiatives organised by sprint. Each sprint must pass automated tests (once
 | Document | Location | Purpose |
 | ------ | ---------- | --------- |
 | Architecture rules | `CLAUDE.md` | Non-negotiable rules for all contributors |
-| Architecture reference | `STRUCTURE.md` | Scenes, signals, systems, entities, data files |
+| Architecture reference | `docs/STRUCTURE.md` | Scenes, signals, systems, entities, data files |
 | Game design summary | `docs/GAME_SUMMARY.md` | Complete game world, story, mechanics (implemented + planned) |
-| Agent briefing | `AGENT_BRIEFING.md` | Full onboarding document for AI agents |
+| Agent briefing | `docs/AGENT_BRIEFING.md` | Full onboarding document for AI agents |
+| Current code review | `docs/architecture/CODE_REVIEW.md` | Enhanced 2026-04-16 review |
+| Active sprint plan | `docs/NEXT_STEPS.md` | Engineering + art sprint schedule |
+| Godot engineering notes | `docs/GODOT_NOTES.md` | Engine quirks, CanvasLayer rules, discoveries |
 | Latest code review | `docs/reviews/CODE_REVIEW_2026-04-07.md` | 22 issues, 18 implemented |
 | Code review (Apr 5) | `docs/reviews/CODE_REVIEW_2026-04-05.md` | 18 issues, partially resolved |
 | Code review (Mar 27) | `docs/reviews/CODE_REVIEW_2026-03-27.md` | First Godot review, partially resolved |
