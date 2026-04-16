@@ -39,6 +39,13 @@ const DESCRIPTION_REVEAL_CPS: float = 95.0
 const AUTO_ADVANCE_DELAY_MIN: float = 2.0
 const READING_SEC_PER_WORD: float = 0.24  # ~250 WPM comfortable reading pace
 
+# Cache of processed (background-removed) portrait textures keyed by the
+# source texture's resource path. _remove_near_white_bg walks every pixel so
+# we pay the cost once per portrait per run (Apr-05 #7). The cache is static
+# because the computation is a pure function of the source texture.
+static var _processed_portrait_cache: Dictionary = {}
+
+
 # Character portrait paths keyed by npc_id
 const CHARACTER_PORTRAITS := {
 	"aristotle": "res://assets/characters/aristotle_head.png",
@@ -501,11 +508,16 @@ func _restore_description() -> void:
 
 
 ## Make bright neutral background pixels transparent, with soft feathering.
+## Result is cached by source `resource_path` so we only pay the per-pixel
+## walk once per portrait per run (Apr-05 #7).
 static func _remove_near_white_bg(
 	tex: Texture2D, hard_threshold: float = 0.91, soft_threshold: float = 0.77
 ) -> Texture2D:
 	if tex == null:
 		return tex
+	var cache_key: String = _portrait_cache_key(tex, hard_threshold, soft_threshold)
+	if not cache_key.is_empty() and _processed_portrait_cache.has(cache_key):
+		return _processed_portrait_cache[cache_key]
 	var image: Image = tex.get_image()
 	if image == null:
 		return tex
@@ -522,7 +534,24 @@ static func _remove_near_white_bg(
 				var span: float = maxf(0.001, hard_threshold - soft_threshold)
 				var alpha_scale: float = (hard_threshold - whiteness) / span
 				image.set_pixel(x, y, Color(c.r, c.g, c.b, c.a * alpha_scale))
-	return ImageTexture.create_from_image(image)
+	var processed: Texture2D = ImageTexture.create_from_image(image)
+	if not cache_key.is_empty():
+		_processed_portrait_cache[cache_key] = processed
+	return processed
+
+
+## Build a cache key from the source texture's resource path and the
+## thresholds. Only textures with a persistent resource_path are cacheable;
+## synthetic textures (e.g. generated in tests) fall back to uncached work.
+static func _portrait_cache_key(
+	tex: Texture2D, hard_threshold: float, soft_threshold: float
+) -> String:
+	if tex == null:
+		return ""
+	var path: String = tex.resource_path
+	if path.is_empty():
+		return ""
+	return "%s|%f|%f" % [path, hard_threshold, soft_threshold]
 
 
 func _check_crew_recruitment(choice: Encounter.EncounterChoice) -> String:

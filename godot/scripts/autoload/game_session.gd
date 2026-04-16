@@ -270,6 +270,75 @@ func clear_return_position() -> void:
 	_return_facing = "down"
 
 
+## Run the post-scene-change half of a world transition from this persistent
+## autoload so the coroutine doesn't outlive its calling SceneTransition node
+## (Mar-27 §2.3). Position the player, then fade the overlay back in.
+## Called by `world/scene_transition.gd` AFTER it has already invoked
+## `tree.change_scene_to_file(target_path)`.
+func complete_scene_transition(
+	spawn_position: Vector2,
+	spawn_facing: String,
+	fade_duration: float
+) -> void:
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return
+	# Wait for the scene swap to actually happen. change_scene_to_file is
+	# queued for end-of-frame; two idle frames is enough for the new scene's
+	# _ready to have fired.
+	await tree.process_frame
+	await tree.process_frame
+	var target_scene: Node = tree.current_scene
+	if target_scene == null:
+		return
+	_position_player_after_transition(target_scene, spawn_position, spawn_facing)
+	_fade_in_transition_overlay(tree, target_scene, fade_duration)
+
+
+func _position_player_after_transition(
+	target_scene: Node, spawn_position: Vector2, spawn_facing: String
+) -> void:
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return
+	var players: Array[Node] = tree.get_nodes_in_group("player")
+	if players.is_empty():
+		return
+	var player: Node2D = players[0] as Node2D
+	if player == null:
+		return
+	var active_scene_path: String = target_scene.scene_file_path if target_scene != null else ""
+	var use_return_position: bool = (
+		has_return_position() and get_return_scene_path() == active_scene_path
+	)
+	if use_return_position:
+		player.global_position = get_return_position()
+		if "_facing" in player and not get_return_facing().is_empty():
+			player.set("_facing", get_return_facing())
+		clear_return_position()
+	else:
+		if spawn_position != Vector2.ZERO:
+			player.global_position = spawn_position
+		if "_facing" in player and not spawn_facing.is_empty():
+			player.set("_facing", spawn_facing)
+	player.set_physics_process(true)
+	player.set_process_unhandled_input(true)
+
+
+func _fade_in_transition_overlay(
+	tree: SceneTree, target_scene: Node, fade_duration: float
+) -> void:
+	if target_scene == null:
+		return
+	var overlay: ColorRect = target_scene.get_node_or_null("TransitionOverlay") as ColorRect
+	if overlay == null:
+		return
+	overlay.color = Color(0, 0, 0, 1)
+	# tree-owned tween survives any caller lifecycle changes
+	var tween: Tween = tree.create_tween()
+	tween.tween_property(overlay, "color", Color(0, 0, 0, 0), fade_duration)
+
+
 # ------------------------------------------------------------------
 # Crew recruitment
 # ------------------------------------------------------------------

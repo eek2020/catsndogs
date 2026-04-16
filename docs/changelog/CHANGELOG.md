@@ -6,6 +6,45 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 3c: Should-fix bugs closed
+
+NEXT_STEPS Sprint 3c. Closed the four medium-priority bugs carried from the Mar-27 and Apr-05 reviews. Each fix ships with targeted regression coverage.
+
+**Bug fixes:**
+
+- **Mar-27 §2.4 — R-key collision (`menu_select` vs `repair`)**: stale tracker entry. `repair` was already rebound R→T in Sprint 1 (see 2026-04-16 Sprint 1 entry below). Added `godot/tests/unit/test_input_map_collisions.gd` as a broad regression guard that walks every user-defined action and rejects any two sharing a keycode. Context-separated intentional overlaps (currently just `pause`/`skip` on ESC) are whitelisted with a MASTER_PLAN §5.3 back-reference.
+- **Mar-27 §2.3 — `scene_transition.gd` tween after scene change**: the old `_do_transition` kept awaiting `tree.process_frame` on the Area2D after calling `change_scene_to_file`, i.e. on a node the scene swap was about to free. Moved the post-change half (position player + fade-in) into `GameSession.complete_scene_transition(spawn_position, spawn_facing, fade_duration)` — a persistent autoload whose coroutine survives any scene swap. `scene_transition.gd` now simply delegates after initiating the change. The tree-owned tween that performs the fade-in is created by GameSession, so there is no path left where a tween's owner becomes freed mid-animation.
+- **Mar-27 §2.5 — `_show_bark` recursion risk**: `_show_bark` used to emit `EventBus.exploration_event` with `type: "npc_bark"`, and `dialogue_manager._on_exploration_event` is connected to the same signal — one future branch that decided to handle barks there would have caused unbounded recursion. Added a dedicated `EventBus.npc_bark(npc_name, text)` signal and migrated the emit. Re-entry is now structurally impossible.
+- **Apr-05 #7 — Per-pixel portrait processing every dialogue open**: `DialogueUI._remove_near_white_bg` walks every pixel of the portrait texture. Added `DialogueUI._processed_portrait_cache` — a static `Dictionary` keyed by `source resource_path + hard_threshold + soft_threshold` — so the O(w·h) work runs once per portrait per process. Textures without a `resource_path` (e.g. synthetic textures in tests) still recompute on each call to avoid caching transient inputs.
+
+**New files:**
+
+- `godot/scripts/autoload/game_session.gd` — `complete_scene_transition(spawn_position, spawn_facing, fade_duration)` + `_position_player_after_transition` + `_fade_in_transition_overlay` helpers.
+- `godot/tests/unit/test_input_map_collisions.gd` — 2 tests, broad collision guard + `menu_select`/`repair` specific regression.
+- `godot/tests/unit/test_dialogue_manager_bark.gd` — 3 tests; proves `_show_bark` emits `EventBus.npc_bark` and never `exploration_event`.
+- `godot/tests/unit/test_portrait_cache.gd` — 6 tests; covers null input, missing `resource_path` (no cache), cache hit by same path, separation by different paths and thresholds, and correctness of the alpha masking.
+- `godot/tests/unit/test_scene_transition_handoff.gd` — 4 tests; verifies `GameSession.complete_scene_transition` exists, `scene_transition.gd` delegates to it (source-level structural check — no `await tree.process_frame` after `change_scene_to_file`), and the helpers tolerate missing player / null target scene without crashing.
+
+**Modified files:**
+
+- `godot/scripts/autoload/event_bus.gd` — added `signal npc_bark(npc_name: String, text: String)`.
+- `godot/scripts/world/dialogue_manager.gd` — `_show_bark` now emits the dedicated signal.
+- `godot/scripts/world/scene_transition.gd` — simpler; removed `_position_player_in_new_scene`; hands off to `GameSession.complete_scene_transition` after the swap.
+- `godot/scripts/ui/dialogue_ui.gd` — added `_processed_portrait_cache` + `_portrait_cache_key`; `_remove_near_white_bg` consults the cache before walking pixels.
+
+**Findings surfaced during 3c:**
+
+- `pause` and `skip` both bind to `KEY_ESCAPE` (4194305). They're context-separated (pause in navigation/combat, skip in intro_crawl/cutscene) so they're whitelisted in the new collision test for now. Logged in MASTER_PLAN §5.3 for the Sprint 6 input-rebind panel work.
+
+**Metrics:**
+
+- Full GUT suite: **77/77 passing** (was 62/62; +15 tests across 4 new files).
+- Command: `/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` (pre-existing splash boot resource leak warnings at exit are unchanged — tracked memory).
+
+Sprint 3 (a/b/c) is now fully closed. Next up per NEXT_STEPS: Sprint 4 (art roll-out, pending artist) in parallel with Sprint 5 (star map decomposition + system wiring).
+
+---
+
 ## 2026-04-16 — Sprint 3b: CombatViewModel + combat_ui.gd decomposition
 
 NEXT_STEPS Sprint 3b. Decomposed `combat_ui.gd` (the second-largest UI script, 585 lines) into five focused components per `REFACTORING_PLAN.md` Phase 2, and introduced `CombatViewModel` as the sole path from the screen to `GameSession`.

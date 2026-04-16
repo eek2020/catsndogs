@@ -108,12 +108,10 @@ func _trigger_dialogue_encounter(dialogue_data: Dictionary, npc_id: String, npc_
 
 
 func _show_bark(npc_name: String, text: String) -> void:
-	# Simple bark — just emit an event for any listening UI
-	EventBus.exploration_event.emit({
-		"type": "npc_bark",
-		"npc_name": npc_name,
-		"text": text,
-	})
+	# Emit on a dedicated signal — NOT exploration_event — so that
+	# _on_exploration_event can never re-enter us even if a future branch
+	# adds npc_bark handling there (Mar-27 §2.5 recursion guard).
+	EventBus.npc_bark.emit(npc_name, text)
 
 
 func _get_generic_bark(faction_id: String) -> String:

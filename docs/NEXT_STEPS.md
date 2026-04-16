@@ -82,16 +82,18 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 | Decompose `combat_ui.gd` (585 → 5 files) | 585 → 399 orchestrator + 4 focused components (`combat_layout.gd`, `combat_logic.gd`, `combat_animations.gd`, `health_bar.gd`) under `scripts/ui/combat/` | MASTER_PLAN Sprint 2, REFACTORING_PLAN Phase 2 | **Done** |
 | Tests for new combat components | 31 new tests across `test_combat_view_model.gd`, `test_combat_layout.gd`, `test_combat_logic.gd`; full suite 62/62 green | Quality policy | **Done** |
 
-**Sprint 3c — should-fix bugs — pending, independent of 3b.**
+**Sprint 3c — should-fix bugs — DONE 2026-04-16.**
 
-| Task | Outcome | Reference |
-| --- | --- | --- |
-| Fix: R-key collision (menu_select vs repair) | Distinct bindings; no ambiguous input | MASTER_PLAN §5.3 Mar-27 §2.4 |
-| Fix: scene_transition tween after scene change | Tween guarded against freed node | MASTER_PLAN §5.3 Mar-27 §2.3 |
-| Fix: `_show_bark` recursion | Bounded depth or re-entry guard | MASTER_PLAN §5.3 Mar-27 §2.5 |
-| Cache processed portrait textures | No per-pixel work per dialogue open | MASTER_PLAN §5.3 Apr-05 #7 |
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| Fix: R-key collision (menu_select vs repair) | Stale tracker — `repair` had already been rebound R→T in Sprint 1. Broad `test_input_map_collisions.gd` regression guard added | MASTER_PLAN §5.3 Mar-27 §2.4 | **Done** |
+| Fix: scene_transition tween after scene change | Post-scene-change work moved to persistent `GameSession.complete_scene_transition(...)`; `scene_transition.gd` no longer awaits on self after the swap | MASTER_PLAN §5.3 Mar-27 §2.3 | **Done** |
+| Fix: `_show_bark` recursion | Dedicated `EventBus.npc_bark` signal — no longer reuses `exploration_event`, so `_on_exploration_event` is structurally incapable of re-entering | MASTER_PLAN §5.3 Mar-27 §2.5 | **Done** |
+| Cache processed portrait textures | Static cache keyed by `resource_path` + thresholds in `dialogue_ui.gd._remove_near_white_bg`; O(w·h) work runs once per portrait per run | MASTER_PLAN §5.3 Apr-05 #7 | **Done** |
 
-**Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0 **(done: 73 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 **(done: 206 → 129)**; combat_ui split into `scripts/ui/combat/` **(done: 585 → 399 + 4 components)**; four should-fix bugs closed (3c).
+**Findings from 3c:** the broad input-collision regression test surfaced an unrelated existing collision — `pause` and `skip` both bound to ESC (keycode 4194305). Currently context-separated (pause is navigation/combat, skip is cutscene/intro_crawl) and whitelisted in the test; logged in MASTER_PLAN §5.3 for the Sprint 6 input-rebind work.
+
+**Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0 **(done: 73 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 **(done: 206 → 129)**; combat_ui split into `scripts/ui/combat/` **(done: 585 → 399 + 4 components)**; four should-fix bugs closed **(done — 3c)**; full GUT suite **77/77** green (was 62/62; +15 regression tests across 4 new files).
 
 ### Sprint 4 — Sprite roll-out (the named cast)
 
@@ -248,3 +250,4 @@ Everything else is sequenced above.
 | 2026-04-16 | Initial plan. Folds CODE_REVIEW.md (enhanced) and MASTER_PLAN.md §7 into a two-track sprint schedule. Adds sprite modernisation track. Adds tidy-up menu. |
 | 2026-04-16 | Sprint 1 closed. Sprint 2 partial (art guide + reference pins done; sprite pilot pending artist). Sprint 3 sliced into 3a/3b/3c; 3a closed (NavigationViewModel + navigation.gd conversion, 73 → 0 refs, UI total 206 → 134, 22 new tests). |
 | 2026-04-16 | Sprint 3b closed (CombatViewModel + `combat_ui.gd` decomposition 585 → 399 orchestrator + 4 components under `scripts/ui/combat/`, 4 → 0 refs, UI total 134 → 129, 31 new tests, full suite 62/62 green). Sprint 3c still pending. |
+| 2026-04-16 | Sprint 3c closed. All four should-fix bugs resolved: R-key was already fixed in Sprint 1 (stale tracker); `scene_transition` post-change work delegated to `GameSession.complete_scene_transition`; `_show_bark` migrated to dedicated `EventBus.npc_bark` signal; `_remove_near_white_bg` results cached by resource_path + thresholds. +15 regression tests across 4 new files (`test_input_map_collisions.gd`, `test_dialogue_manager_bark.gd`, `test_portrait_cache.gd`, `test_scene_transition_handoff.gd`); full suite 77/77 green. New finding: `pause` and `skip` both on ESC — tolerated via whitelist, flagged for Sprint 6 input-rebind work. |

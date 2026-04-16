@@ -116,6 +116,7 @@ signal world_scene_entered(region_id: String)
 signal world_scene_exited(region_id: String)
 signal npc_interaction_started(npc_id: String)
 signal npc_interaction_ended(npc_id: String)
+signal npc_bark(npc_name: String, text: String)
 signal door_transition(from_scene: String, to_scene: String)
 
 # --- UI navigation ---
