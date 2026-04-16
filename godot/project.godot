@@ -34,7 +34,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/procedural_world_map/plugin.cfg")
+enabled=PackedStringArray("res://addons/procedural_world_map/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [input]
 

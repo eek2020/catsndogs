@@ -285,7 +285,11 @@ func resolve_hazard(hazard: Dictionary, game_state: GameStateData) -> Dictionary
 func apply_damage(game_state: GameStateData, damage: int) -> void:
 	if game_state.player_ship == null:
 		return
-	game_state.player_ship.current_hull = maxi(0, game_state.player_ship.current_hull - damage)
+	var ship := game_state.player_ship
+	var was_alive: bool = ship.current_hull > 0
+	ship.current_hull = maxi(0, ship.current_hull - damage)
+	if was_alive and ship.current_hull == 0:
+		EventBus.combat_defeat.emit()
 
 
 ## -----------------------------------------------------------------------

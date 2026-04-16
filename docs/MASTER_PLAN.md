@@ -160,17 +160,14 @@ These have been implemented and tested as part of the April 7 review remediation
 | Apr-05 | #18 | Playtime includes menu/pause | Same as above | Same |
 | Mar-27 | §8 | star_map queue_redraw every frame | Already has REDRAW_INTERVAL throttle | `star_map_screen.gd` |
 | Mar-27 | §12 | No save backup rotation | `save_manager.gd` already does `.bak` | Already implemented |
+| Apr-05 | #1 | `trigger_encounter_id` never evaluated | Dead field removed from `EncounterOutcome` | `encounter.gd` |
+| Apr-05 | #2 | Hull death not emitted from hazard damage | `apply_damage` emits `combat_defeat` on hull 0 → 0 transition (not double-emit) | `astral_hazard_system.gd` |
+| Mar-27 | §2.1 | Missing null guard on `player_ship` in morale system | Already present in current code; tracker was stale | `crew_morale_system.gd` |
+| Mar-27 | §2.2 | `dialogue_manager.gd` push_overlay API mismatch | Already fixed; passes scene-key string | `world/dialogue_manager.gd` |
 
 ### 5.2 Open Issues — Must Fix (Critical)
 
-These are **unresolved critical bugs** from previous reviews:
-
-| Source | ID | Issue | File | Action Required |
-| ------ | -- | ----- | ---- | --------------- |
-| Apr-05 | #1 | `trigger_encounter_id` never evaluated | `entities/encounter.gd:59`, `encounter_engine.gd` | Implement chain triggers with loop guard OR remove dead field |
-| Apr-05 | #2 | Hull death not emitted from hazard damage | `astral_hazard_system.gd:285-288` | Emit `combat_defeat` when hull reaches 0 |
-| Mar-27 | §2.1 | Missing null guard on `player_ship` in morale system | `crew_morale_system.gd:26` | Add null check |
-| Mar-27 | §2.2 | `dialogue_manager.gd` push_overlay passes instance instead of key | `world/dialogue_manager.gd:109` | Fix overlay push API |
+All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint 1. See §5.1 additions and `docs/changelog/CHANGELOG.md`.
 
 ### 5.3 Open Issues — Should Fix (High/Medium)
 
@@ -214,7 +211,7 @@ These are **unresolved critical bugs** from previous reviews:
 | Cache management | DataLoader cache unbounded, no invalidation | Medium | §5.3 Apr-05 #4 |
 | Save migration | `_migrate_save_data()` is a stub | Medium | §5.3 Apr-05 #15 |
 | Trade ledger | `trade_ledger` in GameStateData is unbounded | Low | Untracked |
-| Test coverage | No automated tests | High | §7 Phase 1 |
+| Test coverage | GUT installed 2026-04-16; 3 test files, 9 tests. Refactor targets still untested | Medium | §7 Phase 1 |
 | 3D asset sizes | Character GLBs are 36 MB each; textures 20 MB | Medium | §7 Phase 5 |
 | Art direction | Style guide says "to be decided" but project has moved past prototype | Medium | §7 Phase 6 |
 
@@ -224,7 +221,7 @@ These are **unresolved critical bugs** from previous reviews:
 | ---------- | ------- | ---- |
 | Godot | 4.6 | Stable — GL Compatibility renderer |
 | procedural_world_map addon | 1.0 (vendored) | Low — MIT, vendored |
-| GUT (planned) | Latest | Low — test framework, dev-only |
+| GUT | 9.6.0 (vendored) | Low — test framework, dev-only |
 
 ---
 

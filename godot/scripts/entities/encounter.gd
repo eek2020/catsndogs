@@ -56,7 +56,6 @@ class EncounterOutcome extends Resource:
 	@export var resource_changes: Dictionary = {}
 	@export var story_flags_set: Array[String] = []
 	@export var story_flags_cleared: Array[String] = []
-	@export var trigger_encounter_id: String = ""
 	@export var karma_delta: int = 0
 
 	static func from_dict(data: Dictionary) -> EncounterOutcome:
@@ -66,7 +65,6 @@ class EncounterOutcome extends Resource:
 		o.resource_changes = data.get("resource_changes", {})
 		o.story_flags_set = Array(data.get("story_flags_set", []), TYPE_STRING, "", null)
 		o.story_flags_cleared = Array(data.get("story_flags_cleared", []), TYPE_STRING, "", null)
-		o.trigger_encounter_id = data.get("trigger_encounter_id", "")
 		o.karma_delta = data.get("karma_delta", 0)
 		return o
 

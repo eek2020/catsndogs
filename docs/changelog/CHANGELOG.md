@@ -6,6 +6,25 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-16 — Sprint 1: GUT + Critical Bug Triage
+
+NEXT_STEPS Sprint 1. Installed the GUT test framework and closed the four critical bugs in MASTER_PLAN §5.2 — two required fixes, two were already fixed in current code and the tracker was stale.
+
+**Fixes:**
+
+- **Apr-05 #1** `trigger_encounter_id` never evaluated → removed the dead field from `Encounter.EncounterOutcome` (both the `@export` and the `from_dict` key). No JSON data referenced it. Chain triggers are a "add when needed" feature, not something to implement speculatively.
+- **Apr-05 #2** hull death not emitted from hazard damage → `AstralHazardSystem.apply_damage` now emits `EventBus.combat_defeat` when hazard damage brings `current_hull` from > 0 to 0. Guarded against double-emit if called while already dead.
+- **Mar-27 §2.1** morale `player_ship` null guard → already present in current code (all five cited methods guarded); tracker is stale.
+- **Mar-27 §2.2** `dialogue_manager.push_overlay` API → already fixed; line 104 passes the `"dialogue"` scene-key string as `main.push_overlay(scene_key: String)` expects.
+
+**Test framework:**
+
+- Installed GUT 9.6.0 (vendored at `godot/addons/gut/`, plugin enabled in `project.godot`). Vendored rather than submoduled to match the existing `procedural_world_map` addon convention.
+- Added `godot/tests/unit/` with three test files: `test_math_utils.gd` (sanity), `test_encounter_outcome.gd` (regression for #1), `test_astral_hazard_hull_death.gd` (regression for #2 + null-ship guard).
+- Headless run: `godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` → 9/9 passing, 0.465s.
+
+---
+
 ## 2026-04-16 — Repo Tidy + Enhanced Code Review + NEXT_STEPS Plan
 
 Enhanced code review pass; added sprite modernisation plan and 3D cutscene review; reconciled planning docs; tidied repo root.
