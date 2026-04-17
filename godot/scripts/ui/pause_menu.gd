@@ -25,16 +25,21 @@ func _on_resume() -> void:
 
 
 func _on_save() -> void:
-	GameSession.save_game(0)
-	EventBus.save_game.emit()
+	var main: Control = get_tree().current_scene
+	if main == null or not main.has_method("push_overlay"):
+		return
+	var overlay: Control = main.push_overlay("save_load")
+	if overlay != null and overlay.has_method("setup"):
+		overlay.setup(0)  # SaveLoadMenu.Mode.SAVE
 
 
 func _on_load() -> void:
-	if GameSession.load_game(0):
-		EventBus.load_game.emit()
-		var main: Control = get_tree().current_scene
-		if main.has_method("switch_scene"):
-			main.switch_scene("navigation")
+	var main: Control = get_tree().current_scene
+	if main == null or not main.has_method("push_overlay"):
+		return
+	var overlay: Control = main.push_overlay("save_load")
+	if overlay != null and overlay.has_method("setup"):
+		overlay.setup(1)  # SaveLoadMenu.Mode.LOAD
 
 
 func _on_settings() -> void:

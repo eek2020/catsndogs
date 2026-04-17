@@ -231,6 +231,25 @@ func play_sfx(sfx_id: String) -> void:
 	if ResourceLoader.exists(path):
 		_sfx_player.stream = load(path)
 		_sfx_player.play()
+		_duck_music()
+
+
+# Sprint 6c: duck BGM briefly when an SFX fires so hits/pickups land audibly.
+# Only runs while music is actually playing; skips during fade-paused state.
+const _DUCK_DB: float = -8.0
+const _DUCK_IN_SECS: float = 0.05
+const _DUCK_OUT_SECS: float = 0.35
+var _duck_tween: Tween = null
+
+
+func _duck_music() -> void:
+	if not _music_enabled or _paused or _music_player == null or not _music_player.playing:
+		return
+	if _duck_tween != null and _duck_tween.is_valid():
+		_duck_tween.kill()
+	_duck_tween = create_tween()
+	_duck_tween.tween_property(_music_player, "volume_db", _music_volume_db + _DUCK_DB, _DUCK_IN_SECS)
+	_duck_tween.tween_property(_music_player, "volume_db", _music_volume_db, _DUCK_OUT_SECS)
 
 
 # ------------------------------------------------------------------

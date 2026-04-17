@@ -34,6 +34,7 @@ const SCENES := {
 	"planet": "res://scenes/ui/planet_surface.tscn",
 	"intro_crawl": "res://scenes/ui/intro_crawl.tscn",
 	"controls_rebind": "res://scenes/ui/controls_rebind.tscn",
+	"save_load": "res://scenes/ui/save_load_menu.tscn",
 }
 
 var _overlay_stack: Array[Control] = []

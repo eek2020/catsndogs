@@ -60,6 +60,45 @@ NEXT_STEPS Sprint 6, first slice. REFACTORING_PLAN Phase 4 (Issue #20) adapted t
 
 ---
 
+## 2026-04-17 — Sprint 6c: multi-slot saves + tutorial welcome + game feel
+
+Closes the 6-series. Sprint 6 exit criterion ("new player can start the game, rebind a key, plug in a controller, save to slot 2, and reach the first encounter prompt without reading documentation") is now reachable end-to-end.
+
+**Task 1 — multi-slot save/load UI.** `SaveManager` has supported 3 slots + metadata since inception (`MAX_SAVE_SLOTS = 3`, `get_save_info()`), but the UI hardcoded slot 0. New pieces:
+
+- `godot/scripts/ui/view_models/save_load_view_model.gd` — `class_name SaveLoadViewModel extends RefCounted`. Wraps `GameSession` + `SaveManager` through a duck-typed session arg. Reads: `slot_info()` returns an Array[3] of `{slot, character_name, arc, playtime, saved_at}` dicts (or null). Writes: `save_to_slot`, `load_from_slot`, `delete_slot`. Static display helpers (`format_playtime`, `format_saved_at`, `describe_slot`) so the same strings work in the UI and in tests.
+- `godot/scripts/ui/save_load_menu.gd` + `godot/scenes/ui/save_load_menu.tscn` — overlay with one row per slot. Rows built programmatically from `SaveLoadViewModel.SLOT_COUNT`. `setup(mode)` is called by the pause menu before push to set SAVE vs LOAD; the title label swaps, the Save/Load button is enabled/disabled accordingly (Save requires an in-progress session; Load requires a populated slot), Delete is independent. After a successful load, `main.switch_scene("navigation")` fires so the new session takes effect without a full reboot.
+- `godot/scripts/ui/pause_menu.gd` — `_on_save` and `_on_load` now push the `save_load` overlay with `setup(0)` / `setup(1)` (the enum values for `Mode.SAVE` / `Mode.LOAD`) instead of calling `GameSession.save_game(0)` / `GameSession.load_game(0)` directly.
+- `godot/scripts/ui/main.gd` — `SCENES["save_load"]` registered.
+- 12 new tests in `godot/tests/unit/test_save_load_view_model.gd` covering empty-slot enumeration, save delegation, load delegation, delete delegation, has-state gating, playtime formatting (minutes + hours), and the `describe_slot` formatter. Doubles: `SaveManagerDouble` (dict-backed) + `SessionDouble`.
+
+**Task 2 — tutorial welcome.** `_show_welcome` in `navigation.gd` was a single flash fired once per session ("Fly toward the markers to begin encounters"). Replaced with a 3-step timed sequence driven by a `TUTORIAL_STEPS: Array` constant — each entry has `{at, text, duration}`. Steps fire in `_process` based on cumulative `_tutorial_elapsed`; the sequence short-circuits (sets `_showed_welcome = true`) as soon as any arc-progress flag is set, so loaded/experienced saves don't re-see it. Current sequence:
+
+| After | Message | Duration |
+| --- | --- | --- |
+| 0 s | `WASD or left stick to move` | 4 s |
+| 5 s | `Fly toward coloured markers to start an encounter` | 5 s |
+| 12 s | `TAB (or RB on a gamepad) opens the galaxy map` | 5 s |
+
+The flash system is pre-existing (`flash(message, duration)` + `_update_flash`); the sequence is just a driver on top of it.
+
+**Task 3 — game feel.** Three low-risk polish pieces.
+
+- **Audio ducking** — `MusicManager.play_sfx` now dips BGM by −8 dB (50 ms in, 350 ms out via `Tween`) every time an SFX fires, so hit/pickup/UI SFX land audibly over the score. Guarded against the fade-paused state (no dip if the music player isn't playing or `_paused == true`). Prior ducking tweens are killed on every trigger so rapid-fire SFX don't stack fades and leave the track stuck at −8 dB.
+- **Hit flash (nav)** — `navigation.gd` subscribes to `EventBus.hazard_damage(hazard_id, damage)` and bumps `_hit_flash_timer = 0.35 s`. `_process` decays the timer; `_draw` appends a red `draw_rect` with alpha `0.35 * t²` (where `t = timer / duration`) at the end of the frame so it sits on top of starfield/fog/ship/HUD. Quadratic falloff reads as a sharp hit rather than a steady wash.
+- **Camera shake** — already wired. `CombatAnimations.trigger_shake("player"/"enemy")` at `scripts/ui/combat/combat_animations.gd:51` is called on combat hits from `combat_ui.gd:244` + inside `CombatAnimations._on_laser_arrived`. Nav shake was deferred — the `_draw` call tree is large and applying a global offset would touch every sub-drawer; not worth the diff vs the hit flash, which reads clearly in the same frame as the damage.
+
+**Tests:** full suite 229 → **241 passing / 241 total** (+12 new for SaveLoadViewModel). Tutorial and game-feel are scene-wiring / integer-math / tween timing, which GUT can't exercise meaningfully without a live input-and-audio harness — flagged for manual QA in the checklist below.
+
+**Manual test checklist:**
+
+- New game → pause (ESC) → Save Game → "Slot 1 — Aristotle — The squeeze — 0:05" appears → Save → status "Saved to slot 1." → Back. Re-open Save Game → slot populated. Load → session re-enters navigation with same state.
+- Quit to menu → new game → on first nav entry, see the 3-step tutorial sequence fire at 0 s / 5 s / 12 s.
+- Load the save above → tutorial does NOT fire again (arc progress has a completed objective).
+- In nav, wait for a hazard hit (ion storm / gravity well) → red flash overlays briefly → BGM ducks under the SFX.
+
+---
+
 ## 2026-04-17 — Playtest bug sweep round 2: star map travel, stale realm, planet exit
 
 Three follow-ups from the second playtest pass.

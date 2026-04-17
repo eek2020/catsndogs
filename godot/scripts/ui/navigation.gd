@@ -136,6 +136,24 @@ const NEBULA_TINT_LERP_SPEED: float = 2.0
 
 # First-run welcome
 var _showed_welcome: bool = false
+# Sprint 6c: three-step first-navigation tutorial. Each entry is the flash
+# message shown after the cumulative `_elapsed` for that step. Once the final
+# step has fired, `_tutorial_step` sits past the last index and nothing more
+# shows. Only runs on a session that has never completed an encounter, so
+# veterans and loaded saves skip it.
+const TUTORIAL_STEPS: Array = [
+	{"at": 0.0, "text": "WASD or left stick to move", "duration": 4.0},
+	{"at": 5.0, "text": "Fly toward coloured markers to start an encounter", "duration": 5.0},
+	{"at": 12.0, "text": "TAB (or RB on a gamepad) opens the galaxy map", "duration": 5.0},
+]
+var _tutorial_step: int = 0
+var _tutorial_elapsed: float = 0.0
+
+# Sprint 6c game feel: _hit_flash_timer > 0 draws a red full-screen overlay
+# in `_draw`, decayed over HIT_FLASH_DURATION seconds. EventBus.hazard_damage
+# bumps it.
+const HIT_FLASH_DURATION: float = 0.35
+var _hit_flash_timer: float = 0.0
 
 
 ## Test seam: callers may inject a view model before the scene enters the tree.
@@ -160,6 +178,8 @@ func _ready() -> void:
 	EventBus.arc_advanced.connect(_on_arc_advanced)
 	# Sprint 5c — map-shaking events get a flash so the player sees conquest actually happening.
 	EventBus.realm_control_changed.connect(_on_realm_control_changed)
+	# Sprint 6c game feel — red hit flash when a hazard takes a bite out of the hull.
+	EventBus.hazard_damage.connect(_on_hazard_damage)
 
 
 static func _remove_background_by_corners(tex: Texture2D, tolerance: float = 0.13, feather: float = 0.05) -> Texture2D:
@@ -263,6 +283,8 @@ func _process(dt: float) -> void:
 	_update_flash(dt)
 	_update_hud()
 	_show_welcome()
+	if _hit_flash_timer > 0.0:
+		_hit_flash_timer = maxf(0.0, _hit_flash_timer - dt)
 	queue_redraw()
 
 
@@ -878,10 +900,33 @@ func _update_hud() -> void:
 
 
 func _show_welcome() -> void:
+	# Session-scoped tutorial: skip if the player has already completed an
+	# encounter in this save (via arc_progress) OR if the final step has fired.
 	if _showed_welcome:
 		return
-	_showed_welcome = true
-	flash("Fly toward the markers to begin encounters", 5.0)
+	if _tutorial_step >= TUTORIAL_STEPS.size():
+		_showed_welcome = true
+		return
+	if _has_completed_any_objective():
+		_showed_welcome = true
+		return
+	_tutorial_elapsed += get_process_delta_time()
+	var step: Dictionary = TUTORIAL_STEPS[_tutorial_step]
+	if _tutorial_elapsed >= float(step.get("at", 0.0)):
+		flash(str(step.get("text", "")), float(step.get("duration", 3.0)))
+		_tutorial_step += 1
+
+
+func _has_completed_any_objective() -> bool:
+	var progress: Dictionary = _vm.arc_progress()
+	for flag_name in progress:
+		if progress[flag_name]:
+			return true
+	return false
+
+
+func _on_hazard_damage(_hazard_id: String, _amount: int) -> void:
+	_hit_flash_timer = HIT_FLASH_DURATION
 
 
 func flash(message: String, duration: float = 3.0) -> void:
@@ -970,6 +1015,11 @@ func _draw() -> void:
 	_draw_minimap(gs)
 	_draw_status_effects()
 	_draw_controls_bar()
+	if _hit_flash_timer > 0.0:
+		# Ease the alpha out quadratically so the flash reads as a sharp hit
+		# followed by a quick fade, not a steady red wash.
+		var t: float = _hit_flash_timer / HIT_FLASH_DURATION
+		draw_rect(Rect2(Vector2.ZERO, size), Color(1.0, 0.2, 0.2, 0.35 * t * t))
 
 
 func _draw_nebula(_gs: GameStateData) -> void:

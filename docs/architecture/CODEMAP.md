@@ -263,6 +263,7 @@ ViewModels".
 | [dialogue_view_model.gd](../../godot/scripts/ui/view_models/dialogue_view_model.gd) | [dialogue_ui.gd](../../godot/scripts/ui/dialogue_ui.gd) | [dialogue_ui.tscn](../../godot/scenes/ui/dialogue_ui.tscn) |
 | [input_rebind_view_model.gd](../../godot/scripts/ui/view_models/input_rebind_view_model.gd) | - | - |
 | [navigation_view_model.gd](../../godot/scripts/ui/view_models/navigation_view_model.gd) | [navigation.gd](../../godot/scripts/ui/navigation.gd) | [navigation.tscn](../../godot/scenes/ui/navigation.tscn) |
+| [save_load_view_model.gd](../../godot/scripts/ui/view_models/save_load_view_model.gd) | - | - |
 | [star_map_view_model.gd](../../godot/scripts/ui/view_models/star_map_view_model.gd) | [star_map_screen.gd](../../godot/scripts/ui/star_map_screen.gd) | [star_map_screen.tscn](../../godot/scenes/ui/star_map_screen.tscn) |
 
 ## UI screens
@@ -287,6 +288,7 @@ All UI controllers in `godot/scripts/ui/` (top-level). Subfolders
 - [planet_screen.gd](../../godot/scripts/ui/planet_screen.gd)
 - [planet_surface.gd](../../godot/scripts/ui/planet_surface.gd)
 - [purchase_screen.gd](../../godot/scripts/ui/purchase_screen.gd)
+- [save_load_menu.gd](../../godot/scripts/ui/save_load_menu.gd)
 - [settings_screen.gd](../../godot/scripts/ui/settings_screen.gd)
 - [ship_screen.gd](../../godot/scripts/ui/ship_screen.gd)
 - [skill_allocation.gd](../../godot/scripts/ui/skill_allocation.gd)
@@ -333,6 +335,7 @@ All UI controllers in `godot/scripts/ui/` (top-level). Subfolders
 - [planet_screen.tscn](../../godot/scenes/ui/planet_screen.tscn)
 - [planet_surface.tscn](../../godot/scenes/ui/planet_surface.tscn)
 - [purchase_screen.tscn](../../godot/scenes/ui/purchase_screen.tscn)
+- [save_load_menu.tscn](../../godot/scenes/ui/save_load_menu.tscn)
 - [settings_screen.tscn](../../godot/scenes/ui/settings_screen.tscn)
 - [ship_screen.tscn](../../godot/scenes/ui/ship_screen.tscn)
 - [skill_allocation.tscn](../../godot/scenes/ui/skill_allocation.tscn)
@@ -494,7 +497,7 @@ All JSON content lives under `godot/data/`. Each subfolder is one category.
 | Autoloads | 4 |
 | EventBus signals | 71 |
 | Systems | 18 |
-| UI screens (top-level) | 25 |
-| ViewModels | 5 |
-| Scenes | 31 |
+| UI screens (top-level) | 26 |
+| ViewModels | 6 |
+| Scenes | 32 |
 | Data JSON files | 84 |
