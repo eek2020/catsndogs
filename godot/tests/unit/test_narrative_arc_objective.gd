@@ -6,10 +6,15 @@ extends GutTest
 ## present or the arc is unknown.
 
 
+## NarrativeSystem._init types its dependency as `DataLoader`, so the fake has
+## to extend DataLoader (not RefCounted) for the parse-time check to accept it.
 class _FakeDataLoader:
-	extends RefCounted
+	extends DataLoader
 
 	var arcs: Array = []
+
+	func _init() -> void:
+		super("res://data")
 
 	func load_arc_definitions() -> Array:
 		return arcs

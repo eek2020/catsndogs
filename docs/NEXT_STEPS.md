@@ -1,6 +1,6 @@
 # Whisper Crystals — Next Steps
 
-**Date:** 2026-04-16 (post-Sprint 5c part 2)
+**Date:** 2026-04-17 (post-Sprint 6a)
 **Status:** Active plan, reconciled with `docs/MASTER_PLAN.md` and `docs/architecture/CODE_REVIEW.md`.
 **Scope:** What to do next, in order, across engineering, gameplay, and art.
 **Relationship to other plans:**
@@ -18,7 +18,7 @@ Most of the outstanding work falls into two independent tracks. They do not bloc
 
 ### Track E — Engineering
 
-Test safety (**done** Sprint 1), critical bugs (**done** Sprint 1), should-fix bugs (**done** Sprint 3c), UI god-scripts decomposed one at a time (combat **done** 3b, star_map **done** 5a, dialogue pending 6, navigation decomposition pending), UI↔GameSession coupling cut screen-by-screen via ViewModels (**in progress** — 3 of ~19 screens converted, 206→106 refs), and wire the dormant systems so the player can feel crew morale, hazards, realm control, and conquest (crew morale **done** 5b; astral hazards **retired** as stale tracker in 5b — already ticking at `navigation.gd:213`; realm control + faction conquest still pending 5c).
+Test safety (**done** Sprint 1), critical bugs (**done** Sprint 1), should-fix bugs (**done** Sprint 3c), UI god-scripts decomposed one at a time (combat **done** 3b, star_map **done** 5a, dialogue **done** 6a, navigation decomposition pending), UI↔GameSession coupling cut screen-by-screen via ViewModels (**in progress** — 4 of ~19 screens converted, 206→87 refs), and wire the dormant systems so the player can feel crew morale, hazards, realm control, and conquest (crew morale **done** 5b; astral hazards **retired** as stale tracker in 5b — already ticking at `navigation.gd:213`; realm control + faction conquest **done** 5c).
 
 ### Track A — Art
 
@@ -144,18 +144,35 @@ Sliced into two commits to keep diffs reviewable. Part 1 closed the gameplay wir
 
 ### Sprint 6 — Dialogue decomposition + onboarding + save slots
 
-**Track E.** Matches MASTER_PLAN Sprint 4, plus onboarding/accessibility basics.
+**Track E.** Matches MASTER_PLAN Sprint 4, plus onboarding/accessibility basics. Sliced into 6a/6b/6c to mirror the 3a/3b/3c and 5a/5b/5c pattern.
+
+**Sprint 6a — DialogueViewModel + dialogue_ui.gd decomposition — DONE 2026-04-17.**
+
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| `DialogueViewModel` | `godot/scripts/ui/view_models/dialogue_view_model.gd` (124 lines). Absorbs 19 `GameSession.*` call sites — `has_state` / `state` / `protagonist_id` (with `"aristotle"` fallback) / `story_flag` / `apply_step_outcome` / `apply_choice_outcome` / `complete_encounter` / `recruit_crew` / `crew_definition` / `ship_templates` / `faction` / `faction_registry` / `player_ship` / `deferred_arc_check`. Every method null-guards the session and game_state. | CODE_REVIEW §2.1 | **Done** |
+| `DialoguePortraitManager` + `DialogueCombatTransition` | `scripts/ui/dialogue/portrait_manager.gd` (184 lines) owns CHARACTER_PORTRAITS, setup_two_portraits / setup_legacy_portrait / highlight_speaker, and the static `remove_near_white_bg` cache. `scripts/ui/dialogue/combat_transition.gd` (98 lines) owns enemy-faction derivation + overlay replacement via the VM. | REFACTORING_PLAN §4 | **Done** |
+| Slim `dialogue_ui.gd` (660 → 469 lines) | −191 lines / −29 %. Retains scene-tree-bound logic (typewriter reveal, reading pause, choice-button construction, parchment styling) that wouldn't factor cleanly into RefCounted handlers. `initialize(vm)` + autoload fallback mirrors NavigationVM / StarMapVM. External contract `setup(encounter)` unchanged. | REFACTORING_PLAN §4 | **Done** |
+| Tests for the VM | 24 tests in `test_dialogue_view_model.gd` using SessionDouble + EncounterEngineDouble + CrewTraitDouble + DataLoaderDouble. `test_portrait_cache.gd` migrated to the new PortraitManager path. | Quality policy | **Done** |
+| Pre-existing bug fix | `test_narrative_arc_objective.gd` had been silently ignored by the GUT collector (typed-param parse error on `_FakeDataLoader`). Fixed — 4 tests re-enabled. Previous "175/175" / "183/183" claims were actually 179/183. | — | **Done** |
+
+**Sprint 6b — Input rebind panel + controller support + ESC pause/skip fix — pending.**
 
 | Task | Outcome | Reference |
 | --- | --- | --- |
-| `DialogueViewModel` + decompose `dialogue_ui.gd` (632 → 5 files) | As per REFACTORING_PLAN Phase 4 | MASTER_PLAN Sprint 4 |
-| Tutorial encounter (first-navigation scripted path) | New players get a concrete goal within 30s | CODE_REVIEW §4.1 |
 | Input rebind panel in `settings_screen.gd` | Per-action rebinding via `InputMap` | CODE_REVIEW §4.2 |
 | Controller support — additive JoyButton events in `project.godot` | Plug-and-play gamepad | CODE_REVIEW §4.2 |
-| Multiple save slots | `pause_menu.gd` no longer hardcodes slot 0 | CODE_REVIEW §4.3 |
-| Game feel: camera shake, hit flash, audio ducking | CODE_REVIEW §4.5 | — |
+| Resolve ESC pause/skip collision flagged in Sprint 3c | Either separate by context deliberately (current behaviour) or rebind one | MASTER_PLAN §5.3, Sprint 3c finding |
 
-**Exit criteria:** new player can start the game, rebind a key, plug in a controller, save to slot 2, and reach the first encounter prompt without reading documentation.
+**Sprint 6c — Multi-slot saves + tutorial encounter + game feel — pending.**
+
+| Task | Outcome | Reference |
+| --- | --- | --- |
+| Tutorial encounter (first-navigation scripted path) | New players get a concrete goal within 30 s | CODE_REVIEW §4.1 |
+| Multiple save slots | `pause_menu.gd` no longer hardcodes slot 0 | CODE_REVIEW §4.3 |
+| Game feel: camera shake, hit flash, audio ducking | — | CODE_REVIEW §4.5 |
+
+**Exit criteria (Sprint 6 as a whole):** new player can start the game, rebind a key, plug in a controller, save to slot 2, and reach the first encounter prompt without reading documentation. `rg "GameSession\." godot/scripts/ui/dialogue_ui.gd` returns 0 **(done 6a: 19 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 90 **(done 6a: 106 → 87)**.
 
 ### Sprint 7 — 3D cutscene modernisation (Blender-first)
 
@@ -311,7 +328,7 @@ Repo size dropped from ~5.0 GB to ~3.7 GB.
 
 ## 5. What to do today (if starting now)
 
-The "first commit" items from the original plan are all landed. Current state as of 2026-04-16 post-Sprint 5c part 2:
+Current state as of 2026-04-17 post-Sprint 6a:
 
 - Sprint 1 (critical bugs + GUT) **done**.
 - Sprint 2 (art guide + Track A/B commitment) **done**; sprite pilot pending artist.
@@ -319,13 +336,16 @@ The "first commit" items from the original plan are all landed. Current state as
 - Sprint 5a (StarMapViewModel + star_map_screen decomposition) **done**.
 - Sprint 5b (crew morale wired into combat + trade; astral hazards retired as stale tracker — already wired) **done**.
 - Sprint 5c part 1 (dock gating + conquest surfacing; dormant-systems count 2 → 0) **done**.
-- Sprint 5c part 2 (DataLoader cache hardening + HUD polish: segmented hull bar + objective + morale pip) **done**.
+- Sprint 5c part 2 (DataLoader cache hardening + HUD polish) **done**.
+- Sprint 8 (navigation nebula location-awareness; biome-driven placement + scanner + minimap) **done**.
+- Sprint 6a (DialogueViewModel + dialogue_ui.gd decomposition; 19 → 0 refs, 660 → 469 lines) **done**.
 
 **Pick next from:**
 
-1. **Sprint 7 cutscene modernisation** — offline Blender work. Prep scaffolding already in place (cutscene registry + EventBus signal + indentation + fade fix, per Sprint 7-prep commit). Blender-mcp + blender-claude-plugin now make the `.blend` rework Claude-drivable.
-2. **Sprint 6** — dialogue decomposition (last UI god-script) + onboarding + multi-slot saves (includes ESC rebind for pause/skip collision surfaced in 3c).
-3. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
+1. **Sprint 6b** — input rebind panel + controller support + ESC pause/skip fix. Natural continuation of 6a.
+2. **Sprint 6c** — multi-slot saves + tutorial encounter + game feel polish.
+3. **Sprint 7 cutscene modernisation** — offline Blender work. Prep scaffolding already in place. Blender-mcp + blender-claude-plugin make the `.blend` rework Claude-drivable.
+4. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
 
 Open this file and MASTER_PLAN §7 side by side at the start of every work session. Everything else is sequenced above.
 
@@ -345,3 +365,4 @@ Open this file and MASTER_PLAN §7 side by side at the start of every work sessi
 | 2026-04-16 | Sprint 5c part 1 closed (dock gating + conquest surfacing). `StarBaseSystem` gained `realm_control` injection + `get_dock_block_reason()`; `can_dock` now gates hostile-controller regions below a `-50` reputation threshold on top of the pre-existing stronghold rep gate. `GameSession._process` ticks `FactionConquestAI` every 60 s; `resolve_actions` emits `EventBus.faction_conflict` per action and attack victories shift `RealmControlSystem` influence, emitting `realm_control_changed` when controllers flip. Navigation HUD flashes the block reason on refused docks and toasts controller flips. +17 tests in `test_dock_gating.gd` (9) + `test_conquest_surfacing.gd` (8); full suite 138/138 green. **Dormant-systems count 2 → 0** — all four CODE_REVIEW §3 systems now drive observable gameplay. Sprint 5c part 2 (DataLoader cache + HUD polish) still pending. |
 | 2026-04-16 | Sprint 7 prep (companion commit to 5b). Engineering-only scaffolding that doesn't require the `.blend` rework: new `data/cutscenes/_registry.json` with the `no_tail_outpost` entry; `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` signal + `cutscene_scene.gd._on_cutscene_finished` wired to emit it (no more stub print); `camera_controller.gd` 4-space → tabs; `_fade_in_character` shared-material mutation replaced with per-surface duplicated override materials (CODE_REVIEW §6A.3 closed); `TODO(S7)` headers on all runtime geometry hacks (`_hide_back_wall`, `_build_interior`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, `MaterialApplicator.apply()` call site) so deletion is mechanical when the rework lands. Remaining Sprint 7 work blocked on human artist / Blender rework. |
 | 2026-04-16 | Sprint 5c part 2 closed (DataLoader cache hardening + HUD polish). `_load_json` now deep-duplicates cached Dictionary/Array payloads on every read so caller mutation cannot leak back into the cache; new `clear_cache()` + `invalidate(path)` public API; `GameSession.start_new_game` and `load_game` call `clear_cache()` on session crossover. #12 subsumed — cache already dedupes disk I/O and deep-copy isolation removes the mutation-amplification concern. HUD gains `HullBar` (segmented, 10-cell, colour-graded low/mid/high) + `MoralePip` (colour keyed to `CrewMoraleSystem` tiers) under `scripts/ui/hud/`; `NarrativeSystem.get_arc_objective()` returns `objective_text` or falls back to `theme`; `navigation.tscn` `TopBar` restructured to VBox with a persistent `ObjectiveLabel`. +37 tests across `test_data_loader_cache.gd` (9), `test_narrative_arc_objective.gd` (4), `test_hud_hull_bar.gd` (12), `test_hud_morale_pip.gd` (6), and `test_navigation_view_model.gd` extensions (11 new tests + `MoraleDouble`/`objective_value`); full suite 175/175 green (was 138/138). MASTER_PLAN §5.3 Apr-05 #4 + #12 closed; CODE_REVIEW §4.6 + §5.3 + §2.6 closed. Sprint 5c fully done. |
+| 2026-04-17 | Sprint 6 sliced into 6a/6b/6c. Sprint 6a closed: DialogueViewModel (124 lines) + `scripts/ui/dialogue/{portrait_manager,combat_transition}.gd` helpers; `dialogue_ui.gd` 660 → 469 lines (−29 %); 19 → 0 `GameSession.` refs in the orchestrator; UI total 106 → 87. +24 tests in `test_dialogue_view_model.gd` using SessionDouble + system doubles. REFACTORING_PLAN §4 docstring-cleanup row retired (stale); §4 "632-line" figure absorbed as drift (actual was 660). **Pre-existing bug fix:** `test_narrative_arc_objective.gd` had been silently ignored by the GUT collector since Sprint 5c part 2 (typed-param parse error); fixed via `_FakeDataLoader extends DataLoader` + `super("res://data")`. Previous "175/175" / "183/183" claims were really 179/183 — drift logged and closed. Full suite now **215/215 green**. |

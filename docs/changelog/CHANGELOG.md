@@ -6,6 +6,60 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-17 — Sprint 6a: DialogueViewModel + dialogue_ui.gd decomposition
+
+NEXT_STEPS Sprint 6, first slice. REFACTORING_PLAN Phase 4 (Issue #20) adapted to add the ViewModel layer that the 3a/3b/5a decompositions established. `dialogue_ui.gd` no longer reaches into `GameSession` directly — every read / write / delegate goes through `DialogueViewModel`, and portrait + combat-transition logic move into dedicated `RefCounted` helpers under `scripts/ui/dialogue/`.
+
+**DialogueViewModel (new, 124 lines):**
+
+- `godot/scripts/ui/view_models/dialogue_view_model.gd` — `class_name DialogueViewModel extends RefCounted`. Absorbs all 19 `GameSession.*` call sites the old `dialogue_ui.gd` had, exposing them as a narrow, null-guarded API: `has_state`, `state`, `protagonist_id` (with `"aristotle"` fallback), `story_flag`, `apply_step_outcome`, `apply_choice_outcome`, `complete_encounter`, `recruit_crew`, `crew_definition`, `ship_templates`, `faction`, `faction_registry`, `player_ship`, `deferred_arc_check`. Every method tolerates a null `_session.game_state` so the UI can still render during early-game transitions without crashing.
+
+**PortraitManager (new, 184 lines):**
+
+- `godot/scripts/ui/dialogue/portrait_manager.gd` — `class_name DialoguePortraitManager extends RefCounted`. Owns the `CHARACTER_PORTRAITS` table, `setup_two_portraits` / `setup_legacy_portrait` / `highlight_speaker`, and the static `remove_near_white_bg` cache (Apr-05 #7 fix preserved). Takes the dialogue UI as its tween host so fade animations stay attached to the visible scene.
+
+**CombatTransition (new, 98 lines):**
+
+- `godot/scripts/ui/dialogue/combat_transition.gd` — `class_name DialogueCombatTransition extends RefCounted`. Handles both legacy (`choice.outcome.faction_changes`) and step-triggered (`encounter.npc_ids` ↔ faction registry) enemy-faction derivation, template lookup, enemy-ship construction via `CombatSystem.CombatShip`, and overlay replacement through `main.replace_overlay` / `push_overlay`. All GameSession access routes through the injected VM.
+
+**Slimmed orchestrator (dialogue_ui.gd, 660 → 469 lines):**
+
+- Keeps scene-tree node refs, typewriter reveal (`_process`, `_set_description`), reading-pause (`_reading_pause`, `_space_advance`), choice-button construction, description collapse/restore, and parchment text styling — these are all tightly coupled to the scene tree and async flow, so moving them into RefCounted handlers would have been more ceremony than value.
+- Adds `initialize(vm)` for test injection, with `_ready` fallback to `DialogueViewModel.new(GameSession)` so production callers (`navigation.gd:590` and `dialogue_manager.gd:104`) don't change.
+- Dispatches to `_portraits.setup_two_portraits` or `_portraits.setup_legacy_portrait` in `_build_ui`; `_complete_and_start_combat` / legacy combat path now call `_combat.start_encounter_combat` / `_combat.start_legacy_combat`; crew confirmation + step outcome + arc check all go through the VM.
+- External contract unchanged — `setup(encounter)` still accepts an `Encounter` and drives the same flow.
+
+**Tracker drift noted and closed:**
+
+- REFACTORING_PLAN §4 flagged a `"""..."""` Python docstring at line 506 as "remaining cleanup". `rg '"""' godot/scripts/ui/dialogue_ui.gd` returns zero matches — already cleaned up in an earlier commit. Plan row retired.
+- REFACTORING_PLAN §4 said the file was 632 lines; actual was 660 before this slice. Drift absorbed.
+
+**Pre-existing bug uncovered + fixed:**
+
+- `test_narrative_arc_objective.gd` (landed with Sprint 5c part 2) failed to parse because `_FakeDataLoader extends RefCounted` didn't satisfy `NarrativeSystem._init(p_data_loader: DataLoader)`'s typed param. The file was being silently ignored by the GUT collector, so the "175/175" and "183/183" claims in the Sprint 5c part 2 / Sprint 8 changelog entries were really 179 and 183 out of (expected) 183 and 187 — 4 tests were never running. Fixed by switching `_FakeDataLoader` to `extends DataLoader` + `super("res://data")` in `_init`. All 4 tests now run and pass.
+
+**Coupling / size metrics:**
+
+- `rg "GameSession\." godot/scripts/ui/dialogue_ui.gd` returns **0** (was 19).
+- `rg "GameSession\." godot/scripts/ui | wc -l` drops from 106 to **87** (−19).
+- `dialogue_ui.gd`: **660 → 469** lines (−191, −29 %). Above the 250-line target but the residual is the scene-tree-bound typewriter/flow logic that wouldn't factor cleanly.
+
+**New test coverage (+28 tests):**
+
+- `godot/tests/unit/test_dialogue_view_model.gd` — 24 tests covering `has_state` (3 paths), `protagonist_id` default / empty-fallback / read-through (3), `story_flag` (2), encounter-engine wrappers (6, each with null-state noop), crew (5), ship templates + faction + player ship (6), deferred arc check (2). Uses a `SessionDouble` + `EncounterEngineDouble` + `CrewTraitDouble` + `DataLoaderDouble` so tests exercise the VM without the autoload.
+- `godot/tests/unit/test_portrait_cache.gd` — migrated to target the new `DialoguePortraitManager` script path. Same 6 tests, same assertions.
+- `godot/tests/unit/test_narrative_arc_objective.gd` — unblocked (4 tests now run).
+
+**Tests:** Full GUT suite **215/215 passing** (was 183/183 reported before the narrative-arc fix; +32 real delta = +24 new VM + 4 re-enabled narrative + 4 re-enabled portrait-cache after path migration). Zero orphans.
+
+**Sprint 6 status:**
+
+- 6a (DialogueViewModel + dialogue_ui.gd decomposition) — **done**.
+- 6b (input rebind panel + controller support + ESC pause/skip fix) — pending.
+- 6c (multi-slot saves + tutorial encounter + game feel polish) — pending.
+
+---
+
 ## 2026-04-17 — Sprint 8 (full scope): biome-driven placement, minimap tint, scanner modulation
 
 NEXT_STEPS Sprint 8 steps 4–6, following this morning's one-day cut (steps 1–3 + determinism test). The biome field that the nebula now samples at every point also drives gameplay: where POIs spawn, how far the scanner sees, and how the minimap reads.
