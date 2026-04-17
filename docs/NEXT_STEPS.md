@@ -345,6 +345,17 @@ Current state as of 2026-04-17 post-Sprint 6a:
 
 **Sprint 6 (as a whole) — done.** The stated exit criterion ("new player can start the game, rebind a key, plug in a controller, save to slot 2, and reach the first encounter prompt without reading documentation") is now reachable end-to-end.
 
+**Pending manual QA (Sprint 6c — not unit-testable, needs a live session):**
+
+| Check | Expected | Covers |
+| --- | --- | --- |
+| Pause → Save Game → pick a slot → quit to menu → relaunch → Load Game → pick same slot | Session restores with character, arc, position, hull, inventory intact | `SaveLoadViewModel` + `save_load_menu` overlay end-to-end |
+| New game → enter navigation for the first time | Tutorial flash fires at 0 s (WASD), 5 s (markers), 12 s (TAB) | `TUTORIAL_STEPS` sequencing in `navigation._show_welcome` |
+| Load an existing save that has any arc objective completed | Tutorial does NOT fire again | Short-circuit via `_has_completed_any_objective` |
+| In nav, fly through a hazard pocket | Red full-screen flash on hull damage + BGM dips audibly under the SFX | `EventBus.hazard_damage` → `_hit_flash_timer` + `MusicManager._duck_music` |
+
+When these all pass on a live build, tick them off here with a line or two of what you observed.
+
 **Pick next from:**
 
 1. **Star map connectivity polish** — `_request_travel` shows a confirm dialog for any discovered region; travel only succeeds for directly connected ones, so non-connected targets fail silently. Gate the dialog on connectivity + surface a "not connected — route via X" message. Small (1–2 h).
