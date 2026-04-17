@@ -5,30 +5,24 @@
     {
       "id": "intro_flyover",
       "type": "camera_sequence",
-      "description": "Establishing flyover from high shot down through the wreckage field.",
+      "description": "Quick flyover past the wreckage, camera settles on Aristotle on the landing pad.",
       "camera_keys": [
-        "CAM_01_Establishing",
-        "CAM_02_ApproachOverScouts",
-        "CAM_03_NearGunship"
+        "CAM_02_ApproachOverScouts"
       ],
       "lines": [
-        { "speaker": "Aristotle", "text": "Sensors are picking up League wreckage scattered around that outpost. Somebody put up one hell of a fight down there." },
-        { "speaker": "Aristotle", "text": "I'm counting... twelve scout hulls. Two gunship chassis. All cold. Whatever happened here, it's over." },
-        { "speaker": "Aristotle", "text": "Single heat signature inside the main structure. Still alive. Still armed, from the look of the energy readings." }
+        { "speaker": "Aristotle", "text": "League wreckage everywhere. Twelve scouts, two gunships. One shooter did all this." }
       ],
-      "next_sequence": "approach_dialogue"
+      "next_sequence": "aristotle_beat"
     },
     {
-      "id": "approach_dialogue",
+      "id": "aristotle_beat",
       "type": "dialogue",
       "camera_key": "CAM_04_AristotleShoulder",
-      "description": "Aristotle walks toward the outpost, commenting on the destruction.",
+      "description": "Hold on Aristotle while he sizes up what happened here.",
       "lines": [
-        { "speaker": "Aristotle", "text": "These blast patterns... concentrated fire, single origin point. One shooter did all of this." },
-        { "speaker": "Aristotle", "text": "Whoever's in there, they knew exactly what they were doing. Every shot placed to disable, not just damage." },
-        { "speaker": "Aristotle", "text": "The League sent a full raiding party to this rock and got sent home in pieces. By one cat." }
+        { "speaker": "Aristotle", "text": "Whoever's inside picked every shot to disable. That's not luck." }
       ],
-      "next_sequence": "choice_approach"
+      "next_sequence": "door_approach"
     },
     {
       "id": "choice_approach",

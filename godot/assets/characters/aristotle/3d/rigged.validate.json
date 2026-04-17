@@ -1,0 +1,60 @@
+{
+  "animation_player_count": 1,
+  "animations": {
+    "count": 1,
+    "details": [
+      {
+        "length": 0.0666666701436043,
+        "loop_mode": 0,
+        "name": "A_TPose",
+        "track_count": 34
+      }
+    ],
+    "expected_count": 1,
+    "extra_unexpected": [],
+    "missing_expected": [],
+    "names": [
+      "A_TPose"
+    ],
+    "play_test": {
+      "A_TPose": {
+        "advanced_by": 0.00666666701436043,
+        "current_position": 0.00666666701436043,
+        "is_playing": true,
+        "length": 0.0666666701436043,
+        "outcome": "OK"
+      },
+      "Death01": {
+        "outcome": "NOT_FOUND"
+      },
+      "Idle": {
+        "outcome": "NOT_FOUND"
+      },
+      "Sword_Attack": {
+        "outcome": "NOT_FOUND"
+      },
+      "Walk": {
+        "outcome": "NOT_FOUND"
+      }
+    }
+  },
+  "issues": [],
+  "mesh_instance": {
+    "has_skin": true,
+    "node_path": "Armature/Skeleton3D/material",
+    "surface_count": 1
+  },
+  "mesh_instance_count": 1,
+  "node_count": 5,
+  "root_node": {
+    "class": "Node3D",
+    "name": "rigged"
+  },
+  "skeleton": {
+    "bone_count": 34,
+    "node_path": "Armature/Skeleton3D"
+  },
+  "skeleton_count": 1,
+  "status": "PASS",
+  "target": "res://assets/characters/aristotle/3d/rigged.glb"
+}

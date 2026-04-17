@@ -499,5 +499,5 @@ All JSON content lives under `godot/data/`. Each subfolder is one category.
 | Systems | 18 |
 | UI screens (top-level) | 26 |
 | ViewModels | 6 |
-| Scenes | 32 |
+| Scenes | 33 |
 | Data JSON files | 84 |

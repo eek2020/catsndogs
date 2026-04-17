@@ -169,6 +169,67 @@ func region_display_name(region_id: String) -> String:
 	return region_id.replace("_", " ").capitalize()
 
 
+func region_connections(region_id: String) -> Array:
+	var region := region_info(region_id)
+	if region == null:
+		return []
+	return Array(region.connected_regions)
+
+
+func is_connected_from_current(region_id: String) -> bool:
+	var current := current_region()
+	if current.is_empty() or region_id.is_empty():
+		return false
+	if region_id == current:
+		return true
+	return region_id in region_connections(current)
+
+
+## BFS next-hop from `from_region` toward `to_region`. Returns the region_id
+## of the first step on the shortest discovered-path route, or "" if no path
+## exists through discovered+accessible regions. Used by the star map to
+## surface a "route via X" hint when the player targets a non-adjacent region.
+func route_first_hop(from_region: String, to_region: String) -> String:
+	if _session.exploration == null:
+		return ""
+	if from_region.is_empty() or to_region.is_empty() or from_region == to_region:
+		return ""
+	var regions: Dictionary = _session.exploration.regions
+	if not regions.has(from_region) or not regions.has(to_region):
+		return ""
+	var prev: Dictionary = {}
+	var visited: Dictionary = {from_region: true}
+	var queue: Array = [from_region]
+	var found: bool = false
+	while not queue.is_empty():
+		var cur: String = queue.pop_front()
+		if cur == to_region:
+			found = true
+			break
+		var region: ExplorationSystem.Region = regions.get(cur)
+		if region == null:
+			continue
+		for nxt in region.connected_regions:
+			if visited.has(nxt):
+				continue
+			var nr: ExplorationSystem.Region = regions.get(nxt)
+			if nr == null:
+				continue
+			if nxt != to_region and not nr.is_discovered:
+				continue
+			visited[nxt] = true
+			prev[nxt] = cur
+			queue.append(nxt)
+	if not found:
+		return ""
+	var step: String = to_region
+	while prev.get(step, "") != from_region:
+		step = prev.get(step, "")
+		if step.is_empty():
+			return ""
+	return step
+
+
 # ---------------------------------------------------------------------------
 # Actions
 # ---------------------------------------------------------------------------

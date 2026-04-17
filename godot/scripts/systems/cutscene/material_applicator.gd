@@ -16,15 +16,35 @@ extends RefCounted
 # Keywords are checked in order; first match wins.
 
 const MATERIAL_RULES: Array[Dictionary] = [
-	# Ground / terrain
+	# Ground / terrain — dusty warm regolith with fine grain
 	{
 		"keywords": ["ground", "terrain", "floor_ext", "dirt", "sand", "plane"],
-		"albedo": Color(0.22, 0.18, 0.10),
-		"roughness": 0.92,
+		"albedo": Color(0.34, 0.26, 0.17),
+		"roughness": 0.95,
 		"metallic": 0.0,
-		"noise_scale": 6.0,
-		"normal_strength": 0.5,
+		"noise_scale": 18.0,
+		"normal_strength": 0.6,
 		"role": "ground",
+	},
+	# Rocks / boulders — cool grey stone, matte, chunky noise
+	{
+		"keywords": ["rock", "boulder", "stone"],
+		"albedo": Color(0.38, 0.36, 0.34),
+		"roughness": 0.88,
+		"metallic": 0.02,
+		"noise_scale": 3.5,
+		"normal_strength": 0.9,
+		"role": "rock",
+	},
+	# Hills / background terrain — darker dusty stone
+	{
+		"keywords": ["hill", "mound", "ridge"],
+		"albedo": Color(0.28, 0.23, 0.17),
+		"roughness": 0.93,
+		"metallic": 0.0,
+		"noise_scale": 2.5,
+		"normal_strength": 0.7,
+		"role": "hill",
 	},
 	# Concrete / foundations
 	{
@@ -78,7 +98,9 @@ const MATERIAL_RULES: Array[Dictionary] = [
 	},
 	# Wreckage / debris / scrap
 	{
-		"keywords": ["wreck", "debris", "scrap", "ruin", "damage", "scout", "gunship", "hull_wreck"],
+		"keywords": [
+			"wreck", "debris", "scrap", "ruin", "damage", "scout", "gunship", "hull_wreck",
+		],
 		"albedo": Color(0.18, 0.15, 0.10),
 		"roughness": 0.8,
 		"metallic": 0.5,
@@ -216,7 +238,9 @@ var _mesh_log: Array[String] = []
 func apply(root: Node) -> void:
 	_mesh_log.clear()
 	_apply_recursive(root)
-	print("MaterialApplicator: textured %d unique material slots across subtree '%s'" % [_material_cache.size(), root.name])
+	print("MaterialApplicator: textured %d unique material slots across subtree '%s'" % [
+		_material_cache.size(), root.name,
+	])
 	print("MaterialApplicator: mesh nodes found:")
 	for entry in _mesh_log:
 		print("  %s" % entry)
@@ -234,10 +258,24 @@ func _apply_to_mesh(mesh_inst: MeshInstance3D) -> void:
 	if mesh == null:
 		return
 
-	var node_name_lower: String = mesh_inst.name.to_lower()
+	# Godot's GLB importer often names MeshInstance3D children `geometry_N` and
+	# keeps the original node name (e.g. `Rock_00`, `Ground`) on the parent
+	# Node3D wrapper. Check the mesh name AND walk up the parent chain so
+	# keyword rules still hit.
+	var names_to_check: Array[String] = [mesh_inst.name.to_lower()]
+	var parent: Node = mesh_inst.get_parent()
+	var depth: int = 0
+	while parent != null and depth < 3:
+		names_to_check.append(parent.name.to_lower())
+		parent = parent.get_parent()
+		depth += 1
 
-	# Try name-based matching first.
-	var config: Dictionary = _match_config_by_name(node_name_lower)
+	# Try name-based matching first — against the mesh name and up to 3 ancestors.
+	var config: Dictionary = {}
+	for candidate in names_to_check:
+		config = _match_config_by_name(candidate)
+		if not config.is_empty():
+			break
 	var match_method: String = "name"
 
 	# If no name match, classify by geometry.
@@ -323,7 +361,9 @@ func _classify_by_geometry(mesh_inst: MeshInstance3D) -> Dictionary:
 
 
 func _config_cache_key(config: Dictionary) -> String:
-	return "%s_%.2f_%.2f_%s" % [str(config.albedo), config.roughness, config.metallic, config.get("role", "x")]
+	return "%s_%.2f_%.2f_%s" % [
+		str(config.albedo), config.roughness, config.metallic, config.get("role", "x"),
+	]
 
 
 func _build_material(config: Dictionary) -> StandardMaterial3D:
@@ -334,14 +374,17 @@ func _build_material(config: Dictionary) -> StandardMaterial3D:
 	mat.cull_mode = BaseMaterial3D.CULL_BACK
 
 	# Procedural noise as albedo texture — this ensures visible texture on geometry.
+	# Frequency must be high enough that features span a small fraction of the
+	# texture, otherwise the whole thing is one blob and you see flat albedo.
 	var albedo_noise_tex := NoiseTexture2D.new()
 	var albedo_noise := FastNoiseLite.new()
 	albedo_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-	albedo_noise.frequency = 0.015
+	albedo_noise.frequency = 0.06
+	albedo_noise.fractal_octaves = 4
 	albedo_noise.seed = hash(config.get("role", "fallback"))
 	albedo_noise_tex.noise = albedo_noise
-	albedo_noise_tex.width = 64
-	albedo_noise_tex.height = 64
+	albedo_noise_tex.width = 256
+	albedo_noise_tex.height = 256
 	albedo_noise_tex.seamless = true
 	# Color the noise texture by setting a gradient.
 	var grad := Gradient.new()
@@ -354,11 +397,33 @@ func _build_material(config: Dictionary) -> StandardMaterial3D:
 	albedo_noise_tex.color_ramp = grad
 	mat.albedo_texture = albedo_noise_tex
 
-	# Normal maps skipped for performance — noise albedo provides enough detail.
+	# Triplanar projection: the source GLB has no UV unwrap for terrain / rocks,
+	# so the noise texture only renders if we project it from world-space axes
+	# instead of sampling UVs. Without this, low-poly meshes show flat albedo.
+	mat.uv1_triplanar = true
 
-	# UV1 scaling controls apparent texture density.
+	# UV1 scaling controls apparent texture density (lower = larger features).
 	var uv_scale: float = config.get("noise_scale", 12.0)
 	mat.uv1_scale = Vector3(uv_scale, uv_scale, uv_scale)
+
+	# Surface normal map for roughness / bumpiness cues. Only built when the
+	# config asks for it — keeps emissive lights etc. flat.
+	var normal_strength: float = config.get("normal_strength", 0.0)
+	if normal_strength > 0.0:
+		var normal_noise_tex := NoiseTexture2D.new()
+		var normal_noise := FastNoiseLite.new()
+		normal_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+		normal_noise.frequency = 0.05
+		normal_noise.seed = hash(config.get("role", "fallback")) + 1
+		normal_noise_tex.noise = normal_noise
+		normal_noise_tex.width = 128
+		normal_noise_tex.height = 128
+		normal_noise_tex.seamless = true
+		normal_noise_tex.as_normal_map = true
+		normal_noise_tex.bump_strength = 8.0
+		mat.normal_enabled = true
+		mat.normal_texture = normal_noise_tex
+		mat.normal_scale = normal_strength
 
 	# Emission (for lights / beacons).
 	if config.has("emission"):

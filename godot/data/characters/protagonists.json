@@ -14,7 +14,7 @@
                 "intimidation": 6,
                 "stealth": 7
             },
-            "portrait": "res://assets/characters/aristotle_head.png",
+            "portrait": "res://assets/characters/aristotle/2d/head.png",
             "ship_template_id": "corsair_raider",
             "ship_id": "aristotle_flagship",
             "ship_name": "The Whisper",
@@ -79,7 +79,7 @@
                 "intimidation": 5,
                 "stealth": 3
             },
-            "portrait": "res://assets/characters/dave_head.png",
+            "portrait": "res://assets/characters/dave/2d/head.png",
             "ship_template_id": "league_cruiser",
             "ship_id": "dave_flagship",
             "ship_name": "The Iron Paw",

@@ -294,3 +294,56 @@ func test_set_world_entry_region_writes_meta() -> void:
 	var vm := StarMapViewModel.new(session)
 	vm.set_world_entry_region("starting_realm")
 	assert_eq(session.get_meta("world_entry_region", ""), "starting_realm")
+
+
+# ---------------------------------------------------------------------------
+# Connectivity (Sprint 6d — star map travel gating)
+# ---------------------------------------------------------------------------
+
+func _make_exploration_with_graph(edges: Dictionary, discovered: Array = []) -> ExplorationDouble:
+	var expl := ExplorationDouble.new()
+	for rid in edges.keys():
+		var region := _make_region(rid, "", discovered.is_empty() or rid in discovered)
+		region.connected_regions = Array(edges[rid], TYPE_STRING, "", null)
+		expl.regions[rid] = region
+	return expl
+
+
+func test_is_connected_from_current_true_for_neighbor() -> void:
+	var session := _make_session_with_state("a")
+	session.exploration = _make_exploration_with_graph({"a": ["b"], "b": ["a"]})
+	var vm := StarMapViewModel.new(session)
+	assert_true(vm.is_connected_from_current("b"))
+
+
+func test_is_connected_from_current_false_for_non_neighbor() -> void:
+	var session := _make_session_with_state("a")
+	session.exploration = _make_exploration_with_graph({"a": ["b"], "b": ["a", "c"], "c": ["b"]})
+	var vm := StarMapViewModel.new(session)
+	assert_false(vm.is_connected_from_current("c"))
+
+
+func test_route_first_hop_returns_next_step() -> void:
+	var session := _make_session_with_state("a")
+	session.exploration = _make_exploration_with_graph({"a": ["b"], "b": ["a", "c"], "c": ["b"]})
+	var vm := StarMapViewModel.new(session)
+	assert_eq(vm.route_first_hop("a", "c"), "b")
+
+
+func test_route_first_hop_empty_when_unreachable() -> void:
+	var session := _make_session_with_state("a")
+	session.exploration = _make_exploration_with_graph({"a": ["b"], "b": ["a"], "c": []})
+	var vm := StarMapViewModel.new(session)
+	assert_eq(vm.route_first_hop("a", "c"), "")
+
+
+func test_route_first_hop_skips_undiscovered_intermediate() -> void:
+	# a -> b (undiscovered) -> c (target). Target allowed as destination even if
+	# undiscovered, but undiscovered intermediates shouldn't be routed through.
+	var session := _make_session_with_state("a")
+	var expl := _make_exploration_with_graph(
+		{"a": ["b"], "b": ["a", "c"], "c": ["b"]}, ["a", "c"]
+	)
+	session.exploration = expl
+	var vm := StarMapViewModel.new(session)
+	assert_eq(vm.route_first_hop("a", "c"), "")

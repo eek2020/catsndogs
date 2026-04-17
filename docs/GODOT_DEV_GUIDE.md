@@ -53,29 +53,42 @@ Central reference for Godot 4.6 development on Whisper Crystals. All resources b
 
 ## Tools
 
-All tools are in `tools/godot-dev/`:
+### 2D / Sprite Tools (`tools/godot-dev/`)
 
-### Sprite Tools (`tools/godot-dev/sprites/`)
+**Sprite Tools (`tools/godot-dev/sprites/`)**
 
 - `spritesheet_template.py` — Generate numbered grid templates for sprite sheets
 - `spritesheet_slice.py` — Slice sprite sheets into frames (4 modes: keep-bg, clean-bg, split-bg, split-clean)
 - `requirements.txt` — Dependencies: Pillow
 
-### Asset Processing (`tools/godot-dev/assets/`)
+**Asset Processing (`tools/godot-dev/assets/`)**
 
 - `rembg_matting.py` — Background removal with alpha matting (handles semi-transparent materials)
 - `requirements.txt` — Dependencies: rembg, pymatting, numpy, scipy, Pillow, onnxruntime
 
-### Documentation Tools (`tools/godot-dev/docs/`)
+**Documentation Tools (`tools/godot-dev/docs/`)**
 
 - `godot_api_converter.py` — Convert Godot XML docs to Markdown
 - `class_list.py` — Godot class categorization utilities
 - `ensure_doc_api.sh` — Fetch latest Godot API docs
 
-### Capture Tools (`tools/godot-dev/capture/`)
+**Capture Tools (`tools/godot-dev/capture/`)**
 
 - `gpu_detect.sh` — Detect available GPU for Godot rendering
 - `screenshot.sh` — Capture screenshots with GPU or software fallback
+
+### 3D Character Pipeline (`tools/blender-dev/` + `godot/tools/`)
+
+For producing rigged / animated character GLBs (crew, NPCs, faction leads). See [`CHARACTER_PIPELINE.md`](CHARACTER_PIPELINE.md) for the end-to-end workflow.
+
+- `tools/blender-dev/strip_and_prep_for_mixamo.py` — Strip Tripo3D's broken auto-rig, emit rig-less GLB + FBX.
+- `tools/blender-dev/retarget_to_cc0_rig.py` — Weld clean mesh onto the CC0 Universal Animation Library armature (65 bones + 45 animations). **Preferred path.**
+- `tools/blender-dev/merge_mixamo_animations.py` — Fallback path: merge Mixamo-rigged FBX animations onto a primary rig.
+- `tools/blender-dev/render_preview.py` — Render front/side/three-quarter PNGs of any `.glb` / `.fbx`.
+- `tools/blender-dev/inspect_glb.py` — Dump structural JSON report of a GLB (armatures, bones, actions, fcurves).
+- `godot/tools/validate_rigged_glb.gd` — Headless Godot validator (skeleton + mesh + animation set + play/advance test).
+
+Per-script reference: [`tools/blender-dev/README.md`](../tools/blender-dev/README.md).
 
 ### Tool Setup
 
@@ -85,6 +98,9 @@ cd tools/godot-dev/sprites && pip install -r requirements.txt
 
 # Asset processing (heavier dependencies)
 cd tools/godot-dev/assets && pip install -r requirements.txt
+
+# Blender scripts have no venv requirements — they run under Blender's bundled Python.
+# Godot validator runs under the Godot binary; no deps.
 ```
 
 ## Examples

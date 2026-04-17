@@ -100,6 +100,8 @@ func _run_sequence(sequence_id: String) -> void:
 			await _run_camera_sequence(seq)
 		"dialogue":
 			await _run_dialogue(seq)
+		"walk":
+			await _run_walk(seq)
 		"choice":
 			await _run_choice(seq)
 		"event":
@@ -164,6 +166,51 @@ func _run_dialogue(seq: Dictionary) -> void:
 
 
 # ------------------------------------------------------------------
+# Walk sequence — tween a character toward a target while optionally
+# moving the camera and playing dialogue lines in parallel.
+# Fields: character ("aristotle" | "no_tail"), to ([x,y,z] or "door"),
+#         duration (seconds), camera_key (optional), lines (optional).
+# ------------------------------------------------------------------
+func _run_walk(seq: Dictionary) -> void:
+	var who: String = seq.get("character", "aristotle")
+	var subject: Node3D = aristotle_node if who == "aristotle" else no_tail_node
+	if subject == null:
+		push_warning("CutsceneManager: walk subject '%s' missing" % who)
+		return
+
+	var duration: float = float(seq.get("duration", 2.5))
+	var target: Vector3 = subject.global_position
+	var to_val: Variant = seq.get("to", null)
+	if typeof(to_val) == TYPE_ARRAY and (to_val as Array).size() == 3:
+		target = Vector3(float(to_val[0]), float(to_val[1]), float(to_val[2]))
+	elif typeof(to_val) == TYPE_STRING and String(to_val) == "door" and door_node != null:
+		# Stop a few units in front of the door so the character isn't clipping it.
+		var dp: Vector3 = door_node.global_position
+		target = Vector3(dp.x, subject.global_position.y, dp.z + 3.0)
+
+	var cam_key: String = seq.get("camera_key", "")
+	if cam_key != "" and camera_controller:
+		camera_controller.move_to_key(cam_key)  # parallel, not awaited
+
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(subject, "global_position", target, duration)
+
+	var lines: Array = seq.get("lines", [])
+	if lines.is_empty():
+		await tween.finished
+		return
+
+	# Fire lines in parallel with the walk. Advance is still gated on the
+	# player; the tween keeps playing in the background.
+	for line in lines:
+		await _show_line(line.get("speaker", ""), line.get("text", ""))
+	if tween.is_running():
+		await tween.finished
+
+
+# ------------------------------------------------------------------
 # Choice — presents options and waits for selection.
 # ------------------------------------------------------------------
 func _run_choice(seq: Dictionary) -> void:
@@ -224,12 +271,17 @@ func _show_line(speaker: String, text: String) -> void:
 
 
 # ------------------------------------------------------------------
-# Door animation — simple tween slide upward.
+# Door animation — tween slide downward into the floor so the door
+# retracts cleanly without clipping through the outpost roof.
+# Door mesh origin is at its base (Sprint 7 .blend rebuild), so
+# translating down by the mesh height tucks it fully under the ground.
 # ------------------------------------------------------------------
+const DOOR_OPEN_TRAVEL: float = 3.4  # matches Door mesh height in no_tail_outpost.blend
+
 func _open_door() -> void:
 	if door_node != null:
 		var start_pos: Vector3 = door_node.position
-		var end_pos: Vector3 = start_pos + Vector3(0, 3.2, 0)
+		var end_pos: Vector3 = start_pos - Vector3(0, DOOR_OPEN_TRAVEL, 0)
 		var tween := create_tween()
 		tween.set_ease(Tween.EASE_OUT)
 		tween.set_trans(Tween.TRANS_CUBIC)

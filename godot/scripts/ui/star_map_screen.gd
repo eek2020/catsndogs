@@ -31,6 +31,8 @@ var _local_layer: StarMapLocalLayer
 # Travel confirmation
 var _travel_confirm_visible: bool = false
 var _travel_target_region: String = ""
+var _travel_blocked: bool = false
+var _travel_route_hint: String = ""
 
 const REDRAW_INTERVAL: float = 0.5
 var _redraw_timer: float = 0.0
@@ -150,6 +152,8 @@ func _galaxy_ctx() -> Dictionary:
 		"backdrop": _galaxy_backdrop,
 		"travel_confirm_visible": _travel_confirm_visible,
 		"travel_target_region": _travel_target_region,
+		"travel_blocked": _travel_blocked,
+		"travel_route_hint": _travel_route_hint,
 	}
 
 
@@ -209,7 +213,10 @@ func _handle_galaxy_input(event: InputEvent) -> void:
 	if _travel_confirm_visible:
 		if event.is_action_pressed("ui_accept"):
 			get_viewport().set_input_as_handled()
-			_confirm_travel()
+			if not _travel_blocked:
+				_confirm_travel()
+			else:
+				_cancel_travel()
 		elif event.is_action_pressed("cancel") or event.is_action_pressed("pause"):
 			get_viewport().set_input_as_handled()
 			_cancel_travel()
@@ -348,12 +355,17 @@ func _on_close() -> void:
 func _request_travel() -> void:
 	if _selected_region.is_empty():
 		return
+	_travel_blocked = false
+	_travel_route_hint = ""
 	if _selected_region == _region_id:
 		_travel_target_region = _selected_region
 		_travel_confirm_visible = true
 		return
 	if not _vm.region_is_discovered(_selected_region):
 		return
+	if not _vm.is_connected_from_current(_selected_region):
+		_travel_blocked = true
+		_travel_route_hint = _vm.route_first_hop(_vm.current_region(), _selected_region)
 	_travel_target_region = _selected_region
 	_travel_confirm_visible = true
 
@@ -384,3 +396,5 @@ func _confirm_travel() -> void:
 func _cancel_travel() -> void:
 	_travel_confirm_visible = false
 	_travel_target_region = ""
+	_travel_blocked = false
+	_travel_route_hint = ""

@@ -1,0 +1,384 @@
+{
+  "animation_player_count": 1,
+  "animations": {
+    "count": 45,
+    "details": [
+      {
+        "length": 2.5,
+        "loop_mode": 0,
+        "name": "A_TPose",
+        "track_count": 57
+      },
+      {
+        "length": 2.0,
+        "loop_mode": 1,
+        "name": "Crouch_Fwd",
+        "track_count": 57
+      },
+      {
+        "length": 2.91666674613953,
+        "loop_mode": 1,
+        "name": "Crouch_Idle",
+        "track_count": 57
+      },
+      {
+        "length": 1.0,
+        "loop_mode": 1,
+        "name": "Dance",
+        "track_count": 57
+      },
+      {
+        "length": 2.375,
+        "loop_mode": 0,
+        "name": "Death01",
+        "track_count": 57
+      },
+      {
+        "length": 1.66666662693024,
+        "loop_mode": 1,
+        "name": "Driving",
+        "track_count": 57
+      },
+      {
+        "length": 5.16666650772095,
+        "loop_mode": 0,
+        "name": "Fixing_Kneeling",
+        "track_count": 57
+      },
+      {
+        "length": 0.333333343267441,
+        "loop_mode": 0,
+        "name": "Hit_Chest",
+        "track_count": 57
+      },
+      {
+        "length": 0.416666656732559,
+        "loop_mode": 0,
+        "name": "Hit_Head",
+        "track_count": 57
+      },
+      {
+        "length": 2.5,
+        "loop_mode": 1,
+        "name": "Idle",
+        "track_count": 57
+      },
+      {
+        "length": 2.91666674613953,
+        "loop_mode": 1,
+        "name": "Idle_Talking",
+        "track_count": 57
+      },
+      {
+        "length": 1.25,
+        "loop_mode": 1,
+        "name": "Idle_Torch",
+        "track_count": 57
+      },
+      {
+        "length": 2.0,
+        "loop_mode": 0,
+        "name": "Interact",
+        "track_count": 57
+      },
+      {
+        "length": 0.916666686534882,
+        "loop_mode": 1,
+        "name": "Jog_Fwd",
+        "track_count": 57
+      },
+      {
+        "length": 2.5,
+        "loop_mode": 1,
+        "name": "Jump",
+        "track_count": 57
+      },
+      {
+        "length": 1.25,
+        "loop_mode": 0,
+        "name": "Jump_Land",
+        "track_count": 57
+      },
+      {
+        "length": 1.33333337306976,
+        "loop_mode": 0,
+        "name": "Jump_Start",
+        "track_count": 57
+      },
+      {
+        "length": 0.833333313465118,
+        "loop_mode": 0,
+        "name": "PickUp_Table",
+        "track_count": 57
+      },
+      {
+        "length": 0.16666667163372,
+        "loop_mode": 0,
+        "name": "Pistol_Aim_Down",
+        "track_count": 57
+      },
+      {
+        "length": 0.16666667163372,
+        "loop_mode": 0,
+        "name": "Pistol_Aim_Neutral",
+        "track_count": 57
+      },
+      {
+        "length": 0.16666667163372,
+        "loop_mode": 0,
+        "name": "Pistol_Aim_Up",
+        "track_count": 57
+      },
+      {
+        "length": 1.66666662693024,
+        "loop_mode": 1,
+        "name": "Pistol_Idle",
+        "track_count": 57
+      },
+      {
+        "length": 1.66666662693024,
+        "loop_mode": 0,
+        "name": "Pistol_Reload",
+        "track_count": 57
+      },
+      {
+        "length": 0.625,
+        "loop_mode": 0,
+        "name": "Pistol_Shoot",
+        "track_count": 57
+      },
+      {
+        "length": 1.0,
+        "loop_mode": 0,
+        "name": "Punch_Cross",
+        "track_count": 57
+      },
+      {
+        "length": 0.833333313465118,
+        "loop_mode": 0,
+        "name": "Punch_Jab",
+        "track_count": 57
+      },
+      {
+        "length": 2.66666674613953,
+        "loop_mode": 1,
+        "name": "Push",
+        "track_count": 57
+      },
+      {
+        "length": 1.45833337306976,
+        "loop_mode": 0,
+        "name": "Roll",
+        "track_count": 57
+      },
+      {
+        "length": 1.45833337306976,
+        "loop_mode": 0,
+        "name": "Roll_RM",
+        "track_count": 57
+      },
+      {
+        "length": 1.29166662693024,
+        "loop_mode": 0,
+        "name": "Sitting_Enter",
+        "track_count": 57
+      },
+      {
+        "length": 1.0,
+        "loop_mode": 0,
+        "name": "Sitting_Exit",
+        "track_count": 57
+      },
+      {
+        "length": 1.66666662693024,
+        "loop_mode": 1,
+        "name": "Sitting_Idle",
+        "track_count": 57
+      },
+      {
+        "length": 2.91666674613953,
+        "loop_mode": 1,
+        "name": "Sitting_Talking",
+        "track_count": 57
+      },
+      {
+        "length": 0.5,
+        "loop_mode": 0,
+        "name": "Spell_Simple_Enter",
+        "track_count": 57
+      },
+      {
+        "length": 0.416666656732559,
+        "loop_mode": 0,
+        "name": "Spell_Simple_Exit",
+        "track_count": 57
+      },
+      {
+        "length": 2.08333325386047,
+        "loop_mode": 1,
+        "name": "Spell_Simple_Idle",
+        "track_count": 57
+      },
+      {
+        "length": 0.5,
+        "loop_mode": 0,
+        "name": "Spell_Simple_Shoot",
+        "track_count": 57
+      },
+      {
+        "length": 0.666666686534882,
+        "loop_mode": 1,
+        "name": "Sprint",
+        "track_count": 57
+      },
+      {
+        "length": 1.33333337306976,
+        "loop_mode": 1,
+        "name": "Swim_Fwd",
+        "track_count": 57
+      },
+      {
+        "length": 3.33333325386047,
+        "loop_mode": 1,
+        "name": "Swim_Idle",
+        "track_count": 57
+      },
+      {
+        "length": 1.5,
+        "loop_mode": 0,
+        "name": "Sword_Attack",
+        "track_count": 57
+      },
+      {
+        "length": 1.5,
+        "loop_mode": 0,
+        "name": "Sword_Attack_RM",
+        "track_count": 57
+      },
+      {
+        "length": 1.66666662693024,
+        "loop_mode": 0,
+        "name": "Sword_Idle",
+        "track_count": 57
+      },
+      {
+        "length": 1.33333337306976,
+        "loop_mode": 1,
+        "name": "Walk",
+        "track_count": 57
+      },
+      {
+        "length": 1.33333337306976,
+        "loop_mode": 1,
+        "name": "Walk_Formal",
+        "track_count": 57
+      }
+    ],
+    "expected_count": 45,
+    "extra_unexpected": [],
+    "missing_expected": [],
+    "names": [
+      "A_TPose",
+      "Crouch_Fwd",
+      "Crouch_Idle",
+      "Dance",
+      "Death01",
+      "Driving",
+      "Fixing_Kneeling",
+      "Hit_Chest",
+      "Hit_Head",
+      "Idle",
+      "Idle_Talking",
+      "Idle_Torch",
+      "Interact",
+      "Jog_Fwd",
+      "Jump",
+      "Jump_Land",
+      "Jump_Start",
+      "PickUp_Table",
+      "Pistol_Aim_Down",
+      "Pistol_Aim_Neutral",
+      "Pistol_Aim_Up",
+      "Pistol_Idle",
+      "Pistol_Reload",
+      "Pistol_Shoot",
+      "Punch_Cross",
+      "Punch_Jab",
+      "Push",
+      "Roll",
+      "Roll_RM",
+      "Sitting_Enter",
+      "Sitting_Exit",
+      "Sitting_Idle",
+      "Sitting_Talking",
+      "Spell_Simple_Enter",
+      "Spell_Simple_Exit",
+      "Spell_Simple_Idle",
+      "Spell_Simple_Shoot",
+      "Sprint",
+      "Swim_Fwd",
+      "Swim_Idle",
+      "Sword_Attack",
+      "Sword_Attack_RM",
+      "Sword_Idle",
+      "Walk",
+      "Walk_Formal"
+    ],
+    "play_test": {
+      "A_TPose": {
+        "advanced_by": 0.033,
+        "current_position": 0.033,
+        "is_playing": true,
+        "length": 2.5,
+        "outcome": "OK"
+      },
+      "Death01": {
+        "advanced_by": 0.033,
+        "current_position": 0.033,
+        "is_playing": true,
+        "length": 2.375,
+        "outcome": "OK"
+      },
+      "Idle": {
+        "advanced_by": 0.033,
+        "current_position": 0.033,
+        "is_playing": true,
+        "length": 2.5,
+        "outcome": "OK"
+      },
+      "Sword_Attack": {
+        "advanced_by": 0.033,
+        "current_position": 0.033,
+        "is_playing": true,
+        "length": 1.5,
+        "outcome": "OK"
+      },
+      "Walk": {
+        "advanced_by": 0.033,
+        "current_position": 0.033,
+        "is_playing": true,
+        "length": 1.33333337306976,
+        "outcome": "OK"
+      }
+    }
+  },
+  "issues": [],
+  "mesh_instance": {
+    "has_skin": true,
+    "node_path": "Armature/Skeleton3D/material",
+    "surface_count": 1
+  },
+  "mesh_instance_count": 1,
+  "node_count": 5,
+  "root_node": {
+    "class": "Node3D",
+    "name": "rigged"
+  },
+  "skeleton": {
+    "bone_count": 65,
+    "node_path": "Armature/Skeleton3D"
+  },
+  "skeleton_count": 1,
+  "status": "PASS",
+  "target": "res://assets/characters/crew/nine_lives/3d/rigged.glb"
+}

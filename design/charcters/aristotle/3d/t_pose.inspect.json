@@ -1,0 +1,1506 @@
+{
+  "file": "/Users/erichook-marshall/Downloads/Code/git/catsndogs/design/charcters/3d/aristotle_t_pose_3d.fbx",
+  "file_size_bytes": 42096416,
+  "armature_count": 1,
+  "armatures": [
+    {
+      "armature_name": "Armature",
+      "bone_count": 41,
+      "foot_like_bone_count": 12,
+      "foot_like_bones": [
+        {
+          "name": "mixamorig:LeftForeArm",
+          "parent": "mixamorig:LeftArm",
+          "length": 15.79855,
+          "head_local": [
+            21.7404,
+            64.4461,
+            0.8433
+          ],
+          "tail_local": [
+            37.3477,
+            63.9911,
+            3.2515
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightForeArm",
+          "parent": "mixamorig:RightArm",
+          "length": 15.79791,
+          "head_local": [
+            -24.6601,
+            64.4461,
+            0.8666
+          ],
+          "tail_local": [
+            -40.2674,
+            63.9911,
+            3.2706
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftUpLeg",
+          "parent": "mixamorig:Hips",
+          "length": 16.7343,
+          "head_local": [
+            4.9126,
+            41.5948,
+            -1.8704
+          ],
+          "tail_local": [
+            7.0214,
+            25.0465,
+            -0.5498
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftLeg",
+          "parent": "mixamorig:LeftUpLeg",
+          "length": 18.68782,
+          "head_local": [
+            7.0214,
+            25.0465,
+            -0.5498
+          ],
+          "tail_local": [
+            10.8114,
+            6.7759,
+            -1.5781
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftFoot",
+          "parent": "mixamorig:LeftLeg",
+          "length": 10.48858,
+          "head_local": [
+            10.8114,
+            6.7759,
+            -1.5781
+          ],
+          "tail_local": [
+            13.6872,
+            1.3067,
+            6.897
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftToeBase",
+          "parent": "mixamorig:LeftFoot",
+          "length": 4.52682,
+          "head_local": [
+            13.6872,
+            1.3067,
+            6.897
+          ],
+          "tail_local": [
+            15.381,
+            1.315,
+            11.095
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftToe_End",
+          "parent": "mixamorig:LeftToeBase",
+          "length": 4.52682,
+          "head_local": [
+            15.381,
+            1.315,
+            11.095
+          ],
+          "tail_local": [
+            17.0748,
+            1.3233,
+            15.2929
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightUpLeg",
+          "parent": "mixamorig:Hips",
+          "length": 16.70275,
+          "head_local": [
+            -7.8323,
+            41.5948,
+            -2.2155
+          ],
+          "tail_local": [
+            -9.9411,
+            25.0465,
+            -1.3854
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightLeg",
+          "parent": "mixamorig:RightUpLeg",
+          "length": 18.66058,
+          "head_local": [
+            -9.9411,
+            25.0465,
+            -1.3854
+          ],
+          "tail_local": [
+            -13.7317,
+            6.775,
+            -1.3461
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightFoot",
+          "parent": "mixamorig:RightLeg",
+          "length": 10.26156,
+          "head_local": [
+            -13.7317,
+            6.775,
+            -1.3461
+          ],
+          "tail_local": [
+            -16.6067,
+            1.3112,
+            6.8503
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightToeBase",
+          "parent": "mixamorig:RightFoot",
+          "length": 4.41397,
+          "head_local": [
+            -16.6067,
+            1.3112,
+            6.8503
+          ],
+          "tail_local": [
+            -18.2999,
+            1.3222,
+            10.9265
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightToe_End",
+          "parent": "mixamorig:RightToeBase",
+          "length": 4.41397,
+          "head_local": [
+            -18.2999,
+            1.3222,
+            10.9265
+          ],
+          "tail_local": [
+            -19.9932,
+            1.3332,
+            15.0027
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        }
+      ],
+      "all_bones": [
+        {
+          "name": "mixamorig:Hips",
+          "parent": null,
+          "length": 6.4016,
+          "head_local": [
+            -1.4599,
+            44.4668,
+            -1.6307
+          ],
+          "tail_local": [
+            -1.4599,
+            50.8684,
+            -1.6307
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:Spine",
+          "parent": "mixamorig:Hips",
+          "length": 6.06284,
+          "head_local": [
+            -1.4599,
+            49.6333,
+            -1.0712
+          ],
+          "tail_local": [
+            -1.4599,
+            55.6609,
+            -0.4184
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:Spine1",
+          "parent": "mixamorig:Spine",
+          "length": 6.92895,
+          "head_local": [
+            -1.4599,
+            55.6609,
+            -0.4184
+          ],
+          "tail_local": [
+            -1.4599,
+            62.5496,
+            0.3276
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:Spine2",
+          "parent": "mixamorig:Spine1",
+          "length": 7.62968,
+          "head_local": [
+            -1.4599,
+            62.5496,
+            0.3276
+          ],
+          "tail_local": [
+            -1.4599,
+            70.1349,
+            1.149
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:Neck",
+          "parent": "mixamorig:Spine2",
+          "length": 2.54743,
+          "head_local": [
+            -1.4599,
+            70.2993,
+            1.1668
+          ],
+          "tail_local": [
+            -1.4599,
+            72.8468,
+            1.1668
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:Head",
+          "parent": "mixamorig:Neck",
+          "length": 21.05656,
+          "head_local": [
+            -1.4599,
+            72.7956,
+            1.6747
+          ],
+          "tail_local": [
+            -1.4599,
+            93.8522,
+            1.6747
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:HeadTop_End",
+          "parent": "mixamorig:Head",
+          "length": 21.05656,
+          "head_local": [
+            -1.4599,
+            93.4294,
+            5.8728
+          ],
+          "tail_local": [
+            -1.4599,
+            114.486,
+            5.8728
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftShoulder",
+          "parent": "mixamorig:Spine2",
+          "length": 9.60575,
+          "head_local": [
+            2.9923,
+            68.5132,
+            1.608
+          ],
+          "tail_local": [
+            11.8622,
+            64.9332,
+            2.4904
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftArm",
+          "parent": "mixamorig:LeftShoulder",
+          "length": 10.02641,
+          "head_local": [
+            11.8622,
+            64.9332,
+            2.4904
+          ],
+          "tail_local": [
+            21.7404,
+            64.4461,
+            0.8433
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftForeArm",
+          "parent": "mixamorig:LeftArm",
+          "length": 15.79855,
+          "head_local": [
+            21.7404,
+            64.4461,
+            0.8433
+          ],
+          "tail_local": [
+            37.3477,
+            63.9911,
+            3.2515
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHand",
+          "parent": "mixamorig:LeftForeArm",
+          "length": 2.62844,
+          "head_local": [
+            37.3477,
+            63.9911,
+            3.2515
+          ],
+          "tail_local": [
+            39.4711,
+            64.3712,
+            4.7532
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandThumb1",
+          "parent": "mixamorig:LeftHand",
+          "length": 2.07093,
+          "head_local": [
+            38.9205,
+            63.9308,
+            5.3067
+          ],
+          "tail_local": [
+            39.885,
+            63.6919,
+            7.1237
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandThumb2",
+          "parent": "mixamorig:LeftHandThumb1",
+          "length": 1.9765,
+          "head_local": [
+            40.1788,
+            63.8825,
+            6.9508
+          ],
+          "tail_local": [
+            41.2582,
+            63.2289,
+            8.4721
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandThumb3",
+          "parent": "mixamorig:LeftHandThumb2",
+          "length": 1.97868,
+          "head_local": [
+            40.7257,
+            62.9715,
+            8.6174
+          ],
+          "tail_local": [
+            41.8662,
+            62.0916,
+            9.9739
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandThumb4",
+          "parent": "mixamorig:LeftHandThumb3",
+          "length": 1.97868,
+          "head_local": [
+            42.0299,
+            62.1988,
+            9.889
+          ],
+          "tail_local": [
+            43.1704,
+            61.3189,
+            11.2456
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandIndex1",
+          "parent": "mixamorig:LeftHand",
+          "length": 3.52608,
+          "head_local": [
+            39.5342,
+            64.3031,
+            4.7485
+          ],
+          "tail_local": [
+            42.7266,
+            65.6089,
+            5.4811
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandIndex2",
+          "parent": "mixamorig:LeftHandIndex1",
+          "length": 2.3365,
+          "head_local": [
+            42.6762,
+            65.8974,
+            4.6077
+          ],
+          "tail_local": [
+            44.9328,
+            65.2969,
+            4.5275
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandIndex3",
+          "parent": "mixamorig:LeftHandIndex2",
+          "length": 2.51866,
+          "head_local": [
+            44.8836,
+            65.174,
+            4.8592
+          ],
+          "tail_local": [
+            47.2214,
+            64.258,
+            4.6608
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftHandIndex4",
+          "parent": "mixamorig:LeftHandIndex3",
+          "length": 2.51865,
+          "head_local": [
+            47.1278,
+            64.0776,
+            5.1832
+          ],
+          "tail_local": [
+            49.4656,
+            63.1616,
+            4.9847
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightShoulder",
+          "parent": "mixamorig:Spine2",
+          "length": 9.59631,
+          "head_local": [
+            -5.912,
+            68.5132,
+            1.5533
+          ],
+          "tail_local": [
+            -14.7819,
+            64.9332,
+            2.3261
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightArm",
+          "parent": "mixamorig:RightShoulder",
+          "length": 9.99731,
+          "head_local": [
+            -14.7819,
+            64.9332,
+            2.3261
+          ],
+          "tail_local": [
+            -24.6601,
+            64.4461,
+            0.8666
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightForeArm",
+          "parent": "mixamorig:RightArm",
+          "length": 15.79791,
+          "head_local": [
+            -24.6601,
+            64.4461,
+            0.8666
+          ],
+          "tail_local": [
+            -40.2674,
+            63.9911,
+            3.2706
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHand",
+          "parent": "mixamorig:RightForeArm",
+          "length": 2.68026,
+          "head_local": [
+            -40.2674,
+            63.9911,
+            3.2706
+          ],
+          "tail_local": [
+            -42.4814,
+            64.2707,
+            4.755
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandThumb1",
+          "parent": "mixamorig:RightHand",
+          "length": 1.96058,
+          "head_local": [
+            -41.5913,
+            63.8064,
+            5.3246
+          ],
+          "tail_local": [
+            -42.497,
+            63.5837,
+            7.0491
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandThumb2",
+          "parent": "mixamorig:RightHandThumb1",
+          "length": 2.28418,
+          "head_local": [
+            -42.6505,
+            63.6586,
+            6.9678
+          ],
+          "tail_local": [
+            -43.848,
+            62.8634,
+            8.7429
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandThumb3",
+          "parent": "mixamorig:RightHandThumb2",
+          "length": 1.94191,
+          "head_local": [
+            -43.6391,
+            62.7731,
+            8.8269
+          ],
+          "tail_local": [
+            -44.7088,
+            61.6191,
+            9.9648
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandThumb4",
+          "parent": "mixamorig:RightHandThumb3",
+          "length": 1.94191,
+          "head_local": [
+            -44.7529,
+            61.6403,
+            9.9437
+          ],
+          "tail_local": [
+            -45.8226,
+            60.4863,
+            11.0816
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandIndex1",
+          "parent": "mixamorig:RightHand",
+          "length": 3.33255,
+          "head_local": [
+            -42.7112,
+            64.1631,
+            4.8406
+          ],
+          "tail_local": [
+            -45.6152,
+            65.6987,
+            5.4016
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandIndex2",
+          "parent": "mixamorig:RightHandIndex1",
+          "length": 2.12598,
+          "head_local": [
+            -45.5763,
+            65.8635,
+            4.7643
+          ],
+          "tail_local": [
+            -47.6704,
+            65.5003,
+            4.7113
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandIndex3",
+          "parent": "mixamorig:RightHandIndex2",
+          "length": 2.33804,
+          "head_local": [
+            -47.6194,
+            65.3848,
+            5.1054
+          ],
+          "tail_local": [
+            -49.9487,
+            65.1822,
+            5.1091
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightHandIndex4",
+          "parent": "mixamorig:RightHandIndex3",
+          "length": 2.33804,
+          "head_local": [
+            -49.9292,
+            65.1108,
+            5.3423
+          ],
+          "tail_local": [
+            -52.2585,
+            64.9082,
+            5.346
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftUpLeg",
+          "parent": "mixamorig:Hips",
+          "length": 16.7343,
+          "head_local": [
+            4.9126,
+            41.5948,
+            -1.8704
+          ],
+          "tail_local": [
+            7.0214,
+            25.0465,
+            -0.5498
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftLeg",
+          "parent": "mixamorig:LeftUpLeg",
+          "length": 18.68782,
+          "head_local": [
+            7.0214,
+            25.0465,
+            -0.5498
+          ],
+          "tail_local": [
+            10.8114,
+            6.7759,
+            -1.5781
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftFoot",
+          "parent": "mixamorig:LeftLeg",
+          "length": 10.48858,
+          "head_local": [
+            10.8114,
+            6.7759,
+            -1.5781
+          ],
+          "tail_local": [
+            13.6872,
+            1.3067,
+            6.897
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftToeBase",
+          "parent": "mixamorig:LeftFoot",
+          "length": 4.52682,
+          "head_local": [
+            13.6872,
+            1.3067,
+            6.897
+          ],
+          "tail_local": [
+            15.381,
+            1.315,
+            11.095
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:LeftToe_End",
+          "parent": "mixamorig:LeftToeBase",
+          "length": 4.52682,
+          "head_local": [
+            15.381,
+            1.315,
+            11.095
+          ],
+          "tail_local": [
+            17.0748,
+            1.3233,
+            15.2929
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightUpLeg",
+          "parent": "mixamorig:Hips",
+          "length": 16.70275,
+          "head_local": [
+            -7.8323,
+            41.5948,
+            -2.2155
+          ],
+          "tail_local": [
+            -9.9411,
+            25.0465,
+            -1.3854
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightLeg",
+          "parent": "mixamorig:RightUpLeg",
+          "length": 18.66058,
+          "head_local": [
+            -9.9411,
+            25.0465,
+            -1.3854
+          ],
+          "tail_local": [
+            -13.7317,
+            6.775,
+            -1.3461
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightFoot",
+          "parent": "mixamorig:RightLeg",
+          "length": 10.26156,
+          "head_local": [
+            -13.7317,
+            6.775,
+            -1.3461
+          ],
+          "tail_local": [
+            -16.6067,
+            1.3112,
+            6.8503
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightToeBase",
+          "parent": "mixamorig:RightFoot",
+          "length": 4.41397,
+          "head_local": [
+            -16.6067,
+            1.3112,
+            6.8503
+          ],
+          "tail_local": [
+            -18.2999,
+            1.3222,
+            10.9265
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "mixamorig:RightToe_End",
+          "parent": "mixamorig:RightToeBase",
+          "length": 4.41397,
+          "head_local": [
+            -18.2999,
+            1.3222,
+            10.9265
+          ],
+          "tail_local": [
+            -19.9932,
+            1.3332,
+            15.0027
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": true,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        }
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "material",
+      "vertex_count": 315536,
+      "polygon_count": 482706,
+      "vertex_groups": [
+        "mixamorig:Hips",
+        "mixamorig:Spine",
+        "mixamorig:Spine1",
+        "mixamorig:Spine2",
+        "mixamorig:Neck",
+        "mixamorig:Head",
+        "mixamorig:LeftShoulder",
+        "mixamorig:LeftArm",
+        "mixamorig:LeftForeArm",
+        "mixamorig:LeftHand",
+        "mixamorig:LeftHandThumb1",
+        "mixamorig:LeftHandThumb2",
+        "mixamorig:LeftHandThumb3",
+        "mixamorig:LeftHandIndex1",
+        "mixamorig:LeftHandIndex2",
+        "mixamorig:LeftHandIndex3",
+        "mixamorig:RightShoulder",
+        "mixamorig:RightArm",
+        "mixamorig:RightForeArm",
+        "mixamorig:RightHand",
+        "mixamorig:RightHandThumb1",
+        "mixamorig:RightHandThumb2",
+        "mixamorig:RightHandThumb3",
+        "mixamorig:RightHandIndex1",
+        "mixamorig:RightHandIndex2",
+        "mixamorig:RightHandIndex3",
+        "mixamorig:LeftUpLeg",
+        "mixamorig:LeftLeg",
+        "mixamorig:LeftFoot",
+        "mixamorig:LeftToeBase",
+        "mixamorig:RightUpLeg",
+        "mixamorig:RightLeg",
+        "mixamorig:RightFoot",
+        "mixamorig:RightToeBase"
+      ],
+      "modifiers": [
+        "ARMATURE"
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "Armature|mixamo.com|Layer0",
+      "frame_range": [
+        1.0,
+        2.0
+      ],
+      "fcurve_count": 410,
+      "bones_keyed_count": 41,
+      "bones_keyed": {
+        "mixamorig:Hips": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:Spine": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:Spine1": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:Spine2": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:Neck": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:Head": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftShoulder": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftArm": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftForeArm": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHand": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandThumb1": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandThumb2": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandThumb3": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandIndex1": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandIndex2": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandIndex3": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightShoulder": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightArm": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightForeArm": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHand": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandThumb1": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandThumb2": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandThumb3": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandIndex1": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandIndex2": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandIndex3": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftUpLeg": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftLeg": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftFoot": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftToeBase": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightUpLeg": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightLeg": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightFoot": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightToeBase": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:HeadTop_End": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandThumb4": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftHandIndex4": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandThumb4": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightHandIndex4": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:LeftToe_End": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ],
+        "mixamorig:RightToe_End": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]",
+          "scale idx=[0, 1, 2]"
+        ]
+      },
+      "extreme_rotation_keys": [],
+      "extreme_rotation_count": 0
+    }
+  ]
+}

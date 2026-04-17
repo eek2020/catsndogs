@@ -33,7 +33,7 @@
       ],
       "fov": 60,
       "hold_seconds": 2.5,
-      "transition_seconds": 4.0,
+      "transition_seconds": 1.2,
       "description": "Camera descends and flies forward over scout wreckage."
     },
     {
@@ -50,7 +50,7 @@
       ],
       "fov": 65,
       "hold_seconds": 2.5,
-      "transition_seconds": 3.0,
+      "transition_seconds": 1.2,
       "description": "Low, close to the ground, passing the first gunship wreck."
     },
     {
@@ -67,7 +67,7 @@
       ],
       "fov": 55,
       "hold_seconds": 4.0,
-      "transition_seconds": 3.5,
+      "transition_seconds": 1.2,
       "description": "Over-shoulder on Aristotle as he approaches the outpost door."
     },
     {
@@ -84,7 +84,7 @@
       ],
       "fov": 45,
       "hold_seconds": 3.0,
-      "transition_seconds": 2.5,
+      "transition_seconds": 1.2,
       "description": "Tight on the closed door. Warning light visible. Beat of silence."
     },
     {

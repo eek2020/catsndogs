@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://ctj6l1mmy43u0" path="res://scripts/systems/cutscene/camera_controller.gd" id="3_cam"]
 [ext_resource type="Script" uid="uid://bvps1xp0n22fb" path="res://scripts/systems/cutscene/dialogue_ui.gd" id="4_ui"]
 [ext_resource type="PackedScene" uid="uid://u15yap5g0i74" path="res://assets/cutscenes/no_tail_outpost.glb" id="5_glb"]
-[ext_resource type="PackedScene" uid="uid://c0eg50fojitd0" path="res://assets/characters/aristotle_3d.glb" id="6_aristotle"]
-[ext_resource type="PackedScene" uid="uid://dqgfqfv6cj2dv" path="res://assets/characters/no_tail_3d.glb" id="7_notail"]
+[ext_resource type="PackedScene" uid="uid://c0eg50fojitd0" path="res://assets/characters/aristotle/3d/source.glb" id="6_aristotle"]
+[ext_resource type="PackedScene" uid="uid://dqgfqfv6cj2dv" path="res://assets/characters/crew/no_tail/3d/source.glb" id="7_notail"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_1"]
 sky_top_color = Color(0.05, 0.04, 0.1, 1)
@@ -39,21 +39,18 @@ script = ExtResource("1_scene")
 environment = SubResource("Environment_1")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1369712843]
-transform = Transform3D(0.83, -0.45, 0.33, 0, 0.59, 0.81, -0.56, -0.67, 0.49, 15, 25, 30)
+transform = Transform3D(0.866, 0, 0.5, 0.41, 0.574, -0.709, -0.287, 0.819, 0.497, 15, 25, 30)
 light_color = Color(1, 0.92, 0.75, 1)
-light_energy = 1.5
+light_energy = 1.2
 shadow_enabled = true
+shadow_blur = 2.0
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 60.0
 
 [node name="Fill" type="DirectionalLight3D" parent="." unique_id=785682603]
 transform = Transform3D(0.89, 0.3, -0.35, 0, 0.76, 0.65, 0.45, -0.58, 0.68, -20, 15, -40)
 light_color = Color(0.72, 0.78, 0.95, 1)
 light_energy = 0.4
-
-[node name="DoorRim" type="OmniLight3D" parent="." unique_id=712152703]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -16.5)
-light_color = Color(1, 0.8, 0.55, 1)
-light_energy = 2.0
-omni_range = 8.0
 
 [node name="World" type="Node3D" parent="." unique_id=2058969358]
 
@@ -63,7 +60,7 @@ omni_range = 8.0
 transform = Transform3D(-3, 0, 4.5298742e-07, 0, 3, 0, -4.5298742e-07, 0, -3, 0, 0, -9)
 
 [node name="NoTail" parent="World" unique_id=562841275 instance=ExtResource("7_notail")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.5)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -16.5)
 visible = false
 
 [node name="CameraController" type="Node3D" parent="." unique_id=1289041777]

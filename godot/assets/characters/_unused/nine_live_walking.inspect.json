@@ -1,0 +1,1404 @@
+{
+  "file": "/Users/erichook-marshall/Downloads/Code/git/catsndogs/godot/assets/characters/crew/nine_live_walking.glb",
+  "file_size_bytes": 42048992,
+  "armature_count": 1,
+  "armatures": [
+    {
+      "armature_name": "Armature",
+      "bone_count": 54,
+      "foot_like_bone_count": 0,
+      "foot_like_bones": [],
+      "all_bones": [
+        {
+          "name": "tripo::Root",
+          "parent": null,
+          "length": 0.30851,
+          "head_local": [
+            0.0,
+            0.0,
+            -0.4833
+          ],
+          "tail_local": [
+            -0.0436,
+            -0.3054,
+            -0.4833
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Spine_0",
+          "parent": "tripo::Root",
+          "length": 0.09784,
+          "head_local": [
+            -0.0983,
+            -0.0527,
+            -0.057
+          ],
+          "tail_local": [
+            -0.0913,
+            -0.0677,
+            0.0394
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Spine_1",
+          "parent": "tripo::Spine_0",
+          "length": 0.12526,
+          "head_local": [
+            -0.0983,
+            -0.0488,
+            0.0407
+          ],
+          "tail_local": [
+            -0.0998,
+            -0.0357,
+            0.1653
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Head_0",
+          "parent": "tripo::Spine_1",
+          "length": 0.15131,
+          "head_local": [
+            -0.0943,
+            -0.0254,
+            0.1932
+          ],
+          "tail_local": [
+            -0.1022,
+            -0.0527,
+            0.3418
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Head_1",
+          "parent": "tripo::Head_0",
+          "length": 0.11192,
+          "head_local": [
+            -0.1022,
+            -0.0527,
+            0.3418
+          ],
+          "tail_local": [
+            -0.149,
+            -0.0636,
+            0.4429
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_5",
+          "parent": "tripo::Head_1",
+          "length": 0.09369,
+          "head_local": [
+            0.0034,
+            -0.041,
+            0.377
+          ],
+          "tail_local": [
+            0.0738,
+            -0.0058,
+            0.4279
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_6",
+          "parent": "bone_5",
+          "length": 0.08231,
+          "head_local": [
+            0.0738,
+            -0.0058,
+            0.4279
+          ],
+          "tail_local": [
+            0.1247,
+            0.0528,
+            0.4553
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_7",
+          "parent": "bone_6",
+          "length": 0.06941,
+          "head_local": [
+            0.1247,
+            0.0528,
+            0.4553
+          ],
+          "tail_local": [
+            0.1599,
+            0.1115,
+            0.4435
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_8",
+          "parent": "bone_7",
+          "length": 0.01612,
+          "head_local": [
+            0.1599,
+            0.1115,
+            0.4435
+          ],
+          "tail_local": [
+            0.165,
+            0.1259,
+            0.4486
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_9",
+          "parent": "bone_8",
+          "length": 0.03364,
+          "head_local": [
+            0.1638,
+            0.1271,
+            0.4435
+          ],
+          "tail_local": [
+            0.1638,
+            0.1545,
+            0.424
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_10",
+          "parent": "bone_9",
+          "length": 0.03364,
+          "head_local": [
+            0.1638,
+            0.1545,
+            0.424
+          ],
+          "tail_local": [
+            0.1638,
+            0.1819,
+            0.4044
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_11",
+          "parent": "bone_8",
+          "length": 0.01612,
+          "head_local": [
+            0.1677,
+            0.0998,
+            0.4787
+          ],
+          "tail_local": [
+            0.171,
+            0.0948,
+            0.4937
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_12",
+          "parent": "tripo::Head_1",
+          "length": 0.05572,
+          "head_local": [
+            -0.2078,
+            -0.0684,
+            0.3849
+          ],
+          "tail_local": [
+            -0.243,
+            -0.0723,
+            0.4279
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_13",
+          "parent": "bone_12",
+          "length": 0.05572,
+          "head_local": [
+            -0.243,
+            -0.0723,
+            0.4279
+          ],
+          "tail_local": [
+            -0.2781,
+            -0.0762,
+            0.4709
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Head_2",
+          "parent": "tripo::Head_1",
+          "length": 0.09106,
+          "head_local": [
+            -0.1031,
+            -0.0519,
+            0.3402
+          ],
+          "tail_local": [
+            -0.1313,
+            -0.1372,
+            0.3253
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_15",
+          "parent": "tripo::Head_2",
+          "length": 0.09106,
+          "head_local": [
+            -0.1022,
+            -0.1349,
+            0.3027
+          ],
+          "tail_local": [
+            -0.1012,
+            -0.2179,
+            0.2653
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_16",
+          "parent": "tripo::Head_2",
+          "length": 0.09106,
+          "head_local": [
+            -0.0983,
+            -0.1701,
+            0.2988
+          ],
+          "tail_local": [
+            -0.0947,
+            -0.2559,
+            0.2688
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_17",
+          "parent": "tripo::Head_2",
+          "length": 0.09106,
+          "head_local": [
+            -0.1569,
+            -0.1662,
+            0.2988
+          ],
+          "tail_local": [
+            -0.1938,
+            -0.2444,
+            0.2705
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Head_3",
+          "parent": "tripo::Head_2",
+          "length": 0.07603,
+          "head_local": [
+            -0.0318,
+            -0.1583,
+            0.3692
+          ],
+          "tail_local": [
+            -0.0122,
+            -0.1896,
+            0.4357
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Head_4",
+          "parent": "tripo::Head_3",
+          "length": 0.07603,
+          "head_local": [
+            -0.0122,
+            -0.1896,
+            0.4357
+          ],
+          "tail_local": [
+            0.0073,
+            -0.2209,
+            0.5022
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_20",
+          "parent": "tripo::Head_2",
+          "length": 0.07841,
+          "head_local": [
+            -0.1413,
+            -0.1779,
+            0.3731
+          ],
+          "tail_local": [
+            -0.1686,
+            -0.2092,
+            0.4396
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_21",
+          "parent": "bone_20",
+          "length": 0.07841,
+          "head_local": [
+            -0.1686,
+            -0.2092,
+            0.4396
+          ],
+          "tail_local": [
+            -0.196,
+            -0.2405,
+            0.5061
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_22",
+          "parent": "tripo::Head_2",
+          "length": 0.07841,
+          "head_local": [
+            -0.1921,
+            -0.1231,
+            0.3731
+          ],
+          "tail_local": [
+            -0.2664,
+            -0.1388,
+            0.3927
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_23",
+          "parent": "bone_22",
+          "length": 0.07841,
+          "head_local": [
+            -0.2664,
+            -0.1388,
+            0.3927
+          ],
+          "tail_local": [
+            -0.3407,
+            -0.1544,
+            0.4122
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_24",
+          "parent": "tripo::Head_2",
+          "length": 0.09106,
+          "head_local": [
+            -0.11,
+            -0.0997,
+            0.4201
+          ],
+          "tail_local": [
+            -0.1167,
+            -0.1463,
+            0.498
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_25",
+          "parent": "tripo::Spine_1",
+          "length": 0.10688,
+          "head_local": [
+            -0.0826,
+            -0.0215,
+            0.1776
+          ],
+          "tail_local": [
+            0.0152,
+            -0.0254,
+            0.1346
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::0_Right_Limb_0",
+          "parent": "bone_25",
+          "length": 0.15277,
+          "head_local": [
+            0.0152,
+            -0.0254,
+            0.1346
+          ],
+          "tail_local": [
+            0.1129,
+            -0.0215,
+            0.0173
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::0_Right_Limb_1",
+          "parent": "tripo::0_Right_Limb_0",
+          "length": 0.15277,
+          "head_local": [
+            0.1129,
+            -0.0215,
+            0.0173
+          ],
+          "tail_local": [
+            0.2107,
+            -0.0175,
+            -0.1001
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Spine_2",
+          "parent": "tripo::Spine_1",
+          "length": 0.09808,
+          "head_local": [
+            -0.1295,
+            -0.0215,
+            0.1776
+          ],
+          "tail_local": [
+            -0.2156,
+            -0.0254,
+            0.1307
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::0_Left_Limb_0",
+          "parent": "tripo::Spine_2",
+          "length": 0.15411,
+          "head_local": [
+            -0.2156,
+            -0.0254,
+            0.1307
+          ],
+          "tail_local": [
+            -0.286,
+            -0.0332,
+            -0.0062
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::0_Left_Limb_1",
+          "parent": "tripo::0_Left_Limb_0",
+          "length": 0.15411,
+          "head_local": [
+            -0.286,
+            -0.0332,
+            -0.0062
+          ],
+          "tail_local": [
+            -0.3564,
+            -0.041,
+            -0.1431
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_31",
+          "parent": "tripo::Spine_1",
+          "length": 0.12526,
+          "head_local": [
+            -0.1139,
+            -0.1701,
+            0.0759
+          ],
+          "tail_local": [
+            -0.1293,
+            -0.2894,
+            0.1106
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_32",
+          "parent": "tripo::Spine_1",
+          "length": 0.12526,
+          "head_local": [
+            -0.0552,
+            -0.1583,
+            0.0837
+          ],
+          "tail_local": [
+            -0.0122,
+            -0.2678,
+            0.1268
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_33",
+          "parent": "tripo::Spine_0",
+          "length": 0.09784,
+          "head_local": [
+            -0.0474,
+            -0.1896,
+            -0.0531
+          ],
+          "tail_local": [
+            -0.0134,
+            -0.2813,
+            -0.0505
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Right_Limb_0",
+          "parent": "tripo::Root",
+          "length": 0.16072,
+          "head_local": [
+            0.0112,
+            -0.0645,
+            -0.1235
+          ],
+          "tail_local": [
+            0.0191,
+            -0.0723,
+            -0.2839
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Right_Limb_1",
+          "parent": "tripo::1_Right_Limb_0",
+          "length": 0.13749,
+          "head_local": [
+            0.0191,
+            -0.0723,
+            -0.2839
+          ],
+          "tail_local": [
+            0.0347,
+            -0.041,
+            -0.4168
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Right_Limb_2",
+          "parent": "tripo::1_Right_Limb_1",
+          "length": 0.08184,
+          "head_local": [
+            0.0347,
+            -0.041,
+            -0.4168
+          ],
+          "tail_local": [
+            0.0621,
+            -0.0801,
+            -0.4833
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Right_Limb_3",
+          "parent": "tripo::1_Right_Limb_2",
+          "length": 0.08184,
+          "head_local": [
+            0.0621,
+            -0.0801,
+            -0.4833
+          ],
+          "tail_local": [
+            0.0895,
+            -0.1192,
+            -0.5498
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Left_Limb_0",
+          "parent": "tripo::Root",
+          "length": 0.16374,
+          "head_local": [
+            -0.2156,
+            -0.0723,
+            -0.1196
+          ],
+          "tail_local": [
+            -0.239,
+            -0.0958,
+            -0.2799
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Left_Limb_1",
+          "parent": "tripo::1_Left_Limb_0",
+          "length": 0.13462,
+          "head_local": [
+            -0.239,
+            -0.0958,
+            -0.2799
+          ],
+          "tail_local": [
+            -0.2469,
+            -0.0762,
+            -0.4129
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Left_Limb_2",
+          "parent": "tripo::1_Left_Limb_1",
+          "length": 0.08505,
+          "head_local": [
+            -0.2469,
+            -0.0762,
+            -0.4129
+          ],
+          "tail_local": [
+            -0.2742,
+            -0.1153,
+            -0.4833
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::1_Left_Limb_3",
+          "parent": "tripo::1_Left_Limb_2",
+          "length": 0.08505,
+          "head_local": [
+            -0.2742,
+            -0.1153,
+            -0.4833
+          ],
+          "tail_local": [
+            -0.3016,
+            -0.1544,
+            -0.5537
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_42",
+          "parent": "tripo::Root",
+          "length": 0.1404,
+          "head_local": [
+            -0.0357,
+            0.0294,
+            -0.1783
+          ],
+          "tail_local": [
+            0.0073,
+            0.0763,
+            -0.3034
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_43",
+          "parent": "bone_42",
+          "length": 0.11422,
+          "head_local": [
+            0.0073,
+            0.0763,
+            -0.3034
+          ],
+          "tail_local": [
+            0.066,
+            0.1232,
+            -0.3894
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Tail_0",
+          "parent": "bone_43",
+          "length": 0.15808,
+          "head_local": [
+            0.066,
+            0.1232,
+            -0.3894
+          ],
+          "tail_local": [
+            0.2107,
+            0.1702,
+            -0.4325
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Tail_1",
+          "parent": "tripo::Tail_0",
+          "length": 0.12422,
+          "head_local": [
+            0.2107,
+            0.1702,
+            -0.4325
+          ],
+          "tail_local": [
+            0.3124,
+            0.1819,
+            -0.3621
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Tail_2",
+          "parent": "tripo::Tail_1",
+          "length": 0.08203,
+          "head_local": [
+            0.3124,
+            0.1819,
+            -0.3621
+          ],
+          "tail_local": [
+            0.3358,
+            0.1741,
+            -0.2839
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Tail_3",
+          "parent": "tripo::Tail_2",
+          "length": 0.06414,
+          "head_local": [
+            0.3358,
+            0.1741,
+            -0.2839
+          ],
+          "tail_local": [
+            0.3241,
+            0.1663,
+            -0.2213
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Tail_4",
+          "parent": "tripo::Tail_3",
+          "length": 0.04045,
+          "head_local": [
+            0.3241,
+            0.1663,
+            -0.2213
+          ],
+          "tail_local": [
+            0.3046,
+            0.1623,
+            -0.1861
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "tripo::Tail_5",
+          "parent": "tripo::Tail_4",
+          "length": 0.04045,
+          "head_local": [
+            0.3046,
+            0.1623,
+            -0.1861
+          ],
+          "tail_local": [
+            0.285,
+            0.1584,
+            -0.1509
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_50",
+          "parent": "tripo::Root",
+          "length": 0.30851,
+          "head_local": [
+            0.0425,
+            -0.0254,
+            -0.0609
+          ],
+          "tail_local": [
+            0.3158,
+            0.0505,
+            0.0605
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_51",
+          "parent": "tripo::Root",
+          "length": 0.30851,
+          "head_local": [
+            -0.2508,
+            -0.0606,
+            -0.0727
+          ],
+          "tail_local": [
+            -0.5434,
+            -0.0531,
+            0.0248
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_52",
+          "parent": "tripo::Root",
+          "length": 0.30851,
+          "head_local": [
+            -0.0239,
+            -0.1544,
+            -0.0922
+          ],
+          "tail_local": [
+            0.1658,
+            -0.3842,
+            -0.0123
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        },
+        {
+          "name": "bone_53",
+          "parent": "tripo::Root",
+          "length": 0.30851,
+          "head_local": [
+            0.0582,
+            -0.1153,
+            -0.147
+          ],
+          "tail_local": [
+            0.3486,
+            -0.2097,
+            -0.1906
+          ],
+          "rest_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "use_connect": false,
+          "use_inherit_rotation": true,
+          "inherit_scale": "FULL"
+        }
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Icosphere",
+      "vertex_count": 42,
+      "polygon_count": 80,
+      "vertex_groups": [],
+      "modifiers": [],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "material",
+      "vertex_count": 307368,
+      "polygon_count": 441458,
+      "vertex_groups": [
+        "tripo::Root",
+        "tripo::Spine_0",
+        "tripo::Spine_1",
+        "tripo::Head_0",
+        "tripo::Head_1",
+        "bone_5",
+        "bone_6",
+        "bone_7",
+        "bone_8",
+        "bone_9",
+        "bone_10",
+        "bone_11",
+        "bone_12",
+        "bone_13",
+        "tripo::Head_2",
+        "bone_15",
+        "bone_16",
+        "bone_17",
+        "tripo::Head_3",
+        "tripo::Head_4",
+        "bone_20",
+        "bone_21",
+        "bone_22",
+        "bone_23",
+        "bone_24",
+        "bone_25",
+        "tripo::0_Right_Limb_0",
+        "tripo::0_Right_Limb_1",
+        "tripo::Spine_2",
+        "tripo::0_Left_Limb_0",
+        "tripo::0_Left_Limb_1",
+        "bone_31",
+        "bone_32",
+        "bone_33",
+        "tripo::1_Right_Limb_0",
+        "tripo::1_Right_Limb_1",
+        "tripo::1_Right_Limb_2",
+        "tripo::1_Right_Limb_3",
+        "tripo::1_Left_Limb_0",
+        "tripo::1_Left_Limb_1",
+        "tripo::1_Left_Limb_2",
+        "tripo::1_Left_Limb_3",
+        "bone_42",
+        "bone_43",
+        "tripo::Tail_0",
+        "tripo::Tail_1",
+        "tripo::Tail_2",
+        "tripo::Tail_3",
+        "tripo::Tail_4",
+        "tripo::Tail_5",
+        "bone_50",
+        "bone_51",
+        "bone_52",
+        "bone_53"
+      ],
+      "modifiers": [
+        "ARMATURE"
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "NlaTrack",
+      "frame_range": [
+        0.0,
+        57.0
+      ],
+      "fcurve_count": 67,
+      "bones_keyed_count": 16,
+      "bones_keyed": {
+        "tripo::Head_1": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::Head_0": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::0_Right_Limb_1": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::0_Right_Limb_0": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::0_Left_Limb_1": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::0_Left_Limb_0": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::Spine_2": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::Spine_1": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::Spine_0": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::1_Right_Limb_2": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::1_Right_Limb_1": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::1_Right_Limb_0": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::1_Left_Limb_2": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::1_Left_Limb_1": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::1_Left_Limb_0": [
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ],
+        "tripo::Root": [
+          "location idx=[0, 1, 2]",
+          "rotation_quaternion idx=[0, 1, 2, 3]"
+        ]
+      },
+      "extreme_rotation_keys": [],
+      "extreme_rotation_count": 0
+    }
+  ]
+}

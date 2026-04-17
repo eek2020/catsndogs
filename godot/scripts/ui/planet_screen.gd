@@ -72,12 +72,29 @@ var _treasure_positions: Dictionary = {}  # treasure_id -> Vector2
 var _merchant_positions: Dictionary = {}  # merchant_id -> Vector2
 
 
+# Resolve a character's spritesheet under the per-character asset layout.
+# Tries protagonist → crew → npc locations and returns the first that exists,
+# or the protagonist-prefixed path as the tell-tale miss so the caller can
+# fall back to a default.
+static func _resolve_character_spritesheet(char_id: String) -> String:
+	var candidates := [
+		"res://assets/characters/%s/2d/spritesheet.png" % char_id,
+		"res://assets/characters/crew/%s/2d/spritesheet.png" % char_id,
+		"res://assets/characters/npc/%s/2d/spritesheet.png" % char_id,
+	]
+	for p in candidates:
+		if ResourceLoader.exists(p):
+			return p
+	return candidates[0]
+
+
 func _ready() -> void:
 	depart_btn.pressed.connect(_on_depart)
 	var gs: GameStateData = GameSession.game_state
 	var pid: String = gs.protagonist_id if gs else "aristotle"
-	var sprite_path := "res://assets/sprites/%s_spritesheet.png" % pid
-	_sprite_texture = load(sprite_path) if ResourceLoader.exists(sprite_path) else load("res://assets/sprites/aristotle_spritesheet.png")
+	var sprite_path := _resolve_character_spritesheet(pid)
+	var fallback := "res://assets/characters/aristotle/2d/spritesheet.png"
+	_sprite_texture = load(sprite_path) if ResourceLoader.exists(sprite_path) else load(fallback)
 	if gs == null or gs.current_planet_id.is_empty():
 		return
 

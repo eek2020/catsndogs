@@ -196,3 +196,25 @@ From the repo root (not from `godot/`):
 ```
 
 Expect `121/121 passing` as of 2026-04-16 (Sprint 5b). Splash-boot resource leak warnings at exit are pre-existing; do not treat them as test failures.
+
+### Godot glTF `_Loop` suffix stripping (2026-04-17)
+
+Godot's glTF importer with `gltf/naming_version=2` (the default on newly imported files) **rewrites animation names** when ingesting GLBs that contain NLA strips or named clips:
+
+- Any clip whose name ends in `_Loop` has the suffix stripped AND `loop_mode` set to `LINEAR` (value `1`) automatically.
+- Clips without the `_Loop` suffix keep their exact name and get `loop_mode = NONE` (value `0`).
+
+Example: our CC0 UAL character pipeline pushes 19 `*_Loop` clips to the NLA during export (`Walk_Loop`, `Idle_Loop`, `Sprint_Loop`, `Crouch_Idle_Loop`, etc.). After Godot import, the `AnimationPlayer` exposes them as `Walk`, `Idle`, `Sprint`, `Crouch_Idle` — each with `loop_mode=1`. Gameplay code must call `ap.play("Walk")`, NOT `ap.play("Walk_Loop")`. See `docs/CHARACTER_PIPELINE.md` §Gotchas for the full story.
+
+First surfaced by `godot/tools/validate_rigged_glb.gd` on the `nine_lives_rigged.glb` validation run — the validator's initial `EXPECTED_ANIMS` list used the pre-import NLA names and flagged all 19 loop clips as "missing" with exactly matching "extras" that were the stripped forms. The validator's constant table now stores `{post_import_name: expected_loop_mode}` pairs to make the rule explicit and to catch any future regression where `loop_mode` is not set correctly.
+
+### Headless GLB validator pattern (2026-04-17)
+
+For asset pipeline regression checks (character rigs, static props, animated shaders), a `@tool extends SceneTree` script under `godot/tools/*.gd` is the simplest way to get a PASS/FAIL signal from Godot without opening the editor. Key template points:
+
+- `@tool extends SceneTree` with the work done in `_init()` and a terminating `quit(exit_code)` — replaces the SceneTree entirely, so autoloads still load but the project's main scene never starts.
+- Args come in via `OS.get_cmdline_user_args()` after the `--` separator on the Godot invocation: `Godot --headless --path godot --script res://tools/X.gd -- arg1 arg2`.
+- Mount the scene into `self.root` (the Window) if you need to actually tick signals / animations; otherwise operate purely on the instantiated PackedScene for cheap structural reads.
+- Write both a JSON report (next to the asset or in `logs/`) AND a human-readable stdout summary for the developer tailing the log.
+
+Reference implementation: `godot/tools/validate_rigged_glb.gd` — loads a rigged character GLB, walks the tree for `Skeleton3D` / `AnimationPlayer` / `MeshInstance3D`, validates expected bone count + animation set + per-clip `loop_mode`, and plays a handful of canonical clips for a real tick. Exit 0 on PASS, 1 on FAIL.

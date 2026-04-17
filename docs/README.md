@@ -22,6 +22,7 @@ Entry point for all project documentation. Start here if you're unsure which fil
 - [`GAME_SUMMARY.md`](GAME_SUMMARY.md) — Game world, story, mechanics (implemented + planned).
 - [`GODOT_DEV_GUIDE.md`](GODOT_DEV_GUIDE.md) — Godot development reference and tool index.
 - [`GODOT_NOTES.md`](GODOT_NOTES.md) — Godot engineering notes, quirks, and discoveries (was `MEMORY.md`).
+- [`CHARACTER_PIPELINE.md`](CHARACTER_PIPELINE.md) — 3D character pipeline (Tripo3D → CC0 UAL retarget → Godot). Start here for any crew / NPC rigging work.
 - [`godot-reference/`](godot-reference/) — Godot 4 API quick-refs, patterns, examples, screenshots.
 - [`development-methodology/`](development-methodology/) — Task decomposition, architecture planning, iteration strategy.
 - [`process/CONTRIBUTING.md`](process/CONTRIBUTING.md) — How to pick up tasks.

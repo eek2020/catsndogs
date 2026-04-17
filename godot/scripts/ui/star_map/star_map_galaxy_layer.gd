@@ -327,12 +327,26 @@ func _draw_travel_confirm(
 	var current_region: String = _vm.current_region()
 	var region_name: String = _vm.region_display_name(target_region)
 	var is_current: bool = target_region == current_region
-	var prompt: String = ("Enter %s world view?" % region_name) if is_current else ("Travel to %s?" % region_name)
+	var blocked: bool = ctx.get("travel_blocked", false)
+	var route_hint: String = ctx.get("travel_route_hint", "")
+
+	var prompt: String
+	var prompt_color: Color = Color(0.8, 0.85, 0.95)
+	var hint: String
+	if blocked:
+		prompt = "No direct route to %s" % region_name
+		prompt_color = Color(0.95, 0.7, 0.45)
+		if route_hint.is_empty():
+			hint = "No known path  |  ESC to close"
+		else:
+			hint = "Route via %s  |  ESC to close" % _vm.region_display_name(route_hint)
+	else:
+		prompt = ("Enter %s world view?" % region_name) if is_current else ("Travel to %s?" % region_name)
+		hint = "ENTER to confirm  |  ESC to cancel"
 
 	var pw: float = default_font.get_string_size(prompt, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
-	canvas.draw_string(default_font, Vector2(canvas_size.x * 0.5 - pw * 0.5, box_y + 30), prompt, HORIZONTAL_ALIGNMENT_LEFT, int(box_w), 13, Color(0.8, 0.85, 0.95))
+	canvas.draw_string(default_font, Vector2(canvas_size.x * 0.5 - pw * 0.5, box_y + 30), prompt, HORIZONTAL_ALIGNMENT_LEFT, int(box_w), 13, prompt_color)
 
-	var hint: String = "ENTER to confirm  |  ESC to cancel"
 	var hw: float = default_font.get_string_size(hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
 	canvas.draw_string(default_font, Vector2(canvas_size.x * 0.5 - hw * 0.5, box_y + 65), hint, HORIZONTAL_ALIGNMENT_LEFT, int(box_w), 11, Color(0.5, 0.6, 0.7, 0.8))
 

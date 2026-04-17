@@ -12,18 +12,18 @@ extends RefCounted
 
 ## Character portrait paths keyed by npc_id.
 const CHARACTER_PORTRAITS := {
-	"aristotle": "res://assets/characters/aristotle_head.png",
-	"dave": "res://assets/characters/dave_head.png",
-	"death": "res://assets/characters/death_head.png",
-	"fairy_cartographer": "res://assets/characters/support/fairy_cartographer.png",
-	"nine_lives": "res://assets/characters/crew/nine_lives.png",
-	"no_tail": "res://assets/characters/crew/no_tail.png",
-	"silky": "res://assets/characters/crew/silky.png",
-	"blood_paw": "res://assets/characters/crew/blood_paw.png",
-	"charlie": "res://assets/characters/crew/charlie.png",
-	"bombardier": "res://assets/characters/crew/bombardier.png",
-	"luna": "res://assets/characters/crew/luna.png",
-	"thistle": "res://assets/characters/crew/thistle.png",
+	"aristotle": "res://assets/characters/aristotle/2d/head.png",
+	"dave": "res://assets/characters/dave/2d/head.png",
+	"death": "res://assets/characters/npc/death/2d/head.png",
+	"fairy_cartographer": "res://assets/characters/npc/fairy_cartographer/2d/portrait.png",
+	"nine_lives": "res://assets/characters/crew/nine_lives/2d/portrait.png",
+	"no_tail": "res://assets/characters/crew/no_tail/2d/portrait.png",
+	"silky": "res://assets/characters/crew/silky/2d/portrait.png",
+	"blood_paw": "res://assets/characters/crew/blood_paw/2d/portrait.png",
+	"charlie": "res://assets/characters/crew/charlie/2d/portrait.png",
+	"bombardier": "res://assets/characters/crew/bombardier/2d/portrait.png",
+	"luna": "res://assets/characters/crew/luna/2d/portrait.png",
+	"thistle": "res://assets/characters/crew/thistle/2d/portrait.png",
 }
 
 

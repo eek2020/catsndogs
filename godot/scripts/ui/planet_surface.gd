@@ -171,6 +171,20 @@ var _treasure_nodes: Dictionary = {}  # treasure_id -> Node2D
 var _label_nodes: Dictionary = {}     # entity_id -> Label
 
 
+# Resolve a character's spritesheet under the per-character asset layout.
+# Tries protagonist → crew → npc locations and returns the first that exists.
+static func _resolve_character_spritesheet(char_id: String) -> String:
+	var candidates := [
+		"res://assets/characters/%s/2d/spritesheet.png" % char_id,
+		"res://assets/characters/crew/%s/2d/spritesheet.png" % char_id,
+		"res://assets/characters/npc/%s/2d/spritesheet.png" % char_id,
+	]
+	for p in candidates:
+		if ResourceLoader.exists(p):
+			return p
+	return candidates[0]
+
+
 func _ready() -> void:
 	depart_btn.pressed.connect(_on_depart)
 	depart_btn.text = "DEPART (ESC)"
@@ -182,8 +196,9 @@ func _ready() -> void:
 	var pid: String = gs.protagonist_id if gs else "aristotle"
 
 	# Load sprite texture (already has transparent background)
-	var sprite_path := "res://assets/sprites/%s_spritesheet.png" % pid
-	_sprite_texture = load(sprite_path) if ResourceLoader.exists(sprite_path) else load("res://assets/sprites/aristotle_spritesheet.png")
+	var sprite_path := _resolve_character_spritesheet(pid)
+	var fallback := "res://assets/characters/aristotle/2d/spritesheet.png"
+	_sprite_texture = load(sprite_path) if ResourceLoader.exists(sprite_path) else load(fallback)
 
 	# Create player sprite node
 	_player_sprite = Sprite2D.new()
@@ -632,17 +647,18 @@ func _place_entities(gs: GameStateData) -> void:
 		# Sprite instead of circle indicator
 		var sprite := Sprite2D.new()
 		# Fallback to merchant sprite
-		var tex_path := "res://assets/sprites/merchant_spritesheet.png"
+		var npc_key := "merchant"
 		if mid.find("guard") != -1:
-			tex_path = "res://assets/sprites/npc_guard_spritesheet.png"
+			npc_key = "guard"
 		elif mid.find("fairy") != -1:
-			tex_path = "res://assets/sprites/fairy_cartographer_spritesheet.png"
+			npc_key = "fairy_cartographer"
 		elif mid.find("urchin") != -1 or mid.find("goblin") != -1:
-			tex_path = "res://assets/sprites/npc_urchin_spritesheet.png"
+			npc_key = "urchin"
 		elif mid.find("bard") != -1:
-			tex_path = "res://assets/sprites/npc_bard_spritesheet.png"
-			
-		sprite.texture = load(tex_path) if ResourceLoader.exists(tex_path) else load("res://assets/sprites/merchant_spritesheet.png")
+			npc_key = "bard"
+		var tex_path := _resolve_character_spritesheet(npc_key)
+		var tex_fallback := "res://assets/characters/npc/merchant/2d/spritesheet.png"
+		sprite.texture = load(tex_path) if ResourceLoader.exists(tex_path) else load(tex_fallback)
 		if sprite.texture != null:
 			sprite.hframes = SPRITE_COLS
 			sprite.vframes = sprite.texture.get_height() / SPRITE_FRAME_SIZE
