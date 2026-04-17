@@ -145,6 +145,7 @@ See `docs/MASTER_PLAN.md` for the authoritative project plan and development sta
 - [`docs/STRUCTURE.md`](docs/STRUCTURE.md) — Architecture reference: scenes, signals, systems
 - [`docs/NEXT_STEPS.md`](docs/NEXT_STEPS.md) — Active sprint plan (engineering + art tracks)
 - [`docs/architecture/CODE_REVIEW.md`](docs/architecture/CODE_REVIEW.md) — Current code review (2026-04-16)
+- [`docs/architecture/CODEMAP.md`](docs/architecture/CODEMAP.md) — Auto-generated code map (autoloads, EventBus signals, systems, ViewModels, scenes, data). Regenerated on every Claude Stop via `.claude/skills/codemap/`
 - [`.claude/PROJECT_INDEX.md`](.claude/PROJECT_INDEX.md) — AI agent project index and file location guide
 - [`.claude/MEMORY.md`](.claude/MEMORY.md) — Global AI agent memory and technical patterns
 - [`docs/story/LORE_EXPANSION.md`](docs/story/LORE_EXPANSION.md) — Deep world-building: faction histories, character backstories, crystal network mythology

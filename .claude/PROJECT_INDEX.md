@@ -62,14 +62,15 @@
 
 ### Primary Reference Documents
 
-1. **`README.md`** - Project overview and quick start
-2. **`docs/README.md`** - Documentation index
-3. **`docs/MASTER_PLAN.md`** - Authoritative roadmap and issue tracker
-4. **`docs/NEXT_STEPS.md`** - Active sprint plan
-5. **`docs/architecture/CODE_REVIEW.md`** - Current code review
-6. **`docs/STRUCTURE.md`** - Detailed architecture reference
-7. **`docs/GAME_SUMMARY.md`** - Complete game design
-8. **`docs/GODOT_NOTES.md`** - Godot engineering notes (was `MEMORY.md`)
+1. **`docs/architecture/CODEMAP.md`** - **Start here for "where is X?"** Auto-generated code map: autoloads, every EventBus signal with line anchors, systems, ViewModels↔screens↔scenes, data files. Regenerated on every Claude Stop via `.claude/skills/codemap/`.
+2. **`README.md`** - Project overview and quick start
+3. **`docs/README.md`** - Documentation index
+4. **`docs/MASTER_PLAN.md`** - Authoritative roadmap and issue tracker
+5. **`docs/NEXT_STEPS.md`** - Active sprint plan
+6. **`docs/architecture/CODE_REVIEW.md`** - Current code review
+7. **`docs/STRUCTURE.md`** - Detailed architecture reference
+8. **`docs/GAME_SUMMARY.md`** - Complete game design
+9. **`docs/GODOT_NOTES.md`** - Godot engineering notes (was `MEMORY.md`)
 
 ### Core Game Files
 

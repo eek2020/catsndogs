@@ -7,8 +7,10 @@ extends RefCounted
 
 var _bases: Dictionary = {}  # base_id -> StarBase
 var _artifacts: Dictionary = {}  # artifact_id -> Dictionary
+var realm_control: RealmControlSystem = null  # Optional — when set, hostile-controller dock gating is enforced (Sprint 5c)
 
 const DOCK_RADIUS: float = 60.0
+const HOSTILE_DOCK_REPUTATION_THRESHOLD: int = -50  # Below this with a region controller, non-stronghold bases gate too
 
 
 func load_bases(bases_data: Array) -> void:
@@ -62,18 +64,33 @@ func _is_visible(game_state: GameStateData, base: StarBase) -> bool:
 
 ## Check if the player can dock at a base.
 func can_dock(game_state: GameStateData, base_id: String) -> bool:
+	return get_dock_block_reason(game_state, base_id).is_empty()
+
+
+## Return a human-readable reason the player cannot dock, or "" if docking is allowed.
+## Sprint 5c — gates both the stronghold reputation case AND hostile realm-control.
+func get_dock_block_reason(game_state: GameStateData, base_id: String) -> String:
 	var base: StarBase = _bases.get(base_id)
 	if base == null:
-		return false
+		return "Unknown base"
 	if not _is_visible(game_state, base):
-		return false
+		return "Not discovered"
+	# Stronghold-specific rep threshold (existing behaviour).
 	if base.base_type == "stronghold":
 		var faction: Faction = game_state.faction_registry.get(base.controlling_faction)
 		if faction == null:
-			return false
+			return "Unknown faction"
 		if faction.reputation_with_player < base.required_reputation:
-			return false
-	return true
+			return "Refused by %s" % faction.faction_name
+	# Realm-control gate — when the base sits in a region controlled by a faction
+	# that despises the player, every base in that region is contested airspace.
+	if realm_control != null:
+		var controller_id: String = realm_control.get_region_controller(base.region_id)
+		if not controller_id.is_empty() and controller_id != base.controlling_faction:
+			var ruler: Faction = game_state.faction_registry.get(controller_id)
+			if ruler != null and ruler.reputation_with_player < HOSTILE_DOCK_REPUTATION_THRESHOLD:
+				return "Blockaded by %s" % ruler.faction_name
+	return ""
 
 
 ## Dock the player at a base.

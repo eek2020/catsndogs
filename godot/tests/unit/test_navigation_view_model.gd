@@ -19,6 +19,7 @@ class SessionDouble:
 	var planet_system: PlanetSystemDouble = null
 	var star_base_system: StarBaseDouble = null
 	var astral_hazard_system = null
+	var crew_morale: MoraleDouble = null
 
 	var travel_calls: Array[String] = []
 	var land_calls: Array[String] = []
@@ -91,12 +92,16 @@ class NarrativeDouble:
 	extends RefCounted
 	var arc_titles: Dictionary = {}
 	var progress_value: Dictionary = {}
+	var objective_value: String = ""
 
 	func get_arc_title(arc: String) -> String:
 		return arc_titles.get(arc, "")
 
 	func get_arc_progress(_gs) -> Dictionary:
 		return progress_value
+
+	func get_arc_objective(_gs) -> String:
+		return objective_value
 
 
 class KarmaDouble:
@@ -137,6 +142,18 @@ class PlanetSystemDouble:
 		return planets_by_region.get(region, [])
 
 
+class MoraleDouble:
+	extends RefCounted
+	var average: int = 100
+	var status_label: String = ""
+
+	func get_average_morale(_gs) -> int:
+		return average
+
+	func get_morale_status(_gs) -> String:
+		return status_label
+
+
 class StarBaseDouble:
 	extends RefCounted
 	var dock_proximity_by_pos: Dictionary = {}
@@ -171,6 +188,7 @@ func _make_session_with_state() -> SessionDouble:
 	session.exploration = ExplorationDouble.new()
 	session.planet_system = PlanetSystemDouble.new()
 	session.star_base_system = StarBaseDouble.new()
+	session.crew_morale = MoraleDouble.new()
 	var gs := GameStateData.new()
 	gs.current_region = "starting_realm"
 	gs.current_arc = "arc1"
@@ -363,3 +381,98 @@ func test_can_dock_delegates() -> void:
 	var vm := NavigationViewModel.new(session)
 	assert_true(vm.can_dock("base_a"))
 	assert_false(vm.can_dock("base_b"))
+
+
+# ---------------------------------------------------------------------------
+# Sprint 5c part 2 — HUD accessors (objective, hull, crew, morale)
+# ---------------------------------------------------------------------------
+
+func _attach_ship(session: SessionDouble, hull: int, max_hull: int,
+		crew_size: int, capacity: int) -> void:
+	var ship := Ship.new()
+	ship.current_hull = hull
+	ship.max_hull = max_hull
+	ship.crew_capacity = capacity
+	for i in crew_size:
+		ship.crew.append(Ship.CrewMember.new())
+	session.game_state.player_ship = ship
+
+
+func test_arc_objective_delegates_to_narrative() -> void:
+	var session := _make_session_with_state()
+	session.narrative.objective_value = "Find the crystal"
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.arc_objective(), "Find the crystal")
+
+
+func test_hull_accessors_return_zero_without_ship() -> void:
+	var session := _make_session_with_state()
+	session.game_state.player_ship = null
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.hull_current(), 0)
+	assert_eq(vm.hull_max(), 0)
+
+
+func test_hull_accessors_report_ship_values() -> void:
+	var session := _make_session_with_state()
+	_attach_ship(session, 60, 100, 2, 4)
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.hull_current(), 60)
+	assert_eq(vm.hull_max(), 100)
+
+
+func test_crew_accessors_return_zero_without_ship() -> void:
+	var session := _make_session_with_state()
+	session.game_state.player_ship = null
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.crew_count(), 0)
+	assert_eq(vm.crew_capacity(), 0)
+
+
+func test_crew_accessors_report_ship_values() -> void:
+	var session := _make_session_with_state()
+	_attach_ship(session, 100, 100, 3, 6)
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.crew_count(), 3)
+	assert_eq(vm.crew_capacity(), 6)
+
+
+func test_has_crew_morale_true_when_system_wired() -> void:
+	var session := _make_session_with_state()
+	var vm := NavigationViewModel.new(session)
+	assert_true(vm.has_crew_morale())
+
+
+func test_has_crew_morale_false_when_missing() -> void:
+	var session := _make_session_with_state()
+	session.crew_morale = null
+	var vm := NavigationViewModel.new(session)
+	assert_false(vm.has_crew_morale())
+
+
+func test_crew_morale_average_delegates() -> void:
+	var session := _make_session_with_state()
+	session.crew_morale.average = 47
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.crew_morale_average(), 47)
+
+
+func test_crew_morale_average_returns_100_without_system() -> void:
+	var session := _make_session_with_state()
+	session.crew_morale = null
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.crew_morale_average(), 100)
+
+
+func test_crew_morale_label_delegates() -> void:
+	var session := _make_session_with_state()
+	session.crew_morale.status_label = "STEADY"
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.crew_morale_label(), "STEADY")
+
+
+func test_crew_morale_label_empty_without_system() -> void:
+	var session := _make_session_with_state()
+	session.crew_morale = null
+	var vm := NavigationViewModel.new(session)
+	assert_eq(vm.crew_morale_label(), "")

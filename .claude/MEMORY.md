@@ -155,10 +155,11 @@ godot/
 
 ### Before Starting Work
 
-1. Read `PROJECT_INDEX.md` for file locations
-2. Check `docs/MASTER_PLAN.md` for current priorities
-3. Consult this MEMORY for technical patterns
-4. Review `STRUCTURE.md` for architecture details
+1. Skim `docs/architecture/CODEMAP.md` — auto-generated code map (autoloads, EventBus signals with line anchors, systems, ViewModels, scenes, data). Refreshed on every Claude Stop via `.claude/skills/codemap/`.
+2. Read `PROJECT_INDEX.md` for file locations
+3. Check `docs/MASTER_PLAN.md` for current priorities
+4. Consult this MEMORY for technical patterns
+5. Review `STRUCTURE.md` for architecture details
 
 ### After Completing Work
 

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/navigation.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/hud/hull_bar.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/ui/hud/morale_pip.gd" id="3"]
 
 [node name="NavigationScreen" type="Control"]
 layout_mode = 3
@@ -15,43 +17,68 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="TopBar" type="HBoxContainer" parent="HUD"]
+[node name="TopBar" type="VBoxContainer" parent="HUD"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 40.0
+offset_bottom = 60.0
 
-[node name="ArcLabel" type="Label" parent="HUD/TopBar"]
+[node name="Row1" type="HBoxContainer" parent="HUD/TopBar"]
+layout_mode = 2
+
+[node name="ArcLabel" type="Label" parent="HUD/TopBar/Row1"]
 layout_mode = 2
 text = "Arc 1"
 theme_override_colors/font_color = Color(0.94, 0.75, 0.25, 1)
 
-[node name="RegionLabel" type="Label" parent="HUD/TopBar"]
+[node name="RegionLabel" type="Label" parent="HUD/TopBar/Row1"]
 layout_mode = 2
 text = "Starting Realm"
 
-[node name="Spacer" type="Control" parent="HUD/TopBar"]
+[node name="Spacer" type="Control" parent="HUD/TopBar/Row1"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CrystalsLabel" type="Label" parent="HUD/TopBar"]
+[node name="CrystalsLabel" type="Label" parent="HUD/TopBar/Row1"]
 layout_mode = 2
 text = "Crystals: 0"
 theme_override_colors/font_color = Color(0.3, 0.8, 0.9, 1)
 
-[node name="SalvageLabel" type="Label" parent="HUD/TopBar"]
+[node name="SalvageLabel" type="Label" parent="HUD/TopBar/Row1"]
 layout_mode = 2
 text = "Salvage: 50"
 
-[node name="HullLabel" type="Label" parent="HUD/TopBar"]
+[node name="HullBar" type="Control" parent="HUD/TopBar/Row1"]
+custom_minimum_size = Vector2(120, 16)
 layout_mode = 2
-text = "Hull: 100/100"
+size_flags_vertical = 4
+script = ExtResource("2")
+
+[node name="HullLabel" type="Label" parent="HUD/TopBar/Row1"]
+layout_mode = 2
+text = "100/100"
 theme_override_colors/font_color = Color(0.25, 0.75, 0.38, 1)
 
-[node name="KarmaLabel" type="Label" parent="HUD/TopBar"]
+[node name="CrewLabel" type="Label" parent="HUD/TopBar/Row1"]
+layout_mode = 2
+text = "Crew 0/0"
+
+[node name="MoralePip" type="Control" parent="HUD/TopBar/Row1"]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("3")
+
+[node name="KarmaLabel" type="Label" parent="HUD/TopBar/Row1"]
 layout_mode = 2
 text = "Karma: Neutral (0)"
 theme_override_colors/font_color = Color(0.67, 0.67, 0.67, 1)
+
+[node name="ObjectiveLabel" type="Label" parent="HUD/TopBar"]
+layout_mode = 2
+text = ""
+theme_override_colors/font_color = Color(0.78, 0.82, 0.92, 1)
+theme_override_font_sizes/font_size = 14
 
 [node name="FlashLabel" type="Label" parent="HUD"]
 layout_mode = 1
@@ -60,9 +87,9 @@ anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
 offset_left = -300.0
-offset_top = 60.0
+offset_top = 80.0
 offset_right = 300.0
-offset_bottom = 90.0
+offset_bottom = 110.0
 horizontal_alignment = 1
 theme_override_colors/font_color = Color(1.0, 0.8, 0.2, 1)
 theme_override_font_sizes/font_size = 22

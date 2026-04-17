@@ -50,6 +50,7 @@ func _ready() -> void:
 	karma_system = KarmaSystem.new()
 	stat_evaluator = StatEvaluator.new()
 	star_base_system = StarBaseSystem.new()
+	star_base_system.realm_control = realm_control  # Sprint 5c — enable hostile-controller dock gating
 	planet_system = PlanetSystem.new()
 	save_manager = SaveManager.new()
 
@@ -66,6 +67,30 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if game_state != null:
 		game_state.playtime_seconds += delta
+		_tick_faction_conquest(delta)
+
+
+# ------------------------------------------------------------------
+# Faction conquest tick (Sprint 5c)
+# ------------------------------------------------------------------
+
+## Seconds of real-time game play between conquest AI cycles. Factions plan and
+## resolve one batch of actions per interval, so the galaxy keeps evolving while
+## the player flies around.
+const CONQUEST_TICK_INTERVAL: float = 60.0
+
+var _conquest_tick_timer: float = 0.0
+
+
+func _tick_faction_conquest(delta: float) -> void:
+	if faction_conquest == null or realm_control == null:
+		return
+	_conquest_tick_timer += delta
+	if _conquest_tick_timer < CONQUEST_TICK_INTERVAL:
+		return
+	_conquest_tick_timer = 0.0
+	faction_conquest.plan_faction_actions(game_state)
+	faction_conquest.resolve_actions(game_state, realm_control)
 
 
 # ------------------------------------------------------------------
@@ -73,6 +98,9 @@ func _process(delta: float) -> void:
 # ------------------------------------------------------------------
 
 func start_new_game(protagonist_id: String = "aristotle") -> void:
+	# Apr-05 #4: wipe the data-loader cache on session crossover so mutations
+	# from a prior playthrough cannot contaminate the new one.
+	data_loader.clear_cache()
 	game_state = create_new_game_state(protagonist_id)
 	_init_systems(protagonist_id, "arc1")
 	set_process(true)
@@ -170,6 +198,9 @@ func load_game(slot: int = 0) -> bool:
 	var loaded: GameStateData = save_manager.load_game(slot)
 	if loaded == null:
 		return false
+	# Apr-05 #4: wipe the data-loader cache on session crossover so mutations
+	# in a prior playthrough cannot contaminate the newly loaded one.
+	data_loader.clear_cache()
 	game_state = loaded
 	_init_systems(game_state.protagonist_id, game_state.current_arc)
 	set_process(true)

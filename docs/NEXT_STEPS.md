@@ -1,6 +1,6 @@
 # Whisper Crystals — Next Steps
 
-**Date:** 2026-04-16 (post-Sprint 5b)
+**Date:** 2026-04-16 (post-Sprint 5c part 2)
 **Status:** Active plan, reconciled with `docs/MASTER_PLAN.md` and `docs/architecture/CODE_REVIEW.md`.
 **Scope:** What to do next, in order, across engineering, gameplay, and art.
 **Relationship to other plans:**
@@ -129,16 +129,18 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 | Apply astral hazards during navigation tick | **Stale tracker** — already wired. `navigation.gd:213` has called `_update_astral_hazards(dt)` every frame since the hazard feature shipped (entropy timer, collision detection, status HUD, off-course drift all active). Retired from the active list during Sprint 5b audit. | CODE_REVIEW §3 | **Done** (stale) |
 | Regression tests | 24 tests across `test_crew_morale_combat_wiring.gd` (12) + `test_crew_morale_trade_wiring.gd` (12). Covers VM null-guards, morale-scales-damage math, MoraleDouble and live `CrewMoraleSystem` integration paths; trade covers buy/sell directionality + default-param backwards compatibility + composed karma×morale. | Quality policy | **Done** (121/121 green) |
 
-**Sprint 5c — Dock gating, conquest surfacing, data/HUD polish (pending).**
+**Sprint 5c — Dock gating, conquest surfacing, data/HUD polish — DONE 2026-04-16.**
 
-| Task | Outcome | Reference |
-| --- | --- | --- |
-| Gate docking via `realm_control_system.controlling_faction` + reputation | Low-rep players locked out of hostile stations | CODE_REVIEW §3 |
-| Surface conquest actions as visible world changes | Distress spawns / blockades / price shifts | CODE_REVIEW §3 |
-| Fix: DataLoader cache invalidation + redundant calls | MASTER_PLAN §5.3 Apr-05 #4, #12 | — |
-| HUD: segmented hull bar, objective on top bar, morale pip | CODE_REVIEW §4.6 | — |
+Sliced into two commits to keep diffs reviewable. Part 1 closed the gameplay wiring (dormant-systems count 2 → 0); part 2 closed the engineering & HUD polish.
 
-**Exit criteria:** `rg "GameSession\." godot/scripts/ui/star_map_screen.gd` returns 0 **(done: 23 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 110 **(done: 129 → 106)**; `star_map_screen.gd` ≤ 400 lines **(done: 1092 → 375)**; crew morale bends combat damage + trade prices with regression tests (**done 5b**); astral hazards drive navigation tick (**done — stale tracker, already wired**); HUD shows objective without opening mission log (5c pending); `realm_control_*` + `faction_conquest_*` emissions observable in a 20-minute session (5c pending).
+| Task | Outcome | Reference | Status |
+| --- | --- | --- | --- |
+| Gate docking via `realm_control_system.controlling_faction` + reputation | `StarBaseSystem.get_dock_block_reason()` surfaces a UI-facing string; `can_dock` delegates to it. Realm-control gate (`HOSTILE_DOCK_REPUTATION_THRESHOLD = -50`) refuses docks at any base type when the region's controller differs from the base's owner and despises the player. Stronghold rep gate preserved. Navigation HUD flashes the block reason. | CODE_REVIEW §3 | **Done (part 1)** |
+| Surface conquest actions as visible world changes | `GameSession._process` now ticks `faction_conquest` every 60s. `FactionConquestAI.resolve_actions` emits `EventBus.faction_conflict` per resolved action; attack victories feed `RealmControlSystem.apply_conflict_result()` and emit `realm_control_changed` when controllers flip. Navigation screen toasts on controller flips. | CODE_REVIEW §3 | **Done (part 1)** |
+| Fix: DataLoader cache invalidation + redundant calls | `_load_json` returns deep-duplicated Dictionary/Array payloads so caller mutation cannot leak into the cache. New `clear_cache()` + `invalidate(path)` public API; `GameSession.start_new_game` and `load_game` call `clear_cache()` on session crossover. #12 closed as subsumed — the cache already dedupes disk I/O, and deep-copy isolation removes the mutation-amplification concern. | MASTER_PLAN §5.3 Apr-05 #4, #12 | **Done (part 2)** |
+| HUD: segmented hull bar, objective on top bar, morale pip | New `HullBar` + `MoralePip` Controls under `scripts/ui/hud/`; `NarrativeSystem.get_arc_objective()` falls back to `theme` when no `objective_text`; `navigation.tscn` `TopBar` restructured to VBox(Row1 + ObjectiveLabel); nav VM gains `arc_objective` / hull / crew / morale accessors. | CODE_REVIEW §4.6, §5.3 | **Done (part 2)** |
+
+**Exit criteria:** `rg "GameSession\." godot/scripts/ui/star_map_screen.gd` returns 0 **(done: 23 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 110 **(done: 129 → 106)**; `star_map_screen.gd` ≤ 400 lines **(done: 1092 → 375)**; crew morale bends combat damage + trade prices with regression tests (**done 5b**); astral hazards drive navigation tick (**done — stale tracker, already wired**); `realm_control_*` + `faction_conquest_*` emissions observable in a 20-minute session (**done 5c part 1**, via the 60 s conquest tick + `realm_control_changed` toast); HUD shows objective without opening mission log (**done 5c part 2** — persistent `ObjectiveLabel` on the nav top bar); DataLoader cache is mutation-safe and session-safe (**done 5c part 2** — deep-copy returns + `clear_cache()` on session crossover).
 
 ### Sprint 6 — Dialogue decomposition + onboarding + save slots
 
@@ -198,6 +200,47 @@ Two tools change the Sprint 7 workflow significantly. Install both before the Bl
 | Add cutscene registry | Claude | `data/cutscenes/_registry.json` with `{id, scene_path, dialogue_path, camera_animation_name}` — adding a cutscene becomes data-only | MASTER_PLAN Sprint 6 |
 
 **Exit criteria:** `wc -l godot/scripts/systems/cutscene/cutscene_scene.gd` ≤ 100; `MaterialApplicator` removed; `aristotle_3d.glb` ≤ 4 MB; new cutscene addable by JSON + .blend only. Playthrough screenshot of the "No Tail Outpost" cutscene posted to `docs/qa/cutscenes/` for before/after comparison.
+
+### Sprint 8 — Spatial nuance in the navigation map — **DONE 2026-04-17**
+
+**Track E.** Motivation: today the navigation screen's nebula is a single cached texture stretched over the camera with no world offset ([procedural_map_manager.gd:111](../godot/scripts/autoload/procedural_map_manager.gd#L111), [navigation.gd:895](../godot/scripts/ui/navigation.gd#L895)). Only the starfield parallaxes with `gs.position_x * depth`. The consequence: hyper-speeding across a region lands you somewhere visually indistinguishable from where you left — the region has one "look" everywhere inside it. Fuel, distance, and time all lose meaning because space has no texture of *place*.
+
+**Architectural shift.** Stop treating the nebula as "one texture per region" and start treating it as a *field sampled at the player's world position*. The procedural datasource already produces biome IDs per pixel; we just never sample it. Once we do, each `(region, x, y)` tuple has a deterministic biome and local density value, which can drive visuals AND gameplay.
+
+**Work breakdown:**
+
+| Task | Who | Outcome | Notes |
+| --- | --- | --- | --- |
+| `ProceduralMapManager.sample_biome(region_id, world_x, world_y) -> Dictionary` | Claude | Returns `{biome_id, density, tint}` in O(1). Backed by a per-region cached noise datasource (keep the `ds` object alive, don't regenerate) and sampled via direct `FastNoiseLite.get_noise_2d` calls — skip the `get_biome_image` buffer path | Requires keeping the `ProceduralWorldDatasource` resident instead of `_cleanup_datasource` immediately. One per region, ~12 total. |
+| World-offset nebula tiling in `_draw_nebula` | Claude | Replace `draw_texture_rect` with a tiled draw whose UV offset tracks `gs.position_x / scroll_scale`. Add a 2nd layer (larger zoom, `0.4×` scroll) for parallax depth | `scroll_scale ≈ 600` gives visible motion without nausea. Texture remains cached per region; only the *draw offset* moves. |
+| Local biome tinting | Claude | Tint multiplier on the nebula draw interpolates toward the sampled biome's colour over ~0.5s as the player moves through pockets | Gives "you flew into a dust lane" feel without regenerating textures. |
+| POI spawn weight by biome | Claude | `_clamp_to_bounds` → `_pick_spawn_position`: rejection-sample biomes per encounter_type (e.g. `treasure` prefers `cRock`/asteroid, `distress` prefers void, `exploration` prefers nebula cores) | Content stays in JSON; only the *placement* is biome-aware. Falls back to uniform if no biome match in 16 attempts. |
+| Scanner-range modulation | Claude | POI discovery radius multiplied by `lerp(1.0, 0.6, dense_nebula)`. Emit `exploration_event("dense_nebula_entered" / "cleared")` on threshold crossings | Makes thick nebula genuinely obstructive — creates gameplay reason to navigate *around* dense regions, not through. |
+| Minimap biome tint | Claude | 4×4-downsampled biome sample colours the minimap backdrop | Cheap; makes the minimap actually informative about where you are in the region. |
+| Regression tests | Claude | `test_procedural_sample_determinism.gd` — same `(region, x, y)` returns identical biome across runs. `test_poi_biome_placement.gd` — `treasure` POIs land on `cRock` at >70% over 100 samples | GUT headless, fits existing pattern. |
+
+**Out of scope (explicit):**
+
+- No change to region boundaries, travel rules, or `MINIMAP_WORLD_RANGE`.
+- No new JSON content. The biome palette already covers what's needed; the visual variety comes from *sampling* existing data, not authoring more.
+- No combat/encounter mechanic changes. Biome affects *placement and scanning*, not the encounters themselves.
+
+**Exit criteria:**
+
+1. Flying 1500 world units in any direction visibly changes the nebula (tint + structure), without crossing a region boundary.
+2. At least three distinct "local feels" observable in a single region (e.g. void, dust lane, dense cloud).
+3. Scanner range measurably contracts in dense nebula — verified by a screenshot diff or printed radius value in debug overlay.
+4. `treasure`-type POIs cluster in rocky biome pockets rather than uniformly.
+5. All existing navigation unit tests still pass; two new tests above land green.
+
+**Risks / tradeoffs:**
+
+- *Perf.* Sampling biome at every POI spawn and every minimap tick adds noise work on the main thread. Mitigation: cache the 12 per-region datasources; sample lazily; minimap uses a 16×9 grid, not per-pixel.
+- *Nausea.* Parallax nebula on a 2D screen can feel wobbly if scroll rates are mis-tuned. Mitigation: scroll_scale defaults high (`600`), tweakable; if it feels bad, drop to single layer with slow scroll.
+- *Determinism creep.* If `sample_biome` ever returns different values for the same `(region, x, y)`, saved POI positions become meaningless. Mitigation: the seed is already fixed per region in `REGION_SEEDS`; test #1 above guards this.
+- *Over-investment.* If the team decides space should stay abstract/stylised (NES-era navigation UI), half this sprint becomes ornamental. Cut line: steps 1–3 (visual nuance) are independent of 4–6 (gameplay nuance) — ship 1–3 first, evaluate, decide whether to continue.
+
+**Suggested cut if time-boxed to one day:** ship steps 1–3 + test #1 only. That's the minimum to fix the "same place everywhere" complaint. Biome-driven gameplay (4–6) is a fast-follow.
 
 ### Backlog — preserved from MASTER_PLAN
 
@@ -268,20 +311,21 @@ Repo size dropped from ~5.0 GB to ~3.7 GB.
 
 ## 5. What to do today (if starting now)
 
-The "first commit" items from the original plan are all landed. Current state as of 2026-04-16 post-Sprint 5b:
+The "first commit" items from the original plan are all landed. Current state as of 2026-04-16 post-Sprint 5c part 2:
 
 - Sprint 1 (critical bugs + GUT) **done**.
 - Sprint 2 (art guide + Track A/B commitment) **done**; sprite pilot pending artist.
 - Sprint 3a/3b/3c (NavigationViewModel, CombatViewModel + combat_ui decomposition, should-fix bugs) **done**.
 - Sprint 5a (StarMapViewModel + star_map_screen decomposition) **done**.
 - Sprint 5b (crew morale wired into combat + trade; astral hazards retired as stale tracker — already wired) **done**.
+- Sprint 5c part 1 (dock gating + conquest surfacing; dormant-systems count 2 → 0) **done**.
+- Sprint 5c part 2 (DataLoader cache hardening + HUD polish: segmented hull bar + objective + morale pip) **done**.
 
 **Pick next from:**
 
-1. **Sprint 5c** — dock gating (realm_control + reputation), conquest surfacing, DataLoader cache invalidation, HUD polish (segmented hull bar + objective + morale pip). Two dormant systems left — this is the finish line.
-2. **Sprint 7 cutscene modernisation** — offline Blender work, parallelisable with 5c. Prep scaffolding already in place (cutscene registry + EventBus signal + indentation + fade fix, per Sprint 7-prep commit alongside 5b).
+1. **Sprint 7 cutscene modernisation** — offline Blender work. Prep scaffolding already in place (cutscene registry + EventBus signal + indentation + fade fix, per Sprint 7-prep commit). Blender-mcp + blender-claude-plugin now make the `.blend` rework Claude-drivable.
+2. **Sprint 6** — dialogue decomposition (last UI god-script) + onboarding + multi-slot saves (includes ESC rebind for pause/skip collision surfaced in 3c).
 3. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
-4. **Sprint 6** — dialogue decomposition + onboarding + multi-slot saves (includes ESC rebind for pause/skip collision surfaced in 3c).
 
 Open this file and MASTER_PLAN §7 side by side at the start of every work session. Everything else is sequenced above.
 
@@ -298,4 +342,6 @@ Open this file and MASTER_PLAN §7 side by side at the start of every work sessi
 | 2026-04-16 | Sprint 5 sliced into 5a/5b/5c (mirrors the 3a/3b/3c pattern). Sprint 5a closed: StarMapViewModel + `star_map_screen.gd` decomposition. 1092 → 375-line orchestrator + 3 layer components (`scripts/ui/star_map/{galaxy,region,local}_layer.gd`) + 184-line VM. 23 → 0 refs in `star_map_screen.gd`; UI total 129 → 106. +20 tests in `test_star_map_view_model.gd`; full suite 97/97 green. Sprint 5b (system wiring: morale, hazards) and 5c (dock gating, conquest, DataLoader, HUD) still pending. |
 | 2026-04-16 | Sprint 5b closed. Crew morale threaded through `CombatSystem.calculate_damage` (new `morale_modifier` parameter applied to effective firepower) and `EconomySystem.get_buy_price`/`get_sell_price`/`buy_crystals`/`sell_crystals` (low morale costs more on buy AND earns less on sell, via `2.0 - m` inversion on the sell side). `CombatViewModel.combat_morale_modifier()` fetches from `GameSession.crew_morale.get_combat_modifier(gs)`; `trade_screen.gd` uses `get_trade_modifier(gs)`. **Astral hazards finding:** the "apply astral hazards during navigation tick" row was a stale tracker — hazards have been ticking at `navigation.gd:213` since the feature shipped. Retired from the plan rather than re-implemented. +24 tests across `test_crew_morale_combat_wiring.gd` and `test_crew_morale_trade_wiring.gd`; full suite 121/121 green. Dormant-systems count 4 → 2 (realm_control + faction_conquest still open in 5c). |
 | 2026-04-16 | Sprint 7 tooling: added blender-mcp (ahujasid/blender-mcp, 19 900+ stars) and blender-claude-plugin (ra100, experimental) to the Sprint 7 setup block. blender-mcp gives Claude live socket control of Blender (create/modify objects, materials, camera, arbitrary Python), changing the .blend rework from "blocked on human artist" to "Claude-drivable". Remaining table split into "Claude" vs "human artist" rows accordingly. Warning added: blender-mcp.org is unofficial — use the GitHub repo directly. |
+| 2026-04-16 | Sprint 5c part 1 closed (dock gating + conquest surfacing). `StarBaseSystem` gained `realm_control` injection + `get_dock_block_reason()`; `can_dock` now gates hostile-controller regions below a `-50` reputation threshold on top of the pre-existing stronghold rep gate. `GameSession._process` ticks `FactionConquestAI` every 60 s; `resolve_actions` emits `EventBus.faction_conflict` per action and attack victories shift `RealmControlSystem` influence, emitting `realm_control_changed` when controllers flip. Navigation HUD flashes the block reason on refused docks and toasts controller flips. +17 tests in `test_dock_gating.gd` (9) + `test_conquest_surfacing.gd` (8); full suite 138/138 green. **Dormant-systems count 2 → 0** — all four CODE_REVIEW §3 systems now drive observable gameplay. Sprint 5c part 2 (DataLoader cache + HUD polish) still pending. |
 | 2026-04-16 | Sprint 7 prep (companion commit to 5b). Engineering-only scaffolding that doesn't require the `.blend` rework: new `data/cutscenes/_registry.json` with the `no_tail_outpost` entry; `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` signal + `cutscene_scene.gd._on_cutscene_finished` wired to emit it (no more stub print); `camera_controller.gd` 4-space → tabs; `_fade_in_character` shared-material mutation replaced with per-surface duplicated override materials (CODE_REVIEW §6A.3 closed); `TODO(S7)` headers on all runtime geometry hacks (`_hide_back_wall`, `_build_interior`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, `MaterialApplicator.apply()` call site) so deletion is mechanical when the rework lands. Remaining Sprint 7 work blocked on human artist / Blender rework. |
+| 2026-04-16 | Sprint 5c part 2 closed (DataLoader cache hardening + HUD polish). `_load_json` now deep-duplicates cached Dictionary/Array payloads on every read so caller mutation cannot leak back into the cache; new `clear_cache()` + `invalidate(path)` public API; `GameSession.start_new_game` and `load_game` call `clear_cache()` on session crossover. #12 subsumed — cache already dedupes disk I/O and deep-copy isolation removes the mutation-amplification concern. HUD gains `HullBar` (segmented, 10-cell, colour-graded low/mid/high) + `MoralePip` (colour keyed to `CrewMoraleSystem` tiers) under `scripts/ui/hud/`; `NarrativeSystem.get_arc_objective()` returns `objective_text` or falls back to `theme`; `navigation.tscn` `TopBar` restructured to VBox with a persistent `ObjectiveLabel`. +37 tests across `test_data_loader_cache.gd` (9), `test_narrative_arc_objective.gd` (4), `test_hud_hull_bar.gd` (12), `test_hud_morale_pip.gd` (6), and `test_navigation_view_model.gd` extensions (11 new tests + `MoraleDouble`/`objective_value`); full suite 175/175 green (was 138/138). MASTER_PLAN §5.3 Apr-05 #4 + #12 closed; CODE_REVIEW §4.6 + §5.3 + §2.6 closed. Sprint 5c fully done. |

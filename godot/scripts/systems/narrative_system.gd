@@ -67,6 +67,18 @@ func get_arc_title(arc_id: String) -> String:
 	return arc_id
 
 
+## One-glance objective line for the HUD. Uses `objective_text` when the arc
+## provides one, falling back to the arc `theme`. Empty string if neither.
+func get_arc_objective(game_state: GameStateData) -> String:
+	var arc_def := get_current_arc_def(game_state)
+	if arc_def.is_empty():
+		return ""
+	var objective: String = arc_def.get("objective_text", "")
+	if objective.is_empty():
+		objective = arc_def.get("theme", "")
+	return objective
+
+
 func get_arc_progress(game_state: GameStateData) -> Dictionary:
 	var arc_def := get_current_arc_def(game_state)
 	if arc_def.is_empty():

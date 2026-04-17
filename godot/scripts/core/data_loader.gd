@@ -13,8 +13,11 @@ func _init(p_data_root: String = "res://data") -> void:
 
 
 func _load_json(relative_path: String) -> Variant:
+	# Apr-05 #4: cached Dictionary/Array references used to leak back into the
+	# cache when callers mutated them. Deep-duplicate on read so the cache stays
+	# authoritative and every caller gets an isolated copy.
 	if _cache.has(relative_path):
-		return _cache[relative_path]
+		return _duplicate_cached(_cache[relative_path])
 	var full_path := data_root.path_join(relative_path)
 	if not FileAccess.file_exists(full_path):
 		push_error("Data file not found: %s" % full_path)
@@ -31,7 +34,32 @@ func _load_json(relative_path: String) -> Variant:
 		push_error("Failed to parse JSON in %s: %s" % [full_path, json.get_error_message()])
 		return null
 	_cache[relative_path] = json.data
-	return json.data
+	return _duplicate_cached(json.data)
+
+
+static func _duplicate_cached(value: Variant) -> Variant:
+	if value is Dictionary:
+		return (value as Dictionary).duplicate(true)
+	if value is Array:
+		return (value as Array).duplicate(true)
+	return value
+
+
+## Drop every cached JSON payload. Called on load_game so stale data from a
+## prior session cannot bleed into the next one.
+func clear_cache() -> void:
+	_cache.clear()
+
+
+## Drop a single cached JSON payload (relative path inside data_root). No-op
+## when the path is not in the cache.
+func invalidate(relative_path: String) -> void:
+	_cache.erase(relative_path)
+
+
+## Test/debug helper — true when a given relative_path is held in the cache.
+func is_cached(relative_path: String) -> bool:
+	return _cache.has(relative_path)
 
 
 func load_protagonists() -> Dictionary:

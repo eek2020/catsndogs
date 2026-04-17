@@ -113,7 +113,10 @@ func _choose_action_type(faction: Faction) -> String:
 # Action resolution
 # ------------------------------------------------------------------
 
-func resolve_actions(game_state: GameStateData) -> Array:
+## Resolve all pending actions. When `realm_control` is supplied (Sprint 5c),
+## attack wins translate into territorial influence shifts, and each resolved
+## action emits `EventBus.faction_conflict` so the UI and conquest log can react.
+func resolve_actions(game_state: GameStateData, realm_control = null) -> Array:
 	var resolved_arr: Array = []
 	for action in pending_actions:
 		if action.resolved:
@@ -127,7 +130,7 @@ func resolve_actions(game_state: GameStateData) -> Array:
 			continue
 		match action.action_type:
 			"attack":
-				_resolve_attack(action, aggressor, target)
+				_resolve_attack(action, aggressor, target, realm_control)
 			"blockade":
 				_resolve_blockade(action, aggressor, target)
 			"diplomacy":
@@ -137,11 +140,12 @@ func resolve_actions(game_state: GameStateData) -> Array:
 		action.resolved = true
 		resolved_arr.append(action)
 		history.append(action)
+		EventBus.faction_conflict.emit(action.aggressor_id, action.target_id, action.outcome)
 	pending_actions = pending_actions.filter(func(a): return not a.resolved)
 	return resolved_arr
 
 
-func _resolve_attack(action: ConquestAction, aggressor: Faction, target: Faction) -> void:
+func _resolve_attack(action: ConquestAction, aggressor: Faction, target: Faction, realm_control = null) -> void:
 	var attacker_power: float = aggressor.military_strength + aggressor.tactical_rating * 0.3
 	var defender_power: float = target.military_strength + target.internal_stability * 0.2
 	if attacker_power > defender_power:
@@ -152,6 +156,14 @@ func _resolve_attack(action: ConquestAction, aggressor: Faction, target: Faction
 		aggressor.crystal_reserves += crystal_loot
 		target.internal_stability = maxi(0, target.internal_stability - 5)
 		action.outcome = "victory"
+		# Sprint 5c — victories shift territorial influence in the target's home
+		# realm so map control actually changes over time.
+		if realm_control != null and not target.realm.is_empty():
+			var previous_controller: String = realm_control.get_region_controller(target.realm)
+			realm_control.apply_conflict_result(target.realm, action.aggressor_id, action.target_id, float(loss))
+			var new_controller: String = realm_control.get_region_controller(target.realm)
+			if new_controller != previous_controller:
+				EventBus.realm_control_changed.emit(target.realm, previous_controller, new_controller)
 	else:
 		var loss := mini(5, int((defender_power - attacker_power) * 0.1))
 		aggressor.military_strength = maxi(0, aggressor.military_strength - loss)

@@ -117,6 +117,61 @@ func arc_progress() -> Dictionary:
 	return _session.narrative.get_arc_progress(_session.game_state)
 
 
+## Sprint 5c part 2 — one-glance objective line shown on the HUD top bar.
+func arc_objective() -> String:
+	return _session.narrative.get_arc_objective(_session.game_state)
+
+
+# ---------------------------------------------------------------------------
+# Hull + crew + morale — HUD surfacing (Sprint 5c part 2)
+# ---------------------------------------------------------------------------
+
+func hull_current() -> int:
+	var gs: GameStateData = _session.game_state
+	if gs == null or gs.player_ship == null:
+		return 0
+	return gs.player_ship.current_hull
+
+
+func hull_max() -> int:
+	var gs: GameStateData = _session.game_state
+	if gs == null or gs.player_ship == null:
+		return 0
+	return gs.player_ship.max_hull
+
+
+func crew_count() -> int:
+	var gs: GameStateData = _session.game_state
+	if gs == null or gs.player_ship == null:
+		return 0
+	return gs.player_ship.crew.size()
+
+
+func crew_capacity() -> int:
+	var gs: GameStateData = _session.game_state
+	if gs == null or gs.player_ship == null:
+		return 0
+	return gs.player_ship.crew_capacity
+
+
+func has_crew_morale() -> bool:
+	return _session.crew_morale != null
+
+
+## Average crew morale 0..100; 100 when no crew / no system.
+func crew_morale_average() -> int:
+	if _session.crew_morale == null or _session.game_state == null:
+		return 100
+	return _session.crew_morale.get_average_morale(_session.game_state)
+
+
+## Label for the HUD pip ("STEADY", "MUTINY", etc). Empty when morale system missing.
+func crew_morale_label() -> String:
+	if _session.crew_morale == null or _session.game_state == null:
+		return ""
+	return _session.crew_morale.get_morale_status(_session.game_state)
+
+
 func has_karma_system() -> bool:
 	return _session.karma_system != null
 
@@ -180,6 +235,12 @@ func get_base(id: String) -> StarBase:
 
 func can_dock(base_id: String) -> bool:
 	return _session.star_base_system.can_dock(_session.game_state, base_id)
+
+
+## Return the UI-facing reason the player cannot dock, or "" when docking is allowed.
+## Sprint 5c — exposes realm-control and reputation gates to the HUD.
+func get_dock_block_reason(base_id: String) -> String:
+	return _session.star_base_system.get_dock_block_reason(_session.game_state, base_id)
 
 
 func dock(base_id: String) -> void:

@@ -2,12 +2,16 @@
 ## Mirrors Python ui/navigation.py NavigationState.
 extends Control
 
-@onready var arc_label: Label = $HUD/TopBar/ArcLabel
-@onready var region_label: Label = $HUD/TopBar/RegionLabel
-@onready var crystals_label: Label = $HUD/TopBar/CrystalsLabel
-@onready var salvage_label: Label = $HUD/TopBar/SalvageLabel
-@onready var hull_label: Label = $HUD/TopBar/HullLabel
-@onready var karma_label: Label = $HUD/TopBar/KarmaLabel
+@onready var arc_label: Label = $HUD/TopBar/Row1/ArcLabel
+@onready var region_label: Label = $HUD/TopBar/Row1/RegionLabel
+@onready var crystals_label: Label = $HUD/TopBar/Row1/CrystalsLabel
+@onready var salvage_label: Label = $HUD/TopBar/Row1/SalvageLabel
+@onready var hull_bar: HullBar = $HUD/TopBar/Row1/HullBar
+@onready var hull_label: Label = $HUD/TopBar/Row1/HullLabel
+@onready var crew_label: Label = $HUD/TopBar/Row1/CrewLabel
+@onready var morale_pip: MoralePip = $HUD/TopBar/Row1/MoralePip
+@onready var karma_label: Label = $HUD/TopBar/Row1/KarmaLabel
+@onready var objective_label: Label = $HUD/TopBar/ObjectiveLabel
 @onready var flash_label: Label = $HUD/FlashLabel
 
 var _vm: NavigationViewModel = null
@@ -44,6 +48,33 @@ const ENCOUNTER_TYPE_COLORS := {
 	"abandoned_ship": Color(0.75, 0.4, 1.0),
 	"crystal_hoard": Color(0.75, 0.4, 1.0),
 }
+
+# Biome preferences per encounter type. Empty / missing entries mean "any
+# biome is fine" and placement falls through to uniform randomness.
+# Biome IDs map to `addons/procedural_world_map/biome_constants.gd`.
+const BIOME_PREFERENCES := {
+	# Wrecks and crystal hoards make sense in asteroid fields / void.
+	"treasure": [10, 0],              # cRock, cDeepWater
+	"abandoned_ship": [10, 0, 1],     # cRock, cDeepWater, cShallowWater
+	"crystal_hoard": [10, 12],        # cRock, cSnow (bright core)
+	# Distress signals broadcast from empty void, away from dense clouds.
+	"distress_signal": [0, 1],        # cDeepWater, cShallowWater
+	"rescue": [0, 1],
+	# Exploration encounters favour nebula pockets.
+	"exploration": [6, 7, 8, 9],      # forests: nebula pockets
+	# Hidden locations hide in dense clouds.
+	"hidden": [6, 9, 12],             # cForest, cRainForest, cSnow core
+}
+
+const BIOME_SPAWN_CANDIDATES: int = 16
+
+# Biomes where the nebula is dense enough to obscure the scanner. Matches
+# the palette entries that read as "thick cloud" visually in SPACE_COLORS.
+# Values are biome IDs from addons/procedural_world_map/biome_constants.gd.
+const DENSE_NEBULA_BIOMES := [6, 9, 12]  # cForest, cRainForest, cSnow
+const DENSE_NEBULA_SCAN_MULT: float = 0.6
+
+var _in_dense_nebula: bool = false
 
 # Fog of war
 const FOG_COLOR := Color(0.02, 0.03, 0.05, 0.85)
@@ -97,6 +128,8 @@ var _trail: Array = []
 # Procedural nebula backdrop
 var _nebula_texture: ImageTexture = null
 var _nebula_tint: Color = Color(0.6, 0.6, 0.8)
+var _nebula_local_tint: Color = Color(1.0, 1.0, 1.0)  # biome modulator, eased toward target
+const NEBULA_TINT_LERP_SPEED: float = 2.0
 
 
 # Distress signals handled by SideMissionSystem.update_distress()
@@ -125,6 +158,8 @@ func _ready() -> void:
 	_refresh_pois()
 	_update_hud()
 	EventBus.arc_advanced.connect(_on_arc_advanced)
+	# Sprint 5c — map-shaking events get a flash so the player sees conquest actually happening.
+	EventBus.realm_control_changed.connect(_on_realm_control_changed)
 
 
 static func _remove_background_by_corners(tex: Texture2D, tolerance: float = 0.13, feather: float = 0.05) -> Texture2D:
@@ -184,12 +219,19 @@ func _build_starfield() -> void:
 func _refresh_nebula() -> void:
 	if not _vm.has_state():
 		return
+	var gs: GameStateData = _vm.state()
 	var region_id: String = _vm.current_region()
 	var cam_size := Vector2i(int(size.x), int(size.y))
 	if cam_size.x <= 0 or cam_size.y <= 0:
 		cam_size = Vector2i(1280, 720)
-	_nebula_texture = ProceduralMapManager.get_nav_texture(region_id, cam_size)
+	var world_pos := Vector2(gs.position_x, gs.position_y)
+	_nebula_texture = ProceduralMapManager.get_nav_texture(region_id, cam_size, world_pos)
 	_nebula_tint = ProceduralMapManager.get_region_tint(region_id)
+	var sample: Dictionary = ProceduralMapManager.sample_biome(region_id, gs.position_x, gs.position_y)
+	var target_tint: Color = sample.get("biome_tint", Color(1.0, 1.0, 1.0))
+	var dt: float = get_process_delta_time()
+	var t: float = clampf(dt * NEBULA_TINT_LERP_SPEED, 0.0, 1.0)
+	_nebula_local_tint = _nebula_local_tint.lerp(target_tint, t)
 
 
 func _has_overlay() -> bool:
@@ -255,10 +297,26 @@ func _handle_movement(dt: float) -> void:
 		new_pos.y = clampf(new_pos.y, 0.0, bounds.y)
 		_vm.set_position(new_pos)
 
-		# Reveal fog around ship (halved when fog_blind)
+		# Reveal fog around ship (halved when fog_blind, further reduced in
+		# dense nebula pockets — the scanner genuinely loses range in thick
+		# clouds, which creates a reason to navigate *around* them).
 		var reveal_radius: float = 300.0
 		if ahs != null and ahs.has_active_effect("fog_blind"):
 			reveal_radius = 150.0
+		var scan_biome: Dictionary = ProceduralMapManager.sample_biome(
+			region_id, new_pos.x, new_pos.y
+		)
+		var scan_biome_id: int = int(scan_biome.get("biome_id", -1))
+		var now_dense: bool = scan_biome_id in DENSE_NEBULA_BIOMES
+		if now_dense:
+			reveal_radius *= DENSE_NEBULA_SCAN_MULT
+		if now_dense != _in_dense_nebula:
+			_in_dense_nebula = now_dense
+			EventBus.exploration_event.emit({
+				"type": "dense_nebula_entered" if now_dense else "dense_nebula_cleared",
+				"region_id": region_id,
+				"biome_id": scan_biome_id,
+			})
 		_vm.reveal_around(region_id, new_pos.x, new_pos.y, reveal_radius)
 
 		# Check region boundary for transitions
@@ -410,19 +468,56 @@ func _spawn_poi(encounter: Encounter) -> void:
 			"label": fixed_pos.get("label", encounter.title),
 		})
 	else:
-		var angle := randf() * TAU
-		var distance := randf_range(420.0, 960.0)
-		var clamped: Vector2 = _clamp_to_bounds(
-			gs.position_x + cos(angle) * distance,
-			gs.position_y + sin(angle) * distance,
+		var pos: Vector2 = _pick_biome_spawn(
+			encounter.encounter_type,
+			gs.position_x,
+			gs.position_y,
+			gs.current_region,
 		)
 		_active_pois.append({
 			"encounter": encounter,
-			"x": clamped.x,
-			"y": clamped.y,
+			"x": pos.x,
+			"y": pos.y,
 			"radius": POI_RADIUS,
 			"color": color,
 		})
+
+
+## Pick a spawn position for a dynamic POI. If the encounter type has a
+## biome preference, rejection-sample up to BIOME_SPAWN_CANDIDATES times
+## and return the first candidate that lands in a preferred biome. If none
+## match, fall back to the first candidate so spawns never fail.
+func _pick_biome_spawn(
+	encounter_type: String,
+	center_x: float,
+	center_y: float,
+	region_id: String,
+) -> Vector2:
+	var prefs: Array = BIOME_PREFERENCES.get(encounter_type, [])
+	var first: Vector2 = _random_spawn_candidate(center_x, center_y)
+	if prefs.is_empty():
+		return first
+	if _sample_biome_id(region_id, first.x, first.y) in prefs:
+		return first
+	for _i in range(BIOME_SPAWN_CANDIDATES - 1):
+		var candidate: Vector2 = _random_spawn_candidate(center_x, center_y)
+		if _sample_biome_id(region_id, candidate.x, candidate.y) in prefs:
+			return candidate
+	return first
+
+
+func _random_spawn_candidate(center_x: float, center_y: float) -> Vector2:
+	var angle := randf() * TAU
+	var distance := randf_range(420.0, 960.0)
+	return _clamp_to_bounds(
+		center_x + cos(angle) * distance,
+		center_y + sin(angle) * distance,
+	)
+
+
+func _sample_biome_id(region_id: String, world_x: float, world_y: float) -> int:
+	var sample: Dictionary = ProceduralMapManager.sample_biome(region_id, world_x, world_y)
+	return int(sample.get("biome_id", -1))
 
 
 func _get_fixed_position(encounter_id: String, region_id: String) -> Dictionary:
@@ -455,8 +550,14 @@ func _check_base_proximity() -> void:
 	_nearby_base_id = _vm.check_dock_proximity(pos.x, pos.y)
 	if not _nearby_base_id.is_empty():
 		var base: StarBase = _vm.get_base(_nearby_base_id)
-		if base != null and _vm.can_dock(_nearby_base_id):
+		if base == null:
+			return
+		var reason: String = _vm.get_dock_block_reason(_nearby_base_id)
+		if reason.is_empty():
 			flash("[E] Dock at %s" % base.base_name, 0.5)
+		else:
+			# Sprint 5c — surface the gate reason so the player knows why E won't dock them.
+			flash("%s: %s" % [base.base_name, reason], 0.5)
 
 
 func _land_on_planet() -> void:
@@ -756,11 +857,20 @@ func _update_hud() -> void:
 	region_label.text = gs.current_region.replace("_", " ").capitalize()
 	crystals_label.text = "Crystals: %d" % gs.crystal_inventory
 	salvage_label.text = "Salvage: %d" % gs.salvage
-	if gs.player_ship:
-		hull_label.text = "Hull: %d/%d  Crew: %d/%d" % [
-			gs.player_ship.current_hull, gs.player_ship.max_hull,
-			gs.player_ship.crew.size(), gs.player_ship.crew_capacity,
-		]
+	# Sprint 5c part 2 — segmented hull bar + numeric readout.
+	var current_hull: int = _vm.hull_current()
+	var max_hull: int = _vm.hull_max()
+	if hull_bar != null:
+		hull_bar.set_hull(current_hull, max_hull)
+	hull_label.text = "%d/%d" % [current_hull, max_hull]
+	# Sprint 5c part 2 — crew count + morale pip.
+	crew_label.text = "Crew %d/%d" % [_vm.crew_count(), _vm.crew_capacity()]
+	if morale_pip != null and _vm.has_crew_morale():
+		morale_pip.set_morale(_vm.crew_morale_average())
+		morale_pip.tooltip_text = _vm.crew_morale_label()
+	# Sprint 5c part 2 — persistent objective surface (CODE_REVIEW §4.6, §5.3).
+	if objective_label != null:
+		objective_label.text = _vm.arc_objective()
 	# Karma HUD
 	if karma_label != null and _vm.has_karma_system():
 		var tier_label_text: String = _vm.karma_tier_label()
@@ -814,6 +924,31 @@ func _on_arc_transition_complete(_new_arc: String) -> void:
 		EventBus.arc_transition_complete.disconnect(_on_arc_transition_complete)
 
 
+## Sprint 5c — conquest surfacing. When a region's controller flips (either
+## because a faction's attack won the region or they lost it), the player sees
+## a flash so the conquest tick is not invisible.
+func _on_realm_control_changed(region_id: String, old_controller: String, new_controller: String) -> void:
+	if not _vm.has_state():
+		return
+	var gs: GameStateData = _vm.state()
+	var old_name: String = _faction_display_name(gs, old_controller)
+	var new_name: String = _faction_display_name(gs, new_controller)
+	var pretty_region: String = region_id.replace("_", " ").capitalize()
+	if old_controller.is_empty():
+		flash("%s claimed by %s" % [pretty_region, new_name], 3.5)
+	elif new_controller.is_empty():
+		flash("%s slipped from %s" % [pretty_region, old_name], 3.5)
+	else:
+		flash("%s: %s → %s" % [pretty_region, old_name, new_name], 3.5)
+
+
+func _faction_display_name(gs: GameStateData, faction_id: String) -> String:
+	if faction_id.is_empty():
+		return "unclaimed space"
+	var faction: Faction = gs.faction_registry.get(faction_id)
+	return faction.faction_name if faction != null else faction_id
+
+
 # ---------------------------------------------------------------------------
 # Drawing
 # ---------------------------------------------------------------------------
@@ -840,12 +975,20 @@ func _draw() -> void:
 	_draw_controls_bar()
 
 
-func _draw_nebula(gs: GameStateData) -> void:
+func _draw_nebula(_gs: GameStateData) -> void:
 	_refresh_nebula()
 	if _nebula_texture == null:
 		return
-	# Draw the nebula texture stretched across the full screen with region tint
-	var tint_color := Color(_nebula_tint.r, _nebula_tint.g, _nebula_tint.b, 0.45)
+	# Region tint modulated by the locally-sampled biome tint, so dense
+	# pockets of different biomes fade in visibly as the ship drifts across
+	# them. Region tint holds the *character* of the region, biome tint adds
+	# the per-location *texture*.
+	var tint_color := Color(
+		_nebula_tint.r * _nebula_local_tint.r,
+		_nebula_tint.g * _nebula_local_tint.g,
+		_nebula_tint.b * _nebula_local_tint.b,
+		0.45,
+	)
 	draw_texture_rect(_nebula_texture, Rect2(Vector2.ZERO, size), false, tint_color)
 
 
@@ -1510,13 +1653,16 @@ func _draw_ship(center: Vector2) -> void:
 		draw_circle(engine_pos, 3.0 * glow_pulse, Color(0.8, 0.95, 1.0, 0.8))
 
 
+const MINIMAP_BIOME_GRID: int = 8
+const MINIMAP_BASE_COLOR := Color(0.05, 0.07, 0.11, 0.8)
+
+
 func _draw_minimap(gs: GameStateData) -> void:
 	var map_x: float = size.x - MINIMAP_SIZE - MINIMAP_MARGIN
 	var map_y: float = size.y - MINIMAP_SIZE - MINIMAP_MARGIN - 30  # Above controls bar
 	var map_rect := Rect2(map_x, map_y, MINIMAP_SIZE, MINIMAP_SIZE)
 
-	# Background
-	draw_rect(map_rect, Color(0.05, 0.07, 0.11, 0.8))
+	_draw_minimap_biome_background(map_rect, gs)
 	# Border
 	draw_rect(map_rect, Color(0.2, 0.4, 0.7, 0.8), false, 2.0)
 
@@ -1655,6 +1801,39 @@ func _draw_minimap(gs: GameStateData) -> void:
 	if default_font:
 		var region_name: String = gs.current_region.replace("_", " ").to_upper()
 		draw_string(default_font, Vector2(map_x + 4, map_y + 14), region_name, HORIZONTAL_ALIGNMENT_LEFT, MINIMAP_SIZE - 8, 11, Color(0.4, 0.7, 0.86))
+
+
+## Paint the minimap background as an MxM grid of biome-sampled cells so
+## the minimap shows *where you are* in the region instead of flat dark.
+## Cheap — MINIMAP_BIOME_GRID^2 samples per frame via the resident
+## per-region datasource.
+func _draw_minimap_biome_background(map_rect: Rect2, gs: GameStateData) -> void:
+	var cell_px: float = map_rect.size.x / float(MINIMAP_BIOME_GRID)
+	var cell_world: float = MINIMAP_WORLD_RANGE / float(MINIMAP_BIOME_GRID)
+	var half_range: float = MINIMAP_WORLD_RANGE * 0.5
+	var region_tint: Color = ProceduralMapManager.get_region_tint(gs.current_region)
+	for gy in range(MINIMAP_BIOME_GRID):
+		for gx in range(MINIMAP_BIOME_GRID):
+			var wx: float = gs.position_x - half_range + (gx + 0.5) * cell_world
+			var wy: float = gs.position_y - half_range + (gy + 0.5) * cell_world
+			var sample: Dictionary = ProceduralMapManager.sample_biome(gs.current_region, wx, wy)
+			var biome_tint: Color = sample.get("biome_tint", Color(1.0, 1.0, 1.0))
+			# Multiply base colour by region tint and biome tint. Alpha stays
+			# at base so the minimap doesn't wash out over the gameplay view.
+			var cell_color := Color(
+				MINIMAP_BASE_COLOR.r + region_tint.r * biome_tint.r * 0.08,
+				MINIMAP_BASE_COLOR.g + region_tint.g * biome_tint.g * 0.08,
+				MINIMAP_BASE_COLOR.b + region_tint.b * biome_tint.b * 0.08,
+				MINIMAP_BASE_COLOR.a,
+			)
+			var cell_rect := Rect2(
+				map_rect.position.x + gx * cell_px,
+				map_rect.position.y + gy * cell_px,
+				cell_px + 1.0,  # +1 to avoid hairline gaps from float rounding
+				cell_px + 1.0,
+			).intersection(map_rect)
+			if cell_rect.size.x > 0 and cell_rect.size.y > 0:
+				draw_rect(cell_rect, cell_color)
 
 
 func _draw_status_effects() -> void:

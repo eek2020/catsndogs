@@ -80,11 +80,14 @@ story/                 # Narrative reference (arcs, characters, factions)
 
 ## Task Workflow
 
-1. Read all files you will modify before making changes
-2. Implement the changes
-3. Test in the Godot editor — run the scene and verify behavior
-4. Run the GUT test suite (see below) before declaring work done
-5. Add an entry to `docs/changelog/CHANGELOG.md`
+1. **Orient via the code map.** Skim `docs/architecture/CODEMAP.md` (auto-generated) to locate autoloads, signals, systems, ViewModels, screens, or data files relevant to the task. This is the canonical "where does X live" index.
+2. Read all files you will modify before making changes
+3. Implement the changes
+4. Test in the Godot editor — run the scene and verify behavior
+5. Run the GUT test suite (see below) before declaring work done
+6. Add an entry to `docs/changelog/CHANGELOG.md`
+
+The code map (`docs/architecture/CODEMAP.md`) regenerates automatically via a Stop hook in `.claude/settings.json` — no manual step needed. Run `bash .claude/skills/codemap/generate.sh` by hand only if you're editing outside Claude Code and want the committed map current.
 
 ## Testing
 
@@ -102,6 +105,7 @@ Every new bug fix or system should land with a regression test that would have f
 
 ## Key Files
 
+- `docs/architecture/CODEMAP.md` — **Start here.** Auto-generated code map: autoloads, every EventBus signal (with line anchors), systems, ViewModels↔screens↔scenes, all data files. Regenerate with `.claude/skills/codemap/generate.sh`.
 - `godot/project.godot` — Project config, autoloads, input mappings
 - `godot/scenes/main.tscn` — Main entry scene
 - `godot/scripts/autoload/event_bus.gd` — Pub/sub signal hub

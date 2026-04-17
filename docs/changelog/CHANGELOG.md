@@ -6,6 +6,146 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-17 — Sprint 8 (full scope): biome-driven placement, minimap tint, scanner modulation
+
+NEXT_STEPS Sprint 8 steps 4–6, following this morning's one-day cut (steps 1–3 + determinism test). The biome field that the nebula now samples at every point also drives gameplay: where POIs spawn, how far the scanner sees, and how the minimap reads.
+
+**POI biome weighting — `godot/scripts/ui/navigation.gd`:**
+
+- New `BIOME_PREFERENCES` table maps encounter types to preferred biome IDs: `treasure → [cRock, cDeepWater]`, `abandoned_ship → [cRock, cDeepWater, cShallowWater]`, `crystal_hoard → [cRock, cSnow]`, `distress_signal`/`rescue → [cDeepWater, cShallowWater]`, `exploration → [cForest, cSeasonalForest, cBorealForest, cRainForest]`, `hidden → [cForest, cRainForest, cSnow]`. Missing entries are treated as "any biome fine" and fall through to uniform placement — no gameplay regression for `combat`, `trade`, `event`, `diplomatic`.
+- New `_pick_biome_spawn(encounter_type, cx, cy, region_id)` rejection-samples up to `BIOME_SPAWN_CANDIDATES = 16` random `(angle, distance)` pairs, returning the first whose sampled biome is in the preferred list. Falls back to the first candidate if none match, so spawns never fail. `_spawn_poi` wires this into the non-fixed-position path; fixed-position story POIs are untouched.
+- Helpers `_random_spawn_candidate` and `_sample_biome_id` pull the candidate generation and biome lookup into separately testable units (though the regression test exercises `ProceduralMapManager.sample_biome` directly — the UI wrapper is a thin layer).
+
+**Scanner modulation — `godot/scripts/ui/navigation.gd`:**
+
+- New constants `DENSE_NEBULA_BIOMES = [cForest, cRainForest, cSnow]` and `DENSE_NEBULA_SCAN_MULT = 0.6`. When the ship passes into one of those biomes, the fog-of-war reveal radius (normally 300, already halved to 150 under `fog_blind`) multiplies by 0.6 — scanner range genuinely contracts in thick cloud, so there's a reason to navigate around dense pockets instead of through them.
+- New `_in_dense_nebula` flag tracks the entry/exit boundary. On each crossing, `EventBus.exploration_event` fires with `{type: "dense_nebula_entered" | "dense_nebula_cleared", region_id, biome_id}` so narrative or mission systems can react downstream (nothing listens yet — surface is opened, not wired).
+
+**Minimap biome tint — `godot/scripts/ui/navigation.gd`:**
+
+- `_draw_minimap` now calls `_draw_minimap_biome_background(map_rect, gs)` instead of a flat fill. The helper samples an `8 × 8 = 64` grid of biome cells centred on the ship (covering `MINIMAP_WORLD_RANGE = 2400` world units), composing each cell as `base_color + region_tint * biome_tint * 0.08`. Alpha stays at the minimap base so the tinting doesn't wash out gameplay behind it. Constants `MINIMAP_BIOME_GRID` and `MINIMAP_BASE_COLOR` sit next to `_draw_minimap` so tuning is local.
+
+**New regression test (+4 tests):**
+
+- `godot/tests/unit/test_poi_biome_placement.gd` — mirrors `_pick_biome_spawn`'s rejection-sampling logic as a pure test helper, then: (1) verifies `starting_realm` covers ≥ 3 distinct biomes (biome nuance requires biome variety — if this ever fails the noise seed has collapsed), (2) compares biased vs. uniform hit rates over 150 trials for `[cRock]` (biased must out-hit uniform — with a `pending()` escape if the region happens to lack any rocky pockets, avoiding a false-fail on seed changes), (3) empty preference → returns first candidate, (4) unreachable preference (`[-1]`) → falls back to first candidate without looping. Uses a seeded `RandomNumberGenerator` so runs are deterministic.
+
+**Tests:** Full GUT suite **183/183 passing** (was 179 after the morning's one-day cut; +4 today). Zero orphans, zero exit errors.
+
+**Sprint 8 status:** all six scope items (nebula sampling, parallax/local tint, determinism test, POI biome weighting, scanner modulation, minimap tint) now shipped. Second parallax nebula layer from the original scope was descoped during implementation — single layer reads well enough with biome modulation that adding a second layer felt like polish, not nuance.
+
+---
+
+## 2026-04-17 — Sprint 8 (one-day cut): navigation nebula becomes location-aware
+
+NEXT_STEPS Sprint 8 steps 1–3 + determinism test — the minimum cut that fixes the "hyper-speeding leaves you in the same place" complaint. Biome-driven POI placement and scanner modulation (Sprint 8 steps 4–6) remain backlog. Today the nebula becomes a *field sampled at the player's world position* instead of one cached texture stretched over the camera.
+
+**Core change — `godot/scripts/autoload/procedural_map_manager.gd`:**
+
+- `get_nav_texture(region_id, camera_size, world_pos)` — new `world_pos` parameter (defaults to zero for callers that don't care). The sampled noise rect now centres on the ship's world position, regenerating on region change, camera resize, or when the ship has drifted more than `NAV_REGEN_THRESHOLD = 256.0` world units since the last generation (~1 regen/sec at `SHIP_SPEED = 300`).
+- `sample_biome(region_id, world_x, world_y) -> Dictionary` — new public API. Point-samples the same 4 noise generators the texture uses (main-elev, elev, heat, moisture), runs the classifier mirrored from `fastnoiselite_datasource.get_biome_buffer`, and returns `{biome_id, biome_tint}`. Deterministic for a fixed `(region, x, y)`.
+- Per-region datasources are now resident (kept in `_nav_datasources`) and reparented under the autoload so Godot frees them on teardown. `_reset_area_info_cache` drains the inner `area_info_cache` Nodes between generations without freeing the datasource itself.
+- New `BIOME_TINTS` table — nudges around 1.0 (e.g. `cDesert → (1.30, 0.85, 0.70)` for warm dust, `cDeepWater → (0.60, 0.65, 0.90)` for cool void). Layered *multiplicatively* on the region tint so pockets show local variation without overriding regional character.
+- `NAV_NOISE_SCALE = 0.25` — one world unit ↔ 0.25 noise pixels, preserving the `camera/4` render ratio the original path used. The texture now samples the exact world region the screen covers.
+
+**Wire-up — `godot/scripts/ui/navigation.gd`:**
+
+- `_refresh_nebula` now passes `Vector2(gs.position_x, gs.position_y)` to `get_nav_texture` and additionally calls `sample_biome` at the ship's world position, easing `_nebula_local_tint` toward the returned biome tint at `NEBULA_TINT_LERP_SPEED = 2.0` (half-lerp in ~0.35 s). Result: flying from a void pocket into a dust lane fades the tint over a heartbeat instead of snapping.
+- `_draw_nebula` composes `tint_color = _nebula_tint * _nebula_local_tint` (RGB, alpha fixed at `0.45`). Region character holds; biome character modulates.
+
+**New test file (+4 tests):**
+
+- `godot/tests/unit/test_procedural_sample_determinism.gd` — 4 tests: identical `(region, x, y)` returns identical biome (the load-bearing invariant saved POI positions depend on); different region seeds disagree on at least one sampled coordinate (proves the seed matters); unknown region falls back to `hash(region_id)` without crashing; biome tint values fall in a sane `[0.3, 2.0]` band per channel.
+
+**Tests:** Full GUT suite **179/179 passing** (was 175/175 at end of Sprint 5c; +4 today). Zero orphans, zero exit errors.
+
+**Out of scope (still backlog per NEXT_STEPS §Sprint 8):** biome-weighted POI placement, scanner-range modulation in dense nebula, minimap biome tinting, second parallax nebula layer. The one-day cut ships just enough to make "where you are" visually legible; evaluate in-game feel before continuing to steps 4–6.
+
+---
+
+## 2026-04-16 — Sprint 5c (part 2): DataLoader cache hardening + HUD polish
+
+NEXT_STEPS Sprint 5c, second of two commits. Closes the final engineering+HUD polish rows before the sprint is done: DataLoader cache is now mutation-safe and session-crossover-safe (MASTER_PLAN §5.3 Apr-05 #4, #12), and the navigation HUD gains a segmented hull bar, a persistent objective line, and a crew-morale pip (CODE_REVIEW §4.6, §5.3).
+
+**DataLoader cache (Apr-05 #4, #12):**
+
+- `godot/scripts/core/data_loader.gd` — `_load_json` now returns a deep-duplicated Dictionary/Array on every cache hit via a new `_duplicate_cached` helper, so mutations inside a caller can no longer leak back into the cache (the Apr-05 #4 failure mode). Cache entries themselves still hold the authoritative reference. New public `clear_cache()` wipes every cached payload; new `invalidate(relative_path)` drops a single entry; new `is_cached(path)` is a debug helper that tests use to assert cache state.
+- `godot/scripts/autoload/game_session.gd` — `start_new_game` and `load_game` now call `data_loader.clear_cache()` before re-initialising systems, so stale data from a prior playthrough cannot contaminate the new one.
+- Apr-05 #12 ("redundant DataLoader calls for same file") is closed by #4's fix — the cache already dedupes disk I/O for shared files (`faction_registry.json`, `economy_data.json`, `ship_templates.json`), and deep-copy isolation removes the mutation-amplification concern the original review flagged. Consolidating method signatures would have required caller churn across `GameSession`; the deep-copy fix subsumes the safety benefit.
+
+**HUD polish (CODE_REVIEW §4.6 / §5.3):**
+
+- `godot/scripts/ui/hud/hull_bar.gd` (new, ~80 lines) — `HullBar` Control subclass. Segmented bar with 10 cells, colour-graded (green > 50 %, amber 25-50 %, red ≤ 25 %). Exposes `set_hull(current, max)` and pure helpers (`fill_ratio`, `filled_segments`, static `color_for_ratio`) so tests exercise the draw math without a scene tree. Rounds-up on `filled_segments` so 1 HP still shows one lit cell (you-are-alive feedback).
+- `godot/scripts/ui/hud/morale_pip.gd` (new, ~45 lines) — `MoralePip` Control subclass. Small ring with a fill colour driven by the same thresholds `CrewMoraleSystem` uses for combat/trade modifiers, so the player reads the same tier the multipliers actually use. Static `color_for_morale(value)` keeps tests scene-free.
+- `godot/scripts/systems/narrative_system.gd` — new `get_arc_objective(game_state)` returns the arc's `objective_text` when present, falls back to the arc `theme` (the field every arc already carries), or `""` when both are missing. No JSON changes required; arcs can adopt `objective_text` incrementally.
+- `godot/scripts/ui/view_models/navigation_view_model.gd` — new accessors: `arc_objective`, `hull_current`, `hull_max`, `crew_count`, `crew_capacity`, `has_crew_morale`, `crew_morale_average`, `crew_morale_label`. All tolerate a null `player_ship` / `crew_morale` and return safe defaults.
+- `godot/scenes/ui/navigation.tscn` — `TopBar` restructured from a single `HBoxContainer` to a `VBoxContainer` with two rows: `Row1` carries the existing labels plus the new `HullBar` + micro `HullLabel` + `CrewLabel` + `MoralePip`; a second `ObjectiveLabel` sits below in a muted 14-pt tone for the persistent objective surface. `FlashLabel` anchor pushed down so it clears the taller top bar.
+- `godot/scripts/ui/navigation.gd` — `@onready` refs repointed to `HUD/TopBar/Row1/...`; `_update_hud()` drives the bar via `set_hull`, the pip via `set_morale` (with a tooltip showing the morale label), writes `"%d/%d"` into the micro hull label, updates the crew count, and surfaces the objective text.
+
+**Coupling budget:** No new `GameSession.` refs in `scripts/ui/` — the VM absorbs every new read.
+
+**New test files (+37 tests):**
+
+- `godot/tests/unit/test_data_loader_cache.gd` — 9 tests: Dictionary + Array mutation isolation, cache-hit-skips-disk (verified by deleting the file after priming), `clear_cache`, `invalidate` (targeted + unknown-path + idempotent), primitive pass-through.
+- `godot/tests/unit/test_narrative_arc_objective.gd` — 4 tests: `objective_text` precedence, `theme` fallback, empty when both missing, empty when arc unknown.
+- `godot/tests/unit/test_hud_hull_bar.gd` — 12 tests: ratio math (full/half/zero-max/negative/overflow), segment count (full/empty/1 HP rounds-up/45% rounds up to 5), colour thresholds low/mid/high.
+- `godot/tests/unit/test_hud_morale_pip.gd` — 6 tests: colour for each `CrewMoraleSystem` tier + `set_morale` persists.
+- `godot/tests/unit/test_navigation_view_model.gd` — extended with `arc_objective`, hull accessors (with + without ship), crew accessors, and the morale-pip path (incl. null `crew_morale` fallback). +11 tests.
+
+**Tests:** Full GUT suite **175/175 passing** (was 138/138 at the end of Sprint 5c part 1; +37 from the new coverage). No orphans, no unexpected errors.
+
+**MASTER_PLAN §5.3 rows closed this commit:**
+
+- Apr-05 #4 — DataLoader cache never invalidated. **Done.**
+- Apr-05 #12 — Redundant DataLoader calls for same file. **Done** (subsumed by #4's deep-copy fix).
+
+**CODE_REVIEW findings closed this commit:**
+
+- §4.6 — HUD clarity (objective surface, segmented hull bar, morale pip). **Done.**
+- §5.3 — Persistent objective surface. **Done.**
+- §2.6 — "DataLoader cache has no invalidation" carry-forward. **Done.**
+
+**Exit criteria met:** Sprint 5c fully closed. NEXT_STEPS §5 "pick next from" list drops to three items (Sprint 7, Sprint 2 sprite pilot, Sprint 6).
+
+---
+
+## 2026-04-16 — Sprint 5c (part 1): dock gating + conquest surfacing
+
+NEXT_STEPS Sprint 5c, first of two commits. Closes the final two rows of the CODE_REVIEW §3 "dormant systems" inventory by wiring `RealmControlSystem` into the docking gate and giving `FactionConquestAI` a heartbeat + observable signal emissions. Dormant-systems count 2 → 0.
+
+**Dock gating:**
+
+- `godot/scripts/systems/star_base_system.gd` — new optional `realm_control: RealmControlSystem` field; new `HOSTILE_DOCK_REPUTATION_THRESHOLD = -50`. `can_dock` delegates to a new `get_dock_block_reason(game_state, base_id)` that returns "" when docking is allowed and a human-readable reason otherwise. Stronghold reputation gate preserved; additional realm-control gate refuses docks at *any* base type when the region's controller is a faction that isn't the base's owner and whose rep with the player is below the threshold. Backwards compatible when `realm_control` is unset (original behaviour).
+- `godot/scripts/autoload/game_session.gd` — injects `star_base_system.realm_control = realm_control` during autoload init so the gate fires in the live game.
+- `godot/scripts/ui/view_models/navigation_view_model.gd` — new `get_dock_block_reason(base_id)` adapter.
+- `godot/scripts/ui/navigation.gd` — `_check_base_proximity` now flashes the block reason (e.g. `Outpost Alpha: Blockaded by Hostile Raiders`) instead of silently dropping the dock prompt when the gate refuses.
+
+**Conquest surfacing:**
+
+- `godot/scripts/autoload/game_session.gd` — `_process` now ticks `faction_conquest` every `CONQUEST_TICK_INTERVAL = 60.0s`. Each tick calls `plan_faction_actions(game_state)` and `resolve_actions(game_state, realm_control)`. Guarded on both `faction_conquest` and `realm_control` being non-null so unit tests that instantiate GameStateData without the autoload stay isolated.
+- `godot/scripts/systems/faction_conquest_system.gd` — `resolve_actions` now takes an optional `realm_control` and emits `EventBus.faction_conflict(aggressor_id, target_id, outcome)` for every resolved ConquestAction. `_resolve_attack` victories feed `realm_control.apply_conflict_result()` (scaled by the loss inflicted) so territorial influence actually moves; when that shift flips the region's controller, `EventBus.realm_control_changed(region_id, old, new)` fires. Backwards compatible — old callers passing no second arg keep working.
+- `godot/scripts/ui/navigation.gd` — subscribes to `EventBus.realm_control_changed` in `_ready` and flashes a map-shaking toast (e.g. `Feline Courts: Aggressor → Target`) so the conquest tick is not invisible.
+
+**Dormant-systems count:**
+
+- Before Sprint 5c (part 1): 2 dormant (realm control, faction conquest).
+- After Sprint 5c (part 1): **0 dormant.** All four CODE_REVIEW §3 systems now drive observable gameplay.
+
+**New test files:**
+
+- `godot/tests/unit/test_dock_gating.gd` — 9 tests covering pre-5c stronghold rep gate preservation, new realm-control gate behaviour at various rep thresholds, controller == owner bypass, unclaimed-region bypass, unknown-base error, and the `can_dock` ↔ `get_dock_block_reason` invariant.
+- `godot/tests/unit/test_conquest_surfacing.gd` — 8 tests covering `faction_conflict` emission on every resolve path (attack/blockade/diplomacy/fortify), attack-victory influence shift, controller-flip triggering `realm_control_changed`, and the no-`realm_control`-arg backwards-compat path.
+
+**Tests:** Full GUT suite **138/138 passing** (was 121/121 at the end of Sprint 5b; +17 from the two new files).
+
+**CODE_REVIEW findings closed this commit:**
+
+- §3 — "wire dormant systems" for realm control. **Done.**
+- §3 — "wire dormant systems" for faction conquest. **Done.**
+
+Remaining Sprint 5c work (DataLoader cache invalidation + HUD polish) lands in the companion commit.
+
+---
+
 ## 2026-04-16 — Sprint 7 prep: engineering scaffolding (parallel to Sprint 5b)
 
 NEXT_STEPS Sprint 7 engineering-only prep. Non-breaking scaffolding that doesn't require the `.blend` rework — closes four of the CODE_REVIEW §6A findings without touching the runtime geometry hacks (those stay TODO-marked until a Blender-first .blend arrives).

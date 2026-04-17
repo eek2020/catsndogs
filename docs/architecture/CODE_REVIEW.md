@@ -1,6 +1,6 @@
 # Whisper Crystals — Godot Code Review
 
-**Date:** 2026-04-16 (enhanced pass, refreshed post-Sprint 5b)
+**Date:** 2026-04-16 (enhanced pass, refreshed post-Sprint 5c part 1)
 **Scope:** Full codebase walk — autoloads, systems, entities, UI, data, scenes, **and visual assets**.
 **Supersedes:** the previous edition of this file (same path). See `docs/reviews/` for the earlier dated reviews that fed into `docs/MASTER_PLAN.md` §5.
 **Companion plan:** [docs/NEXT_STEPS.md](../NEXT_STEPS.md) — prioritised action list reconciled with [docs/MASTER_PLAN.md](../MASTER_PLAN.md).
@@ -21,10 +21,10 @@ The previous edition identified sound structural issues but was written against 
 | `dialogue_ui.gd` | 632 | 631 | 632 (pending Sprint 6) |
 | `game_session.gd` | 432 | 437 | 506 (grew in 3c to own post-scene-change transition work) |
 | `event_bus.gd` signal count | "50+" / MASTER_PLAN quoted 120+ | ≈ 50 declared | **70** (audited 2026-04-16; `npc_bark` added 3c) |
-| Unit tests | 0 | 0 | **121 across 14 files** (GUT 9.6.0 vendored; Sprint 5b added crew-morale wiring coverage) |
+| Unit tests | 0 | 0 | **138 across 16 files** (GUT 9.6.0 vendored; Sprint 5c part 1 added dock-gating + conquest-surfacing coverage) |
 | Four critical bugs (§5.2) | Open | Open | **All closed** 2026-04-16 (Sprint 1) |
 
-**Headline shift:** UI coupling is no longer the dominant issue. Sprints 3a/3b/5a retired 100 of the 206 UI refs by routing three screens through dedicated ViewModels. What remains: `navigation.gd` still 1,717 lines (coupling gone, decomposition pending); `dialogue_ui.gd` still a monolith (Sprint 6); **two** dormant systems (realm_control, faction_conquest) still unwired into gameplay (Sprint 5c). Sprint 5b landed morale wiring + retired the "astral hazards not applied" tracker as stale (already wired at `navigation.gd:213`).
+**Headline shift:** UI coupling is no longer the dominant issue. Sprints 3a/3b/5a retired 100 of the 206 UI refs by routing three screens through dedicated ViewModels. What remains: `navigation.gd` still 1,717 lines (coupling gone, decomposition pending); `dialogue_ui.gd` still a monolith (Sprint 6). Sprint 5b landed morale wiring + retired the "astral hazards not applied" tracker as stale (already wired at `navigation.gd:213`). Sprint 5c part 1 closed the remaining two dormant-system rows — realm control gates docking, faction conquest ticks every 60 s and emits observable signals. DataLoader cache invalidation + HUD polish still pending (Sprint 5c part 2).
 
 **Post-review progress (2026-04-16):**
 
@@ -54,12 +54,12 @@ Pattern — `scripts/ui/view_models/<screen>_view_model.gd` + duck-typed `Sessio
 2. **UI coupling is being retired screen-by-screen.** Was 206 UI `GameSession.` refs; now **106** after three ViewModel landings. Remaining screens (dialogue_ui, ship_screen, mission_log, station, faction, purchase, trade, pause_menu, settings…) will each get their own VM over Sprints 6–7.
 3. **`navigation.gd` remains 1,717 lines.** Coupling was cut via `NavigationViewModel` (Sprint 3a) but function bodies were not decomposed. Still owns input, physics, minimap, POI rendering, fog-of-war, particles, and hazard overlays. Decomposition into renderer child nodes (§2.2 below) is outstanding.
 4. **Four March-review critical bugs — all closed** as of 2026-04-16 (Sprint 1). See MASTER_PLAN §5.1.
-5. **Automated tests — GUT 9.6.0 vendored**, 121 tests across 14 files green. Every subsequent sprint ships with regression tests.
-6. **Two dormant systems remain.** Sprint 5b landed crew-morale wiring (combat damage + trade prices) and retired the astral-hazards tracker as stale (hazards have been applied during `_update_astral_hazards(dt)` since the feature shipped). Realm control and faction conquest still compute state without affecting docking or the visible world; scheduled for Sprint 5c.
+5. **Automated tests — GUT 9.6.0 vendored**, 138 tests across 16 files green. Every subsequent sprint ships with regression tests.
+6. **Zero dormant systems.** Sprint 5b landed crew-morale wiring (combat damage + trade prices) and retired the astral-hazards tracker as stale. Sprint 5c part 1 wired realm control into the dock gate and gave faction conquest a 60 s tick with observable `EventBus.faction_conflict` + `realm_control_changed` emissions. All four CODE_REVIEW §3 systems now drive observable gameplay.
 
 ### Non-critical but high-leverage
 
-- Systems-built-but-not-wired gap narrowed: realm control and faction conquest still unwired. Crew morale (Sprint 5b) and astral hazards (already wired; retired as stale) are no longer in this list.
+- ~~Systems-built-but-not-wired~~ **closed** (Sprint 5c part 1). Crew morale (Sprint 5b), astral hazards (stale tracker), realm control (dock gate + conflict shift) and faction conquest (60 s tick + signal emissions) all drive observable gameplay.
 - Arc branching is nominal — paths converge. Player choice is performative.
 - Combat is still a stat check (no abilities, no status effects, no archetypes).
 - Onboarding, accessibility, controller support, and multi-slot saves remain on the backlog.
@@ -131,7 +131,7 @@ The convention should be: if a constant is tuned by design intent, it lives in `
 
 ### 2.6 Minor code-quality items (carry-forward)
 
-- `DataLoader` cache has no invalidation (MASTER_PLAN §5.3 Apr-05 #4).
+- ~~`DataLoader` cache has no invalidation (MASTER_PLAN §5.3 Apr-05 #4).~~ **Resolved 2026-04-16 (Sprint 5c part 2):** deep-copy on read + `clear_cache()` + `invalidate(path)`.
 - Theme overrides in content screens — ship_screen, mission_log, combat_ui, dialogue_ui still inline colours. Move to named StyleBox resources in `theme_builder`.
 - `ProceduralMapManager` could drop out of autoloads once navigation is decomposed — only one consumer.
 
@@ -143,7 +143,7 @@ Unchanged in direction from the previous review; still the highest-leverage area
 
 - **Make choice branch the arc.** Replace the AND'd exit conditions in `arc_definitions.json` with OR-of-requirement-sets; tag encounters with `requires_flag` for path-gating; persist per-faction stance.
 - **Give combat tactical decisions.** 2–3 abilities per crew role, reuse the existing status-effect shape from `astral_hazard_system.gd`, add `ai_profile` to ship templates.
-- **Wire the dormant systems.** ~~Crew morale → combat damage + trade prices~~ (Sprint 5b); ~~astral hazards → applied in navigation tick~~ (stale tracker, already wired); realm control → gates docking; conquest actions → visible world changes.
+- **Wire the dormant systems.** ~~Crew morale → combat damage + trade prices~~ (Sprint 5b); ~~astral hazards → applied in navigation tick~~ (stale tracker, already wired); ~~realm control → gates docking~~ (Sprint 5c part 1); ~~conquest actions → visible world changes~~ (Sprint 5c part 1 — 60 s tick + `faction_conflict` + `realm_control_changed` emissions).
 - **Reward pressure gradient.** Upgrade tiers (T1 10 / T2 40 / T3 120), consumables, crew hire cost + upkeep.
 - **Side missions with teeth.** Time-limited missions, arc-cascade missions, mission chains.
 - **Procedural map as gameplay.** Distress events that read faction state, dynamic spawn difficulty, region ownership colouring.
@@ -181,8 +181,8 @@ Unchanged in direction from the previous review; still the highest-leverage area
 
 ### 4.6 HUD clarity
 
-- Current objective read from `NarrativeSystem.current_arc.objective_text` on the top bar.
-- Segmented hull bar in place of the hull number; cargo fill bar; crew-morale pip.
+- ~~Current objective read from `NarrativeSystem.current_arc.objective_text` on the top bar.~~ **Resolved 2026-04-16 (Sprint 5c part 2):** `NarrativeSystem.get_arc_objective()` surfaces `objective_text` with `theme` fallback; navigation HUD shows it on a dedicated `ObjectiveLabel`.
+- ~~Segmented hull bar in place of the hull number; cargo fill bar; crew-morale pip.~~ **Resolved 2026-04-16 (Sprint 5c part 2):** 10-segment `HullBar` + colour-graded `MoralePip` under `scripts/ui/hud/`; cargo fill bar deferred (not yet ranked by the player feedback loop).
 
 ---
 
@@ -201,7 +201,7 @@ Unchanged in direction from the previous review; still the highest-leverage area
 
 ### 5.3 Persistent objective surface
 
-Current objective should be one glance away in every arc-participating scene, not gated behind `M` for mission_log.
+~~Current objective should be one glance away in every arc-participating scene, not gated behind `M` for mission_log.~~ **Resolved 2026-04-16 (Sprint 5c part 2):** `ObjectiveLabel` on the navigation top bar always shows the current arc's objective. Falls back to the arc `theme` when no explicit `objective_text` is set, so every shipped arc already surfaces a line without data migration.
 
 ### 5.4 Theme adherence
 
@@ -382,7 +382,7 @@ Progress on the original list, plus remaining small-but-high-impact items.
 **Done (original tracker numbers preserved in parentheses):**
 
 - (#1) ~~**Fix the 4 remaining critical bugs from MASTER_PLAN §5.2.**~~ Sprint 1 (2026-04-16).
-- (#2) ~~**Install GUT and add one test** (`test_condition_evaluator.gd`).~~ Sprint 1. Now 121 tests across 14 files.
+- (#2) ~~**Install GUT and add one test** (`test_condition_evaluator.gd`).~~ Sprint 1. Now 138 tests across 16 files.
 - (#5) ~~**Wire crew morale to combat damage**~~ — Sprint 5b landed combat + trade wiring with 24 regression tests.
 - (#13) ~~**Resolve R-key collision** (`menu_select` vs `repair`) in `project.godot`.~~ Stale tracker — already fixed in Sprint 1; Sprint 3c added broad collision regression test.
 - (#14) ~~**Update Art Direction Guide** to remove the "to be decided" line and commit to the floor-style (Track A).~~ NEXT_STEPS Sprint 2 (art guide + reference pins done; sprite pilot redraw still pending artist).
@@ -390,7 +390,7 @@ Progress on the original list, plus remaining small-but-high-impact items.
 **Still outstanding:**
 
 - (#3) **Remove unused EventBus signals** (`ui_select`, `ui_cancel`, `ui_navigate`).
-- (#4) **Segmented hull bar** in navigation HUD in place of the hull number (NEXT_STEPS Sprint 5c).
+- (#4) ~~**Segmented hull bar** in navigation HUD in place of the hull number (NEXT_STEPS Sprint 5c).~~ **Resolved 2026-04-16 (Sprint 5c part 2).**
 - (#6) **Shorten dialogue open delay** 1.5s → 0.4s and combat hold 2.0s → 0.8s.
 - (#7) **`Escape` closes dialogue** — single `_unhandled_input` handler.
 - (#8) **Camera shake** on combat hits.
@@ -407,9 +407,9 @@ Baseline numbers used by every sprint-exit check.
 
 - **Coupling baseline.** Total `GameSession.` refs was 236 at review time, now **131**. UI-only was 206, now **106**. Per-sprint target: monotonic downward as each screen gets a VM. Measure via `grep -r 'GameSession\.' godot/scripts --include='*.gd' | wc -l` (project has no `rg`).
 - **Script-size baseline.** `wc -l godot/scripts/ui/navigation.gd` → 1,717 still. `combat_ui.gd` 585 → 399 (Sprint 3b). `star_map_screen.gd` 1,092 → 375 (Sprint 5a). `dialogue_ui.gd` 632 still (Sprint 6 target). Any sprint that claims to reduce a file must actually cut function bodies into companion modules per §2.2 / Refactoring Plan.
-- **Dormant-system audit.** Post Sprint 5b: `hazard_entered` / `hazard_mitigated` / `hazard_damage` / `hazard_status_applied` emit during navigation ticks (always did — tracker was stale); crew-morale now bends combat damage and trade prices (no direct EventBus signal, but `get_combat_modifier` / `get_trade_modifier` are called per attack / transaction). `realm_control_*` + `faction_conquest_*` remain silent — that is Sprint 5c's baseline.
+- **Dormant-system audit.** Post Sprint 5c part 1: hazard signals emit during navigation ticks; crew-morale bends combat damage and trade prices; `realm_control.get_region_controller` gates docking through `StarBaseSystem.get_dock_block_reason`; `faction_conquest.resolve_actions` emits `EventBus.faction_conflict` per action and shifts `RealmControlSystem` influence on attack wins — controller flips surface as `realm_control_changed` toasts in navigation. All four §3 dormant systems now observable.
 - **Critical-bug regression.** All four §5.2 bugs have GUT regression tests committed with their fixes (Sprint 1).
-- **Test suite.** `/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` → should print `121/121 passing`. Any merge that drops the count needs justification in the commit message.
+- **Test suite.** `/Applications/Godot.app/Contents/MacOS/Godot --headless --path godot -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` → should print `138/138 passing`. Any merge that drops the count needs justification in the commit message.
 - **Visual parity walk.** New-game → navigation → dialogue → combat. Capture screenshots. Place them next to `assets/characters/aristotle.png` and `assets/ships/royal_galleon.png` — they should feel like the same game. (Pending sprite pilot.)
 
 Critical files to read before acting on any recommendation:
