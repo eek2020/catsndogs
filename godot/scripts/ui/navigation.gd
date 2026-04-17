@@ -257,6 +257,7 @@ func _process(dt: float) -> void:
 		_check_star_map_poi_collisions()
 		_check_base_proximity()
 		_check_planet_proximity()
+		_check_boundary(_vm.state(), _vm.region_bounds(_vm.current_region()))
 	else:
 		_update_trail(dt)  # Let trail fade while paused
 	_update_flash(dt)
@@ -318,9 +319,6 @@ func _handle_movement(dt: float) -> void:
 				"biome_id": scan_biome_id,
 			})
 		_vm.reveal_around(region_id, new_pos.x, new_pos.y, reveal_radius)
-
-		# Check region boundary for transitions
-		_check_boundary(_vm.state(), bounds)
 
 		# --- Horizontal flip detection ---
 		if direction.x > 0.01 and not _facing_right:
@@ -829,7 +827,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var main: Control = get_tree().current_scene
 		if main.has_method("push_overlay"):
 			main.push_overlay("star_map")
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("confirm") or event.is_action_pressed("ui_accept"):
 		if not _nearby_planet_id.is_empty() and _vm.has_planet_system():
 			_land_on_planet()
 		elif not _boundary_prompt_region.is_empty() and _boundary_prompt_timer > 0:
@@ -959,7 +957,6 @@ func _draw() -> void:
 		return
 
 	var center := size * 0.5
-	_draw_nebula(gs)
 	_draw_starfield(center, gs)
 	_draw_fog_of_war(center, gs)
 	_draw_hazards(center, gs)
@@ -1102,20 +1099,31 @@ func _draw_fog_of_war(center: Vector2, gs: GameStateData) -> void:
 				# Deep interior — draw as a solid rectangle
 				draw_rect(Rect2(sx, sy, cell_size, cell_size), FOG_COLOR)
 			else:
-				# Near the fog boundary — draw soft overlapping circles
-				var cell_cx: float = sx + cell_size * 0.5
-				var cell_cy: float = sy + cell_size * 0.5
-				var cell_pos := Vector2(cell_cx, cell_cy)
-				# t goes from 0.0 (right at boundary) to 1.0 (deep in fog)
+				# Near the fog boundary — wispy blobs. Deterministic per-cell
+				# hashes jitter the position, radius, and alpha so the 8-neighbor
+				# grid doesn't read as a ring of uniform bubbles.
+				var h1: float = fposmod(sin(float(cx) * 12.9898 + float(cy) * 78.233) * 43758.5453, 1.0)
+				var h2: float = fposmod(sin(float(cx) * 39.3468 + float(cy) * 11.135) * 43758.5453, 1.0)
+				var h3: float = fposmod(sin(float(cx) * 93.9898 + float(cy) * 67.345) * 43758.5453, 1.0)
+				var jitter: Vector2 = Vector2(h1 - 0.5, h2 - 0.5) * cell_size * 0.45
+				var cell_pos := Vector2(sx + cell_size * 0.5, sy + cell_size * 0.5) + jitter
+				# t: 0.0 at boundary, 1.0 deep in fog
 				var t: float = float(min_dist) / float(soft_radius)
-				# Alpha ramps up from soft edge to full fog
 				var base_alpha: float = lerpf(FOG_COLOR.a * 0.15, FOG_COLOR.a, t * t)
-				# Radius shrinks near the edge for a wispy look
-				var r: float = cell_size * lerpf(0.5, 0.82, t)
-				# Outer glow (cloud wisp)
-				draw_circle(cell_pos, r * 1.5, Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, base_alpha * 0.3))
-				# Core fog
-				draw_circle(cell_pos, r, Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, base_alpha))
+				var size_var: float = lerpf(0.75, 1.35, h3)
+				var r: float = cell_size * lerpf(0.55, 0.9, t) * size_var
+				var alpha_var: float = lerpf(0.7, 1.1, h2)
+				var core_a: float = clampf(base_alpha * alpha_var, 0.0, 1.0)
+				draw_circle(
+					cell_pos,
+					r * 1.5,
+					Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, core_a * 0.3),
+				)
+				draw_circle(
+					cell_pos,
+					r,
+					Color(FOG_COLOR.r, FOG_COLOR.g, FOG_COLOR.b, core_a),
+				)
 
 
 func _draw_hazards(center: Vector2, gs: GameStateData) -> void:

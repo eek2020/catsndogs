@@ -118,5 +118,5 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.6, 0.65, 0.7, 0.7)
 theme_override_font_sizes/font_size = 10
-text = "ARROWS move | E interact | TAB depart"
+text = "WASD / Arrows move | E interact | ESC or DEPART button to leave"
 horizontal_alignment = 1

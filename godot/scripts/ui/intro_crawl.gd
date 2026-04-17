@@ -135,7 +135,7 @@ func _process(dt: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("skip"):
+	if event.is_action_pressed("skip") or event.is_action_pressed("pause"):
 		_finish()
 	# Space or Down to fast-forward
 	if event is InputEventKey:

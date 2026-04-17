@@ -262,7 +262,7 @@ func _draw_hints(canvas: Control, canvas_size: Vector2, pad: float, default_font
 	var hint_color := Color(0.5, 0.6, 0.7, 0.7)
 	var hint_bg_color := Color(0.02, 0.03, 0.07, 0.5)
 	canvas.draw_rect(Rect2(0, canvas_size.y - 36, canvas_size.x, 36), hint_bg_color)
-	var hint1: String = "ARROWS select region, ENTER view sector, SPACE travel to region"
+	var hint1: String = "ARROWS select | ENTER travel (or view sector if already there) | SPACE travel"
 	var hint2: String = "TAB to close the Codex"
 	canvas.draw_string(default_font, Vector2(pad, canvas_size.y - 22), hint1, HORIZONTAL_ALIGNMENT_LEFT, int(canvas_size.x - pad * 2), 11, hint_color)
 	canvas.draw_string(default_font, Vector2(pad, canvas_size.y - 8), hint2, HORIZONTAL_ALIGNMENT_LEFT, int(canvas_size.x - pad * 2), 11, hint_color * Color(1, 1, 1, 0.7))

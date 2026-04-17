@@ -260,6 +260,8 @@ ViewModels".
 | ViewModel | Screen controller | Scene |
 |---|---|---|
 | [combat_view_model.gd](../../godot/scripts/ui/view_models/combat_view_model.gd) | [combat_ui.gd](../../godot/scripts/ui/combat_ui.gd) | [combat_ui.tscn](../../godot/scenes/ui/combat_ui.tscn) |
+| [dialogue_view_model.gd](../../godot/scripts/ui/view_models/dialogue_view_model.gd) | [dialogue_ui.gd](../../godot/scripts/ui/dialogue_ui.gd) | [dialogue_ui.tscn](../../godot/scenes/ui/dialogue_ui.tscn) |
+| [input_rebind_view_model.gd](../../godot/scripts/ui/view_models/input_rebind_view_model.gd) | - | - |
 | [navigation_view_model.gd](../../godot/scripts/ui/view_models/navigation_view_model.gd) | [navigation.gd](../../godot/scripts/ui/navigation.gd) | [navigation.tscn](../../godot/scenes/ui/navigation.tscn) |
 | [star_map_view_model.gd](../../godot/scripts/ui/view_models/star_map_view_model.gd) | [star_map_screen.gd](../../godot/scripts/ui/star_map_screen.gd) | [star_map_screen.tscn](../../godot/scenes/ui/star_map_screen.tscn) |
 
@@ -271,6 +273,7 @@ All UI controllers in `godot/scripts/ui/` (top-level). Subfolders
 - [arc_summary.gd](../../godot/scripts/ui/arc_summary.gd)
 - [character_select.gd](../../godot/scripts/ui/character_select.gd)
 - [combat_ui.gd](../../godot/scripts/ui/combat_ui.gd)
+- [controls_rebind.gd](../../godot/scripts/ui/controls_rebind.gd)
 - [cutscene.gd](../../godot/scripts/ui/cutscene.gd)
 - [dialogue_ui.gd](../../godot/scripts/ui/dialogue_ui.gd)
 - [ending_screen.gd](../../godot/scripts/ui/ending_screen.gd)
@@ -317,6 +320,7 @@ All UI controllers in `godot/scripts/ui/` (top-level). Subfolders
 - [arc_summary.tscn](../../godot/scenes/ui/arc_summary.tscn)
 - [character_select.tscn](../../godot/scenes/ui/character_select.tscn)
 - [combat_ui.tscn](../../godot/scenes/ui/combat_ui.tscn)
+- [controls_rebind.tscn](../../godot/scenes/ui/controls_rebind.tscn)
 - [cutscene.tscn](../../godot/scenes/ui/cutscene.tscn)
 - [dialogue_ui.tscn](../../godot/scenes/ui/dialogue_ui.tscn)
 - [ending_screen.tscn](../../godot/scenes/ui/ending_screen.tscn)
@@ -490,7 +494,7 @@ All JSON content lives under `godot/data/`. Each subfolder is one category.
 | Autoloads | 4 |
 | EventBus signals | 71 |
 | Systems | 18 |
-| UI screens (top-level) | 24 |
-| ViewModels | 3 |
-| Scenes | 30 |
+| UI screens (top-level) | 25 |
+| ViewModels | 5 |
+| Scenes | 31 |
 | Data JSON files | 84 |

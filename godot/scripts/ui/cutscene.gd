@@ -95,7 +95,7 @@ func _reveal_to_end() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("skip"):
+	if event.is_action_pressed("skip") or event.is_action_pressed("pause"):
 		_finish()
 
 

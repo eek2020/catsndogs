@@ -5,6 +5,7 @@ extends Control
 @onready var music_toggle: CheckButton = $Panel/VBox/MusicToggle
 @onready var sfx_toggle: CheckButton = $Panel/VBox/SfxToggle
 @onready var volume_slider: HSlider = $Panel/VBox/VolumeSlider
+@onready var controls_btn: Button = $Panel/VBox/ControlsBtn
 @onready var close_btn: Button = $Panel/VBox/CloseBtn
 
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 	music_toggle.toggled.connect(_on_music_toggled)
 	sfx_toggle.toggled.connect(_on_sfx_toggled)
 	volume_slider.value_changed.connect(_on_volume_changed)
+	controls_btn.pressed.connect(_on_controls)
 	close_btn.pressed.connect(_on_close)
 	close_btn.grab_focus()
 
@@ -33,6 +35,12 @@ func _on_sfx_toggled(pressed: bool) -> void:
 
 func _on_volume_changed(value: float) -> void:
 	MusicManager.set_music_volume(value)
+
+
+func _on_controls() -> void:
+	var main: Control = get_tree().current_scene
+	if main.has_method("push_overlay"):
+		main.push_overlay("controls_rebind")
 
 
 func _on_close() -> void:

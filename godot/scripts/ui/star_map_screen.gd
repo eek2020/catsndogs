@@ -221,9 +221,14 @@ func _handle_galaxy_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("cancel") or event.is_action_pressed("pause"):
 		get_viewport().set_input_as_handled()
 		_on_close()
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("ui_accept") or event.is_action_pressed("confirm"):
 		get_viewport().set_input_as_handled()
-		_drill_to_region()
+		# ENTER on the current region = drill into sector view.
+		# ENTER on a different connected region = travel there.
+		if _selected_region.is_empty() or _selected_region == _vm.current_region():
+			_drill_to_region()
+		else:
+			_request_travel()
 	elif event.is_action_pressed("fire"):
 		get_viewport().set_input_as_handled()
 		_request_travel()
@@ -364,10 +369,16 @@ func _confirm_travel() -> void:
 			return
 		_region_id = _travel_target_region
 
-	var scene_path: String = WORLD_SCENE_MAP.get(_travel_target_region, "res://scenes/world/world.tscn")
 	_vm.set_world_entry_region(_travel_target_region)
+	var main: Control = get_tree().current_scene
 	_on_close()
-	get_tree().call_deferred("change_scene_to_file", scene_path)
+	# Route through main.switch_scene so nav re-inits with the new region and
+	# the overlay/scene_container system stays coherent. Previously used
+	# change_scene_to_file to a per-region world scene (with a world.tscn
+	# fallback); that bypassed main and left the arc/region HUD showing the
+	# previous realm's state until another transition fired.
+	if main != null and main.has_method("switch_scene"):
+		main.switch_scene("navigation")
 
 
 func _cancel_travel() -> void:

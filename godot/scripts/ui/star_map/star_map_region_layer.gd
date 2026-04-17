@@ -61,7 +61,7 @@ func draw(canvas: Control, ctx: Dictionary) -> void:
 
 	if view_region == current_region:
 		_draw_navigation_pois(canvas, ctx, offset, map_scale)
-		_draw_player(canvas, offset, map_scale, default_font)
+		_draw_player(canvas, offset, map_scale, default_font, map_center, map_radius)
 
 	_draw_spawn_zones(canvas, view_region, offset, map_scale)
 	_draw_legend(canvas, map_center, map_radius, view_region, default_font)
@@ -235,15 +235,37 @@ func _draw_navigation_pois(
 
 
 func _draw_player(
-	canvas: Control, offset: Vector2, map_scale: float, default_font: Font
+	canvas: Control,
+	offset: Vector2,
+	map_scale: float,
+	default_font: Font,
+	map_center: Vector2,
+	map_radius: float,
 ) -> void:
 	var player_pos: Vector2 = _vm.player_position()
-	var player_x: float = offset.x + player_pos.x * map_scale
-	var player_y: float = offset.y + player_pos.y * map_scale
-	canvas.draw_circle(Vector2(player_x, player_y), 5.0, Color(0.43, 0.84, 1.0))
-	canvas.draw_arc(Vector2(player_x, player_y), 9.0, 0.0, TAU, 24, Color(0.43, 0.84, 1.0, 0.5), 1.5)
+	var player_screen := Vector2(
+		offset.x + player_pos.x * map_scale,
+		offset.y + player_pos.y * map_scale,
+	)
+	# The world bounds are rectangular but the sector is rendered as a circle,
+	# so a player at a corner of the world maps outside the visible circle.
+	# Clamp the marker to the inner edge so "YOU" never floats in the vignette.
+	var delta: Vector2 = player_screen - map_center
+	var max_r: float = maxf(map_radius - 12.0, 0.0)
+	if delta.length() > max_r:
+		player_screen = map_center + delta.normalized() * max_r
+	canvas.draw_circle(player_screen, 5.0, Color(0.43, 0.84, 1.0))
+	canvas.draw_arc(player_screen, 9.0, 0.0, TAU, 24, Color(0.43, 0.84, 1.0, 0.5), 1.5)
 	if default_font:
-		canvas.draw_string(default_font, Vector2(player_x + 10, player_y - 4), "YOU", HORIZONTAL_ALIGNMENT_LEFT, 100, 11, Color(0.43, 0.84, 1.0))
+		canvas.draw_string(
+			default_font,
+			player_screen + Vector2(10, -4),
+			"YOU",
+			HORIZONTAL_ALIGNMENT_LEFT,
+			100,
+			11,
+			Color(0.43, 0.84, 1.0),
+		)
 
 
 func _draw_spawn_zones(

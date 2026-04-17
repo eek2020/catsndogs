@@ -55,8 +55,198 @@ NEXT_STEPS Sprint 6, first slice. REFACTORING_PLAN Phase 4 (Issue #20) adapted t
 **Sprint 6 status:**
 
 - 6a (DialogueViewModel + dialogue_ui.gd decomposition) — **done**.
-- 6b (input rebind panel + controller support + ESC pause/skip fix) — pending.
+- 6b (input rebind panel + controller support + ESC pause/skip fix) — **done** 2026-04-17. All three tasks landed.
 - 6c (multi-slot saves + tutorial encounter + game feel polish) — pending.
+
+---
+
+## 2026-04-17 — Playtest bug sweep round 2: star map travel, stale realm, planet exit
+
+Three follow-ups from the second playtest pass.
+
+**Star map travel was undiscoverable + mis-routed (bugs A + B).** Galaxy layer's `_handle_galaxy_input` mapped ENTER → `_drill_to_region` (zoom into sector view) and SPACE → `_request_travel` (travel there), which matched the hint text but not the mental model — users pressed ENTER on a region expecting to go there. Compounding that, `_confirm_travel` called `get_tree().change_scene_to_file(WORLD_SCENE_MAP.get(region, "res://scenes/world/world.tscn"))`, which bypassed `main.switch_scene` and left the region HUD showing the previous realm's name until the next full reload.
+
+Fixes:
+
+- `star_map_screen.gd:224` — ENTER on a *different* connected region now triggers travel; ENTER on the *current* region keeps the existing drill-to-sector behavior. SPACE still triggers travel unconditionally. Also accepts the project's `confirm` action in addition to `ui_accept`, matching the pattern the boundary-jump fix established earlier in this sprint.
+- `star_map_screen.gd:_confirm_travel` — replaced `change_scene_to_file(world_scene_path)` with `main.switch_scene("navigation")`. Nav re-inits with the new `game_state.current_region`, so the HUD's region label, arc progress, POIs, and starfield all reflect the destination realm. The `WORLD_SCENE_MAP` dict is left in place for a future "special hub scenes" feature but no longer wired to travel.
+- `star_map_galaxy_layer.gd:_draw_hints` — hint text updated to `"ARROWS select | ENTER travel (or view sector if already there) | SPACE travel"` so the new ENTER semantics are discoverable.
+
+Known limitation not fixed here: `_request_travel` shows a confirm dialog for any discovered region, not only directly connected ones. If the user tries to travel to a discovered-but-not-connected region, `_vm.travel_to_region` returns false and the scene-switch is skipped silently. The user notices this as "nothing happened." Connectivity-aware gating is a separate polish.
+
+**Planet exit still didn't work after the label fix (bug C).** Relabelling ControlsLabel from "TAB depart" to "ESC depart" was correct but insufficient. Two likely causes on the user's machine:
+
+1. `_unhandled_input` fires only when no Control has consumed the event. Once the player clicks the DepartBtn once, it holds focus; a subsequent ESC press can be swallowed by the focus system before `_unhandled_input` runs.
+2. SubViewportContainer sits under the DepartBtn and captures mouse input when the button is small / in the corner.
+
+Fixes:
+
+- `planet_surface.gd:_ready` — DepartBtn now calls `grab_focus()` (deferred) on scene enter, gets a bumped `custom_minimum_size` (160×48 vs the scene-file 120×40), and relabels to `"DEPART (ESC)"` with a warmer font color so the keyboard shortcut is visible on the button itself.
+- `planet_surface.gd:_input` (renamed from `_unhandled_input`) — both ESC→depart and E→interact now run in `_input`, which fires *before* UI focus consumption. After handling, the event is marked handled so it doesn't double-fire elsewhere.
+
+**Tests:** 229/229 green (no new tests — all three are scene-wiring / UX changes that unit tests can't meaningfully cover without a live input harness).
+
+**Manual test checklist for the next playtest:**
+
+- New game → TAB to open star map → arrow-key to a connected region → ENTER → confirm dialog → ENTER → nav reloads in the new realm and the HUD region label matches.
+- In a non-starting realm, TAB → select starting realm → if directly connected, ENTER works; if not, user needs to hop through an intermediate (documented behavior — future polish).
+- Land on a planet → DEPART button is obviously visible in bottom-right and shows "DEPART (ESC)" → pressing ESC OR clicking the button returns to nav.
+
+---
+
+## 2026-04-17 — Nav fog of war reads as wisps instead of bubbles
+
+Follow-up to the post-ship playtest. The nav fog drew soft circles at each hidden-cell centre on a fixed grid with uniform size and alpha per `min_dist` bucket, so the boundary between revealed and unrevealed space read as a ring of evenly-spaced blobs (the 8-neighbour grid around the player's revealed area was especially visible).
+
+**Change in `navigation.gd:_draw_fog_of_war`:** boundary cells now jitter the blob's centre by ±45 % of a cell via a deterministic hash of `(cx, cy)`, and independent hashes pick per-cell radius (0.75–1.35×) and alpha (0.7–1.1×) multipliers. Same 2 `draw_circle` calls per cell — no perf cost — but the output breaks the grid and reads as organic fog. The solid-interior branch (`min_dist > soft_radius`) is unchanged; bulk fog stays flat and cheap.
+
+Deep interiors still use `draw_rect`, so the central opaque mass is unaffected. Only the transition band gets the new treatment, which is where the tiling was visible.
+
+Not touched: `star_map_local_layer.gd` and `star_map_region_layer.gd` both have similar circle-per-cell fog; leaving those alone since the user's complaint was specifically the nav view. Mirrored jitter can copy-paste if/when those views get the same feedback.
+
+---
+
+## 2026-04-17 — Sprint 6b post-ship playtest bug sweep
+
+Five issues from the first hands-on playtest of the 6b build.
+
+**Nav jitter + cloudy overlay (bugs 1 + 4).** `_draw_nebula` called `_refresh_nebula()` every frame, which regenerated a procedural `ImageTexture` via `ProceduralMapManager.get_nav_texture(...)` on each redraw — the scene calls `queue_redraw()` every frame, so the cost was paid unconditionally. Removed the `_draw_nebula(gs)` entry from `_draw()` in `scripts/ui/navigation.gd:962`. Starfield + fog + POIs + ship still draw; the shifting cloud layer is gone and the per-frame texture regen is no longer an ongoing cost. Kept `_refresh_nebula` / `_nebula_*` fields in place rather than ripping them out — they still run cheaply on region change and can be re-enabled once the art direction settles. Fixes both symptoms with one edit.
+
+**Planet exit hint lied (bug 2).** `planet_surface.tscn` ControlsLabel read `"ARROWS move | E interact | TAB depart"`, but the actual depart handler at `planet_surface.gd:310-311` listens for the `pause` action (ESC) and there is no `star_map`/TAB handler on the planet surface. Users pressing TAB correctly got nothing. Updated the label to `"WASD / Arrows move | E interact | ESC or DEPART button to leave"` — the DEPART button (bottom-right, bound at `planet_surface.gd:175`) always worked; the hint was the regression.
+
+**"YOU" marker drawn outside the sector map (bug 3).** In `star_map/star_map_region_layer.gd`, the sector is rendered as a circle of radius `map_radius`, but the world bounds are rectangular and scaled to `fit_diameter = map_radius * 1.8` — so corners of the world map to screen positions up to `map_radius * ~1.27` from center, outside the visible disc. `_draw_player` plotted raw world→screen without clamping. Added a circular clamp that pulls the marker onto the inner edge (12 px margin) when the player is near a corner of the region, so "YOU" now always renders inside the drawn circle. `_draw_player` signature gained `map_center` + `map_radius` args; single call site at line 64 updated.
+
+**ENTER at sector boundary did nothing (bug 5).** Two independent issues stacked:
+
+- The boundary handler at `navigation.gd:832` checked `ui_accept` only. `ui_accept` is a Godot built-in that defaults to ENTER/SPACE, but SPACE is already the project's `fire` action and gets consumed earlier in the elif chain — and the flash prompt explicitly says "Press ENTER", which is the project's named `confirm` action. Changed to `is_action_pressed("confirm") or is_action_pressed("ui_accept")`.
+- `_check_boundary` was only called inside `if _is_moving:` in `_handle_movement`. The boundary-prompt timer starts at 5s and decrements every frame; if a player drifts to the edge, stops, and reads the prompt, the timer counts down and the prompt becomes inert while the flash text is still on screen. `_check_boundary` no longer runs inside `_handle_movement`; it now runs from `_process` each frame (guarded by the overlay check). When the player is at the edge, the region stays set; when they move away, it clears. The prompt now stays active for the full flash duration regardless of movement state.
+
+**Tests:** full suite 229/229 still green (no new tests added — the three code-side fixes are either geometry clamps against a canvas-size-dependent constant, an input-action rename, or a call-site move; the existing nav + star-map coverage exercises them). Nav jitter and the clamp are visual regressions best caught by the user's next playtest rather than a unit test.
+
+**Manual test checklist:**
+
+- New game → navigate with WASD → background is stars only, no cloud shimmer, movement is smooth.
+- Drift to sector edge → "SECTOR BOUNDARY — Press ENTER" flash appears → stop moving → ENTER still jumps.
+- Open star map with TAB → region view shows "YOU" marker inside the circle even if the ship is at a world corner.
+- Land on a planet → read hint at bottom center → press ESC or click DEPART → return to navigation.
+
+---
+
+## 2026-04-17 — Sprint 6b task 3: input rebind panel
+
+Sprint 6b, third and final slice. The player can now remap any of 14 actions (keyboard + joypad) from the in-game settings menu; bindings persist across runs and load automatically on startup. All `InputMap` access routes through a new `InputRebindViewModel`, extending the VM pattern from Sprints 3a/3b/5a/6a to one more screen.
+
+**InputRebindViewModel (new, ~200 lines):**
+
+- `godot/scripts/ui/view_models/input_rebind_view_model.gd` — `class_name InputRebindViewModel extends RefCounted`. Wraps `InputMap` through a duck-typed `_api` arg (default: inline `_DefaultApi` RefCounted proxy calling the engine singleton; tests pass a dict-backed `FakeInputApi`). Constructor snapshots current bindings into `_defaults` so `reset_to_defaults()` has something to restore.
+- Reads: `primary_keyboard_event(action)` returns the first `InputEventKey` or null; `primary_joypad_event(action)` returns the first `InputEventJoypadButton` or `InputEventJoypadMotion`.
+- Writes: `set_keyboard_binding` and `set_joypad_binding` replace the first event of the matching kind in place, preserving the other kind's binding; append when none of that kind exists yet.
+- Persistence: `save(path)` serializes each action's event list to plain dicts (`{type: "key"|"joy_button"|"joy_motion", ...}`) and writes a `ConfigFile` to `user://input_bindings.cfg`; `load(path)` applies the saved events via `action_erase_events` + `action_add_event`. Hand-rolled dict serialization avoids engine-resource encoding quirks and keeps the test doubles simple.
+- UX helpers: `describe_event` produces human-readable labels — `"W"`, `"A"`, `"Start"`, `"L-Stick Up"`, `"D-pad Right"`, etc.
+- Constant `REBINDABLE_ACTIONS` — the 14 actions users can rebind, in display order. A test (`test_rebindable_actions_list_covers_all_project_actions`) walks `InputMap.get_actions()` and fails CI if any new action is added to `project.godot` without being added here.
+
+**Controls rebind overlay (new, ~130 lines + scene):**
+
+- `godot/scripts/ui/controls_rebind.gd` + `godot/scenes/ui/controls_rebind.tscn` — overlay with a 14-row list (built programmatically from `REBINDABLE_ACTIONS`); each row has an action label, keyboard button, and joypad button. Clicking a button begins capture: the status label prompts the user, other rows disable, and `_unhandled_input` waits for the next matching event (keyboard for keyboard cells; joypad button OR axis deflection ≥0.7 for joypad cells). ESC cancels capture without replacing the binding. Back saves via `vm.save()` before popping the overlay; Reset restores defaults in-memory (user still needs to press Back to persist).
+- Joypad motion captures are normalized to ±1.0 so a partial stick deflection doesn't save as (say) `axis_value = 0.72`.
+
+**Wiring:**
+
+- `godot/scripts/ui/main.gd` — `SCENES["controls_rebind"]` registered. `_ready` now calls `_apply_saved_input_bindings()` before `switch_scene("splash")`; the helper constructs an `InputRebindViewModel` (which snapshots the project defaults) and calls `load()`. Missing file is a silent no-op, so first-run users keep the project defaults.
+- `godot/scripts/ui/settings_screen.gd` + `settings_screen.tscn` — new "Controls…" button between the volume slider and Close; pressing it pushes the `controls_rebind` overlay.
+
+**Tests (12 new, in `test_input_rebind_view_model.gd`):**
+
+- `test_primary_keyboard_event_returns_first_key` / `null_when_none`
+- `test_primary_joypad_event_returns_button` / `returns_motion_when_only_axis`
+- `test_set_keyboard_binding_replaces_existing_key` / `appends_when_none_exists`
+- `test_set_joypad_binding_replaces_existing_button`
+- `test_reset_to_defaults_restores_snapshot`
+- `test_save_and_load_round_trip` — writes a temp file under `user://`, reconstructs the VM on a fresh `FakeInputApi`, asserts the custom binding survives.
+- `test_load_returns_error_when_file_missing`
+- `test_describe_event_handles_all_kinds`
+- `test_rebindable_actions_list_covers_all_project_actions` — the drift guard described above.
+
+Full suite now 229/229 green (+12 from 217).
+
+**What's manual-test-only:**
+
+- The click-to-capture flow inside the scene itself (GUT can't simulate mouse/keyboard events reliably against a live Control). The VM layer is fully covered; the scene is just row construction + event dispatch, which is small enough to eyeball during QA.
+
+**Tracker updates:**
+
+- `docs/NEXT_STEPS.md` Sprint 6b table — task 3 row marked Done; sprint header now "done 2026-04-17".
+- `docs/changelog/CHANGELOG.md` Sprint 6 status line — 6b now reads "done".
+
+---
+
+## 2026-04-17 — Sprint 6b task 2: controller support
+
+Sprint 6b, second slice. Every player-facing action now has an additive joypad binding alongside its existing keyboard event, so the game is playable on an Xbox/PS/generic gamepad without any code changes — every existing `event.is_action_pressed(...)` call site picks up the new events automatically.
+
+**`godot/project.godot` additions:**
+
+| Action | Joypad event |
+| --- | --- |
+| `move_up` | D-pad up (button 11) + left stick Y = −1.0 (axis 1) |
+| `move_down` | D-pad down (12) + left stick Y = +1.0 |
+| `move_left` | D-pad left (13) + left stick X = −1.0 (axis 0) |
+| `move_right` | D-pad right (14) + left stick X = +1.0 |
+| `confirm` | A / Cross (0) |
+| `cancel` | B / Circle (1) |
+| `fire` | X / Square (2) |
+| `interact` | Y / Triangle (3) |
+| `pause` | Start (6) — also skips cutscene/intro via task-1 handler fallback |
+| `menu_select` | Back / Share (4) |
+| `mission_log` | LB / L1 (9) |
+| `star_map` | RB / R1 (10) |
+
+Keyboard defaults and deadzones (0.5) unchanged. `skip` stays keyboard-only (X key) — cutscene/intro_crawl handlers already accept `pause`, so Start on the gamepad skips those scenes. `repair` also stays keyboard-only (T) since it's surfaced via buttons inside ship/station screens and rarely wanted via d-pad shortcut.
+
+**Test:** `test_essential_actions_have_joypad_bindings` (new, in `test_input_map_collisions.gd`) asserts that each of the 12 essential actions has at least one `InputEventJoypadButton` or `InputEventJoypadMotion` event — would fail if the joypad block gets stripped out by a future project-settings revert. Full suite 217/217 green (+1 new test).
+
+**Not tested end-to-end:** no physical gamepad plugged in during this slice. Manual test plan for when one is: plug in controller → start new game → left stick moves Aristotle in nav → A opens faction overlay (existing `interact` action) → B closes overlays → Start opens pause menu → Start during a cutscene skips it.
+
+**Tracker updates:**
+
+- `docs/NEXT_STEPS.md` Sprint 6b table — task 2 row marked Done with the full binding table summary.
+
+---
+
+## 2026-04-17 — Sprint 6b task 1: ESC pause/skip collision resolved
+
+Sprint 6b, first slice. MASTER_PLAN §5.3 row (CR-2026-04-16) closed. `pause` and `skip` had both been bound to `KEY_ESCAPE` (4194305) since Sprint 3c surfaced the collision — tolerated via a whitelist entry in `test_input_map_collisions.gd` because the two actions live in disjoint screens. With the rebind panel coming in 6b, a shared default key would make the rebind UI ambiguous, so the collision is now separated at the action-map level while user-facing behavior is preserved.
+
+**Changes:**
+
+- `godot/project.godot` — `skip` action's only keycode changed from `4194305` (ESC) → `88` (X). `pause` still binds ESC only.
+- `godot/scripts/ui/cutscene.gd:98` — `_unhandled_input` now accepts `skip OR pause`, so pressing ESC during a 3D cutscene still routes to `_finish()` and returns to navigation.
+- `godot/scripts/ui/intro_crawl.gd:138` — same treatment: `skip OR pause` both end the crawl and jump to navigation. Existing `SPACE`/`DOWN` fast-forward keycode handling is untouched.
+- `godot/tests/unit/test_input_map_collisions.gd` — `KNOWN_CONTEXT_SEPARATED_COLLISIONS` emptied (the sole `["pause","skip"]` entry is no longer needed). New `test_pause_and_skip_have_distinct_keycodes` mirrors the existing `menu_select`/`repair` specific-regression pattern and would fail if either action ever shares a keycode again.
+
+**Why X (88) for skip:**
+
+- ESC and BACKSPACE are `pause` and `cancel`. ENTER is `confirm`. SPACE is `fire`. TAB is `star_map`. Every semantically natural "skip" key was already claimed.
+- `skip` is only consumed by full-screen takeover scenes (`cutscene`, `intro_crawl`), so the literal default key rarely matters — users reaching for ESC/ENTER still skip via the `pause` fallback added above.
+- X is keyboard-convenient and stays open for rebind in task 3.
+
+**What still works:**
+
+- ESC during cutscene → skip (via `pause` handler).
+- ESC during intro crawl → skip (via `pause` handler).
+- ESC during navigation / combat → pause menu (unchanged).
+- X during cutscene / intro crawl → skip (new default).
+- Rebind-UI groundwork: every user action now owns a unique default keycode, so task 3 can list one key per action without asterisks.
+
+**Tests:** full suite 215/215 passing (was 214/215 during the ENTER-conflict intermediate state — the broad collision guard caught the slip). The two that cover this work:
+
+- `test_no_unexpected_user_action_keycode_collisions` — would fail if any pair of user actions shares a keycode.
+- `test_pause_and_skip_have_distinct_keycodes` — direct regression for this ticket.
+
+**Tracker updates:**
+
+- `docs/MASTER_PLAN.md` §5.3 — CR-2026-04-16 row marked Done 2026-04-17 with fix summary.
+- `docs/NEXT_STEPS.md` Sprint 6b table — task 3 marked Done; sprint header moved to "in progress".
 
 ---
 

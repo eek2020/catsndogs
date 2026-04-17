@@ -33,6 +33,7 @@ const SCENES := {
 	"station": "res://scenes/ui/station_screen.tscn",
 	"planet": "res://scenes/ui/planet_surface.tscn",
 	"intro_crawl": "res://scenes/ui/intro_crawl.tscn",
+	"controls_rebind": "res://scenes/ui/controls_rebind.tscn",
 }
 
 var _overlay_stack: Array[Control] = []
@@ -43,7 +44,13 @@ var _current_scene_key: String = ""
 func _ready() -> void:
 	theme = ThemeBuilder.build()
 	transition_overlay.color = Color(0, 0, 0, 1)
+	_apply_saved_input_bindings()
 	switch_scene("splash")
+
+
+func _apply_saved_input_bindings() -> void:
+	var vm := InputRebindViewModel.new()
+	vm.load()
 
 
 func switch_scene(scene_key: String) -> void:

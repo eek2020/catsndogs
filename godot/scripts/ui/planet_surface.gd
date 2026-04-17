@@ -173,6 +173,11 @@ var _label_nodes: Dictionary = {}     # entity_id -> Label
 
 func _ready() -> void:
 	depart_btn.pressed.connect(_on_depart)
+	depart_btn.text = "DEPART (ESC)"
+	depart_btn.custom_minimum_size = Vector2(160, 48)
+	depart_btn.add_theme_color_override("font_color", Color(1, 0.95, 0.7))
+	depart_btn.add_theme_font_size_override("font_size", 16)
+	depart_btn.call_deferred("grab_focus")
 	var gs: GameStateData = GameSession.game_state
 	var pid: String = gs.protagonist_id if gs else "aristotle"
 
@@ -304,11 +309,16 @@ func _update_camera() -> void:
 	camera.position = camera.position.lerp(target, 0.1)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
-		_try_interact()
-	elif event.is_action_pressed("pause"):
+func _input(event: InputEvent) -> void:
+	# Pre-UI handler so ESC/interact fire even if DepartBtn or the SubViewport
+	# container has focus. Without this, clicking the button once gave it focus
+	# and subsequent ESC presses didn't reach `_unhandled_input` on some systems.
+	if event.is_action_pressed("pause"):
+		get_viewport().set_input_as_handled()
 		_on_depart()
+	elif event.is_action_pressed("interact"):
+		get_viewport().set_input_as_handled()
+		_try_interact()
 
 
 func _try_interact() -> void:
