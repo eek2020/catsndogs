@@ -6,6 +6,102 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-17 — Sprint 7 (partial): stylized-flat terrain + outpost building in `.blend`
+
+Resolves the terrain-material decision parked earlier the same day. Picked **Option A (stylized flat)** — PBR packs are photogrammetry-realistic and clash with the painted 2D portraits/ships; hand-painted textures would match but need an artist. Stylized flat is the one path that coheres with the existing visual language without new art. Reworked live in Blender via `blender-mcp`.
+
+**Changes — `godot/assets/cutscenes/no_tail_outpost.blend`:**
+
+- **Terrain materials (`mat_Ground`, `mat_Hill`, `mat_Rock`)** rebuilt as flat warm-palette BSDF × vertex color × **stepped (CONSTANT-interpolation) Pointiness ramp** → 3-band toon shading. Fresnel-driven amber rim emission (strength 0.25). Rock shadow floor lifted (0.75/0.62/0.48) so small rock meshes don't crush to black. All metallic zeroed.
+- **Hill geometry decimated** — Collapse modifier (ratio 0.18) applied across all 8 `Hill_*` meshes, 320 → ~58 polys each, flat-shaded. Smooth domes → faceted boulders (Sable/Short-Hike silhouette).
+- **Outpost building (~15 materials)** rebuilt with same stylized-flat recipe, role-specific palettes: `Body`/`Annex`/`Buttress`/`Vent` desaturated teal-grey, `UpperStrip` warm rust accent, `Roof`/`AnnexRoof` darker grey-brown, `Antenna`/`AntennaTip` near-black, `Door` + frames dark warm metal. All metallic zeroed (was 0.4–0.8 — fought the toon look).
+- **Emissives:** `mat_Outpost_Window` → warm amber (1.00, 0.72, 0.38) @ strength 3.0 — outpost now reads "inhabited". `mat_Door_WarningLight` → danger red (1.00, 0.25, 0.15) @ strength 4.0 — matches the crashed-gunship story beat.
+- **Brightness lift.** First pass values rendered near-black in the low-ambient Godot cutscene; lifted all building shadow floors ~1.8× (e.g. body shadow 0.22/0.26/0.28 → 0.42/0.48/0.52) and raised terrain shadow floors.
+- **Geometry fix — right buttress gap.** `Outpost_Buttress` left edge at x=6.25 vs `Outpost_Body` right edge at x=6.00 left a 0.25m gap visible through to sky. Translated Buttress -0.25 X to close the seam.
+
+**Not changed (deliberate):**
+
+- `godot/scripts/systems/cutscene/material_applicator.gd` kept as-is. Its `rock`/`ground`/`hill`/`wall`/`door`/`roof`/`antenna` keyword rules are now dead-code-by-convention (the `.blend` carries real materials) but `cutscene_scene.gd` still calls `MaterialApplicator.apply()` as a fallback for unmatched meshes (burn marks, etc.). Full removal is the "Delete MaterialApplicator (370 lines)" Sprint 7 row and should land with the interior-room / character-GLB optimisation rows.
+- `cutscene_scene.gd`, `camera_controller.gd`, `camera_path.json`, dialogue, character placement — untouched.
+
+**Why superseded:** the prior "tactical pass" entry (archived below) shipped runtime keyword rules with noise+triplanar+normals but still read flat because low-poly faceted GLB geometry in a dark scene can't be rescued by procedural detail alone. The .blend rework fixes the root cause.
+
+---
+
+## 2026-04-17 — Sprint 7 (partial): MaterialApplicator Rocks/Ground/Hills — tactical pass, parked
+
+Tactical extension of the runtime `MaterialApplicator` to cover previously-untextured terrain surfaces (`Rock_00`–`Rock_11`, `Ground`, `Hill_00`–`Hill_07`). Landed; result still reads as flat-shaded low-poly geometry, not convincingly "rocky". **Parked for a later pass** (likely Sprint 7 Blender rework or a dedicated stylized-low-poly pass).
+
+**Changes (`godot/scripts/systems/cutscene/material_applicator.gd`):**
+
+- Added `rock` / `boulder` / `stone` keyword rule → cool grey matte stone (`Color(0.38, 0.36, 0.34)`, rough 0.88).
+- Added `hill` / `mound` / `ridge` keyword rule → darker dusty stone.
+- Re-tuned `ground` rule — warmer regolith (`Color(0.34, 0.26, 0.17)`), higher noise/normal density.
+- Name-matching now walks **up the parent chain** (up to 3 ancestors) so meshes named `geometry_N` by Godot's GLB importer still match against their parent `Node3D` wrapper names (`Rock_00`, `Ground`, etc.). Without this, ~every GLB mesh fell through to the AABB fallback classifier.
+- Enabled `uv1_triplanar = true` on all built materials — GLB has no UV unwraps, so without triplanar the noise `albedo_texture` silently rendered nothing and you saw flat albedo color only.
+- Wired up the previously-ignored `normal_strength` config field — each rule that asks for it now gets a second `NoiseTexture2D` with `as_normal_map = true` applied to `mat.normal_texture`.
+- Noise texture itself retuned — 64×64 @ `frequency = 0.015` was near-uniform (features ~67 px wide on a 64 px texture); now 256×256 @ `frequency = 0.06` with 4 fractal octaves.
+
+**Why parked:** Even with visible procedural noise + triplanar + normals, low-poly faceted rocks in a dark scene still read as "grey faceted shapes". Three paths forward, unpicked:
+
+1. Commit to stylized flat shading — per-rock vertex color variation, rim light, AO on facet edges. Coheres with the low-poly outpost + gunships.
+2. Real PBR rock texture via Polyhaven (`mcp__blender__search_polyhaven_assets` → `download_polyhaven_asset`), applied to `mat_Rock` in `.blend`. More realistic, may clash with low-poly style.
+3. Keep pushing procedural — higher gradient contrast, add emission edges, bigger normal map.
+
+Door / frame / warning-light material overrides in `cutscene_scene.gd` untouched. Character placement, cutscene logic, dialogue, camera all untouched.
+
+---
+
+## 2026-04-17 — Sprint 7 (partial): No Tail cutscene door + interior rebuilt in Blender
+
+NEXT_STEPS Sprint 7, door-focused slice. The four visible door defects reported in the latest playtest (misplaced shadows, floating interior floor, door frame clipping the outpost roof, door too small for Nine Lives) all trace back to runtime geometry patching in `cutscene_scene.gd`. Fixed by moving the geometry into `no_tail_outpost.blend` and deleting the runtime builders.
+
+**Blender rebuild (`godot/assets/cutscenes/no_tail_outpost.blend`):**
+
+- Door raised from 3.0 m → 3.4 m internal opening height — Nine Lives is 3.08 m tall at scale 3 (measured via GLB import), so the old 3.0 m opening was 8 cm too short. Frame pieces raised in lockstep (FrameLeft/Right now 3.6 m; FrameTop now at z ∈ [3.4, 3.6]; WarningLight moved to z = 3.80, clear of UpperStrip at 3.8). Width unchanged (2.5 m × 2.1 m Nine → 40 cm margin).
+- Door, FrameLeft, FrameRight, FrameTop origins moved to each mesh's base (z = 0) so the imported node's `position.y` is at ground level — this is the direct fix for the interior floor that was floating 1.42 m in the doorway (old origin at mesh centre, runtime code computed `door_pos.y − 0.08`).
+- Boolean `DIFFERENCE` applied to `Outpost_Body` with a 2.6 × 1.2 × 3.5 m cutter, so the front wall actually has a doorway hole — deletes the need for `_hide_back_wall`'s AABB heuristic.
+- Interior room modelled in-scene: `Interior_Floor`, `Interior_BackWall`, `Interior_LeftWall`, `Interior_RightWall`, `Interior_Ceiling`, plus `Interior_Crate1`/`Crate2`, `Interior_Barrel`, `Interior_Shelf`, `Interior_ShelfItem`, `Interior_Light` (point, warm). Five named materials (`mat_Interior_Floor/Wall/Ceiling/Crate/ShelfItem`) mirror the runtime colours.
+- Door + frame + warning light reparented to the `world` empty (were orphaned). `no_tail_outpost.glb` re-exported.
+
+**Runtime code (deletes, not adds):**
+
+- `cutscene_manager.gd::_open_door` — door now slides **down** 3.4 m into the floor instead of up 3.2 m through the roof. `DOOR_OPEN_TRAVEL` const matches the mesh height baked into the .blend so the door tucks fully under ground when open. Fixes "parts of the door frame appear to extend beyond the building height" — that was the door itself punching through `Outpost_Roof` (z = 5.0–5.4) because it started at z = 1.5 and travelled up 3.2 m.
+- `cutscene_scene.gd` — `_build_interior` (155 lines of BoxMesh + prop assembly) and `_hide_back_wall` / `_hide_back_wall_recursive` (35 lines of AABB heuristic) deleted outright. Their calls in `_ready` were also removed. Net: `cutscene_scene.gd` is **503 → 318 lines** (−185, -37%). `MaterialApplicator`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture` stay until the remaining Sprint 7 items (textures, baked scorch marks, placeholder deletion in the .blend) land.
+
+**Lighting tune (`no_tail_cutscene.tscn`):**
+
+- `Sun` directional light transform corrected — the old basis had rays travelling with a **positive** Y component (physically impossible for sunlight; shadows fell in nonsensical directions). New transform is pitch −55° + yaw −30°, so rays travel `(+0.287, −0.819, −0.497)` — properly downward.
+- `light_energy` 1.5 → 1.2, `shadow_blur = 2.0`, `directional_shadow_max_distance = 60.0`, `directional_shadow_blend_splits = true` — softer edges, no wasted shadow map on off-scene geometry.
+
+**Tests:** Full suite **246/246 green** (unchanged). GDScript compiles, nothing in the deleted functions was referenced by tests.
+
+**Before → after dimensions:**
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Door internal height | 3.00 m | 3.40 m |
+| Nine Lives clearance (scale 3) | −0.08 m (pokes through) | +0.32 m |
+| Door open direction | up 3.2 m (into roof) | down 3.4 m (into ground) |
+| Interior floor Y | 1.42 m (floating) | 0.06 m (on ground) |
+| Outpost front wall at door | solid | boolean-cut opening |
+| `cutscene_scene.gd` LOC | 503 | 318 |
+
+Safety backup at `/tmp/no_tail_outpost.blend.presprint7_bak`. Remaining Sprint 7 items (texture unwraps, MaterialApplicator deletion, placeholder geometry in .blend, particles + flicker) still open in NEXT_STEPS §Sprint 7.
+
+---
+
+## 2026-04-17 — Star map connectivity polish
+
+NEXT_STEPS §5 pick-list item 1 — closes the "travel confirm dialog appears for any discovered region but silently fails on non-connected targets" gap left by the round-2 playtest sweep.
+
+- `StarMapViewModel` gains `region_connections`, `is_connected_from_current`, and `route_first_hop(from, to)` (BFS next-hop through discovered + accessible regions, "" when unreachable).
+- `star_map_screen._request_travel` sets `_travel_blocked = true` + `_travel_route_hint = <next-hop>` when the selected region is discovered but not directly connected. ENTER on a blocked panel cancels instead of calling `travel_to_region`, so the dialog can't misrepresent success.
+- `star_map_galaxy_layer._draw_travel_confirm` renders a distinct amber prompt (`No direct route to <region>`) and footer (`Route via <hop>  |  ESC to close` or `No known path  |  ESC to close`) when blocked.
+- +5 VM tests (`test_is_connected_from_current_true_for_neighbor`, `_false_for_non_neighbor`, `test_route_first_hop_returns_next_step`, `_empty_when_unreachable`, `_skips_undiscovered_intermediate`). Full suite **246/246 green** (was 241).
+
+---
+
 ## 2026-04-17 — Sprint 6a: DialogueViewModel + dialogue_ui.gd decomposition
 
 NEXT_STEPS Sprint 6, first slice. REFACTORING_PLAN Phase 4 (Issue #20) adapted to add the ViewModel layer that the 3a/3b/5a decompositions established. `dialogue_ui.gd` no longer reaches into `GameSession` directly — every read / write / delegate goes through `DialogueViewModel`, and portrait + combat-transition logic move into dedicated `RefCounted` helpers under `scripts/ui/dialogue/`.

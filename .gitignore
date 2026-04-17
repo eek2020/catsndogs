@@ -26,3 +26,11 @@ logs/
 .godot/
 export_presets.cfg
 .claude/worktrees/
+
+# Blender autobackup files
+*.blend1
+*.blend2
+
+# Large external tooling / asset libraries (kept local, not in repo)
+tools/Universal Animation Library*
+tools/blender-dev/

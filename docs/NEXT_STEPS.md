@@ -209,6 +209,7 @@ Two tools change the Sprint 7 workflow significantly. Install both before the Bl
 | Lighting pass | Human artist | Volumetric fog on wides, ember/dust particles at door, DoorRim flicker, baked indirect GI | CODE_REVIEW §6A.5 |
 | Rewrite `cutscene_scene.gd` | Claude | ≤ 100 lines — wiring only, no geometry manipulation | CODE_REVIEW §6A.7 |
 | Delete `MaterialApplicator` (370 lines) | Claude | Runtime painter no longer needed | CODE_REVIEW §6A.6 step 3 |
+| Decide terrain look — stylized flat vs PBR vs procedural (**DONE 2026-04-17**) | Human + Claude (blender-mcp) | **Chose stylized flat.** In-session rebuild of `no_tail_outpost.blend`: toon-stepped Pointiness ramps, faceted Decimate-collapsed hills (~320→58 polys), warm-tan ground / rust-teal building palette, emissive amber windows + red warning light, buttress gap closed (`Outpost_Buttress` shifted -0.25 X). `MaterialApplicator` runtime rules kept as fallback only — deletion deferred to the interior-room / character-GLB rows below. | CODE_REVIEW §6A.6 step 3 |
 | Replace `CameraController` with AnimationPlayer driver | Claude | Hero shots use baked animation; JSON-keyed tweens remain as generic fallback | CODE_REVIEW §6A.6 step 4 |
 | Fix `_fade_in_character` material mutation | Claude | Shader-based fade (uniform) or AnimationPlayer modulate track — no shared-material side effects | CODE_REVIEW §6A.3 |
 | Wire cutscene return flow | Claude | `_on_cutscene_finished` emits `cutscene_completed(cutscene_id, karma_delta, recruited)` on EventBus; `SceneManager` re-enters gameplay (no stub print) | CODE_REVIEW §6A.3 |
@@ -358,7 +359,7 @@ When these all pass on a live build, tick them off here with a line or two of wh
 
 **Pick next from:**
 
-1. **Star map connectivity polish** — `_request_travel` shows a confirm dialog for any discovered region; travel only succeeds for directly connected ones, so non-connected targets fail silently. Gate the dialog on connectivity + surface a "not connected — route via X" message. Small (1–2 h).
+1. ~~**Star map connectivity polish**~~ — **done 2026-04-17.** VM gained `is_connected_from_current` + `route_first_hop`; `_request_travel` now flips `_travel_blocked` when a discovered target isn't directly connected, and the galaxy-layer confirm panel renders "No direct route to X" + "Route via Y" (or "No known path") in amber. ENTER on a blocked panel cancels instead of calling `travel_to_region`. +5 VM tests; suite 241 → 246 green.
 2. **Sprint 7 cutscene modernisation** — offline Blender work. Prep scaffolding already in place. blender-mcp + blender-claude-plugin make the `.blend` rework Claude-drivable.
 3. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
 4. **Nav `_draw` decomposition** — `navigation.gd` is still 1,700+ lines with pre-existing lint warnings (long lines, private-access, stale Python-docstring shards). Candidate for a 3b-style extraction into `scripts/ui/navigation/` helpers. Medium (half-day).
