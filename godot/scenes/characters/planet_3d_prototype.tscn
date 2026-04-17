@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://b11g2ly6by1ll"]
+
+[ext_resource type="Script" uid="uid://bbpn3lc7xygnj" path="res://scripts/characters/planet_3d_prototype.gd" id="1_proto"]
+
+[node name="Planet3DPrototype" type="Control" unique_id=1170881873]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_proto")
+
+[node name="Background" type="ColorRect" parent="." unique_id=127074383]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.13, 0.2, 0.14, 1)
+
+[node name="World" type="Node2D" parent="." unique_id=1016357575]
+
+[node name="Camera" type="Camera2D" parent="World" unique_id=1936859954]
+zoom = Vector2(1.5, 1.5)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1106804201]
+
+[node name="Label" type="Label" parent="HUD" unique_id=564150268]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 900.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "Loading..."

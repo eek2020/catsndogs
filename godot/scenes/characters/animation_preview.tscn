@@ -1,22 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqn8k7j2m9x1p"]
+[gd_scene format=3 uid="uid://bqn8k7j2nax1p"]
 
-[ext_resource type="Script" path="res://scripts/characters/animation_preview_controller.gd" id="1_controller"]
+[ext_resource type="Script" uid="uid://dsdyx11to27y6" path="res://scripts/characters/animation_preview_controller.gd" id="1_controller"]
 
-[sub_resource type="Environment" id="Environment_1"]
-background_mode = 1
-bg_color = Color(0.2, 0.2, 0.25, 1)
-ambient_light_source = 1
-ambient_light_color = Color(0.4, 0.4, 0.45, 1)
-ambient_light_energy = 1.0
-
-[node name="AnimationPreview" type="Node3D"]
+[node name="AnimationPreview" type="Node3D" unique_id=959548314]
 script = ExtResource("1_controller")
-environment = SubResource("Environment_1")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 5, 5, 10)
-light_energy = 2.0
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=839999188]
+transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 4, 6, 8)
+light_energy = 2.2
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 1.5, 3)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=587511293]
+transform = Transform3D(0.766, 0, -0.643, 0, 1, 0, 0.643, 0, 0.766, 1.6, 1.4, 2.4)
+current = true
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=793492771]
+
+[node name="Label" type="Label" parent="HUD" unique_id=1969001288]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 800.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "Loading..."

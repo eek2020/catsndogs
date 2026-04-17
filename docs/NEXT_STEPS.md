@@ -260,6 +260,22 @@ Two tools change the Sprint 7 workflow significantly. Install both before the Bl
 
 **Suggested cut if time-boxed to one day:** ship steps 1–3 + test #1 only. That's the minimum to fix the "same place everywhere" complaint. Biome-driven gameplay (4–6) is a fast-follow.
 
+### Sprint 9 — 3D character + ship pipeline — **DONE 2026-04-17**
+
+**Track A + Track E.** Brought the newly-added Mixamo character FBX files (Aristotle + Nine Lives, 5 animations each) and the raw 3D ship (500k tris) into a reusable, game-ready pipeline. Evaluated and installed a Godot MCP server.
+
+| Task | Outcome | Reference |
+| --- | --- | --- |
+| Reusable `Character3D` + `SpriteCharacter3D` + `animation_preview` / `planet_3d_prototype` / `ship_3d_preview` scenes | Three runnable previews validate the full pipeline without touching live gameplay screens; ≤ 100-line scripts each | CHANGELOG 2026-04-17 3D pipeline entry |
+| Runtime `AnimationLibrary` from 5 mesh-less Mixamo FBXs | Dropping `<NewAnim>.fbx` into `anim_dir` extends the library with no code change; track retargeting rewrites node paths to match the mesh's actual skeleton location | `scripts/characters/character_3d.gd` `_retarget_tracks` |
+| Per-character mesh rotation correction | Aristotle's `rigged.glb` had `Armature rot=(90°,0,0), scale=0.01` (cm-FBX artifact) — `paths_for("aristotle")` returns `rotation_deg: Vector3(-90,0,0)` to cancel; Nine Lives clean Mixamo rig, no correction | `tools/inspect_transforms.gd` diagnostic |
+| Autofit camera in `SpriteCharacter3D` | ortho_size picked from mesh AABB so 0.95 m characters fill 85 % of frustum regardless of rig dimensions; 3/4 hero framing | `scripts/characters/sprite_character_3d.gd::_fit_camera_to_mesh` |
+| Headless ship decimation tool | `tools/blender-dev/decimate_for_game.py`: raw `ship_3d.fbx` 500 k tris / 4 k² / 37.7 MB → `ship_3d_gameready.glb` 8 k tris / 1 k² / 2.17 MB | CHANGELOG 2026-04-17 3D pipeline entry |
+| GUT regression tests | `tests/unit/test_character_3d.gd` — 6 tests covering library assembly, bone coverage, track NodePath targeting, graceful unknown-char behaviour. Full suite 252/252 green. | Quality policy |
+| Godot MCP server install | `@coding-solo/godot-mcp@0.1.1` global install + registered in `~/.claude.json`. Editor launch + project run + debug capture + basic scene ops. Deeper ops stay on the `tools/validate_*.gd` pattern. Paid alternative `youichi-uda/godot-mcp-pro` noted, not chosen. | CHANGELOG 2026-04-17 MCP install entry |
+
+**Exit criteria:** both characters stand upright in `animation_preview.tscn` on the reference grid; decimated ship under 12 k tris (verified in `validate_ship_preview.gd`); 5 animations resolve 0 unmatched tracks for both characters (`validate_character_3d.gd`); full GUT suite 252/252 green; `~/.claude.json` `mcpServers.godot` resolves to the installed binary. **All met 2026-04-17.**
+
 ### Backlog — preserved from MASTER_PLAN
 
 Everything in MASTER_PLAN §7 "Backlog: Visual Polish & Features" remains valid. Items most likely to move into Sprint 7+:

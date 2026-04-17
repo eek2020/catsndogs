@@ -6,6 +6,46 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-17 — 3D character + ship pipeline: Mixamo animations, decimated ship, planet-surface 3D prototype
+
+Brought the newly-added Mixamo character FBX files (Aristotle + Nine Lives, 5 animations each) and the raw 3D ship model into a reusable, game-ready pipeline. Validated end-to-end via headless Godot + GUT before wiring.
+
+**Why this shape:** the animation FBXs are mesh-less Mixamo exports (41-bone Aristotle, 33-bone Nine Lives) each containing a single `mixamo_com` animation. Rather than hand-merge them in Blender per addition, Character3D builds an AnimationLibrary at runtime so new motions drop in as `<Name>.fbx` files.
+
+**New — character pipeline:**
+
+- `scripts/characters/character_3d.gd` (+ `scenes/characters/character_3d.tscn`) — reusable rigged character. Loads a T-pose mesh and aggregates per-animation FBXs into a single `AnimationLibrary` keyed by filename (Idle/Walking/Running/Sprint/Jumping). Public `initialize()` makes it headless-testable.
+- `scripts/characters/sprite_character_3d.gd` — 2D-compatible wrapper: Node2D → SubViewportContainer(128²) → orthographic Camera3D → Character3D. Drops into Sprite2D slots on tilemap-based screens with matching `play_anim()` / `face_direction()` / `position` interface.
+- `scripts/characters/planet_3d_prototype.gd` (+ `scenes/characters/planet_3d_prototype.tscn`) — WASD demo scene validating the 3D-on-2D composition before touching live `planet_surface.gd`. `[1]/[2]` switches character, Shift sprints, Space jumps.
+- `scripts/characters/animation_preview_controller.gd` + `scenes/characters/animation_preview.tscn` — rebuilt on top of Character3D; cycles both characters through all five animations.
+
+**Fix — track retargeting for mixed rig paths:**
+
+Mixamo animation FBXs author track paths as `Skeleton3D:<bone>` (skeleton at scene root), but Aristotle's CC0-UAL-derived `rigged.glb` nests its skeleton at `Armature/Skeleton3D`. Without rewriting, every animation silently no-opped on Aristotle while flooding the log with `couldn't resolve track` warnings. `Character3D._retarget_tracks` now rewrites each track's NodePath to the real skeleton-relative path of the loaded mesh. Nine Lives (skeleton at root) was already compatible.
+
+**New — ship pipeline:**
+
+- `tools/blender-dev/decimate_for_game.py` — headless Blender tool: imports FBX/GLB, triangulates, applies Decimate to a target poly count, downscales bundled textures, exports GLB. Runs in a background Blender instance so the user's live session isn't disturbed.
+- `godot/assets/ships/ship_3d_gameready.glb` — 8 000 tris / 1024² texture / **2.17 MB** (from **499 602 tris / 4096² / 37.7 MB** raw FBX). Ready to instance in gameplay.
+- `scripts/ships/ship_3d_preview.gd` + `scenes/ships/ship_3d_preview.tscn` — 2.5D smoke-test scene: SubViewport(512²) with orthographic camera renders the decimated ship with a slow yaw. Proves the perf envelope before wiring into navigation/combat.
+
+**Tests:**
+
+- `tests/unit/test_character_3d.gd` — 5 tests: paths known, library aggregates all expected animations, every track bone exists on the skeleton, every track node-path matches the actual skeleton location (the regression guard for the Aristotle mismatch), unknown character IDs warn without crashing.
+- `tools/validate_character_3d.gd`, `tools/validate_ship_preview.gd`, `tools/validate_planet_3d_prototype.gd`, `tools/inspect_3d_assets.gd`, `tools/inspect_anim_tracks.gd` — headless diagnostic scripts.
+- Full GUT suite **252/252** green (was 251; +1 new retarget-path assertion).
+
+**Follow-up fixes (same day, after first playtest):**
+
+- *Per-character mesh rotation.* First playtest showed Aristotle rendering top-down/prone. Transform-tree inspection ([tools/inspect_transforms.gd](godot/tools/inspect_transforms.gd)) revealed his `rigged.glb` had an inner `Armature` with `rot_deg=(90°,0°,0°)` and `scale=0.01` — cm-based FBX authoring artifact from the CC0-UAL pipeline legacy. `Character3D` now accepts `mesh_rotation_deg` (per-character default in `paths_for`): Aristotle gets `Vector3(-90,0,0)` to cancel, Nine Lives stays at `Vector3.ZERO` (clean Mixamo rig already).
+- *Autofit camera in SpriteCharacter3D.* Characters are ~0.95 m tall (cats/dogs), not a human 1.8 m. Default `ortho_size` of 2.2 m left them as pixels on screen. `autofit` mode now reads the mesh AABB and picks `ortho_size = max_extent * 1.15` with 3/4 hero framing (`right = 0.75×ortho`, `up = 0.30×ortho`, `back = max(2.5, 2×ortho)`). Defaults raised: `render_size 128→256`, `display_size 32²→128²`.
+- *Animation preview usability.* Ground plane (6×6 m) + grid bars at 1 m intervals, so upright-on-floor is visually verifiable. Manual orbit (`A`/`D` tumble, `O` toggles auto-orbit), yaw read-out in HUD. Eliminates the "is it top-down or is the character prone" ambiguity.
+- *Planet prototype spawn.* Uses `preload()` instead of `SpriteCharacter3D.new()` so `--script` validators outside the class-registration boundary can spawn it cleanly.
+
+**Godot MCP installation:** `@coding-solo/godot-mcp@0.1.1` installed globally (`/opt/homebrew/bin/godot-mcp`), registered in `~/.claude.json` → `mcpServers.godot` with `GODOT_PATH=/Applications/Godot.app/Contents/MacOS/Godot`. Exposes editor launch, project run, console/debug capture, and basic scene ops (add node, load sprite, save). Deeper operations (AnimationTree, scene-graph surgery) continue through the `tools/validate_*.gd` / `tools/inspect_*.gd` headless-GDScript pattern. `youichi-uda/godot-mcp-pro` (paid, 162 tools) noted but not chosen. **Restart Claude Code before first use** — MCP servers are connected at session start.
+
+---
+
 ## 2026-04-17 — Sprint 7 (partial): stylized-flat terrain + outpost building in `.blend`
 
 Resolves the terrain-material decision parked earlier the same day. Picked **Option A (stylized flat)** — PBR packs are photogrammetry-realistic and clash with the painted 2D portraits/ships; hand-painted textures would match but need an artist. Stylized flat is the one path that coheres with the existing visual language without new art. Reworked live in Blender via `blender-mcp`.
