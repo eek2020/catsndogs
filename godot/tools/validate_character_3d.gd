@@ -5,8 +5,8 @@
 ##   /Applications/Godot.app/Contents/MacOS/Godot --headless --script res://tools/validate_character_3d.gd
 extends SceneTree
 
-const CHARACTERS: Array[String] = ["aristotle", "nine_lives"]
-const EXPECTED_ANIMS: Array[String] = ["Idle", "Walking", "Running", "Sprint", "Jumping"]
+const CHARACTERS: Array[String] = ["aristotle", "nine_lives", "no_tail", "dave", "blood_paw", "silky", "death", "charlie", "bombardier", "luna", "thistle"]
+const EXPECTED_ANIMS: Array[String] = ["idle", "walk", "run", "jump", "laugh"]
 
 
 func _initialize() -> void:

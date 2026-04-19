@@ -2,15 +2,15 @@
 ## that assembles an AnimationLibrary from the per-animation Mixamo FBX files.
 ##
 ## Guards:
-## - Aristotle + Nine Lives both instantiate without error.
+## - Nine Lives instantiates without error.
 ## - Every expected animation resolves on the AnimationPlayer.
 ## - Every animation's tracks target bones that exist on the skeleton (prevents
 ##   silent-no-op regressions when somebody swaps in a mismatched rig).
 extends "res://addons/gut/test.gd"
 
 const SCENE_PATH := "res://scenes/characters/character_3d.tscn"
-const CHARACTERS := ["aristotle", "nine_lives"]
-const EXPECTED_ANIMS := ["Idle", "Walking", "Running", "Sprint", "Jumping"]
+const CHARACTERS := ["aristotle", "nine_lives", "no_tail", "dave", "blood_paw", "silky", "death", "charlie", "bombardier", "luna", "thistle"]
+const EXPECTED_ANIMS := ["idle", "walk", "run", "jump", "laugh"]
 
 
 func _instantiate_character(char_id: String) -> Character3D:
@@ -60,8 +60,8 @@ func test_animation_tracks_map_to_skeleton_bones() -> void:
 
 func test_tracks_target_actual_skeleton_node_path() -> void:
 	# The node portion (everything before the `:`) must match the real skeleton
-	# location in the mesh tree. This is the check that caught the Aristotle
-	# `Skeleton3D` vs `Armature/Skeleton3D` mismatch.
+	# location in the mesh tree — catches `Skeleton3D` vs `Armature/Skeleton3D`
+	# mismatches on rigs that nest the skeleton under an Armature node.
 	for char_id in CHARACTERS:
 		var c := _instantiate_character(char_id)
 		var expected: String = str(c.mesh_root.get_path_to(c.skeleton))
@@ -81,8 +81,8 @@ func test_tracks_target_actual_skeleton_node_path() -> void:
 
 func test_play_anim_sets_current() -> void:
 	var c := _instantiate_character("nine_lives")
-	c.play_anim("Running")
-	assert_eq(c.current_anim(), "Running")
+	c.play_anim("run")
+	assert_eq(c.current_anim(), "run")
 
 
 func test_unknown_character_is_a_warning_not_a_crash() -> void:

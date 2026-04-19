@@ -18,7 +18,7 @@ var camera: Camera2D = null
 var _character: SpriteCharacter3D = null
 var _player_pos: Vector2 = Vector2(640, 360)
 var _velocity: Vector2 = Vector2.ZERO
-var _current_char: String = "aristotle"
+var _current_char: String = "nine_lives"
 
 
 func _ready() -> void:
@@ -52,9 +52,9 @@ func _process(delta: float) -> void:
 			# 2D world y is down — 3D yaw around Y is from +X going CCW. Map:
 			var yaw := atan2(-_velocity.x, -_velocity.y)
 			_character.face_direction(yaw)
-			_character.play_anim("Sprint" if sprint else "Walking")
+			_character.play_anim("run" if sprint else "walk")
 		else:
-			_character.play_anim("Idle")
+			_character.play_anim("idle")
 
 	camera.position = _player_pos
 	_refresh_hud()
@@ -64,12 +64,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
 			KEY_1:
-				_spawn("aristotle")
-			KEY_2:
 				_spawn("nine_lives")
 			KEY_SPACE:
 				if _character:
 					_character.play_anim("Jumping")
+			KEY_ESCAPE:
+				get_tree().quit()
 
 
 func _spawn(char_id: String) -> void:
@@ -94,7 +94,7 @@ func _spawn(char_id: String) -> void:
 func _refresh_hud() -> void:
 	if hud == null:
 		return
-	hud.text = "%s · %s · pos=%s\n[1/2] switch · Shift=sprint · Space=jump" % [
+	hud.text = "%s · %s · pos=%s\n[1/2] switch · Shift=sprint · Space=jump · ESC quit" % [
 		_current_char,
 		(_character.current_anim() if _character else "-"),
 		_player_pos.round()

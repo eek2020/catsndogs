@@ -1,13 +1,12 @@
 ## Preview harness for the 3D character + animation library pipeline.
 ##
-## Spawns Aristotle or Nine Lives via Character3D, cycles through their
-## animations, lets the user switch character with [1]/[2] and skip animations
-## with Space. Used to validate the Mixamo animation library + T-pose mesh
-## combinations before wiring them into gameplay.
+## Spawns each character via Character3D, cycles through animations, and lets
+## the user skip animations with Space. Used to validate the Mixamo animation
+## library + T-pose mesh combinations before wiring them into gameplay.
 extends Node3D
 
-const CHARACTERS: Array[String] = ["aristotle", "nine_lives"]
-const ANIM_CYCLE: Array[String] = ["Idle", "Walking", "Running", "Sprint", "Jumping"]
+const CHARACTERS: Array[String] = ["aristotle", "nine_lives", "no_tail", "dave", "blood_paw", "silky", "death", "charlie", "bombardier", "luna", "thistle"]
+const ANIM_CYCLE: Array[String] = ["idle", "walk", "run", "jump", "laugh"]
 const SWITCH_INTERVAL: float = 3.0
 
 @onready var camera: Camera3D = $Camera3D
@@ -17,7 +16,7 @@ var _character_idx: int = 0
 var _anim_idx: int = 0
 var _switch_timer: float = 0.0
 var _character: Character3D = null
-var _orbit_yaw: float = 0.0
+var _orbit_yaw: float = PI / 5.0  # 3/4 hero angle, not pure side-on
 var _orbit_enabled: bool = false
 
 
@@ -80,8 +79,20 @@ func _input(event: InputEvent) -> void:
 				_set_character(0)
 			KEY_2:
 				_set_character(1)
+			KEY_3:
+				_set_character(2)
+			KEY_4:
+				_set_character(3)
+			KEY_5:
+				_set_character(4)
+			KEY_6:
+				_set_character(5)
+			KEY_7:
+				_set_character(6)
 			KEY_O:
 				_orbit_enabled = not _orbit_enabled
+			KEY_ESCAPE:
+				get_tree().quit()
 
 
 func _set_character(idx: int) -> void:
@@ -102,6 +113,8 @@ func _spawn_character(char_id: String) -> void:
 	_character.autoplay = ANIM_CYCLE[_anim_idx]
 	add_child(_character)
 	_character.position = Vector3.ZERO
+	# Mesh pivot sits at hips; lift so feet rest on the ground plane at y=0.
+	_character.call_deferred("ground_to_floor")
 	_aim_camera()
 
 
@@ -110,9 +123,9 @@ func _spawn_character(char_id: String) -> void:
 func _aim_camera() -> void:
 	if camera == null:
 		return
-	var radius: float = 2.6
-	var elevation: float = 0.7
-	var target_y: float = 0.45  # chest height for ~0.95m-tall character
+	var radius: float = 2.8
+	var elevation: float = 1.6  # well above the ground plane so it reads as a pad, not a horizon through the body
+	var target_y: float = 0.55  # chest-height look target for ~0.95m-tall character
 	var px: float = cos(_orbit_yaw) * radius
 	var pz: float = sin(_orbit_yaw) * radius
 	camera.look_at_from_position(
@@ -134,6 +147,6 @@ func _refresh_hud() -> void:
 		return
 	var char_id := CHARACTERS[_character_idx]
 	var anim_name: String = _character.current_anim() if _character else "-"
-	hud_label.text = "%s — %s  yaw=%0.1f°\n[1]/[2] switch · Space next anim · A/D orbit · O auto-orbit" % [
+	hud_label.text = "%s — %s  yaw=%0.1f°\n[1-7] switch · Space next anim · A/D orbit · O auto-orbit · ESC quit" % [
 		char_id, anim_name, rad_to_deg(_orbit_yaw)
 	]

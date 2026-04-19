@@ -12,10 +12,10 @@
 class_name SpriteCharacter3D
 extends Node2D
 
-@export var character_id: String = "aristotle"
+@export var character_id: String = "nine_lives"
 @export_range(32, 512, 16) var render_size: int = 256
 @export_range(0.5, 10.0, 0.1) var ortho_size: float = 2.4
-@export var autoplay: String = "Idle"
+@export var autoplay: String = "idle"
 ## Convenience property — size to render on screen (Sprite2D equivalent).
 @export var display_size: Vector2 = Vector2(128, 128)
 ## If true, override ortho_size + camera Y from the loaded mesh's AABB so the

@@ -5,8 +5,7 @@
 [ext_resource type="Script" uid="uid://ctj6l1mmy43u0" path="res://scripts/systems/cutscene/camera_controller.gd" id="3_cam"]
 [ext_resource type="Script" uid="uid://bvps1xp0n22fb" path="res://scripts/systems/cutscene/dialogue_ui.gd" id="4_ui"]
 [ext_resource type="PackedScene" uid="uid://u15yap5g0i74" path="res://assets/cutscenes/no_tail_outpost.glb" id="5_glb"]
-[ext_resource type="PackedScene" uid="uid://c0eg50fojitd0" path="res://assets/characters/aristotle/3d/source.glb" id="6_aristotle"]
-[ext_resource type="PackedScene" uid="uid://dqgfqfv6cj2dv" path="res://assets/characters/crew/no_tail/3d/source.glb" id="7_notail"]
+[ext_resource type="PackedScene" uid="uid://br6ku4gpdu8tt" path="res://scenes/characters/character_3d.tscn" id="7_notail"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_1"]
 sky_top_color = Color(0.05, 0.04, 0.1, 1)
@@ -56,12 +55,10 @@ light_energy = 0.4
 
 [node name="NoTailOutpost" parent="World" unique_id=1599704168 instance=ExtResource("5_glb")]
 
-[node name="Aristotle" parent="World" unique_id=1862661359 instance=ExtResource("6_aristotle")]
-transform = Transform3D(-3, 0, 4.5298742e-07, 0, 3, 0, -4.5298742e-07, 0, -3, 0, 0, -9)
-
 [node name="NoTail" parent="World" unique_id=562841275 instance=ExtResource("7_notail")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -16.5)
 visible = false
+character_id = "no_tail"
 
 [node name="CameraController" type="Node3D" parent="." unique_id=1289041777]
 script = ExtResource("3_cam")

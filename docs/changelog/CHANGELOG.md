@@ -6,6 +6,71 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-19 — Character pipeline rebuild: 11 characters wired, uniform layout, 5 anims each
+
+Yesterday's tidy-up deleted the rigged character assets and broke the live character pipeline (Aristotle's `rigged.glb`, Nine Lives' old baseline, all old `Walking.fbx`/`Idle.fbx` Mixamo FBXs, `validate_rigged_glb.gd`, `inspect_*` tools). Today rebuilds the pipeline against a fresh, uniform per-character layout and brings the full named cast (10 protagonists + crew, plus Death) into Godot.
+
+**New on-disk shape (uniform across all characters):**
+
+```text
+design/charcters/<base>/
+  2d/<char>_t_pose.png
+  3d/<char>_t_pose_3d_baseline.fbx        # Mixamo "T-Pose" download (with skin)
+  3d/animations/<char>_anim_idle.fbx      # Mixamo "Without Skin" anim FBXs
+  3d/animations/<char>_anim_{walk,run,jump,laugh}.fbx
+```
+
+`<base>` is `aristotle`, `dave`, `death`, or `crew/<id>` for the 8 crew. Mirror at `godot/assets/characters/<base>/...`.
+
+**Refactor — `Character3D`:**
+
+- New `CHARACTER_BASES` dictionary covers all 11 characters; `paths_for()` derives mesh + anims + filename prefix from a single base path. Adding a character now means adding one row.
+- `DEFAULT_ANIMS` → `["idle", "walk", "run", "jump", "laugh"]` (snake_case, drops `Sprint`, adds `Laugh`).
+- New `anim_prefix` field resolves Mixamo files as `<anim_dir>/<char>_anim_<name>.fbx`.
+- `autoplay` default lowercased to `"idle"`.
+
+**Wired into preview / cutscene / tests:**
+
+- `animation_preview_controller.gd`: cycles all 11 characters; keys 1–7 directly select the first 7.
+- `planet_3d_prototype.gd`: anim names updated (`Sprint`→`run`, `Walking`→`walk`).
+- `no_tail_cutscene.tscn`: NoTail node now instances `character_3d.tscn` (rigged + animated) instead of the deleted `source.glb`.
+- `tests/unit/test_character_3d.gd` + `tools/validate_character_3d.gd` cover all 11.
+
+**Validation:** all 11 characters resolve a Skeleton3D, build a 5-anim library, and play all 5 with **0 unmatched bone tracks**. GUT 252/252 green.
+
+**Mixamo gotcha learned the hard way:** the T-pose baseline FBX must be downloaded with default "With Skin" — animation FBXs use "Without Skin". Easy to mix up; the validator catches it via "no Skeleton3D found on mesh".
+
+**Bone counts (informational):** 41-bone rig (Aristotle, Dave, Luna, Thistle); 33-bone rig (Nine Lives, No Tail, Blood Paw, Silky, Death, Charlie, Bombardier). Per-character bone match is what matters; cross-character retarget is not used.
+
+**Naming alignment:** `bombadier` → `bombardier` everywhere (matches `crew_members.json`). Folder + filenames + code references all renamed.
+
+**Removed legacy:**
+
+- `tools/validate_rigged_glb.gd` (CC0-UAL validator for deleted `rigged.glb`)
+- `tools/inspect_3d_assets.gd`, `inspect_anim_tracks.gd`, `inspect_mesh_scale.gd`, `inspect_transforms.gd` — diagnostic scripts for the deleted CC0 pipeline; superseded by `validate_character_3d.gd`
+- All `rigged.*`, `*_texture_20250901.png`, `nine_lives_t_pose_3d.fbx`, `source.glb`, `source_texture_*.png` orphans in `godot/assets/characters/...`
+- `design/charcters/_pipeline/cc0_source/` and `_unused/` left untouched (archived).
+
+**Tests:** GUT 252/252 green.
+
+---
+
+## 2026-04-17 — Sprint 10 kickoff: preview-scene ESC exit, anim_preview 3/4 hero framing, sprint 4/7 parked
+
+User-directed focus shift to planet-surface basics. Sprint 4 (sprite rollout) parked pending human artist — placeholder 32×32 sheets stay in-game and the rollout moves to backlog. Sprint 7 (3D cutscene rework) parked to prioritise the planet path.
+
+**Fixed — 3D preview scenes:**
+
+- `animation_preview_controller.gd`: ESC now quits; default orbit yaw π/5 (3/4 hero) instead of pure side-on; camera elevation 0.7 → 1.6, target_y 0.45 → 0.55, radius 2.6 → 2.8. Removes the "floor cutting through character" look reported by the user — ground plane now reads as a pad under the character instead of a horizon line crossing the body.
+- `planet_3d_prototype.gd`: ESC now quits. HUD hint updated.
+- HUD strings in both scenes now advertise ESC.
+
+**Docs:** `docs/NEXT_STEPS.md` adds Sprint 10 (planet-surface basics), marks Sprint 4 + Sprint 7 PARKED, appends parked sprite rollout to backlog.
+
+**Tests:** GUT 252/252 green.
+
+---
+
 ## 2026-04-17 — 3D character + ship pipeline: Mixamo animations, decimated ship, planet-surface 3D prototype
 
 Brought the newly-added Mixamo character FBX files (Aristotle + Nine Lives, 5 animations each) and the raw 3D ship model into a reusable, game-ready pipeline. Validated end-to-end via headless Godot + GUT before wiring.

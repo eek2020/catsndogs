@@ -1,31 +1,49 @@
 ## Reusable 3D character — mesh + runtime-assembled AnimationLibrary.
 ##
-## Loads a T-pose mesh (`mesh_path`) and a set of mesh-less animation FBX files
-## (`anim_dir`/`anim_names`.fbx), each containing a single Mixamo `mixamo_com`
-## animation. The animations are hoisted into an AnimationLibrary keyed by
-## filename (Idle/Walk/Run/Sprint/Jump), so the AnimationPlayer can play them by
-## short name and additional animations can be added by dropping FBXs into
-## `anim_dir` with no code change.
+## Loads a T-pose mesh (`<char>_t_pose_3d_baseline.fbx`) and a set of mesh-less
+## animation FBX files (`<char>_anim_<name>.fbx`), each containing a single
+## Mixamo `mixamo_com` animation. The animations are hoisted into an
+## AnimationLibrary keyed by short name (idle/walk/run/jump/laugh), so the
+## AnimationPlayer can play them by name. Drop a new
+## `<char>_anim_<new>.fbx` into `anim_dir` and add the short name to `anim_names`.
 ##
-## Bone-name compatibility: all Mixamo animation FBXs and the T-pose meshes in
-## this project share the `mixamorig_*` prefix. Minor bone-count mismatches
-## (34 vs 41 for Aristotle — fingers absent on the rig) are tolerated by Godot:
-## tracks targeting missing bones silently no-op.
+## All four characters (aristotle, nine_lives, no_tail, dave) follow the same
+## on-disk shape: `assets/characters/<base>/3d/<char>_t_pose_3d_baseline.fbx`
+## plus `assets/characters/<base>/3d/animations/<char>_anim_<name>.fbx`.
 class_name Character3D
 extends Node3D
 
-const DEFAULT_ANIMS: Array[String] = ["Idle", "Walking", "Running", "Sprint", "Jumping"]
+const DEFAULT_ANIMS: Array[String] = ["idle", "walk", "run", "jump", "laugh"]
 
-@export var character_id: String = "aristotle"
+# Maps character_id → asset base path under `res://assets/characters/`.
+# Aristotle and Dave live at the root; crew live under `crew/`.
+const CHARACTER_BASES: Dictionary = {
+	"aristotle": "aristotle",
+	"dave": "dave",
+	"nine_lives": "crew/nine_lives",
+	"no_tail": "crew/no_tail",
+	"blood_paw": "crew/blood_paw",
+	"silky": "crew/silky",
+	"charlie": "crew/charlie",
+	"bombardier": "crew/bombardier",
+	"luna": "crew/luna",
+	"thistle": "crew/thistle",
+	"death": "death",
+}
+
+@export var character_id: String = "nine_lives"
 @export var mesh_path: String = ""
 @export var anim_dir: String = ""
 @export var anim_names: Array[String] = DEFAULT_ANIMS
-@export var autoplay: String = "Idle"
+@export var anim_prefix: String = ""
+@export var autoplay: String = "idle"
 @export_range(0.1, 20.0, 0.1) var model_scale: float = 1.0
 ## Euler degrees applied to the mesh root. Needed per-character to counter
-## FBX-export axis artifacts (e.g. Aristotle's rigged.glb has an inner
-## Armature at 90° X rotation + 0.01 scale — legacy of cm-based authoring).
+## FBX-export axis artifacts on cm-authored rigs.
 @export var mesh_rotation_deg: Vector3 = Vector3.ZERO
+## Extra Y lift applied on top of bone/AABB grounding. Use when the rig has
+## scale quirks (e.g. Armature at 0.01) that throw off automatic measurement.
+@export var ground_offset_y: float = 0.0
 
 var animation_player: AnimationPlayer = null
 var skeleton: Skeleton3D = null
@@ -34,27 +52,24 @@ var _current_anim: String = ""
 
 
 static func paths_for(char_id: String) -> Dictionary:
-	## Known per-character asset locations. Adding a character means adding a row.
+	## Per-character asset locations. Layout is uniform across all characters,
+	## so paths derive from `character_id` + `CHARACTER_BASES[char_id]`. Add a
+	## new character by adding a row to `CHARACTER_BASES`. Per-rig overrides
+	## (rotation_deg / scale / ground_offset_y) live below.
+	if not CHARACTER_BASES.has(char_id):
+		return {}
+	var base: String = CHARACTER_BASES[char_id]
+	var out: Dictionary = {
+		"mesh": "res://assets/characters/%s/3d/%s_t_pose_3d_baseline.fbx" % [base, char_id],
+		"anims": "res://assets/characters/%s/3d/animations" % base,
+		"anim_prefix": "%s_anim_" % char_id,
+		"scale": 1.0,
+	}
+	# Per-rig corrections for FBX axis / scale artifacts. Empty for clean rigs.
 	match char_id:
-		"aristotle":
-			return {
-				"mesh": "res://assets/characters/aristotle/3d/rigged.glb",
-				"anims": "res://assets/characters/aristotle/3d/animations",
-				"scale": 1.0,
-				# rigged.glb's inner Armature carries (90°, 0°, 0°) + 0.01 scale
-				# from the cm-based FBX authoring. Counter-rotate so the
-				# character stands on +Y rather than lying on -Z.
-				"rotation_deg": Vector3(-90, 0, 0),
-			}
-		"nine_lives":
-			return {
-				"mesh": "res://assets/characters/crew/nine_lives/3d/nine_lives_t_pose_3d.fbx",
-				"anims": "res://assets/characters/crew/nine_lives/3d/animations",
-				"scale": 1.0,
-				"rotation_deg": Vector3.ZERO,
-			}
 		_:
-			return {}
+			pass
+	return out
 
 
 func _ready() -> void:
@@ -75,10 +90,14 @@ func initialize() -> void:
 			mesh_path = paths.get("mesh", "")
 		if anim_dir.is_empty():
 			anim_dir = paths.get("anims", "")
+		if anim_prefix.is_empty():
+			anim_prefix = paths.get("anim_prefix", "")
 		if model_scale == 1.0 and paths.has("scale"):
 			model_scale = paths["scale"]
 		if mesh_rotation_deg == Vector3.ZERO and paths.has("rotation_deg"):
 			mesh_rotation_deg = paths["rotation_deg"]
+		if ground_offset_y == 0.0 and paths.has("ground_offset_y"):
+			ground_offset_y = paths["ground_offset_y"]
 	_load_mesh()
 	_build_animation_library()
 	if autoplay != "" and animation_player and animation_player.has_animation(autoplay):
@@ -105,6 +124,49 @@ func available_anims() -> Array:
 	return animation_player.get_animation_list()
 
 
+## Translate the character so the lowest skeleton bone sits at local y=0.
+## Mixamo/rigged.glb pivots are at the hips, which otherwise bury the feet below
+## the ground plane. Using skeleton bones (rather than mesh AABB) sidesteps
+## per-rig transform quirks (Armature scale/rotation artifacts from cm FBXs).
+## Call after the mesh has loaded.
+func ground_to_floor() -> void:
+	if skeleton == null or skeleton.get_bone_count() == 0:
+		return
+	# Measure mesh extents in *character-local* space. The mesh vertices — not
+	# skeleton bones — are what the player sees, and can extend below the
+	# skeleton's foot bones via skinning / bind-pose offsets. Using the visual
+	# AABB also handles rigs where the skeleton origin sits at the hips.
+	var char_inv: Transform3D = global_transform.affine_inverse()
+	var min_y: float = INF
+	var stack: Array = [mesh_root]
+	while not stack.is_empty():
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.append(c)
+		if not (n is VisualInstance3D):
+			continue
+		var vi: VisualInstance3D = n
+		var aabb: AABB = vi.get_aabb()
+		if aabb.size == Vector3.ZERO:
+			continue
+		var to_char: Transform3D = char_inv * vi.global_transform
+		for i in 8:
+			var pt: Vector3 = to_char * aabb.get_endpoint(i)
+			if pt.y < min_y:
+				min_y = pt.y
+	# Also consider the skeleton's rest-pose bones as a lower bound — helps
+	# when VisualInstance3D AABBs haven't been computed yet this frame.
+	var skel_xform: Transform3D = char_inv * skeleton.global_transform
+	for i in skeleton.get_bone_count():
+		var p: Vector3 = skel_xform * skeleton.get_bone_global_rest(i).origin
+		if p.y < min_y:
+			min_y = p.y
+	var measured_lift: float = -min_y if (min_y != INF and min_y < 0.0) else 0.0
+	var total_lift: float = measured_lift + ground_offset_y
+	if total_lift > 0.0:
+		position.y += total_lift
+
+
 func _load_mesh() -> void:
 	if not ResourceLoader.exists(mesh_path):
 		push_warning("Character3D(%s): mesh not found at %s" % [character_id, mesh_path])
@@ -125,6 +187,11 @@ func _load_mesh() -> void:
 		animation_player = AnimationPlayer.new()
 		animation_player.name = "AnimationPlayer"
 		mesh_root.add_child(animation_player)
+	# Force track resolution to start at mesh_root. GLB imports can stash the AP
+	# anywhere and author `root_node = ".."` — which, under our class hierarchy,
+	# points at the parent Character3D rather than mesh_root. That silently
+	# breaks every animation track (animation player plays, no bones move).
+	animation_player.root_node = animation_player.get_path_to(mesh_root)
 
 
 func _build_animation_library() -> void:
@@ -133,10 +200,14 @@ func _build_animation_library() -> void:
 	var skel_rel_path: String = mesh_root.get_path_to(skeleton) if skeleton else ""
 	var lib := AnimationLibrary.new()
 	for nm in anim_names:
-		var path := "%s/%s.fbx" % [anim_dir, nm]
+		var path := "%s/%s%s.fbx" % [anim_dir, anim_prefix, nm]
 		var anim := _load_anim_from_fbx(path)
 		if anim != null:
 			_retarget_tracks(anim, skel_rel_path)
+			# Mixamo FBX imports sometimes land with loop_mode=NONE, so the AP
+			# plays once and freezes at the end frame. Force-loop every library
+			# entry — every animation we ship is designed to be cycled.
+			anim.loop_mode = Animation.LOOP_LINEAR
 			lib.add_animation(StringName(nm), anim)
 	# Replace or install as the default "" library so `play(nm)` works with bare name.
 	if animation_player.has_animation_library(&""):
@@ -146,8 +217,8 @@ func _build_animation_library() -> void:
 
 ## Rewrite the node portion of every track's NodePath so it points at the
 ## current mesh's Skeleton3D, wherever it lives. Mixamo FBX animations author
-## their paths as `Skeleton3D:<bone>` (skeleton at root); some rigs (e.g. the
-## CC0-UAL-derived Aristotle rigged.glb) nest it under `Armature/Skeleton3D`.
+## their paths as `Skeleton3D:<bone>` (skeleton at root); some rigs nest it
+## under `Armature/Skeleton3D`.
 ## Without this rewrite, Godot silently skips every track and the character
 ## locks in T-pose while logging unresolved-track warnings.
 static func _retarget_tracks(anim: Animation, skel_rel_path: String) -> void:

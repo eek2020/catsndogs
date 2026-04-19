@@ -95,7 +95,9 @@ Each sprint is 1–2 focused sessions. Assume all sprints include: **test before
 
 **Exit criteria:** `rg "GameSession\." godot/scripts/ui/navigation.gd` returns 0 **(done: 73 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 140 **(done: 206 → 129)**; combat_ui split into `scripts/ui/combat/` **(done: 585 → 399 + 4 components)**; four should-fix bugs closed **(done — 3c)**; full GUT suite **77/77** green (was 62/62; +15 regression tests across 4 new files).
 
-### Sprint 4 — Sprite roll-out (the named cast)
+### Sprint 4 — Sprite roll-out (the named cast) — **PARKED 2026-04-17**
+
+**Parked** pending human-artist capacity. Live game keeps the existing 32×32 sheets as *placeholders* — they remain playable. Work moved to the backlog (see "Sprite modernisation — named cast" below). Re-open when an artist is available or when the 3D-character-in-planet path (Sprint 10 candidate) makes the sprite rollout unnecessary.
 
 **Track A.** Expands the Sprint 2 pilot across the named cast.
 
@@ -174,7 +176,9 @@ Sliced into two commits to keep diffs reviewable. Part 1 closed the gameplay wir
 
 **Exit criteria (Sprint 6 as a whole):** new player can start the game, rebind a key, plug in a controller, save to slot 2, and reach the first encounter prompt without reading documentation. `rg "GameSession\." godot/scripts/ui/dialogue_ui.gd` returns 0 **(done 6a: 19 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 90 **(done 6a: 106 → 87)**.
 
-### Sprint 7 — 3D cutscene modernisation (Blender-first)
+### Sprint 7 — 3D cutscene modernisation (Blender-first) — **PARKED 2026-04-17**
+
+**Parked** to prioritise planet-surface basics (see Sprint 10). Prep commits and stylized-flat terrain pass remain landed; the interior-room rebuild, camera-animation bake, `MaterialApplicator` deletion, and `cutscene_scene.gd` rewrite sit unchanged until we un-park.
 
 **Track A (with engineering glue).** Parallelisable with any engineering sprint because the .blend rework is offline work. Expected to delete ~500 lines of GDScript.
 
@@ -276,6 +280,43 @@ Two tools change the Sprint 7 workflow significantly. Install both before the Bl
 
 **Exit criteria:** both characters stand upright in `animation_preview.tscn` on the reference grid; decimated ship under 12 k tris (verified in `validate_ship_preview.gd`); 5 animations resolve 0 unmatched tracks for both characters (`validate_character_3d.gd`); full GUT suite 252/252 green; `~/.claude.json` `mcpServers.godot` resolves to the installed binary. **All met 2026-04-17.**
 
+### Sprint 11 — Character pipeline rebuild — **DONE 2026-04-19**
+
+**Track A + Track E.** Rebuilt the rigged-character pipeline after a 2026-04-18 tidy-up deleted Sprint 9's CC0-UAL `rigged.glb` assets. New uniform on-disk layout supports the full named cast (10 protagonists + crew, plus Death) instead of just the 2 originally rigged.
+
+| Task | Outcome | Reference |
+| --- | --- | --- |
+| Uniform on-disk layout | `<base>/3d/<char>_t_pose_3d_baseline.fbx` + `<base>/3d/animations/<char>_anim_<name>.fbx` × 5 anims; mirrored design/ → godot/assets | CHANGELOG 2026-04-19 |
+| `Character3D` refactor | New `CHARACTER_BASES` dict; `paths_for()` derives mesh+anims+prefix from one row per char; `DEFAULT_ANIMS = [idle, walk, run, jump, laugh]` | `scripts/characters/character_3d.gd` |
+| 11 characters wired | Aristotle, Dave, Nine Lives, No Tail, Blood Paw, Silky, Death, Charlie, Bombardier, Luna, Thistle — all validate with 0 unmatched bones | `tools/validate_character_3d.gd` |
+| Cutscene rewire | `no_tail_cutscene.tscn` NoTail node now instances `character_3d.tscn` (rigged + animated) instead of the deleted `source.glb` | — |
+| `bombadier` → `bombardier` rename | Folder + filenames + code aligned with `crew_members.json` | — |
+| Legacy removal | `validate_rigged_glb.gd`, all `inspect_*.gd`, all `rigged.*` + `*_texture_20250901.png` + `source.glb` + `source_texture_*.png` orphans | CHANGELOG 2026-04-19 |
+| Regression tests | `test_character_3d.gd` covers all 11 characters × 5 anims × bone match. GUT 252/252 green. | Quality policy |
+
+**Mixamo gotcha learned:** the T-pose baseline FBX must be downloaded with default "With Skin"; animation FBXs use "Without Skin". `validate_character_3d.gd` catches the mix-up via "no Skeleton3D found on mesh".
+
+**Bone counts:** 41-bone (Aristotle, Dave, Luna, Thistle), 33-bone (rest). Per-character match is what matters; cross-character retarget is not used.
+
+**Exit criteria:** all 11 characters resolve a Skeleton3D, build a 5-anim library, play all 5 with 0 unmatched tracks (`validate_character_3d.gd`); GUT 252/252 green; `no_tail_cutscene` opens with a rigged NoTail. **All met 2026-04-19.**
+
+### Sprint 10 — Planet-surface basics (current focus)
+
+**Track E.** User-directed on 2026-04-17: park sprite rollout (keep placeholders) and 3D cutscenes, fix the planet experience.
+
+**Immediate fixes landed 2026-04-17:**
+
+| Task | Outcome | Reference |
+| --- | --- | --- |
+| ESC exit on preview scenes | `animation_preview_controller.gd` + `planet_3d_prototype.gd` now quit on ESC; HUD hints updated. Verified 252/252 GUT green. | User report 2026-04-17 |
+| anim_preview floor-through-body framing | Default `_orbit_yaw = π/5` (3/4 hero angle, no longer pure side-on); camera elevation 0.7 → 1.6, target_y 0.45 → 0.55, radius 2.6 → 2.8. Ground plane reads as a pad under the character instead of a horizon crossing the body. | User report 2026-04-17 |
+
+**Open questions / next steps for this sprint:**
+
+1. **3D-in-planet integration decision.** `SpriteCharacter3D` is ready (5 animations × 2 characters, autofit-framed). Integration path into `planet_surface.gd` is a one-line swap at sprite construction (`_player_sprite: Sprite2D` → `SpriteCharacter3D` instance) plus face_direction/play_anim wiring in `_update_animation`. Decide whether planet NPCs and merchants also get the 3D treatment or stay 2D (mixed is fine — a 3D hero on a 2D tilemap is the `planet_3d_prototype` shape and already validated).
+2. **Real planet_surface exit.** `planet_surface.gd:331` already maps `pause` → `_on_depart` → `switch_scene("navigation")`. Verify in a live run that the wiring still works end-to-end and add a visible HUD hint ("ESC — return to ship"). Currently only the DepartBtn is on-screen.
+3. **Planet look-and-feel.** Tilemap is 30×22 at TILE_SIZE=32 (so 960×704px in a 1280×720 viewport). Evaluate: scale the map, add proper scrolling, or move to a larger procedural field. Out-of-scope for this ticket unless user calls it in.
+
 ### Backlog — preserved from MASTER_PLAN
 
 Everything in MASTER_PLAN §7 "Backlog: Visual Polish & Features" remains valid. Items most likely to move into Sprint 7+:
@@ -286,6 +327,7 @@ Everything in MASTER_PLAN §7 "Backlog: Visual Polish & Features" remains valid.
 - Time-limited and arc-cascade side missions.
 - Procedural distress events driven by faction state.
 - Live World News, Wanted/Notoriety system, Black Market, Astral Dice, Tavern/Station hubs.
+- **Sprite modernisation — named cast (was Sprint 4).** Redraw Dave + 8 named crew at 64×64 + painterly portrait cards. Parked 2026-04-17 pending artist. Placeholder 32×32 sheets stay in-game. Re-open if/when art capacity lands, *or* fold into Sprint 10's 3D-character-on-planet path if 3D replaces the sprite surface entirely.
 
 ---
 
