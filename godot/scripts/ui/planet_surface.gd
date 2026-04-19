@@ -328,6 +328,12 @@ func _input(event: InputEvent) -> void:
 	# Pre-UI handler so ESC/interact fire even if DepartBtn or the SubViewport
 	# container has focus. Without this, clicking the button once gave it focus
 	# and subsequent ESC presses didn't reach `_unhandled_input` on some systems.
+	# Raw KEY_ESCAPE catch guards against `pause` action being unbound/remapped.
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			get_viewport().set_input_as_handled()
+			_on_depart()
+			return
 	if event.is_action_pressed("pause"):
 		get_viewport().set_input_as_handled()
 		_on_depart()
