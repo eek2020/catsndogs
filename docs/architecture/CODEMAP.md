@@ -3,7 +3,7 @@
 > **Auto-generated.** Do not hand-edit. Regenerate via the `codemap` skill or
 > `bash .claude/skills/codemap/generate.sh`.
 >
-> Inputs last changed: **2026-04-17**
+> Inputs last changed: **2026-04-19**
 
 Code-anchored index: every section links to real files. This is the
 companion to [.claude/PROJECT_INDEX.md](../../.claude/PROJECT_INDEX.md)

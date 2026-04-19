@@ -21,6 +21,8 @@ Desktop.ini
 # Project specific
 logs/
 *.log
+# Anchor to repo root so it doesn't match tools/sandbox/ (the CLI).
+/sandbox/
 
 # Godot engine
 .godot/
