@@ -355,7 +355,9 @@ All UI controllers in `godot/scripts/ui/` (top-level). Subfolders
 
 ### Cutscene scenes
 
+- [dave_intro_cutscene.tscn](../../godot/scenes/cutscenes/dave_intro_cutscene.tscn)
 - [no_tail_cutscene.tscn](../../godot/scenes/cutscenes/no_tail_cutscene.tscn)
+- [prerendered_cutscene.tscn](../../godot/scenes/cutscenes/prerendered_cutscene.tscn)
 
 ## Data files
 
@@ -499,5 +501,5 @@ All JSON content lives under `godot/data/`. Each subfolder is one category.
 | Systems | 18 |
 | UI screens (top-level) | 26 |
 | ViewModels | 6 |
-| Scenes | 36 |
+| Scenes | 38 |
 | Data JSON files | 84 |

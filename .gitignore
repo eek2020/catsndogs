@@ -33,6 +33,13 @@ export_presets.cfg
 *.blend1
 *.blend2
 
+# Cutscene pipeline — intermediate renders are regenerable; only the final
+# composited PNG sequences under godot/assets/cutscenes/ are shipped.
+/cutscene_pipeline/renders/
+/cutscene_pipeline/blender/*.blend
+/cutscene_pipeline/blender/__pycache__/
+
 # Large external tooling / asset libraries (kept local, not in repo)
 tools/Universal Animation Library*
 tools/blender-dev/
+/cutscene_pipeline/archives/

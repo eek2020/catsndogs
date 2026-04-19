@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdaveintrocutscene"]
+
+[ext_resource type="PackedScene" path="res://scenes/cutscenes/prerendered_cutscene.tscn" id="1_base"]
+
+[node name="DaveIntroCutscene" instance=ExtResource("1_base")]
+frame_dir = "res://assets/cutscenes/dave_intro/frames"
+dialogue_wav = "res://assets/cutscenes/dave_intro/dialogue.wav"
+fps = 24.0
+autoplay = true
+loop = false
+audio_start_seconds = 1.45

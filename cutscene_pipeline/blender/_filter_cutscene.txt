@@ -1,0 +1,4 @@
+drawbox=x=(iw-iw*0.70)/2:y=ih*0.68:w=iw*0.70:h=ih*0.22:color=black@0.62:t=fill:enable='gte(t\,1.55)',
+drawbox=x=(iw-iw*0.70)/2:y=ih*0.68:w=iw*0.70:h=ih*0.22:color=0x2a1f14@0.95:t=6:enable='gte(t\,1.55)',
+drawtext=fontfile=/System/Library/Fonts/Supplemental/Baskerville.ttc:text='DAVE':fontcolor=0xf0d9a8:fontsize=34:x=(w-text_w)/2:y=h*0.705:enable='gte(t\,1.55)':alpha='if(lt(t\,1.55)\,0\,if(lt(t\,1.95)\,(t-1.55)/0.4\,1))',
+drawtext=fontfile=/System/Library/Fonts/Supplemental/Baskerville.ttc:text='Well now — a sight you do not see every solar cycle.':fontcolor=0xfaf3e0:fontsize=44:x=(w-text_w)/2:y=h*0.775:enable='gte(t\,1.55)':alpha='if(lt(t\,1.55)\,0\,if(lt(t\,1.95)\,(t-1.55)/0.4\,1))'

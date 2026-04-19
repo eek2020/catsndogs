@@ -6,6 +6,37 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-19 — Pre-rendered cutscene pipeline (Sprint 12 style-test promoted)
+
+Style-test sandbox (`cutscene_test/`) retired. The working pipeline has been split into authoring tools (`cutscene_pipeline/`) and shipped assets (`godot/assets/cutscenes/dave_intro/`), with a new Godot scene type (`prerendered_cutscene.tscn`) that complements the existing realtime 3D flavour (`no_tail_cutscene.tscn`).
+
+**New pipeline — prerendered painterly cutscenes:**
+
+- `cutscene_pipeline/blender/setup_scene.py` — reproducibly builds a Blender scene with Dave (or any character), toon-shaded (banded `ShaderToRGB` + ColorRamp) with Solidify backface outlines. All knobs at top of file.
+- `cutscene_pipeline/blender/render_shots.py` — multi-shot sequencer: each entry in `SHOTS` specifies an animation FBX + camera move + duration. Cycles the Mixamo action via F-curve modifier when shot length exceeds clip length.
+- `cutscene_pipeline/blender/_filter_cutscene.txt` — ffmpeg filter graph for the dialogue card (Baskerville serif on warm-black panel with alpha fade-in).
+
+**New Godot pieces:**
+
+- `godot/scripts/cutscenes/prerendered_cutscene_player.gd` — `PreRenderedCutscenePlayer` class. Loads a directory of PNG frames + an optional WAV, plays at configurable FPS, emits `finished` on completion or loops if toggled. Avoids Godot's stuttery Theora decoder by doing frame-indexed `TextureRect` swaps in `_process`.
+- `godot/scenes/cutscenes/prerendered_cutscene.tscn` — reusable base scene with the player node + CutsceneFrame TextureRect + Audio player.
+- `godot/scenes/cutscenes/dave_intro_cutscene.tscn` — first concrete instance, pointing at `assets/cutscenes/dave_intro/`.
+- `godot/data/cutscenes/_registry.json` — bumped to schema v2, added `type` field (`realtime_3d` | `prerendered`). `dave_intro` registered with `arc1`, tagged `intro`/`style_test`.
+
+**Documentation:**
+
+- `docs/architecture/cutscenes/PRERENDERED_PIPELINE.md` — end-to-end authoring walkthrough (plan shots → generate audio → render in Blender → composite in ffmpeg → register → play). Also documents Blender 5.x gotchas (Freestyle silently unsupported on Eevee Next; compositor moved to `scene.compositing_node_group`; many classic nodes removed).
+
+**Known limitations baked into the v1 pipeline (documented in the pipeline doc):**
+
+- No mouth animation. AI-generated character UV atlases are fragmented (no editable mouth region), no jaw bones, no blendshapes. Painted-mouth-overlay approach was tried and abandoned — painted tongue baked into the model showed through overlays. Current stance: static painted face + dialogue card + audio is the shipping answer.
+- Compositor polish layer (paper, grain, vignette) is stubbed — deferred to v2 until base look is locked.
+- Outlines are silhouette-only (no interior creases). Grease Pencil Line Art would add them but is a per-character rig investment.
+
+**Dave intro asset summary:** 144 frames @ 24fps @ 960×540 (~60 MB PNG sequence), 3.3s TTS audio (`say -v Daniel`), dialogue card with line *"Well now — a sight you do not see every solar cycle."* Shot 1: side-on walk (30 frames, root motion through frame). Shot 2: stylised 3/4 close-up idle (114 frames, cycled 96-frame action).
+
+---
+
 ## 2026-04-19 — Character pipeline rebuild: 11 characters wired, uniform layout, 5 anims each
 
 Yesterday's tidy-up deleted the rigged character assets and broke the live character pipeline (Aristotle's `rigged.glb`, Nine Lives' old baseline, all old `Walking.fbx`/`Idle.fbx` Mixamo FBXs, `validate_rigged_glb.gd`, `inspect_*` tools). Today rebuilds the pipeline against a fresh, uniform per-character layout and brings the full named cast (10 protagonists + crew, plus Death) into Godot.

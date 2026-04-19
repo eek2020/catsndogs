@@ -1,12 +1,16 @@
 {
-  "_schema_version": 1,
-  "_description": "Registry of cutscenes that can be played via CutsceneManager. Adding a cutscene should be a data-only operation — pair a new scene_path + dialogue_path + camera_animation_name (or camera_path fallback) entry here with the actual assets and the cutscene becomes playable. See docs/architecture/CODE_REVIEW.md §6A.6 step 10.",
+  "_schema_version": 2,
+  "_description": "Registry of cutscenes that can be played via CutsceneManager (type=realtime_3d) or PreRenderedCutscenePlayer (type=prerendered). Adding a cutscene should be a data-only operation — pair a new entry here with the actual assets and the cutscene becomes playable. See docs/architecture/CODE_REVIEW.md §6A.6 and docs/architecture/cutscenes/PRERENDERED_PIPELINE.md.",
   "_field_reference": {
     "id": "Stable identifier used by code (e.g. passed to CutsceneManager.start_cutscene(id) or emitted as cutscene_completed(id, ...)).",
-    "scene_path": "res:// path to the PackedScene that hosts the cutscene (CutsceneManager + CameraController + CutsceneDialogueUI + 3D world).",
-    "dialogue_path": "res:// path to the dialogue JSON that drives the CutsceneManager sequences.",
-    "camera_animation_name": "Name of an AnimationPlayer track baked into the .glb/.tscn to drive the camera. When set, CameraController should prefer this over camera_path_json.",
-    "camera_path_json": "Fallback: res:// path to the JSON camera-keyframe table used by the current CameraController.move_to_key() flow. Only read when camera_animation_name is empty.",
+    "type": "Playback flavour: 'realtime_3d' (CutsceneManager drives a live 3D scene with camera + dialogue UI) or 'prerendered' (PreRenderedCutscenePlayer plays a PNG sequence + WAV baked in Blender).",
+    "scene_path": "res:// path to the PackedScene that hosts the cutscene.",
+    "dialogue_path": "res:// path to the dialogue JSON that drives the CutsceneManager sequences. realtime_3d only.",
+    "camera_animation_name": "Name of an AnimationPlayer track baked into the .glb/.tscn to drive the camera. realtime_3d only.",
+    "camera_path_json": "Fallback: res:// path to the JSON camera-keyframe table. realtime_3d only.",
+    "frames_dir": "prerendered only. res:// path to the directory holding the frame_NNNN.png sequence.",
+    "dialogue_wav": "prerendered only. res:// path to the dialogue audio WAV, or empty for silent.",
+    "fps": "prerendered only. Frame rate the sequence was rendered at (default 24).",
     "title": "Human-readable label for debug logs, QA screenshots, and the future cutscene picker.",
     "arc": "Narrative arc this cutscene belongs to (arc1 .. arc10). Used to scope playback windows and filter in the future cutscene picker.",
     "tags": "Optional free-form tags (e.g. recruitment, combat_intro, finale) for future gating.",
@@ -15,6 +19,7 @@
   "cutscenes": [
     {
       "id": "no_tail_outpost",
+      "type": "realtime_3d",
       "scene_path": "res://scenes/cutscenes/no_tail_cutscene.tscn",
       "dialogue_path": "res://data/cutscenes/no_tail_dialogue.json",
       "camera_animation_name": "",
@@ -23,6 +28,18 @@
       "arc": "arc2",
       "tags": ["recruitment", "crew"],
       "notes": "Sprint 7 rewrite target. Runtime interior / burn marks / material-applicator hacks all live in cutscene_scene.gd and should move into the .blend when the Blender-first rework lands (see CODE_REVIEW.md §6A.6). camera_animation_name currently empty — falls back to camera_path.json until the baked AnimationPlayer track ships."
+    },
+    {
+      "id": "dave_intro",
+      "type": "prerendered",
+      "scene_path": "res://scenes/cutscenes/dave_intro_cutscene.tscn",
+      "frames_dir": "res://assets/cutscenes/dave_intro/frames",
+      "dialogue_wav": "res://assets/cutscenes/dave_intro/dialogue.wav",
+      "fps": 24,
+      "title": "Dave — intro line (style-test origin)",
+      "arc": "arc1",
+      "tags": ["intro", "dave", "style_test"],
+      "notes": "First prerendered cutscene — proves the Blender -> ffmpeg -> PNG-sequence pipeline. Two-shot: side-on walk (30 frames) + stylised 3/4 close-up with dialogue card (114 frames looping the idle action). Audio: macOS `say -v Daniel` TTS, swap for real VO when cast. Art direction: painterly toon-shade + Solidify outlines, see docs/architecture/cutscenes/PRERENDERED_PIPELINE.md. Mouth animation deliberately not implemented (see same doc §Known limitations)."
     }
   ]
 }

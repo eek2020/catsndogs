@@ -1,5 +1,10 @@
 # Whisper Crystals — Art Direction Guide
 
+**Companion docs.**
+
+- [`cutscene_visual_language.md`](cutscene_visual_language.md) — painterly-3D cutscene aesthetic (Track C). Shading, outlines, camera grammar, dialogue card style. Read this before authoring a pre-rendered cutscene.
+- [`sprite_sheet_notes.md`](sprite_sheet_notes.md) — Track A sprite-sheet conventions.
+
 ---
 
 ## Visual Style
