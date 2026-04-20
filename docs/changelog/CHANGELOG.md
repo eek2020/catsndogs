@@ -6,6 +6,25 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-20 — Sprint 10 step 5: Fringe Haven 3D interactions
+
+**Step 5 of the Fringe Haven 3D build.** Port the hub's interaction loop (merchant, treasure, depart) onto the new 3D scene, plus a small HUD layer so the player can see what's intractable without leaving the scene.
+
+- **Area3D interaction zones.** Instead of a per-frame distance loop (the pattern the 2D `planet_surface.gd` uses), each interactable spawns a sphere `Area3D` (radius 2.0m, centred at y=0.8 so it overlaps the player capsule's midsection). `body_entered`/`body_exited` maintain `_active_zones: Dictionary` keyed by the area's instance id; `_try_interact()` picks the first entry when the `interact` action fires. Clean inversion of the "scan every frame" approach and gives us free support for multiple concurrent zones without coupling them.
+- **Merchant — Bryn.** Third NPC in `_build_npcs()` is tagged `InteractKind.MERCHANT` (new enum on the controller). On interact: `GameSession.open_trade_screen("felid_corsairs")` + `main.push_overlay("trade")`, matching the `station_screen.gd`/`planet_surface.gd` flow exactly. Label updated to "BRYN — trade" so the prompt is discoverable before you walk up.
+- **Treasure chest.** Procedural 3D chest at (-14, 0, 7) — `BoxMesh` base + tilted lid + golden-band detail + an unshaded emissive sparkle sphere that pulses via `_update_chest_sparkle()` (sine on both scale and y). `StaticBody3D` + `BoxShape3D` (0.95 × 0.75 × 0.65) collider wraps the base+lid bounds so the player can't walk through it (the Area3D trigger is `monitoring=true, monitorable=false` and doesn't block — the physical collider is separate). First interact: `+25 crystal_inventory`, `+10 salvage`, sets `story_flags["fringe_haven_chest_opened"]`, tilts the lid 55° back and hides the sparkle. Re-entering the scene with the flag set builds the chest in the opened state with no Area3D.
+- **HUD layer.** New `CanvasLayer` with three labels:
+  - `"DEPART — ESC"` pinned top-left (fixed hint, always visible).
+  - `"[E] Interact"` pinned below it, visibility gated on `_active_zones.is_empty()`.
+  - Centred flash line for action feedback (`_flash(msg, duration)` with alpha fade in the last second).
+- **Depart wiring.** `_on_depart()` now calls `MusicManager.on_state_change("navigation")` + `main.switch_scene("navigation")`, matching the production flow. Deliberately does **not** call `GameSession.planet_system.depart()` — Fringe Haven is a hand-authored hub entered via `navigation.gd`'s direct scene swap, not through `planet_system.land_on()`, so `planet_inventory` belongs to whatever procedural planet the player landed on last. Depart quits only when run standalone via F6.
+- **`interact` input action.** Already wired in `project.godot` (line 79); no project-settings change needed.
+- **Tests.** 252/252 GUT green. Editor import clean.
+
+**Files touched:** `godot/scripts/world/fringe_haven_3d.gd` (+~260 lines: constants, state, `_build_chest`, `_build_hud`, `_attach_interact_zone`, `_try_interact`, `_open_merchant`, `_collect_chest`, `_update_hud`, `_update_chest_sparkle`, `_flash`).
+
+---
+
 ## 2026-04-20 — Sprint 10 step 4: props + NPC rigs + z-fight fixes
 
 **Step 4 of the Fringe Haven 3D build.** Set-dressing, NPC population, and a pass of z-fighting fixes that only became visible once real geometry sat next to each other.

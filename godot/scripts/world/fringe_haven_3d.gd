@@ -31,6 +31,15 @@ const CHARACTER_3D_SCENE: PackedScene = preload(
 	"res://scenes/characters/character_3d.tscn"
 )
 
+# Step 5 interaction tunables.
+const MERCHANT_FACTION_ID: String = "felid_corsairs"
+const CHEST_STORY_FLAG: String = "fringe_haven_chest_opened"
+const CHEST_REWARD_CRYSTALS: int = 25
+const CHEST_REWARD_SALVAGE: int = 10
+const INTERACT_RADIUS: float = 2.0    # metres — Area3D trigger radius
+
+enum InteractKind { NONE, MERCHANT, CHEST }
+
 var _player: CharacterBody3D = null
 var _character: Character3D = null
 var _camera_rig: Node3D = null
@@ -40,6 +49,22 @@ var _campfire_lights: Array[OmniLight3D] = []
 var _campfire_flames: Array[MeshInstance3D] = []
 var _anim_accum: float = 0.0
 
+# Active interaction zones the player is currently inside. Each Area3D's
+# `on_enter`/`on_exit` flips an entry here; _input reads it when E fires.
+# Dict: { area_instance_id: { "kind": InteractKind, "data": Variant } }
+var _active_zones: Dictionary = {}
+
+# HUD
+var _hud_hint_interact: Label = null
+var _hud_hint_depart: Label = null
+var _hud_flash: Label = null
+var _flash_timer: float = 0.0
+
+# Chest state — swapped between CLOSED/OPEN visuals on collect.
+var _chest_lid: MeshInstance3D = null
+var _chest_sparkle: MeshInstance3D = null
+var _chest_collected: bool = false
+
 
 func _ready() -> void:
 	_build_environment()
@@ -47,15 +72,19 @@ func _ready() -> void:
 	_build_buildings()
 	_build_props()
 	_build_npcs()
+	_build_chest()
 	_build_player()
 	_build_camera()
+	_build_hud()
 	set_process(true)
 
 
 func _process(delta: float) -> void:
+	_anim_accum += delta
+	_update_hud(delta)
+	_update_chest_sparkle()
 	if _campfire_lights.is_empty():
 		return
-	_anim_accum += delta
 	# Deterministic per-fire flicker: two sine waves with different freqs per
 	# index give each fire its own rhythm without an RNG.
 	for i in range(_campfire_lights.size()):
@@ -114,14 +143,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_ESCAPE:
 			get_viewport().set_input_as_handled()
 			_on_depart()
+			return
+	if event.is_action_pressed("interact"):
+		get_viewport().set_input_as_handled()
+		_try_interact()
 
 
 func _on_depart() -> void:
-	# Step 1: ESC just quits. Full depart wiring comes in step 5.
+	# Fringe Haven is a hand-authored hub (not reached via planet_system.land_on),
+	# so we skip planet_system.depart() — it would wipe planet_inventory that
+	# belongs to a different (procedural) planet session. Just swap back.
+	MusicManager.on_state_change("navigation")
 	var main_node := get_tree().current_scene
 	if main_node and main_node.has_method("switch_scene"):
 		main_node.switch_scene("navigation")
 	else:
+		# Fallback for running the .tscn standalone via F6.
 		get_tree().quit()
 
 
@@ -459,7 +496,9 @@ func _sub_texture(path: String, region: Rect2i) -> Texture2D:
 # Spawn a billboarded sprite at `pos`, world-height `world_height` metres tall,
 # aspect preserved from the texture's pixel size. Base of the sprite sits on
 # the ground (y=pos.y); the sprite's centre is lifted by world_height/2.
-func _make_billboard(tex: Texture2D, pos: Vector3, world_height: float, parent: Node = self) -> Sprite3D:
+func _make_billboard(
+	tex: Texture2D, pos: Vector3, world_height: float, parent: Node = self,
+) -> Sprite3D:
 	var s := Sprite3D.new()
 	s.texture = tex
 	s.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -602,12 +641,25 @@ func _make_campfire_3d(pos: Vector3) -> void:
 # Merchant (Bryn) keeps her sprite placeholder for now — step 5 will route
 # interactions through an Area3D per NPC.
 func _build_npcs() -> void:
-	_spawn_3d_npc("felid_corsair_guard", Vector3(2.0, 0.0, 1.0), "GUARD", PI)
-	_spawn_3d_npc("felid_corsair_guard", Vector3(-2.0, 0.0, -1.0), "GUARD", 0.0)
-	_spawn_3d_npc("felid_corsair_guard", Vector3(6.0, 0.0, -2.5), "BRYN", PI * 0.5)
+	_spawn_3d_npc("felid_corsair_guard", Vector3(2.0, 0.0, 1.0), "GUARD", PI, InteractKind.NONE)
+	_spawn_3d_npc("felid_corsair_guard", Vector3(-2.0, 0.0, -1.0), "GUARD", 0.0, InteractKind.NONE)
+	# Bryn stands just outside her storefront and opens the trade overlay.
+	_spawn_3d_npc(
+		"felid_corsair_guard",
+		Vector3(6.0, 0.0, -2.5),
+		"BRYN — trade",
+		PI * 0.5,
+		InteractKind.MERCHANT,
+	)
 
 
-func _spawn_3d_npc(char_id: String, pos: Vector3, label: String, yaw: float) -> void:
+func _spawn_3d_npc(
+	char_id: String,
+	pos: Vector3,
+	label: String,
+	yaw: float,
+	interact: int = InteractKind.NONE,
+) -> void:
 	# StaticBody3D wraps the rig so the player bumps into the NPC instead of
 	# walking through. Capsule roughly matches the player's collider.
 	var body := StaticBody3D.new()
@@ -637,3 +689,269 @@ func _spawn_3d_npc(char_id: String, pos: Vector3, label: String, yaw: float) -> 
 	tag.outline_size = 6
 	tag.position = pos + Vector3(0, 2.2, 0)
 	add_child(tag)
+
+	if interact != InteractKind.NONE:
+		_attach_interact_zone(pos, interact, null)
+
+
+# Spawns an Area3D sphere at `pos` that tracks the player and drives the
+# HUD interact prompt. `data` is stored on the entry and passed to the
+# interaction dispatcher (used by the chest to resolve its own state).
+func _attach_interact_zone(pos: Vector3, kind: int, data: Variant) -> void:
+	var area := Area3D.new()
+	area.position = pos
+	# Monitor only — NPCs already have StaticBody3D colliders for push-back.
+	area.monitoring = true
+	area.monitorable = false
+	var zone_col := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = INTERACT_RADIUS
+	zone_col.shape = sphere
+	# Raise the sphere centre so the player's capsule (radius 0.35, centred at
+	# y=0.8) overlaps at its midsection — keeps the trigger proportional to the
+	# actor height rather than a flat disc at ground level.
+	zone_col.position.y = 0.8
+	area.add_child(zone_col)
+	add_child(area)
+	var aid := area.get_instance_id()
+	area.body_entered.connect(func(body: Node) -> void:
+		if body == _player:
+			_active_zones[aid] = {"kind": kind, "data": data}
+	)
+	area.body_exited.connect(func(body: Node) -> void:
+		if body == _player:
+			_active_zones.erase(aid)
+	)
+
+
+# ── Treasure chest ────────────────────────────────────────────────────
+
+# Build a small wooden chest (base + lid) with an emissive sparkle puff while
+# unopened. Placed on the hill behind the southern doghouses — off the roads
+# and far enough from Bryn that the two interact prompts never fight.
+func _build_chest() -> void:
+	var gs: GameStateData = GameSession.game_state if GameSession else null
+	_chest_collected = gs != null and gs.story_flags.get(CHEST_STORY_FLAG, false)
+
+	var pos := Vector3(-14.0, 0.0, 7.0)
+
+	var root := Node3D.new()
+	root.name = "Chest"
+	root.position = pos
+	add_child(root)
+
+	var base := MeshInstance3D.new()
+	var base_box := BoxMesh.new()
+	base_box.size = Vector3(0.9, 0.55, 0.6)
+	base.mesh = base_box
+	base.position.y = 0.275
+	var base_mat := StandardMaterial3D.new()
+	base_mat.albedo_color = Color(0.42, 0.26, 0.14)
+	base_mat.roughness = 0.9
+	base.material_override = base_mat
+	root.add_child(base)
+
+	# Physical collider so the player can't walk through. Sized to the base +
+	# lid bounding box (0.95 × 0.75 × 0.65) so the lid can't be clipped either.
+	var chest_body := StaticBody3D.new()
+	var chest_col := CollisionShape3D.new()
+	var chest_shape := BoxShape3D.new()
+	chest_shape.size = Vector3(0.95, 0.75, 0.65)
+	chest_col.shape = chest_shape
+	chest_col.position.y = 0.375
+	chest_body.add_child(chest_col)
+	root.add_child(chest_body)
+
+	_chest_lid = MeshInstance3D.new()
+	var lid_box := BoxMesh.new()
+	lid_box.size = Vector3(0.95, 0.2, 0.65)
+	_chest_lid.mesh = lid_box
+	_chest_lid.position.y = 0.65
+	var lid_mat := StandardMaterial3D.new()
+	lid_mat.albedo_color = Color(0.52, 0.34, 0.18)
+	lid_mat.roughness = 0.85
+	_chest_lid.material_override = lid_mat
+	root.add_child(_chest_lid)
+
+	# Golden band across the front (purely decorative).
+	var band := MeshInstance3D.new()
+	var band_box := BoxMesh.new()
+	band_box.size = Vector3(0.92, 0.08, 0.02)
+	band.mesh = band_box
+	band.position = Vector3(0, 0.35, 0.31)
+	var band_mat := StandardMaterial3D.new()
+	band_mat.albedo_color = Color(0.85, 0.65, 0.22)
+	band_mat.metallic = 0.6
+	band_mat.roughness = 0.3
+	band.material_override = band_mat
+	root.add_child(band)
+
+	# Sparkle — emissive sphere above the lid, visible only when uncollected.
+	_chest_sparkle = MeshInstance3D.new()
+	var sp := SphereMesh.new()
+	sp.radius = 0.12
+	sp.height = 0.24
+	_chest_sparkle.mesh = sp
+	_chest_sparkle.position = Vector3(0, 1.1, 0)
+	var sp_mat := StandardMaterial3D.new()
+	sp_mat.albedo_color = Color(1.0, 0.92, 0.45)
+	sp_mat.emission_enabled = true
+	sp_mat.emission = Color(1.0, 0.85, 0.35)
+	sp_mat.emission_energy_multiplier = 3.0
+	sp_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_chest_sparkle.material_override = sp_mat
+	root.add_child(_chest_sparkle)
+
+	var tag := Label3D.new()
+	tag.text = "HIDDEN CHEST" if not _chest_collected else "(empty)"
+	tag.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	tag.pixel_size = 0.008
+	tag.no_depth_test = true
+	tag.modulate = Color(1.0, 0.92, 0.5)
+	tag.outline_modulate = Color(0, 0, 0, 1)
+	tag.outline_size = 6
+	tag.position = Vector3(0, 1.6, 0)
+	root.add_child(tag)
+
+	if _chest_collected:
+		_apply_chest_opened_visuals()
+	else:
+		_attach_interact_zone(pos, InteractKind.CHEST, null)
+
+
+func _apply_chest_opened_visuals() -> void:
+	if _chest_lid:
+		_chest_lid.rotation.x = deg_to_rad(-55.0)
+		# Slide the lid so its hinge stays at the back of the base.
+		_chest_lid.position = Vector3(0, 0.65, -0.1)
+	if _chest_sparkle:
+		_chest_sparkle.visible = false
+
+
+func _update_chest_sparkle() -> void:
+	if _chest_sparkle == null or not _chest_sparkle.visible:
+		return
+	var s: float = 0.85 + 0.2 * sin(_anim_accum * 3.2)
+	_chest_sparkle.scale = Vector3(s, s, s)
+	_chest_sparkle.position.y = 1.1 + 0.05 * sin(_anim_accum * 2.1)
+
+
+# ── Interaction ───────────────────────────────────────────────────────
+
+# When E is pressed, pick the first active zone and dispatch. Proximity
+# filtering is already handled by the Area3D enter/exit events.
+func _try_interact() -> void:
+	if _active_zones.is_empty():
+		_flash("Nothing to interact with here.", 1.2)
+		return
+	for aid in _active_zones:
+		var entry: Dictionary = _active_zones[aid]
+		var kind: int = entry.get("kind", InteractKind.NONE)
+		if kind == InteractKind.MERCHANT:
+			_open_merchant()
+			return
+		if kind == InteractKind.CHEST:
+			_collect_chest(aid)
+			return
+
+
+func _open_merchant() -> void:
+	GameSession.open_trade_screen(MERCHANT_FACTION_ID)
+	var main_node := get_tree().current_scene
+	if main_node and main_node.has_method("push_overlay"):
+		main_node.push_overlay("trade")
+	else:
+		_flash("Trade unavailable (standalone scene).", 2.0)
+
+
+func _collect_chest(zone_id: int) -> void:
+	if _chest_collected:
+		return
+	_chest_collected = true
+	var gs: GameStateData = GameSession.game_state if GameSession else null
+	if gs:
+		gs.crystal_inventory += CHEST_REWARD_CRYSTALS
+		gs.salvage += CHEST_REWARD_SALVAGE
+		gs.story_flags[CHEST_STORY_FLAG] = true
+	_apply_chest_opened_visuals()
+	# Remove the trigger so the prompt clears immediately.
+	_active_zones.erase(zone_id)
+	_flash(
+		"Found chest: +%d crystals, +%d salvage" % [CHEST_REWARD_CRYSTALS, CHEST_REWARD_SALVAGE],
+		3.0,
+	)
+
+
+# ── HUD ───────────────────────────────────────────────────────────────
+
+func _build_hud() -> void:
+	# CanvasLayer sits above the 3D viewport so text renders crisp at 1:1
+	# screen pixels regardless of the ortho camera's size.
+	var layer := CanvasLayer.new()
+	layer.name = "HUD"
+	add_child(layer)
+
+	_hud_hint_depart = _make_hud_label(
+		"DEPART — ESC",
+		Vector2(20, 20),
+		Color(1.0, 0.95, 0.7),
+		14,
+	)
+	layer.add_child(_hud_hint_depart)
+
+	_hud_hint_interact = _make_hud_label(
+		"[E] Interact",
+		Vector2(20, 48),
+		Color(1.0, 0.9, 0.55),
+		14,
+	)
+	_hud_hint_interact.visible = false
+	layer.add_child(_hud_hint_interact)
+
+	_hud_flash = _make_hud_label(
+		"",
+		Vector2(0, 84),
+		Color(1.0, 0.95, 0.7),
+		16,
+	)
+	# Centre the flash across the screen width.
+	_hud_flash.anchor_left = 0.0
+	_hud_flash.anchor_right = 1.0
+	_hud_flash.offset_left = 0
+	_hud_flash.offset_right = 0
+	_hud_flash.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hud_flash.visible = false
+	layer.add_child(_hud_flash)
+
+
+func _make_hud_label(text: String, pos: Vector2, color: Color, font_size: int) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.position = pos
+	l.add_theme_font_size_override("font_size", font_size)
+	l.add_theme_color_override("font_color", color)
+	l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.85))
+	l.add_theme_constant_override("shadow_offset_x", 1)
+	l.add_theme_constant_override("shadow_offset_y", 1)
+	return l
+
+
+func _update_hud(delta: float) -> void:
+	if _hud_hint_interact:
+		_hud_hint_interact.visible = not _active_zones.is_empty()
+	if _hud_flash:
+		if _flash_timer > 0.0:
+			_flash_timer -= delta
+			_hud_flash.visible = true
+			_hud_flash.modulate.a = clampf(_flash_timer, 0.0, 1.0) if _flash_timer < 1.0 else 1.0
+		else:
+			_hud_flash.visible = false
+
+
+func _flash(message: String, duration: float = 2.0) -> void:
+	if _hud_flash == null:
+		return
+	_hud_flash.text = message
+	_flash_timer = duration
+	_hud_flash.modulate.a = 1.0
+	_hud_flash.visible = true
