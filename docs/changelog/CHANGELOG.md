@@ -6,6 +6,24 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-20 — Sprint 10 step 4: props + NPC rigs + z-fight fixes
+
+**Step 4 of the Fringe Haven 3D build.** Set-dressing, NPC population, and a pass of z-fighting fixes that only became visible once real geometry sat next to each other.
+
+- **Trees.** 14 billboarded `Sprite3D` trees around the town perimeter, pulled from `serene_village_32x32.png` via a new `_sub_texture(path, region)` + `_make_billboard(tex, pos, world_height)` helper pair. Five variants (four 2×3-tile species + one 2×2). Aspect preserved from texture pixel size; `ALPHA_CUT_DISCARD` + `SHADED = false` so they pop cleanly against the 3D terrain.
+- **Campfires (procedural 3D, not sprites).** First pass used the animated 4-frame pixel strip but it clashed against the painterly-3D player and buildings. Replaced with a small procedural 3D fire per campfire: dark stone `TorusMesh` ring, three crossed brown `CylinderMesh` logs, an unshaded emissive orange flame cone, and a warm `OmniLight3D`. `_process` drives a two-sine flicker on both light energy (1.5 ± 0.55) and flame scale, with per-fire phase offsets so they don't strobe in lockstep.
+- **NPCs on the real rig pipeline.** Fringe Haven is canonically controlled by `felid_corsairs` (per `planet_registry.json`), so guards should be cats. New 12th character `felid_corsair_guard` added to `CHARACTER_BASES` (assets at `godot/assets/characters/npc/felid_corsair_guard/3d/...` — first NPC to use the `npc/<id>` base, adjacent to `crew/<id>`). `_spawn_3d_npc(char_id, pos, label, yaw)` wraps each rig in a `StaticBody3D` + capsule (0.35r × 1.6h) so the player bumps into them instead of clipping through, with a billboarded `Label3D` name tag above. Two guards at the crossroads + a third NPC labelled "BRYN" outside Bryn's Oddities as a merchant placeholder.
+- **Z-fight pass.**
+  - *Path crossroads.* The E-W and N-S stone strips sat at the same y=0.01, so the centre tile flipped winner per frame. `_add_path_strip` now takes a `y_offset` param; N-S drawn at 0.010, E-W on top at 0.012.
+  - *Building roofs.* The rotated-box roof's lowest corner was grazing the wall's top face. Formula now computes the actual lowest tilted corner (`h/2·cos(30°) + d/2·sin(30°)`) and adds a 0.15m margin instead of the earlier coarse lift.
+  - *Adjacent doghouse roofs.* Four doghouses spaced 2.2m apart each had roofs 2.3m wide (with overhang), so neighbours intersected along the seam. Spacing widened to 2.6m for a clean 0.3m gap.
+
+**Guards are from `design/charcters/npcs/felid_corsair_guard/`** — user-provided FBX baseline + 5 Mixamo clips. Copied into `godot/assets/characters/npc/felid_corsair_guard/` via the existing uniform character layout; no validator or GUT character-registry updates yet (optional next pass).
+
+**Small cleanup:** `CHARACTER_3D_SCENE: PackedScene` const at the top of `fringe_haven_3d.gd` replaces three duplicated `preload()` calls.
+
+GUT 252/252 green before and after.
+
 ## 2026-04-20 — Sprint 10 pivot: full 3D world (Option A) + root-motion fix
 
 **Option B (3D-hero-in-2D-tilemap) parked permanently.** Three integration attempts failed because `SpriteCharacter3D` (SubViewportContainer as Control child of a Node2D under a Camera2D) does not inherit canvas transforms cleanly — the rendered box drifted off the player and scaled out of sync with the tilemap. Prototype code stays in-repo for UI/portrait use cases where the outer parent is a Control.

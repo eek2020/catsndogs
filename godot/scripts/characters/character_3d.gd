@@ -29,6 +29,7 @@ const CHARACTER_BASES: Dictionary = {
 	"luna": "crew/luna",
 	"thistle": "crew/thistle",
 	"death": "death",
+	"felid_corsair_guard": "npc/felid_corsair_guard",
 }
 
 @export var character_id: String = "nine_lives"
