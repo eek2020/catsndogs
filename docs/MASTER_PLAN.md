@@ -325,6 +325,20 @@ All initiatives organised by sprint. Each sprint must pass automated tests (once
 | Integration-test Arcs 5–10 expansion content | High | §7 original 6.4 | `data/encounters/`, `data/side_missions/` |
 | Difficulty balance pass | Medium | §7 original 6.5 | `data/` JSON files |
 
+### Sprint 10: Planet-Surface 3D Pivot (active — 2026-04-20)
+
+**Goal:** Fix the planet / outpost visual experience. Initial Option B (3D hero composited into the existing 2D tilemap via SubViewport) failed three integration attempts and is parked permanently. Switched to Option A: full 3D world, 3D player, ortho Camera3D. New scene at `godot/scenes/world/fringe_haven_3d.tscn`. See `docs/NEXT_STEPS.md` §Sprint 10 for the step-by-step tracker and `CHANGELOG.md` 2026-04-20 for shipped detail.
+
+| Task | Priority | Reference | Files | Status |
+| ---- | -------- | --------- | ----- | ------ |
+| Step 1: minimal 3D scene (sun + ground + player + ortho camera, WASD) | High | NEXT_STEPS §Sprint 10 | `scripts/world/fringe_haven_3d.gd`, `scenes/world/fringe_haven_3d.tscn` | **Done 2026-04-20** |
+| Step 2: textured ground + cobble crossroads + dirt branches + water | High | NEXT_STEPS §Sprint 10 | `scripts/world/fringe_haven_3d.gd` | **Done 2026-04-20** |
+| Step 3: seven buildings via `_make_building` helper | High | NEXT_STEPS §Sprint 10 | `scripts/world/fringe_haven_3d.gd` | **Done 2026-04-20** |
+| Strip Mixamo root-motion XZ so walk/run cycles loop in place | High | CHANGELOG 2026-04-20 | `scripts/characters/character_3d.gd` | **Done 2026-04-20** |
+| Step 4: tree + campfire + NPC billboards (Sprite3D) | Medium | NEXT_STEPS §Sprint 10 | `scripts/world/fringe_haven_3d.gd` | Pending |
+| Step 5: interactions (merchant → trade, treasure collect, depart) | Medium | NEXT_STEPS §Sprint 10 | `scripts/world/fringe_haven_3d.gd` | Pending |
+| Step 6: scene-registry swap; port pattern to Oakhaven + procedural planet_surface | High | NEXT_STEPS §Sprint 10 | `scripts/ui/main.gd`, `scenes/world/` | Pending |
+
 ### Backlog: Visual Polish & Features
 
 | Task | Priority | Reference |

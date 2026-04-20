@@ -208,6 +208,12 @@ func _build_animation_library() -> void:
 			# plays once and freezes at the end frame. Force-loop every library
 			# entry — every animation we ship is designed to be cycled.
 			anim.loop_mode = Animation.LOOP_LINEAR
+			# Strip XZ root motion. Mixamo walk/run clips translate the hip bone
+			# forward during the cycle, so when the animation loops the mesh
+			# snaps back to origin — visible as a "skip backward" every few
+			# steps. We want in-place cycles: world position is driven by the
+			# CharacterBody3D, not by bone translation.
+			_strip_root_xz_motion(anim)
 			lib.add_animation(StringName(nm), anim)
 	# Replace or install as the default "" library so `play(nm)` works with bare name.
 	if animation_player.has_animation_library(&""):
@@ -230,6 +236,23 @@ static func _retarget_tracks(anim: Animation, skel_rel_path: String) -> void:
 		if sub.is_empty():
 			continue
 		anim.track_set_path(ti, NodePath("%s:%s" % [skel_rel_path, sub]))
+
+
+## Zero the X and Z components of every position key on the root bone's
+## TYPE_POSITION_3D track — keeps vertical bounce (Y) intact so jumps/crouches
+## still animate, but removes the forward drift that Mixamo bakes into walk
+## and run cycles. Hip bone is typically named "Hips" or "mixamorig:Hips".
+static func _strip_root_xz_motion(anim: Animation) -> void:
+	# Zero X/Z on every TYPE_POSITION_3D track. Walk/run/idle clips only have
+	# position keys on the hip (root) bone by convention, so this is a safe
+	# blanket strip and avoids fragile bone-name matching across rigs.
+	# Y is kept so vertical bounce (jumps, crouches) still animates.
+	for ti in range(anim.get_track_count()):
+		if anim.track_get_type(ti) != Animation.TYPE_POSITION_3D:
+			continue
+		for ki in range(anim.track_get_key_count(ti)):
+			var pos: Vector3 = anim.track_get_key_value(ti, ki)
+			anim.track_set_key_value(ti, ki, Vector3(0.0, pos.y, 0.0))
 
 
 static func _load_anim_from_fbx(fbx_path: String) -> Animation:

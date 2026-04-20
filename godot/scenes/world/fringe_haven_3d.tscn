@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://en3jtmxg2gej"]
+
+[ext_resource type="Script" uid="uid://baudwnq51epw4" path="res://scripts/world/fringe_haven_3d.gd" id="1"]
+
+[node name="FringeHaven3D" type="Node3D" unique_id=1875136080]
+script = ExtResource("1")

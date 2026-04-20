@@ -311,11 +311,28 @@ Two tools change the Sprint 7 workflow significantly. Install both before the Bl
 | ESC exit on preview scenes | `animation_preview_controller.gd` + `planet_3d_prototype.gd` now quit on ESC; HUD hints updated. Verified 252/252 GUT green. | User report 2026-04-17 |
 | anim_preview floor-through-body framing | Default `_orbit_yaw = π/5` (3/4 hero angle, no longer pure side-on); camera elevation 0.7 → 1.6, target_y 0.45 → 0.55, radius 2.6 → 2.8. Ground plane reads as a pad under the character instead of a horizon crossing the body. | User report 2026-04-17 |
 
-**Open questions / next steps for this sprint:**
+**Option B (3D-hero-in-2D-tilemap) — PARKED PERMANENTLY 2026-04-20.**
+Three integration attempts failed: `SpriteCharacter3D` (SubViewportContainer as Control child of Node2D) does not inherit Camera2D zoom / canvas transforms correctly. Rendered box drifted off the player, scaled out of sync, and nested transparent-BG didn't composite. Verified reverted on `main`. Prototype code for `SpriteCharacter3D` stays for reference; it remains sound for UI/portrait uses where the outer parent is a Control, just not for in-world entities.
 
-1. **3D-in-planet integration decision.** `SpriteCharacter3D` is ready (5 animations × 2 characters, autofit-framed). Integration path into `planet_surface.gd` is a one-line swap at sprite construction (`_player_sprite: Sprite2D` → `SpriteCharacter3D` instance) plus face_direction/play_anim wiring in `_update_animation`. Decide whether planet NPCs and merchants also get the 3D treatment or stay 2D (mixed is fine — a 3D hero on a 2D tilemap is the `planet_3d_prototype` shape and already validated).
-2. **Real planet_surface exit.** `planet_surface.gd:331` already maps `pause` → `_on_depart` → `switch_scene("navigation")`. Verify in a live run that the wiring still works end-to-end and add a visible HUD hint ("ESC — return to ship"). Currently only the DepartBtn is on-screen.
-3. **Planet look-and-feel.** Tilemap is 30×22 at TILE_SIZE=32 (so 960×704px in a 1280×720 viewport). Evaluate: scale the map, add proper scrolling, or move to a larger procedural field. Out-of-scope for this ticket unless user calls it in.
+**Option A — Full 3D world (active 2026-04-20):**
+
+New scene: [godot/scenes/world/fringe_haven_3d.tscn](godot/scenes/world/fringe_haven_3d.tscn), script [godot/scripts/world/fringe_haven_3d.gd](godot/scripts/world/fringe_haven_3d.gd). Runs as its own `.tscn` under F6 during development; swaps into the scene registry in step 6.
+
+| Step | Scope | Status |
+| --- | --- | --- |
+| 1 | Environment + sun + ground plane + CharacterBody3D player wrapping `character_3d.tscn` + ortho Camera3D (55° pitch, 30° yaw, ortho_size 6, distance 18). Camera-relative WASD (input.y = up−down, yaw mapped to forward/right basis). Character rig yaw = `atan2(v.x, v.z)`. `play_anim` only on state change. | **Done 2026-04-20** |
+| 2 | Tileset textures on 3D planes: grass (10,4), dirt (0,3), cobble (7,7) from `overworld_tileset_16x16.png` extracted via `_tile_texture(col, row)`. Stone crossroads + dirt branches + blue water patch. `TEXTURE_FILTER_NEAREST` preserves pixel-art look. | **Done 2026-04-20** |
+| 3 | Buildings via `_make_building(pos, size, height, roof_color, label?)`: BoxMesh walls + StaticBody3D collider, rotated-box roof with overhang, plank door on +Z face, optional billboarded `Label3D`. Seven buildings (Tipsy Tankard, Bryn's Oddities, Blacksmith, 2 houses, 4 doghouses). | **Done 2026-04-20** |
+| 4 | Props + NPCs: tree billboards (`Sprite3D`, BILLBOARD_ENABLED), campfires (`campfire_32x32.png`), merchant/guard NPCs as billboarded sprites with Label3D name tags. | Next |
+| 5 | Interactions: port `fringe_haven_outpost.gd` logic — merchant Area3D → trade overlay, treasure chest collect, depart trigger, ESC → `switch_scene("navigation")`. | Pending |
+| 6 | Scene-registry swap: point `main.gd`'s "fringe_haven_outpost" key at `fringe_haven_3d.tscn`. Remove the old 2D outpost scene once the 3D one is at parity. Then port the same pattern to Oakhaven and procedural `planet_surface`. | Pending |
+
+**Root-motion fix (2026-04-20):** `character_3d.gd:_strip_root_xz_motion` zeros X/Z on every TYPE_POSITION_3D key (keeps Y). Without this, Mixamo walk/run cycles translate the hip bone and visibly snap back at loop ("2 steps forward then skip"). Applies to every character3D-driven scene, not just Fringe Haven 3D.
+
+**Deferred from the old plan (still valid once step 6 lands):**
+
+1. **Real planet_surface exit.** Verify ESC → `switch_scene("navigation")` wiring end-to-end with a visible HUD hint ("ESC — return to ship").
+2. **Planet look-and-feel at scale.** Was a 2D-tilemap concern (30×22 at TILE_SIZE=32 in a 1280×720 viewport). Obsolete once 3D ports are done; camera zoom is a one-line Camera3D change.
 
 ### Backlog — preserved from MASTER_PLAN
 

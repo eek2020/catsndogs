@@ -3,7 +3,7 @@
 > **Auto-generated.** Do not hand-edit. Regenerate via the `codemap` skill or
 > `bash .claude/skills/codemap/generate.sh`.
 >
-> Inputs last changed: **2026-04-19**
+> Inputs last changed: **2026-04-20**
 
 Code-anchored index: every section links to real files. This is the
 companion to [.claude/PROJECT_INDEX.md](../../.claude/PROJECT_INDEX.md)
@@ -245,6 +245,7 @@ Gameplay systems in `godot/scripts/systems/` (excluding cutscene subsystem).
 Player / NPC / scene-transition controllers in `godot/scripts/world/`.
 
 - [dialogue_manager.gd](../../godot/scripts/world/dialogue_manager.gd)
+- [fringe_haven_3d.gd](../../godot/scripts/world/fringe_haven_3d.gd)
 - [fringe_haven_outpost.gd](../../godot/scripts/world/fringe_haven_outpost.gd)
 - [npc_controller.gd](../../godot/scripts/world/npc_controller.gd)
 - [player_controller.gd](../../godot/scripts/world/player_controller.gd)
@@ -346,6 +347,7 @@ All UI controllers in `godot/scripts/ui/` (top-level). Subfolders
 
 ### World scenes
 
+- [fringe_haven_3d.tscn](../../godot/scenes/world/fringe_haven_3d.tscn)
 - [fringe_haven_outpost.tscn](../../godot/scenes/world/fringe_haven_outpost.tscn)
 - [npc.tscn](../../godot/scenes/world/npc.tscn)
 - [oakhaven_outpost.tscn](../../godot/scenes/world/oakhaven_outpost.tscn)
@@ -501,5 +503,5 @@ All JSON content lives under `godot/data/`. Each subfolder is one category.
 | Systems | 18 |
 | UI screens (top-level) | 26 |
 | ViewModels | 6 |
-| Scenes | 38 |
+| Scenes | 39 |
 | Data JSON files | 84 |

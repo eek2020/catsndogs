@@ -6,6 +6,24 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-20 — Sprint 10 pivot: full 3D world (Option A) + root-motion fix
+
+**Option B (3D-hero-in-2D-tilemap) parked permanently.** Three integration attempts failed because `SpriteCharacter3D` (SubViewportContainer as Control child of a Node2D under a Camera2D) does not inherit canvas transforms cleanly — the rendered box drifted off the player and scaled out of sync with the tilemap. Prototype code stays in-repo for UI/portrait use cases where the outer parent is a Control.
+
+**Option A — Full 3D world (active).** New scene [godot/scenes/world/fringe_haven_3d.tscn](godot/scenes/world/fringe_haven_3d.tscn) and script [godot/scripts/world/fringe_haven_3d.gd](godot/scripts/world/fringe_haven_3d.gd). Runs under F6 during development; will swap into the scene registry once steps 4–6 land.
+
+Shipped:
+
+- **Step 1 — minimal scene.** WorldEnvironment (sky BG), DirectionalLight3D sun, 60m grass plane, CharacterBody3D player wrapping the existing `character_3d.tscn` rig. Ortho Camera3D at 55° pitch / 30° yaw / distance 18 / ortho_size 6, tracked via a camera-rig Node3D snapped to the player every physics frame. Camera-relative WASD: `forward = (-sin(yaw), 0, -cos(yaw))`, `right = (cos(yaw), 0, -sin(yaw))`, `input.y = up−down`. Character yaw = `atan2(v.x, v.z)`. `play_anim` only fires on state change so the clip doesn't re-seed every tick.
+- **Step 2 — textured ground + paths.** `_tile_texture(col, row)` extracts a 16×16 region from `overworld_tileset_16x16.png` at startup and uses it as a tiling albedo on a PlaneMesh. Tileset coords were picked from actual pixel data (not eyeballed from the atlas — first pass landed on roof/transition tiles). Grass (10,4), dirt (0,3), cobble (7,7). Stone crossroads through origin, two dirt branches (NW + SE), blue water patch in the NW corner. `TEXTURE_FILTER_NEAREST` preserves the pixel-art look.
+- **Step 3 — buildings.** `_make_building(pos, size, height, roof_color, label?)` helper builds: BoxMesh walls + StaticBody3D collider, rotated-box roof with overhang, plank door on the +Z face, optional billboarded `Label3D` with outline. Seven buildings (Tipsy Tankard, Bryn's Oddities, Blacksmith, two houses, four doghouses) placed in the four quadrants around the crossroads.
+
+**Root-motion strip (applies to every Character3D scene).** `character_3d.gd:_strip_root_xz_motion` zeros X and Z on every `TYPE_POSITION_3D` key in every animation (Y preserved so vertical bounce still works). Mixamo walk/run clips translate the hip bone forward during the cycle — without this strip the mesh snaps back to origin every loop ("2 steps forward then skip"). World position is driven by the CharacterBody3D, not by bone translation.
+
+Pending: step 4 (tree/campfire/NPC billboards), step 5 (interactions: merchant Area3D → trade overlay, treasure collect, depart), step 6 (scene-registry swap + port to Oakhaven and `planet_surface`).
+
+No GUT changes — full suite 252/252 green before and after.
+
 ## 2026-04-19 — Pre-rendered cutscene pipeline (Sprint 12 style-test promoted)
 
 Style-test sandbox (`cutscene_test/`) retired. The working pipeline has been split into authoring tools (`cutscene_pipeline/`) and shipped assets (`godot/assets/cutscenes/dave_intro/`), with a new Godot scene type (`prerendered_cutscene.tscn`) that complements the existing realtime 3D flavour (`no_tail_cutscene.tscn`).
