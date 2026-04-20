@@ -6,6 +6,20 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-20 — Sprint 10 step 6: trader Bryn + shop interior + camera/movement polish
+
+**Focus of the session:** wire the new `trader_bryn` FBX rig into Fringe Haven as a vendor you can walk up to inside her shop, fix the broken interact triggers, add a sprint control, and align movement with the screen axes.
+
+- **New NPC: Bryn.** `trader_bryn` registered in `Character3D.CHARACTER_BASES` (`scripts/characters/character_3d.gd:34`). FBX baseline + `.import` sidecar live at `godot/assets/characters/npc/trader_bryn/3d/`. No Mixamo animations yet — rig displays T-pose idle; drop `trader_bryn_anim_<name>.fbx` files into `3d/animations/` to light up idle/walk/run/jump/laugh.
+- **Shop interior (`_make_shop_building`).** New helper next to `_make_building` in `fringe_haven_3d.gd`. Replaces Bryn's Oddities' single solid box with four wall segments framing a 1.2m front doorway. Interior gets: wooden plank floor, shopkeeper counter (BoxMesh + collider) against the back wall, warm emissive lamp + OmniLight overhead, and an awning strip replacing the pitched roof so the 3/4 camera can read the vendor through an open top. Building bumped to 5.5 × 4.0 × 2.2h after playtest showed the 4.0 × 3.0 version clipping the camera into Bryn.
+- **Bryn placement + vendor spot.** Stands at (6, 0, -5.4) facing +Z, in front of the counter. Warm emissive cylinder at her feet (radius 0.55, unshaded) serves as both a readability cue and a fallback in case the rig's albedo loads weirdly.
+- **Interaction fix (distance poll).** Area3D + `body_entered` was unreliable on the procedural scene (neither chest nor Bryn prompts fired). Replaced with a per-physics-tick XZ-distance poll: `_attach_interact_zone` now registers entries in `_interact_points: Dictionary` and returns a stable id; `_poll_interact_zones()` rebuilds `_active_zones` each tick by comparing player XZ to each point. Chest `_collect_chest` drops its own id from `_interact_points` so the prompt clears. `INTERACT_RADIUS` bumped 2.0 → 2.5m so the shop prompt fires as you step through the doorway.
+- **Sprint control.** New `sprint` input action in `project.godot` (Shift / gamepad L3). `fringe_haven_3d.gd` picks `SPRINT_SPEED=4.5` when held vs. `MOVE_SPEED=1.8` otherwise; anim state picks `run` when sprinting and falls back to `walk` if the rig has no run clip. HUD hint updated to `"DEPART — ESC     RUN — SHIFT"`.
+- **Walk speed calibrated.** Reduced `MOVE_SPEED` 4.0 → 1.8 m/s so the Mixamo walk cycle matches foot travel (no more skating). Sprint covers the old travel speed.
+- **Camera yaw aligned.** `CAMERA_YAW_DEG` 30 → 0 so W = screen-up, D = screen-right. Paths and buildings now render axis-aligned. No world-geometry rotation needed.
+
+---
+
 ## 2026-04-20 — Sprint 10 step 5: Fringe Haven 3D interactions
 
 **Step 5 of the Fringe Haven 3D build.** Port the hub's interaction loop (merchant, treasure, depart) onto the new 3D scene, plus a small HUD layer so the player can see what's intractable without leaving the scene.

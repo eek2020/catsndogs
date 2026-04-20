@@ -8,10 +8,11 @@
 ## is fast and the composition stays legible in a single file.
 extends Node3D
 
-const MOVE_SPEED: float = 4.0
+const MOVE_SPEED: float = 1.8
+const SPRINT_SPEED: float = 4.5    # Shift / L3 — roughly 2.5× walk
 const CAMERA_ORTHO_SIZE: float = 6.0
 const CAMERA_PITCH_DEG: float = 55.0   # degrees below horizontal
-const CAMERA_YAW_DEG: float = 30.0     # clockwise from north
+const CAMERA_YAW_DEG: float = 0.0      # look straight down -Z so W = screen-up
 const CAMERA_DISTANCE: float = 18.0
 const GROUND_SIZE: float = 60.0        # metres; big enough to not see the edge
 const TILESET_PATH: String = "res://assets/tiles/fringe_haven/overworld_tileset_16x16.png"
@@ -36,7 +37,7 @@ const MERCHANT_FACTION_ID: String = "felid_corsairs"
 const CHEST_STORY_FLAG: String = "fringe_haven_chest_opened"
 const CHEST_REWARD_CRYSTALS: int = 25
 const CHEST_REWARD_SALVAGE: int = 10
-const INTERACT_RADIUS: float = 2.0    # metres — Area3D trigger radius
+const INTERACT_RADIUS: float = 2.5    # metres — distance-poll trigger radius
 
 enum InteractKind { NONE, MERCHANT, CHEST }
 
@@ -49,9 +50,14 @@ var _campfire_lights: Array[OmniLight3D] = []
 var _campfire_flames: Array[MeshInstance3D] = []
 var _anim_accum: float = 0.0
 
-# Active interaction zones the player is currently inside. Each Area3D's
-# `on_enter`/`on_exit` flips an entry here; _input reads it when E fires.
-# Dict: { area_instance_id: { "kind": InteractKind, "data": Variant } }
+# Registered interaction points — `_physics_process` polls distance each
+# tick and rebuilds `_active_zones`. Dict-based for stable IDs so the
+# chest can remove its own entry once collected.
+# _interact_points[id] = { "pos": Vector3, "kind": int, "data": Variant, "radius": float }
+var _interact_points: Dictionary = {}
+var _next_interact_id: int = 1
+# Subset of _interact_points the player is currently within. Used by
+# _try_interact and the HUD prompt.
 var _active_zones: Dictionary = {}
 
 # HUD
@@ -114,16 +120,26 @@ func _physics_process(_delta: float) -> void:
 	# camera's view is -(+sin, 0, +cos). Right is forward rotated -90° about Y.
 	var forward := Vector3(-sin(yaw), 0.0, -cos(yaw))
 	var right := Vector3(cos(yaw), 0.0, -sin(yaw))
+	var sprinting := Input.is_action_pressed("sprint")
+	var speed: float = SPRINT_SPEED if sprinting else MOVE_SPEED
 	var v := right * input.x + forward * input.y
 	if v.length() > 0.1:
-		v = v.normalized() * MOVE_SPEED
+		v = v.normalized() * speed
 	else:
 		v = Vector3.ZERO
 	_player.velocity = v
 	_player.move_and_slide()
 
 	if _character:
-		var want := "walk" if v.length() > 0.1 else "idle"
+		# Pick idle / walk / run from current speed. "run" falls back to "walk"
+		# automatically inside Character3D.play_anim if the rig has no run clip.
+		var want := "idle"
+		if v.length() > 0.1:
+			want = "run" if sprinting else "walk"
+			# Fall back to walk if the rig doesn't have a run clip so sprint
+			# still reads as movement instead of snapping to idle.
+			if sprinting and not _character.available_anims().has("run"):
+				want = "walk"
 		# Only dispatch on state change — calling play_anim every physics tick
 		# (even for the same name) can re-seed the AnimationPlayer and cause a
 		# visible skip at the cycle boundary.
@@ -136,6 +152,8 @@ func _physics_process(_delta: float) -> void:
 
 	if _camera_rig:
 		_camera_rig.global_position = _player.global_position
+
+	_poll_interact_zones()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -359,6 +377,168 @@ func _make_building(
 	return root
 
 
+# Hollow building with a doorway in the +Z (front) wall. Same size/roof/label
+# contract as `_make_building` — differs in: four separate wall segments
+# (front split around a 1.2m doorway), no ceiling/floor-to-ceiling collider,
+# plank floor inside, shopkeeper counter along the -Z wall, and a warm point
+# light overhead so the interior reads from the 3/4 camera without needing a
+# separate ambient pass.
+#
+# Returns the root Node3D so callers can place interior NPCs/props relative
+# to the shop's local origin (the building centre).
+func _make_shop_building(
+	pos: Vector3,
+	size: Vector2,
+	wall_height: float,
+	roof_color: Color,
+	label: String = "",
+) -> Node3D:
+	var root := Node3D.new()
+	root.name = "Shop_%s" % label if label != "" else "Shop"
+	root.position = pos
+
+	var wall_mat := StandardMaterial3D.new()
+	wall_mat.albedo_color = Color(0.87, 0.75, 0.55)
+	wall_mat.roughness = 0.95
+
+	var wall_thick: float = 0.2
+	var half_w: float = size.x * 0.5
+	var half_d: float = size.y * 0.5
+	var doorway_w: float = 1.2
+	var side_w: float = (size.x - doorway_w) * 0.5  # per-side framing width
+
+	# Helper: one wall segment (visual BoxMesh + StaticBody3D collider).
+	var add_wall := func(seg_pos: Vector3, seg_size: Vector3) -> void:
+		var mi := MeshInstance3D.new()
+		var mesh := BoxMesh.new()
+		mesh.size = seg_size
+		mi.mesh = mesh
+		mi.position = seg_pos
+		mi.material_override = wall_mat
+		mi.add_to_group("building_walls")
+		root.add_child(mi)
+		var body := StaticBody3D.new()
+		var col := CollisionShape3D.new()
+		var cs := BoxShape3D.new()
+		cs.size = seg_size
+		col.shape = cs
+		col.position = seg_pos
+		body.add_child(col)
+		root.add_child(body)
+
+	# Back wall (full width, -Z face).
+	add_wall.call(
+		Vector3(0, wall_height * 0.5, -half_d),
+		Vector3(size.x, wall_height, wall_thick),
+	)
+	# Left and right side walls (full depth).
+	add_wall.call(
+		Vector3(-half_w, wall_height * 0.5, 0),
+		Vector3(wall_thick, wall_height, size.y),
+	)
+	add_wall.call(
+		Vector3(half_w, wall_height * 0.5, 0),
+		Vector3(wall_thick, wall_height, size.y),
+	)
+	# Front wall split around a doorway. Left chunk.
+	add_wall.call(
+		Vector3(-(doorway_w * 0.5 + side_w * 0.5), wall_height * 0.5, half_d),
+		Vector3(side_w, wall_height, wall_thick),
+	)
+	# Right chunk.
+	add_wall.call(
+		Vector3(doorway_w * 0.5 + side_w * 0.5, wall_height * 0.5, half_d),
+		Vector3(side_w, wall_height, wall_thick),
+	)
+
+	# Interior floor — dark wood plank, slightly above grass to avoid z-fight.
+	var floor_mi := MeshInstance3D.new()
+	var floor_plane := PlaneMesh.new()
+	floor_plane.size = Vector2(size.x - wall_thick, size.y - wall_thick)
+	floor_mi.mesh = floor_plane
+	floor_mi.position = Vector3(0, 0.02, 0)
+	var floor_mat := StandardMaterial3D.new()
+	floor_mat.albedo_color = Color(0.42, 0.28, 0.18)
+	floor_mat.roughness = 0.9
+	floor_mi.material_override = floor_mat
+	root.add_child(floor_mi)
+
+	# Counter along the back wall — a low box Bryn stands behind. Size leaves
+	# a ~0.6m aisle on either side so the player can walk around it.
+	var counter := MeshInstance3D.new()
+	var counter_box := BoxMesh.new()
+	counter_box.size = Vector3(size.x - 1.2, 1.0, 0.6)
+	counter.mesh = counter_box
+	counter.position = Vector3(0, 0.5, -half_d + 0.9)
+	var counter_mat := StandardMaterial3D.new()
+	counter_mat.albedo_color = Color(0.55, 0.38, 0.22)
+	counter_mat.roughness = 0.85
+	counter.material_override = counter_mat
+	root.add_child(counter)
+	# Counter collider so the player can't walk through it.
+	var counter_body := StaticBody3D.new()
+	var counter_col := CollisionShape3D.new()
+	var counter_shape := BoxShape3D.new()
+	counter_shape.size = counter_box.size
+	counter_col.shape = counter_shape
+	counter_col.position = counter.position
+	counter_body.add_child(counter_col)
+	root.add_child(counter_body)
+
+	# Interior lamp — warm point light above the counter so the inside reads
+	# well under the exterior sun + ambient. Unshaded emissive sphere sells it.
+	var lamp := MeshInstance3D.new()
+	var lamp_sphere := SphereMesh.new()
+	lamp_sphere.radius = 0.12
+	lamp_sphere.height = 0.24
+	lamp.mesh = lamp_sphere
+	lamp.position = Vector3(0, wall_height - 0.3, -half_d + 1.2)
+	var lamp_mat := StandardMaterial3D.new()
+	lamp_mat.albedo_color = Color(1.0, 0.85, 0.5)
+	lamp_mat.emission_enabled = true
+	lamp_mat.emission = Color(1.0, 0.85, 0.5)
+	lamp_mat.emission_energy_multiplier = 3.0
+	lamp_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	lamp.material_override = lamp_mat
+	root.add_child(lamp)
+
+	var light := OmniLight3D.new()
+	light.light_color = Color(1.0, 0.85, 0.55)
+	light.light_energy = 2.0
+	light.omni_range = 6.0
+	light.position = lamp.position
+	root.add_child(light)
+
+	# Shop has no pitched roof — an open-top storefront makes the interior
+	# (counter, lamp, vendor) readable from the 3/4 camera. A thin awning
+	# strip along the +Z edge suggests "shop frontage" without occluding.
+	var awning := MeshInstance3D.new()
+	var awning_box := BoxMesh.new()
+	awning_box.size = Vector3(size.x + 0.5, 0.25, 0.8)
+	awning.mesh = awning_box
+	awning.position = Vector3(0, wall_height + 0.12, half_d + 0.4)
+	var awning_mat := StandardMaterial3D.new()
+	awning_mat.albedo_color = roof_color
+	awning_mat.roughness = 0.85
+	awning.material_override = awning_mat
+	root.add_child(awning)
+
+	if label != "":
+		var lbl := Label3D.new()
+		lbl.text = label
+		lbl.position = Vector3(0, wall_height + 0.9, 0)
+		lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		lbl.no_depth_test = true
+		lbl.pixel_size = 0.012
+		lbl.modulate = Color(1.0, 0.95, 0.7)
+		lbl.outline_modulate = Color(0, 0, 0, 1)
+		lbl.outline_size = 8
+		root.add_child(lbl)
+
+	add_child(root)
+	return root
+
+
 # Place each named building from the original Fringe Haven layout. Positions
 # are hand-picked to sit in the four quadrants around the stone crossroads
 # (E-W road at z=0, N-S road at x=0), leaving the 2.5m-wide roads clear.
@@ -371,11 +551,14 @@ func _build_buildings() -> void:
 		Color(0.72, 0.22, 0.22),
 		"TIPSY TANKARD",
 	)
-	# NE quadrant — Bryn's Oddities (merchant).
-	_make_building(
+	# NE quadrant — Bryn's Oddities. Shop-variant builds hollow walls with a
+	# front doorway so the player can walk inside to trade. Counter + warm
+	# interior light come along for free. Position/size match the original
+	# solid building so the layout around it is unchanged.
+	_make_shop_building(
 		Vector3(6.0, 0.0, -5.0),
-		Vector2(4.0, 3.0),
-		2.0,
+		Vector2(5.5, 4.0),
+		2.2,
 		Color(0.72, 0.22, 0.22),
 		"BRYN'S ODDITIES",
 	)
@@ -643,14 +826,38 @@ func _make_campfire_3d(pos: Vector3) -> void:
 func _build_npcs() -> void:
 	_spawn_3d_npc("felid_corsair_guard", Vector3(2.0, 0.0, 1.0), "GUARD", PI, InteractKind.NONE)
 	_spawn_3d_npc("felid_corsair_guard", Vector3(-2.0, 0.0, -1.0), "GUARD", 0.0, InteractKind.NONE)
-	# Bryn stands just outside her storefront and opens the trade overlay.
+	# Bryn stands behind the counter inside her shop (centre = (6, 0, -5),
+	# counter depth 0.6m against the back wall). Yaw = 0 so she faces the
+	# +Z doorway. Interact radius is the default 2m — covers the counter
+	# apron so the prompt fires the moment the player steps up to trade.
+	# No Mixamo anims yet — idle falls back to T-pose until
+	# animations/trader_bryn_anim_<name>.fbx files are added.
+	var bryn_pos := Vector3(6.0, 0.0, -5.4)
 	_spawn_3d_npc(
-		"felid_corsair_guard",
-		Vector3(6.0, 0.0, -2.5),
+		"trader_bryn",
+		bryn_pos,
 		"BRYN — trade",
-		PI * 0.5,
+		0.0,
 		InteractKind.MERCHANT,
 	)
+	# Warm emissive disc at her feet so she's locatable even if the rig
+	# imports without an albedo texture. Doubles as a visual "vendor spot"
+	# cue, which helps readability from the 3/4 camera.
+	var spot := MeshInstance3D.new()
+	var spot_mesh := CylinderMesh.new()
+	spot_mesh.top_radius = 0.55
+	spot_mesh.bottom_radius = 0.55
+	spot_mesh.height = 0.04
+	spot.mesh = spot_mesh
+	spot.position = bryn_pos + Vector3(0, 0.03, 0)
+	var spot_mat := StandardMaterial3D.new()
+	spot_mat.albedo_color = Color(1.0, 0.75, 0.35)
+	spot_mat.emission_enabled = true
+	spot_mat.emission = Color(1.0, 0.75, 0.35)
+	spot_mat.emission_energy_multiplier = 1.8
+	spot_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	spot.material_override = spot_mat
+	add_child(spot)
 
 
 func _spawn_3d_npc(
@@ -691,37 +898,43 @@ func _spawn_3d_npc(
 	add_child(tag)
 
 	if interact != InteractKind.NONE:
-		_attach_interact_zone(pos, interact, null)
+		var _id := _attach_interact_zone(pos, interact, null)
 
 
-# Spawns an Area3D sphere at `pos` that tracks the player and drives the
-# HUD interact prompt. `data` is stored on the entry and passed to the
-# interaction dispatcher (used by the chest to resolve its own state).
-func _attach_interact_zone(pos: Vector3, kind: int, data: Variant) -> void:
-	var area := Area3D.new()
-	area.position = pos
-	# Monitor only — NPCs already have StaticBody3D colliders for push-back.
-	area.monitoring = true
-	area.monitorable = false
-	var zone_col := CollisionShape3D.new()
-	var sphere := SphereShape3D.new()
-	sphere.radius = INTERACT_RADIUS
-	zone_col.shape = sphere
-	# Raise the sphere centre so the player's capsule (radius 0.35, centred at
-	# y=0.8) overlaps at its midsection — keeps the trigger proportional to the
-	# actor height rather than a flat disc at ground level.
-	zone_col.position.y = 0.8
-	area.add_child(zone_col)
-	add_child(area)
-	var aid := area.get_instance_id()
-	area.body_entered.connect(func(body: Node) -> void:
-		if body == _player:
-			_active_zones[aid] = {"kind": kind, "data": data}
-	)
-	area.body_exited.connect(func(body: Node) -> void:
-		if body == _player:
-			_active_zones.erase(aid)
-	)
+# Register an interaction point at `pos`. `_poll_interact_zones` compares
+# the player's XZ distance each physics tick and marks the entry active when
+# inside `radius`. Area3D+body_entered was unreliable here (Godot 4 layer/mask
+# quirks with CharacterBody3D in a procedural scene) — distance-poll is
+# deterministic and survives scene rebuilds.
+func _attach_interact_zone(pos: Vector3, kind: int, data: Variant) -> int:
+	var id := _next_interact_id
+	_next_interact_id += 1
+	_interact_points[id] = {
+		"pos": pos,
+		"kind": kind,
+		"data": data,
+		"radius": INTERACT_RADIUS,
+	}
+	return id
+
+
+# Called every physics tick. Compares player XZ distance to each registered
+# interact point and rebuilds `_active_zones`. Y is ignored so vertical lift
+# on chests/NPCs doesn't break proximity.
+func _poll_interact_zones() -> void:
+	if _player == null:
+		return
+	var pp := _player.global_position
+	var next: Dictionary = {}
+	for id in _interact_points:
+		var entry: Dictionary = _interact_points[id]
+		var p: Vector3 = entry["pos"]
+		var dx := pp.x - p.x
+		var dz := pp.z - p.z
+		var r: float = entry.get("radius", INTERACT_RADIUS)
+		if (dx * dx + dz * dz) <= (r * r):
+			next[id] = {"kind": entry["kind"], "data": entry["data"]}
+	_active_zones = next
 
 
 # ── Treasure chest ────────────────────────────────────────────────────
@@ -875,6 +1088,9 @@ func _collect_chest(zone_id: int) -> void:
 		gs.story_flags[CHEST_STORY_FLAG] = true
 	_apply_chest_opened_visuals()
 	# Remove the trigger so the prompt clears immediately.
+	# Drop the registration so the prompt stops showing even if the player
+	# is still standing on top of the chest.
+	_interact_points.erase(zone_id)
 	_active_zones.erase(zone_id)
 	_flash(
 		"Found chest: +%d crystals, +%d salvage" % [CHEST_REWARD_CRYSTALS, CHEST_REWARD_SALVAGE],
@@ -892,7 +1108,7 @@ func _build_hud() -> void:
 	add_child(layer)
 
 	_hud_hint_depart = _make_hud_label(
-		"DEPART — ESC",
+		"DEPART — ESC     RUN — SHIFT",
 		Vector2(20, 20),
 		Color(1.0, 0.95, 0.7),
 		14,
