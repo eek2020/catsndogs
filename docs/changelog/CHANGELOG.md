@@ -6,6 +6,34 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — Sprint 7 follow-up: texture pass on cutscene scene
+
+**Focus:** after the step 1+2 commit (`b732088`), in-engine preview revealed the scene rendered washed-out white (ground, hills, outpost hull all flat). Root cause diagnosed via `blender-mcp`: **every stylized-flat material used a vertex-color × color-ramp × mix-RGB shader chain that does not round-trip through glTF export.** The glTF exporter's "uses vertex color?" heuristic didn't recognize the chain, so Godot received materials with plain `(0.8, 0.8, 0.8)` BSDF base color and no texture. This has been a latent issue since the Apr-17 stylized-flat pass — the Blender viewport showed warm tones but Godot has been rendering flat grey all along.
+
+**Fix:** replace every vertex-color chain with a proper texture-based tree using the 6 Poly Haven CC0 textures shipped in Sprint 10 step 16 (grass, cobblestone, mud, plaster, wood_planks, roof_tiles). Textures packed into `no_tail_outpost.blend` so the GLB export embeds them directly.
+
+**Materials rewritten (23 total, across `godot/assets/cutscenes/no_tail_outpost.blend`):**
+
+- **Terrain (4).** `mat_Ground` → grass at 8× uv, warm-tan tint `(0.55, 0.42, 0.28)`. `mat_Hill` → grass at 6×, deeper rust `(0.42, 0.28, 0.22)`. `mat_Rock` → cobblestone at 5× with warm sandstone tint. `mat_LandingPad` → mud at 4× with packed-dirt tint.
+- **Outpost hull (9).** Plaster tex + per-panel tint matching the Apr-17 palette — Body / Annex / Buttress all desaturated teal-grey (`0.50 / 0.55 / 0.56` → `0.42 / 0.48 / 0.50`), Vent darker, UpperStrip rust accent. Outpost_Roof + Outpost_AnnexRoof → roof_tiles tex with dark-brown tint. Antenna → near-black matte metal. AntennaTip → warm emissive `(0.9, 0.5, 0.2)` strength 2.
+- **Wreckage (10).** Scout + Gunship hull/wing/nose/tail/debris/wreck use plaster tex with burnt-metal tints `(0.18-0.32)` + metallic 0.3-0.6. `_Smoke` materials → near-black alpha-blended `(0.08, 0.07, 0.06)` 0.75 alpha. `_Burn` sub-meshes keep the plaster tex with dark charring tint.
+- **Door + frames (4).** Rebuilt as plain BSDF (dropping the vestigial VC chain that was overriding our BSDF inputs from the first step-1+2 pass). Same colour values as before — Door warm-brown, frames dark matte.
+- **Whisper Crystal ship (5).** `mat_Whisper_Hull` → pearlescent plaster. Cockpit → dark smoky-blue plain BSDF (metallic 0.85 / rough 0.1). Nacelle → metallic blue plaster. Gear → dark metal plaster. Glow → cyan emissive `(0.3, 0.9, 1.0)` strength 4.
+
+**Housekeeping:** purged 50 orphan datablocks (the leftover `mat_Aristotle_*` / `mat_NoTail_*` materials from step-1+2 placeholder deletion, plus other internal dupes).
+
+**Re-exported GLB:** 1.89 MB → **4.60 MB** (6 × 1K Poly Haven textures now embedded).
+
+**Verification.**
+
+- Post-pass sweep: `0 materials with vertex-color chains and >0 users`. Every material that ships geometry now has a proper texture-or-plain-BSDF tree that glTF understands.
+- GUT headless: **256/256 green**, 3.94s.
+- `no_tail_cutscene.tscn` headless smoke-load clean; only unchanged pre-existing `Could not find 'Aristotle'` warning.
+
+**Known limitations.** Planar-UV mapping on geometry without proper unwraps may show tiling seams. Most cutscene geometry is shot from far enough away this reads fine; close-up shots of the outpost body may need a triplanar pass in a later iteration. No attempt yet at parity with the blender viewport's stepped-toon pointiness look — we traded stylized-flat for photogrammetric textures, matching Fringe Haven's aesthetic.
+
+---
+
 ## 2026-04-21 — Sprint 7 steps 1+2: cutscene Blender-ification
 
 **Focus:** delete the runtime model-patching layer that `no_tail_cutscene.tscn` leaned on. All the workarounds that existed because the source `.blend` shipped without proper materials / burn marks / placeholder-character deletion are now moved *into* the `.blend`.
