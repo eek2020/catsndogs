@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bvps1xp0n22fb" path="res://scripts/systems/cutscene/dialogue_ui.gd" id="4_ui"]
 [ext_resource type="PackedScene" uid="uid://u15yap5g0i74" path="res://assets/cutscenes/no_tail_outpost.glb" id="5_glb"]
 [ext_resource type="PackedScene" uid="uid://br6ku4gpdu8tt" path="res://scenes/characters/character_3d.tscn" id="7_notail"]
+[ext_resource type="Texture2D" uid="uid://cx2tqtkuy0ydq" path="res://assets/cutscenes/no_tail_outpost/backdrop.png" id="8_backdrop"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_1"]
 sky_top_color = Color(0.05, 0.04, 0.1, 1)
@@ -21,15 +22,23 @@ sky_material = SubResource("SkyMat_1")
 background_mode = 2
 sky = SubResource("Sky_1")
 ambient_light_source = 2
-ambient_light_color = Color(0.25, 0.22, 0.2, 1)
-ambient_light_energy = 0.4
+ambient_light_color = Color(0.45, 0.3, 0.22, 1)
+ambient_light_energy = 0.55
 tonemap_mode = 2
 glow_enabled = true
-glow_bloom = 0.05
-fog_enabled = true
-fog_light_color = Color(0.3, 0.22, 0.15, 1)
-fog_density = 0.0005
-fog_sky_affect = 0.3
+glow_bloom = 0.04
+fog_enabled = false
+
+[sub_resource type="StandardMaterial3D" id="BackdropMat_1"]
+resource_local_to_scene = true
+shading_mode = 0
+vertex_color_use_as_albedo = false
+albedo_texture = ExtResource("8_backdrop")
+disable_receive_shadows = true
+texture_filter = 3
+
+[sub_resource type="QuadMesh" id="BackdropMesh_1"]
+size = Vector2(146, 56)
 
 [node name="NoTailCutscene" type="Node3D" unique_id=1697589989]
 script = ExtResource("1_scene")
@@ -39,8 +48,8 @@ environment = SubResource("Environment_1")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1369712843]
 transform = Transform3D(0.866, 0, 0.5, 0.41, 0.574, -0.709, -0.287, 0.819, 0.497, 15, 25, 30)
-light_color = Color(1, 0.92, 0.75, 1)
-light_energy = 1.2
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.35
 shadow_enabled = true
 shadow_blur = 2.0
 directional_shadow_blend_splits = true
@@ -48,12 +57,13 @@ directional_shadow_max_distance = 60.0
 
 [node name="Fill" type="DirectionalLight3D" parent="." unique_id=785682603]
 transform = Transform3D(0.89, 0.3, -0.35, 0, 0.76, 0.65, 0.45, -0.58, 0.68, -20, 15, -40)
-light_color = Color(0.72, 0.78, 0.95, 1)
-light_energy = 0.4
+light_color = Color(0.55, 0.4, 0.28, 1)
+light_energy = 0.3
 
 [node name="World" type="Node3D" parent="." unique_id=2058969358]
 
 [node name="NoTailOutpost" parent="World" unique_id=1599704168 instance=ExtResource("5_glb")]
+visible = false
 
 [node name="NoTail" parent="World" unique_id=562841275 instance=ExtResource("7_notail")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -16.5)
@@ -66,6 +76,12 @@ script = ExtResource("3_cam")
 [node name="Camera3D" type="Camera3D" parent="CameraController" unique_id=1795754564]
 current = true
 fov = 55.0
+
+[node name="Backdrop" type="MeshInstance3D" parent="CameraController/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
+mesh = SubResource("BackdropMesh_1")
+material_override = SubResource("BackdropMat_1")
+extra_cull_margin = 100.0
 
 [node name="CutsceneManager" type="Node" parent="." unique_id=772831417]
 script = ExtResource("2_mgr")

@@ -6,6 +6,35 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — Sprint 7 pivot: painted backdrop replaces 3D cutscene rendering
+
+**Focus:** the post-`b6f8424` in-engine preview still read as washed-out grey — pink burn marks, flat-lit plaster, white-blown windows. Diagnosis was correct at the material level (vertex-color chains were broken), but the *goal* was wrong. The user showed concept art depicting a **painterly** look (sepia palette, volumetric smoke, hand-painted rocks, silhouetted outpost with glowing doorway). No amount of tuning low-poly box geometry with PBR textures gets to that aesthetic.
+
+**Pivot:** stop trying to render the outpost in 3D. Use the concept art itself as a painted backdrop behind the cutscene camera — same pattern as `bryn_shop_interior` ([project_painted_backdrop_pattern.md](.)), just scaled up. 3D foreground collapses to whatever the script needs to animate (door opening, character movement, dialogue triggers).
+
+**Changes** ([godot/scenes/cutscenes/no_tail_cutscene.tscn](godot/scenes/cutscenes/no_tail_cutscene.tscn) + one asset).
+
+- **Concept art shipped.** `design/cutscenes/no_tail_outpost_design_1.png` (AI-gen, 3318×1280) copied into `godot/assets/cutscenes/no_tail_outpost/backdrop.png` so Godot imports it (uid `cx2tqtkuy0ydq`).
+- **Backdrop node.** New `Backdrop` MeshInstance3D child of `CameraController/Camera3D` at local z=-50. `QuadMesh` size `(146, 56)` — at `fov=55°` vertical, z=-50 covers 52.1m vertical × ~93m horizontal viewport extent, so the quad is sized to over-fill with the image aspect (2.59:1) preserved. Material: `StandardMaterial3D` with `shading_mode=0 (UNSHADED)`, `albedo_texture=backdrop.png`, `disable_receive_shadows=true`, `texture_filter=3 (LINEAR_WITH_MIPMAPS)`, `extra_cull_margin=100.0`. Because the quad is a child of `Camera3D`, it follows camera rotation/translation and acts as an always-visible skybox at infinite apparent distance.
+- **3D outpost hidden.** `$World/NoTailOutpost` gets `visible = false`. The entire `no_tail_outpost.glb` (181 objects, 4.6 MB, 58 materials) stops rendering. Script still traverses the subtree for the `Door` node so door-open animations keep running invisibly — harmless, and leaves the door in place for future fine-tuning.
+- **Lighting re-palettised for sepia sunset.** Sun `light_color` 0.92/0.75 → 0.72/0.45 warm orange, energy 1.2 → 1.35. Fill light desaturated to warm amber `(0.55, 0.4, 0.28)` energy 0.3 (was cool blue). `Environment.ambient_light_color` `(0.25, 0.22, 0.2)` → `(0.45, 0.3, 0.22)`, energy 0.4 → 0.55. `fog_enabled=true` → `false` (the painting already carries atmospheric haze). Bloom dialled down slightly.
+
+**Result at first iteration:** painted backdrop fills the view; dialogue UI renders over it. 3D character silhouettes / door animation remain parked until the backdrop is visually confirmed before per-shot tuning.
+
+**What this does *not* solve yet.**
+
+- Cutscene currently has no visible 3D foreground — `NoTail` is `visible=false` (pre-existing), `Aristotle` was never in the scene to begin with (pre-existing warning). Once the backdrop reads right, next iteration will add rim-lit character silhouettes in front of it.
+- Camera animation still plays against a flat backdrop — no parallax for foreground vs. backdrop. Current `CameraController` keyframes may need tightening (no big translations) to preserve the "at infinity" illusion.
+- Single painting means only one hero composition; close-up dialogue shots will need either (a) dialogue-gating of camera position (stay wide) or (b) darkening the backdrop for speaker-focused shots.
+
+**Verification.**
+
+- GUT headless: 256/256 green, 3.74s.
+- Cutscene headless smoke-load clean; only unchanged pre-existing `Could not find 'Aristotle'` warning.
+- Visual test deferred to user (mcp__godot__run_project doesn't return a viewport screenshot in this env).
+
+---
+
 ## 2026-04-21 — Sprint 7 follow-up: texture pass on cutscene scene
 
 **Focus:** after the step 1+2 commit (`b732088`), in-engine preview revealed the scene rendered washed-out white (ground, hills, outpost hull all flat). Root cause diagnosed via `blender-mcp`: **every stylized-flat material used a vertex-color × color-ramp × mix-RGB shader chain that does not round-trip through glTF export.** The glTF exporter's "uses vertex color?" heuristic didn't recognize the chain, so Godot received materials with plain `(0.8, 0.8, 0.8)` BSDF base color and no texture. This has been a latent issue since the Apr-17 stylized-flat pass — the Blender viewport showed warm tones but Godot has been rendering flat grey all along.
