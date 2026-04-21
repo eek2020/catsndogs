@@ -14,7 +14,7 @@ extends RefCounted
 const REBINDABLE_ACTIONS: Array[String] = [
 	"move_up", "move_down", "move_left", "move_right",
 	"fire", "interact", "confirm", "cancel", "pause",
-	"menu_select", "mission_log", "star_map", "repair", "skip",
+	"menu_select", "mission_log", "star_map", "repair", "skip", "sprint",
 ]
 
 const SAVE_PATH := "user://input_bindings.cfg"

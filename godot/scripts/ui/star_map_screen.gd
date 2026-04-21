@@ -38,7 +38,7 @@ const REDRAW_INTERVAL: float = 0.5
 var _redraw_timer: float = 0.0
 
 const WORLD_SCENE_MAP := {
-	"starting_realm": "res://scenes/world/fringe_haven_outpost.tscn",
+	"starting_realm": "res://scenes/world/fringe_haven_3d.tscn",
 	"tavern": "res://scenes/world/tavern.tscn",
 }
 

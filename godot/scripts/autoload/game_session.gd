@@ -31,6 +31,12 @@ var _return_scene_path: String = ""
 var _return_position: Vector2 = Vector2.ZERO
 var _return_facing: String = "down"
 
+# Fringe Haven 3D: optional spawn override used when returning from a shop
+# interior (e.g. Bryn's). `fringe_haven_3d.gd` reads + clears this on load so
+# the player re-enters the outdoor scene at the doorway instead of at world
+# origin. Vector3.ZERO means "use default origin spawn".
+var pending_fringe_haven_spawn: Vector3 = Vector3.ZERO
+
 
 func _ready() -> void:
 	data_loader = DataLoader.new()

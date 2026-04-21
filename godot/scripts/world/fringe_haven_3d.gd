@@ -509,6 +509,152 @@ func _make_shop_building(
 	light.position = lamp.position
 	root.add_child(light)
 
+	# Interior dressing — shelves, wares, stool, rug. Kept procedural (BoxMesh +
+	# CylinderMesh primitives) so the shop reads as "stocked" under the 3/4
+	# camera without pulling in new art. Everything sits on the plank floor;
+	# side shelves hug the interior face of the left/right walls. Props are
+	# visual-only (no colliders) — the player only bumps into walls + counter.
+	var shelf_mat := StandardMaterial3D.new()
+	shelf_mat.albedo_color = Color(0.38, 0.24, 0.14)
+	shelf_mat.roughness = 0.9
+
+	var crate_mat := StandardMaterial3D.new()
+	crate_mat.albedo_color = Color(0.62, 0.44, 0.24)
+	crate_mat.roughness = 0.95
+
+	var jar_mat := StandardMaterial3D.new()
+	jar_mat.albedo_color = Color(0.35, 0.55, 0.45)
+	jar_mat.roughness = 0.3
+	jar_mat.metallic = 0.1
+
+	var bottle_mat := StandardMaterial3D.new()
+	bottle_mat.albedo_color = Color(0.65, 0.25, 0.35)
+	bottle_mat.roughness = 0.25
+	bottle_mat.metallic = 0.15
+
+	# Helper: a single shelf plank (visual only).
+	var add_plank := func(plank_pos: Vector3, plank_size: Vector3) -> void:
+		var mi := MeshInstance3D.new()
+		var m := BoxMesh.new()
+		m.size = plank_size
+		mi.mesh = m
+		mi.position = plank_pos
+		mi.material_override = shelf_mat
+		root.add_child(mi)
+
+	# Helper: a cube crate prop.
+	var add_crate := func(crate_pos: Vector3, edge: float) -> void:
+		var mi := MeshInstance3D.new()
+		var m := BoxMesh.new()
+		m.size = Vector3(edge, edge, edge)
+		mi.mesh = m
+		mi.position = crate_pos
+		mi.material_override = crate_mat
+		root.add_child(mi)
+
+	# Helper: a bottle/jar (upright cylinder).
+	var add_jar := func(jar_pos: Vector3, radius: float, height: float, mat: StandardMaterial3D) -> void:
+		var mi := MeshInstance3D.new()
+		var m := CylinderMesh.new()
+		m.top_radius = radius
+		m.bottom_radius = radius
+		m.height = height
+		mi.mesh = m
+		mi.position = jar_pos + Vector3(0, height * 0.5, 0)
+		mi.material_override = mat
+		root.add_child(mi)
+
+	# Left wall shelf — two planks at 0.9m and 1.5m, stocked with jars + a crate.
+	var lshelf_x: float = -half_w + wall_thick + 0.2
+	add_plank.call(Vector3(lshelf_x, 0.9, 0.0), Vector3(0.35, 0.05, size.y - 1.0))
+	add_plank.call(Vector3(lshelf_x, 1.5, 0.0), Vector3(0.35, 0.05, size.y - 1.0))
+	add_jar.call(Vector3(lshelf_x, 0.925, -0.8), 0.10, 0.28, jar_mat)
+	add_jar.call(Vector3(lshelf_x, 0.925, -0.3), 0.10, 0.30, bottle_mat)
+	add_jar.call(Vector3(lshelf_x, 0.925, 0.3), 0.10, 0.25, jar_mat)
+	add_crate.call(Vector3(lshelf_x, 1.65, 0.8), 0.3)
+	add_jar.call(Vector3(lshelf_x, 1.525, -0.5), 0.10, 0.26, bottle_mat)
+	add_jar.call(Vector3(lshelf_x, 1.525, 0.1), 0.10, 0.28, jar_mat)
+
+	# Right wall shelf — mirrored, slightly different stocking so it doesn't
+	# look symmetric.
+	var rshelf_x: float = half_w - wall_thick - 0.2
+	add_plank.call(Vector3(rshelf_x, 0.9, 0.0), Vector3(0.35, 0.05, size.y - 1.0))
+	add_plank.call(Vector3(rshelf_x, 1.5, 0.0), Vector3(0.35, 0.05, size.y - 1.0))
+	add_crate.call(Vector3(rshelf_x, 1.05, -0.7), 0.3)
+	add_jar.call(Vector3(rshelf_x, 0.925, 0.0), 0.10, 0.30, bottle_mat)
+	add_jar.call(Vector3(rshelf_x, 0.925, 0.6), 0.10, 0.28, jar_mat)
+	add_jar.call(Vector3(rshelf_x, 1.525, -0.6), 0.10, 0.26, jar_mat)
+	add_jar.call(Vector3(rshelf_x, 1.525, -0.1), 0.10, 0.30, bottle_mat)
+	add_jar.call(Vector3(rshelf_x, 1.525, 0.5), 0.10, 0.24, jar_mat)
+
+	# Floor crates stacked in the back corners, below the shelves — sells "stock
+	# room overflow" without cluttering the walkable aisle.
+	add_crate.call(Vector3(lshelf_x + 0.05, 0.2, -half_d + 0.6), 0.4)
+	add_crate.call(Vector3(rshelf_x - 0.05, 0.2, -half_d + 0.6), 0.4)
+	add_crate.call(Vector3(rshelf_x - 0.05, 0.6, -half_d + 0.6), 0.35)
+
+	# Wares on the counter — a row of three jars + one crate so the counter
+	# isn't an empty slab. Counter top is at y=1.0 (counter.position.y + half
+	# its height = 0.5 + 0.5). Jars sit right on top.
+	var counter_top_y: float = 1.0
+	var counter_z: float = -half_d + 0.9
+	add_jar.call(Vector3(-1.2, counter_top_y, counter_z + 0.15), 0.09, 0.24, jar_mat)
+	add_jar.call(Vector3(-0.5, counter_top_y, counter_z + 0.15), 0.09, 0.28, bottle_mat)
+	add_jar.call(Vector3(0.3, counter_top_y, counter_z + 0.15), 0.09, 0.22, jar_mat)
+	add_crate.call(Vector3(1.2, counter_top_y + 0.125, counter_z + 0.1), 0.25)
+
+	# Stool behind the counter (between counter and back wall). Bryn can stand
+	# next to it; visually suggests "this is her spot". Cylinder seat + thin leg.
+	var stool_leg := MeshInstance3D.new()
+	var stool_leg_mesh := CylinderMesh.new()
+	stool_leg_mesh.top_radius = 0.04
+	stool_leg_mesh.bottom_radius = 0.04
+	stool_leg_mesh.height = 0.55
+	stool_leg.mesh = stool_leg_mesh
+	stool_leg.position = Vector3(-1.8, 0.275, -half_d + 0.4)
+	stool_leg.material_override = shelf_mat
+	root.add_child(stool_leg)
+	var stool_seat := MeshInstance3D.new()
+	var stool_seat_mesh := CylinderMesh.new()
+	stool_seat_mesh.top_radius = 0.20
+	stool_seat_mesh.bottom_radius = 0.20
+	stool_seat_mesh.height = 0.06
+	stool_seat.mesh = stool_seat_mesh
+	stool_seat.position = Vector3(-1.8, 0.58, -half_d + 0.4)
+	stool_seat.material_override = crate_mat
+	root.add_child(stool_seat)
+
+	# Welcome rug at the doorway threshold — ties the entry into the interior
+	# colour palette and gives the player a visual "you're inside now" cue as
+	# they step through the 1.2m gap.
+	var rug := MeshInstance3D.new()
+	var rug_plane := PlaneMesh.new()
+	rug_plane.size = Vector2(1.6, 1.2)
+	rug.mesh = rug_plane
+	rug.position = Vector3(0, 0.025, half_d - 0.9)
+	var rug_mat := StandardMaterial3D.new()
+	rug_mat.albedo_color = Color(0.55, 0.18, 0.22)
+	rug_mat.roughness = 0.95
+	rug.material_override = rug_mat
+	root.add_child(rug)
+
+	# Second ceiling lamp above the doorway so the entry area isn't dimmer than
+	# the counter. Matches the counter lamp styling but lower energy (accent).
+	var lamp2 := MeshInstance3D.new()
+	var lamp2_sphere := SphereMesh.new()
+	lamp2_sphere.radius = 0.10
+	lamp2_sphere.height = 0.20
+	lamp2.mesh = lamp2_sphere
+	lamp2.position = Vector3(0, wall_height - 0.3, half_d - 1.0)
+	lamp2.material_override = lamp_mat
+	root.add_child(lamp2)
+	var light2 := OmniLight3D.new()
+	light2.light_color = Color(1.0, 0.85, 0.55)
+	light2.light_energy = 1.2
+	light2.omni_range = 4.5
+	light2.position = lamp2.position
+	root.add_child(light2)
+
 	# Shop has no pitched roof — an open-top storefront makes the interior
 	# (counter, lamp, vendor) readable from the 3/4 camera. A thin awning
 	# strip along the +Z edge suggests "shop frontage" without occluding.
@@ -631,7 +777,13 @@ func _build_player() -> void:
 	_player.add_child(_character)
 	_character.initialize()
 
-	_player.global_position = Vector3(0, 0, 0)
+	# If we're returning from a shop interior, spawn at the stashed doorway
+	# position. Otherwise default to world origin (crossroads).
+	var spawn := Vector3.ZERO
+	if GameSession and GameSession.pending_fringe_haven_spawn != Vector3.ZERO:
+		spawn = GameSession.pending_fringe_haven_spawn
+		GameSession.pending_fringe_haven_spawn = Vector3.ZERO
+	_player.global_position = spawn
 	add_child(_player)
 
 
@@ -1069,12 +1221,14 @@ func _try_interact() -> void:
 
 
 func _open_merchant() -> void:
-	GameSession.open_trade_screen(MERCHANT_FACTION_ID)
-	var main_node := get_tree().current_scene
-	if main_node and main_node.has_method("push_overlay"):
-		main_node.push_overlay("trade")
-	else:
-		_flash("Trade unavailable (standalone scene).", 2.0)
+	# Enter Bryn's shop interior (face-on dialogue + trade flow). fringe_haven_3d
+	# is loaded via change_scene_to_file from navigation, so main.gd's SceneContainer
+	# is gone — we use change_scene_to_file again here (same pattern) to swap the
+	# whole tree root rather than main.switch_scene.
+	get_tree().call_deferred(
+		"change_scene_to_file",
+		"res://scenes/world/bryn_shop_interior.tscn",
+	)
 
 
 func _collect_chest(zone_id: int) -> void:

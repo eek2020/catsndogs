@@ -6,6 +6,114 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — Sprint 10 step 11c: Bryn shop — painted backdrop swap
+
+**Focus:** the procedural shop interior (walls + shelves + jars built from boxes and cylinders) was reading as low-poly greybox; swapped it for a painted 2D backdrop behind the 3D Bryn rig to match the painted portrait style.
+
+- **Painted backdrop.** `design/background/bryns_store_idea.png` (ornate steampunk shop wall with astrolabe, crystals, potions, sextants) copied into `godot/assets/backgrounds/bryns_store_backdrop.png`. Rendered on a vertical `QuadMesh` (5.2m × 2.9m) behind Bryn at z=-1.2, unshaded so the baked paint lighting stays punchy.
+- **Procedural geometry removed.** Deleted back wall + side walls + floor plane + two shelves + ten jar/crate meshes + the 3D hanging lamp mesh. `_make_box` and `_add_jar` helpers gone. Interior build reduced from ~90 lines to ~25.
+- **Lighting matched to the paint.** Key `DirectionalLight3D` swung to upper-right (yaw +30°, pitch -35°) with a warmer tint (0.88, 0.65 G/B) so Bryn's highlights come from the same direction as the painted lantern. `OmniLight3D` kept at the painted lantern's position (1.6, 2.1, -1.1) for close-range rim light on Bryn.
+- **Camera pitch zeroed.** `CAMERA_PITCH_DEG` 6° → 0°. Any pitch on a flat backdrop reveals that it's a plane; straight-on keeps the 2.5D illusion.
+- **Bryn scaled 2.1×.** First render showed Bryn at ~0.75m — authored small because `trader_bryn`'s Mixamo-baseline FBX lands tiny in world units, which reads fine in the wider outdoor camera of `fringe_haven_3d` but made her look shrunken next to the painting's human-scale shelves. `BRYN_SHOP_SCALE = 2.1` applied locally via `Character3D.model_scale` before `initialize()` so she sits shoulder-level with the bottom shelf. Rig scale unchanged elsewhere.
+- **Rationale.** Modelling this ornate a wall in low-poly would be days of work and clash with the stepped-toon aesthetic elsewhere. Painted backdrop is strictly better for a non-interactive shop room, and aligns with the portrait style already in-game.
+
+**Known limitations:**
+
+- Shop is effectively a 2.5D vignette — camera and Bryn don't translate. Acceptable since the shop has no interactive objects.
+- Backdrop assumes 1280×720 display; if the orthographic size ever widens the 5.2×2.9 plane may need resizing to preserve aspect.
+
+---
+
+## 2026-04-21 — Sprint 10 step 11b: Bryn shop — Node3D rewrite + layout polish
+
+**Focus:** the step 11 shop interior shipped with a hidden blocker — Bryn didn't render. End-of-session rewrite + layout polish so the shop reads cleanly.
+
+- **Control + SubViewport pattern rejected.** The original step-11 shop used a `Control` root with a `SubViewportContainer` hosting the 3D (same trick as `planet_surface_3d.tscn`). On this scene's close-up ortho camera, Bryn's Character3D rig consistently rendered invisible — debug print showed the mesh loaded at `global_position=(0, 0, -0.4)` with expected AABB, but the skinned mesh never appeared in frame. Setting `own_world_3d = true` on the SubViewport got her partially visible but at the wrong scale. Tried various scale/yaw/camera tweaks — all dead ends. **Rewrote the scene as Node3D root** matching the pattern from `fringe_haven_3d.gd`, with dialogue panel moved onto a CanvasLayer. Rig renders correctly.
+- **Scene + script refactor.** `bryn_shop_interior.tscn` root is now `Node3D`, `bryn_shop_interior.gd` now `extends Node3D`. Removed `SubViewportContainer` / `SubViewport` plumbing. HUD root is a `CanvasLayer` directly parented to the scene. Trade overlay still instantiated as a direct child of the CanvasLayer so `pop_overlay()` routes it back to the dialogue panel on close.
+- **Counter occlusion fix.** With the close ortho camera (distance 3m, ortho_size 2.6), the waist-high counter sitting between camera and Bryn occluded her entire silhouette. Removed the counter + foreground wares entirely — the back-wall shelves alone carry the "trader behind the counter" read.
+- **Shelf layout polish.** Lowered shelves (waist + shoulder level) so they frame Bryn's upper body rather than riding above her head. Shrunk jars/bottles/crates ~60% so they read as shop stock rather than cathedral columns. Removed the warm floor-spot cylinder behind Bryn (she pops against the back wall fine without it).
+- **Compact dialogue strip.** Dialogue panel is now a 112px bottom strip (was ~180px). Two-column layout: speaker name + greeting text on the left, buttons stacked on the right. Font sizes dropped to 16 (header) / 13 (body) so the 3D scene + Bryn stay the focus.
+- **Camera pulled in.** Distance 3m, ortho_size 2.6, pitch 6° — tighter close-up of Bryn from the waist up so she fills the frame rather than sitting as a small figure.
+
+**Incidental fix (step 10 carry-over):** Interact+trade from Bryn in the *outdoor* `fringe_haven_3d` scene had never actually opened a trade panel — `_open_merchant` called `current_scene.push_overlay("trade")`, but `current_scene` on a scene entered via `change_scene_to_file` is the outpost itself, which has no overlay stack. The new flow swaps `fringe_haven_3d._open_merchant` to `change_scene_to_file("bryn_shop_interior.tscn")`, which always works.
+
+**Known issues deferred to next session:**
+- **DualSense / Bluetooth gamepad input doesn't work.** `project.godot`'s input map has no joypad events bound — every `interact`/`sprint`/movement action is keyboard-only. Needs an audit + joypad_button/axis additions for the full action set.
+- **`planet_surface_3d.tscn` never smoke-tested.** It uses the same Control + SubViewportContainer pattern that failed for bryn_shop. May have the same rig-invisible bug once a character3D lands on a procedural planet. Next session: either verify it works or port it to Node3D root like bryn_shop.
+- **Shop interior has no walls visible from the close camera.** The side/back walls are outside the frame now that the camera pulled in. Shop still reads as an interior because of the warm backdrop, but if the ortho size ever widens the walls need reconsidering.
+
+---
+
+## 2026-04-21 — Sprint 10 step 11: Bryn shop face-on dialogue + trade
+
+**Focus:** turn interacting with Bryn into a mini-encounter instead of an overlay pop. New dedicated interior scene with a face-on camera, short dialogue, and trade gated behind a button — template for future named-vendor hubs.
+
+- **New scene.** `godot/scenes/world/bryn_shop_interior.tscn` + `godot/scripts/world/bryn_shop_interior.gd`. Control-rooted (same SubViewportContainer trick as `planet_surface_3d.tscn`) hosting a 3D close-up of Bryn behind her counter with shelves/wares/warm lamp. Fixed ortho camera at pitch 15° / ortho_size 3.4 / distance 5.
+- **Dialogue panel.** Lightweight CanvasLayer-adjacent PanelContainer (not the encounter-based `DialogueUI` — that would be overkill for a greeting). Shows Bryn's name, a line of greeting, and two buttons: `TRADE` and `LEAVE (ESC)`.
+- **First-visit intro.** `story_flags["bryn_shop_first_visit"]` gates a longer introduction line (Bryn introduces herself) vs. a short repeat-visit greeting. Flag is set on first read so the intro never fires twice.
+- **Trade flow.** `TRADE` instantiates `trade_screen.tscn` as a direct child of the shop scene (bypasses `main.gd`'s overlay stack, which isn't on the tree during any `change_scene_to_file`-entered scene). The shop exposes a local `pop_overlay()` method so `trade_screen.gd`'s close handler routes back into the dialogue panel instead of no-opping. Dialogue panel hides while trade is open, restores on close.
+- **Enter + leave.** `fringe_haven_3d.gd` `_open_merchant` now calls `change_scene_to_file("res://scenes/world/bryn_shop_interior.tscn")` (matches how fringe_haven is reached from navigation). On LEAVE/ESC the shop stashes `GameSession.pending_fringe_haven_spawn = Vector3(6, 0, -2)` and `change_scene_to_file`s back — `fringe_haven_3d._build_player()` reads+clears the stash so the player re-enters standing outside Bryn's doorway instead of at the crossroads.
+- **GameSession seam.** New `pending_fringe_haven_spawn: Vector3` field on `GameSession` — the minimal shared state needed so two independently-loaded scenes can agree on where to respawn the player. Defaulting to `Vector3.ZERO` means "use default spawn".
+- **Bug fix along the way.** Bryn's trade overlay *in the outdoor scene* has never actually worked since fringe_haven_3d landed — `_open_merchant` called `current_scene.push_overlay("trade")` but fringe_haven_3d doesn't have that method (main.gd was nuked by `change_scene_to_file` from navigation). The new shop-interior flow is the first working trade path for Bryn.
+
+**Deferred:**
+- Portrait art for Bryn in the dialogue panel (right now the face-on 3D rig *is* the portrait). Could layer a painted portrait in the panel later.
+- Multi-line typewriter reveal on the greeting — currently just a static Label. Not worth adding until the dialogue branches.
+- Applying the same template to other named vendors (Blacksmith, Tavern). Pattern is in place; each one just needs its own interior scene + greeting copy.
+
+---
+
+## 2026-04-21 — Sprint 10 step 10: Procedural `planet_surface` 3D port
+
+**Focus:** retire the 2D `planet_surface.tscn` flow for every non-Fringe-Haven planet. The player now lands on a procedural 3D outpost that shares the visual language + movement feel of Fringe Haven 3D, but reads live planet data (merchants + treasures) and routes depart through the real `planet_system.depart(gs)` pipeline.
+
+- **New scene.** `godot/scenes/world/planet_surface_3d.tscn` (Control root) + `godot/scripts/world/planet_surface_3d.gd`. Control-rooted rather than Node3D because `main.gd`'s `SceneContainer` expects every registry value to resolve to a Control — interior uses a `SubViewportContainer` + `SubViewport` wrapping the 3D world.
+- **Main registry swap.** `main.gd` `SCENES["planet"]` now points at `res://scenes/world/planet_surface_3d.tscn`. The old 2D scene + controller (`scenes/ui/planet_surface.tscn`, `scripts/ui/planet_surface.gd`) are kept untouched as design reference for the tile-layout vocabulary; nothing runtime references them any more.
+- **Procedural layout seeded on `planet_id`.** `hash(planet_id)` seeds three RNGs (buildings, trees, merchant/treasure placement) so each planet has a distinct but consistent silhouette. 4–8 buildings placed outside a 3.5m crossroads keepout, 16–26 trees ringed around the outer radius, NPCs/treasures clustered inside the play area with ≥2.2m spacing.
+- **Player + camera.** Same pattern as `fringe_haven_3d.gd` — CharacterBody3D wrapping a `Character3D` rig for the active protagonist, ortho camera at pitch 55° / yaw 0° / ortho_size 6 / distance 18, camera-relative WASD, Shift to sprint.
+- **Merchants.** Read from `_planet.merchants`. Each rendered as a `felid_corsair_guard` Character3D rig (the one full pipeline we know is wired) with a billboarded name label; interacting opens `GameSession.open_trade_screen(merchant.faction_id)` + `main.push_overlay("trade")`. Merchant metadata is cached by interact-zone id so the dispatcher can route the correct faction without string lookups.
+- **Treasures.** Read from `_planet.treasures`. Each rendered as the Fringe-Haven chest primitive (base + tilt-on-open lid + golden band + emissive sparkle). `GameSession.planet_system.is_treasure_cleared` sets initial opened/closed state (so chests persist across scene re-entry); on collect, `planet_system.collect_treasure` returns `{name, reward_crystals, reward_salvage}`, lid rotates -55°, sparkle hides, zone drops, flash + loot counter update.
+- **Depart.** ESC (and the legacy `pause` binding) calls `planet_system.depart(gs)` to flush `planet_inventory` into the ship, then `switch_scene("navigation")`. Distinct from Fringe Haven 3D which deliberately skips `depart()` because it's a hand-authored hub not reached via `planet_system.land_on`.
+- **HUD.** Centred planet name, top-right loot counter (`Loot: %dC %dS` from `gs.planet_inventory`), fixed depart/run hint, proximity-gated `[E] Interact` hint, centred flash.
+- **Oakhaven left alone.** The 2D `oakhaven_outpost.tscn` was never routed through any runtime code path — it's design reference only. The procedural 3D port now covers every planet landing the game reaches.
+
+**Deferred:**
+- Per-faction merchant rigs (right now every procedural merchant visually reads as a felid corsair guard, whatever their faction). Blocked on Mixamo anims for the other faction NPCs.
+- Named-location hubs (like Fringe Haven) for Oakhaven and other story-critical planets — those will use hand-authored 3D scenes rather than this procedural one, following the Fringe Haven pattern.
+- Terrain biomes per planet (the current grass is flat neutral). Cheap win once we add a `planet.biome` → material lookup.
+
+---
+
+## 2026-04-21 — Sprint 10 step 9: Bryn's shop 3D interior
+
+**Focus:** turn Bryn's Oddities from an empty walls-and-counter shell into a stocked interior the player walks into.
+
+- **Side-wall shelves.** Two plank rows each on the left and right interior walls (y=0.9m and 1.5m), stocked with procedural jars (green ceramic) and bottles (red glass) plus a few wooden crates. Asymmetric stocking on the two sides so it doesn't read as mirrored.
+- **Counter wares.** Three jars + a small crate sit on the counter top (y=1.0m), framing Bryn.
+- **Stock-room overflow.** Three floor crates tucked in the back corners under the shelves — implies the shop is active.
+- **Stool behind counter.** Cylinder seat on a thin leg at (-1.8, 0.58, back-0.4). Suggests "Bryn's post" without her actually sitting on it.
+- **Doorway rug.** Red plane (1.6×1.2m) just inside the 1.2m doorway at y=0.025 — colour-pops the threshold and signals "you're inside now" as the player crosses through.
+- **Second ceiling lamp.** Added above the doorway (matching the counter lamp but energy 1.2 / range 4.5m) so the entry area isn't dimmer than the back of the shop.
+
+All props are visual-only — the player still only collides with walls + counter (already in place from step 6). Open-top storefront is preserved so the 3/4 camera reads everything without needing roof transparency tricks.
+
+---
+
+## 2026-04-21 — Sprint 10 step 7: Fringe Haven 3D registry swap + Bryn Mixamo anims
+
+**Focus:** flip the Fringe Haven landing path from the old 2D outpost to the new 3D scene, and light up Bryn's Mixamo animations now that the files landed.
+
+- **Registry swap (minimal).** `navigation.gd:FRINGE_HAVEN_SCENE_PATH` and `star_map_screen.gd:WORLD_SCENE_MAP["starting_realm"]` now point at `res://scenes/world/fringe_haven_3d.tscn`. The old `fringe_haven_outpost.tscn` is kept unchanged as a design reference for future 3D planet builds (Oakhaven + procedural `planet_surface` still ahead). Tavern ExitDoor's stale `target_scene_path` is parked — the 3D outpost has no tavern warp (shop doorway is open, no scene transition), so nothing loads `tavern.tscn` from the 3D flow.
+- **Bryn animations shipped.** `trader_bryn_anim_{idle,walk,run,jump,laugh}.fbx` added to `godot/assets/characters/npc/trader_bryn/3d/animations/` (copied from design assets). Fixed a stray double-underscore on the walk FBX (`_anim__walk` → `_anim_walk`) so `Character3D` can find it via the standard `<char>_anim_<name>.fbx` lookup. Bryn will now idle/walk/laugh in-scene instead of T-posing.
+- **Test hygiene.** Added `"sprint"` to `InputRebindViewModel.REBINDABLE_ACTIONS` so the `test_rebindable_actions_list_covers_all_project_actions` coverage test matches `project.godot` (was red after Sprint 10 step 6 added the action). GUT: 252/252 green.
+
+**Deferred:**
+- 3D interior for Bryn's shop (the current `_make_shop_building` is an exterior shell; entering it is still an illusion — the player walks up to a counter visible through the open doorway). Will slot in once Oakhaven's 3D port lands and we know what we want the interior loop to feel like.
+- Oakhaven + procedural `planet_surface` 3D ports (same pattern as this swap).
+- Eventual cleanup of unreferenced 2D outpost scripts once all planets are 3D — scenes stay as design reference.
+
+---
+
 ## 2026-04-20 — Sprint 10 step 6: trader Bryn + shop interior + camera/movement polish
 
 **Focus of the session:** wire the new `trader_bryn` FBX rig into Fringe Haven as a vendor you can walk up to inside her shop, fix the broken interact triggers, add a sprint control, and align movement with the screen axes.

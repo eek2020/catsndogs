@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bq8n2mvxkt4pd"]
+
+[ext_resource type="Script" uid="uid://m2efjyxyv6rv" path="res://scripts/world/bryn_shop_interior.gd" id="1"]
+
+[node name="BrynShopInterior" type="Node3D" unique_id=1183110298]
+script = ExtResource("1")

@@ -31,7 +31,7 @@ const SCENES := {
 	"star_map": "res://scenes/ui/star_map_screen.tscn",
 	"skill_allocation": "res://scenes/ui/skill_allocation.tscn",
 	"station": "res://scenes/ui/station_screen.tscn",
-	"planet": "res://scenes/ui/planet_surface.tscn",
+	"planet": "res://scenes/world/planet_surface_3d.tscn",
 	"intro_crawl": "res://scenes/ui/intro_crawl.tscn",
 	"controls_rebind": "res://scenes/ui/controls_rebind.tscn",
 	"save_load": "res://scenes/ui/save_load_menu.tscn",

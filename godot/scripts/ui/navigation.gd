@@ -115,7 +115,7 @@ var _nearby_base_id: String = ""
 # Planet landing
 var _nearby_planet_id: String = ""
 const FRINGE_HAVEN_PLANET_ID: String = "fringe_haven"
-const FRINGE_HAVEN_SCENE_PATH: String = "res://scenes/world/fringe_haven_outpost.tscn"
+const FRINGE_HAVEN_SCENE_PATH: String = "res://scenes/world/fringe_haven_3d.tscn"
 
 const FLIP_SPEED: float = 6.0
 const BANK_MAX_ANGLE: float = 0.30       # ~17 degrees max banking tilt
