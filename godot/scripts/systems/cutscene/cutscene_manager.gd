@@ -130,13 +130,21 @@ func _run_camera_sequence(seq: Dictionary) -> void:
 
 		if i < lines.size():
 			var line: Dictionary = lines[i]
-			await _show_line(line.get("speaker", ""), line.get("text", ""))
+			await _show_line(
+				line.get("speaker", ""),
+				line.get("text", ""),
+				float(line.get("auto_advance", 0.0)),
+			)
 
 	# If there are more lines than keys, show the rest at the final key.
 	if lines.size() > keys.size():
 		for i in range(keys.size(), lines.size()):
 			var line: Dictionary = lines[i]
-			await _show_line(line.get("speaker", ""), line.get("text", ""))
+			await _show_line(
+				line.get("speaker", ""),
+				line.get("text", ""),
+				float(line.get("auto_advance", 0.0)),
+			)
 
 
 # ------------------------------------------------------------------
@@ -162,7 +170,11 @@ func _run_dialogue(seq: Dictionary) -> void:
 		var line_cam: String = line.get("camera", "")
 		if line_cam != "" and camera_controller:
 			await camera_controller.move_to_key(line_cam)
-		await _show_line(line.get("speaker", ""), line.get("text", ""))
+		await _show_line(
+			line.get("speaker", ""),
+			line.get("text", ""),
+			float(line.get("auto_advance", 0.0)),
+		)
 
 
 # ------------------------------------------------------------------
@@ -205,7 +217,11 @@ func _run_walk(seq: Dictionary) -> void:
 	# Fire lines in parallel with the walk. Advance is still gated on the
 	# player; the tween keeps playing in the background.
 	for line in lines:
-		await _show_line(line.get("speaker", ""), line.get("text", ""))
+		await _show_line(
+			line.get("speaker", ""),
+			line.get("text", ""),
+			float(line.get("auto_advance", 0.0)),
+		)
 	if tween.is_running():
 		await tween.finished
 
@@ -260,14 +276,14 @@ func _run_event(seq: Dictionary) -> void:
 # ------------------------------------------------------------------
 # Line display helper.
 # ------------------------------------------------------------------
-func _show_line(speaker: String, text: String) -> void:
+func _show_line(speaker: String, text: String, auto_advance: float = 0.0) -> void:
 	line_shown.emit(speaker, text)
 	if dialogue_ui and dialogue_ui.has_method("show_line"):
-		await dialogue_ui.show_line(speaker, text, typewriter_speed)
+		await dialogue_ui.show_line(speaker, text, typewriter_speed, auto_advance)
 	else:
 		# Fallback: print and wait.
 		print("[%s] %s" % [speaker, text])
-		await get_tree().create_timer(2.0).timeout
+		await get_tree().create_timer(max(auto_advance, 2.0)).timeout
 
 
 # ------------------------------------------------------------------

@@ -1,166 +1,78 @@
 {
   "scene_file": "no_tail_outpost.glb",
-  "description": "Camera path and lighting for the No Tail Outpost cutscene.",
+  "description": "Camera choreography for the No Tail Outpost cutscene. All shots assume the painted backdrop at world (0, 10, -40) with the outpost doorway around world (-6, 6, -40). Aristotle at (2, 0, 0), NoTail emerges from painted doorway and walks to (-4, 0, -8).",
   "cameras": [
     {
       "name": "CAM_01_Establishing",
-      "position": [
-        -2,
-        14,
-        55
-      ],
-      "look_at": [
-        0,
-        3,
-        -10
-      ],
+      "position": [6, 2.5, 6],
+      "look_at": [0, 1.5, -3],
       "fov": 55,
-      "hold_seconds": 3.0,
+      "hold_seconds": 0.0,
       "transition_seconds": 0.0,
-      "description": "High wide establishing shot. Outpost in distance, wreckage in middle ground."
+      "description": "Wide-right angle showing Aristotle on the landing pad with painted outpost centered. This is the initial shot that composes to the reference painting."
     },
     {
-      "name": "CAM_02_ApproachOverScouts",
-      "position": [
-        8,
-        6,
-        30
-      ],
-      "look_at": [
-        0,
-        2,
-        -12
-      ],
-      "fov": 60,
-      "hold_seconds": 2.5,
-      "transition_seconds": 1.2,
-      "description": "Camera descends and flies forward over scout wreckage."
-    },
-    {
-      "name": "CAM_03_NearGunship",
-      "position": [
-        -8,
-        3,
-        18
-      ],
-      "look_at": [
-        0,
-        2,
-        -16
-      ],
-      "fov": 65,
-      "hold_seconds": 2.5,
-      "transition_seconds": 1.2,
-      "description": "Low, close to the ground, passing the first gunship wreck."
-    },
-    {
-      "name": "CAM_04_AristotleShoulder",
-      "position": [
-        1.8,
-        2.2,
-        -5
-      ],
-      "look_at": [
-        0,
-        2,
-        -17
-      ],
+      "name": "CAM_02_GlideBehind",
+      "position": [4, 3.2, 5],
+      "look_at": [-2, 1.5, -12],
       "fov": 55,
-      "hold_seconds": 4.0,
-      "transition_seconds": 1.2,
-      "description": "Over-shoulder on Aristotle as he approaches the outpost door."
+      "hold_seconds": 0.0,
+      "transition_seconds": 2.8,
+      "description": "Glide to 3/4 behind-and-above Aristotle as he walks toward the door. Painted doorway occupies the centre of frame."
     },
     {
-      "name": "CAM_05_DoorFocus",
-      "position": [
-        0,
-        1.9,
-        -10
-      ],
-      "look_at": [
-        0,
-        1.8,
-        -17
-      ],
-      "fov": 45,
-      "hold_seconds": 3.0,
-      "transition_seconds": 1.2,
-      "description": "Tight on the closed door. Warning light visible. Beat of silence."
-    },
-    {
-      "name": "CAM_06_NoTailReveal",
-      "position": [
-        2.2,
-        1.9,
-        -12.5
-      ],
-      "look_at": [
-        0,
-        1.7,
-        -16.5
-      ],
+      "name": "CAM_03_OverShoulder",
+      "position": [2.5, 2.6, 2],
+      "look_at": [-4, 1.8, -12],
       "fov": 50,
-      "hold_seconds": 5.0,
-      "transition_seconds": 1.5,
-      "description": "Angled reveal as door opens. No Tail framed in doorway with rifle."
+      "hold_seconds": 0.0,
+      "transition_seconds": 2.0,
+      "description": "Tight over Aristotle's right shoulder. Painted doorway dominates the frame — this is where the blast door opens."
+    },
+    {
+      "name": "CAM_04_SideReveal",
+      "position": [3.5, 2.3, -4],
+      "look_at": [-3, 1.7, -10],
+      "fov": 55,
+      "hold_seconds": 0.0,
+      "transition_seconds": 2.4,
+      "description": "Side-slide reveal. Aristotle in right of frame, NoTail emerging from painted doorway on the left."
+    },
+    {
+      "name": "CAM_05_NoTailClose",
+      "position": [-1, 2.2, -5],
+      "look_at": [-4, 1.8, -10],
+      "fov": 45,
+      "hold_seconds": 0.0,
+      "transition_seconds": 1.4,
+      "description": "Close on NoTail for her threatening opening lines."
+    },
+    {
+      "name": "CAM_06_TwoShot",
+      "position": [1, 2.2, -4],
+      "look_at": [-1.5, 1.6, -10],
+      "fov": 50,
+      "hold_seconds": 0.0,
+      "transition_seconds": 1.6,
+      "description": "Medium two-shot covering both characters for back-and-forth dialogue."
+    },
+    {
+      "name": "CAM_07_AristotleClose",
+      "position": [-1.5, 2.2, -4],
+      "look_at": [2, 1.8, -2],
+      "fov": 45,
+      "hold_seconds": 0.0,
+      "transition_seconds": 1.4,
+      "description": "Reverse-angle close on Aristotle for his responses."
     }
   ],
   "lights": [
     {
       "name": "Sun",
       "type": "directional",
-      "position": [
-        15,
-        25,
-        30
-      ],
-      "direction": [
-        -0.3,
-        -0.85,
-        -0.45
-      ],
-      "color": [
-        1.0,
-        0.92,
-        0.75
-      ],
-      "intensity": 5.0
-    },
-    {
-      "name": "Fill",
-      "type": "directional",
-      "position": [
-        -20,
-        15,
-        -40
-      ],
-      "direction": [
-        0.4,
-        -0.5,
-        0.8
-      ],
-      "color": [
-        0.72,
-        0.78,
-        0.95
-      ],
-      "intensity": 1.5
-    },
-    {
-      "name": "DoorRim",
-      "type": "point",
-      "position": [
-        0,
-        4,
-        -16.5
-      ],
-      "color": [
-        1.0,
-        0.8,
-        0.55
-      ],
-      "intensity": 3.0,
-      "range": 8.0
+      "color": [1.0, 0.72, 0.45],
+      "intensity": 5.0,
+      "note": "Warm low-right angle matching painted sunset. Transform authored directly in the .tscn."
     }
   ]
 }

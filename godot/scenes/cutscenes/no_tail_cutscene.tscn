@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://ctj6l1mmy43u0" path="res://scripts/systems/cutscene/camera_controller.gd" id="3_cam"]
 [ext_resource type="Script" uid="uid://bvps1xp0n22fb" path="res://scripts/systems/cutscene/dialogue_ui.gd" id="4_ui"]
 [ext_resource type="PackedScene" uid="uid://u15yap5g0i74" path="res://assets/cutscenes/no_tail_outpost.glb" id="5_glb"]
-[ext_resource type="PackedScene" uid="uid://br6ku4gpdu8tt" path="res://scenes/characters/character_3d.tscn" id="7_notail"]
+[ext_resource type="PackedScene" uid="uid://br6ku4gpdu8tt" path="res://scenes/characters/character_3d.tscn" id="7_char3d"]
 [ext_resource type="Texture2D" uid="uid://cx2tqtkuy0ydq" path="res://assets/cutscenes/no_tail_outpost/backdrop.png" id="8_backdrop"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_1"]
@@ -27,18 +27,16 @@ ambient_light_energy = 0.55
 tonemap_mode = 2
 glow_enabled = true
 glow_bloom = 0.04
-fog_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="BackdropMat_1"]
 resource_local_to_scene = true
 shading_mode = 0
-vertex_color_use_as_albedo = false
 albedo_texture = ExtResource("8_backdrop")
 disable_receive_shadows = true
 texture_filter = 3
 
 [sub_resource type="QuadMesh" id="BackdropMesh_1"]
-size = Vector2(146, 56)
+size = Vector2(200, 77)
 
 [node name="NoTailCutscene" type="Node3D" unique_id=1697589989]
 script = ExtResource("1_scene")
@@ -65,8 +63,18 @@ light_energy = 0.3
 [node name="NoTailOutpost" parent="World" unique_id=1599704168 instance=ExtResource("5_glb")]
 visible = false
 
-[node name="NoTail" parent="World" unique_id=562841275 instance=ExtResource("7_notail")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -16.5)
+[node name="Backdrop" type="MeshInstance3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -40)
+mesh = SubResource("BackdropMesh_1")
+material_override = SubResource("BackdropMat_1")
+extra_cull_margin = 50.0
+
+[node name="Aristotle" parent="World" instance=ExtResource("7_char3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+character_id = "aristotle"
+
+[node name="NoTail" parent="World" unique_id=562841275 instance=ExtResource("7_char3d")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -4, 0, -12)
 visible = false
 character_id = "no_tail"
 
@@ -76,12 +84,6 @@ script = ExtResource("3_cam")
 [node name="Camera3D" type="Camera3D" parent="CameraController" unique_id=1795754564]
 current = true
 fov = 55.0
-
-[node name="Backdrop" type="MeshInstance3D" parent="CameraController/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
-mesh = SubResource("BackdropMesh_1")
-material_override = SubResource("BackdropMat_1")
-extra_cull_margin = 100.0
 
 [node name="CutsceneManager" type="Node" parent="." unique_id=772831417]
 script = ExtResource("2_mgr")

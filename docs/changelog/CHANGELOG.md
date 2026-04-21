@@ -6,6 +6,55 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — Sprint 7 choreography: walks, auto-advance, new camera path
+
+**Focus:** painted backdrop landed on `0f2e65d` but there was no 3D foreground and no camera choreography — one static shot with dialogue overlay. This pass adds Aristotle and NoTail as actual characters in the scene, choreographs a 7-shot camera sequence matching the user's described vision (glide to 3/4-behind → over-shoulder → side-reveal → NoTail close), adds walk sequences (Aristotle approaches the door, NoTail emerges and walks toward Aristotle), and introduces auto-advance so narration beats don't require a click between lines.
+
+**Scene changes** ([no_tail_cutscene.tscn](godot/scenes/cutscenes/no_tail_cutscene.tscn)).
+
+- **Backdrop detached from `Camera3D`** — now a world-fixed `MeshInstance3D` child of `World` at position `(0, 10, -40)` with `QuadMesh` size `(200, 77)` preserving the painting's 2.59:1 aspect. Because it's world-fixed (not camera-parented), 3D characters pass in front with natural parallax as the camera moves. Painted doorway sits at world `(-6, 6, -40)` derived from image UV `(0.47, 0.55)` on the quad.
+- **Aristotle added** under `World` as a `character_3d.tscn` instance at `(2, 0, 0)`, identity rotation facing -Z (toward the painted outpost). Scale 1. `character_id = "aristotle"` loads the right rig + textures so he renders painterly against the backdrop (matching the screenshot you showed).
+- **NoTail repositioned + rescaled.** Was scale-3 at `(0, 0, -16.5)` (giant cat, outpost-era world). Now scale-1 at `(-4, 0, -12)` with 180° yaw so he faces toward Aristotle. `visible = false` at start — `_open_door` fades him in when the `door_state: opening` beat fires, then the `notail_emerges` walk carries him from the painted doorway to `(-4, 0, -8)`.
+
+**Auto-advance** ([dialogue_ui.gd](godot/scripts/systems/cutscene/dialogue_ui.gd), [cutscene_manager.gd](godot/scripts/systems/cutscene/cutscene_manager.gd)).
+
+`show_line()` grew an `auto_advance_seconds: float = 0.0` parameter. When > 0, the line advances itself after the typewriter finishes + that many seconds (player can still skip early via space/click). When 0, behaviour is unchanged — wait for player. `CutsceneManager._show_line` propagates the value from each line's `auto_advance` JSON field. `camera_sequence`, `dialogue`, and `walk` call sites all thread the field through.
+
+**Camera path** ([camera_path.json](godot/data/cutscenes/camera_path.json)) — 7 keys replacing the 6 old ones. All positions authored for the painted-backdrop world (camera stays within ~7m of origin so backdrop composition stays consistent).
+
+| Key | Purpose |
+| --- | --- |
+| `CAM_01_Establishing` | Wide-right, Aristotle on pad, painted outpost centered. |
+| `CAM_02_GlideBehind` | 3/4 behind-and-above Aristotle as he walks. 2.8s transition. |
+| `CAM_03_OverShoulder` | Tight over right shoulder, painted door dominates. 2.0s. |
+| `CAM_04_SideReveal` | Side slide as NoTail emerges from the doorway. 2.4s. |
+| `CAM_05_NoTailClose` | Close on NoTail for threatening lines. |
+| `CAM_06_TwoShot` | Medium two-shot for back-and-forth. |
+| `CAM_07_AristotleClose` | Reverse-angle close on Aristotle. |
+
+**Dialogue path** ([no_tail_dialogue.json](godot/data/cutscenes/no_tail_dialogue.json)) — opening rewritten; rest of cutscene rewired to new cameras.
+
+- `intro_narration` (camera_sequence on CAM_01) — Aristotle's first narration line auto-advances after 3.2s.
+- `approach_walk` (walk sequence) — Aristotle walks from `(2, 0, 0)` to `(0, 0, -3)` over 3.5s while CAM_02 glides behind. Second narration line auto-advances.
+- `door_focus` (dialogue on CAM_03) — tight on door, 2 lines (first auto-advances so the dramatic second line lands on a click).
+- Choice inserted: `choice_approach` — hold vs hail (hail_first loops back to door_opens).
+- `door_opens` (dialogue on CAM_03, door_state=opening) — narration line auto-advances during the invisible door tween + NoTail fade-in.
+- `notail_emerges` (walk sequence) — NoTail walks from `(-4, 0, -12)` to `(-4, 0, -8)` over 2.6s while CAM_04 slides sideways. "Stop right there" auto-advances.
+- Rest of existing back-and-forth preserved; per-line `camera` overrides alternate CAM_05_NoTailClose ↔ CAM_07_AristotleClose for shot-reverse-shot.
+
+**Verification.**
+
+- GUT headless: **256/256 green**, 3.69s.
+- `no_tail_cutscene.tscn` headless smoke-load: clean (**no more `Could not find 'Aristotle'` warning** — he's in the scene now). Long-run (1200 frames) clean too.
+
+**Known limitations** (next iteration if wanted).
+
+- `_open_door` animates the Door node inside the hidden `$World/NoTailOutpost` subtree — the tween plays invisibly. Works fine (script still calls `_fade_in_character` on NoTail when done), but means you don't *see* the painted door change during the opening beat. Could bake a door-panel mesh in front of the painted doorway position if that beat needs a visible reveal.
+- Aristotle's walk target is `(0, 0, -3)` — not literally at the painted doorway position `(-6, 6, -40)`. It's a compromise: walking into a painted backdrop breaks the illusion, so he walks partway. Camera + dialogue sell the rest.
+- Character facing directions are fixed transforms — they don't rotate to look at each other mid-dialogue. If that matters, add `look_at` tweens in `_run_dialogue`.
+
+---
+
 ## 2026-04-21 — Sprint 7 pivot: painted backdrop replaces 3D cutscene rendering
 
 **Focus:** the post-`b6f8424` in-engine preview still read as washed-out grey — pink burn marks, flat-lit plaster, white-blown windows. Diagnosis was correct at the material level (vertex-color chains were broken), but the *goal* was wrong. The user showed concept art depicting a **painterly** look (sepia palette, volumetric smoke, hand-painted rocks, silhouetted outpost with glowing doorway). No amount of tuning low-poly box geometry with PBR textures gets to that aesthetic.

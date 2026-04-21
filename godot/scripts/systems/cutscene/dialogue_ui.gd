@@ -40,8 +40,16 @@ func _input(event: InputEvent) -> void:
 
 
 ## Show a single dialogue line with typewriter effect.
-## Awaits until the player presses advance.
-func show_line(speaker: String, text: String, typewriter_speed: float = 0.025) -> void:
+##
+## If `auto_advance_seconds > 0`, advances automatically after the typewriter
+## finishes + that many seconds (player can still skip early with space/click).
+## Otherwise awaits player input.
+func show_line(
+	speaker: String,
+	text: String,
+	typewriter_speed: float = 0.025,
+	auto_advance_seconds: float = 0.0,
+) -> void:
 	dialogue_box.visible = true
 	speaker_label.text = speaker
 	text_label.text = ""
@@ -62,12 +70,21 @@ func show_line(speaker: String, text: String, typewriter_speed: float = 0.025) -
 		text_label.text = text
 
 	_line_finished = true
-	advance_hint.visible = true
 	_advance_requested = false
 
-	# Wait for player to advance.
-	while not _advance_requested:
-		await get_tree().process_frame
+	if auto_advance_seconds > 0.0:
+		# Auto-advance timer runs in parallel with player input; whichever
+		# fires first ends the wait.
+		advance_hint.visible = false
+		var elapsed := 0.0
+		while elapsed < auto_advance_seconds and not _advance_requested:
+			await get_tree().process_frame
+			elapsed += get_process_delta_time()
+	else:
+		advance_hint.visible = true
+		while not _advance_requested:
+			await get_tree().process_frame
+
 	_advance_requested = false
 	advance_hint.visible = false
 
