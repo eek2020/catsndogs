@@ -176,52 +176,131 @@ Sliced into two commits to keep diffs reviewable. Part 1 closed the gameplay wir
 
 **Exit criteria (Sprint 6 as a whole):** new player can start the game, rebind a key, plug in a controller, save to slot 2, and reach the first encounter prompt without reading documentation. `rg "GameSession\." godot/scripts/ui/dialogue_ui.gd` returns 0 **(done 6a: 19 → 0)**; `rg "GameSession\." godot/scripts/ui | wc -l` ≤ 90 **(done 6a: 106 → 87)**.
 
-### Sprint 7 — 3D cutscene modernisation (Blender-first) — **PARKED 2026-04-17**
+### Sprint 7 — 3D cutscene modernisation — **CLOSED 2026-04-21 (painted-backdrop pivot rejected; full rebuild in Sprint 12)**
 
-**Parked** to prioritise planet-surface basics (see Sprint 10). Prep commits and stylized-flat terrain pass remain landed; the interior-room rebuild, camera-animation bake, `MaterialApplicator` deletion, and `cutscene_scene.gd` rewrite sit unchanged until we un-park.
+**Sprint closed with mixed outcomes.** The engineering-side tasks (code cleanup, `MaterialApplicator` deletion, dialogue/auto-advance plumbing) landed successfully. The *visual* pivot — using the AI-generated concept art `design/cutscenes/no_tail_outpost_design_1.png` as a painted backdrop at world z=-40 with the 3D outpost geometry hidden — was user-rejected on 2026-04-21 with "so bad, so, so bad. full rebuild it is." See Sprint 12 below for the replacement plan.
 
-**Track A (with engineering glue).** Parallelisable with any engineering sprint because the .blend rework is offline work. Expected to delete ~500 lines of GDScript.
+**What shipped successfully (kept on `main`):**
 
-**Context:** the existing "No Tail Outpost" cutscene plays, but the runtime code builds an interior room from BoxMeshes, hides back walls by AABB heuristic, force-finds light fixtures by proximity, and paints materials by node-name keyword match. See `CODE_REVIEW.md §6A` for the full teardown. Blender is available, so most of these runtime hacks can move into the source .blend.
-
-**Engineering-only prep landed 2026-04-16** alongside Sprint 5b (companion commit). Non-breaking items that do not require the `.blend` rework:
-
-| Prep task | Status | Notes |
+| Task | Outcome | Commit |
 | --- | --- | --- |
-| `data/cutscenes/_registry.json` with `no_tail_outpost` entry | **Done** | Schema documents `{id, scene_path, dialogue_path, camera_animation_name, camera_path_json, title, arc, tags, notes}`. New cutscenes become data-only when the .blend rework lands. |
-| `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` signal | **Done** | `cutscene_scene.gd._on_cutscene_finished` emits it with the CutsceneManager's accumulated karma delta + recruited ids. Replaces the `"In a real game, transition back to the main scene here."` stub. |
-| `camera_controller.gd` 4-space → tabs | **Done** | Converted via python3 pass; project convention restored. |
-| `_fade_in_character` shared-material fix | **Done** | Per-surface duplicated override materials contain the transparency mutation; pristine originals restored via `set_surface_override_material(s, null)` on completion. CODE_REVIEW §6A.3 closed. |
-| `TODO(S7):` markers on runtime geometry hacks | **Done** | `_hide_back_wall`, `_build_interior`, `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, and the `MaterialApplicator.apply()` call site all carry back-references to the CODE_REVIEW step that explains why each belongs in the .blend. Mechanical deletion when the rework lands. |
+| Delete `MaterialApplicator` (434 lines) + runtime geometry patchers from `cutscene_scene.gd` (286 → 77 lines, exit criterion ≤100 met) | Runtime painter + placeholder-hider + burn-mark-quadder + proximity light-fixture force all gone | `b732088` |
+| `_fade_in_character` shader-safe per-surface override duplication (CODE_REVIEW §6A.3) | No more shared-material leakage on fade-in | (Sprint 5b prep, retained) |
+| `EventBus.cutscene_completed(cutscene_id, karma_delta, recruited)` signal + registry entry | Cutscene return flow wired through `SceneManager` | (prep, retained) |
+| `camera_controller.gd` tabs-conversion | Project convention restored | (prep, retained) |
+| `auto_advance_seconds` field in `show_line()` + `CutsceneManager._show_line` pass-through + JSON field threaded through `camera_sequence` / `dialogue` / `walk` | Narration lines now advance without a click | `38b8a2d` |
+| `play_anim("walk")` / `play_anim("idle")` triggering in `_run_walk` + look_at orientation on mirrored target | Characters animate while walking instead of gliding | `a1678c4` |
 
-**Blender tooling — install before Sprint 7 begins:**
+**What was rejected and needs rework in Sprint 12:**
 
-Two tools change the Sprint 7 workflow significantly. Install both before the Blender rework starts.
+| Task | Why it failed |
+| --- | --- |
+| Painted-backdrop at world `(0, 10, -40)` with concept art as albedo on a 400×154 QuadMesh | Visible quad edges at wide shots, no parallax when camera dollies, reverse-angle shots shoot into empty procedural sky, characters appear to float in front of a 2D curtain. User feedback: "looks like a play on a stage" / "I wanted it built the best it could be." |
+| 7-shot camera path constrained to `z ≥ 2` looking toward `-Z` only | Same-side closes substituting for true reverse shots because the painted backdrop doesn't extend behind characters. Camera gymnastics inherent to the constraint. |
+| Character placement designed to compose with painted doorway pixel `(0.47, 0.55)` on backdrop UV | NoTail's emergence point didn't feel like she was stepping out of a door — more like she fades in 3m in front of a painting. |
+| `no_tail_outpost.glb` Blender edits (steps 1+2 + texture pass) | Retained on disk as source material (and still imports fine), but the .tscn now hides the whole GLB subtree (`visible = false`). Sprint 12 decides whether to rebuild the .blend or re-use parts. |
+
+**Current state on `main` (2026-04-21, post-Sprint 7 closure):**
+
+- `no_tail_cutscene.tscn` still contains the painted-backdrop quad + hidden GLB; it plays end-to-end without errors but looks like a stage play. Retained until Sprint 12 replaces it.
+- `design/cutscenes/no_tail_outpost_design_1.png` and `godot/assets/cutscenes/no_tail_outpost/backdrop.png` remain in-repo as **art direction reference** for Sprint 12 (the painting's *mood* — sepia, volumetric, atmospheric — is the Sprint 12 target).
+- `cutscene_manager.gd` choreography primitives (walk sequences, auto-advance, camera_key per line) are solid and will carry into Sprint 12 unchanged.
+
+### Sprint 12 — Cutscene 3D rebuild (replaces Sprint 7's painted-backdrop pivot) — **PLANNED 2026-04-21**
+
+**Track A + Track E.** User-directed on 2026-04-21 after the painted-backdrop approach was rejected. Plan only — not started. Close Sprint 10 (planet basics) first, or run in parallel since the Blender work is offline.
+
+**Intent.** Build a real 3D cutscene scene that captures the concept art's *mood* — warm sepia, volumetric smoke, dramatic sunset, weathered outpost with glowing doorway — **not** its literal composition. Characters interact spatially: walk on real ground, cast real shadows, emerge from a real 3D door. True reverse shots, dolly moves, and parallax all become possible.
+
+**Art direction reference.** [design/cutscenes/no_tail_outpost_design_1.png](design/cutscenes/no_tail_outpost_design_1.png) (AI-gen concept art). Mood guide only. Don't clone pixel-for-pixel — the painting's value is its palette and atmosphere, not its geometry.
+
+**Phase A — Outpost geometry rebuild (Claude via blender-mcp).**
+
+| Task | Outcome |
+| --- | --- |
+| Model outpost from scratch (or re-use applicable parts of existing `no_tail_outpost.blend`) | Single-story bunker ~8m × 5m × 3m: plastered walls, flat roof with overhang, recessed doorway, UV-unwrapped with sensible seams |
+| Door as separate mesh on a rail | Animates up/down to open. Parented to outpost but pivoted at doorway base. |
+| Interior glow plane | Emissive plane just inside doorway; visible when door opens — the pink glow the painting suggests |
+| Emissive accents | Amber window lights flanking door (strength 3); red warning light above door (strength 4); both authored in-blend with materials already proven (`mat_Door_WarningLight`, `mat_Outpost_Window` from Sprint 7a) |
+| Materials | Stylized-painted look matching character rigs, NOT flat PBR. Re-use shipped CC0 plaster/roof_tiles/wood_planks textures with per-surface tints. **Critical:** drop the vertex-color shader chains that broke in the Sprint 7 follow-up — use plain BSDF + texture + optional MixRGB tint |
+| Re-export GLB | Target ≤ 3 MB. Existing glb/.blend retained unless full rebuild chosen. |
+
+**Phase B — Terrain & wreckage (Blender → Godot).**
+
+| Task | Outcome |
+| --- | --- |
+| Ground plane with dune displacement | ~30m × 30m, modest height noise, mud/grass-tinted texture. Characters cast real shadows on it. |
+| Distant hill silhouettes | Low-poly z=-30 shapes for depth. No detail — just shape against sky. |
+| Wreckage placement | 3-5 scattered hulks. Re-use Scout/Gunship geometry from `no_tail_outpost.blend` (already textured with burnt-metal palette from Sprint 7 follow-up), scatter naturally. |
+| Rocks | ~10 stylized low-poly rocks at scene edges. Can re-use `Rock` material. |
+| Dirt pad | Raised platform in front of door where characters stand. |
+
+**Phase C — Atmospherics (Godot .tscn).**
+
+| Task | Outcome |
+| --- | --- |
+| Volumetric fog via `WorldEnvironment` | `fog_density` ~ 0.01, warm tint `(0.55, 0.35, 0.22)`, `fog_aerial_perspective` enabled. Sells the sepia haze. |
+| Smoke columns | 3 `GPUParticles3D` emitters at wreckage positions. Dark plumes rising, drifting slightly. Reuse the Fringe Haven campfire v2 particle recipe (amount 60, process material with upward velocity + scale curve). |
+| God-rays / light shafts | DirectionalLight3D with `light_volumetric_fog_energy` (Godot 4.6 supports volumetric lights). If perf-prohibitive, fall back to an animated light-shaft billboard plane. |
+| Dust motes | Small `GPUParticles3D` with bright points at camera-height. Gives the "air has texture" feel the painting carries. |
+
+**Phase D — Lighting & shadows.**
+
+| Task | Outcome |
+| --- | --- |
+| Warm directional sun | Low-right, ~15° elevation. Intensity 2.5. Color `(1, 0.6, 0.35)` — strong orange. Shadow casting on. |
+| Cool fill | Camera-side, intensity 0.4, blue-purple `(0.4, 0.45, 0.55)`. Separates characters from warm backdrop. |
+| Emissive door spill | Once door opens, interior glow plane illuminates nearby geometry. Point light slight bounce. |
+| Rim light (optional) | Small spot backlighting characters for silhouette separation. |
+| Shadow tuning | `shadow_max_distance`, `directional_shadow_blend_splits`, PCSS if viable. |
+
+**Phase E — Camera choreography & character blocking.**
+
+| Task | Outcome |
+| --- | --- |
+| Replace JSON-driven camera with AnimationPlayer track | Hand-authored bezier curves in the .tscn for hero shots. JSON stays as a fallback for simple keys. |
+| 6-shot sequence | (1) Wide establishing, Aristotle landing on pad, sun in frame. (2) Dolly-in as Aristotle walks to door. (3) Over-shoulder close on door. (4) **True reverse shot** on Aristotle reacting to the grinding. (5) NoTail emerges through *real* doorway with interior glow silhouetting her. (6) Two-shot + shot-reverse-shot for dialogue. |
+| Character `look_at` tweens during dialogue | Subtle head turns so characters face each other when speaking. |
+| Walk animation (already working from Sprint 7) | Preserved. |
+
+**Phase F — Retire painted-backdrop scaffolding.**
+
+| Task | Outcome |
+| --- | --- |
+| Delete painted-backdrop QuadMesh + its material/mesh subresources from `no_tail_cutscene.tscn` | Scene no longer depends on the painting |
+| Delete `godot/assets/cutscenes/no_tail_outpost/backdrop.png` + its extracted sidecars | Reclaim ~6 MB. Keep `design/cutscenes/no_tail_outpost_design_1.png` as reference. |
+| Delete extracted Godot texture sidecars (`no_tail_outpost_*_diff_1k.jpg` + `cutscenes/textures/*.jpg`) | ~6 MB freed; no longer needed once materials live in the rebuilt GLB |
+| Update `MEMORY.md` + `project_cutscene_state.md` | Painted-backdrop attempt marked as cautionary tale |
+
+**Exit criteria.**
+
+1. `no_tail_cutscene.tscn` plays the full opening (intro → walk → door opens → NoTail emerges → threat) end-to-end without user input beyond choice points.
+2. Characters walk (don't glide), cast real shadows on the ground, face each other during dialogue.
+3. Camera executes at least one dolly move and at least one true reverse shot (180° across the characters).
+4. Visual read matches concept art's *mood* (sepia palette, volumetric atmospherics, dramatic sunset) even where composition differs.
+5. GUT suite green.
+6. Before/after playthrough screenshots posted to `docs/qa/cutscenes/` (Sprint 7 painted-backdrop vs Sprint 12 rebuild).
+
+**Estimate.** 2-4 focused days, Claude-driven via `blender-mcp` with user review at each phase boundary.
+
+**Open questions (need user call before Phase A).**
+
+1. **Start fresh or re-use existing `.blend`?** The Sprint 7 `.blend` has properly textured outpost walls, wreckage, hills. It looked flat grey in Godot because of the vertex-color chain export issue — but the geometry is sound. Rebuild from scratch (more control, more time) or port the existing into new materials (faster, less ideal)?
+2. **Painted style or photoreal?** Characters are painterly. Materials should match — stylized textures with outlines? Or PBR and let the volumetric fog do the atmospheric work?
+3. **Door-open composition.** The painting shows the doorway glowing pink. Should the rebuild honour that (emissive pink interior), or pick a different colour for the open door?
+
+**Risks.**
+
+- Modeling is 3D art work — subject to taste, iteration, and "that doesn't look right" loops. User should expect phase-boundary check-ins, not a big-bang reveal.
+- Volumetric fog + multiple particle systems + shadow-casting directional light have GPU cost. Target 60fps at 1280×720; drop rim light or reduce particle count if frame budget breaks.
+- If Godot 4.6's volumetric light implementation has limits, fall back to shader-based light-shaft planes.
+
+**Blender tooling note (carries into Sprint 12).** Both tools below were installed during Sprint 7 prep and are ready for Sprint 12.
 
 | Tool | What it does | Install |
 | --- | --- | --- |
-| **blender-mcp** ([ahujasid/blender-mcp](https://github.com/ahujasid/blender-mcp), 19 900+ stars) | MCP server + Blender addon that give Claude a live two-way socket connection to a running Blender instance. Claude can create/modify objects, apply materials, inspect the scene, and execute arbitrary Python — interactively, with viewport screenshots. Changes the .blend rework from "offline human task" to "Claude-driven session". | Install the Blender addon (`addon.py`) from the repo, then add the MCP server to Claude. Requires Blender 3.0+, `uv` (`brew install uv`). **Do not use blender-mcp.org — it is unofficial and unaffiliated; the README explicitly warns against it.** |
-| **blender-claude-plugin** ([ra100/blender-claude-plugin](https://github.com/ra100/blender-claude-plugin), experimental) | Claude Code plugin that loads Blender 5.x API reference skills (geometry nodes, modifiers, Python scripting, animation/rigging, rendering) into context. Prevents hallucinated `bpy` calls when writing scripts outside a live MCP session. | `claude plugin marketplace add ra100/blender-claude-plugin && claude plugin install blender-skills@blender-claude-marketplace`. Verify your Blender version is 5.x before relying on the API refs. |
-
-**Remaining — Blender rework (Claude-drivable via blender-mcp; human judgment required for artistic calls):**
-
-| Task | Who | Outcome | Reference |
-| --- | --- | --- | --- |
-| Rebuild `no_tail_outpost.blend` | Claude (blender-mcp) | Proper material slots with meaningful names, UV unwraps, **interior room modeled in-scene**, burn marks painted into textures, door as single named mesh on an Empty pivot, no placeholder character geometry in export | CODE_REVIEW §6A.6 step 1 |
-| Author camera animation in Blender | Claude (blender-mcp) | 6 keyframes matching existing `camera_path.json`, baked into an AnimationPlayer track on export | CODE_REVIEW §6A.2 |
-| Optimise character GLBs | Human artist | Bake 1024×1024 textures + mesh compression; target ≤ 4 MB each (from 34 MB today) — artistic texture decisions need a human eye | CODE_REVIEW §6A.4, MASTER_PLAN §6 |
-| Lighting pass | Human artist | Volumetric fog on wides, ember/dust particles at door, DoorRim flicker, baked indirect GI | CODE_REVIEW §6A.5 |
-| Rewrite `cutscene_scene.gd` | Claude | ≤ 100 lines — wiring only, no geometry manipulation | CODE_REVIEW §6A.7 |
-| Delete `MaterialApplicator` (370 lines) | Claude | Runtime painter no longer needed | CODE_REVIEW §6A.6 step 3 |
-| Decide terrain look — stylized flat vs PBR vs procedural (**DONE 2026-04-17**) | Human + Claude (blender-mcp) | **Chose stylized flat.** In-session rebuild of `no_tail_outpost.blend`: toon-stepped Pointiness ramps, faceted Decimate-collapsed hills (~320→58 polys), warm-tan ground / rust-teal building palette, emissive amber windows + red warning light, buttress gap closed (`Outpost_Buttress` shifted -0.25 X). `MaterialApplicator` runtime rules kept as fallback only — deletion deferred to the interior-room / character-GLB rows below. | CODE_REVIEW §6A.6 step 3 |
-| Replace `CameraController` with AnimationPlayer driver | Claude | Hero shots use baked animation; JSON-keyed tweens remain as generic fallback | CODE_REVIEW §6A.6 step 4 |
-| Fix `_fade_in_character` material mutation | Claude | Shader-based fade (uniform) or AnimationPlayer modulate track — no shared-material side effects | CODE_REVIEW §6A.3 |
-| Wire cutscene return flow | Claude | `_on_cutscene_finished` emits `cutscene_completed(cutscene_id, karma_delta, recruited)` on EventBus; `SceneManager` re-enters gameplay (no stub print) | CODE_REVIEW §6A.3 |
-| Fix `camera_controller.gd` indentation | Claude | Tabs, matching project convention | CODE_REVIEW §6A.2 |
-| Unify dialogue UIs | Claude | Merge `CutsceneDialogueUI` + `scripts/ui/dialogue_ui.gd` (already flagged Apr-07 #14) | CODE_REVIEW §6A.6 step 8 |
-| Add cutscene registry | Claude | `data/cutscenes/_registry.json` with `{id, scene_path, dialogue_path, camera_animation_name}` — adding a cutscene becomes data-only | MASTER_PLAN Sprint 6 |
-
-**Exit criteria:** `wc -l godot/scripts/systems/cutscene/cutscene_scene.gd` ≤ 100; `MaterialApplicator` removed; `aristotle_3d.glb` ≤ 4 MB; new cutscene addable by JSON + .blend only. Playthrough screenshot of the "No Tail Outpost" cutscene posted to `docs/qa/cutscenes/` for before/after comparison.
+| **blender-mcp** ([ahujasid/blender-mcp](https://github.com/ahujasid/blender-mcp)) | MCP server + Blender addon for live two-way socket control of a running Blender instance. Claude can create/modify objects, apply materials, inspect the scene, execute arbitrary Python, capture viewport screenshots. | Already installed 2026-04-17. |
+| **blender-claude-plugin** ([ra100/blender-claude-plugin](https://github.com/ra100/blender-claude-plugin)) | Loads Blender 5.x API reference skills into context to prevent hallucinated `bpy` calls. | Already installed 2026-04-17. |
 
 ### Sprint 8 — Spatial nuance in the navigation map — **DONE 2026-04-17**
 
@@ -445,10 +524,11 @@ When these all pass on a live build, tick them off here with a line or two of wh
 
 **Pick next from:**
 
-1. ~~**Star map connectivity polish**~~ — **done 2026-04-17.** VM gained `is_connected_from_current` + `route_first_hop`; `_request_travel` now flips `_travel_blocked` when a discovered target isn't directly connected, and the galaxy-layer confirm panel renders "No direct route to X" + "Route via Y" (or "No known path") in amber. ENTER on a blocked panel cancels instead of calling `travel_to_region`. +5 VM tests; suite 241 → 246 green.
-2. **Sprint 7 cutscene modernisation** — offline Blender work. Prep scaffolding already in place. blender-mcp + blender-claude-plugin make the `.blend` rework Claude-drivable.
-3. **Human-artist slice** — Aristotle pilot spritesheet redraw at 64×64 + parity screenshot (Sprint 2 exit criterion).
-4. **Nav `_draw` decomposition** — `navigation.gd` is still 1,700+ lines with pre-existing lint warnings (long lines, private-access, stale Python-docstring shards). Candidate for a 3b-style extraction into `scripts/ui/navigation/` helpers. Medium (half-day).
+1. ~~**Star map connectivity polish**~~ — **done 2026-04-17.**
+2. ~~**Sprint 7 cutscene modernisation**~~ — **closed 2026-04-21.** Engineering-side work landed (code cleanup, auto-advance, walk anim). Visual pivot (painted backdrop) rejected by user; full rebuild is now **Sprint 12** above.
+3. **Sprint 12 — Cutscene full 3D rebuild** — planned 2026-04-21, not started. Replaces the Sprint 7 painted-backdrop. 2-4 focused days via `blender-mcp`. Three open questions gate Phase A: (a) rebuild `.blend` or re-texture existing, (b) stylized-painted vs PBR, (c) pink interior glow vs different colour.
+4. ~~**Human-artist slice**~~ — zombie (see `project_visual_mismatch.md` in memory: `assets/sprites/` no longer exists; 3D pivot obsoleted the sprite modernisation plan).
+5. **Nav `_draw` decomposition** — `navigation.gd` is 1,700+ lines with lint warnings. Candidate for a 3b-style extraction into `scripts/ui/navigation/` helpers. Half-day, mechanical. Independent of Sprint 12 — can run in parallel.
 
 Open this file and MASTER_PLAN §7 side by side at the start of every work session. Everything else is sequenced above.
 
