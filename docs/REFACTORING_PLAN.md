@@ -12,7 +12,7 @@
 | 2 | `combat_ui.gd` decomposition (Issue #18) | **Done 2026-04-16** (Sprint 3b) — 585→399 + `scripts/ui/combat/` + `CombatViewModel` |
 | 3 | `star_map_screen.gd` decomposition (Issue #19) | **Done 2026-04-16** (Sprint 5a) — 1,092→375 + `scripts/ui/star_map/` + `StarMapViewModel` |
 | 4 | `dialogue_ui.gd` decomposition (Issue #20) | Pending — NEXT_STEPS Sprint 6 |
-| 5 | 2.5D / 3D asset pipeline + cutscene expansion | Pending — NEXT_STEPS Sprint 7 |
+| 5 | 2.5D / 3D asset pipeline + cutscene expansion | Pending — NEXT_STEPS Sprint 12 ([plans/sprint-12-cutscene-3d-port.md](plans/sprint-12-cutscene-3d-port.md)) |
 | 6 | Art direction resolution | **Partial** — guide updated + Track A/B committed (NEXT_STEPS Sprint 2); sprite pilot redraw pending artist |
 
 ---
@@ -487,9 +487,9 @@ This is the original sprint map from the April 7 plan. The **actual** sprint seq
 | 3 | 3 | star_map_screen decomposition | **Done 2026-04-16** (NEXT_STEPS Sprint 5a) |
 | 4 | 4 | dialogue_ui decomposition + `"""..."""` fix | Pending — NEXT_STEPS Sprint 6 |
 | 5 | 6 | Art direction resolution | **Partial** (guide updated; sprite pilot pending artist) — NEXT_STEPS Sprint 2 |
-| 5 | 5.1–5.2 | Asset directory restructure + model optimisation | Pending — NEXT_STEPS Sprint 7 (3D cutscene modernisation) |
-| 6 | 5.3–5.4 | Cutscene pipeline templates + 2.5D strategy | Pending — NEXT_STEPS Sprint 7 |
-| 6 | 5.5 | 3D asset manifest documentation | Pending — NEXT_STEPS Sprint 7 |
+| 5 | 5.1–5.2 | Asset directory restructure + model optimisation | Pending — NEXT_STEPS Sprint 12 (cutscene rebuild, see plans/sprint-12-cutscene-3d-port.md) |
+| 6 | 5.3–5.4 | Cutscene pipeline templates + 2.5D strategy | Pending — NEXT_STEPS Sprint 12 |
+| 6 | 5.5 | 3D asset manifest documentation | Pending — NEXT_STEPS Sprint 12 |
 
 ---
 
@@ -514,8 +514,8 @@ Status snapshot as of 2026-04-16 post-Sprint 5a.
 - [x] Each new component has at least basic unit test coverage — all VMs + combat components covered; layer components exercised via VM tests.
 - [x] Game runs identically before and after each phase — all orchestrators fall back to constructing a VM from the `GameSession` autoload in `_ready`, so no scene wiring changed.
 - [x] No new autoload dependencies introduced.
-- [ ] 3D assets separated from 2D assets with clear directory conventions — pending Sprint 7.
+- [ ] 3D assets separated from 2D assets with clear directory conventions — pending Sprint 12.
 - [ ] Art direction guide updated with resolved rendering strategy — **partial** (Track A/B committed; 3D gameplay decision pending).
-- [ ] Cutscene template scene created — pending Sprint 7.
-- [ ] All 3D models have LOD variants under 5 MB for runtime use — pending Sprint 7.
-- [ ] 3D asset manifest documenting all models, textures, and dependencies — pending Sprint 7.
+- [ ] Cutscene template scene created — pending Sprint 12 ([plans/sprint-12-cutscene-3d-port.md](plans/sprint-12-cutscene-3d-port.md)).
+- [ ] All 3D models have LOD variants under 5 MB for runtime use — pending Sprint 12.
+- [ ] 3D asset manifest documenting all models, textures, and dependencies — pending Sprint 12.

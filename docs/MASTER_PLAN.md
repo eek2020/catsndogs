@@ -222,7 +222,7 @@ All four critical bugs from previous reviews closed 2026-04-16 as part of Sprint
 | Save migration | `_migrate_save_data()` is a stub | Medium | §5.3 Apr-05 #15 |
 | Trade ledger | `trade_ledger` in GameStateData is unbounded | Low | Untracked |
 | Test coverage | GUT 9.6.0 vendored 2026-04-16; 19 test files, 175 tests (MathUtils, EncounterOutcome, AstralHazard hull death, NavigationViewModel, CombatViewModel, CombatLayout, CombatLogic, InputMapCollisions, DialogueManagerBark, PortraitCache, SceneTransitionHandoff, StarMapViewModel, CrewMoraleCombatWiring, CrewMoraleTradeWiring, DockGating, ConquestSurfacing, DataLoaderCache, NarrativeArcObjective, HudHullBar, HudMoralePip). Remaining UI and systems still untested | Medium | §7 Sprint 1 (done) + per-sprint regression tests |
-| 3D asset sizes | Character GLBs are 34 MB each; textures 20 MB | Medium | NEXT_STEPS Sprint 7 |
+| 3D asset sizes | Character GLBs are 34 MB each; textures 20 MB | Medium | NEXT_STEPS Sprint 12 ([docs/plans/sprint-12-cutscene-3d-port.md](plans/sprint-12-cutscene-3d-port.md)) |
 | Art direction | Guide committed to Track A floor + Track B aspirational (2026-04-16). Sprite pilot redraw + parity screenshot still pending | Medium | NEXT_STEPS Sprints 2 / 4 |
 
 ### Engine/Addon Dependencies

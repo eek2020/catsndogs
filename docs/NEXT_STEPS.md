@@ -208,7 +208,9 @@ Sliced into two commits to keep diffs reviewable. Part 1 closed the gameplay wir
 
 ### Sprint 12 — Cutscene 3D rebuild (replaces Sprint 7's painted-backdrop pivot) — **PLANNED 2026-04-21**
 
-**Track A + Track E.** User-directed on 2026-04-21 after the painted-backdrop approach was rejected. Plan only — not started. Close Sprint 10 (planet basics) first, or run in parallel since the Blender work is offline.
+**Detailed plan:** [docs/plans/sprint-12-cutscene-3d-port.md](plans/sprint-12-cutscene-3d-port.md) (Phase A: port existing `.blend` geometry; fall back to full rebuild if port fails the A.5 checkpoint).
+
+**Track A + Track E.** User-directed on 2026-04-21 after the painted-backdrop approach was rejected. User answered the three open questions: (a) **port** existing geometry (fall back to rebuild if needed), (b) **stylized** (not PBR — Claude recommended; coherent with painted characters), (c) door = **rusted/burnt/shot-at metallic**, interior = **warm amber**, walls = **built-up painterly materials**. Plan only — not started. Can run in parallel with any other sprint since the Blender work is offline.
 
 **Intent.** Build a real 3D cutscene scene that captures the concept art's *mood* — warm sepia, volumetric smoke, dramatic sunset, weathered outpost with glowing doorway — **not** its literal composition. Characters interact spatially: walk on real ground, cast real shadows, emerge from a real 3D door. True reverse shots, dolly moves, and parallax all become possible.
 
