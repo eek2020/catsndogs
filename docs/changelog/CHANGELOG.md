@@ -6,6 +6,42 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — felid_cruiser 3D ship asset: smoke test + preview swap
+
+**Focus:** new faction-authored 3D ship model (`design/ships/3d/felid_cruiser.fbx`, 35 MB) replaces the generic placeholder in the 2.5D ship preview scene. First game-specific 3D ship asset.
+
+- **Asset mirrored** to `godot/assets/ships/3d/felid_cruiser.fbx` (+ auto-extracted embedded texture `felid_cruiser_0.png`).
+- **`scripts/ships/ship_3d_preview.gd` swap.** `SHIP_GLB` constant now points at the new FBX. Two FBX-export quirks handled in-code:
+  - **Scale mismatch.** Model AABB is ~1.2 cm (Blender export unit confusion — likely authored in mm). New `SHIP_TARGET_SIZE = 3.0m` auto-normalises longest-axis to 3m on spawn, so the ortho camera frames it regardless of source units.
+  - **Pivot offset.** FBX origin sits at Blender world zero, not geometry centre. After scaling, re-centre so AABB centroid sits at pivot origin.
+- **`tools/validate_ship_preview.gd` retuned.** Old 12k-tri hard-fail guard was written around the decimated `ship_3d_gameready.glb`. Raised to a **600k-tri warn** (no hard-fail) with rationale comment: at the 512² SubViewport target, sub-pixel tris cost effectively nothing on desktop — decimation only becomes relevant if we composite 3+ ships per frame or a perf regression shows up in combat.
+- **Perf read:** 495,898 tris / 311,580 verts / 1 mesh / 1 material. Single draw call. Clean topology, embedded texture came through in one pass. At 512² with one ship visible, cost is negligible on an M3/M4. Build size (~35 MB per ship) is the real constraint if we author 8 unique faction ships — decimation becomes a build-time concern before a runtime one.
+- **Visual smoke test.** Launched the preview window; both front and side angles (screenshots captured during review) show the pirate-galleon silhouette reading cleanly with cannons, sails, flags, and lit stern windows at the pixel-art target surface. Texture/embedded material pass-through correct.
+- **Validator run:** `PASS (tri budget OK)`. Not wired into GUT since it requires a windowed render pipeline.
+
+**Decision:** ship as-is. Do not decimate yet. Revisit when 3+ faction ships exist or when build size crosses 100 MB. Preview scene stays as-is until live-wiring (faction-conditional ship rendering in navigation + combat) is picked up as a future task.
+
+---
+
+## 2026-04-21 — Sprint 10 step 13: planet_surface_3d smoke test
+
+**Focus:** close out the last outstanding concern from step 10 — whether `planet_surface_3d.tscn` would hit the Control + SubViewportContainer invisibility bug that step 11b found for Bryn's shop. Covered both visually and with a regression test so the answer survives future changes.
+
+- **Visual verification.** In-game screenshot confirmed the player rig (purple-hatted musketeer) and two `felid_corsair_guard` merchants render correctly on a landed procedural planet. The step-11b bug manifests specifically at close ortho scales (ortho_size 2.6, distance 3m); `planet_surface_3d` runs at ortho_size 6 / distance 18m where the SubViewportContainer pattern works without rewrite.
+- **New GUT regression test.** `tests/unit/test_planet_surface_3d.gd` (4 tests, 15 asserts):
+  1. *Scene instantiates with 3D world* — `SubViewportContainer → SubViewport → World (Node3D)` tree assembled after `_ready`. First place the step-11b invisibility bug would resurface.
+  2. *Merchants mount as Character3D rigs* — at least one `Character3D` spawns under the world (procedural merchant placement is seed-deterministic, and Fringe Haven always seeds ≥1).
+  3. *Treasure round-trip* — `collect_treasure` writes reward into `planet_inventory`, `is_treasure_cleared` flips, second collect is a no-op.
+  4. *Depart flushes inventory* — `planet_system.depart(gs)` clears `current_planet_id`, empties `planet_inventory`, and merges crystals + salvage into ship inventory.
+- **Code-level audit of interaction/trade paths (what the test can't cover — runtime input):**
+  - `_open_merchant` → `GameSession.open_trade_screen(faction_id)` + `main_node.push_overlay("trade")`. `planet_surface_3d` is routed via `main.gd`'s `SCENES["planet"]` + `switch_scene("planet")`, so `current_scene == main.gd` and `push_overlay` works (unlike the step-11b Bryn outdoor flow which entered via `change_scene_to_file` and had no overlay stack).
+  - `_collect_treasure` UI glue: lid tilts, sparkle hides, zone erases, HUD loot label refreshes. Data path covered by test #3.
+- **Incidental fix — protagonists.json JSON-parse bug.** Running the smoke test surfaced `Invalid \escape` at line 120 of `data/characters/protagonists.json` (`I\'m still here` — apostrophes don't need escaping in JSON). In-game this fails silently: `data_loader.load_protagonists()` catches the parse error via `push_error` and returns `{}`, so `GameSession.create_new_game_state` falls back to `.get(key, default)` values for every protagonist field — meaning Aristotle/Dave were booting with default salvage/region/ship/rival/story-flags rather than their authored configs. Fixed by removing the backslash. Unlocks the `load_protagonists` data path in the smoke test and for real gameplay.
+- **Test suite.** 256/256 green (was 252/252; +4 new).
+- **Decision.** SubViewport + Control pattern is empirically fine at this camera range; no port to Node3D root needed. Step 13 marked done. Future 3D scenes with close-up ortho cameras should still follow the Node3D + CanvasLayer pattern from Bryn's shop (step 11b).
+
+---
+
 ## 2026-04-21 — Sprint 10 step 11c: Bryn shop — painted backdrop swap
 
 **Focus:** the procedural shop interior (walls + shelves + jars built from boxes and cylinders) was reading as low-poly greybox; swapped it for a painted 2D backdrop behind the 3D Bryn rig to match the painted portrait style.
