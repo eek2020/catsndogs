@@ -6,6 +6,34 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — Sprint 7 steps 1+2: cutscene Blender-ification
+
+**Focus:** delete the runtime model-patching layer that `no_tail_cutscene.tscn` leaned on. All the workarounds that existed because the source `.blend` shipped without proper materials / burn marks / placeholder-character deletion are now moved *into* the `.blend`.
+
+**.blend changes** ([godot/assets/cutscenes/no_tail_outpost.blend](godot/assets/cutscenes/no_tail_outpost.blend), edited via `blender-mcp`).
+
+- **Door + frame materials** — `mat_Door` set to warm-brown `(0.32, 0.20, 0.11)` roughness 0.85 metallic 0.15; `mat_Door_FrameLeft/Right/Top` set to dark matte `(0.14, 0.13, 0.12)` roughness 0.95 metallic 0.1. Matches the runtime override values exactly so deleting `cutscene_scene._ready` overrides is a visual no-op. Dropped the vestigial 0.25 generic emission on all four frame materials (they shouldn't glow).
+- **Door_WarningLight material** — left unchanged. Already red emissive `(1.0, 0.25, 0.15)` strength 4, which matches the runtime `_force_red_light_fixture` recipe.
+- **Placeholder character meshes** — deleted all 28 `Aristotle_*` / `NoTail_*` stand-in meshes (arm/leg/head/torso/ear/etc. + rifle + tail stump). Runtime `_hide_placeholder_characters` used to hide these after load; now they're not in the export at all.
+- **Door burn-mark planes** — added 5 `BurnMark_{Left,Right,Top,Bottom,Ground}` meshes parented to `Door` with emissive voronoi-textured material (`mat_Door_BurnMark`). Same offsets + sizes + albedo + emission values as the runtime `_apply_burn_marks` recipe. Used `surface_render_method = "BLENDED"` (Blender 5.x) for alpha.
+- **Re-exported** `no_tail_outpost.glb`: 2.37 MB → 1.89 MB (placeholder geometry removal).
+
+**GDScript deletions** ([godot/scripts/systems/cutscene/cutscene_scene.gd](godot/scripts/systems/cutscene/cutscene_scene.gd), [material_applicator.gd](godot/scripts/systems/cutscene/)).
+
+- `cutscene_scene.gd`: **286 → 77 lines** (target ≤100 per Sprint 7 exit criteria). Deleted `_apply_burn_marks`, `_hide_placeholder_characters`, `_force_red_light_fixture`, `_print_tree`, the runtime Door + Door_Frame material overrides, and the `MaterialApplicator.new().apply()` call. What remains is pure wiring: find `Door`/`Aristotle`/`NoTail`, connect `CutsceneManager` / `CameraController` / `DialogueUI` / camera, forward `cutscene_finished` to `EventBus.cutscene_completed`.
+- **Deleted `material_applicator.gd` (434 lines) + its `.uid`** — runtime painter that existed solely to compensate for the untextured GLB. Zero callers remain. The keyword-match rules (rock/ground/hill/wall/door/roof/antenna) are now dead-code-by-Blender-authoring.
+
+**Net:** ~640 lines of GDScript deleted, one script file gone, one GLB shrank 20%, `.blend` carries real materials instead of runtime-painted ones.
+
+**Verification.**
+
+- Full GUT headless suite: `256/256 green, 27 scripts, 3972 asserts, 3.8s`. No regressions.
+- `no_tail_cutscene.tscn` headless smoke-load clean: no missing-script errors, no missing-node crashes. Only warning is the pre-existing `Could not find 'Aristotle' node in the scene.` (unchanged from HEAD — the scene expects the parent to inject `$World/Aristotle`).
+
+**Still deferred to later Sprint 7 steps.** Camera animation bake (AnimationPlayer track in `.blend` replacing `CameraController` JSON-keyed tweens), character GLB optimisation (34 MB → ≤4 MB via texture rebake — needs human artist), unify `CutsceneDialogueUI` with `dialogue_ui.gd`.
+
+---
+
 ## 2026-04-21 — Fringe Haven campfire v2: particles, faceted rocks, textured char
 
 **Focus:** the first campfire polish pass still read as "painted props on grass" in-screenshot — solid-cube rocks, traffic-cone flame silhouette, flat brown char disc. Second pass replaces all three without new assets. The big unlock is `GPUParticles3D` for the flame: same node count, no custom shader, genuine flicker.
