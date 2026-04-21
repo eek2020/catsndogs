@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://cx2tqtkuy0ydq" path="res://assets/cutscenes/no_tail_outpost/backdrop.png" id="8_backdrop"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat_1"]
-sky_top_color = Color(0.05, 0.04, 0.1, 1)
+sky_top_color = Color(0.18, 0.09, 0.05, 1)
 sky_horizon_color = Color(0.3, 0.2, 0.12, 1)
-ground_bottom_color = Color(0.08, 0.06, 0.04, 1)
+ground_bottom_color = Color(0.12, 0.06, 0.04, 1)
 ground_horizon_color = Color(0.3, 0.2, 0.12, 1)
 sun_curve = 0.05
 
@@ -36,7 +36,7 @@ disable_receive_shadows = true
 texture_filter = 3
 
 [sub_resource type="QuadMesh" id="BackdropMesh_1"]
-size = Vector2(200, 77)
+size = Vector2(400, 154)
 
 [node name="NoTailCutscene" type="Node3D" unique_id=1697589989]
 script = ExtResource("1_scene")
@@ -63,18 +63,18 @@ light_energy = 0.3
 [node name="NoTailOutpost" parent="World" unique_id=1599704168 instance=ExtResource("5_glb")]
 visible = false
 
-[node name="Backdrop" type="MeshInstance3D" parent="World"]
+[node name="Backdrop" type="MeshInstance3D" parent="World" unique_id=733026599]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -40)
 mesh = SubResource("BackdropMesh_1")
 material_override = SubResource("BackdropMat_1")
-extra_cull_margin = 50.0
+extra_cull_margin = 100.0
 
-[node name="Aristotle" parent="World" instance=ExtResource("7_char3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+[node name="Aristotle" parent="World" unique_id=1743184439 instance=ExtResource("7_char3d")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1, 0, -1)
 character_id = "aristotle"
 
 [node name="NoTail" parent="World" unique_id=562841275 instance=ExtResource("7_char3d")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -4, 0, -12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
 visible = false
 character_id = "no_tail"
 

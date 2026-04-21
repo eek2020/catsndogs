@@ -204,6 +204,18 @@ func _run_walk(seq: Dictionary) -> void:
 	if cam_key != "" and camera_controller:
 		camera_controller.move_to_key(cam_key)  # parallel, not awaited
 
+	# Face the walk direction before starting, and trigger the rig's walk
+	# animation so the character actually walks rather than glides.
+	var dir: Vector3 = target - subject.global_position
+	dir.y = 0.0
+	if dir.length() > 0.05:
+		# Character3D forward is +Z (rigs baseline face +Z). `look_at` orients
+		# -Z toward target; to aim +Z at target we look at the mirrored point.
+		var mirrored: Vector3 = subject.global_position - dir
+		subject.look_at(mirrored, Vector3.UP)
+	if subject.has_method("play_anim"):
+		subject.play_anim("walk")
+
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
@@ -212,6 +224,8 @@ func _run_walk(seq: Dictionary) -> void:
 	var lines: Array = seq.get("lines", [])
 	if lines.is_empty():
 		await tween.finished
+		if subject.has_method("play_anim"):
+			subject.play_anim("idle")
 		return
 
 	# Fire lines in parallel with the walk. Advance is still gated on the
@@ -224,6 +238,8 @@ func _run_walk(seq: Dictionary) -> void:
 		)
 	if tween.is_running():
 		await tween.finished
+	if subject.has_method("play_anim"):
+		subject.play_anim("idle")
 
 
 # ------------------------------------------------------------------
@@ -335,7 +351,9 @@ func _fade_in_character(character: Node3D, duration: float) -> void:
 			continue
 		for s in range(mi.mesh.get_surface_count()):
 			var source: Material = mi.get_active_material(s)
-			var dup_mat: Material = source.duplicate() if source != null else StandardMaterial3D.new()
+			var dup_mat: Material = (
+				source.duplicate() if source != null else StandardMaterial3D.new()
+			)
 			if dup_mat is StandardMaterial3D:
 				var smat := dup_mat as StandardMaterial3D
 				smat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA

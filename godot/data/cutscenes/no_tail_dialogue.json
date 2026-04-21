@@ -17,9 +17,9 @@
       "type": "walk",
       "character": "aristotle",
       "to": [0, 0, -3],
-      "duration": 3.5,
+      "duration": 3.2,
       "camera_key": "CAM_02_GlideBehind",
-      "description": "Camera glides 3/4 behind-and-above Aristotle as he walks toward the painted outpost.",
+      "description": "Aristotle walks from (1, 0, -1) to (0, 0, -3) with walk animation. Camera glides behind him over 2.8s.",
       "lines": [
         { "speaker": "Aristotle", "text": "Whoever's inside picked every shot to disable. That's not luck.", "auto_advance": 3.0 }
       ],
@@ -80,10 +80,10 @@
       "id": "notail_emerges",
       "type": "walk",
       "character": "no_tail",
-      "to": [-4, 0, -8],
-      "duration": 2.6,
-      "camera_key": "CAM_04_SideReveal",
-      "description": "Camera slides to the side (in parallel with the walk). NoTail walks out of the painted doorway toward Aristotle.",
+      "to": [-1.5, 0, -2],
+      "duration": 2.4,
+      "camera_key": "CAM_04_SideSlide",
+      "description": "NoTail walks from (-2, 0, -3) to (-1.5, 0, -2) with walk animation. Camera slides to stage-right in parallel.",
       "lines": [
         { "speaker": "NoTail", "text": "Stop right there.", "auto_advance": 1.6 }
       ],
