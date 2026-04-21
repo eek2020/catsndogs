@@ -6,6 +6,60 @@ Format: Each entry includes the date, phase/task reference, and summary of chang
 
 ---
 
+## 2026-04-21 — Fringe Haven campfire v2: particles, faceted rocks, textured char
+
+**Focus:** the first campfire polish pass still read as "painted props on grass" in-screenshot — solid-cube rocks, traffic-cone flame silhouette, flat brown char disc. Second pass replaces all three without new assets. The big unlock is `GPUParticles3D` for the flame: same node count, no custom shader, genuine flicker.
+
+- **Rocks** ([fringe_haven_3d.gd:_make_campfire_3d](godot/scripts/world/fringe_haven_3d.gd)). Swapped `BoxMesh` → `SphereMesh` with `radial_segments = 5, rings = 3` so each rock renders as a low-poly faceted lump (angular carved-stone silhouette instead of a cube). Non-uniform scale per rock (sx/sy/sz on 0.22 / 0.13 / 0.22 with ±0.03–0.05m jitter), tilt up to ±0.2rad on X/Z, reused plaster texture via triplanar at `uv1_scale = 3.0` (tight tiling reads as rock grain). Tint range shifted warmer (0.32–0.48 vs. 0.28–0.42).
+- **Flame** — `GPUParticles3D` replaces the two emissive cones.
+  - **Core cone** (small, 0.22m radius, 0.35m height) retained as the hot base of the fire and still registered in `_campfire_flames` so the existing `_process` scale-pulse keeps the base breathing.
+  - **Particles:** `amount = 60`, `lifetime = 1.1s`, `preprocess = 0.5` so the fire is already burning on scene load. Process material: sphere emission at 0.15m radius, upward direction with 18° spread, initial velocity 0.9–1.4 m/s, slight upward gravity (+0.4). Scale curve 1.0→0.75→0.0 shrinks tongues as they rise. Colour ramp: hot orange at base → yellow-white at 35-70% life → fade to alpha 0 at end. Draw mesh is a billboarded `QuadMesh` (0.35×0.45m) with `vertex_color_use_as_albedo` so the colour ramp drives each particle's tint, unshaded + emission energy 2.2 so tongues glow without sun dependence. Explicit `visibility_aabb` so particles render when the campfire sits at the edge of frustum.
+- **Charred disc** — dropped the flat brown cylinder in favour of the mud texture darkened to burn-mark tone (`albedo_color = (0.22, 0.17, 0.13)`, `albedo_texture = CC0_MUD_PATH`, `uv1_scale = (1.5, 1.5, 1.0)`). Reads as scorched earth with real surface variation.
+- **Retained.** OmniLight3D flicker, log grain, stone ring layout, seeded RNG for stable rendering.
+- **Launch check.** `mcp__godot__run_project` on `fringe_haven_3d.tscn` clean. Particle system initialised without shader errors. No new runtime errors; pre-existing `_build_player:829` transform warning unchanged.
+
+**Files touched:** `godot/scripts/world/fringe_haven_3d.gd` only.
+
+---
+
+## 2026-04-21 — Fringe Haven chest + campfire polish
+
+**Focus:** after the step 16 exterior material pass, the treasure chest and two campfires still read as programmer primitives ("painted box with a bauble", "donut of stones with a cone"). Pass over both without introducing new art dependencies — reuse the wood-plank and plaster textures shipped in step 16, lean on procedural variation + tweens + lighting for the lift.
+
+- **Chest** ([fringe_haven_3d.gd:_build_chest](godot/scripts/world/fringe_haven_3d.gd)).
+  - Base + lid gained `albedo_texture = CC0_WOOD_PATH` + triplanar (1.6× uv) with distinct warm-brown tints (base 0.55 / 0.35 / 0.2, lid 0.68 / 0.46 / 0.26) so the two pieces read as separate carved planks instead of one painted cuboid.
+  - 4 brass corner rivets (0.09m `BoxMesh`, 0.7 metallic, 0.35 roughness) on the top corners of the base — reuses the gold-band palette to unify the metalwork. Chest silhouette now parses from across the square, not just up close.
+  - New warm `OmniLight3D` (color 1.0 / 0.85 / 0.45, energy 1.2, range 3.5m) on uncollected chests so they signal "go here" from 10m away. Field tracked in `_chest_light` (declared alongside `_chest_lid` / `_chest_sparkle`).
+  - `_update_chest_sparkle` now also breathes the chest light energy (`1.0 + 0.25·sin(accum·2.4)`), synced to the sparkle bauble pulse so the glow reads as one radiance source.
+  - Lid-open animation: new `_animate_chest_opening()` tweens `rotation.x` (−55°) and `position` (0, 0.65, −0.1) over 0.4s via cubic ease-out, plus a parallel 0.6s fade on `_chest_light.light_energy` before hiding it. `_apply_chest_opened_visuals` retained as the snap-version for scene reloads where the chest was already opened in a prior session.
+- **Campfires** ([fringe_haven_3d.gd:_make_campfire_3d](godot/scripts/world/fringe_haven_3d.gd)). Rewrote the whole function.
+  - **Stone ring.** Torus removed. Replaced with 7 hand-placed scattered stone chunks (~0.22×0.15×0.22m `BoxMesh` each, radial at 0.48m with ±0.06m jitter). Each chunk rotates freely on Y and tilts up to ±0.12rad on X/Z. Albedo tinted in a narrow band (grey 0.28–0.42) so stones feel like one weathered pile, not a painted set. Seeded on `hash(pos)` so the same campfire is stable across scene reloads.
+  - **Charred ground disc.** Dark scorched `CylinderMesh` (radius 0.75m, height 0.01m, albedo 0.12 / 0.09 / 0.07) sits at y=0.016 — over the grass, under the path strips (y=0.010 N-S / 0.012 E-W). Reads as "this fire has been here a while".
+  - **Log grain.** `log_mat.albedo_texture = CC0_WOOD_PATH` at `uv1_scale = (4, 1)` so the wood grain runs along the cylinder length (default cylinder UV wraps once around). Warm brown tint (0.55 / 0.38 / 0.22) kept for consistency with the chest lid.
+  - **Layered flame.** Outer cone unchanged (registered in `_campfire_flames` for the existing scale-pulse). Added an inner cone child (0.18m bottom radius vs. 0.35m, 0.5m height, yellow-white 1.0 / 0.9 / 0.55, emission energy 3.5 vs. outer 2.5, `TRANSPARENCY_ALPHA` at 0.9 so the two cones blend rather than showing a hard seam). Inner inherits the outer's scale pulse automatically via parent/child relationship.
+- **Launch check.** `mcp__godot__run_project` on `fringe_haven_3d.tscn` booted cleanly; no new errors (only the pre-existing `_build_player:829` transform warning from prior work). All textures re-used from step 16's `assets/textures/fringe_haven/` — no new asset imports.
+
+**Files touched:** `godot/scripts/world/fringe_haven_3d.gd` only.
+
+---
+
+## 2026-04-21 — Sprint 10 step 16: Fringe Haven exterior material pass
+
+**Focus:** the outdoor ground, paths, and buildings at Fringe Haven were reading crunchy next to the painted Bryn shop interior (step 11c). Ground/paths tiled 16×16 pixel art on large planes; buildings were flat-colour `BoxMesh` with no texture. Swap in CC0 seamless textures while keeping the flat-shaded `StandardMaterial3D` approach — no PBR, no normal/roughness maps, no geometry changes.
+
+- **Assets.** 6 CC0 Poly Haven 1K JPGs shipped to `godot/assets/textures/fringe_haven/` (~3 MB total): `grass_diff_1k.jpg` (Aerial Grass Rock), `cobblestone_diff_1k.jpg` (Cobblestone Floor 08), `mud_diff_1k.jpg` (Brown Mud 02), `plaster_diff_1k.jpg` (Plastered Wall), `wood_planks_diff_1k.jpg` (Wood Planks Grey), `roof_tiles_diff_1k.jpg` (Roof Tiles 14). Attribution listed in a new `CREDITS.txt` alongside them.
+- **`_build_ground` swap.** Old code extracted a 16×16 region from `overworld_tileset_16x16.png` via `_tile_texture(coord)` and tiled at 0.5m per tile with `TEXTURE_FILTER_NEAREST`. New code loads the seamless grass JPG directly, tiles at `GROUND_TEXTURE_METRES = 4.0m` per repeat (~15 repeats across the 60m plane), filters `LINEAR_WITH_MIPMAPS`.
+- **`_add_path_strip` signature change.** Parameter renamed from `tile: Vector2i` to `texture_path: String` and now loads the seamless texture directly. Stone crossroads use cobblestone; NW/SE dirt branches use mud. 2.5m per repeat (`PATH_TEXTURE_METRES`). Y-offset + draw-order fix from step 4 (N-S at y=0.010, E-W at y=0.012) preserved — intersection still has one winner.
+- **Building walls + roofs textured.** `_make_building` walls gained `albedo_texture = CC0_PLASTER_PATH` + `uv1_triplanar = true` + 2m per repeat. The existing `albedo_color = (0.87, 0.75, 0.55)` stays as a warm-plaster tint multiplied against the texture. Roofs gained `albedo_texture = CC0_ROOF_PATH` + triplanar at 1.6m per repeat, with the per-building `roof_color` (reds / greens / blues / ochres) surviving as a tint — so the palette variety between buildings is preserved while surface detail lands. Doors gained wood-plank texture (albedo tint warmed from 0.32 brown → 0.58 brown so the texture reads). `_make_shop_building` walls + awning follow the same pattern.
+- **Triplanar rationale.** `BoxMesh` has per-face UVs that wrap each face independently, so a single `uv1_scale` gives visibly different tiling densities on walls vs. top vs. sides. Triplanar projection gives consistent world-space tiling across all six faces (and across differently-sized buildings) without needing per-building UV tuning. Cost: extra texture samples per fragment — negligible at this scene scale (6–7 buildings, ortho camera).
+- **Retained.** Pixel-art tileset (`overworld_tileset_16x16.png`) still used by tree/campfire billboards via `_tile_texture`/`_sub_texture` — those read better as crisp pixel-art sprites than seamless textures. Water patch unchanged (still a flat blue plane — proper water texture/animation deferred to a later pass).
+- **Launch check.** `mcp__godot__run_project` on `fringe_haven_3d.tscn` booted cleanly; all 6 textures auto-generated `.import` sidecars on first load; no new errors. Pre-existing `_build_player` transform warning is unrelated to textures.
+- **Docs.** `NEXT_STEPS.md` Sprint 10 step 16 marked **Done 2026-04-21** with full scope summary.
+
+**Files touched:** `godot/scripts/world/fringe_haven_3d.gd`, `godot/assets/textures/fringe_haven/*` (new), `docs/NEXT_STEPS.md`.
+
+---
+
 ## 2026-04-21 — felid_cruiser 3D ship asset: smoke test + preview swap
 
 **Focus:** new faction-authored 3D ship model (`design/ships/3d/felid_cruiser.fbx`, 35 MB) replaces the generic placeholder in the 2.5D ship preview scene. First game-specific 3D ship asset.

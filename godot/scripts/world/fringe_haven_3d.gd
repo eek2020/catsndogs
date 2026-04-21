@@ -20,14 +20,28 @@ const WATER_PATH: String = "res://assets/tiles/fringe_haven/water_waves_32x32.pn
 const SERENE_PATH: String = "res://assets/tiles/fringe_haven/serene_village_32x32.png"
 const TILE_PX: int = 16
 const SERENE_PX: int = 32
-# Tileset atlas coords (col, row) — centres of the solid 3×3 floor panels
-# on the 18×13 sheet. Picked visually from the PNG to avoid edge/transition
-# tiles (which read as diagonal stripes when tiled).
+# Tileset atlas coords retained for billboard props (trees/campfire) that
+# still read better as pixel-art sprites. Ground/paths moved to CC0 seamless
+# textures in step 16 (2026-04-21) — see CC0_* paths below.
 const GRASS_TILE: Vector2i = Vector2i(10, 4)
 const DIRT_TILE: Vector2i = Vector2i(0, 3)
 const STONE_TILE: Vector2i = Vector2i(7, 7)
 # World size of a single tile, in metres. 1 tile ≈ half a character.
 const TILE_METRES: float = 0.5
+
+# CC0 seamless textures (Poly Haven, 1K JPG) — see assets/textures/fringe_haven/CREDITS.txt.
+# One physical repeat covers GROUND_TEXTURE_METRES of world space. Tuned so tiling
+# isn't obvious from the 3/4 ortho camera but detail still reads close-up.
+const CC0_GRASS_PATH: String = "res://assets/textures/fringe_haven/grass_diff_1k.jpg"
+const CC0_COBBLE_PATH: String = "res://assets/textures/fringe_haven/cobblestone_diff_1k.jpg"
+const CC0_MUD_PATH: String = "res://assets/textures/fringe_haven/mud_diff_1k.jpg"
+const CC0_PLASTER_PATH: String = "res://assets/textures/fringe_haven/plaster_diff_1k.jpg"
+const CC0_WOOD_PATH: String = "res://assets/textures/fringe_haven/wood_planks_diff_1k.jpg"
+const CC0_ROOF_PATH: String = "res://assets/textures/fringe_haven/roof_tiles_diff_1k.jpg"
+const GROUND_TEXTURE_METRES: float = 4.0
+const PATH_TEXTURE_METRES: float = 2.5
+const WALL_TEXTURE_METRES: float = 2.0
+const ROOF_TEXTURE_METRES: float = 1.6
 const CHARACTER_3D_SCENE: PackedScene = preload(
 	"res://scenes/characters/character_3d.tscn"
 )
@@ -69,6 +83,7 @@ var _flash_timer: float = 0.0
 # Chest state — swapped between CLOSED/OPEN visuals on collect.
 var _chest_lid: MeshInstance3D = null
 var _chest_sparkle: MeshInstance3D = null
+var _chest_light: OmniLight3D = null
 var _chest_collected: bool = false
 
 
@@ -203,7 +218,6 @@ func _build_environment() -> void:
 
 
 func _build_ground() -> void:
-	var grass := _tile_texture(GRASS_TILE)
 	var mi := MeshInstance3D.new()
 	mi.name = "Ground"
 	var plane := PlaneMesh.new()
@@ -211,10 +225,13 @@ func _build_ground() -> void:
 	mi.mesh = plane
 
 	var mat := StandardMaterial3D.new()
-	mat.albedo_texture = grass
-	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
-	# Repeat the 16px tile across the whole plane at TILE_METRES per tile.
-	mat.uv1_scale = Vector3(GROUND_SIZE / TILE_METRES, GROUND_SIZE / TILE_METRES, 1.0)
+	mat.albedo_texture = load(CC0_GRASS_PATH)
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	# One texture repeat covers GROUND_TEXTURE_METRES of world. At 4m per repeat
+	# across a 60m plane, the eye sees ~15 repeats — enough to avoid a "single
+	# painted square" look without the repetition reading as a grid.
+	var rep: float = GROUND_SIZE / GROUND_TEXTURE_METRES
+	mat.uv1_scale = Vector3(rep, rep, 1.0)
 	mat.roughness = 0.95
 	mi.material_override = mat
 	add_child(mi)
@@ -223,17 +240,17 @@ func _build_ground() -> void:
 	# N-S strip drawn first at y=0.01; E-W strip drawn on top at y=0.012 so the
 	# intersection has one consistent winner (fixes per-frame z-fight jitter).
 	_add_path_strip(
-		Vector3(0.0, 0.0, -12.0), Vector3(0.0, 0.0, 12.0), 2.5, STONE_TILE, 0.010,
+		Vector3(0.0, 0.0, -12.0), Vector3(0.0, 0.0, 12.0), 2.5, CC0_COBBLE_PATH, 0.010,
 	)
 	_add_path_strip(
-		Vector3(-14.0, 0.0, 0.0), Vector3(14.0, 0.0, 0.0), 2.5, STONE_TILE, 0.012,
+		Vector3(-14.0, 0.0, 0.0), Vector3(14.0, 0.0, 0.0), 2.5, CC0_COBBLE_PATH, 0.012,
 	)
 	# NW + SE dirt branches.
 	_add_path_strip(
-		Vector3(-10.0, 0.0, -8.0), Vector3(-3.0, 0.0, -8.0), 1.5, DIRT_TILE,
+		Vector3(-10.0, 0.0, -8.0), Vector3(-3.0, 0.0, -8.0), 1.5, CC0_MUD_PATH,
 	)
 	_add_path_strip(
-		Vector3(3.0, 0.0, 6.0), Vector3(10.0, 0.0, 6.0), 1.5, DIRT_TILE,
+		Vector3(3.0, 0.0, 6.0), Vector3(10.0, 0.0, 6.0), 1.5, CC0_MUD_PATH,
 	)
 
 	# Water — small lake in the NW corner, matching original layout.
@@ -263,9 +280,10 @@ func _tile_texture(coord: Vector2i) -> Texture2D:
 
 
 # Lay down a rectangular path segment between two points, width metres wide,
-# textured with the given tileset coord. Sits 0.01m above ground to avoid z-fight.
+# textured with a CC0 seamless JPG at PATH_TEXTURE_METRES per repeat. Sits
+# 0.01m above ground to avoid z-fight.
 func _add_path_strip(
-	a: Vector3, b: Vector3, width: float, tile: Vector2i, y_offset: float = 0.01,
+	a: Vector3, b: Vector3, width: float, texture_path: String, y_offset: float = 0.01,
 ) -> void:
 	var length := a.distance_to(b)
 	if length <= 0.001:
@@ -275,9 +293,11 @@ func _add_path_strip(
 	plane.size = Vector2(length, width)
 	mi.mesh = plane
 	var mat := StandardMaterial3D.new()
-	mat.albedo_texture = _tile_texture(tile)
-	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
-	mat.uv1_scale = Vector3(length / TILE_METRES, width / TILE_METRES, 1.0)
+	mat.albedo_texture = load(texture_path)
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	mat.uv1_scale = Vector3(
+		length / PATH_TEXTURE_METRES, width / PATH_TEXTURE_METRES, 1.0,
+	)
 	mat.roughness = 0.95
 	mi.material_override = mat
 	var mid := (a + b) * 0.5
@@ -301,14 +321,21 @@ func _make_building(
 	root.name = "Building_%s" % label if label != "" else "Building"
 	root.position = pos
 
-	# Walls — a box centred vertically at wall_height/2.
+	# Walls — a box centred vertically at wall_height/2. Plaster texture tints
+	# against the warm albedo so buildings still read as "warm plaster" but gain
+	# surface detail up close. BoxMesh wraps UVs per-face, so the triplanar
+	# scale here is applied to the material's default UV channel.
 	var walls := MeshInstance3D.new()
 	var box := BoxMesh.new()
 	box.size = Vector3(size.x, wall_height, size.y)
 	walls.mesh = box
 	walls.position = Vector3(0, wall_height * 0.5, 0)
 	var wall_mat := StandardMaterial3D.new()
-	wall_mat.albedo_color = Color(0.87, 0.75, 0.55)   # warm plaster
+	wall_mat.albedo_color = Color(0.87, 0.75, 0.55)   # warm plaster tint
+	wall_mat.albedo_texture = load(CC0_PLASTER_PATH)
+	wall_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	wall_mat.uv1_triplanar = true
+	wall_mat.uv1_scale = Vector3.ONE * (1.0 / WALL_TEXTURE_METRES)
 	wall_mat.roughness = 0.95
 	walls.material_override = wall_mat
 	walls.add_to_group("building_walls")
@@ -344,19 +371,27 @@ func _make_building(
 	var min_corner: float = roof_height * 0.5 * cos(pitch) + depth_half * sin(pitch)
 	roof.position = Vector3(0, wall_height + min_corner + 0.15, 0)
 	var roof_mat := StandardMaterial3D.new()
-	roof_mat.albedo_color = roof_color
+	roof_mat.albedo_color = roof_color            # per-building tint
+	roof_mat.albedo_texture = load(CC0_ROOF_PATH)
+	roof_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	roof_mat.uv1_triplanar = true
+	roof_mat.uv1_scale = Vector3.ONE * (1.0 / ROOF_TEXTURE_METRES)
 	roof_mat.roughness = 0.85
 	roof.material_override = roof_mat
 	root.add_child(roof)
 
-	# Door — small dark box on the front face (+Z side).
+	# Door — small wood-plank box on the front face (+Z side).
 	var door := MeshInstance3D.new()
 	var door_box := BoxMesh.new()
 	door_box.size = Vector3(0.9, 1.6, 0.05)
 	door.mesh = door_box
 	door.position = Vector3(0, 0.8, size.y * 0.5 + 0.03)
 	var door_mat := StandardMaterial3D.new()
-	door_mat.albedo_color = Color(0.32, 0.2, 0.12)
+	door_mat.albedo_color = Color(0.58, 0.4, 0.24)  # warmer brown than base wood
+	door_mat.albedo_texture = load(CC0_WOOD_PATH)
+	door_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	# Scale so a single door shows ~2 plank strips vertically.
+	door_mat.uv1_scale = Vector3(1.0, 1.6, 1.0)
 	door_mat.roughness = 0.9
 	door.material_override = door_mat
 	root.add_child(door)
@@ -399,6 +434,10 @@ func _make_shop_building(
 
 	var wall_mat := StandardMaterial3D.new()
 	wall_mat.albedo_color = Color(0.87, 0.75, 0.55)
+	wall_mat.albedo_texture = load(CC0_PLASTER_PATH)
+	wall_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	wall_mat.uv1_triplanar = true
+	wall_mat.uv1_scale = Vector3.ONE * (1.0 / WALL_TEXTURE_METRES)
 	wall_mat.roughness = 0.95
 
 	var wall_thick: float = 0.2
@@ -665,6 +704,10 @@ func _make_shop_building(
 	awning.position = Vector3(0, wall_height + 0.12, half_d + 0.4)
 	var awning_mat := StandardMaterial3D.new()
 	awning_mat.albedo_color = roof_color
+	awning_mat.albedo_texture = load(CC0_ROOF_PATH)
+	awning_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	awning_mat.uv1_triplanar = true
+	awning_mat.uv1_scale = Vector3.ONE * (1.0 / ROOF_TEXTURE_METRES)
 	awning_mat.roughness = 0.85
 	awning.material_override = awning_mat
 	root.add_child(awning)
@@ -909,57 +952,251 @@ func _build_props() -> void:
 		_make_campfire_3d(p)
 
 
-# A small campfire: ring of stones (dark grey torus), three crossed logs
-# (brown cylinders), emissive orange flame cone, warm OmniLight3D. The
-# light + flame scale animate in _process for flicker.
+# A small campfire. Rebuilt 2026-04-21 to read painterly at the 3/4 ortho
+# camera instead of "three primitives": charred ground disc + 7 scattered
+# stone chunks (rotated individually so no two read the same) + 3 wood-grain
+# logs crossed at 80° + layered inner/outer emissive flame cones + warm
+# OmniLight3D. The outer flame + light animate in _process for flicker; the
+# inner flame inherits the parent flame's scale pulse.
 func _make_campfire_3d(pos: Vector3) -> void:
 	var root := Node3D.new()
 	root.position = pos
 	add_child(root)
 
-	var stones := MeshInstance3D.new()
-	var stone_mesh := TorusMesh.new()
-	stone_mesh.inner_radius = 0.35
-	stone_mesh.outer_radius = 0.55
-	stones.mesh = stone_mesh
-	var stone_mat := StandardMaterial3D.new()
-	stone_mat.albedo_color = Color(0.35, 0.33, 0.3)
-	stone_mat.roughness = 1.0
-	stones.material_override = stone_mat
-	stones.position.y = 0.08
-	root.add_child(stones)
+	# Charred disc — mud texture darkened to burn-mark grey-brown. Sits at
+	# y=0.016 so it draws over the grass but below the path y-offsets (0.010
+	# N-S, 0.012 E-W). Using a real texture (instead of the flat ellipse it
+	# was) gives it surface variation so it stops reading as a painted shape
+	# under the rocks.
+	var char_disc := MeshInstance3D.new()
+	var disc := CylinderMesh.new()
+	disc.top_radius = 0.75
+	disc.bottom_radius = 0.75
+	disc.height = 0.01
+	char_disc.mesh = disc
+	char_disc.position.y = 0.016
+	var char_mat := StandardMaterial3D.new()
+	char_mat.albedo_color = Color(0.22, 0.17, 0.13)
+	char_mat.albedo_texture = load(CC0_MUD_PATH)
+	char_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	char_mat.uv1_scale = Vector3(1.5, 1.5, 1.0)
+	char_mat.roughness = 1.0
+	char_disc.material_override = char_mat
+	root.add_child(char_disc)
 
+	# Scattered stone chunks — low-poly faceted spheres (5 radial × 3 rings)
+	# give the angular "hand-carved rock" silhouette that boxes couldn't. Each
+	# stone gets a non-uniform scale + random tilt so no two read the same.
+	# Seeded on position for stable rendering across reloads.
+	var stone_rng := RandomNumberGenerator.new()
+	stone_rng.seed = hash(pos)
+	var stone_count: int = 7
+	var ring_radius: float = 0.48
+	var plaster_tex: Texture2D = load(CC0_PLASTER_PATH)
+	for i in range(stone_count):
+		var angle: float = TAU * float(i) / float(stone_count)
+		var jitter: float = stone_rng.randf_range(-0.06, 0.06)
+		var r: float = ring_radius + jitter
+		# Non-uniform scale: wider than tall, slightly squashed on one axis,
+		# so each sphere reads as a weathered lump rather than a perfect ball.
+		var sx: float = 0.22 + stone_rng.randf_range(-0.04, 0.05)
+		var sy: float = 0.13 + stone_rng.randf_range(-0.03, 0.03)
+		var sz: float = 0.22 + stone_rng.randf_range(-0.04, 0.05)
+		var stone := MeshInstance3D.new()
+		var sm := SphereMesh.new()
+		sm.radius = 0.5
+		sm.height = 1.0
+		# 8×4 reads as faceted stone without the pentagon/d20 silhouette that
+		# 5×3 produces. The random non-uniform scale does more shape work than
+		# low segment count at this camera distance.
+		sm.radial_segments = 8
+		sm.rings = 4
+		stone.mesh = sm
+		stone.scale = Vector3(sx, sy, sz)
+		# Sit stones partly buried so they read as settled into the char disc
+		# rather than perched on top. Burying half a stone's height pushes the
+		# visible lump to ~sy*0.6 which matches "weathered rock in soot".
+		stone.position = Vector3(cos(angle) * r, sy * 0.25, sin(angle) * r)
+		stone.rotation.y = stone_rng.randf_range(0.0, TAU)
+		stone.rotation.x = stone_rng.randf_range(-0.2, 0.2)
+		stone.rotation.z = stone_rng.randf_range(-0.2, 0.2)
+		var s_mat := StandardMaterial3D.new()
+		var tint: float = stone_rng.randf_range(0.32, 0.48)
+		s_mat.albedo_color = Color(tint, tint * 0.95, tint * 0.9)
+		s_mat.albedo_texture = plaster_tex
+		s_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		s_mat.uv1_triplanar = true
+		s_mat.uv1_scale = Vector3.ONE * 3.0   # tight tiling reads as rock grain
+		s_mat.roughness = 1.0
+		stone.material_override = s_mat
+		root.add_child(stone)
+
+	# Logs — wood-grain texture with charred darker tint so they look burnt
+	# rather than freshly cut. Darker than the chest lid/door on purpose. Logs
+	# sit at ~80° tilt (near-flat, small rise toward the centre) and barely
+	# above the char disc so they read as "thrown in" instead of hovering.
 	var log_mat := StandardMaterial3D.new()
-	log_mat.albedo_color = Color(0.32, 0.2, 0.12)
+	log_mat.albedo_color = Color(0.28, 0.18, 0.10)   # charred brown
+	log_mat.albedo_texture = load(CC0_WOOD_PATH)
+	log_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	log_mat.uv1_scale = Vector3(4.0, 1.0, 1.0)
 	log_mat.roughness = 0.95
 	for i in range(3):
 		var log_m := MeshInstance3D.new()
 		var cyl := CylinderMesh.new()
-		cyl.top_radius = 0.08
-		cyl.bottom_radius = 0.08
-		cyl.height = 0.8
+		cyl.top_radius = 0.07
+		cyl.bottom_radius = 0.07
+		cyl.height = 0.75
 		log_m.mesh = cyl
 		log_m.material_override = log_mat
-		log_m.rotation = Vector3(0, float(i) * PI / 3.0, deg_to_rad(80.0))
-		log_m.position.y = 0.15
+		# Tilt 85° (closer to horizontal) + per-log yaw. Position y=0.06 so the
+		# log rests on the char disc instead of floating 15cm up.
+		log_m.rotation = Vector3(
+			stone_rng.randf_range(-0.08, 0.08),
+			float(i) * PI / 3.0 + stone_rng.randf_range(-0.1, 0.1),
+			deg_to_rad(85.0),
+		)
+		log_m.position = Vector3(
+			stone_rng.randf_range(-0.05, 0.05),
+			0.06,
+			stone_rng.randf_range(-0.05, 0.05),
+		)
 		root.add_child(log_m)
 
-	var flame := MeshInstance3D.new()
-	var cone := CylinderMesh.new()
-	cone.top_radius = 0.0
-	cone.bottom_radius = 0.35
-	cone.height = 0.7
-	flame.mesh = cone
-	var flame_mat := StandardMaterial3D.new()
-	flame_mat.albedo_color = Color(1.0, 0.55, 0.15)
-	flame_mat.emission_enabled = true
-	flame_mat.emission = Color(1.0, 0.6, 0.2)
-	flame_mat.emission_energy_multiplier = 2.5
-	flame_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	flame.material_override = flame_mat
-	flame.position.y = 0.55
-	root.add_child(flame)
-	_campfire_flames.append(flame)
+	# Flame — GPUParticles3D spawning rising billboarded emissive quads.
+	# Replaces the solid cones that read as "traffic cone stickers". Each
+	# particle is a small emissive square that rises ~0.6m, shrinks from
+	# 0.25m→0m, and colour-shifts orange→yellow-white→out over its ~1.1s
+	# lifetime. At 60 particles/s this gives the "licking flame" silhouette
+	# with no custom shader. Core glow = small unshaded orange cone so the
+	# base of the fire still reads warm when particles thin out.
+	var flame_core := MeshInstance3D.new()
+	var core_cone := CylinderMesh.new()
+	core_cone.top_radius = 0.0
+	core_cone.bottom_radius = 0.22
+	core_cone.height = 0.35
+	flame_core.mesh = core_cone
+	var core_mat := StandardMaterial3D.new()
+	core_mat.albedo_color = Color(1.0, 0.5, 0.12)
+	core_mat.emission_enabled = true
+	core_mat.emission = Color(1.0, 0.55, 0.15)
+	core_mat.emission_energy_multiplier = 3.0
+	core_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	flame_core.material_override = core_mat
+	flame_core.position.y = 0.35
+	root.add_child(flame_core)
+	# _campfire_flames drives the existing scale-pulse on the core so the
+	# base of the flame still breathes in sync with the OmniLight flicker.
+	_campfire_flames.append(flame_core)
+
+	# Two-stream particle flame: dense small "tongues" + sparse high "embers".
+	# Splitting avoids the "same particles everywhere" look where big sprites
+	# at the base and tiny sparks at the top would otherwise share one config.
+
+	# Stream 1 — tongues. Short-lived, tiny, tight cluster around the core.
+	var tongues := GPUParticles3D.new()
+	tongues.amount = 80
+	tongues.lifetime = 0.6
+	tongues.preprocess = 0.5
+	tongues.position.y = 0.15
+	tongues.visibility_aabb = AABB(Vector3(-0.6, 0.0, -0.6), Vector3(1.2, 1.4, 1.2))
+
+	var tongue_proc := ParticleProcessMaterial.new()
+	tongue_proc.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	tongue_proc.emission_sphere_radius = 0.08
+	tongue_proc.direction = Vector3(0, 1, 0)
+	tongue_proc.spread = 12.0
+	tongue_proc.initial_velocity_min = 0.7
+	tongue_proc.initial_velocity_max = 1.1
+	tongue_proc.gravity = Vector3(0, 0.2, 0)
+	tongue_proc.scale_min = 0.10
+	tongue_proc.scale_max = 0.18
+	var tongue_curve := Curve.new()
+	tongue_curve.add_point(Vector2(0.0, 0.4))   # start small (just lit)
+	tongue_curve.add_point(Vector2(0.25, 1.0))  # swell
+	tongue_curve.add_point(Vector2(1.0, 0.0))   # taper to nothing
+	var tongue_curve_tex := CurveTexture.new()
+	tongue_curve_tex.curve = tongue_curve
+	tongue_proc.scale_curve = tongue_curve_tex
+	var tongue_grad := Gradient.new()
+	tongue_grad.set_offset(0, 0.0)
+	tongue_grad.set_color(0, Color(1.0, 0.55, 0.12, 0.95))
+	tongue_grad.set_offset(1, 1.0)
+	tongue_grad.set_color(1, Color(1.0, 0.4, 0.1, 0.0))
+	tongue_grad.add_point(0.4, Color(1.0, 0.75, 0.25, 0.9))
+	tongue_grad.add_point(0.75, Color(1.0, 0.55, 0.15, 0.5))
+	var tongue_grad_tex := GradientTexture1D.new()
+	tongue_grad_tex.gradient = tongue_grad
+	tongue_proc.color_ramp = tongue_grad_tex
+	tongues.process_material = tongue_proc
+
+	var tongue_quad := QuadMesh.new()
+	tongue_quad.size = Vector2(0.18, 0.24)
+	var tongue_mat := StandardMaterial3D.new()
+	tongue_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	tongue_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	tongue_mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	tongue_mat.billboard_keep_scale = true
+	tongue_mat.vertex_color_use_as_albedo = true
+	tongue_mat.emission_enabled = true
+	tongue_mat.emission = Color(1.0, 0.65, 0.25)
+	tongue_mat.emission_energy_multiplier = 2.5
+	tongue_mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	tongue_quad.material = tongue_mat
+	tongues.draw_pass_1 = tongue_quad
+	root.add_child(tongues)
+
+	# Stream 2 — embers. Sparse, high, rise further before fading.
+	var embers := GPUParticles3D.new()
+	embers.amount = 18
+	embers.lifetime = 1.4
+	embers.preprocess = 0.8
+	embers.position.y = 0.35
+	embers.visibility_aabb = AABB(Vector3(-0.8, 0.0, -0.8), Vector3(1.6, 2.6, 1.6))
+
+	var ember_proc := ParticleProcessMaterial.new()
+	ember_proc.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	ember_proc.emission_sphere_radius = 0.12
+	ember_proc.direction = Vector3(0, 1, 0)
+	ember_proc.spread = 22.0
+	ember_proc.initial_velocity_min = 0.8
+	ember_proc.initial_velocity_max = 1.4
+	ember_proc.gravity = Vector3(0, -0.3, 0)  # real gravity so embers arc + fall
+	ember_proc.scale_min = 0.04
+	ember_proc.scale_max = 0.08
+	var ember_curve := Curve.new()
+	ember_curve.add_point(Vector2(0.0, 1.0))
+	ember_curve.add_point(Vector2(0.7, 0.9))
+	ember_curve.add_point(Vector2(1.0, 0.0))
+	var ember_curve_tex := CurveTexture.new()
+	ember_curve_tex.curve = ember_curve
+	ember_proc.scale_curve = ember_curve_tex
+	var ember_grad := Gradient.new()
+	ember_grad.set_offset(0, 0.0)
+	ember_grad.set_color(0, Color(1.0, 0.85, 0.45, 1.0))
+	ember_grad.set_offset(1, 1.0)
+	ember_grad.set_color(1, Color(0.7, 0.2, 0.05, 0.0))
+	ember_grad.add_point(0.6, Color(1.0, 0.55, 0.15, 0.8))
+	var ember_grad_tex := GradientTexture1D.new()
+	ember_grad_tex.gradient = ember_grad
+	ember_proc.color_ramp = ember_grad_tex
+	embers.process_material = ember_proc
+
+	var ember_quad := QuadMesh.new()
+	ember_quad.size = Vector2(0.08, 0.08)
+	var ember_mat := StandardMaterial3D.new()
+	ember_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	ember_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	ember_mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	ember_mat.billboard_keep_scale = true
+	ember_mat.vertex_color_use_as_albedo = true
+	ember_mat.emission_enabled = true
+	ember_mat.emission = Color(1.0, 0.7, 0.3)
+	ember_mat.emission_energy_multiplier = 3.5
+	ember_mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	ember_quad.material = ember_mat
+	embers.draw_pass_1 = ember_quad
+	root.add_child(embers)
 
 	var light := OmniLight3D.new()
 	light.light_color = Color(1.0, 0.55, 0.2)
@@ -1105,13 +1342,21 @@ func _build_chest() -> void:
 	root.position = pos
 	add_child(root)
 
+	# Wood-grain base — reuses the exterior wood-planks texture (step 16). Tint
+	# stays the warm brown we had before so the chest still reads as darker
+	# wood than the doors. Triplanar so the grain wraps consistently across
+	# the cuboid's 6 faces without per-face UV tuning.
 	var base := MeshInstance3D.new()
 	var base_box := BoxMesh.new()
 	base_box.size = Vector3(0.9, 0.55, 0.6)
 	base.mesh = base_box
 	base.position.y = 0.275
 	var base_mat := StandardMaterial3D.new()
-	base_mat.albedo_color = Color(0.42, 0.26, 0.14)
+	base_mat.albedo_color = Color(0.55, 0.35, 0.2)
+	base_mat.albedo_texture = load(CC0_WOOD_PATH)
+	base_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	base_mat.uv1_triplanar = true
+	base_mat.uv1_scale = Vector3.ONE * 1.6
 	base_mat.roughness = 0.9
 	base.material_override = base_mat
 	root.add_child(base)
@@ -1132,11 +1377,39 @@ func _build_chest() -> void:
 	lid_box.size = Vector3(0.95, 0.2, 0.65)
 	_chest_lid.mesh = lid_box
 	_chest_lid.position.y = 0.65
+	# Lid shares the wood texture but with a slightly lighter tint so it reads
+	# as a distinct piece from the base, not one continuous cuboid.
 	var lid_mat := StandardMaterial3D.new()
-	lid_mat.albedo_color = Color(0.52, 0.34, 0.18)
+	lid_mat.albedo_color = Color(0.68, 0.46, 0.26)
+	lid_mat.albedo_texture = load(CC0_WOOD_PATH)
+	lid_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	lid_mat.uv1_triplanar = true
+	lid_mat.uv1_scale = Vector3.ONE * 1.6
 	lid_mat.roughness = 0.85
 	_chest_lid.material_override = lid_mat
 	root.add_child(_chest_lid)
+
+	# Metal corner rivets — 4 tiny brass cubes at the top corners of the base.
+	# Give the chest silhouette some shape from the 3/4 camera; reuses the
+	# gold tint from the band so the metalwork palette stays unified.
+	var rivet_mat := StandardMaterial3D.new()
+	rivet_mat.albedo_color = Color(0.75, 0.58, 0.22)
+	rivet_mat.metallic = 0.7
+	rivet_mat.roughness = 0.35
+	var rivet_offsets: Array = [
+		Vector3(-0.41, 0.5, 0.26),
+		Vector3(0.41, 0.5, 0.26),
+		Vector3(-0.41, 0.5, -0.26),
+		Vector3(0.41, 0.5, -0.26),
+	]
+	for off in rivet_offsets:
+		var rivet := MeshInstance3D.new()
+		var rb := BoxMesh.new()
+		rb.size = Vector3(0.09, 0.09, 0.09)
+		rivet.mesh = rb
+		rivet.position = off
+		rivet.material_override = rivet_mat
+		root.add_child(rivet)
 
 	# Golden band across the front (purely decorative).
 	var band := MeshInstance3D.new()
@@ -1167,6 +1440,16 @@ func _build_chest() -> void:
 	_chest_sparkle.material_override = sp_mat
 	root.add_child(_chest_sparkle)
 
+	# Warm pool of light around uncollected chests so they read as "important"
+	# from across the square, not just when the player is close enough for the
+	# sparkle to be visible. Hidden in _apply_chest_opened_visuals on collect.
+	_chest_light = OmniLight3D.new()
+	_chest_light.light_color = Color(1.0, 0.85, 0.45)
+	_chest_light.light_energy = 1.2
+	_chest_light.omni_range = 3.5
+	_chest_light.position = Vector3(0, 1.0, 0)
+	root.add_child(_chest_light)
+
 	var tag := Label3D.new()
 	tag.text = "HIDDEN CHEST" if not _chest_collected else "(empty)"
 	tag.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -1185,12 +1468,37 @@ func _build_chest() -> void:
 
 
 func _apply_chest_opened_visuals() -> void:
+	# Snap immediately — used on scene load when the chest was already opened
+	# in a prior session (no satisfying animation possible after the fact).
 	if _chest_lid:
 		_chest_lid.rotation.x = deg_to_rad(-55.0)
 		# Slide the lid so its hinge stays at the back of the base.
 		_chest_lid.position = Vector3(0, 0.65, -0.1)
 	if _chest_sparkle:
 		_chest_sparkle.visible = false
+	if _chest_light:
+		_chest_light.visible = false
+
+
+# Tweened version — used when the player collects the chest in-scene so the
+# lid arcs open instead of snapping. Light fades in parallel. Sparkle hides
+# immediately so the reward flash is the visual payoff.
+func _animate_chest_opening() -> void:
+	if _chest_sparkle:
+		_chest_sparkle.visible = false
+	if _chest_lid:
+		var tw := create_tween().set_parallel(true)
+		tw.tween_property(_chest_lid, "rotation:x", deg_to_rad(-55.0), 0.4) \
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.tween_property(_chest_lid, "position", Vector3(0, 0.65, -0.1), 0.4) \
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	if _chest_light:
+		var lw := create_tween()
+		lw.tween_property(_chest_light, "light_energy", 0.0, 0.6)
+		lw.tween_callback(func() -> void:
+			if _chest_light:
+				_chest_light.visible = false
+		)
 
 
 func _update_chest_sparkle() -> void:
@@ -1199,6 +1507,10 @@ func _update_chest_sparkle() -> void:
 	var s: float = 0.85 + 0.2 * sin(_anim_accum * 3.2)
 	_chest_sparkle.scale = Vector3(s, s, s)
 	_chest_sparkle.position.y = 1.1 + 0.05 * sin(_anim_accum * 2.1)
+	# Breathe the chest light in sync with the sparkle so the glow pulse
+	# matches the bauble — reads as one radiance, not two.
+	if _chest_light and _chest_light.visible:
+		_chest_light.light_energy = 1.0 + 0.25 * sin(_anim_accum * 2.4)
 
 
 # ── Interaction ───────────────────────────────────────────────────────
@@ -1240,7 +1552,7 @@ func _collect_chest(zone_id: int) -> void:
 		gs.crystal_inventory += CHEST_REWARD_CRYSTALS
 		gs.salvage += CHEST_REWARD_SALVAGE
 		gs.story_flags[CHEST_STORY_FLAG] = true
-	_apply_chest_opened_visuals()
+	_animate_chest_opening()
 	# Remove the trigger so the prompt clears immediately.
 	# Drop the registration so the prompt stops showing even if the player
 	# is still standing on top of the chest.

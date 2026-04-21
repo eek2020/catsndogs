@@ -1,0 +1,9 @@
+Fringe Haven exterior textures — sourced from Poly Haven (https://polyhaven.com).
+All assets released under CC0 (public domain). Attribution not required, listed for provenance.
+
+- grass_diff_1k.jpg       — "Aerial Grass Rock" by Rob Tuytel
+- cobblestone_diff_1k.jpg — "Cobblestone Floor 08" by Rob Tuytel
+- mud_diff_1k.jpg         — "Brown Mud 02" by Rob Tuytel
+- plaster_diff_1k.jpg     — "Plastered Wall" by Amal Kumar
+- wood_planks_diff_1k.jpg — "Wood Planks Grey" by Rob Tuytel
+- roof_tiles_diff_1k.jpg  — "Roof Tiles 14" by Rob Tuytel
